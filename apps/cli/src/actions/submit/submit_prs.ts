@@ -88,7 +88,11 @@ export async function submitPullRequest(
       updated: chalk.yellow,
       created: chalk.green,
     }[pr.response.status](pr.response.status)}${
-      pr.response.isDraft === false ? '; ready for review' : ''
+      pr.response.isDraft === false
+        ? '; ready for review'
+        : pr.response.isDraft === true
+        ? '; draft'
+        : ''
     })`
   );
 }
@@ -208,13 +212,22 @@ async function submitPrToGithub({
     ]);
   }
 
-  if (request.draft === false && prInfo.isDraft) {
-    execFileSync('gh', ['pr', 'ready', String(prInfo.number), '--repo', repo]);
+  if (request.draft !== undefined && request.draft !== prInfo.isDraft) {
+    execFileSync('gh', [
+      'pr',
+      'ready',
+      String(prInfo.number),
+      '--repo',
+      repo,
+      ...(request.draft ? ['--undo'] : []),
+    ]);
   }
   const isDraft = readPrDraftStatus(request.head, prInfo.number, repo);
-  if (request.draft === false && isDraft) {
+  if (request.draft !== undefined && isDraft !== request.draft) {
     throw new Error(
-      `GitHub did not confirm ${request.head} (PR #${prInfo.number}) as ready for review`
+      `GitHub did not confirm ${request.head} (PR #${prInfo.number}) as ${
+        request.draft ? 'draft' : 'ready for review'
+      }`
     );
   }
 

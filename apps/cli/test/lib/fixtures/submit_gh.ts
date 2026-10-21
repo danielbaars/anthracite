@@ -169,10 +169,14 @@ function main(): void {
     return;
   }
   if (args[1] === 'ready' && pr) {
-    if (!pr.isDraft) throw new Error('PR is already ready for review');
+    const requestedDraft = args.includes('--undo');
+    if (pr.isDraft === requestedDraft)
+      throw new Error('PR already has the requested status');
     if (process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName) {
       if (process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'reject') {
-        process.stderr.write('GitHub refused ready transition\n');
+        process.stderr.write(
+          `GitHub refused ${requestedDraft ? 'draft' : 'ready'} transition\n`
+        );
         process.exitCode = 1;
         return;
       }
@@ -182,7 +186,7 @@ function main(): void {
       process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'unchanged'
     )
       return;
-    pr.isDraft = false;
+    pr.isDraft = requestedDraft;
     fs.writeFileSync(statePath, JSON.stringify(prs));
     return;
   }
