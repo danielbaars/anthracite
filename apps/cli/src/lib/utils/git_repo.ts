@@ -32,12 +32,24 @@ export class GitRepo {
   }
 
   runCliCommand(command: string[], opts?: { cwd?: string }): void {
+    const binary = getTestBinary();
     const result = spawnSync(
-      process.argv[0],
-      [
-        path.join(__dirname, `..`, `..`, `..`, `..`, `dist`, `src`, `index.js`),
-        ...command,
-      ],
+      binary || process.argv[0],
+      binary
+        ? command
+        : [
+            path.join(
+              __dirname,
+              `..`,
+              `..`,
+              `..`,
+              `..`,
+              `dist`,
+              `src`,
+              `index.js`
+            ),
+            ...command,
+          ],
       {
         stdio: process.env.DEBUG ? 'inherit' : 'pipe',
         cwd: opts?.cwd || this.dir,
@@ -74,22 +86,25 @@ export class GitRepo {
   }
 
   runCliCommandAndGetOutput(args: string[]): string {
+    const binary = getTestBinary();
     return (
       spawnSync(
-        process.argv[0],
-        [
-          path.join(
-            __dirname,
-            `..`,
-            `..`,
-            `..`,
-            `..`,
-            `dist`,
-            `src`,
-            `index.js`
-          ),
-          ...args,
-        ],
+        binary || process.argv[0],
+        binary
+          ? args
+          : [
+              path.join(
+                __dirname,
+                `..`,
+                `..`,
+                `..`,
+                `..`,
+                `dist`,
+                `src`,
+                `index.js`
+              ),
+              ...args,
+            ],
         {
           encoding: 'utf-8',
           cwd: this.dir,
@@ -183,4 +198,12 @@ export class GitRepo {
         .concat([branch])
     );
   }
+}
+
+function getTestBinary(): string | undefined {
+  const binary = process.env.CHARCOAL_TEST_BINARY;
+  if (binary && !path.isAbsolute(binary)) {
+    throw new Error('CHARCOAL_TEST_BINARY must be an absolute path');
+  }
+  return binary;
 }

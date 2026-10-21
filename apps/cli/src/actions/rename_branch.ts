@@ -32,10 +32,9 @@ export async function renameCurrentBranch(
 ): Promise<void> {
   const oldBranchName = context.engine.currentBranchPrecondition;
 
-  const branchName =
-    context.interactive && args.newBranchName
-      ? args.newBranchName
-      : await getNewBranchName(context, oldBranchName);
+  const branchName = args.newBranchName
+    ? args.newBranchName
+    : await getNewBranchName(context, oldBranchName);
 
   if (oldBranchName === branchName) {
     context.splog.info(
