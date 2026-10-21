@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
 import { RebaseConflictError } from '../lib/errors';
+import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { assertUnreachable } from '../lib/utils/assert_unreachable';
 import { persistContinuation } from './persist_continuation';
 import { printConflictStatus } from './print_conflict_status';
@@ -9,6 +10,18 @@ export function restackBranches(
   branchNames: string[],
   context: TContext
 ): void {
+  const branchesToChange = new Set<string>();
+  for (const branchName of branchNames) {
+    if (
+      !context.engine.isTrunk(branchName) &&
+      (!context.engine.isBranchFixed(branchName) ||
+        branchesToChange.has(context.engine.getParentPrecondition(branchName)))
+    ) {
+      branchesToChange.add(branchName);
+    }
+  }
+  assertBranchesAvailableInWorktrees([...branchesToChange]);
+
   context.splog.debug(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')
   );

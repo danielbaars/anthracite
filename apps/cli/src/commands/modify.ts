@@ -2,6 +2,8 @@ import yargs from 'yargs';
 import { commitAmendAction } from '../actions/commit_amend';
 import { commitCreateAction } from '../actions/commit_create';
 import { graphite } from '../lib/runner';
+import { SCOPE } from '../lib/engine/scope_spec';
+import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 
 const args = {
   all: {
@@ -55,8 +57,14 @@ export const description =
   'Modify the current branch by amending its commit (or creating a new one with --commit) and restack upstack branches.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
-  return graphite(argv, canonical, async (context) =>
-    argv.commit
+  return graphite(argv, canonical, async (context) => {
+    assertBranchesAvailableInWorktrees(
+      context.engine.getRelativeStack(
+        context.engine.currentBranchPrecondition,
+        SCOPE.UPSTACK_EXCLUSIVE
+      )
+    );
+    return argv.commit
       ? commitCreateAction(
           {
             message: argv.message,
@@ -73,6 +81,6 @@ export const handler = async (argv: argsT): Promise<void> => {
             patch: argv.patch,
           },
           context
-        )
-  );
+        );
+  });
 };
