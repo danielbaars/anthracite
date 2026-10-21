@@ -64,7 +64,10 @@ export async function submitAction(
   }
 
   const allBranchNames = context.engine
-    .getRelativeStack(context.engine.currentBranchPrecondition, args.scope)
+    .getRelativeStack(
+      args.branch ?? context.engine.currentBranchPrecondition,
+      args.scope
+    )
     .filter((branchName) => !context.engine.isTrunk(branchName));
 
   const branchNames = args.select
