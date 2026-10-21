@@ -1,6 +1,7 @@
 import { addAll } from './add_all';
 import {
   deleteBranch,
+  fastForward,
   forceCheckoutNewBranch,
   forceCreateBranch,
   getCurrentBranchName,
@@ -69,6 +70,7 @@ function composeGitInternal() {
     getCurrentBranchName,
     moveBranch,
     deleteBranch,
+    fastForward,
     switchBranch,
     getDiff,
     forceCheckoutNewBranch,

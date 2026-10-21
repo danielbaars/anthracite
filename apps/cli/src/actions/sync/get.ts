@@ -7,6 +7,7 @@ import {
   KilledError,
   RebaseConflictError,
 } from '../../lib/errors';
+import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { assertUnreachable } from '../../lib/utils/assert_unreachable';
 import { persistContinuation } from '../persist_continuation';
 import { printConflictStatus } from '../print_conflict_status';
@@ -113,28 +114,63 @@ export async function getBranchesFromRemote(
   args: { downstack: string[]; base: string; force: boolean },
   context: TContext
 ): Promise<void> {
-  let parentBranchName = args.base;
-  for (const [index, branchName] of args.downstack.entries()) {
-    context.engine.fetchBranch(branchName, parentBranchName);
-    if (args.force || !context.engine.branchExists(branchName)) {
-      context.engine.checkoutBranchFromFetched(branchName, parentBranchName);
-      context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
-    } else if (!context.engine.isBranchTracked(branchName)) {
-      await handleUntrackedLocally(branchName, parentBranchName, context);
-    } else if (
-      context.engine.getParentPrecondition(branchName) !== parentBranchName
-    ) {
-      await handleDifferentParents(branchName, parentBranchName, context);
-    } else if (context.engine.branchMatchesFetched(branchName)) {
-      context.splog.info(`${chalk.cyan(branchName)} is up to date.`);
-    } else {
-      const remainingBranchesToSync = args.downstack.slice(index + 1);
-      await handleSameParent(
-        { branchName, parentBranchName, remainingBranchesToSync },
-        context
+  const updatedBranches: string[] = [];
+  try {
+    let parentBranchName = args.base;
+    for (const [index, branchName] of args.downstack.entries()) {
+      const previousRevision = context.engine.branchExists(branchName)
+        ? context.engine.getRevision(branchName)
+        : undefined;
+      context.engine.fetchBranch(branchName, parentBranchName);
+      if (
+        !args.force &&
+        (!context.engine.branchExists(branchName) ||
+          !context.engine.branchMatchesFetched(branchName))
+      ) {
+        uncommittedTrackedChangesPrecondition();
+      }
+      if (args.force || !context.engine.branchExists(branchName)) {
+        context.engine.checkoutBranchFromFetched(branchName, parentBranchName);
+        context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
+      } else if (!context.engine.isBranchTracked(branchName)) {
+        await handleUntrackedLocally(branchName, parentBranchName, context);
+      } else if (
+        context.engine.getParentPrecondition(branchName) !== parentBranchName
+      ) {
+        await handleDifferentParents(branchName, parentBranchName, context);
+      } else if (context.engine.branchMatchesFetched(branchName)) {
+        context.splog.info(`${chalk.cyan(branchName)} is up to date.`);
+      } else if (
+        context.engine.fastForwardBranchFromFetched(
+          branchName,
+          parentBranchName
+        )
+      ) {
+        context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
+        if (context.engine.getChildren(branchName).length > 0) {
+          context.splog.info('Local children may need to be restacked.');
+        }
+      } else {
+        const remainingBranchesToSync = args.downstack.slice(index + 1);
+        await handleSameParent(
+          { branchName, parentBranchName, remainingBranchesToSync },
+          context
+        );
+      }
+      if (context.engine.getRevision(branchName) !== previousRevision) {
+        updatedBranches.push(branchName);
+      }
+      parentBranchName = branchName;
+    }
+  } catch (error) {
+    if (updatedBranches.length > 0) {
+      throw new ExitFailedError(
+        `Updated ${updatedBranches.join(', ')} before get stopped.\n${
+          error instanceof Error ? error.message : String(error)
+        }`
       );
     }
-    parentBranchName = branchName;
+    throw error;
   }
 }
 

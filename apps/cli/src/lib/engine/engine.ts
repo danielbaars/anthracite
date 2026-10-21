@@ -138,6 +138,10 @@ export type TEngine = {
 
   fetchBranch: (branchName: string, parentBranchName: string) => void;
   branchMatchesFetched: (branchName: string) => boolean;
+  fastForwardBranchFromFetched: (
+    branchName: string,
+    parentBranchName: string
+  ) => boolean;
   checkoutBranchFromFetched: (
     branchName: string,
     parentBranchName: string
@@ -971,7 +975,38 @@ export function composeEngine({
     },
     branchMatchesFetched: (branchName: string) => {
       assertBranch(branchName);
-      return cache.branches[branchName].branchRevision === git.readFetchHead();
+      return git.getShaOrThrow(branchName) === git.readFetchHead();
+    },
+    fastForwardBranchFromFetched: (branchName, parentBranchName) => {
+      const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
+      const head = git.readFetchHead();
+      const base = git.readFetchBase();
+      if (git.getShaOrThrow(branchName) !== cachedMeta.branchRevision) {
+        throw new PreconditionsFailedError(
+          `${branchName} changed while getting the stack. Please retry.`
+        );
+      }
+      if (
+        git.getMergeBase(cachedMeta.branchRevision, head) !==
+        cachedMeta.branchRevision
+      ) {
+        return false;
+      }
+      checkoutBranch(branchName);
+      git.fastForward(head);
+      if (git.getShaOrThrow(branchName) !== head) {
+        throw new PreconditionsFailedError(
+          `${branchName} changed while getting the stack. Please retry.`
+        );
+      }
+      git.setRemoteTracking({ remote, branchName, sha: head });
+      updateMeta(branchName, {
+        ...cachedMeta,
+        parentBranchName,
+        parentBranchRevision: base,
+        branchRevision: head,
+      });
+      return true;
     },
     checkoutBranchFromFetched: (
       branchName: string,

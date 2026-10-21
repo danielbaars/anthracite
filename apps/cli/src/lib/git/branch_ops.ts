@@ -63,3 +63,12 @@ export function forceCreateBranch(branchName: string, sha: string): void {
     resource: 'forceCreateBranch',
   });
 }
+
+export function fastForward(revision: string): void {
+  runGitCommand({
+    args: ['merge', '--ff-only', '--no-edit', revision],
+    options: { stdio: 'pipe' },
+    onError: 'throw',
+    resource: 'fastForward',
+  });
+}
