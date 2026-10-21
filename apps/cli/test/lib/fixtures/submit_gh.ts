@@ -57,6 +57,8 @@ function isSubmitPr(value: unknown): value is SubmitPr {
   );
 }
 
+// Keep the supported external gh commands together in this small test fixture.
+// eslint-disable-next-line max-lines-per-function
 function main(): void {
   const args = process.argv.slice(2);
   const statePath = process.env.CHARCOAL_TEST_GH_STATE;
@@ -95,6 +97,25 @@ function main(): void {
     const response: Record<string, unknown> = { ...pr, headRefOid };
     const fields = option('--json')?.split(',');
     if (!fields) throw new Error('Fixture PR view requires --json');
+    if (
+      fields.length === 3 &&
+      fields.includes('isDraft') &&
+      process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName &&
+      process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'read-missing'
+    ) {
+      process.stderr.write('no pull requests found during status readback\n');
+      process.exitCode = 1;
+      return;
+    }
+    if (
+      fields.length === 3 &&
+      fields.includes('isDraft') &&
+      process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName &&
+      process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'read-invalid'
+    ) {
+      process.stdout.write('{not valid JSON');
+      return;
+    }
     const selected: Record<string, unknown> = {};
     for (const field of fields) {
       if (!(field in response))
@@ -129,6 +150,24 @@ function main(): void {
     prs.push(created);
     fs.writeFileSync(statePath, JSON.stringify(prs));
     process.stdout.write(`${created.url}\n`);
+    return;
+  }
+  if (args[1] === 'ready' && pr) {
+    if (!pr.isDraft) throw new Error('PR is already ready for review');
+    if (process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName) {
+      if (process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'reject') {
+        process.stderr.write('GitHub refused ready transition\n');
+        process.exitCode = 1;
+        return;
+      }
+    }
+    if (
+      process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName &&
+      process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'unchanged'
+    )
+      return;
+    pr.isDraft = false;
+    fs.writeFileSync(statePath, JSON.stringify(prs));
     return;
   }
   if (args[1] === 'edit' && pr) {

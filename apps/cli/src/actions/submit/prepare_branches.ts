@@ -168,6 +168,10 @@ async function getPRAction(
     }[status]
   );
 
+  if (args.publish && status !== 'PUBLISH' && status !== 'NOOP') {
+    context.splog.info('  Publish as ready for review');
+  }
+
   const shouldSkipUpdate =
     args.always === false && (args.dryRun || status === 'NOOP');
 

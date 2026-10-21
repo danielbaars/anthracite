@@ -6,6 +6,7 @@ import { TContext } from '../../lib/context';
 import { ExitFailedError } from '../../lib/errors';
 import { Unpacked } from '../../lib/utils/ts_helpers';
 import { execFileSync } from 'child_process';
+import { readPrDraftStatus } from './pr_status';
 
 export type TPRSubmissionInfo = t.UnwrapSchemaMap<
   typeof API_ROUTES.submitPullRequests.params
@@ -15,7 +16,16 @@ type TSubmittedPRRequest = Unpacked<TPRSubmissionInfo>;
 
 type TSubmittedPRResponse = Unpacked<
   t.UnwrapSchemaMap<typeof API_ROUTES.submitPullRequests.response>['prs']
->;
+> & { isDraft?: boolean };
+
+const existingPrSchema = t.shape({
+  headRefName: t.string,
+  url: t.string,
+  number: t.number,
+  baseRefName: t.string,
+  body: t.string,
+  isDraft: t.boolean,
+});
 
 type TSubmittedPR = {
   request: TSubmittedPRRequest;
@@ -49,13 +59,17 @@ export async function submitPullRequest(
           reviewDecision: 'REVIEW_REQUIRED', // Because we just opened this PR
         }
       : {}),
-    ...(pr.request.draft !== undefined ? { draft: pr.request.draft } : {}),
+    ...(pr.response.isDraft !== undefined
+      ? { isDraft: pr.response.isDraft }
+      : {}),
   });
   context.splog.info(
     `${chalk.green(pr.response.head)}: ${pr.response.prURL} (${{
       updated: chalk.yellow,
       created: chalk.green,
-    }[pr.response.status](pr.response.status)})`
+    }[pr.response.status](pr.response.status)}${
+      pr.response.isDraft === false ? '; ready for review' : ''
+    })`
   );
 }
 
@@ -100,8 +114,9 @@ async function submitPrToGithub({
   // prepare_branches always attaches reviewers, but the route type only
   // declares them on the 'create' variant.
   const reviewers = (request as { reviewers?: string[] }).reviewers ?? [];
+  let prInfo: unknown;
   try {
-    const prInfo = await JSON.parse(
+    prInfo = JSON.parse(
       execFileSync('gh', [
         'pr',
         'view',
@@ -109,40 +124,9 @@ async function submitPrToGithub({
         '--repo',
         repo,
         '--json',
-        'headRefName,url,number,baseRefName,body',
+        'headRefName,url,number,baseRefName,body,isDraft',
       ]).toString()
     );
-
-    if (prInfo.headRefName !== request.head) {
-      throw Error(
-        `PR head mismatch: ${prInfo.headRefName} !== ${request.head}`
-      );
-    }
-
-    const prBaseChanged = prInfo.baseRefName !== request.base;
-
-    const editArgs = [
-      ...(prBaseChanged ? ['--base', request.base] : []),
-      ...reviewers.flatMap((r) => ['--add-reviewer', r]),
-    ];
-
-    if (editArgs.length) {
-      execFileSync('gh', [
-        'pr',
-        'edit',
-        prInfo.headRefName,
-        '--repo',
-        repo,
-        ...editArgs,
-      ]);
-    }
-
-    return {
-      head: prInfo.headRefName,
-      status: 'updated',
-      prNumber: prInfo.number,
-      prURL: prInfo.url,
-    };
   } catch (error) {
     if (
       error instanceof Error &&
@@ -169,7 +153,14 @@ async function submitPrToGithub({
 
       const prNumber = getPrNumberFromUrl(result);
 
+      const isDraft = readPrDraftStatus(request.head, prNumber, repo);
+      if (isDraft !== request.draft) {
+        throw new Error(
+          `GitHub did not confirm the requested status for ${request.head} (PR #${prNumber})`
+        );
+      }
       return {
+        isDraft,
         head: request.head,
         status: 'created',
         prNumber,
@@ -179,6 +170,48 @@ async function submitPrToGithub({
 
     throw error;
   }
+  if (!existingPrSchema(prInfo)) {
+    throw new Error(`Invalid GitHub PR response for ${request.head}`);
+  }
+  if (prInfo.headRefName !== request.head) {
+    throw Error(`PR head mismatch: ${prInfo.headRefName} !== ${request.head}`);
+  }
+
+  const prBaseChanged = prInfo.baseRefName !== request.base;
+
+  const editArgs = [
+    ...(prBaseChanged ? ['--base', request.base] : []),
+    ...reviewers.flatMap((r) => ['--add-reviewer', r]),
+  ];
+
+  if (editArgs.length) {
+    execFileSync('gh', [
+      'pr',
+      'edit',
+      prInfo.headRefName,
+      '--repo',
+      repo,
+      ...editArgs,
+    ]);
+  }
+
+  if (request.draft === false && prInfo.isDraft) {
+    execFileSync('gh', ['pr', 'ready', String(prInfo.number), '--repo', repo]);
+  }
+  const isDraft = readPrDraftStatus(request.head, prInfo.number, repo);
+  if (request.draft === false && isDraft) {
+    throw new Error(
+      `GitHub did not confirm ${request.head} (PR #${prInfo.number}) as ready for review`
+    );
+  }
+
+  return {
+    isDraft,
+    head: prInfo.headRefName,
+    status: 'updated',
+    prNumber: prInfo.number,
+    prURL: prInfo.url,
+  };
 }
 
 function getPrNumberFromUrl(url: string): number {

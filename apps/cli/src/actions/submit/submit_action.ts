@@ -137,7 +137,15 @@ export async function submitAction(
       throw err;
     }
 
-    await submitPullRequest([submissionInfo], context);
+    try {
+      await submitPullRequest([submissionInfo], context);
+    } catch (error) {
+      throw new ExitFailedError(
+        `${error instanceof Error ? error.message : String(error)}\nCode for ${
+          submissionInfo.head
+        } was already pushed; earlier confirmed PR changes remain applied.`
+      );
+    }
   }
 
   context.splog.info(
