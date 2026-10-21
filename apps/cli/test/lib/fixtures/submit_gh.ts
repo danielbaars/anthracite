@@ -13,6 +13,7 @@ export type SubmitPr = {
   isDraft: boolean;
   reviewDecision: string;
   reviewRequests: { login: string }[];
+  reviews?: { id: string; author: { login: string } }[];
 };
 
 export function readSubmitPrs(path: string): SubmitPr[] {
@@ -94,7 +95,17 @@ function main(): void {
       ['ls-remote', 'origin', `refs/heads/${pr.headRefName}`],
       { encoding: 'utf8' }
     ).split(/\s/)[0];
-    const response: Record<string, unknown> = { ...pr, headRefOid };
+    const response: Record<string, unknown> = {
+      ...pr,
+      reviews: pr.reviews ?? [],
+      headRefOid,
+    };
+    if (
+      process.env.CHARCOAL_TEST_GH_REVIEW_MODE === 'invalid' &&
+      option('--json')?.includes('reviews') &&
+      pr.reviewRequests.length
+    )
+      response.number = 999;
     const fields = option('--json')?.split(',');
     if (!fields) throw new Error('Fixture PR view requires --json');
     if (
@@ -145,7 +156,12 @@ function main(): void {
       state: 'OPEN',
       isDraft: args.includes('--draft'),
       reviewDecision: 'REVIEW_REQUIRED',
-      reviewRequests: [],
+      reviewRequests:
+        process.env.CHARCOAL_TEST_GH_REVIEW_MODE === 'ignore'
+          ? []
+          : args.flatMap((arg, index) =>
+              arg === '--reviewer' ? [{ login: args[index + 1] }] : []
+            ),
     };
     prs.push(created);
     fs.writeFileSync(statePath, JSON.stringify(prs));
@@ -173,7 +189,36 @@ function main(): void {
   if (args[1] === 'edit' && pr) {
     if (option('--base')) pr.baseRefName = option('--base') ?? pr.baseRefName;
     if (option('--body') !== undefined) pr.body = option('--body') ?? '';
-    if (!args.includes('--base') && !args.includes('--body'))
+    const reviewMode = process.env.CHARCOAL_TEST_GH_REVIEW_MODE;
+    if (args.includes('--add-reviewer') && reviewMode === 'reject') {
+      process.stderr.write(
+        'review request rejected: unknown or unauthorized reviewer\n'
+      );
+      process.exitCode = 1;
+      return;
+    }
+    for (const [index, arg] of args.entries()) {
+      if (arg === '--add-reviewer' && reviewMode === 'reviewed') {
+        pr.reviews = [
+          ...(pr.reviews ?? []),
+          { id: 'new-review', author: { login: args[index + 1] } },
+        ];
+        continue;
+      }
+      if (
+        arg === '--add-reviewer' &&
+        reviewMode !== 'ignore' &&
+        (reviewMode !== 'partial' || args[index + 1] === 'alice') &&
+        !pr.reviewRequests.some((request) => request.login === args[index + 1])
+      ) {
+        pr.reviewRequests.push({ login: args[index + 1] });
+      }
+    }
+    if (
+      !args.includes('--base') &&
+      !args.includes('--body') &&
+      !args.includes('--add-reviewer')
+    )
       throw new Error('Unsupported PR edit');
     fs.writeFileSync(statePath, JSON.stringify(prs));
     return;

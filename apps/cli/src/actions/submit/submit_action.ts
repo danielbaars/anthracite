@@ -38,6 +38,15 @@ export async function submitAction(
       `Can't use both --publish and --draft flags in one command`
     );
   }
+  if (
+    !context.interactive &&
+    args.reviewers !== undefined &&
+    args.reviewers.split(',').some((reviewer) => !reviewer.trim())
+  ) {
+    throw new ExitFailedError(
+      'Provide a non-empty reviewer username with --reviewers in non-interactive mode.'
+    );
+  }
   const populateRemoteShasPromise = context.engine.populateRemoteShas();
   if (args.dryRun) {
     context.splog.info(
@@ -51,7 +60,6 @@ export async function submitAction(
 
   if (!context.interactive) {
     args.editPRFieldsInline = false;
-    args.reviewers = undefined;
 
     context.splog.info(
       `Running in non-interactive mode. Inline prompts to fill PR fields will be skipped${

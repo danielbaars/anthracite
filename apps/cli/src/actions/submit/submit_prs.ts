@@ -7,6 +7,7 @@ import { ExitFailedError } from '../../lib/errors';
 import { Unpacked } from '../../lib/utils/ts_helpers';
 import { execFileSync } from 'child_process';
 import { readPrDraftStatus } from './pr_status';
+import { requestReviewers } from './request_reviewers';
 
 export type TPRSubmissionInfo = t.UnwrapSchemaMap<
   typeof API_ROUTES.submitPullRequests.params
@@ -63,6 +64,25 @@ export async function submitPullRequest(
       ? { isDraft: pr.response.isDraft }
       : {}),
   });
+  const reviewers = 'reviewers' in pr.request ? pr.request.reviewers ?? [] : [];
+  try {
+    requestReviewers(
+      {
+        head: pr.response.head,
+        number: pr.response.prNumber,
+        repo: githubRepoSlug(context),
+      },
+      reviewers
+    );
+  } catch (error) {
+    throw new ExitFailedError(
+      `PR ${pr.response.status} at ${
+        pr.response.prURL
+      }; review request failed for ${reviewers.join(', ')}: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
+  }
   context.splog.info(
     `${chalk.green(pr.response.head)}: ${pr.response.prURL} (${{
       updated: chalk.yellow,
@@ -111,9 +131,6 @@ async function submitPrToGithub({
   request: TSubmittedPRRequest;
   repo: string;
 }): Promise<TSubmittedPRResponse> {
-  // prepare_branches always attaches reviewers, but the route type only
-  // declares them on the 'create' variant.
-  const reviewers = (request as { reviewers?: string[] }).reviewers ?? [];
   let prInfo: unknown;
   try {
     prInfo = JSON.parse(
@@ -146,7 +163,6 @@ async function submitPrToGithub({
         '--body',
         request.body ?? '',
         ...(request.draft ? ['--draft'] : []),
-        ...reviewers.flatMap((r) => ['--reviewer', r]),
       ])
         .toString()
         .trim();
@@ -179,10 +195,7 @@ async function submitPrToGithub({
 
   const prBaseChanged = prInfo.baseRefName !== request.base;
 
-  const editArgs = [
-    ...(prBaseChanged ? ['--base', request.base] : []),
-    ...reviewers.flatMap((r) => ['--add-reviewer', r]),
-  ];
+  const editArgs = [...(prBaseChanged ? ['--base', request.base] : [])];
 
   if (editArgs.length) {
     execFileSync('gh', [

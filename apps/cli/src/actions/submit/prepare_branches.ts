@@ -57,6 +57,7 @@ export async function getPRInfoForBranches(
         select: args.select,
         editPRFieldsInline: args.editPRFieldsInline,
         always: args.always,
+        reviewers: args.reviewers,
       },
       context
     );
@@ -127,6 +128,7 @@ async function getPRAction(
     publish: boolean;
     dryRun: boolean;
     always: boolean;
+    reviewers: string | undefined;
     select: boolean;
     editPRFieldsInline: boolean | undefined;
   },
@@ -155,10 +157,13 @@ async function getPRAction(
       ? 'DRAFT'
       : args.publish === true && prInfo.isDraft !== false
       ? 'PUBLISH'
+      : args.reviewers !== undefined
+      ? 'REVIEWERS'
       : 'NOOP';
 
   context.splog.info(
     {
+      REVIEWERS: `▸ ${chalk.cyan(args.branchName)} (Request review)`,
       NOOP: `▸ ${chalk.gray(args.branchName)} (No-op)`,
       CREATE: `▸ ${chalk.cyan(args.branchName)} (Create)`,
       RESTACK: `▸ ${chalk.cyan(args.branchName)} (New parent)`,
