@@ -173,8 +173,18 @@ async function getPRAction(
     }[status]
   );
 
-  if (args.publish && status !== 'PUBLISH' && status !== 'NOOP') {
-    context.splog.info('  Publish as ready for review');
+  if (status !== 'NOOP') {
+    if (args.draft && status !== 'DRAFT' && prInfo?.isDraft !== true) {
+      context.splog.info('  Mark as draft');
+    }
+    if (args.publish && status !== 'PUBLISH' && prInfo?.isDraft !== false) {
+      context.splog.info('  Publish as ready for review');
+    }
+    if (args.reviewers !== undefined && status !== 'REVIEWERS') {
+      context.splog.info(
+        `  Request review${args.reviewers ? `: ${args.reviewers}` : ''}`
+      );
+    }
   }
 
   const shouldSkipUpdate =

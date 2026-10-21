@@ -2,6 +2,7 @@ import { spawnSync } from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import { USER_CONFIG_OVERRIDE_ENV } from '../context';
+import { getTestCliCommand } from './test_cli_command';
 
 const TEXT_FILE_NAME = 'test.txt';
 
@@ -32,37 +33,19 @@ export class GitRepo {
   }
 
   runCliCommand(command: string[], opts?: { cwd?: string }): void {
-    const binary = getTestBinary();
-    const result = spawnSync(
-      binary || process.argv[0],
-      binary
-        ? command
-        : [
-            path.join(
-              __dirname,
-              `..`,
-              `..`,
-              `..`,
-              `..`,
-              `dist`,
-              `src`,
-              `index.js`
-            ),
-            ...command,
-          ],
-      {
-        stdio: process.env.DEBUG ? 'inherit' : 'pipe',
-        cwd: opts?.cwd || this.dir,
-        env: {
-          ...process.env,
-          [USER_CONFIG_OVERRIDE_ENV]: this.userConfigPath,
-          GRAPHITE_DISABLE_TELEMETRY: '1',
-          GRAPHITE_DISABLE_UPGRADE_PROMPT: '1',
-          GRAPHITE_DISABLE_SURVEY: '1',
-          GRAPHITE_PROFILE: undefined,
-        },
-      }
-    );
+    const [executable, ...cliArgs] = getTestCliCommand(command);
+    const result = spawnSync(executable, cliArgs, {
+      stdio: process.env.DEBUG ? 'inherit' : 'pipe',
+      cwd: opts?.cwd || this.dir,
+      env: {
+        ...process.env,
+        [USER_CONFIG_OVERRIDE_ENV]: this.userConfigPath,
+        GRAPHITE_DISABLE_TELEMETRY: '1',
+        GRAPHITE_DISABLE_UPGRADE_PROMPT: '1',
+        GRAPHITE_DISABLE_SURVEY: '1',
+        GRAPHITE_PROFILE: undefined,
+      },
+    });
     if (result.status) {
       throw new Error(
         [
@@ -86,36 +69,18 @@ export class GitRepo {
   }
 
   runCliCommandAndGetOutput(args: string[]): string {
-    const binary = getTestBinary();
+    const [executable, ...cliArgs] = getTestCliCommand(args);
     return (
-      spawnSync(
-        binary || process.argv[0],
-        binary
-          ? args
-          : [
-              path.join(
-                __dirname,
-                `..`,
-                `..`,
-                `..`,
-                `..`,
-                `dist`,
-                `src`,
-                `index.js`
-              ),
-              ...args,
-            ],
-        {
-          encoding: 'utf-8',
-          cwd: this.dir,
-          env: {
-            ...process.env,
-            [USER_CONFIG_OVERRIDE_ENV]: this.userConfigPath,
-            GRAPHITE_DISABLE_TELEMETRY: '1',
-            GRAPHITE_DISABLE_UPGRADE_PROMPT: '1',
-          },
-        }
-      ).stdout?.trim() ?? ''
+      spawnSync(executable, cliArgs, {
+        encoding: 'utf-8',
+        cwd: this.dir,
+        env: {
+          ...process.env,
+          [USER_CONFIG_OVERRIDE_ENV]: this.userConfigPath,
+          GRAPHITE_DISABLE_TELEMETRY: '1',
+          GRAPHITE_DISABLE_UPGRADE_PROMPT: '1',
+        },
+      }).stdout?.trim() ?? ''
     );
   }
 
@@ -198,12 +163,4 @@ export class GitRepo {
         .concat([branch])
     );
   }
-}
-
-function getTestBinary(): string | undefined {
-  const binary = process.env.CHARCOAL_TEST_BINARY;
-  if (binary && !path.isAbsolute(binary)) {
-    throw new Error('CHARCOAL_TEST_BINARY must be an absolute path');
-  }
-  return binary;
 }

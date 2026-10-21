@@ -5,9 +5,12 @@ import path from 'path';
 import { allScenes } from '../../lib/scenes/all_scenes';
 import { configureTest } from '../../lib/utils/configure_test';
 import { expectCommits } from '../../lib/utils/expect_commits';
+import { getTestCliCommand } from '../../../src/lib/utils/test_cli_command';
 import { runCliInPty } from '../../lib/utils/run_cli_in_pty';
 
 for (const scene of allScenes) {
+  // Independent public CLI scenarios, not one production operation.
+  // eslint-disable-next-line max-lines-per-function
   describe(`(${scene}): rename`, function () {
     configureTest(this, scene);
 
@@ -94,19 +97,8 @@ for (const scene of allScenes) {
         'show-ref',
         '--heads',
       ]);
-      const binary = process.env.CHARCOAL_TEST_BINARY;
-      if (binary && !path.isAbsolute(binary)) {
-        throw new Error('CHARCOAL_TEST_BINARY must be an absolute path');
-      }
       const result = runCliInPty(
-        binary
-          ? [binary, 'rename', '--interactive']
-          : [
-              process.execPath,
-              path.resolve(__dirname, '../../../src/index.js'),
-              'rename',
-              '--interactive',
-            ],
+        getTestCliCommand(['rename', '--interactive']),
         {
           cwd: scene.repo.dir,
           env: {
@@ -352,25 +344,18 @@ if (process.argv[2] === 'pr' && process.argv[3] === 'view' && ['a', '17'].includ
 }
 
 function runBuiltCli(cwd: string, args: string[], env?: NodeJS.ProcessEnv) {
-  const binary = process.env.CHARCOAL_TEST_BINARY;
-  if (binary && !path.isAbsolute(binary)) {
-    throw new Error('CHARCOAL_TEST_BINARY must be an absolute path');
-  }
-  return spawnSync(
-    binary || process.execPath,
-    binary ? args : [path.resolve(__dirname, '../../../src/index.js'), ...args],
-    {
-      cwd,
-      encoding: 'utf8',
-      timeout: 15000,
-      env: {
-        ...process.env,
-        GRAPHITE_DISABLE_TELEMETRY: '1',
-        GRAPHITE_DISABLE_UPGRADE_PROMPT: '1',
-        GRAPHITE_DISABLE_SURVEY: '1',
-        GRAPHITE_PROFILE: '',
-        ...env,
-      },
-    }
-  );
+  const [executable, ...cliArgs] = getTestCliCommand(args);
+  return spawnSync(executable, cliArgs, {
+    cwd,
+    encoding: 'utf8',
+    timeout: 15000,
+    env: {
+      ...process.env,
+      GRAPHITE_DISABLE_TELEMETRY: '1',
+      GRAPHITE_DISABLE_UPGRADE_PROMPT: '1',
+      GRAPHITE_DISABLE_SURVEY: '1',
+      GRAPHITE_PROFILE: '',
+      ...env,
+    },
+  });
 }

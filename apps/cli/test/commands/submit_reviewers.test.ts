@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import path from 'path';
+import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { runCliInPty } from '../lib/utils/run_cli_in_pty';
 import { SubmitCliFixture } from '../lib/fixtures/submit_cli';
 
@@ -194,19 +194,14 @@ describe('explicit reviewers through the built CLI', function () {
   it('still prompts for reviewers interactively before pushing when the option has no value', () => {
     fixture.branch('target', 'main');
     const refs = fixture.git('ls-remote', '--heads', 'origin');
-    const binary = process.env.CHARCOAL_TEST_BINARY;
-    const command = binary
-      ? [binary]
-      : [process.execPath, path.resolve(__dirname, '../../src/index.js')];
     const result = runCliInPty(
-      [
-        ...command,
+      getTestCliCommand([
         'submit',
         '--reviewers',
         '--no-edit',
         '--draft',
         '--interactive',
-      ],
+      ]),
       { cwd: fixture.repo, env: fixture.env }
     );
     expect(result.status).to.equal(124);

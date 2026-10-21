@@ -4,8 +4,7 @@ import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
 import { runCliInPty } from '../lib/utils/run_cli_in_pty';
-
-const cli = path.resolve(__dirname, '../../src/index.js');
+import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 
 type CliResult = { status: number | null; output: string };
 
@@ -92,9 +91,7 @@ console.log(JSON.stringify({headRefName: head, baseRefName: base}));\n`,
   }
 
   run(args: string[], interactive = false): CliResult {
-    const command = process.env.CHARCOAL_TEST_BINARY
-      ? [process.env.CHARCOAL_TEST_BINARY, ...args]
-      : [process.execPath, cli, ...args];
+    const command = getTestCliCommand(args);
     if (interactive) {
       return runCliInPty(command, { cwd: this.consumer, env: this.env });
     }
@@ -155,6 +152,8 @@ console.log(JSON.stringify({headRefName: head, baseRefName: base}));\n`,
   }
 }
 
+// Independent public CLI scenarios, not one production operation.
+// eslint-disable-next-line max-lines-per-function
 describe('get CLI safe fast-forward', function () {
   this.timeout(30000);
   let fixture: GetFixture;

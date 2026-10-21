@@ -2,6 +2,7 @@ import { execFileSync, spawnSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import { getTestCliCommand } from '../../../src/lib/utils/test_cli_command';
 import { readSubmitPrs, SubmitPr } from './submit_gh';
 
 // Every instance owns its repo, bare remote, HOME, and external gh state.
@@ -82,13 +83,16 @@ export class SubmitCliFixture {
     stdout: string;
     stderr: string;
   } {
-    const binary = process.env.CHARCOAL_TEST_BINARY;
-    const entrypoint = path.resolve(__dirname, '../../../src/index.js');
-    const result = spawnSync(
-      binary ?? process.execPath,
-      [...(binary ? [] : [entrypoint]), ...args, '--no-interactive'],
-      { cwd: this.repo, env: this.env, encoding: 'utf8', timeout: 20000 }
-    );
+    const [executable, ...cliArgs] = getTestCliCommand([
+      ...args,
+      '--no-interactive',
+    ]);
+    const result = spawnSync(executable, cliArgs, {
+      cwd: this.repo,
+      env: this.env,
+      encoding: 'utf8',
+      timeout: 20000,
+    });
     if (result.error) throw result.error;
     if (result.signal)
       throw new Error(

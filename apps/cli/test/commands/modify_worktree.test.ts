@@ -3,8 +3,7 @@ import { execFileSync, spawnSync } from 'child_process';
 import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
-
-const cliPath = path.resolve(__dirname, '../../src/index.js');
+import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 
 class WorktreeFixture {
   readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'ch-worktrees-'));
@@ -67,12 +66,16 @@ class WorktreeFixture {
   }
 
   run(args: string[], cwd = this.repo) {
-    const nativeBinary = process.env.CHARCOAL_TEST_BINARY;
-    return spawnSync(
-      nativeBinary ?? process.execPath,
-      [...(nativeBinary ? [] : [cliPath]), ...args, '--no-interactive'],
-      { cwd, env: this.env, encoding: 'utf8', timeout: 15000 }
-    );
+    const [executable, ...cliArgs] = getTestCliCommand([
+      ...args,
+      '--no-interactive',
+    ]);
+    return spawnSync(executable, cliArgs, {
+      cwd,
+      env: this.env,
+      encoding: 'utf8',
+      timeout: 15000,
+    });
   }
 
   ok(args: string[], cwd = this.repo): void {
@@ -110,6 +113,8 @@ class WorktreeFixture {
   }
 }
 
+// Independent public CLI scenarios, not one production operation.
+// eslint-disable-next-line max-lines-per-function
 describe('modify worktree protection through the CLI', function () {
   this.timeout(60000);
   let fixture: WorktreeFixture;
