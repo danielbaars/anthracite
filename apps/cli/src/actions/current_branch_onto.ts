@@ -23,9 +23,13 @@ export function currentBranchOnto(
   const oldParent = context.engine.getParentPrecondition(source);
   context.engine.getRelativeStack(ontoBranchName, SCOPE.BRANCH);
   const branches = context.engine.getRelativeStack(source, SCOPE.UPSTACK);
-  if (branches.includes(ontoBranchName)) {
+  // Detaching every original child makes a non-self descendant target acyclic.
+  if (
+    source === ontoBranchName ||
+    (!only && branches.includes(ontoBranchName))
+  ) {
     throw new PreconditionsFailedError(
-      `Cannot move ${source} onto itself or a descendant.`
+      `Cannot move ${source} onto itself${only ? '' : ' or a descendant'}.`
     );
   }
   const children = only ? [...context.engine.getChildren(source)] : [];

@@ -320,16 +320,17 @@ describe('move only child detachment through the public CLI', function () {
     expect(fixture.git(['branch', '--show-current'])).to.equal('retained');
   });
 
-  for (const target of ['base', 'child', 'tip']) {
-    it(`rejects only target ${target} before detaching any child in this stage`, () => {
-      fixture.git(['switch', 'other']);
-      const before = fixture.snapshot();
-      const result = fixture.run(['move', target, '-s', 'base', '--only']);
-      expect(result.status).not.to.equal(0);
-      expect(fixture.snapshot()).to.deep.equal(before);
-      fixture.ok(['checkout', 'child']);
-      fixture.ok(['down']);
-      expect(fixture.git(['branch', '--show-current'])).to.equal('base');
-    });
-  }
+  it('rejects an only self target before detaching any child', () => {
+    fixture.git(['switch', 'other']);
+    const before = fixture.snapshot();
+    const result = fixture.run(['move', 'base', '-s', 'base', '--only']);
+    expect(result.status).not.to.equal(0);
+    expect(result.stdout + result.stderr).to.include(
+      'Cannot move base onto itself.'
+    );
+    expect(fixture.snapshot()).to.deep.equal(before);
+    fixture.ok(['checkout', 'child']);
+    fixture.ok(['down']);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('base');
+  });
 });
