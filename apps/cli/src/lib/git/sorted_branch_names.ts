@@ -6,7 +6,7 @@ export function getBranchNamesAndRevisions(): Record<string, string> {
   runGitCommandAndSplitLines({
     args: [
       `for-each-ref`,
-      `--format=%(refname:short):%(objectname)`,
+      `--format=%(refname:lstrip=2):%(objectname)`,
       `--sort=-committerdate`,
       `refs/heads/`,
     ],

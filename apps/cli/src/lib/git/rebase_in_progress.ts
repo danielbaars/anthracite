@@ -3,17 +3,16 @@ import path from 'path';
 import { runGitCommand } from './runner';
 
 export function rebaseInProgress(options?: { cwd: string }): boolean {
-  let rebaseDir = path.join(
+  const gitDir = path.resolve(
+    options?.cwd ?? process.cwd(),
     runGitCommand({
       args: [`rev-parse`, `--git-dir`],
       options,
       onError: 'throw',
       resource: 'rebaseInProgress',
-    }),
-    'rebase-merge'
+    })
   );
-  if (options?.cwd) {
-    rebaseDir = path.join(options.cwd, rebaseDir);
-  }
-  return fs.existsSync(rebaseDir);
+  return ['rebase-merge', 'rebase-apply'].some((directory) =>
+    fs.existsSync(path.join(gitDir, directory))
+  );
 }

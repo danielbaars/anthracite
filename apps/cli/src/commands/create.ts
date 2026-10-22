@@ -11,6 +11,11 @@ const args = {
     describe: 'The name of the new branch.',
     hidden: true,
   },
+  onto: {
+    describe: 'Create above this tracked local branch or trunk.',
+    type: 'string',
+    requiresArg: true,
+  },
   message: {
     describe: `Commit staged changes on the new branch with this message.`,
     demandOption: false,
@@ -52,6 +57,7 @@ export const handler = async (argv: argsT): Promise<void> => {
     await createBranchAction(
       {
         branchName: argv.name,
+        onto: argv.onto,
         message: argv.message,
         all: argv.all,
         insert: argv.insert,

@@ -30,7 +30,12 @@ export function deleteBranch(branchName: string): void {
 
 export function switchBranch(
   branch: string,
-  opts?: { new?: boolean; detach?: boolean; force?: boolean }
+  opts?: {
+    new?: boolean;
+    detach?: boolean;
+    force?: boolean;
+    startPoint?: string;
+  }
 ): void {
   runGitCommand({
     args: [
@@ -39,6 +44,7 @@ export function switchBranch(
       ...(opts?.force ? ['-f'] : []),
       ...(opts?.new ? ['-c'] : []),
       branch,
+      ...(opts?.startPoint ? [opts.startPoint] : []),
     ],
     options: { stdio: 'pipe' },
     onError: 'throw',

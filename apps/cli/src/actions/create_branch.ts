@@ -7,6 +7,7 @@ import { restackBranches } from './restack';
 export async function createBranchAction(
   opts: {
     branchName?: string;
+    onto?: string;
     message?: string;
     all?: boolean;
     insert?: boolean;
@@ -14,6 +15,13 @@ export async function createBranchAction(
   },
   context: TContext
 ): Promise<void> {
+  // shortcut: enable these combinations after their work-preservation and restack checks land.
+  if (opts.onto !== undefined && (opts.all || opts.patch || opts.insert)) {
+    throw new ExitFailedError(
+      '--onto does not yet support --all, --patch, or --insert.'
+    );
+  }
+
   const branchName = newBranchName(opts.branchName, opts.message, context);
   if (!branchName) {
     throw new ExitFailedError(
@@ -21,7 +29,19 @@ export async function createBranchAction(
     );
   }
 
-  context.engine.checkoutNewBranch(branchName);
+  if (
+    opts.onto !== undefined &&
+    !context.interactive &&
+    !opts.message &&
+    context.engine.detectStagedChanges()
+  ) {
+    throw new ExitFailedError(
+      'Must specify a commit message in non-interactive mode.'
+    );
+  }
+
+  const sourceBranch = context.engine.currentBranch;
+  context.engine.checkoutNewBranch(branchName, opts.onto);
 
   if (opts.all) {
     context.engine.addAll();
@@ -35,9 +55,14 @@ export async function createBranchAction(
       });
     } catch (e) {
       try {
+        if (opts.onto !== undefined && sourceBranch) {
+          context.engine.checkoutBranch(sourceBranch);
+        }
         context.engine.deleteBranch(branchName);
       } catch {
-        // pass
+        context.splog.warn(
+          `Could not clean up ${branchName}; inspect your checkout and work before retrying.`
+        );
       }
       throw e;
     }

@@ -84,7 +84,7 @@ export type TEngine = {
 
   getRelativeStack: (branchName: string, scope: TScopeSpec) => string[];
 
-  checkoutNewBranch: (branchName: string) => void;
+  checkoutNewBranch: (branchName: string, parentBranchName?: string) => void;
   checkoutBranch: (branchName: string) => void;
   renameCurrentBranch: (branchName: string) => void;
   foldCurrentBranch: (keep: boolean) => void;
@@ -629,12 +629,18 @@ export function composeEngine({
         ...(scope.recursiveChildren ? getRecursiveChildren(branchName) : []),
       ];
     },
-    checkoutNewBranch: (branchName: string) => {
-      const parentBranchName = getCurrentBranchOrThrow();
+    checkoutNewBranch: (branchName: string, explicitParent?: string) => {
+      if (explicitParent !== undefined && !git.getCurrentBranchName()) {
+        throw new DetachedError();
+      }
+      const parentBranchName = explicitParent ?? getCurrentBranchOrThrow();
       const parentCachedMeta =
         assertBranchIsValidOrTrunkAndGetMeta(parentBranchName);
       validateNewParent(branchName, parentBranchName);
-      git.switchBranch(branchName, { new: true });
+      git.switchBranch(branchName, {
+        new: true,
+        startPoint: `refs/heads/${parentBranchName}`,
+      });
       updateMeta(branchName, {
         validationResult: 'VALID',
         parentBranchName,
