@@ -176,11 +176,12 @@ export function validateOrFixParentBranchRevision(
   // This branch is valid because its PBR is in its history
   if (
     parentBranchRevision &&
-    getMergeBase(branchName, parentBranchRevision) === parentBranchRevision
+    getMergeBase(`refs/heads/${branchName}`, parentBranchRevision) ===
+      parentBranchRevision
   ) {
     if (
       parentBranchRevision !== parentBranchCurrentRevision &&
-      getMergeBase(branchName, parentBranchCurrentRevision) ===
+      getMergeBase(`refs/heads/${branchName}`, parentBranchCurrentRevision) ===
         parentBranchCurrentRevision
     ) {
       // If the parent is ahead of where the metadata has it, we update
@@ -204,7 +205,7 @@ export function validateOrFixParentBranchRevision(
 
   // PBR cannot be fixed because its parent is not in its history
   if (
-    getMergeBase(branchName, parentBranchCurrentRevision) !==
+    getMergeBase(`refs/heads/${branchName}`, parentBranchCurrentRevision) !==
     parentBranchCurrentRevision
   ) {
     splog.debug(

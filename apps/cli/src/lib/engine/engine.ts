@@ -426,7 +426,7 @@ export function composeEngine({
 
     updateMeta(branchName, {
       ...cachedMeta,
-      branchRevision: git.getShaOrThrow(branchName),
+      branchRevision: git.getShaOrThrow(`refs/heads/${branchName}`),
       parentBranchRevision,
     });
 
@@ -857,7 +857,8 @@ export function composeEngine({
       if (
         git.rebase({
           branchName,
-          onto: cachedMeta.parentBranchName,
+          // The validated local parent wins over a same-named tag.
+          onto: newBase,
           from: cachedMeta.parentBranchRevision,
           restackCommitterDateIsAuthorDate,
         }) === 'REBASE_CONFLICT'

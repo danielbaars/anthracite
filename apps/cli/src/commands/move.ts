@@ -33,7 +33,6 @@ export const handler = async (argv: argsT): Promise<void> => {
     const originalBranch = argv.source
       ? context.engine.currentBranch
       : undefined;
-    argv.source && context.engine.checkoutBranch(argv.source);
 
     const dest =
       argv.branch ??
@@ -47,8 +46,9 @@ export const handler = async (argv: argsT): Promise<void> => {
         context
       ));
 
-    currentBranchOnto(dest, context);
+    currentBranchOnto(dest, context, argv.source);
 
-    originalBranch && context.engine.checkoutBranch(originalBranch);
+    originalBranch &&
+      context.engine.checkoutBranch(originalBranch, { preserveIgnored: true });
   });
 };

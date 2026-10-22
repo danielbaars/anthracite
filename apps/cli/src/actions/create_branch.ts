@@ -3,7 +3,7 @@ import { readIndex, restoreIndex } from '../lib/git/index_state';
 import { addPatch } from '../lib/git/add_patch';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { hasCreateChanges } from '../lib/git/create_changes';
-import { assertCreateRestackFilesAvailable } from '../lib/git/create_restack_files';
+import { assertRestackFilesAvailable } from '../lib/git/restack_files';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { ExitFailedError } from '../lib/errors';
@@ -119,13 +119,14 @@ function insertBranch(
       );
     }
     // Hooks run after the first preflight; their remaining work was not selected by --all.
-    assertCreateRestackFilesAvailable(
-      changingBranches.map((name) => ({
+    assertRestackFilesAvailable({
+      branches: changingBranches.map((name) => ({
         name,
         from: context.engine.getBaseRevision(name),
       })),
-      false
-    );
+      all: false,
+      operation: 'insert',
+    });
     restackBranches(branches, context);
   } catch (e) {
     if (context.engine.rebaseInProgress()) {
@@ -168,13 +169,14 @@ function getInsertChildren(
       'Cannot insert with unstaged tracked changes when restacking is required. Stage or commit them, or use --all, then retry.'
     );
   }
-  assertCreateRestackFilesAvailable(
-    branchesToRestack.map((name) => ({
+  assertRestackFilesAvailable({
+    branches: branchesToRestack.map((name) => ({
       name,
       from: context.engine.getBaseRevision(name),
     })),
-    opts.all ?? false
-  );
+    all: opts.all ?? false,
+    operation: 'insert',
+  });
   return children;
 }
 
