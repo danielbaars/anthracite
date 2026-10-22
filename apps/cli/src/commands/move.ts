@@ -24,6 +24,10 @@ const args = {
     describe: `Move only the selected source and leave its children on its old parent; otherwise move its whole upstack.`,
     type: 'boolean',
     default: false,
+    coerce: (value: boolean): boolean => {
+      validateOnlyArguments(process.argv.slice(2));
+      return value;
+    },
   },
   source: {
     describe: `Optional branch to rebase (defaults to current branch).`,
@@ -91,4 +95,32 @@ function getBranchArgument(value: unknown, option: string): string | undefined {
     );
   }
   return branch;
+}
+
+function validateOnlyArguments(input: readonly string[]): void {
+  // Yargs normalizes invalid booleans and keeps only the last repeated value.
+  let previous: string | undefined;
+  for (let index = 0; index < input.length; index++) {
+    const token = input[index];
+    if (token === '--') break;
+    let value = 'true';
+    if (token.startsWith('--only=')) value = token.slice('--only='.length);
+    else if (token === '--no-only') value = 'false';
+    else if (token === '--only') {
+      const next = input[index + 1];
+      if (next === 'true' || next === 'false' || next === '') {
+        value = next;
+        index++;
+      }
+    } else continue;
+    if (
+      (value !== 'true' && value !== 'false') ||
+      (previous !== undefined && value !== previous)
+    ) {
+      throw new PreconditionsFailedError(
+        '--only requires one nonempty, unambiguous boolean value (true or false).'
+      );
+    }
+    previous = value;
+  }
 }
