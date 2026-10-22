@@ -90,21 +90,49 @@ export async function createBranchAction(
     return;
   }
 
-  // Now we actually handle the `insert` case.
+  insertBranch(branchName, siblings, context);
+}
 
-  // Change the parent of each sibling to the new branch.
-  siblings.forEach((siblingBranchName) =>
-    context.engine.setParent(siblingBranchName, branchName)
+function insertBranch(
+  branchName: string,
+  children: readonly string[],
+  context: TContext
+): void {
+  context.splog.info(
+    `Created branch ${branchName} at ${context.engine
+      .getRevision(branchName)
+      .slice(0, 7)}; inserting beneath the chosen parent's existing children.`
   );
-
-  // If we're restacking siblings onto this branch, we need to restack
-  // all of their recursive children as well. Get all the upstacks!
-  restackBranches(
-    siblings.flatMap((siblingBranchName) =>
-      context.engine.getRelativeStack(siblingBranchName, SCOPE.UPSTACK)
-    ),
-    context
-  );
+  try {
+    children.forEach((child) => context.engine.setParent(child, branchName));
+    const branches = children.flatMap((child) =>
+      context.engine.getRelativeStack(child, SCOPE.UPSTACK)
+    );
+    const changingBranches = getInsertRestackBranches(branches, context);
+    if (
+      changingBranches.length > 0 &&
+      (context.engine.detectStagedChanges() ||
+        context.engine.getUnstagedChanges().length > 0)
+    ) {
+      throw new ExitFailedError(
+        'Cannot restack inserted children with remaining tracked changes after commit. Preserve or commit that work before retrying.'
+      );
+    }
+    // Hooks run after the first preflight; their remaining work was not selected by --all.
+    assertCreateRestackFilesAvailable(changingBranches, false);
+    restackBranches(branches, context);
+  } catch (e) {
+    if (context.engine.rebaseInProgress()) {
+      context.splog.warn(
+        `Insertion is incomplete. Aborting with ch rebase --abort keeps ${branchName} and its commit, parent changes and completed restacks; it only cancels the active rebase.`
+      );
+    } else {
+      context.splog.warn(
+        `Insertion is incomplete. ${branchName}, its commit and changed parent relationships remain; completed restacks are retained. Resolve the reported problem, then run ch restack --upstack from ${branchName}. No rebase is active.`
+      );
+    }
+    throw e;
+  }
 }
 
 function getInsertChildren(
@@ -119,19 +147,14 @@ function getInsertChildren(
   const createsCommit =
     hasCreateChanges(parent, opts.all ?? false) ||
     (opts.patch && context.engine.getUnstagedChanges().length > 0);
-  const branchesToRestack = new Set<string>();
-  for (const branch of scope.filter((branch) => branch !== parent)) {
-    if (
-      !context.engine.isBranchFixed(branch) ||
-      (children.includes(branch) && createsCommit) ||
-      branchesToRestack.has(context.engine.getParentPrecondition(branch))
-    ) {
-      branchesToRestack.add(branch);
-    }
-  }
+  const branchesToRestack = getInsertRestackBranches(
+    scope.filter((branch) => branch !== parent),
+    context,
+    createsCommit ? children : []
+  );
   assertBranchesAvailableInWorktrees([...children, ...branchesToRestack]);
   if (
-    branchesToRestack.size > 0 &&
+    branchesToRestack.length > 0 &&
     !opts.all &&
     context.engine.getUnstagedChanges().length > 0
   ) {
@@ -139,8 +162,26 @@ function getInsertChildren(
       'Cannot insert with unstaged tracked changes when restacking is required. Stage or commit them, or use --all, then retry.'
     );
   }
-  assertCreateRestackFilesAvailable([...branchesToRestack], opts.all ?? false);
+  assertCreateRestackFilesAvailable(branchesToRestack, opts.all ?? false);
   return children;
+}
+
+function getInsertRestackBranches(
+  branches: readonly string[],
+  context: TContext,
+  willChange: readonly string[] = []
+): string[] {
+  const changingBranches = new Set<string>();
+  for (const branch of branches) {
+    if (
+      !context.engine.isBranchFixed(branch) ||
+      willChange.includes(branch) ||
+      changingBranches.has(context.engine.getParentPrecondition(branch))
+    ) {
+      changingBranches.add(branch);
+    }
+  }
+  return [...changingBranches];
 }
 
 function commitNewBranch(

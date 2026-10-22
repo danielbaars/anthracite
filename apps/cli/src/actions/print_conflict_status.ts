@@ -41,6 +41,6 @@ export function printConflictStatus(
     )} to continue executing your previous Charcoal command`
   );
   context.splog.info(
-    "It's safe to cancel the ongoing rebase with `ch rebase --abort`."
+    'ch rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.'
   );
 }
