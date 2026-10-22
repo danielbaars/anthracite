@@ -114,14 +114,33 @@ export function assertRestackFilesAvailable({
 }
 
 function getCheckoutPaths(file: string, cwd: string): string[] {
+  const root = fs.realpathSync.native(cwd);
+  const paths = [file];
   const parts = file.split('/');
-  for (let i = 1; i < parts.length; i++) {
-    const parent = parts.slice(0, i).join('/');
-    const stat = fs.lstatSync(path.join(cwd, parent), {
-      throwIfNoEntry: false,
-    });
+  let parent = root;
+  for (let i = 0; i < parts.length; i++) {
+    const requested = path.join(parent, parts[i]);
+    const stat = fs.lstatSync(requested, { throwIfNoEntry: false });
     if (!stat) break;
-    if (!stat.isDirectory()) return [file, parent];
+    if (stat.isSymbolicLink()) {
+      // Resolve the link's spelling without following it outside the worktree.
+      for (const entry of fs.readdirSync(parent)) {
+        const sibling = fs.lstatSync(path.join(parent, entry));
+        if (sibling.dev === stat.dev && sibling.ino === stat.ino)
+          paths.push(path.relative(root, path.join(parent, entry)));
+      }
+      break;
+    }
+    // Git's icase pathspec does not match every alias the host filesystem does.
+    // The native primitive returns stored spelling (including Unicode) on Node
+    // and the embedded Bun runtime, unlike Node's JavaScript realpath fallback.
+    const actual = fs.realpathSync.native(requested);
+    paths.push(path.join(path.relative(root, actual), ...parts.slice(i + 1)));
+    if (!stat.isDirectory()) {
+      paths.push(path.relative(root, actual));
+      break;
+    }
+    parent = actual;
   }
-  return [file];
+  return paths;
 }
