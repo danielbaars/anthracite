@@ -69,6 +69,8 @@ export async function interactiveBranchSelection(
     message: string;
     omitCurrentBranch?: boolean;
     showUntracked?: boolean;
+    omitBranches?: readonly string[];
+    initialBranch?: string;
   },
   context: TContext
 ): Promise<string> {
@@ -97,15 +99,17 @@ export async function interactiveBranchSelection(
             value: branchName,
           }))
         : []
-    );
+    )
+    .filter((choice) => !opts.omitBranches?.includes(choice.value));
   const indexOfCurrentIfPresent = choices.findIndex(
     (choice) =>
       choice.value ===
-      (opts.omitCurrentBranch
-        ? context.engine.getParentPrecondition(
-            context.engine.currentBranchPrecondition
-          )
-        : context.engine.currentBranch)
+      (opts.initialBranch ??
+        (opts.omitCurrentBranch
+          ? context.engine.getParentPrecondition(
+              context.engine.currentBranchPrecondition
+            )
+          : context.engine.currentBranch))
   );
 
   const initial =

@@ -41,7 +41,7 @@ export async function continueAction(
     `Resolved rebase conflict for ${chalk.green(cont.branchName)}.`
   );
 
-  if (branchesToSync) {
+  if (branchesToSync?.length) {
     await getBranchesFromRemote(
       {
         downstack: branchesToSync,

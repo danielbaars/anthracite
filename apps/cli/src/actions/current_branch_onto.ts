@@ -11,14 +11,21 @@ import { getBranchesToRestack, restackBranches } from './restack';
 export function currentBranchOnto(
   ontoBranchName: string,
   context: TContext,
-  source = context.engine.currentBranchPrecondition
+  opts: { source?: string; only?: boolean } = {}
 ): void {
+  const source = opts.source ?? context.engine.currentBranchPrecondition;
+  const only = opts.only ?? false;
   assertNoGitOperation();
   if (!getCurrentBranchName()) throw new DetachedError();
   uncommittedTrackedChangesPrecondition();
   const from = context.engine.getBaseRevision(source);
   context.engine.getRelativeStack(ontoBranchName, SCOPE.BRANCH);
   const branches = context.engine.getRelativeStack(source, SCOPE.UPSTACK);
+  if (only && context.engine.getChildren(source).length > 0) {
+    throw new PreconditionsFailedError(
+      `Cannot move only ${source}: only currently supports a source without children.`
+    );
+  }
   if (branches.includes(ontoBranchName)) {
     throw new PreconditionsFailedError(
       `Cannot move ${source} onto itself or a descendant.`
@@ -42,7 +49,6 @@ export function currentBranchOnto(
     ].map((name) => `refs/heads/${name}`),
     operation: 'move',
   });
-  context.engine.checkoutBranch(source, { preserveIgnored: true });
   context.engine.setParent(source, ontoBranchName);
   restackBranches(branches, context);
 }
