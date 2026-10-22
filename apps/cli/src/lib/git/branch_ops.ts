@@ -35,12 +35,14 @@ export function switchBranch(
     detach?: boolean;
     force?: boolean;
     startPoint?: string;
+    preserveIgnored?: boolean;
   }
 ): void {
   runGitCommand({
     args: [
       `switch`,
       ...(opts?.detach ? ['-d'] : []),
+      ...(opts?.preserveIgnored ? ['--no-overwrite-ignore'] : []),
       ...(opts?.force ? ['-f'] : []),
       ...(opts?.new ? ['-c'] : []),
       branch,

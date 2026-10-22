@@ -3,6 +3,8 @@ import { spawnSync } from 'child_process';
 const ptyRunner = `
 import errno, json, os, pty, select, signal, sys, time
 command = json.loads(sys.argv[1])
+responses = json.loads(sys.argv[2])
+response_offset = 0
 pid, fd = pty.fork()
 if pid == 0:
     os.execv(command[0], command)
@@ -16,6 +18,12 @@ while time.monotonic() < deadline:
             chunk = os.read(fd, 65536)
             if chunk:
                 output.extend(chunk)
+                if responses:
+                    prompt = responses[0]['prompt'].encode()
+                    found = output.find(prompt, response_offset)
+                    if found >= 0:
+                        os.write(fd, responses.pop(0)['input'].encode())
+                        response_offset = found + len(prompt)
             else:
                 reading = False
         except OSError as error:
@@ -42,11 +50,23 @@ sys.exit(124 if status is None else os.waitstatus_to_exitcode(status))
 
 export function runCliInPty(
   command: readonly string[],
-  options: { readonly cwd: string; readonly env: NodeJS.ProcessEnv }
+  options: {
+    readonly cwd: string;
+    readonly env: NodeJS.ProcessEnv;
+    readonly responses?: readonly {
+      readonly prompt: string;
+      readonly input: string;
+    }[];
+  }
 ): { status: number | null; output: string } {
   const result = spawnSync(
     '/usr/bin/python3',
-    ['-c', ptyRunner, JSON.stringify(command)],
+    [
+      '-c',
+      ptyRunner,
+      JSON.stringify(command),
+      JSON.stringify(options.responses ?? []),
+    ],
     { ...options, encoding: 'utf8', timeout: 10000 }
   );
   if (result.error) throw result.error;

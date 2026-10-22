@@ -85,7 +85,10 @@ export type TEngine = {
   getRelativeStack: (branchName: string, scope: TScopeSpec) => string[];
 
   checkoutNewBranch: (branchName: string, parentBranchName?: string) => void;
-  checkoutBranch: (branchName: string) => void;
+  checkoutBranch: (
+    branchName: string,
+    opts?: { preserveIgnored?: boolean }
+  ) => void;
   renameCurrentBranch: (branchName: string) => void;
   foldCurrentBranch: (keep: boolean) => void;
   deleteBranch: (branchName: string) => void;
@@ -316,12 +319,15 @@ export function composeEngine({
       : [];
   };
 
-  const checkoutBranch = (branchName: string) => {
+  const checkoutBranch = (
+    branchName: string,
+    opts?: { preserveIgnored?: boolean }
+  ) => {
     if (cache.currentBranch === branchName) {
       return;
     }
     assertBranch(branchName);
-    git.switchBranch(branchName);
+    git.switchBranch(branchName, opts);
     cache.currentBranch = branchName;
   };
 
@@ -640,6 +646,7 @@ export function composeEngine({
       git.switchBranch(branchName, {
         new: true,
         startPoint: `refs/heads/${parentBranchName}`,
+        preserveIgnored: explicitParent !== undefined,
       });
       updateMeta(branchName, {
         validationResult: 'VALID',
