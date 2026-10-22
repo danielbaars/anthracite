@@ -3,6 +3,7 @@ import {
   DetachedError,
   NoBranchError,
   PreconditionsFailedError,
+  RebaseCheckoutError,
 } from '../errors';
 import { TCommitOpts } from '../git/commit';
 import { TCommitFormat } from '../git/commit_range';
@@ -431,7 +432,15 @@ export function composeEngine({
     });
 
     if (cache.currentBranch && cache.currentBranch in cache.branches) {
-      git.switchBranch(cache.currentBranch);
+      try {
+        git.switchBranch(cache.currentBranch, { preserveIgnored: true });
+      } catch (error) {
+        throw new RebaseCheckoutError(branchName, {
+          returnBranch: cache.currentBranch,
+          checkout: git.getCurrentBranchName(),
+          cause: error,
+        });
+      }
     }
   };
 

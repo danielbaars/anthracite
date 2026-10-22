@@ -8,11 +8,13 @@ export function assertRestackFilesAvailable({
   branches,
   checkoutRevisions = [],
   all = false,
+  skipTrackedPaths = false,
   operation,
 }: {
   branches: readonly { name: string; from: string }[];
   checkoutRevisions?: readonly string[];
   all?: boolean;
+  skipTrackedPaths?: boolean;
   operation: 'insert' | 'move';
 }): void {
   if (branches.length === 0 && checkoutRevisions.length === 0) return;
@@ -21,54 +23,54 @@ export function assertRestackFilesAvailable({
     onError: 'throw',
     resource: 'restackRoot',
   });
+  const plannedPaths = [
+    ...new Set([
+      ...branches.flatMap(({ name, from }) =>
+        [
+          runGitCommand({
+            args: ['ls-tree', '-r', '--name-only', '-z', `refs/heads/${name}`],
+            options: { cwd, noTrim: true },
+            onError: 'throw',
+            resource: 'restackPaths',
+          }),
+          // Rebase can materialize files that later commits remove from the tip.
+          runGitCommand({
+            args: [
+              'log',
+              '--format=',
+              '--name-only',
+              '-z',
+              '--no-renames',
+              `${from}..refs/heads/${name}`,
+              '--',
+            ],
+            options: { cwd, noTrim: true },
+            onError: 'throw',
+            resource: 'restackReplayPaths',
+          }),
+        ]
+          .flatMap((output) => output.split('\0'))
+          .filter(Boolean)
+      ),
+      ...checkoutRevisions
+        .map((revision) =>
+          runGitCommand({
+            args: ['ls-tree', '-r', '--name-only', '-z', revision],
+            options: { cwd, noTrim: true },
+            onError: 'throw',
+            resource: 'restackCheckoutPaths',
+          })
+        )
+        .flatMap((output) => output.split('\0'))
+        .filter(Boolean),
+    ]),
+  ];
   const paths = [
     ...new Set(
-      [
-        ...branches.flatMap(({ name, from }) =>
-          [
-            runGitCommand({
-              args: [
-                'ls-tree',
-                '-r',
-                '--name-only',
-                '-z',
-                `refs/heads/${name}`,
-              ],
-              options: { cwd, noTrim: true },
-              onError: 'throw',
-              resource: 'restackPaths',
-            }),
-            // Rebase can materialize files that later commits remove from the tip.
-            runGitCommand({
-              args: [
-                'log',
-                '--format=',
-                '--name-only',
-                '-z',
-                '--no-renames',
-                `${from}..refs/heads/${name}`,
-                '--',
-              ],
-              options: { cwd, noTrim: true },
-              onError: 'throw',
-              resource: 'restackReplayPaths',
-            }),
-          ]
-            .flatMap((output) => output.split('\0'))
-            .filter(Boolean)
-        ),
-        ...checkoutRevisions
-          .map((revision) =>
-            runGitCommand({
-              args: ['ls-tree', '-r', '--name-only', '-z', revision],
-              options: { cwd, noTrim: true },
-              onError: 'throw',
-              resource: 'restackCheckoutPaths',
-            })
-          )
-          .flatMap((output) => output.split('\0'))
-          .filter(Boolean),
-      ].flatMap((file) => getCheckoutPaths(file, cwd))
+      (skipTrackedPaths
+        ? getPathsOutsideIndex(plannedPaths, cwd)
+        : plannedPaths
+      ).flatMap((file) => getCheckoutPaths(file, cwd))
     ),
   ];
   if (paths.length === 0) return;
@@ -143,4 +145,26 @@ function getCheckoutPaths(file: string, cwd: string): string[] {
     parent = actual;
   }
   return paths;
+}
+
+function getPathsOutsideIndex(files: readonly string[], cwd: string): string[] {
+  // Git can list a clean indexed Unicode alias as ignored under its stored
+  // spelling. Later phases let Git protect indexed work and check the rest here.
+  const indexed = new Set(
+    runGitCommand({
+      args: [
+        'ls-files',
+        '--cached',
+        '-z',
+        '--',
+        ...files.map((file) => `:(literal)${file}`),
+      ],
+      options: { cwd, noTrim: true },
+      onError: 'throw',
+      resource: 'restackIndexedPaths',
+    })
+      .split('\0')
+      .filter(Boolean)
+  );
+  return files.filter((file) => !indexed.has(file));
 }

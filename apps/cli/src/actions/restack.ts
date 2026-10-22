@@ -1,10 +1,16 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
-import { RebaseConflictError } from '../lib/errors';
+import { RebaseCheckoutError, RebaseConflictError } from '../lib/errors';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { assertUnreachable } from '../lib/utils/assert_unreachable';
 import { persistContinuation } from './persist_continuation';
 import { printConflictStatus } from './print_conflict_status';
+import {
+  assertMoveFilesAvailable,
+  recordMoveCompletion,
+  reportMoveFailure,
+} from './move_recovery';
+import { uncommittedTrackedChangesPrecondition } from '../lib/preconditions';
 
 /** Plan parent-first restacks, optionally including branches a pending commit will change. */
 export function getBranchesToRestack(
@@ -57,45 +63,63 @@ export function restackBranches(
       continue;
     }
 
-    const result = context.engine.restackBranch(branchName);
-    context.splog.debug(`${result}: ${branchName}`);
-    switch (result.result) {
-      case 'REBASE_DONE':
-        context.splog.info(
-          `Restacked ${chalk.green(branchName)} on ${chalk.cyan(
-            context.engine.getParentPrecondition(branchName)
-          )}.`
-        );
-        continue;
-
-      case 'REBASE_CONFLICT':
-        persistContinuation(
-          {
-            branchesToRestack: branchNames,
-            rebasedBranchBase: result.rebasedBranchBase,
-          },
+    try {
+      if (context.continueConfig.data.move) {
+        uncommittedTrackedChangesPrecondition();
+        assertMoveFilesAvailable(
+          getBranchesToRestack([branchName, ...branchNames], context),
           context
         );
-        printConflictStatus(
-          `Hit conflict restacking ${chalk.yellow(branchName)} on ${chalk.cyan(
-            context.engine.getParentPrecondition(branchName)
-          )}.`,
-          context
-        );
-        throw new RebaseConflictError();
+      }
+      const result = context.engine.restackBranch(branchName);
+      context.splog.debug(`${result}: ${branchName}`);
+      switch (result.result) {
+        case 'REBASE_DONE':
+          recordMoveCompletion(branchName, context);
+          context.splog.info(
+            `Restacked ${chalk.green(branchName)} on ${chalk.cyan(
+              context.engine.getParentPrecondition(branchName)
+            )}.`
+          );
+          continue;
 
-      case 'REBASE_UNNEEDED':
-        context.splog.info(
-          `${chalk.cyan(
-            branchName
-          )} does not need to be restacked${` on ${chalk.cyan(
-            context.engine.getParentPrecondition(branchName)
-          )}`}.`
-        );
-        continue;
+        case 'REBASE_CONFLICT':
+          persistContinuation(
+            {
+              branchesToRestack: branchNames,
+              rebasedBranchBase: result.rebasedBranchBase,
+            },
+            context
+          );
+          printConflictStatus(
+            `Hit conflict restacking ${chalk.yellow(
+              branchName
+            )} on ${chalk.cyan(
+              context.engine.getParentPrecondition(branchName)
+            )}.`,
+            context
+          );
+          throw new RebaseConflictError();
 
-      default:
-        assertUnreachable(result);
+        case 'REBASE_UNNEEDED':
+          recordMoveCompletion(branchName, context);
+          context.splog.info(
+            `${chalk.cyan(
+              branchName
+            )} does not need to be restacked${` on ${chalk.cyan(
+              context.engine.getParentPrecondition(branchName)
+            )}`}.`
+          );
+          continue;
+
+        default:
+          assertUnreachable(result);
+      }
+    } catch (error) {
+      if (error instanceof RebaseCheckoutError)
+        recordMoveCompletion(error.branchName, context);
+      reportMoveFailure(branchName, branchNames, context);
+      throw error;
     }
   }
 }

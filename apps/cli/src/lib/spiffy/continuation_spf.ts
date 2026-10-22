@@ -19,6 +19,14 @@ const ContinueSchema = t.shape({
   branchesToRestack: t.array(t.string),
   currentBranchOverride: t.optional(t.string),
   rebasedBranchBase: t.optional(t.string),
+  move: t.optional(
+    t.shape({
+      source: t.string,
+      only: t.boolean,
+      returnBranch: t.string,
+      completed: t.array(t.string),
+    })
+  ),
 });
 
 export const continueConfigFactory = spiffy({

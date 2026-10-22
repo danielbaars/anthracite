@@ -7,6 +7,22 @@ export class ExitFailedError extends Error {
   }
 }
 
+export class RebaseCheckoutError extends ExitFailedError {
+  constructor(
+    readonly branchName: string,
+    args: { returnBranch: string; checkout: string | undefined; cause: unknown }
+  ) {
+    super(
+      `Rewrite of ${branchName} completed, but return to ${
+        args.returnBranch
+      } failed. Actual checkout: ${args.checkout ?? 'detached HEAD'}. ${
+        args.cause instanceof Error ? args.cause.message : String(args.cause)
+      }`
+    );
+    this.name = 'RebaseCheckoutError';
+  }
+}
+
 export class NonInteractiveError extends Error {
   constructor() {
     super('Cannot perform interactive operation in non-interactive mode.');

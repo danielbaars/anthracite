@@ -7,6 +7,7 @@ import { assertRestackFilesAvailable } from '../lib/git/restack_files';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { uncommittedTrackedChangesPrecondition } from '../lib/preconditions';
 import { getBranchesToRestack, restackBranches } from './restack';
+import { clearContinuation } from './persist_continuation';
 
 export function currentBranchOnto(
   ontoBranchName: string,
@@ -16,7 +17,8 @@ export function currentBranchOnto(
   const source = opts.source ?? context.engine.currentBranchPrecondition;
   const only = opts.only ?? false;
   assertNoGitOperation();
-  if (!getCurrentBranchName()) throw new DetachedError();
+  const departure = getCurrentBranchName();
+  if (!departure) throw new DetachedError();
   uncommittedTrackedChangesPrecondition();
   const oldParent = context.engine.getParentPrecondition(source);
   context.engine.getRelativeStack(ontoBranchName, SCOPE.BRANCH);
@@ -50,27 +52,19 @@ export function currentBranchOnto(
         ? [ontoBranchName, ...(only ? [oldParent] : [])]
         : []),
     ].map((name) => `refs/heads/${name}`),
+    skipTrackedPaths: true,
     operation: 'move',
   });
   children.forEach((child) => context.engine.setParent(child, oldParent));
   context.engine.setParent(source, ontoBranchName);
-  try {
-    restackBranches(queue, context);
-  } catch (error) {
-    if (only && context.engine.rebaseInProgress()) {
-      const branch = context.engine.getRebaseHead();
-      const phase =
-        branch === source
-          ? 'source phase'
-          : branch
-          ? 'left-behind child phase'
-          : 'rebase phase';
-      context.splog.warn(
-        `Move only ${source} is incomplete in the ${phase} (${
-          branch ?? 'unknown branch'
-        }). Parent changes and completed restacks remain; resolve and run ch continue to finish the remaining branches and return to your departure checkout.`
-      );
-    }
-    throw error;
-  }
+  context.continueConfig.update((data) => {
+    data.move = {
+      source,
+      only,
+      returnBranch: departure,
+      completed: [],
+    };
+  });
+  restackBranches(queue, context);
+  clearContinuation(context);
 }
