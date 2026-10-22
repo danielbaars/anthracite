@@ -631,27 +631,6 @@ describe('create --onto through the public CLI', function () {
     expect(fixture.git(['rev-parse', 'MERGE_HEAD'])).to.equal(mergeHead);
   });
 
-  for (const flag of ['--insert']) {
-    it(`refuses unsupported onto ${flag} before changing staged work`, () => {
-      fixture.stage();
-      fixture.write('main.txt', 'unfinished');
-      const before = fixture.snapshot();
-
-      const result = fixture.run([
-        'create',
-        'new-branch',
-        '--onto',
-        'other',
-        '-m',
-        'new work',
-        flag,
-      ]);
-
-      expect(result.status).not.to.equal(0);
-      expect(fixture.snapshot()).to.deep.equal(before);
-    });
-  }
-
   for (const [source, parent] of [
     ['base', 'main'],
     ['base', 'base'],

@@ -1,6 +1,9 @@
 import { getWorkState } from '../lib/git/work_state';
 import { readIndex, restoreIndex } from '../lib/git/index_state';
 import { addPatch } from '../lib/git/add_patch';
+import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
+import { hasCreateChanges } from '../lib/git/create_changes';
+import { assertCreateRestackFilesAvailable } from '../lib/git/create_restack_files';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { ExitFailedError } from '../lib/errors';
@@ -20,11 +23,6 @@ export async function createBranchAction(
   opts: TCreateBranchOptions,
   context: TContext
 ): Promise<void> {
-  // shortcut: enable insert after its restack checks land.
-  if (opts.onto !== undefined && opts.insert) {
-    throw new ExitFailedError('--onto does not yet support --insert.');
-  }
-
   if (
     opts.onto !== undefined &&
     opts.patch &&
@@ -57,6 +55,9 @@ export async function createBranchAction(
   }
 
   const sourceBranch = context.engine.currentBranch;
+  const insertChildren = opts.insert
+    ? getInsertChildren(opts, context)
+    : undefined;
   const originalIndex = opts.onto !== undefined ? readIndex() : undefined;
   context.engine.checkoutNewBranch(branchName, opts.onto);
 
@@ -69,9 +70,11 @@ export async function createBranchAction(
   // the `--insert` logic in a separate function is so that we only
   // show the tip if the user creates a branch with siblings.
 
-  const siblings = context.engine
-    .getChildren(context.engine.getParentPrecondition(branchName))
-    .filter((childBranchName) => childBranchName !== branchName);
+  const siblings =
+    insertChildren ??
+    context.engine
+      .getChildren(context.engine.getParentPrecondition(branchName))
+      .filter((childBranchName) => childBranchName !== branchName);
 
   if (siblings.length === 0) {
     return;
@@ -102,6 +105,42 @@ export async function createBranchAction(
     ),
     context
   );
+}
+
+function getInsertChildren(
+  opts: TCreateBranchOptions,
+  context: TContext
+): string[] {
+  const parent = opts.onto ?? context.engine.currentBranchPrecondition;
+  const scope = context.engine.getRelativeStack(parent, SCOPE.UPSTACK);
+  const children = scope.filter(
+    (branch) => context.engine.getParent(branch) === parent
+  );
+  const createsCommit =
+    hasCreateChanges(parent, opts.all ?? false) ||
+    (opts.patch && context.engine.getUnstagedChanges().length > 0);
+  const branchesToRestack = new Set<string>();
+  for (const branch of scope.filter((branch) => branch !== parent)) {
+    if (
+      !context.engine.isBranchFixed(branch) ||
+      (children.includes(branch) && createsCommit) ||
+      branchesToRestack.has(context.engine.getParentPrecondition(branch))
+    ) {
+      branchesToRestack.add(branch);
+    }
+  }
+  assertBranchesAvailableInWorktrees([...children, ...branchesToRestack]);
+  if (
+    branchesToRestack.size > 0 &&
+    !opts.all &&
+    context.engine.getUnstagedChanges().length > 0
+  ) {
+    throw new ExitFailedError(
+      'Cannot insert with unstaged tracked changes when restacking is required. Stage or commit them, or use --all, then retry.'
+    );
+  }
+  assertCreateRestackFilesAvailable([...branchesToRestack], opts.all ?? false);
+  return children;
 }
 
 function commitNewBranch(
