@@ -5,7 +5,7 @@ import { runGitCommand } from './runner';
 
 /** Protect only paths a planned restack may check out, including ignored work. */
 export function assertCreateRestackFilesAvailable(
-  branches: readonly string[],
+  branches: readonly { name: string; from: string }[],
   all: boolean
 ): void {
   if (branches.length === 0) return;
@@ -16,14 +16,31 @@ export function assertCreateRestackFilesAvailable(
   });
   const paths = [
     ...new Set(
-      branches.flatMap((branch) =>
-        runGitCommand({
-          args: ['ls-tree', '-r', '--name-only', '-z', `refs/heads/${branch}`],
-          options: { cwd, noTrim: true },
-          onError: 'throw',
-          resource: 'createRestackPaths',
-        })
-          .split('\0')
+      branches.flatMap(({ name, from }) =>
+        [
+          runGitCommand({
+            args: ['ls-tree', '-r', '--name-only', '-z', `refs/heads/${name}`],
+            options: { cwd, noTrim: true },
+            onError: 'throw',
+            resource: 'createRestackPaths',
+          }),
+          // Rebase can materialize files that later commits remove from the tip.
+          runGitCommand({
+            args: [
+              'log',
+              '--format=',
+              '--name-only',
+              '-z',
+              '--no-renames',
+              `${from}..refs/heads/${name}`,
+              '--',
+            ],
+            options: { cwd, noTrim: true },
+            onError: 'throw',
+            resource: 'createRestackReplayPaths',
+          }),
+        ]
+          .flatMap((output) => output.split('\0'))
           .filter(Boolean)
           .flatMap((file) => getCheckoutPaths(file, cwd))
       )

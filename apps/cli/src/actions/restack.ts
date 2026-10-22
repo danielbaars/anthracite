@@ -6,21 +6,33 @@ import { assertUnreachable } from '../lib/utils/assert_unreachable';
 import { persistContinuation } from './persist_continuation';
 import { printConflictStatus } from './print_conflict_status';
 
-export function restackBranches(
-  branchNames: string[],
-  context: TContext
-): void {
+/** Plan parent-first restacks, optionally including branches a pending commit will change. */
+export function getBranchesToRestack(
+  branchNames: readonly string[],
+  context: TContext,
+  willChange: readonly string[] = []
+): string[] {
   const branchesToChange = new Set<string>();
   for (const branchName of branchNames) {
     if (
       !context.engine.isTrunk(branchName) &&
       (!context.engine.isBranchFixed(branchName) ||
+        willChange.includes(branchName) ||
         branchesToChange.has(context.engine.getParentPrecondition(branchName)))
     ) {
       branchesToChange.add(branchName);
     }
   }
-  assertBranchesAvailableInWorktrees([...branchesToChange]);
+  return [...branchesToChange];
+}
+
+export function restackBranches(
+  branchNames: string[],
+  context: TContext
+): void {
+  assertBranchesAvailableInWorktrees(
+    getBranchesToRestack(branchNames, context)
+  );
 
   context.splog.debug(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')

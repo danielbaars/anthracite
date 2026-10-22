@@ -8,7 +8,7 @@ import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { ExitFailedError } from '../lib/errors';
 import { newBranchName } from '../lib/utils/branch_name';
-import { restackBranches } from './restack';
+import { getBranchesToRestack, restackBranches } from './restack';
 
 type TCreateBranchOptions = {
   branchName?: string;
@@ -108,7 +108,7 @@ function insertBranch(
     const branches = children.flatMap((child) =>
       context.engine.getRelativeStack(child, SCOPE.UPSTACK)
     );
-    const changingBranches = getInsertRestackBranches(branches, context);
+    const changingBranches = getBranchesToRestack(branches, context);
     if (
       changingBranches.length > 0 &&
       (context.engine.detectStagedChanges() ||
@@ -119,7 +119,13 @@ function insertBranch(
       );
     }
     // Hooks run after the first preflight; their remaining work was not selected by --all.
-    assertCreateRestackFilesAvailable(changingBranches, false);
+    assertCreateRestackFilesAvailable(
+      changingBranches.map((name) => ({
+        name,
+        from: context.engine.getBaseRevision(name),
+      })),
+      false
+    );
     restackBranches(branches, context);
   } catch (e) {
     if (context.engine.rebaseInProgress()) {
@@ -147,7 +153,7 @@ function getInsertChildren(
   const createsCommit =
     hasCreateChanges(parent, opts.all ?? false) ||
     (opts.patch && context.engine.getUnstagedChanges().length > 0);
-  const branchesToRestack = getInsertRestackBranches(
+  const branchesToRestack = getBranchesToRestack(
     scope.filter((branch) => branch !== parent),
     context,
     createsCommit ? children : []
@@ -162,26 +168,14 @@ function getInsertChildren(
       'Cannot insert with unstaged tracked changes when restacking is required. Stage or commit them, or use --all, then retry.'
     );
   }
-  assertCreateRestackFilesAvailable(branchesToRestack, opts.all ?? false);
+  assertCreateRestackFilesAvailable(
+    branchesToRestack.map((name) => ({
+      name,
+      from: context.engine.getBaseRevision(name),
+    })),
+    opts.all ?? false
+  );
   return children;
-}
-
-function getInsertRestackBranches(
-  branches: readonly string[],
-  context: TContext,
-  willChange: readonly string[] = []
-): string[] {
-  const changingBranches = new Set<string>();
-  for (const branch of branches) {
-    if (
-      !context.engine.isBranchFixed(branch) ||
-      willChange.includes(branch) ||
-      changingBranches.has(context.engine.getParentPrecondition(branch))
-    ) {
-      changingBranches.add(branch);
-    }
-  }
-  return [...changingBranches];
 }
 
 function commitNewBranch(
