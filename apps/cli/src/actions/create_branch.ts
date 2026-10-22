@@ -157,7 +157,7 @@ function getInsertChildren(
   const branchesToRestack = getBranchesToRestack(
     scope.filter((branch) => branch !== parent),
     context,
-    createsCommit ? children : []
+    { willChange: createsCommit ? children : [] }
   );
   assertBranchesAvailableInWorktrees([...children, ...branchesToRestack]);
   if (

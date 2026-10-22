@@ -181,6 +181,8 @@ export function validateOrFixParentBranchRevision(
   ) {
     if (
       parentBranchRevision !== parentBranchCurrentRevision &&
+      getMergeBase(parentBranchRevision, parentBranchCurrentRevision) ===
+        parentBranchRevision &&
       getMergeBase(`refs/heads/${branchName}`, parentBranchCurrentRevision) ===
         parentBranchCurrentRevision
     ) {

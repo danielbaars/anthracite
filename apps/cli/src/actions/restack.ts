@@ -10,15 +10,25 @@ import { printConflictStatus } from './print_conflict_status';
 export function getBranchesToRestack(
   branchNames: readonly string[],
   context: TContext,
-  willChange: readonly string[] = []
+  opts: {
+    willChange?: readonly string[];
+    parents?: ReadonlyMap<string, string>;
+  } = {}
 ): string[] {
   const branchesToChange = new Set<string>();
   for (const branchName of branchNames) {
+    if (context.engine.isTrunk(branchName)) continue;
+    const parent =
+      opts.parents?.get(branchName) ??
+      context.engine.getParentPrecondition(branchName);
+    const isFixed = opts.parents?.has(branchName)
+      ? context.engine.getBaseRevision(branchName) ===
+        context.engine.getRevision(parent)
+      : context.engine.isBranchFixed(branchName);
     if (
-      !context.engine.isTrunk(branchName) &&
-      (!context.engine.isBranchFixed(branchName) ||
-        willChange.includes(branchName) ||
-        branchesToChange.has(context.engine.getParentPrecondition(branchName)))
+      !isFixed ||
+      opts.willChange?.includes(branchName) ||
+      branchesToChange.has(parent)
     ) {
       branchesToChange.add(branchName);
     }

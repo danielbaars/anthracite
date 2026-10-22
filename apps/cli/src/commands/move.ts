@@ -21,7 +21,7 @@ const args = {
     requiresArg: true,
   },
   only: {
-    describe: `Move only the selected source (currently a leaf); otherwise move its whole upstack.`,
+    describe: `Move only the selected source and leave its children on its old parent; otherwise move its whole upstack.`,
     type: 'boolean',
     default: false,
   },

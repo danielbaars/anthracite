@@ -229,21 +229,20 @@ describe('move options through the public CLI', function () {
     expect(fixture.git(['branch', '--show-current'])).to.equal('other');
   });
 
-  it('rejects child-bearing only based on the selected source rather than the leaf departure', () => {
+  it('detaches children of the selected source while returning to its leaf departure', () => {
     fixture.git(['switch', 'other']);
-    const before = fixture.snapshot();
-    const result = fixture.run([
-      'move',
-      '--onto',
-      'other',
-      '--source',
-      'base',
-      '--only',
-    ]);
-    expect(result.status).not.to.equal(0);
-    expect(result.stdout + result.stderr).to.match(/only.*without children/);
-    expect(fixture.snapshot()).to.deep.equal(before);
+    const other = fixture.git(['rev-parse', 'other']);
+    fixture.ok(['move', '--onto', 'other', '--source', 'base', '--only']);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('other');
+    expect(fixture.git(['rev-parse', 'other'])).to.equal(other);
+    expect(fixture.git(['log', '--format=%s', 'other..base'])).to.equal('base');
+    expect(
+      fixture.git(['log', '--reverse', '--format=%s', 'main..tip'])
+    ).to.equal('child\ntip');
     fixture.ok(['checkout', 'base']);
+    fixture.ok(['down']);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('other');
+    fixture.ok(['checkout', 'child']);
     fixture.ok(['down']);
     expect(fixture.git(['branch', '--show-current'])).to.equal('main');
   });
