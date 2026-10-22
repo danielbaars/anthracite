@@ -3,6 +3,7 @@ import { spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { CreateCliFixture } from '../lib/fixtures/create_cli';
+import { expectParent } from '../lib/utils/expect_parent';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 
 function prepareConflicts(fixture: CreateCliFixture, departure: string): void {
@@ -31,15 +32,6 @@ function expectRebase(fixture: CreateCliFixture, active: boolean): void {
   expect(fixture.git(['diff', '--name-only', '--diff-filter=U'])).to.equal(
     active ? 'main.txt' : ''
   );
-}
-function expectParent(
-  fixture: CreateCliFixture,
-  branch: string,
-  parent: string
-): void {
-  fixture.ok(['checkout', branch]);
-  fixture.ok(['down']);
-  expect(fixture.git(['branch', '--show-current'])).to.equal(parent);
 }
 function expectResult(
   fixture: CreateCliFixture,

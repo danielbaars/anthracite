@@ -2,16 +2,7 @@ import { expect } from 'chai';
 import fs from 'fs';
 import path from 'path';
 import { CreateCliFixture } from '../lib/fixtures/create_cli';
-
-function expectParent(
-  fixture: CreateCliFixture,
-  branch: string,
-  parent: string
-): void {
-  fixture.ok(['checkout', branch]);
-  fixture.ok(['down']);
-  expect(fixture.git(['branch', '--show-current'])).to.equal(parent);
-}
+import { expectParent } from '../lib/utils/expect_parent';
 
 // eslint-disable-next-line max-lines-per-function
 describe('move only descendant worktree safety through the public CLI', function () {

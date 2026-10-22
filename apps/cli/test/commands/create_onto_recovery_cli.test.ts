@@ -3,6 +3,7 @@ import { spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { CreateCliFixture } from '../lib/fixtures/create_cli';
+import { expectParent } from '../lib/utils/expect_parent';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 
 const CREATE_INSERT = [
@@ -83,16 +84,6 @@ function stableRefs(fixture: CreateCliFixture): string {
         )
     )
     .join('\n');
-}
-
-function expectParent(
-  fixture: CreateCliFixture,
-  child: string,
-  parent: string
-): void {
-  fixture.ok(['checkout', child]);
-  fixture.ok(['down']);
-  expect(fixture.git(['branch', '--show-current'])).to.equal(parent);
 }
 
 // eslint-disable-next-line max-lines-per-function

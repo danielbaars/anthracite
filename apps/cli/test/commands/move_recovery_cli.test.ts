@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { CreateCliFixture } from '../lib/fixtures/create_cli';
+import { expectParent } from '../lib/utils/expect_parent';
 
 function prepareLaterConflict(fixture: CreateCliFixture): void {
   fixture.stage('main.txt', 'source edit');
@@ -74,15 +75,6 @@ function executeRetry(
       fixture.ok(['continue']);
     }
   }
-}
-function expectParent(
-  fixture: CreateCliFixture,
-  branch: string,
-  parent: string
-): void {
-  fixture.ok(['checkout', branch]);
-  fixture.ok(['down']);
-  expect(fixture.git(['branch', '--show-current'])).to.equal(parent);
 }
 
 // eslint-disable-next-line max-lines-per-function
