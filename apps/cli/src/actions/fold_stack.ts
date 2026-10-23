@@ -6,9 +6,13 @@ import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { uncommittedTrackedChangesPrecondition } from '../lib/preconditions';
 import { restackBranches } from './restack';
 import { clearContinuation } from './persist_continuation';
+import { interactiveBranchSelection } from './log';
 
 /** Collapse one aligned linear chain into its chosen surviving name. */
-export function foldStack(keep: boolean, context: TContext): void {
+export async function foldStack(
+  keep: boolean,
+  context: TContext
+): Promise<void> {
   assertNoGitOperation('fold');
   const departure = context.engine.currentBranchPrecondition;
   uncommittedTrackedChangesPrecondition();
@@ -27,18 +31,14 @@ export function foldStack(keep: boolean, context: TContext): void {
   }
   if (chain.length === 0)
     throw new PreconditionsFailedError('Cannot fold trunk.');
-  branch = departure;
-  while (childrenOf(branch).length > 0) {
-    const children = childrenOf(branch);
-    if (children.length !== 1) {
-      throw new PreconditionsFailedError(
-        'Stack fold requires a unique tip; multiple tips are not supported yet.'
-      );
-    }
-    branch = children[0];
-    context.engine.getBaseRevision(branch);
-    chain.push(branch);
+  const tip = await selectFoldTip(departure, childrenOf, context);
+  const upstack: string[] = [];
+  branch = tip;
+  while (branch !== departure) {
+    upstack.unshift(branch);
+    branch = context.engine.getParentPrecondition(branch);
   }
+  chain.push(...upstack);
   for (const name of chain) {
     const parent = context.engine.getParentPrecondition(name);
     if (!context.engine.isBranchFixed(name)) {
@@ -58,7 +58,6 @@ export function foldStack(keep: boolean, context: TContext): void {
       );
     }
   }
-  const tip = chain[chain.length - 1];
   const survivor = keep ? tip : chain[0];
   const roots = chain.flatMap((name) =>
     childrenOf(name).filter((child) => !chain.includes(child))
@@ -125,4 +124,40 @@ export function foldStack(keep: boolean, context: TContext): void {
     clearContinuation(context);
   }
   context.splog.info(`Folded stack into ${survivor}.`);
+}
+
+async function selectFoldTip(
+  departure: string,
+  childrenOf: (name: string) => string[],
+  context: TContext
+): Promise<string> {
+  const tips: string[] = [];
+  const visited = new Set<string>();
+  const findTips = (name: string): void => {
+    if (visited.has(name))
+      throw new PreconditionsFailedError('Invalid fold subtree.');
+    visited.add(name);
+    context.engine.getBaseRevision(name);
+    const children = childrenOf(name);
+    if (children.length === 0) tips.push(name);
+    else children.forEach(findTips);
+  };
+  findTips(departure);
+  if (tips.length > 1 && !context.interactive)
+    throw new PreconditionsFailedError(
+      'Stack fold requires a unique tip in non-interactive mode.'
+    );
+  const tip =
+    tips.length === 1
+      ? tips[0]
+      : await interactiveBranchSelection(
+          {
+            message: `Choose a tip above ${departure} to fold (autocomplete or arrow keys)`,
+            allowedBranches: tips,
+          },
+          context
+        );
+  if (!tips.includes(tip))
+    throw new PreconditionsFailedError('Invalid fold tip selection.');
+  return tip;
 }

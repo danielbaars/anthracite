@@ -70,6 +70,7 @@ export async function interactiveBranchSelection(
     omitCurrentBranch?: boolean;
     showUntracked?: boolean;
     omitBranches?: readonly string[];
+    allowedBranches?: readonly string[];
     initialBranch?: string;
   },
   context: TContext
@@ -100,7 +101,11 @@ export async function interactiveBranchSelection(
           }))
         : []
     )
-    .filter((choice) => !opts.omitBranches?.includes(choice.value));
+    .filter(
+      (choice) =>
+        !opts.omitBranches?.includes(choice.value) &&
+        (!opts.allowedBranches || opts.allowedBranches.includes(choice.value))
+    );
   const indexOfCurrentIfPresent = choices.findIndex(
     (choice) =>
       choice.value ===
