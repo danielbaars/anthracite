@@ -55,11 +55,12 @@ for (const keep of [false, true]) {
       });
     }
 
-    it('refuses a fan-out beside the downstack rather than deleting its sibling', () => {
+    it('preserves a fan-out beside the downstack with one tip above departure', () => {
       fixture.branch('sibling', 'base');
       fixture.git(['switch', 'child']);
-      refuse('fan-out');
-      expectParent(fixture, 'sibling', 'base');
+      fixture.ok(['fold', '--stack', ...keepArgs]);
+      expect(fixture.git(['branch', '--show-current'])).to.equal(survivor);
+      expectParent(fixture, 'sibling', survivor);
     });
 
     it('refuses ambiguous upstack tips under quiet noninteractive operation', () => {

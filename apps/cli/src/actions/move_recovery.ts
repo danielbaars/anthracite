@@ -1,9 +1,13 @@
 import { TContext } from '../lib/context';
 import { assertRestackFilesAvailable } from '../lib/git/restack_files';
+import { getCurrentBranchName } from '../lib/git/branch_ops';
 
 export function recordMoveCompletion(branch: string, context: TContext): void {
-  if (!context.continueConfig.data.move) return;
+  if (!context.continueConfig.data.move && !context.continueConfig.data.fold)
+    return;
   context.continueConfig.update((data) => {
+    if (data.fold && !data.fold.completed.includes(branch))
+      data.fold.completed.push(branch);
     if (data.move && !data.move.completed.includes(branch)) {
       data.move.completed.push(branch);
     }
@@ -16,6 +20,38 @@ export function reportMoveFailure(
   context: TContext
 ): void {
   const move = context.continueConfig.data.move;
+  const fold = context.continueConfig.data.fold;
+  if (fold) {
+    context.splog.warn(
+      `Stack fold into ${
+        fold.survivor
+      } is incomplete at ${branch}. Selected collapse is complete; removed names: ${fold.removed.join(
+        ', '
+      )}. Parent changes and completed restacks remain.`
+    );
+    context.splog.info(
+      `Completed branches: ${fold.completed.join(', ') || 'none'}.`
+    );
+    const pending = [branch, ...remaining].filter(
+      (name) => !fold.completed.includes(name)
+    );
+    context.splog.info(
+      `Current checkout: ${
+        getCurrentBranchName() ?? 'detached HEAD'
+      }. Remaining branches: ${pending.join(', ') || 'none'}.`
+    );
+    if (context.engine.rebaseInProgress())
+      context.splog.info(
+        'Resolve the conflict, git add the resolution and run ch continue. ch rebase --abort only cancels the active rebase; the selected collapse, removed names, parent changes and completed restacks remain.'
+      );
+    context.splog.info(
+      'After abort, or after moving blocking local work aside and resolving the Git/hook error, retry each remaining branch in this order (resolve and ch continue any new conflict before the next command):'
+    );
+    for (const name of pending)
+      context.splog.info(`ch restack --branch ${shellQuote(name)} --only`);
+    context.splog.info(`ch checkout ${shellQuote(fold.survivor)}`);
+    return;
+  }
   if (!move) return;
   const phase =
     branch === move.source
@@ -57,17 +93,20 @@ export function assertMoveFilesAvailable(
   context: TContext
 ): void {
   const move = context.continueConfig.data.move;
-  if (!move) return;
+  const fold = context.continueConfig.data.fold;
+  if (!move && !fold) return;
   assertRestackFilesAvailable({
     branches: branches.map((name) => ({
       name,
       from: context.engine.getBaseRevision(name),
     })),
     checkoutRevisions: [
-      move.returnBranch,
+      fold?.survivor ??
+        move?.returnBranch ??
+        context.engine.currentBranchPrecondition,
       ...branches.map((name) => context.engine.getParentPrecondition(name)),
     ].map((name) => `refs/heads/${name}`),
     skipTrackedPaths: true,
-    operation: 'move',
+    operation: fold ? 'fold' : 'move',
   });
 }

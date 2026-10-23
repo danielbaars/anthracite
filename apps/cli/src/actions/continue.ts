@@ -39,7 +39,10 @@ export async function continueAction(
   const activeBranch = context.engine.getRebaseHead();
   let cont: ReturnType<TContext['engine']['continueRebase']>;
   try {
-    if (activeBranch && context.continueConfig.data.move) {
+    if (
+      activeBranch &&
+      (context.continueConfig.data.move || context.continueConfig.data.fold)
+    ) {
       assertMoveFilesAvailable(
         getBranchesToRestack(
           [activeBranch, ...(branchesToRestack ?? [])],

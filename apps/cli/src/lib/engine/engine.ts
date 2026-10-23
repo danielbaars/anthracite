@@ -93,7 +93,11 @@ export type TEngine = {
   ) => void;
   renameCurrentBranch: (branchName: string) => void;
   foldCurrentBranch: (keep: boolean) => void;
-  foldStack: (chain: readonly string[], survivor: string) => void;
+  foldStack: (
+    chain: readonly string[],
+    survivor: string,
+    roots?: readonly string[]
+  ) => void;
   deleteBranch: (branchName: string) => void;
   commit: (opts: TCommitOpts) => void;
   squashCurrentBranch: (opts: { message?: string; noEdit?: boolean }) => void;
@@ -694,7 +698,7 @@ export function composeEngine({
       deleteMetadataRef(currentBranchName);
       cache.currentBranch = branchName;
     },
-    foldStack: (chain, survivor) => {
+    foldStack: (chain, survivor, roots = []) => {
       const first = chain[0];
       const last = chain[chain.length - 1];
       if (!first || !last || !chain.includes(survivor)) {
@@ -708,7 +712,19 @@ export function composeEngine({
       const tip = assertBranchIsValidAndNotTrunkAndGetMeta(last).branchRevision;
       const departure = getCurrentBranchOrThrow();
       const quote = (name: string) => `'${name.replace(/'/g, "'\\''")}'`;
+      const offChain: { name: string; from: string; parent: string }[] = [];
+      const saveSubtree = (name: string, parent: string): void => {
+        offChain.push({
+          name,
+          parent,
+          from: assertBranchIsValidAndNotTrunkAndGetMeta(name)
+            .parentBranchRevision,
+        });
+        for (const child of getChildren(name)) saveSubtree(child, name);
+      };
+      roots.forEach((name) => saveSubtree(name, survivor));
       let published = false;
+      let trackingComplete = false;
       try {
         // A detached checkout prepares the real index/tree before any names go.
         git.switchBranch(tip, { detach: true, preserveIgnored: true });
@@ -726,6 +742,7 @@ export function composeEngine({
         // Tracking is published only after the selected Git refs are confirmed.
         writeMetadataRef(survivor, next);
         cache.branches[survivor] = next;
+        for (const root of roots) setParent(root, survivor);
         for (const name of [...chain]
           .reverse()
           .filter((name) => name !== survivor)) {
@@ -737,6 +754,7 @@ export function composeEngine({
         }
         const trunk = cache.branches[bottom.parentBranchName];
         if (!trunk.children.includes(survivor)) trunk.children.push(survivor);
+        trackingComplete = true;
         git.switchBranch(survivor, { preserveIgnored: true });
         cache.currentBranch = survivor;
       } catch (error) {
@@ -755,12 +773,31 @@ export function composeEngine({
               survivor
             )} --parent ${quote(bottom.parentBranchName)}.`
           : 'Selected refs were not published; all original selected names remain.';
+        const recovery =
+          published && offChain.length > 0 && trackingComplete
+            ? ` Off-chain replay has not started. After preserving blocking local work and resolving the Git/hook error, run these surviving branches in order (resolve and ch continue any new conflict before the next command):\n${offChain
+                .map(({ name }) => `ch restack --branch ${quote(name)} --only`)
+                .join('\n')}\nch checkout ${quote(survivor)}`
+            : published && offChain.length > 0
+            ? ` Off-chain replay has not started. After moving blocking local work aside and resolving the Git/hook error, repair the survivor tracking first, then replay these frozen own ranges in order. Resolve and stage any conflict and use git rebase --continue before the next command:\nch track ${quote(
+                survivor
+              )} --parent ${quote(bottom.parentBranchName)}\n${offChain
+                .map(
+                  ({ name, from, parent }) =>
+                    `git rebase --onto ${quote(parent)} ${quote(from)} ${quote(
+                      name
+                    )}\nch track ${quote(name)} --parent ${quote(parent)}`
+                )
+                .join('\n')}\nch checkout ${quote(survivor)}`
+            : '';
         throw new PreconditionsFailedError(
           `Stack fold failed. ${progress} Current checkout: ${
             cache.currentBranch ?? 'detached HEAD'
           }. Move obstructing local work aside and resolve the reported Git/hook error before recovery with ch checkout ${quote(
             published ? survivor : departure
-          )}. ${error instanceof Error ? error.message : String(error)}`
+          )}. ${
+            error instanceof Error ? error.message : String(error)
+          }${recovery}`
         );
       }
     },

@@ -64,7 +64,10 @@ export function restackBranches(
     }
 
     try {
-      if (context.continueConfig.data.move) {
+      if (
+        context.continueConfig.data.move ||
+        context.continueConfig.data.fold
+      ) {
         uncommittedTrackedChangesPrecondition();
         assertMoveFilesAvailable(
           getBranchesToRestack([branchName, ...branchNames], context),
