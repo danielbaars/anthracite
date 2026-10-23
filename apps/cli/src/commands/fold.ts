@@ -7,7 +7,7 @@ import { graphite } from '../lib/runner';
 const args = {
   stack: {
     describe:
-      'Fold the complete trunk-to-tip feature chain into its original bottom branch (not a squash).',
+      'Fold the complete trunk-to-tip feature chain into its original bottom branch, or its chosen tip with --keep (not a squash).',
     type: 'boolean',
     default: false,
     coerce: (value: boolean): boolean => {
@@ -16,7 +16,7 @@ const args = {
     },
   },
   keep: {
-    describe: `Keeps the name of the current branch instead of using the name of its parent.`,
+    describe: `Keep the current name for ordinary fold; with --stack, keep the chosen tip name instead of the original bottom name.`,
     demandOption: false,
     type: 'boolean',
     alias: 'k',

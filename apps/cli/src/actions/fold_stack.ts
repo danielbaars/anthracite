@@ -5,16 +5,11 @@ import { assertRestackFilesAvailable } from '../lib/git/restack_files';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { uncommittedTrackedChangesPrecondition } from '../lib/preconditions';
 
-/** The first stack-fold slice deliberately accepts one aligned linear chain. */
+/** Collapse one aligned linear chain into its chosen surviving name. */
 export function foldStack(keep: boolean, context: TContext): void {
   assertNoGitOperation('fold');
   const departure = context.engine.currentBranchPrecondition;
   uncommittedTrackedChangesPrecondition();
-  if (keep) {
-    throw new PreconditionsFailedError(
-      'Stack fold with --keep is not supported yet.'
-    );
-  }
   const chain: string[] = [];
   let branch = departure;
   while (!context.engine.isTrunk(branch)) {
@@ -68,8 +63,8 @@ export function foldStack(keep: boolean, context: TContext): void {
       );
     }
   }
-  const survivor = chain[0];
   const tip = chain[chain.length - 1];
+  const survivor = keep ? tip : chain[0];
   if (chain.length === 1) return;
   assertBranchesAvailableInWorktrees(chain);
   assertRestackFilesAvailable({

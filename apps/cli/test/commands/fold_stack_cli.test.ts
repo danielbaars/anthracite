@@ -129,8 +129,6 @@ describe('stack fold bounded inputs through the public CLI', function () {
     ['--stack', '--close'],
     ['--stack', '--force'],
     ['--stack', 'tip'],
-    ['--stack', '--keep'],
-    ['--stack', '-k'],
   ]) {
     it(`refuses unsupported input ${JSON.stringify(
       args
@@ -144,10 +142,12 @@ describe('stack fold bounded inputs through the public CLI', function () {
     });
   }
 
-  it('explains whole-chain scope and the current bottom survivor in help', () => {
+  it('explains whole-chain scope and both survivor names in help', () => {
     const result = fixture.ok(['fold', '--help']);
     expect(result).to.include('--stack');
     expect(result).to.include('trunk-to-tip');
     expect(result).to.include('bottom');
+    expect(result).to.include('chosen tip');
+    expect(result).to.include('--keep');
   });
 });
