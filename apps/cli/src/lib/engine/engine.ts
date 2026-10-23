@@ -27,6 +27,7 @@ import {
 import { validateOrFixParentBranchRevision } from './parse_branches_and_meta';
 import { TScopeSpec } from './scope_spec';
 import fjsh from 'fast-json-stable-hash';
+import { publishFoldStackRefs } from '../git/fold_stack';
 
 export type TEngine = {
   debug: string;
@@ -92,6 +93,7 @@ export type TEngine = {
   ) => void;
   renameCurrentBranch: (branchName: string) => void;
   foldCurrentBranch: (keep: boolean) => void;
+  foldStack: (chain: readonly string[], survivor: string) => void;
   deleteBranch: (branchName: string) => void;
   commit: (opts: TCommitOpts) => void;
   squashCurrentBranch: (opts: { message?: string; noEdit?: boolean }) => void;
@@ -179,6 +181,7 @@ export function composeEngine({
   const cacheLoader = composeCacheLoader(splog);
   void cacheLoader;
   const originallyLoadedBranches = cacheLoader.loadCachedBranches(trunkName);
+  let canPersistCache = true;
   const cache = {
     currentBranch: currentBranchOverride ?? git.getCurrentBranchName(),
     branches: originallyLoadedBranches,
@@ -449,6 +452,10 @@ export function composeEngine({
       return cuteString(cache);
     },
     persist() {
+      if (!canPersistCache) {
+        cacheLoader.clearPersistedCache();
+        return;
+      }
       if (
         fjsh.hash(originallyLoadedBranches, 'sha256') !==
         fjsh.hash(cache.branches, 'sha256')
@@ -686,6 +693,76 @@ export function composeEngine({
       delete cache.branches[currentBranchName];
       deleteMetadataRef(currentBranchName);
       cache.currentBranch = branchName;
+    },
+    foldStack: (chain, survivor) => {
+      const first = chain[0];
+      const last = chain[chain.length - 1];
+      if (!first || !last || !chain.includes(survivor)) {
+        throw new PreconditionsFailedError('Invalid fold chain.');
+      }
+      const bottom = assertBranchIsValidAndNotTrunkAndGetMeta(first);
+      const saved = chain.map((name) => ({
+        name,
+        revision: assertBranchIsValidAndNotTrunkAndGetMeta(name).branchRevision,
+      }));
+      const tip = assertBranchIsValidAndNotTrunkAndGetMeta(last).branchRevision;
+      const departure = getCurrentBranchOrThrow();
+      const quote = (name: string) => `'${name.replace(/'/g, "'\\''")}'`;
+      let published = false;
+      try {
+        // A detached checkout prepares the real index/tree before any names go.
+        git.switchBranch(tip, { detach: true, preserveIgnored: true });
+        cache.currentBranch = undefined;
+        publishFoldStackRefs(saved, survivor, tip);
+        published = true;
+        const meta = assertBranchIsValidAndNotTrunkAndGetMeta(survivor);
+        const next = {
+          ...meta,
+          branchRevision: tip,
+          parentBranchName: bottom.parentBranchName,
+          parentBranchRevision: bottom.parentBranchRevision,
+          children: meta.children.filter((name) => !chain.includes(name)),
+        };
+        // Tracking is published only after the selected Git refs are confirmed.
+        writeMetadataRef(survivor, next);
+        cache.branches[survivor] = next;
+        for (const name of [...chain]
+          .reverse()
+          .filter((name) => name !== survivor)) {
+          const old = cache.branches[name];
+          if (old.validationResult === 'VALID')
+            removeChild(old.parentBranchName, name);
+          delete cache.branches[name];
+          deleteMetadataRef(name);
+        }
+        const trunk = cache.branches[bottom.parentBranchName];
+        if (!trunk.children.includes(survivor)) trunk.children.push(survivor);
+        git.switchBranch(survivor, { preserveIgnored: true });
+        cache.currentBranch = survivor;
+      } catch (error) {
+        if (!published) {
+          try {
+            git.switchBranch(departure, { preserveIgnored: true });
+          } catch {
+            /* Report the actual checkout below if recovery also failed. */
+          }
+        }
+        cache.currentBranch = git.getCurrentBranchName();
+        // Do not persist a partly updated cache or run mutating repair in this error path.
+        canPersistCache = false;
+        const progress = published
+          ? `Selected refs were folded into ${survivor}; selected names are already removed. Tracking or the final checkout did not finish. Inspect with ch info; if needed run ch track ${quote(
+              survivor
+            )} --parent ${quote(bottom.parentBranchName)}.`
+          : 'Selected refs were not published; all original selected names remain.';
+        throw new PreconditionsFailedError(
+          `Stack fold failed. ${progress} Current checkout: ${
+            cache.currentBranch ?? 'detached HEAD'
+          }. Move obstructing local work aside and resolve the reported Git/hook error before recovery with ch checkout ${quote(
+            published ? survivor : departure
+          )}. ${error instanceof Error ? error.message : String(error)}`
+        );
+      }
     },
     foldCurrentBranch: (keep: boolean) => {
       const currentBranchName = getCurrentBranchOrThrow();

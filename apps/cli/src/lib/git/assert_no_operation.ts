@@ -3,8 +3,8 @@ import path from 'path';
 import { PreconditionsFailedError } from '../errors';
 import { runGitCommand } from './runner';
 
-/** Move cannot change topology while Git is finishing another operation. */
-export function assertNoGitOperation(): void {
+/** Topology changes cannot start while Git is finishing another operation. */
+export function assertNoGitOperation(command = 'move'): void {
   for (const operation of [
     'rebase-merge',
     'rebase-apply',
@@ -20,7 +20,7 @@ export function assertNoGitOperation(): void {
     });
     if (fs.existsSync(path.resolve(file))) {
       throw new PreconditionsFailedError(
-        `Cannot move while Git operation ${operation} is active. Finish or abort it first.`
+        `Cannot ${command} while Git operation ${operation} is active. Finish or abort it first.`
       );
     }
   }

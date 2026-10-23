@@ -15,7 +15,7 @@ export function assertRestackFilesAvailable({
   checkoutRevisions?: readonly string[];
   all?: boolean;
   skipTrackedPaths?: boolean;
-  operation: 'insert' | 'move';
+  operation: 'insert' | 'move' | 'fold';
 }): void {
   if (branches.length === 0 && checkoutRevisions.length === 0) return;
   const cwd = runGitCommand({
