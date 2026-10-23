@@ -38,11 +38,28 @@ export const handler = async (argv: argsT): Promise<void> =>
   );
 
 function validateFoldArguments(input: readonly string[]): void {
+  input = input.flatMap((token) => {
+    // Preserve each short boolean declaration before yargs keeps only its last value.
+    const group = /^-([qk]+)(.*)$/s.exec(token);
+    if (!group) return [token];
+    const options = group[1].split('').map((name) => `-${name}`);
+    const suffix = group[2];
+    options[options.length - 1] +=
+      suffix && !suffix.startsWith('=') ? `=${suffix}` : suffix;
+    return options;
+  });
   const values = new Map<string, string>();
   for (let index = 0; index < input.length; index++) {
     const token = input[index];
-    if (token === '--') break;
-    const match = /^(--(?:no-)?(stack|keep)|-k)(?:=(.*))?$/.exec(token);
+    if (token === '--') {
+      if (values.get('stack') === 'true' && index + 1 < input.length) {
+        throw new PreconditionsFailedError(
+          'Stack fold does not accept positional arguments after --.'
+        );
+      }
+      break;
+    }
+    const match = /^(--(?:no-)?(stack|keep)|-k)(?:=(.*))?$/s.exec(token);
     if (!match) continue;
     const name = match[2] ?? 'keep';
     let value = match[1].startsWith('--no-') ? 'false' : 'true';

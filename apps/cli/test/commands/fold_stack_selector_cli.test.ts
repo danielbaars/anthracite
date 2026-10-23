@@ -224,6 +224,12 @@ describe('stack fold tip selection through a real PTY', function () {
     ['--stack=false', '--stack'],
     ['--keep='],
     ['--keep', '--keep=false'],
+    ['--keep=false', '-qk'],
+    ['--keep=true', '-qk=false'],
+    ['-kk=false'],
+    ['-qk=garbage'],
+    ['--', 'tip'],
+    ['--', '--force'],
     ['--force'],
     ['tip'],
   ]) {
