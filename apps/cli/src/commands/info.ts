@@ -83,7 +83,12 @@ export const handler = async (argv: argsT): Promise<void> => {
         argv.branchName ??
         (typeof argv._[1] === 'string' ? argv._[1] : undefined) ??
         context.engine.currentBranchPrecondition,
-      { patch: argv.patch, diff: argv.diff, body: argv.body },
+      {
+        patch: argv.patch,
+        diff: argv.diff,
+        body: argv.body,
+        quiet: argv.quiet === true,
+      },
       context
     );
   });

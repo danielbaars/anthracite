@@ -6,7 +6,12 @@ import { TBranchPRInfo } from '../lib/engine/metadata_ref';
 
 export async function showBranchInfo(
   branchName: string,
-  opts: { patch: boolean; diff: boolean; body: boolean },
+  opts: {
+    patch: boolean;
+    diff: boolean;
+    body: boolean;
+    readonly quiet?: boolean;
+  },
   context: TContext
 ): Promise<void> {
   if (
@@ -43,7 +48,12 @@ export async function showBranchInfo(
     output.push(context.engine.showDiff(branchName));
   }
 
-  context.splog.page(output.join('\n'));
+  if (opts.quiet) return;
+  if (context.interactive && process.stdin.isTTY && process.stdout.isTTY) {
+    context.splog.page(output.join('\n'), { fallback: false });
+  } else {
+    context.splog.info(output.join('\n'));
+  }
 }
 
 export function getBranchInfo(

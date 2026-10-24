@@ -11,7 +11,7 @@ export type TSplog = {
   warn: (msg: string) => void;
   message: (msg: string) => void;
   tip: (msg: string) => void;
-  page: (msg: string) => void;
+  page: (msg: string, options?: { readonly fallback?: boolean }) => void;
 };
 
 export function composeSplog(
@@ -47,7 +47,7 @@ export function composeSplog(
             )
           )
         : () => void 0,
-    page: (s: string) => {
+    page: (s: string, options?: { readonly fallback?: boolean }) => {
       if (!opts.pager) {
         console.log(s);
         return;
@@ -63,16 +63,18 @@ export function composeSplog(
         });
       } catch (e) {
         if (e.status !== 0 || e.code !== 'EPIPE') {
-          console.log(s);
-          console.log(
-            chalk.yellow(
-              `NOTE: Tried to send output to your pager (${chalk.cyan(
-                opts.pager
-              )}) but encountered an error.\nYou can change your configured pager or disable paging: ${chalk.cyan(
-                `ch user pager --help`
-              )}`
-            )
-          );
+          if (options?.fallback !== false) {
+            console.log(s);
+            console.log(
+              chalk.yellow(
+                `NOTE: Tried to send output to your pager (${chalk.cyan(
+                  opts.pager
+                )}) but encountered an error.\nYou can change your configured pager or disable paging: ${chalk.cyan(
+                  `ch user pager --help`
+                )}`
+              )
+            );
+          }
           throw new CommandFailedError({
             command: opts.pager,
             ...e,
