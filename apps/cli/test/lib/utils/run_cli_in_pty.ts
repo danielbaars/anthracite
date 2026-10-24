@@ -1,7 +1,7 @@
 import { spawnSync } from 'child_process';
 
 const ptyRunner = `
-import errno, json, os, pty, select, signal, sys, time
+import errno, json, os, pty, select, signal, subprocess, sys, time
 command = json.loads(sys.argv[1])
 responses = json.loads(sys.argv[2])
 response_offset = 0
@@ -18,12 +18,17 @@ while time.monotonic() < deadline:
             chunk = os.read(fd, 65536)
             if chunk:
                 output.extend(chunk)
-                if responses:
+                while responses:
                     prompt = responses[0]['prompt'].encode()
                     found = output.find(prompt, response_offset)
                     if found >= 0:
-                        os.write(fd, responses.pop(0)['input'].encode())
+                        response = responses.pop(0)
+                        if 'beforeInput' in response:
+                            subprocess.run(response['beforeInput'], check=True)
+                        os.write(fd, response['input'].encode())
                         response_offset = found + len(prompt)
+                    else:
+                        break
             else:
                 reading = False
         except OSError as error:
@@ -56,6 +61,7 @@ export function runCliInPty(
     readonly responses?: readonly {
       readonly prompt: string;
       readonly input: string;
+      readonly beforeInput?: readonly string[];
     }[];
   }
 ): { status: number | null; output: string } {

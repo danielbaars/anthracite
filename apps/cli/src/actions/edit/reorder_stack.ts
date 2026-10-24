@@ -15,6 +15,7 @@ import { performInTmpDir } from '../../lib/utils/perform_in_tmp_dir';
 import { restackBranches } from '../restack';
 import { clearContinuation } from '../persist_continuation';
 import { beginReorder, finishReorder } from '../reorder_recovery';
+import { interactiveBranchSelection } from '../log';
 import { createStackEditFile } from './stack_edit_file';
 
 /** Reorder a frozen, aligned chain while preserving every original own range. */
@@ -25,6 +26,7 @@ export async function reorderStack(
   assertNoGitOperation('reorder');
   uncommittedTrackedChangesPrecondition();
   const departure = context.engine.currentBranchPrecondition;
+  const before = captureReorderState();
   // Include saved nodes whose local ref is missing; the engine omits those.
   const savedParents = new Map(
     Object.keys(getMetadataRefList()).map((name) => [
@@ -32,19 +34,13 @@ export async function reorderStack(
       readMetadataRef(name).parentBranchName,
     ])
   );
-  const chain = getUniqueTipChain(departure, savedParents, context);
+  const selection = { savedParents, before };
+  const chain = await selectTipChain(departure, selection, context);
   for (const name of chain) {
-    if (!context.engine.isBranchFixed(name))
-      throw new PreconditionsFailedError(
-        `Cannot reorder ${name}: needs restack. Run ch restack --branch '${name.replace(
-          /'/g,
-          "'\\''"
-        )}' before retrying reorder --stack.`
-      );
+    assertAlignedBranch(name, context);
     assertNoPrAssociation(name, context);
   }
   const others = getOtherBranches(chain, savedParents, context);
-  // Freeze every original own boundary, parent and tip before the editor.
   const original = new Map(
     [...chain, ...others].map((name) => [
       name,
@@ -55,7 +51,6 @@ export async function reorderStack(
       },
     ])
   );
-  const before = captureReorderState();
   if (!inputPath && !context.interactive)
     throw new PreconditionsFailedError(
       'Stack reorder requires an interactive editor or --input.'
@@ -136,6 +131,16 @@ export async function reorderStack(
   clearContinuation(context);
 }
 
+function assertAlignedBranch(name: string, context: TContext): void {
+  if (!context.engine.isBranchFixed(name))
+    throw new PreconditionsFailedError(
+      `Cannot reorder ${name}: needs restack. Run ch restack --branch '${name.replace(
+        /'/g,
+        "'\\''"
+      )}' before retrying reorder --stack.`
+    );
+}
+
 function assertNoPrAssociation(name: string, context: TContext): void {
   if (context.engine.getPrInfo(name)?.number !== undefined)
     throw new PreconditionsFailedError(
@@ -167,11 +172,17 @@ function getOtherBranches(
   return others;
 }
 
-function getUniqueTipChain(
+async function selectTipChain(
   departure: string,
-  savedParents: ReadonlyMap<string, string | undefined>,
+  {
+    savedParents,
+    before,
+  }: {
+    readonly savedParents: ReadonlyMap<string, string | undefined>;
+    readonly before: string;
+  },
   context: TContext
-): string[] {
+): Promise<string[]> {
   const chain: string[] = [];
   let name = departure;
   while (!context.engine.isTrunk(name)) {
@@ -187,27 +198,56 @@ function getUniqueTipChain(
   }
   if (!chain.length)
     throw new PreconditionsFailedError('Cannot reorder trunk.');
-  name = departure;
-  while (name) {
+  const tips: string[] = [];
+  const visited = new Set<string>();
+  const findTips = (name: string): void => {
+    if (visited.has(name))
+      throw new PreconditionsFailedError('Invalid reorder parent chain.');
+    visited.add(name);
+    if (!context.engine.branchExists(name))
+      throw new PreconditionsFailedError(
+        `Cannot reorder ${name}: missing local tracked branch.`
+      );
+    if (!context.engine.isBranchTracked(name))
+      assertAlignedBranch(name, context);
+    context.engine.getBaseRevision(name);
     const children = [...savedParents]
       .filter(([, parent]) => parent === name)
       .map(([child]) => child);
-    if (children.length > 1)
-      throw new PreconditionsFailedError(
-        'Stack reorder requires a unique tip; fan-out is not supported yet.'
-      );
-    const child = children[0];
-    if (!child) break;
-    if (!context.engine.branchExists(child))
-      throw new PreconditionsFailedError(
-        `Cannot reorder ${child}: missing local tracked branch.`
-      );
-    if (chain.includes(child))
-      throw new PreconditionsFailedError('Invalid reorder parent chain.');
-    chain.push(child);
-    name = child;
+    if (!children.length) tips.push(name);
+    else children.forEach(findTips);
+  };
+  findTips(departure);
+  if (tips.length > 1 && !context.interactive)
+    throw new PreconditionsFailedError(
+      'Stack reorder requires a unique tip in non-interactive mode.'
+    );
+  const tip =
+    tips.length === 1
+      ? tips[0]
+      : await interactiveBranchSelection(
+          {
+            message: `Choose a tip above ${departure} to reorder (autocomplete or arrow keys)`,
+            allowedBranches: tips,
+          },
+          context
+        );
+  if (!tips.includes(tip))
+    throw new PreconditionsFailedError('Invalid reorder tip selection.');
+  // The selector can wait while another process changes refs or local work.
+  if (captureReorderState() !== before)
+    throw new PreconditionsFailedError(
+      'Cannot reorder: repository state changed during tip selection. Retry from the current state.'
+    );
+  assertNoGitOperation('reorder');
+  uncommittedTrackedChangesPrecondition();
+  const upstack: string[] = [];
+  name = tip;
+  while (name !== departure) {
+    upstack.unshift(name);
+    name = context.engine.getParentPrecondition(name);
   }
-  return chain;
+  return [...chain, ...upstack];
 }
 
 function parseStackOrder(file: string, chain: readonly string[]): string[] {
