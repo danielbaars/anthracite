@@ -232,7 +232,7 @@ describe('children through the public CLI', function () {
         }
       );
       fixture.savePty(quiet);
-      expect(quiet).to.deep.equal({ status: 0, output: '' });
+      expect(quiet).to.deep.equal({ status: 0, output: '', outputBase64: '' });
       expect(
         fs.existsSync(path.join(fixture.root, 'unexpected-tool'))
       ).to.equal(false);
