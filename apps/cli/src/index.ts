@@ -13,6 +13,7 @@ import { registerCompletion } from './commands/completion';
 import * as auth from './commands/auth';
 import * as bottom from './commands/bottom';
 import * as checkout from './commands/checkout';
+import * as children from './commands/children';
 import * as continueCmd from './commands/continue';
 import * as create from './commands/create';
 import * as deleteCmd from './commands/delete';
@@ -70,6 +71,7 @@ const commandModules = [
   auth,
   bottom,
   checkout,
+  children,
   continueCmd,
   create,
   deleteCmd,

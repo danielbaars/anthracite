@@ -80,6 +80,7 @@ export type TEngine = {
   clearPrInfo: (branchName: string) => void;
 
   getChildren: (branchName: string) => string[];
+  getChildrenPrecondition: (branchName: string) => string[];
 
   setParent: (branchName: string, parentBranchName: string) => void;
   getParent: (branchName: string) => string | undefined;
@@ -648,6 +649,13 @@ export function composeEngine({
       });
     },
     getChildren,
+    getChildrenPrecondition: (branchName: string) => {
+      const meta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
+      // Unlike traversal, relation inspection must not return a partial list.
+      for (const child of meta.children)
+        assertBranchIsValidAndNotTrunkAndGetMeta(child);
+      return [...meta.children];
+    },
     setParent,
     getParent,
     getParentPrecondition: (branchName: string) =>
