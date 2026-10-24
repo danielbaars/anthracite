@@ -85,10 +85,18 @@ describe('stack reorder preflight and editor recheck through public CLI', functi
       expect(fs.existsSync(fixture.offered)).to.equal(false);
     });
   }
-  it('bounds an off-chain sibling below departure until subtree replay is supported', () => {
+  it('accepts an off-chain sibling below departure without adding it to the editor', () => {
     fixture.branch('sibling', 'base');
     fixture.git(['switch', 'child']);
-    refuse('other subtrees');
+    fixture.editor('base\ntip\nchild\n');
+    fixture.edit();
+    expect(
+      fs.readFileSync(fixture.offered, 'utf8').split('\n').slice(0, 3)
+    ).to.deep.equal(['tip', 'child', 'base']);
+    expect(fixture.parent('sibling')).to.equal('base');
+    expect(fixture.git(['log', '--format=%s', 'base..sibling'])).to.equal(
+      'sibling'
+    );
   });
   it('preserves noncolliding untracked and ignored binary bytes while reordering', () => {
     const bytes = Buffer.from([0, 255, 13, 10, 128]);

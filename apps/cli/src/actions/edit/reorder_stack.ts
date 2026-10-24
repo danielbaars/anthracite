@@ -2,6 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { TContext } from '../../lib/context';
 import { PreconditionsFailedError } from '../../lib/errors';
+import {
+  getMetadataRefList,
+  readMetadataRef,
+} from '../../lib/engine/metadata_ref';
 import { assertNoGitOperation } from '../../lib/git/assert_no_operation';
 import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
 import { runGitCommand } from '../../lib/git/runner';
@@ -19,7 +23,14 @@ export async function reorderStack(
   assertNoGitOperation('reorder');
   uncommittedTrackedChangesPrecondition();
   const departure = context.engine.currentBranchPrecondition;
-  const chain = getLinearChain(departure, context);
+  // Include saved nodes whose local ref is missing; the engine omits those.
+  const savedParents = new Map(
+    Object.keys(getMetadataRefList()).map((name) => [
+      name,
+      readMetadataRef(name).parentBranchName,
+    ])
+  );
+  const chain = getUniqueTipChain(departure, savedParents, context);
   for (const name of chain) {
     if (!context.engine.isBranchFixed(name))
       throw new PreconditionsFailedError(
@@ -28,13 +39,19 @@ export async function reorderStack(
           "'\\''"
         )}' before retrying reorder --stack.`
       );
-    if (context.engine.getPrInfo(name)?.number !== undefined)
-      throw new PreconditionsFailedError(
-        `Cannot reorder ${name}: it has a locally known PR association. PR-aware stack reorder is not supported.`
-      );
+    assertNoPrAssociation(name, context);
   }
-  const bases = new Map(
-    chain.map((name) => [name, context.engine.getBaseRevision(name)])
+  const others = getOtherBranches(chain, savedParents, context);
+  // Freeze every original own boundary, parent and tip before the editor.
+  const original = new Map(
+    [...chain, ...others].map((name) => [
+      name,
+      {
+        from: context.engine.getBaseRevision(name),
+        parent: context.engine.getParentPrecondition(name),
+        revision: context.engine.getRevision(name),
+      },
+    ])
   );
   const before = captureReorderState();
   if (!inputPath && !context.interactive)
@@ -64,25 +81,36 @@ export async function reorderStack(
   const futureTips = new Map<string, string | undefined>([
     [parent, context.engine.getRevision(parent)],
   ]);
+  const parents = new Map<string, string>();
   for (const name of order) {
-    const from = bases.get(name);
-    const revision = context.engine.getRevision(name);
+    parents.set(name, parent);
+    parent = name;
+  }
+  for (const [name, branch] of original)
+    if (!parents.has(name)) parents.set(name, branch.parent);
+  const unchanged = order.every((name, index) => name === chain[index]);
+  for (const name of unchanged ? [] : [...order, ...others]) {
+    const parent = parents.get(name);
+    if (!parent) throw new PreconditionsFailedError('Invalid reorder plan.');
+    const branch = original.get(name);
+    if (!branch) throw new PreconditionsFailedError('Invalid reorder plan.');
+    const { from, revision } = branch;
     const parentTip = futureTips.get(parent);
     const changesTip = parentTip === undefined || from !== parentTip;
-    if (changesTip || context.engine.getParentPrecondition(name) !== parent) {
+    if (changesTip || branch.parent !== parent) {
       changing.push(name);
       checkoutRevisions.push(
         `refs/heads/${name}`,
         `refs/heads/${parent}`,
-        context.engine.getBaseRevision(name)
+        from
       );
     }
     futureTips.set(
       name,
       changesTip ? (revision === from ? parentTip : undefined) : revision
     );
-    parent = name;
   }
+  for (const name of changing) assertNoPrAssociation(name, context);
   assertBranchesAvailableInWorktrees(changing);
   assertRestackFilesAvailable({
     branches: changing.map((name) => ({
@@ -95,7 +123,7 @@ export async function reorderStack(
     skipTrackedPaths: true,
     operation: 'reorder',
   });
-  if (order.every((name, index) => name === chain[index])) return;
+  if (unchanged) return;
   // Detach each new bottom before attaching its next child: no transient cycle.
   parent = context.engine.trunk;
   for (const name of order) {
@@ -109,7 +137,42 @@ export async function reorderStack(
     context.engine.checkoutBranch(departure, { preserveIgnored: true });
 }
 
-function getLinearChain(departure: string, context: TContext): string[] {
+function assertNoPrAssociation(name: string, context: TContext): void {
+  if (context.engine.getPrInfo(name)?.number !== undefined)
+    throw new PreconditionsFailedError(
+      `Cannot reorder ${name}: it has a locally known PR association. PR-aware stack reorder is not supported.`
+    );
+}
+
+function getOtherBranches(
+  chain: readonly string[],
+  savedParents: ReadonlyMap<string, string | undefined>,
+  context: TContext
+): string[] {
+  const others: string[] = [];
+  const collectChildren = (parent: string): void => {
+    for (const [child, savedParent] of savedParents) {
+      if (savedParent !== parent) continue;
+      if (!context.engine.branchExists(child))
+        throw new PreconditionsFailedError(
+          `Cannot reorder ${child}: missing local tracked branch.`
+        );
+      if (chain.includes(child)) continue;
+      if (others.includes(child))
+        throw new PreconditionsFailedError('Invalid reorder parent chain.');
+      others.push(child);
+      collectChildren(child);
+    }
+  };
+  chain.forEach(collectChildren);
+  return others;
+}
+
+function getUniqueTipChain(
+  departure: string,
+  savedParents: ReadonlyMap<string, string | undefined>,
+  context: TContext
+): string[] {
   const chain: string[] = [];
   let name = departure;
   while (!context.engine.isTrunk(name)) {
@@ -127,30 +190,23 @@ function getLinearChain(departure: string, context: TContext): string[] {
     throw new PreconditionsFailedError('Cannot reorder trunk.');
   name = departure;
   while (name) {
-    const children = context.engine.allBranchNames.filter(
-      (child) => context.engine.getParent(child) === name
-    );
+    const children = [...savedParents]
+      .filter(([, parent]) => parent === name)
+      .map(([child]) => child);
     if (children.length > 1)
       throw new PreconditionsFailedError(
         'Stack reorder requires a unique tip; fan-out is not supported yet.'
       );
     const child = children[0];
     if (!child) break;
+    if (!context.engine.branchExists(child))
+      throw new PreconditionsFailedError(
+        `Cannot reorder ${child}: missing local tracked branch.`
+      );
     if (chain.includes(child))
       throw new PreconditionsFailedError('Invalid reorder parent chain.');
     chain.push(child);
     name = child;
-  }
-  for (const branch of chain) {
-    if (
-      context.engine.allBranchNames.some(
-        (child) =>
-          context.engine.getParent(child) === branch && !chain.includes(child)
-      )
-    )
-      throw new PreconditionsFailedError(
-        'Stack reorder with other subtrees is not supported yet.'
-      );
   }
   return chain;
 }

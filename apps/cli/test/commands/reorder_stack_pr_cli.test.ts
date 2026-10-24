@@ -148,4 +148,104 @@ describe('stack reorder local PR boundary with public submit/sync and external a
     expect(fixture.parent('child')).to.equal('base');
     expect(fixture.parent('tip')).to.equal('child');
   });
+  for (const branch of ['side', 'deep']) {
+    for (const prState of ['OPEN', 'CLOSED', 'MERGED']) {
+      it(`refuses a changed off-chain ${branch} with known ${prState} PR while preserving identity and remote effects`, () => {
+        fixture.branch(branch, 'main');
+        fixture.ok(['submit', '--publish']);
+        if (branch === 'deep') fixture.branch('side', 'base');
+        fixture.ok([
+          'move',
+          branch === 'deep' ? 'side' : 'base',
+          '--source',
+          branch,
+        ]);
+        fs.writeFileSync(
+          state,
+          JSON.stringify(
+            readSubmitPrs(state).map((pr) => ({ ...pr, state: prState }))
+          )
+        );
+        fixture.ok(['sync', '--no-pull', '--no-delete', '--no-restack']);
+        fixture.ok(['checkout', branch]);
+        const info = identity(fixture.ok(['info']));
+        expect(info).to.include('PR #1');
+        fixture.git(['switch', 'child']);
+        const before = fixture.snapshot();
+        const remote = fixture.git(['ls-remote', '--heads', 'origin']);
+        const prs = fs.readFileSync(state, 'utf8');
+        const parents = fixture.ok(['log', 'short']);
+        fs.writeFileSync(calls, '');
+        fixture.editor('base\ntip\nchild\n');
+        const result = fixture.run(['reorder', '--stack', '--interactive']);
+        expect(result.status).not.to.equal(0);
+        expect(result.stdout + result.stderr).to.include(
+          `Cannot reorder ${branch}`
+        );
+        expect(result.stdout + result.stderr).to.include('locally known PR');
+        expect(fixture.snapshot()).to.deep.equal(before);
+        expect(fixture.ok(['log', 'short'])).to.equal(parents);
+        fixture.ok(['checkout', branch]);
+        expect(identity(fixture.ok(['info']))).to.equal(info);
+        expect(fs.readFileSync(calls, 'utf8')).to.equal('');
+        expect(fs.readFileSync(state, 'utf8')).to.equal(prs);
+        expect(fixture.git(['ls-remote', '--heads', 'origin'])).to.equal(
+          remote
+        );
+      });
+    }
+  }
+  it('allows a truly unchanged off-chain PR and retains its identity and every remote ref', () => {
+    fixture.branch('side', 'main');
+    fixture.ok(['submit', '--publish']);
+    const info = identity(fixture.ok(['info']));
+    fixture.branch('e-base', 'main', true);
+    fixture.branch('e-work', 'e-base');
+    fixture.branch('e-top', 'e-work', true);
+    fixture.ok(['move', 'e-base', '--source', 'side']);
+    fixture.git(['switch', 'e-work']);
+    const side = fixture.git(['rev-parse', 'side']);
+    const remote = fixture.git(['ls-remote', '--heads', 'origin']);
+    const prs = fs.readFileSync(state, 'utf8');
+    fs.writeFileSync(calls, '');
+    fixture.editor('e-work\ne-top\ne-base\n');
+    fixture.edit();
+    expect(fixture.git(['rev-parse', 'side'])).to.equal(side);
+    expect(fs.readFileSync(calls, 'utf8')).to.equal('');
+    expect(fs.readFileSync(state, 'utf8')).to.equal(prs);
+    expect(fixture.git(['ls-remote', '--heads', 'origin'])).to.equal(remote);
+    fixture.ok(['checkout', 'side']);
+    expect(identity(fixture.ok(['info']))).to.equal(info);
+  });
+  it('rejects a new off-chain association installed by public submit during the editor', () => {
+    fixture.branch('side', 'base');
+    fixture.git(['switch', 'child']);
+    const submit = getTestCliCommand([
+      'submit',
+      '--branch',
+      'side',
+      '--publish',
+      '--no-interactive',
+    ]);
+    const saved = path.join(fixture.root, 'editor-offchain-refs');
+    fixture.editor(
+      'base\ntip\nchild\n',
+      `const {execFileSync}=require('child_process'); execFileSync(${JSON.stringify(
+        submit[0]
+      )},${JSON.stringify(
+        submit.slice(1)
+      )},{env:process.env}); fs.writeFileSync(${JSON.stringify(
+        saved
+      )},execFileSync('git',['for-each-ref','--format=%(refname) %(objectname)']));`
+    );
+    const result = fixture.run(['reorder', '--stack', '--interactive']);
+    expect(result.status).not.to.equal(0);
+    expect(result.stdout + result.stderr).to.include('state changed');
+    expect(
+      fixture.git(['for-each-ref', '--format=%(refname) %(objectname)'])
+    ).to.equal(fs.readFileSync(saved, 'utf8').trim());
+    fixture.ok(['checkout', 'side']);
+    expect(fixture.ok(['info'])).to.include('PR #');
+    expect(fixture.parent('child')).to.equal('base');
+  });
 });
