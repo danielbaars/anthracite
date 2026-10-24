@@ -30,7 +30,7 @@ export function getRebaseHead(): string | undefined {
         .readFileSync(rebaseHeadPath, {
           encoding: 'utf-8',
         })
-        .trim()
+        .replace(/\r?\n$/, '')
         .slice('refs/heads/'.length)
     : undefined;
 }

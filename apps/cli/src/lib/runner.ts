@@ -92,7 +92,10 @@ async function graphiteInternal(
           return;
         }
 
-        const context = initContext(contextLite, git, args);
+        const context = initContext(contextLite, git, {
+          ...args,
+          preserveMetadata: canonicalName === 'reorder' && args.stack === true,
+        });
         return await graphiteHelper(
           canonicalName,
           handlerMaybeWithCacheLock,

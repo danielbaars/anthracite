@@ -95,6 +95,7 @@ export function getMetadataRefList(): Record<string, string> {
     ],
     onError: 'throw',
     resource: 'getMetadataRefList',
+    options: { noTrim: true },
   })
     .map((line) => line.split(':'))
     .filter(

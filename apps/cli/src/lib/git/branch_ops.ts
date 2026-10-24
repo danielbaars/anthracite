@@ -5,7 +5,8 @@ export function getCurrentBranchName(): string | undefined {
     args: [`branch`, `--show-current`],
     onError: 'ignore',
     resource: 'getCurrentBranchName',
-  });
+    options: { noTrim: true },
+  }).replace(/\r?\n$/, '');
 
   return branchName.length > 0 ? branchName : undefined;
 }

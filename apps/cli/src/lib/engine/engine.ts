@@ -173,6 +173,7 @@ export function composeEngine({
   noVerify,
   remote,
   restackCommitterDateIsAuthorDate,
+  preserveMetadata = false,
 }: {
   git: TGit;
   trunkName?: string;
@@ -181,11 +182,12 @@ export function composeEngine({
   noVerify: boolean;
   remote: string;
   restackCommitterDateIsAuthorDate?: boolean;
+  preserveMetadata?: boolean;
 }): TEngine {
-  const cacheLoader = composeCacheLoader(splog);
+  const cacheLoader = composeCacheLoader(splog, preserveMetadata);
   void cacheLoader;
   const originallyLoadedBranches = cacheLoader.loadCachedBranches(trunkName);
-  let canPersistCache = true;
+  let canPersistCache = !preserveMetadata;
   const cache = {
     currentBranch: currentBranchOverride ?? git.getCurrentBranchName(),
     branches: originallyLoadedBranches,

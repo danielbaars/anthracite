@@ -10,6 +10,7 @@ export function getBranchNamesAndRevisions(): Record<string, string> {
       `--sort=-committerdate`,
       `refs/heads/`,
     ],
+    options: { noTrim: true },
     onError: 'throw',
     resource: 'getBranchNamesAndRevisions',
   })

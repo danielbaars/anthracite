@@ -17,7 +17,7 @@ import {
 } from './spiffy/upgrade_message_spf';
 import { TUserConfig, userConfigFactory } from './spiffy/user_config_spf';
 import { composeSplog, TSplog } from './utils/splog';
-import { NonInteractiveError } from './errors';
+import { NonInteractiveError, PreconditionsFailedError } from './errors';
 import { gtPrompts, TPrompts } from './utils/prompts_helpers';
 
 export const USER_CONFIG_OVERRIDE_ENV = 'GRAPHITE_USER_CONFIG_PATH' as const;
@@ -81,9 +81,14 @@ export function initContext(
   git: TGit,
   opts?: {
     verify?: boolean;
+    preserveMetadata?: boolean;
   }
 ): TContext {
   const repoConfig = repoConfigFactory.load();
+  if (opts?.preserveMetadata && !repoConfig.graphiteInitialized())
+    throw new PreconditionsFailedError(
+      'Stack reorder requires an initialized repository. Run ch init explicitly before retrying.'
+    );
   if (!rebaseInProgress()) {
     continueConfigFactory.load().delete();
   }
@@ -95,6 +100,7 @@ export function initContext(
     splog: contextLite.splog,
     noVerify: !(opts?.verify ?? true),
     remote: repoConfig.getRemote(),
+    preserveMetadata: opts?.preserveMetadata,
     restackCommitterDateIsAuthorDate:
       contextLite.userConfig.data.restackCommitterDateIsAuthorDate,
   });

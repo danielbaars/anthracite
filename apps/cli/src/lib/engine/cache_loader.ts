@@ -18,7 +18,10 @@ type TCacheLoader = {
   ): void;
   clearPersistedCache(): void;
 };
-export function composeCacheLoader(splog: TSplog): TCacheLoader {
+export function composeCacheLoader(
+  splog: TSplog,
+  preserveMetadata = false
+): TCacheLoader {
   const persistedCache = cachePersistenceFactory.load();
   return {
     loadCachedBranches: (trunkName: string | undefined) => {
@@ -26,14 +29,16 @@ export function composeCacheLoader(splog: TSplog): TCacheLoader {
       const cacheSeed = getCacheSeed(trunkName);
       splog.debug('Loading cache...');
       return (
-        (persistedCache.data.sha === hashSeed(cacheSeed) &&
+        (!preserveMetadata &&
+          persistedCache.data.sha === hashSeed(cacheSeed) &&
           Object.fromEntries(persistedCache.data.branches)) ||
         parseBranchesAndMeta(
           {
             ...cacheSeed,
             trunkName,
           },
-          splog
+          splog,
+          !preserveMetadata
         )
       );
     },

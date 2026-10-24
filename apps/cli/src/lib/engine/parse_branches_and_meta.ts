@@ -16,7 +16,8 @@ type TBranchToParse = {
 
 function getAllBranchesAndMeta(
   args: Omit<TCacheSeed, 'version' | 'trunkName'>,
-  splog: TSplog
+  splog: TSplog,
+  repairMetadata: boolean
 ): TBranchToParse[] {
   splog.debug(`Building cache from disk...`);
   const branchesWithMeta = new Set(
@@ -26,7 +27,7 @@ function getAllBranchesAndMeta(
       }
       // Clean up refs whose branch is missing
       splog.debug(`Deleting metadata for missing branch: ${branchName}`);
-      deleteMetadataRef(branchName);
+      if (repairMetadata) deleteMetadataRef(branchName);
       return false;
     })
   );
@@ -48,9 +49,10 @@ export type TCacheSeed = {
 
 export function parseBranchesAndMeta(
   args: TCacheSeed,
-  splog: TSplog
+  splog: TSplog,
+  repairMetadata = true
 ): Record<string, TCachedMeta> {
-  const branchesToParse = getAllBranchesAndMeta(args, splog);
+  const branchesToParse = getAllBranchesAndMeta(args, splog, repairMetadata);
 
   const allBranchNames = new Set(
     branchesToParse.map((meta) => meta.branchName)
@@ -139,7 +141,8 @@ export function parseBranchesAndMeta(
         parentBranchCurrentRevision:
           parsedBranches[parentBranchName].branchRevision,
       } as TBranchToParseWithValidatedParent,
-      splog
+      splog,
+      repairMetadata
     );
 
     parsedBranches[branchName] = {
@@ -169,7 +172,8 @@ export function validateOrFixParentBranchRevision(
     prInfo,
     parentBranchCurrentRevision,
   }: TBranchToParseWithValidatedParent,
-  splog: TSplog
+  splog: TSplog,
+  repairMetadata = true
 ):
   | { validationResult: 'VALID'; parentBranchRevision: string }
   | { validationResult: 'BAD_PARENT_REVISION' } {
@@ -180,6 +184,7 @@ export function validateOrFixParentBranchRevision(
       parentBranchRevision
   ) {
     if (
+      repairMetadata &&
       parentBranchRevision !== parentBranchCurrentRevision &&
       getMergeBase(parentBranchRevision, parentBranchCurrentRevision) ===
         parentBranchRevision &&
@@ -215,6 +220,8 @@ export function validateOrFixParentBranchRevision(
     );
     return { validationResult: 'BAD_PARENT_REVISION' };
   }
+
+  if (!repairMetadata) return { validationResult: 'BAD_PARENT_REVISION' };
 
   // PBR can be fixed because we see the parent in the branch's history
   writeMetadataRef(branchName, {
