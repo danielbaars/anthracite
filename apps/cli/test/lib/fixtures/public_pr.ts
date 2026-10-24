@@ -4,7 +4,10 @@ import path from 'path';
 import { RelationCliFixture } from './relation_cli';
 
 /** Public local remote and external gh adapter; suites own their PR scenarios. */
-export function preparePublicPrRemote(fixture: RelationCliFixture): {
+export function preparePublicPrRemote(
+  fixture: RelationCliFixture,
+  trunk = 'main'
+): {
   readonly state: string;
   readonly calls: string;
   readonly remote: string;
@@ -30,7 +33,7 @@ export function preparePublicPrRemote(fixture: RelationCliFixture): {
   const remote = path.join(fixture.root, 'remote.git');
   fixture.git(['init', '--bare', remote]);
   fixture.git(['remote', 'add', 'origin', remote]);
-  fixture.git(['push', '-u', 'origin', 'main']);
+  fixture.git(['push', '-u', 'origin', trunk]);
   fixture.ok(['repo', 'owner', '--set', 'fixture']);
   fixture.ok(['repo', 'name', '--set', 'submit']);
   return {

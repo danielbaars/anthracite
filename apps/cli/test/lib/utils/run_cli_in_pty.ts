@@ -64,7 +64,11 @@ export function runCliInPty(
       readonly beforeInput?: readonly string[];
     }[];
   }
-): { status: number | null; output: string } {
+): {
+  status: number | null;
+  output: string;
+  outputBase64: string;
+} {
   const result = spawnSync(
     '/usr/bin/python3',
     [
@@ -73,8 +77,13 @@ export function runCliInPty(
       JSON.stringify(command),
       JSON.stringify(options.responses ?? []),
     ],
-    { ...options, encoding: 'utf8', timeout: 10000 }
+    { ...options, timeout: 10000 }
   );
   if (result.error) throw result.error;
-  return { status: result.status, output: result.stdout + result.stderr };
+  const output = Buffer.concat([result.stdout, result.stderr]);
+  return {
+    status: result.status,
+    output: output.toString('utf8'),
+    outputBase64: output.toString('base64'),
+  };
 }
