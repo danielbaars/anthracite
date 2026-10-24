@@ -104,11 +104,19 @@ export function initContext(
   const continueConfig = continueConfigFactory.load(undefined, {
     preserveInvalid: opts?.inspection,
   });
+  // Attached worktrees keep their own subject; only an own local replay may use C.
+  const inspectionOverride =
+    opts?.inspection &&
+    !git.getCurrentBranchName() &&
+    rebaseInProgress() &&
+    continueConfig.data.rebasedBranchBase
+      ? continueConfig.data.currentBranchOverride
+      : undefined;
   const engine = composeEngine({
     git,
     trunkName: repoConfig.data.trunk,
     currentBranchOverride: opts?.inspection
-      ? undefined
+      ? inspectionOverride
       : continueConfig.data.currentBranchOverride,
     splog: contextLite.splog,
     noVerify: !(opts?.verify ?? true),
