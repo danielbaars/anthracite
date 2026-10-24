@@ -43,7 +43,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
           ],
         }
       );
-      savePty(result);
+      fixture.savePty(result);
       expect(result.status, result.output).to.equal(0);
       expect(result.output).to.match(/◯\s+tip/);
       expect(result.output).to.match(/◯\s+z-deep/);
@@ -146,7 +146,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         env: normalEnv,
         responses: [{ prompt: 'Choose a tip', input: '' }],
       });
-      savePty(result);
+      fixture.savePty(result);
       expect(result.status, result.output).not.to.equal(0);
       expect(result.status).not.to.equal(124);
       expect(result.output).to.include('Choose a tip above child');
@@ -195,7 +195,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
           ]),
           { cwd: fixture.repo, env: fixture.env }
         );
-        savePty(result);
+        fixture.savePty(result);
         expect(result.status, result.output).not.to.equal(0);
         expect(result.status).not.to.equal(124);
         expect(result.output).to.include('unique tip in non-interactive mode');
@@ -224,7 +224,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         getTestCliCommand(['reorder', '--stack', ...args]),
         { cwd: fixture.repo, env: fixture.env }
       );
-      savePty(result);
+      fixture.savePty(result);
       expect(result.status, result.output).not.to.equal(0);
       expect(result.status).not.to.equal(124);
       expect(result.output).not.to.include('Choose a tip');
@@ -262,7 +262,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         getTestCliCommand(['reorder', '--stack', '--interactive']),
         { cwd: fixture.repo, env: fixture.env }
       );
-      savePty(result);
+      fixture.savePty(result);
       expect(result.status, result.output).to.equal(0);
       expect(result.output).not.to.include('Choose a tip');
       expect(
@@ -308,7 +308,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         cwd: fixture.repo,
         env: fixture.env,
       });
-      savePty(result);
+      fixture.savePty(result);
       expect(result.status, result.output).not.to.equal(0);
       expect(result.status).not.to.equal(124);
       expect(result.output).not.to.include('Choose a tip');
@@ -335,7 +335,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         { prompt: '› tip\r\n', input: '\r' },
       ],
     });
-    savePty(result);
+    fixture.savePty(result);
     expect(result.status, result.output).to.equal(0);
     expect(fixture.git(['branch', '--show-current'], linked)).to.equal('child');
     expect(fixture.git(['status', '--porcelain'], linked)).to.equal('');
@@ -370,7 +370,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         { prompt: '› \r\n', input: '\r' },
       ],
     });
-    savePty(result);
+    fixture.savePty(result);
     expect(result.status, result.output).to.equal(0);
     const initial = result.output.split('› \r\n')[1]?.split('\u001b')[0] ?? '';
     const suggestion = /❯[^\r\n]*◯\s+(tip|deep)/.exec(initial)?.[1];
@@ -410,21 +410,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         { prompt: `› ${tip}\r\n`, input: '\r' },
       ],
     });
-    savePty(result);
+    fixture.savePty(result);
     return result;
-  }
-
-  function savePty(result: {
-    readonly status: number | null;
-    readonly output: string;
-  }): void {
-    const directory = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
-    if (directory) {
-      fs.mkdirSync(directory, { recursive: true });
-      fs.appendFileSync(
-        path.join(directory, `${path.basename(fixture.root)}-pty.jsonl`),
-        JSON.stringify(result) + '\n'
-      );
-    }
   }
 });

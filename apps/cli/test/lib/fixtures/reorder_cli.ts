@@ -197,6 +197,19 @@ export class ReorderCliFixture {
     this.ok(['checkout', departure]);
     return parent;
   }
+  savePty(result: {
+    readonly status: number | null;
+    readonly output: string;
+  }): void {
+    const directory = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    if (directory) {
+      fs.mkdirSync(directory, { recursive: true });
+      fs.appendFileSync(
+        path.join(directory, `${path.basename(this.root)}-pty.jsonl`),
+        JSON.stringify(result) + '\n'
+      );
+    }
+  }
   cleanup(): void {
     const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
     if (evidence) {

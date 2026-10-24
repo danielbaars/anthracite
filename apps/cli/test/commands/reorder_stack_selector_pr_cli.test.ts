@@ -116,14 +116,7 @@ describe('chosen stack reorder keeps its local PR boundary', function () {
         ],
       }
     );
-    const directory = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
-    if (directory) {
-      fs.mkdirSync(directory, { recursive: true });
-      fs.appendFileSync(
-        path.join(directory, `${path.basename(fixture.root)}-pty.jsonl`),
-        JSON.stringify(result) + '\n'
-      );
-    }
+    fixture.savePty(result);
     return result;
   }
 });

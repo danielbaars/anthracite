@@ -77,7 +77,7 @@ describe('chosen stack reorder rechecks real selection and editor effects', func
             ],
           }
         );
-        savePty(result);
+        fixture.savePty(result);
         expect(result.status, result.output).not.to.equal(0);
         expect(result.status).not.to.equal(124);
         expect(fs.existsSync(saved), result.output).to.equal(true);
@@ -180,7 +180,7 @@ describe('chosen stack reorder rechecks real selection and editor effects', func
           { prompt: '› tip\r\n', input: '\r' },
         ],
       });
-      savePty(result);
+      fixture.savePty(result);
       expect(result.status, result.output).not.to.equal(0);
       expect(result.status).not.to.equal(124);
       expect(result.output).to.include(
@@ -225,7 +225,7 @@ describe('chosen stack reorder rechecks real selection and editor effects', func
         { prompt: '› tip\r\n', input: '\r' },
       ],
     });
-    savePty(result);
+    fixture.savePty(result);
     expect(result.status, result.output).not.to.equal(0);
     expect(result.status).not.to.equal(124);
     expect(result.output)
@@ -274,18 +274,4 @@ describe('chosen stack reorder rechecks real selection and editor effects', func
         )
       ).to.equal(false);
   });
-
-  function savePty(result: {
-    readonly status: number | null;
-    readonly output: string;
-  }): void {
-    const directory = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
-    if (directory) {
-      fs.mkdirSync(directory, { recursive: true });
-      fs.appendFileSync(
-        path.join(directory, `${path.basename(fixture.root)}-pty.jsonl`),
-        JSON.stringify(result) + '\n'
-      );
-    }
-  }
 });

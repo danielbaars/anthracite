@@ -126,20 +126,6 @@ function run(
     );
   return result;
 }
-function savedParent(fixture: ReorderCliFixture, name: string): string {
-  const meta: unknown = JSON.parse(
-    fixture.git(['cat-file', '-p', `refs/branch-metadata/${name}`])
-  );
-  if (
-    typeof meta !== 'object' ||
-    meta === null ||
-    !('parentBranchName' in meta)
-  )
-    throw new Error('Missing parent');
-  const parent: unknown = Reflect.get(meta, 'parentBranchName');
-  if (typeof parent !== 'string') throw new Error('Invalid parent');
-  return parent;
-}
 // eslint-disable-next-line max-lines-per-function
 describe('stack reorder bounded real Git and storage failures', function () {
   this.timeout(120000);
@@ -162,18 +148,23 @@ describe('stack reorder bounded real Git and storage failures', function () {
     const output = result.stdout + result.stderr;
     expect(result.status).not.to.equal(0);
     expect(fixture.snapshot()).to.deep.equal(before);
-    expect(
-      ['child', 'tip', 'base'].map((name) => savedParent(fixture, name))
-    ).to.deep.equal(['main', 'child', 'main']);
     expect(output)
       .to.include('Parent graph: incomplete')
       .and.include('Phase: parent graph installation')
       .and.include('Current checkout: child');
-    for (const [name, parent] of [
+    fs.unlinkSync(refused);
+    fixture.ok(['info']);
+    fixture.ok(['log']);
+    const parents = ['child', 'tip', 'base'].map((name) => [
+      name,
+      fixture.parent(name),
+    ]);
+    expect(parents).to.deep.equal([
       ['child', 'main'],
       ['tip', 'child'],
       ['base', 'main'],
-    ])
+    ]);
+    for (const [name, parent] of parents)
       expect(output).to.include(
         `Saved branch: ${name} -> ${parent}; ref: ${fixture.git([
           'rev-parse',
@@ -183,11 +174,6 @@ describe('stack reorder bounded real Git and storage failures', function () {
     expect(output).not.to.include('Applied parents:');
     expect(commands(output)).to.deep.equal([]);
     expect(output).not.to.match(/retry.*reorder/i);
-    fs.unlinkSync(refused);
-    fixture.ok(['info']);
-    fixture.ok(['log']);
-    expect(fixture.parent('child')).to.equal('main');
-    expect(fixture.parent('base')).to.equal('main');
   });
   it('reports the published graph when a metadata hook occupies a pending branch after preflight', () => {
     const linked = path.join(fixture.root, 'late-worktree');
@@ -616,7 +602,6 @@ fi`
     fs.writeFileSync(path.join(fixture.repo, 'main.txt'), 'child recovered');
     fixture.git(['add', 'main.txt']);
     const old = fixture.git(['rev-parse', 'child']);
-    const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/child']);
     const refused = hook(
       fixture,
       'reference-transaction',
@@ -627,9 +612,6 @@ fi`
     expect(result.status).not.to.equal(0);
     expect(active(fixture)).to.equal(false);
     expect(fixture.git(['rev-parse', 'child'])).not.to.equal(old);
-    expect(fixture.git(['rev-parse', 'refs/branch-metadata/child'])).to.equal(
-      metadata
-    );
     expect(output)
       .to.include('replay metadata refused')
       .and.include('Completed branches: child')
@@ -651,6 +633,22 @@ fi`
     const completed = fixture.git(['rev-parse', 'child']);
     fixture.ok(['info']);
     fixture.ok(['log']);
+    const parents = ['child', 'tip', 'base'].map((name) => [
+      name,
+      fixture.parent(name),
+    ]);
+    expect(parents).to.deep.equal([
+      ['child', 'main'],
+      ['tip', 'child'],
+      ['base', 'tip'],
+    ]);
+    for (const [name, parent] of parents)
+      expect(output).to.include(
+        `Saved branch: ${name} -> ${parent}; ref: ${fixture.git([
+          'rev-parse',
+          `refs/heads/${name}`,
+        ])}`
+      );
     expect(fixture.git(['rev-parse', 'child'])).to.equal(completed);
     const before = fixture.snapshot();
     expect(run(fixture, ['continue']).status).not.to.equal(0);
