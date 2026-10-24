@@ -563,9 +563,9 @@ export function composeEngine({
       const meta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
       return git.showCommits(
         meta.validationResult === 'TRUNK'
-          ? `${branchName}~`
+          ? `${meta.branchRevision}~`
           : meta.parentBranchRevision,
-        branchName,
+        meta.branchRevision,
         patch
       );
     },
@@ -584,9 +584,9 @@ export function composeEngine({
       const meta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
       return git.showDiff(
         meta.validationResult === 'TRUNK'
-          ? `${branchName}~`
+          ? `${meta.branchRevision}~`
           : meta.parentBranchRevision,
-        branchName
+        meta.branchRevision
       );
     },
     getDiff: git.getDiff,
