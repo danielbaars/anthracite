@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import cp from 'child_process';
 
-const GIT_COMMAND_ALLOWLIST = [
+export const GIT_COMMAND_ALLOWLIST = [
   'add',
   'am',
   'apply',

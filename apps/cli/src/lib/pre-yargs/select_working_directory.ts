@@ -1,5 +1,7 @@
 import { CommandModule } from 'yargs';
 
+import { GIT_COMMAND_ALLOWLIST } from './passthrough';
+
 /** Normalize once so yargs and command-specific argv validation agree. */
 export function selectWorkingDirectory(
   commands: readonly CommandModule[]
@@ -7,8 +9,16 @@ export function selectWorkingDirectory(
   const args = process.argv.slice(2);
   const retained: string[] = [];
   let directory: string | undefined;
+  let isGitPassthrough = false;
   for (let index = 0; index < args.length; index++) {
     const argument = args[index];
+    // Only a direct cwd prefix may precede raw Git routing. The entire tail,
+    // including cwd-looking arguments and terminators, belongs to Git.
+    if (retained.length === 0 && GIT_COMMAND_ALLOWLIST.includes(argument)) {
+      retained.push(...args.slice(index));
+      isGitPassthrough = true;
+      break;
+    }
     if (argument === '--no-cwd' || argument.startsWith('--no-cwd='))
       throw new CwdSelectionError('--cwd cannot be negated.');
     if (argument === '--cwd') {
@@ -26,7 +36,10 @@ export function selectWorkingDirectory(
         throw new CwdSelectionError('--cwd requires a nonempty directory.');
     } else retained.push(argument);
   }
-  if (directory !== undefined && !isDocumentationRequest(retained, commands)) {
+  if (
+    directory !== undefined &&
+    (isGitPassthrough || !isDocumentationRequest(retained, commands))
+  ) {
     try {
       process.chdir(directory);
     } catch (error) {

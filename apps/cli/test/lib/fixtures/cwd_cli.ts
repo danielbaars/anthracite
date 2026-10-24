@@ -43,13 +43,15 @@ export class CwdCliFixture extends RelationCliFixture {
 
   override run(
     args: readonly string[],
-    cwd = this.repo
+    cwd = this.repo,
+    input?: string
   ): SpawnSyncReturns<string> {
     const [executable, ...cliArgs] = getTestCliCommand(args);
     const result = spawnSync(executable, cliArgs, {
       cwd,
       env: this.env,
       timeout: 20000,
+      input,
     });
     if (result.error) throw result.error;
     if (result.signal) throw new Error(`CLI killed by ${result.signal}`);
@@ -61,6 +63,8 @@ export class CwdCliFixture extends RelationCliFixture {
           args: cliArgs,
           cwd,
           status: result.status,
+          stdinBase64:
+            input === undefined ? null : Buffer.from(input).toString('base64'),
           stdoutBase64: result.stdout.toString('base64'),
           stderrBase64: result.stderr.toString('base64'),
           environment: Object.fromEntries(
