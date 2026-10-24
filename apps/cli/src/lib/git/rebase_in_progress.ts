@@ -2,7 +2,9 @@ import fs from 'fs-extra';
 import path from 'path';
 import { runGitCommand } from './runner';
 
-export function rebaseInProgress(options?: { cwd: string }): boolean {
+export function getRebaseDirectory(options?: {
+  readonly cwd: string;
+}): string | undefined {
   const gitDir = path.resolve(
     options?.cwd ?? process.cwd(),
     runGitCommand({
@@ -12,7 +14,11 @@ export function rebaseInProgress(options?: { cwd: string }): boolean {
       resource: 'rebaseInProgress',
     })
   );
-  return ['rebase-merge', 'rebase-apply'].some((directory) =>
-    fs.existsSync(path.join(gitDir, directory))
-  );
+  return ['rebase-merge', 'rebase-apply']
+    .map((directory) => path.join(gitDir, directory))
+    .find((directory) => fs.existsSync(directory));
+}
+
+export function rebaseInProgress(options?: { cwd: string }): boolean {
+  return getRebaseDirectory(options) !== undefined;
 }

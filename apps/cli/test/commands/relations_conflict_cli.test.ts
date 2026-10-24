@@ -131,6 +131,47 @@ describe('relation inspection during a real own conflictrebase', function () {
     ).to.equal('child own');
   });
 
+  for (const scenario of ['different onto', 'same onto', 'same replay']) {
+    it(`rejects stale own context during an unrelated raw Git conflict with ${scenario}`, () => {
+      fixture.git(['switch', 'main']);
+      fixture.git(['switch', '-c', 'raw-X']);
+      resolve('raw X');
+      fixture.git(['commit', '-m', 'raw X']);
+      fixture.git(['switch', '-c', 'raw-Y']);
+      resolve('raw Y');
+      fixture.git(['commit', '-m', 'raw Y']);
+      fixture.git(['switch', '-c', 'raw-target', 'main']);
+      resolve('raw target');
+      fixture.git(['commit', '-m', 'raw target']);
+      prepare();
+      fixture.editor('conflict-base\nconflict-child\n');
+      expect(
+        fixture.run(['reorder', '--stack', '--interactive']).status
+      ).to.equal(1);
+      expectReplay('conflict-child');
+      fixture.git(['rebase', '--abort']);
+      const sameReplay = scenario === 'same replay';
+      expect(() =>
+        fixture.git([
+          'rebase',
+          '--onto',
+          scenario === 'different onto' ? 'raw-target' : 'main',
+          sameReplay ? 'conflict-base' : 'raw-X',
+          sameReplay ? 'conflict-child' : 'raw-Y',
+        ])
+      ).to.throw();
+      expectReplay(sameReplay ? 'conflict-child' : 'raw-Y');
+      expectNoSubject();
+      resolve(sameReplay ? 'child version' : 'raw Y');
+      expectNoSubject();
+      fixture.env.GIT_EDITOR = 'true';
+      fixture.git(['rebase', '--continue']);
+      expect(fixture.git(['branch', '--show-current'])).to.equal(
+        sameReplay ? 'conflict-child' : 'raw-Y'
+      );
+    });
+  }
+
   it('rejects a logical departure removed through ordinary Git without repairing recovery', () => {
     prepare();
     fixture.editor('conflict-base\nconflict-child\n');

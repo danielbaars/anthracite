@@ -28,7 +28,7 @@ export class RelationCliFixture extends ReorderCliFixture {
 
   /** Observers alone disable optional writes; inspect opaque persistence bytes. */
   inspectionSnapshot(cwd = this.repo): Record<string, unknown> {
-    const git = (args: string[]): string =>
+    const git = (args: ReadonlyArray<string>): string =>
       execFileSync('git', args, {
         cwd,
         env: { ...this.env, GIT_OPTIONAL_LOCKS: '0' },

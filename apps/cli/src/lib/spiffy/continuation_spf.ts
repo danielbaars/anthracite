@@ -19,6 +19,7 @@ const ContinueSchema = t.shape({
   branchesToRestack: t.array(t.string),
   currentBranchOverride: t.optional(t.string),
   rebasedBranchBase: t.optional(t.string),
+  rebaseOwnership: t.optional(t.string),
   reorder: t.optional(
     t.shape({
       returnBranch: t.string,

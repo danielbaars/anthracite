@@ -1,6 +1,7 @@
 import { composeEngine, TEngine } from './engine/engine';
 import { TGit } from './git/git';
 import { rebaseInProgress } from './git/rebase_in_progress';
+import { ownsRebase } from './git/rebase_ownership';
 import {
   continueConfigFactory,
   TContinueConfig,
@@ -43,7 +44,7 @@ export function initContextLite(opts?: {
   quiet?: boolean;
   debug?: boolean;
   userEmail?: string;
-  inspection?: boolean;
+  readonly inspection?: boolean;
 }): TContextLite {
   const userConfig = userConfigFactory.load(
     process.env[USER_CONFIG_OVERRIDE_ENV]
@@ -85,7 +86,7 @@ export function initContext(
   opts?: {
     verify?: boolean;
     preserveMetadata?: boolean;
-    inspection?: boolean;
+    readonly inspection?: boolean;
   }
 ): TContext {
   const repoConfig = repoConfigFactory.load();
@@ -108,7 +109,7 @@ export function initContext(
   const inspectionOverride =
     opts?.inspection &&
     !git.getCurrentBranchName() &&
-    rebaseInProgress() &&
+    ownsRebase(continueConfig.data.rebaseOwnership) &&
     continueConfig.data.rebasedBranchBase
       ? continueConfig.data.currentBranchOverride
       : undefined;

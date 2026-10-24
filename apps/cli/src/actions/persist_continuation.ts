@@ -1,4 +1,5 @@
 import { TContext } from '../lib/context';
+import { recordRebaseOwnership } from '../lib/git/rebase_ownership';
 
 export function persistContinuation(
   args: {
@@ -24,11 +25,13 @@ export function persistContinuation(
       'PERSISTING (restack):'
     )
   );
+  const rebaseOwnership = recordRebaseOwnership();
   context.continueConfig.update((data) => {
     data.branchesToSync = branchesToSync;
     data.branchesToRestack = branchesToRestack;
     data.currentBranchOverride = context.engine.currentBranch;
     data.rebasedBranchBase = args.rebasedBranchBase;
+    data.rebaseOwnership = rebaseOwnership;
   });
 }
 
@@ -38,6 +41,7 @@ export function clearContinuation(context: TContext): void {
     data.branchesToRestack = [];
     data.currentBranchOverride = undefined;
     data.rebasedBranchBase = undefined;
+    data.rebaseOwnership = undefined;
     data.move = undefined;
     data.fold = undefined;
     data.reorder = undefined;

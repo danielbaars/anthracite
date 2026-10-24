@@ -22,7 +22,7 @@ export function spiffy<TSpfData, THelperFunctions>(
   };
   const loadHandler = (
     defaultPathOverride?: string,
-    options?: { preserveInvalid?: boolean }
+    options?: { readonly preserveInvalid?: boolean }
   ) => {
     const filePath = determinePath(defaultPathOverride);
     const _data: TSpfData = readOrInitSpf({
@@ -100,7 +100,7 @@ type TSpfInstance<TSpfData, THelperFunctions> = {
 type TSpfFactory<TSpfData, THelperFunctions> = {
   load: (
     filePath?: string,
-    options?: { preserveInvalid?: boolean }
+    options?: { readonly preserveInvalid?: boolean }
   ) => TSpfInstance<TSpfData, THelperFunctions>;
   loadIfExists: (
     filePath?: string

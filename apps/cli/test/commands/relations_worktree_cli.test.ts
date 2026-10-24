@@ -19,7 +19,7 @@ describe('relation inspection across worktrees and raw abort', function () {
   afterEach(() => fixture?.cleanup());
 
   function expectPreserved(
-    before: Record<string, unknown>[],
+    before: ReadonlyArray<Record<string, unknown>>,
     label: string
   ): void {
     const after = observed.map((cwd) => fixture.inspectionSnapshot(cwd));
@@ -159,8 +159,8 @@ describe('relation inspection across worktrees and raw abort', function () {
   }
 
   function executeNamed(command: string): {
-    status: number | null;
-    output: string;
+    readonly status: number | null;
+    readonly output: string;
   } {
     const bin = path.join(fixture.root, 'named-recovery-bin');
     fs.mkdirSync(bin, { recursive: true });
