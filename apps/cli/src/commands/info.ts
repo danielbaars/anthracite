@@ -22,6 +22,12 @@ const args = {
     type: 'boolean',
     alias: 'd',
   },
+  stat: {
+    describe: `Show a diffstat instead of full patches.`,
+    default: false,
+    type: 'boolean',
+    alias: 's',
+  },
   body: {
     describe: `Show the PR body, if it exists.`,
     demandOption: false,
@@ -52,7 +58,7 @@ export const builder = (cli: yargs.Argv): yargs.Argv =>
         if (/^--(?:no-)?branch(?:Name|-name)(?:=|$)/.test(argument))
           throw new Error('Use a positional branch name or --branch.');
         if (
-          /^(?:--(?:no-)?(?:patch|diff|body|quiet|interactive|verify|debug|p|d|b|q)|-[pdbq]+)=(?!true$|false$)/.test(
+          /^(?:--(?:no-)?(?:patch|diff|stat|body|quiet|interactive|verify|debug|p|d|s|b|q)|-[pdsbq]+)=(?!true$|false$)/.test(
             argument
           )
         )
@@ -87,6 +93,7 @@ export const handler = async (argv: argsT): Promise<void> => {
         patch: argv.patch,
         diff: argv.diff,
         body: argv.body,
+        stat: argv.stat,
         quiet: argv.quiet === true,
       },
       context

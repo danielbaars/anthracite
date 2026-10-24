@@ -3,7 +3,7 @@ import { runGitCommand } from './runner';
 export function showCommits(
   base: string,
   head: string,
-  patch?: boolean
+  opts: { readonly shouldShowPatch: boolean; readonly shouldShowStat?: boolean }
 ): string {
   return runGitCommand({
     args: [
@@ -11,7 +11,7 @@ export function showCommits(
       `color.ui=always`,
       `--no-pager`,
       `log`,
-      ...(patch ? ['-p'] : []),
+      ...(opts.shouldShowPatch ? [opts.shouldShowStat ? '--stat' : '-p'] : []),
       `${base}..${head}`,
       `--`,
     ],

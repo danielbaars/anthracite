@@ -7,9 +7,10 @@ import { TBranchPRInfo } from '../lib/engine/metadata_ref';
 export async function showBranchInfo(
   branchName: string,
   opts: {
-    patch: boolean;
-    diff: boolean;
-    body: boolean;
+    readonly patch: boolean;
+    readonly diff: boolean;
+    readonly body: boolean;
+    readonly stat: boolean;
     readonly quiet?: boolean;
   },
   context: TContext
@@ -41,11 +42,13 @@ export async function showBranchInfo(
   }
 
   output.push('');
-  output.push(context.engine.showCommits(branchName, opts.patch && !opts.diff));
+  output.push(
+    context.engine.showCommits(branchName, opts.patch && !opts.diff, opts.stat)
+  );
 
-  if (opts.diff) {
+  if (opts.diff || (opts.stat && !opts.patch)) {
     output.push('');
-    output.push(context.engine.showDiff(branchName));
+    output.push(context.engine.showDiff(branchName, opts.stat));
   }
 
   if (opts.quiet) return;

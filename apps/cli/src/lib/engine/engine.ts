@@ -59,8 +59,12 @@ export type TEngine = {
   getStatus: () => TStatusFile[];
   logLong: () => void;
 
-  showCommits: (branchName: string, patch: boolean) => string;
-  showDiff: (branchName: string) => string;
+  showCommits: (
+    branchName: string,
+    patch: boolean,
+    shouldShowStat?: boolean
+  ) => string;
+  showDiff: (branchName: string, shouldShowStat?: boolean) => string;
   getDiff: (left: string, right: string | undefined) => string;
   getStackDiff: (branchName: string) => string;
   getParentOrPrev: (branchName: string) => string;
@@ -559,14 +563,18 @@ export function composeEngine({
     getUnstagedChanges: git.getUnstagedChanges,
     getStatus: git.getStatus,
     logLong: git.logLong,
-    showCommits: (branchName: string, patch: boolean) => {
+    showCommits: (
+      branchName: string,
+      patch: boolean,
+      shouldShowStat?: boolean
+    ) => {
       const meta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
       return git.showCommits(
         meta.validationResult === 'TRUNK'
           ? `${meta.branchRevision}~`
           : meta.parentBranchRevision,
         meta.branchRevision,
-        patch
+        { shouldShowPatch: patch, shouldShowStat }
       );
     },
     getChangedFiles: (branchName: string) => {
@@ -580,13 +588,14 @@ export function composeEngine({
     },
     getFileContents: git.getFileContents,
     restoreFile: git.restoreFile,
-    showDiff: (branchName: string) => {
+    showDiff: (branchName: string, shouldShowStat?: boolean) => {
       const meta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
       return git.showDiff(
         meta.validationResult === 'TRUNK'
           ? `${meta.branchRevision}~`
           : meta.parentBranchRevision,
-        meta.branchRevision
+        meta.branchRevision,
+        shouldShowStat
       );
     },
     getDiff: git.getDiff,

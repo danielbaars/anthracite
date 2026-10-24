@@ -410,7 +410,7 @@ describe('info branch selection through the public CLI', function () {
       ['info', '--branch', 'pr-selected', '--body', '--patch'],
       ['i', 'pr-selected', '--body', '--diff'],
       ['info', '--branch', 'pr-selected', '--body', '--patch', '--diff'],
-    ]) {
+    ].flatMap((args) => [args, [...args, '--stat']])) {
       const result = fixture.run([...args, '--no-interactive']);
       expect(result.status, result.stdout + result.stderr).to.equal(0);
       expect(stripAnsi(result.stdout))
