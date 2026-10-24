@@ -4,6 +4,7 @@ import {
   NoGraphiteContinue,
   RebaseCheckoutError,
   RebaseConflictError,
+  RebaseMetadataError,
 } from '../lib/errors';
 import { clearContinuation, persistContinuation } from './persist_continuation';
 import { printConflictStatus } from './print_conflict_status';
@@ -62,18 +63,27 @@ export async function continueAction(
     }
     cont = context.engine.continueRebase(rebasedBranchBase);
   } catch (error) {
-    if (error instanceof RebaseCheckoutError) {
+    if (
+      error instanceof RebaseCheckoutError ||
+      error instanceof RebaseMetadataError
+    ) {
       recordMoveCompletion(error.branchName, context);
       recordReorderCompletion(error.branchName, context);
     }
     reportMoveFailure(
-      error instanceof RebaseCheckoutError
+      error instanceof RebaseCheckoutError ||
+        error instanceof RebaseMetadataError
         ? error.branchName
         : activeBranch ?? 'unknown branch',
       branchesToRestack ?? [],
       context
     );
-    reportReorderFailure(context);
+    reportReorderFailure(
+      context,
+      error instanceof RebaseMetadataError
+        ? 'replay metadata publication'
+        : undefined
+    );
     throw error;
   }
   if (cont.result === 'REBASE_CONFLICT') {

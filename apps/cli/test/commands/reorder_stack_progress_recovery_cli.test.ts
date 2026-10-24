@@ -344,117 +344,129 @@ describe('stack reorder persistent progress and executable recovery', function (
         "Remaining branches: r-child, r-tip, r-base, side'$(false), r-deep"
       );
   });
-  it('records a completed rewrite before its failed return checkout and offers only actual pending recovery', () => {
-    fixture.git(['switch', 'r-base']);
-    fs.writeFileSync(
-      path.join(fixture.repo, 'café.txt'),
-      'base Unicode content'
-    );
-    fixture.git(['add', 'café.txt']);
-    fixture.git(['commit', '-m', 'base Unicode']);
-    fixture.ok(['restack', '--branch', 'r-child', '--upstack']);
-    fixture.ok(['restack', '--branch', "side'$(false)", '--upstack']);
-    fixture.git(['switch', "side'$(false)"]);
-    fixture.git(['rm', 'café.txt']);
-    fixture.git(['commit', '-m', 'side Unicode removal']);
-    fixture.git(['switch', 'r-child']);
-    // C owns this edit, so its final tree retains the path after moving to trunk.
-    fs.writeFileSync(
-      path.join(fixture.repo, 'café.txt'),
-      'departure Unicode content'
-    );
-    fixture.git(['add', 'café.txt']);
-    fixture.git(['commit', '-m', 'child Unicode']);
-    fixture.ok(['restack', '--branch', 'r-tip']);
-    fixture.git(['switch', 'r-child']);
-    expect(
-      fixture.run(['reorder', '--stack', '--interactive']).status
-    ).not.to.equal(0);
-    resolve(fixture, 'child own');
-    // The selected Unicode edit also conflicts when replayed without its base.
-    fs.writeFileSync(
-      path.join(fixture.repo, 'café.txt'),
-      'departure Unicode content'
-    );
-    fixture.git(['add', 'café.txt']);
-    let result = fixture.run(['continue']);
-    for (
-      let step = 0;
-      step < 4 &&
-      active(fixture) &&
-      !(result.stdout + result.stderr).includes(
-        "Conflict branch: side'$(false)"
+  for (const finalReplay of [false, true]) {
+    it(`records a completed rewrite before its failed ${
+      finalReplay ? 'final' : 'intermediate'
+    } return checkout and offers only actual pending recovery`, () => {
+      if (finalReplay) fixture.ok(['delete', 'r-deep', '--force']);
+      fixture.git(['switch', 'r-base']);
+      fs.writeFileSync(
+        path.join(fixture.repo, 'café.txt'),
+        'base Unicode content'
       );
-      step++
-    ) {
-      resolve(fixture, 'reordered base');
+      fixture.git(['add', 'café.txt']);
+      fixture.git(['commit', '-m', 'base Unicode']);
+      fixture.ok(['restack', '--branch', 'r-child', '--upstack']);
+      fixture.ok(['restack', '--branch', "side'$(false)", '--upstack']);
+      fixture.git(['switch', "side'$(false)"]);
+      fixture.git(['rm', 'café.txt']);
+      fixture.git(['commit', '-m', 'side Unicode removal']);
+      fixture.git(['switch', 'r-child']);
+      // C owns this edit, so its final tree retains the path after moving to trunk.
       fs.writeFileSync(
         path.join(fixture.repo, 'café.txt'),
         'departure Unicode content'
       );
       fixture.git(['add', 'café.txt']);
-      result = fixture.run(['continue']);
-    }
-    expect(result.status).not.to.equal(0);
-    expect(result.stdout + result.stderr).to.include(
-      "Conflict branch: side'$(false)"
-    );
-    fixture.ok(['info']);
-    fixture.ok(['log']);
-    resolve(fixture, 'side recovered');
-    const removal = fixture.run(['continue']);
-    expect(removal.status).not.to.equal(0);
-    expect(fixture.git(['ls-files', '--unmerged'])).to.include('caf');
-    fixture.git(['rm', '--', 'café.txt']);
-    fs.appendFileSync(
-      path.join(fixture.repo, '.git/info/exclude'),
-      '\ncafé.txt\ncafe\u0301.txt\n'
-    );
-    const hook = path.join(fixture.repo, '.git/hooks/post-rewrite');
-    fs.writeFileSync(
-      hook,
-      `#!/bin/sh\nprintf '\\000\\377\\200\\013' > ${quote('cafe\u0301.txt')}\n`,
-      { mode: 0o755 }
-    );
-    const stopped = fixture.run(['continue']);
-    const output = stopped.stdout + stopped.stderr;
-    expect(stopped.status).not.to.equal(0);
-    expect(output)
-      .to.match(/rewrite[^\n]*completed/i)
-      .and.include("Completed branches: r-child, r-tip, r-base, side'$(false)")
-      .and.include('Remaining branches: r-deep')
-      .and.include("Current checkout: side'$(false)");
-    expect(active(fixture)).to.equal(false);
-    const completed = fixture.git(['rev-parse', "side'$(false)"]);
-    const bytes = Buffer.from([0, 255, 128, 11]);
-    expect(
-      fs.readFileSync(path.join(fixture.repo, 'cafe\u0301.txt'))
-    ).to.deep.equal(bytes);
-    const saved = fixture.snapshot();
-    expect(fixture.run(['continue']).status).not.to.equal(0);
-    expect(fixture.snapshot()).to.deep.equal(saved);
-    fs.renameSync(
-      path.join(fixture.repo, 'cafe\u0301.txt'),
-      path.join(fixture.root, 'saved-local-bytes')
-    );
-    fs.unlinkSync(hook);
-    const retries = commands(output);
-    expect(retries).to.deep.equal([
-      "ch restack --branch 'r-deep' --only",
-      "ch checkout 'r-child'",
-    ]);
-    for (const command of retries) execute(fixture, command);
-    expect(fixture.git(['branch', '--show-current'])).to.equal('r-child');
-    expect(fixture.git(['rev-parse', "side'$(false)"])).to.equal(completed);
-    expect(fixture.parent('r-deep')).to.equal("side'$(false)");
-    expect(
-      fixture.git(['log', '--reverse', '--format=%s', "side'$(false)..r-deep"])
-    ).to.equal('r-deep');
-    expect(
-      fs.readFileSync(path.join(fixture.root, 'saved-local-bytes'))
-    ).to.deep.equal(bytes);
-    expect(fixture.git(['status', '--porcelain'])).to.equal('');
-  });
+      fixture.git(['commit', '-m', 'child Unicode']);
+      fixture.ok(['restack', '--branch', 'r-tip']);
+      fixture.git(['switch', 'r-child']);
+      expect(
+        fixture.run(['reorder', '--stack', '--interactive']).status
+      ).not.to.equal(0);
+      resolve(fixture, 'child own');
+      // The selected Unicode edit also conflicts when replayed without its base.
+      fs.writeFileSync(
+        path.join(fixture.repo, 'café.txt'),
+        'departure Unicode content'
+      );
+      fixture.git(['add', 'café.txt']);
+      let result = fixture.run(['continue']);
+      for (
+        let step = 0;
+        step < 4 &&
+        active(fixture) &&
+        !(result.stdout + result.stderr).includes(
+          "Conflict branch: side'$(false)"
+        );
+        step++
+      ) {
+        resolve(fixture, 'reordered base');
+        fs.writeFileSync(
+          path.join(fixture.repo, 'café.txt'),
+          'departure Unicode content'
+        );
+        fixture.git(['add', 'café.txt']);
+        result = fixture.run(['continue']);
+      }
+      expect(result.status).not.to.equal(0);
+      expect(result.stdout + result.stderr).to.include(
+        "Conflict branch: side'$(false)"
+      );
+      fixture.ok(['info']);
+      fixture.ok(['log']);
+      resolve(fixture, 'side recovered');
+      const removal = fixture.run(['continue']);
+      expect(removal.status).not.to.equal(0);
+      expect(fixture.git(['ls-files', '--unmerged'])).to.include('caf');
+      fixture.git(['rm', '--', 'café.txt']);
+      fs.appendFileSync(
+        path.join(fixture.repo, '.git/info/exclude'),
+        '\ncafé.txt\ncafe\u0301.txt\n'
+      );
+      const hook = path.join(fixture.repo, '.git/hooks/post-rewrite');
+      fs.writeFileSync(
+        hook,
+        `#!/bin/sh\nprintf '\\000\\377\\200\\013' > ${quote(
+          'cafe\u0301.txt'
+        )}\n`,
+        { mode: 0o755 }
+      );
+      const stopped = fixture.run(['continue']);
+      const output = stopped.stdout + stopped.stderr;
+      expect(stopped.status).not.to.equal(0);
+      expect(output)
+        .to.match(/rewrite[^\n]*completed/i)
+        .and.include(
+          "Completed branches: r-child, r-tip, r-base, side'$(false)"
+        )
+        .and.include(`Remaining branches: ${finalReplay ? 'none' : 'r-deep'}`)
+        .and.include("Current checkout: side'$(false)");
+      expect(active(fixture)).to.equal(false);
+      const completed = fixture.git(['rev-parse', "side'$(false)"]);
+      const bytes = Buffer.from([0, 255, 128, 11]);
+      expect(
+        fs.readFileSync(path.join(fixture.repo, 'cafe\u0301.txt'))
+      ).to.deep.equal(bytes);
+      const saved = fixture.snapshot();
+      expect(fixture.run(['continue']).status).not.to.equal(0);
+      expect(fixture.snapshot()).to.deep.equal(saved);
+      fs.renameSync(
+        path.join(fixture.repo, 'cafe\u0301.txt'),
+        path.join(fixture.root, 'saved-local-bytes')
+      );
+      fs.unlinkSync(hook);
+      const retries = commands(output);
+      expect(retries).to.deep.equal([
+        ...(finalReplay ? [] : ["ch restack --branch 'r-deep' --only"]),
+        "ch checkout 'r-child'",
+      ]);
+      for (const command of retries) execute(fixture, command);
+      expect(fixture.git(['branch', '--show-current'])).to.equal('r-child');
+      expect(fixture.git(['rev-parse', "side'$(false)"])).to.equal(completed);
+      if (!finalReplay) {
+        expect(fixture.parent('r-deep')).to.equal("side'$(false)");
+        const range = "side'$(false)..r-deep";
+        expect(
+          fixture.git(['log', '--reverse', '--format=%s', range])
+        ).to.equal('r-deep');
+      }
+      expect(
+        fs.readFileSync(path.join(fixture.root, 'saved-local-bytes'))
+      ).to.deep.equal(bytes);
+      expect(fixture.git(['status', '--porcelain'])).to.equal('');
+    });
+  }
   it('preserves the raw index on initial dirty refusal in the normal Git environment', () => {
     const file = path.join(fixture.repo, 'main.txt');
     const previous = fs.statSync(file);

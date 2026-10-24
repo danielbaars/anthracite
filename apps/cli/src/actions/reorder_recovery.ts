@@ -1,4 +1,5 @@
 import { TContext } from '../lib/context';
+import { readMetadataRef } from '../lib/engine/metadata_ref';
 import { PreconditionsFailedError } from '../lib/errors';
 import { getCurrentBranchName } from '../lib/git/branch_ops';
 import { assertRestackFilesAvailable } from '../lib/git/restack_files';
@@ -110,7 +111,10 @@ export function recordReorderCompletion(
   });
 }
 
-export function reportReorderFailure(context: TContext): void {
+export function reportReorderFailure(
+  context: TContext,
+  phase?: 'replay metadata publication'
+): void {
   const reorder = context.continueConfig.data.reorder;
   if (!reorder) return;
   const checkout = getCurrentBranchName();
@@ -141,6 +145,25 @@ export function reportReorderFailure(context: TContext): void {
   context.splog.info(
     `Remaining branches: ${reorder.pending.join(', ') || 'none'}.`
   );
+  if (!reorder.graphApplied || phase) {
+    context.splog.info(`Phase: ${phase ?? 'parent graph installation'}.`);
+    // A rejected write may already have changed the engine's in-memory graph.
+    for (const { name } of reorder.plan) {
+      const metadata = readMetadataRef(name);
+      const revision = runGitCommand({
+        args: ['rev-parse', '--verify', `refs/heads/${name}`],
+        onError: 'ignore',
+        resource: 'reorderSavedRef',
+      });
+      context.splog.info(
+        `Saved branch: ${name} -> ${
+          metadata.parentBranchName ?? 'unknown'
+        }; ref: ${revision || 'missing'}; base: ${
+          metadata.parentBranchRevision ?? 'unknown'
+        }.`
+      );
+    }
+  }
   if (!reorder.graphApplied) {
     context.splog.info(
       'Parent graph was not completely applied. Inspect the saved parents before further changes.'

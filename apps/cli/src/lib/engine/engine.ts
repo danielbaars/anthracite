@@ -4,6 +4,7 @@ import {
   NoBranchError,
   PreconditionsFailedError,
   RebaseCheckoutError,
+  RebaseMetadataError,
 } from '../errors';
 import { TCommitOpts } from '../git/commit';
 import { TCommitFormat } from '../git/commit_range';
@@ -434,11 +435,16 @@ export function composeEngine({
   ) => {
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
-    updateMeta(branchName, {
-      ...cachedMeta,
-      branchRevision: git.getShaOrThrow(`refs/heads/${branchName}`),
-      parentBranchRevision,
-    });
+    const branchRevision = git.getShaOrThrow(`refs/heads/${branchName}`);
+    try {
+      updateMeta(branchName, {
+        ...cachedMeta,
+        branchRevision,
+        parentBranchRevision,
+      });
+    } catch (error) {
+      throw new RebaseMetadataError(branchName, error);
+    }
 
     if (cache.currentBranch && cache.currentBranch in cache.branches) {
       try {

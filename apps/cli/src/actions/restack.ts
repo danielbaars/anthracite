@@ -1,6 +1,10 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
-import { RebaseCheckoutError, RebaseConflictError } from '../lib/errors';
+import {
+  RebaseCheckoutError,
+  RebaseConflictError,
+  RebaseMetadataError,
+} from '../lib/errors';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { assertUnreachable } from '../lib/utils/assert_unreachable';
 import { persistContinuation } from './persist_continuation';
@@ -51,9 +55,14 @@ export function restackBranches(
   branchNames: string[],
   context: TContext
 ): void {
-  assertBranchesAvailableInWorktrees(
-    getBranchesToRestack(branchNames, context)
-  );
+  try {
+    assertBranchesAvailableInWorktrees(
+      getBranchesToRestack(branchNames, context)
+    );
+  } catch (error) {
+    reportReorderFailure(context);
+    throw error;
+  }
 
   context.splog.debug(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')
@@ -131,12 +140,20 @@ export function restackBranches(
           assertUnreachable(result);
       }
     } catch (error) {
-      if (error instanceof RebaseCheckoutError) {
+      if (
+        error instanceof RebaseCheckoutError ||
+        error instanceof RebaseMetadataError
+      ) {
         recordMoveCompletion(error.branchName, context);
         recordReorderCompletion(error.branchName, context);
       }
       reportMoveFailure(branchName, branchNames, context);
-      reportReorderFailure(context);
+      reportReorderFailure(
+        context,
+        error instanceof RebaseMetadataError
+          ? 'replay metadata publication'
+          : undefined
+      );
       throw error;
     }
   }

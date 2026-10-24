@@ -23,6 +23,17 @@ export class RebaseCheckoutError extends ExitFailedError {
   }
 }
 
+export class RebaseMetadataError extends ExitFailedError {
+  constructor(readonly branchName: string, cause: unknown) {
+    super(
+      `Rewrite of ${branchName} completed, but metadata publication failed. ${
+        cause instanceof Error ? cause.message : String(cause)
+      }`
+    );
+    this.name = 'RebaseMetadataError';
+  }
+}
+
 export class NonInteractiveError extends Error {
   constructor() {
     super('Cannot perform interactive operation in non-interactive mode.');
