@@ -1,4 +1,4 @@
-import { spawnSync } from 'child_process';
+import { execFileSync, spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
@@ -253,7 +253,26 @@ sys.exit(result.returncode)
       );
     }
     expect(direct.status, direct.stderr).to.equal(0);
+    const expected = execFileSync(
+      'git',
+      ['-c', 'color.ui=always', '--no-pager', 'log', '-p', 'main..base', '--'],
+      {
+        cwd: fixture.repo,
+        env: { ...fixture.env, GIT_OPTIONAL_LOCKS: '0' },
+        encoding: 'utf8',
+        maxBuffer: 16 * 1024 * 1024,
+      }
+    ).trim();
+    if (evidence)
+      fs.writeFileSync(
+        path.join(
+          evidence,
+          `${path.basename(fixture.root)}-large-expected.gitlog`
+        ),
+        expected
+      );
     expect(Buffer.byteLength(direct.stdout)).to.be.greaterThan(2 * 1024 * 1024);
+    expect(direct.stdout.endsWith(expected + '\n')).to.equal(true);
     const before = fixture.inspectionSnapshot();
     for (const mode of ['quit', 'fail']) {
       const pager = installPager(mode);

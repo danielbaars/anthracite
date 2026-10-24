@@ -52,7 +52,12 @@ export async function showBranchInfo(
   if (context.interactive && process.stdin.isTTY && process.stdout.isTTY) {
     context.splog.page(output.join('\n'), { fallback: false });
   } else {
-    context.splog.info(output.join('\n'));
+    // Await delivery so the native runtime flushes large piped pages.
+    await new Promise<void>((resolve, reject) => {
+      process.stdout.write(`${output.join('\n')}\n`, (error) =>
+        error ? reject(error) : resolve()
+      );
+    });
   }
 }
 
