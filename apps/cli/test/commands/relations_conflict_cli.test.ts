@@ -150,24 +150,24 @@ describe('relation inspection during a real own conflictrebase', function () {
       ).to.equal(1);
       expectReplay('conflict-child');
       fixture.git(['rebase', '--abort']);
-      const sameReplay = scenario === 'same replay';
+      const isSameReplay = scenario === 'same replay';
       expect(() =>
         fixture.git([
           'rebase',
           '--onto',
           scenario === 'different onto' ? 'raw-target' : 'main',
-          sameReplay ? 'conflict-base' : 'raw-X',
-          sameReplay ? 'conflict-child' : 'raw-Y',
+          isSameReplay ? 'conflict-base' : 'raw-X',
+          isSameReplay ? 'conflict-child' : 'raw-Y',
         ])
       ).to.throw();
-      expectReplay(sameReplay ? 'conflict-child' : 'raw-Y');
+      expectReplay(isSameReplay ? 'conflict-child' : 'raw-Y');
       expectNoSubject();
-      resolve(sameReplay ? 'child version' : 'raw Y');
+      resolve(isSameReplay ? 'child version' : 'raw Y');
       expectNoSubject();
       fixture.env.GIT_EDITOR = 'true';
       fixture.git(['rebase', '--continue']);
       expect(fixture.git(['branch', '--show-current'])).to.equal(
-        sameReplay ? 'conflict-child' : 'raw-Y'
+        isSameReplay ? 'conflict-child' : 'raw-Y'
       );
     });
   }
