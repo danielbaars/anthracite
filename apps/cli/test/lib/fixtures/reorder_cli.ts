@@ -10,7 +10,7 @@ export class ReorderCliFixture {
   readonly repo = path.join(this.root, 'repo');
   readonly offered = path.join(this.root, 'offered');
   readonly env: NodeJS.ProcessEnv;
-  constructor() {
+  constructor(environment: NodeJS.ProcessEnv = process.env) {
     fs.mkdirSync(this.repo);
     const config = path.join(this.root, 'user-config');
     fs.writeFileSync(
@@ -18,7 +18,7 @@ export class ReorderCliFixture {
       JSON.stringify({ tips: false, branchDate: false })
     );
     this.env = {
-      ...process.env,
+      ...environment,
       GRAPHITE_USER_CONFIG_PATH: config,
       GRAPHITE_PROFILE: '',
       GH_CONFIG_DIR: path.join(this.root, 'gh-config'),

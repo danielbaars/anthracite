@@ -5,8 +5,8 @@ import { ReorderCliFixture } from './reorder_cli';
 
 /** Real CLI setup with normal optional locks for the command under test. */
 export class RelationCliFixture extends ReorderCliFixture {
-  constructor() {
-    super();
+  constructor(environment: NodeJS.ProcessEnv = process.env) {
+    super(environment);
     delete this.env.GIT_OPTIONAL_LOCKS;
     this.env.XDG_CONFIG_HOME = path.join(this.root, 'xdg');
     const marker = path.join(this.root, 'unexpected-tool');

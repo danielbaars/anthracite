@@ -109,7 +109,7 @@ const commandModules = [
 ] as unknown as CommandModule[];
 
 const cli = registerCompletion(
-  registerCommands(yargs(getYargsInput()), commandModules)
+  registerCommands(yargs(getYargsInput(commandModules)), commandModules)
 );
 
 void cli
