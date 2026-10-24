@@ -15,5 +15,10 @@ export function unstagedChanges(): boolean {
 }
 
 export function trackedUncommittedChanges(): boolean {
-  return doChangesExist([`status`, `-uno`, `--porcelain=v1`]); // staged but uncommitted changes only
+  return doChangesExist([
+    `--no-optional-locks`,
+    `status`,
+    `-uno`,
+    `--porcelain=v1`,
+  ]); // staged but uncommitted changes only
 }

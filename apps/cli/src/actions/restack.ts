@@ -11,6 +11,11 @@ import {
   reportMoveFailure,
 } from './move_recovery';
 import { uncommittedTrackedChangesPrecondition } from '../lib/preconditions';
+import {
+  assertReorderFilesAvailable,
+  recordReorderCompletion,
+  reportReorderFailure,
+} from './reorder_recovery';
 
 /** Plan parent-first restacks, optionally including branches a pending commit will change. */
 export function getBranchesToRestack(
@@ -54,7 +59,8 @@ export function restackBranches(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')
   );
   while (branchNames.length > 0) {
-    const branchName = branchNames.shift() as string;
+    const branchName = branchNames.shift();
+    if (!branchName) continue;
 
     if (context.engine.isTrunk(branchName)) {
       context.splog.info(
@@ -64,6 +70,10 @@ export function restackBranches(
     }
 
     try {
+      if (context.continueConfig.data.reorder) {
+        uncommittedTrackedChangesPrecondition();
+        assertReorderFilesAvailable(context);
+      }
       if (
         context.continueConfig.data.move ||
         context.continueConfig.data.fold
@@ -79,6 +89,7 @@ export function restackBranches(
       switch (result.result) {
         case 'REBASE_DONE':
           recordMoveCompletion(branchName, context);
+          recordReorderCompletion(branchName, context);
           context.splog.info(
             `Restacked ${chalk.green(branchName)} on ${chalk.cyan(
               context.engine.getParentPrecondition(branchName)
@@ -106,6 +117,7 @@ export function restackBranches(
 
         case 'REBASE_UNNEEDED':
           recordMoveCompletion(branchName, context);
+          recordReorderCompletion(branchName, context);
           context.splog.info(
             `${chalk.cyan(
               branchName
@@ -119,9 +131,12 @@ export function restackBranches(
           assertUnreachable(result);
       }
     } catch (error) {
-      if (error instanceof RebaseCheckoutError)
+      if (error instanceof RebaseCheckoutError) {
         recordMoveCompletion(error.branchName, context);
+        recordReorderCompletion(error.branchName, context);
+      }
       reportMoveFailure(branchName, branchNames, context);
+      reportReorderFailure(context);
       throw error;
     }
   }

@@ -10,6 +10,13 @@ import { printConflictStatus } from './print_conflict_status';
 import { getBranchesToRestack, restackBranches } from './restack';
 import { getBranchesFromRemote } from './sync/get';
 import {
+  assertReorderContinuationClean,
+  assertReorderFilesAvailable,
+  finishReorder,
+  recordReorderCompletion,
+  reportReorderFailure,
+} from './reorder_recovery';
+import {
   assertMoveFilesAvailable,
   recordMoveCompletion,
   reportMoveFailure,
@@ -39,6 +46,8 @@ export async function continueAction(
   const activeBranch = context.engine.getRebaseHead();
   let cont: ReturnType<TContext['engine']['continueRebase']>;
   try {
+    assertReorderContinuationClean(context);
+    assertReorderFilesAvailable(context);
     if (
       activeBranch &&
       (context.continueConfig.data.move || context.continueConfig.data.fold)
@@ -55,6 +64,7 @@ export async function continueAction(
   } catch (error) {
     if (error instanceof RebaseCheckoutError) {
       recordMoveCompletion(error.branchName, context);
+      recordReorderCompletion(error.branchName, context);
     }
     reportMoveFailure(
       error instanceof RebaseCheckoutError
@@ -63,6 +73,7 @@ export async function continueAction(
       branchesToRestack ?? [],
       context
     );
+    reportReorderFailure(context);
     throw error;
   }
   if (cont.result === 'REBASE_CONFLICT') {
@@ -76,10 +87,12 @@ export async function continueAction(
       branchesToRestack ?? [],
       context
     );
+    reportReorderFailure(context);
     throw new RebaseConflictError();
   }
 
   recordMoveCompletion(cont.branchName, context);
+  recordReorderCompletion(cont.branchName, context);
   context.splog.info(
     `Resolved rebase conflict for ${chalk.green(cont.branchName)}.`
   );
@@ -98,5 +111,6 @@ export async function continueAction(
   if (branchesToRestack) {
     restackBranches(branchesToRestack, context);
   }
+  finishReorder(context);
   clearContinuation(context);
 }

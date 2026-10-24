@@ -40,5 +40,6 @@ export function clearContinuation(context: TContext): void {
     data.rebasedBranchBase = undefined;
     data.move = undefined;
     data.fold = undefined;
+    data.reorder = undefined;
   });
 }

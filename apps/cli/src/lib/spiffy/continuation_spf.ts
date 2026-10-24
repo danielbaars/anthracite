@@ -19,6 +19,19 @@ const ContinueSchema = t.shape({
   branchesToRestack: t.array(t.string),
   currentBranchOverride: t.optional(t.string),
   rebasedBranchBase: t.optional(t.string),
+  reorder: t.optional(
+    t.shape({
+      returnBranch: t.string,
+      graphApplied: t.boolean,
+      plan: t.array(
+        t.shape({ name: t.string, parent: t.string, from: t.string })
+      ),
+      completed: t.array(t.string),
+      pending: t.array(t.string),
+      checkout: t.optional(t.string),
+      conflictBranch: t.optional(t.string),
+    })
+  ),
   fold: t.optional(
     t.shape({
       survivor: t.string,

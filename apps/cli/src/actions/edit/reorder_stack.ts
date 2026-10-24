@@ -13,6 +13,8 @@ import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { performInTmpDir } from '../../lib/utils/perform_in_tmp_dir';
 import { restackBranches } from '../restack';
+import { clearContinuation } from '../persist_continuation';
+import { beginReorder, finishReorder } from '../reorder_recovery';
 import { createStackEditFile } from './stack_edit_file';
 
 /** Reorder a frozen, aligned chain while preserving every original own range. */
@@ -124,17 +126,14 @@ export async function reorderStack(
     operation: 'reorder',
   });
   if (unchanged) return;
-  // Detach each new bottom before attaching its next child: no transient cycle.
-  parent = context.engine.trunk;
-  for (const name of order) {
-    context.engine.setParent(name, parent);
-    parent = name;
-  }
-  // The engine retains original own bases when only parent names change and
-  // returns to its original current branch after every completed replay.
+  beginReorder(
+    { returnBranch: departure, order, parents, original, pending: changing },
+    context
+  );
+  // Existing restack retains original own bases and returns to C after replay.
   restackBranches([...changing], context);
-  if (context.engine.currentBranch !== departure)
-    context.engine.checkoutBranch(departure, { preserveIgnored: true });
+  finishReorder(context);
+  clearContinuation(context);
 }
 
 function assertNoPrAssociation(name: string, context: TContext): void {
@@ -242,7 +241,13 @@ function captureReorderState(): string {
     git(['symbolic-ref', '-q', 'HEAD']),
     git(['for-each-ref', '--format=%(refname) %(objectname)']),
     fs.existsSync(index) ? fs.readFileSync(index).toString('base64') : '',
-    git(['status', '--porcelain=v1', '-z', '--untracked-files=no']),
+    git([
+      '--no-optional-locks',
+      'status',
+      '--porcelain=v1',
+      '-z',
+      '--untracked-files=no',
+    ]),
     git(['worktree', 'list', '--porcelain', '-z']),
     fs.readFileSync(
       path.join(
