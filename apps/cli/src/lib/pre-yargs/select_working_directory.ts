@@ -27,6 +27,11 @@ export function selectWorkingDirectory(
       retained.push(...args.slice(index));
       break;
     }
+    // Yargs dot notation would otherwise accept these as properties of cwd.
+    if (/^--(?:no-)?cwd\./.test(argument))
+      throw new CwdSelectionError(
+        `Unknown argument: ${argument.split('=')[0]}`
+      );
     if (argument === '--no-cwd' || argument.startsWith('--no-cwd='))
       throw new CwdSelectionError('--cwd cannot be negated.');
     if (argument === '--cwd') {

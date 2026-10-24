@@ -145,6 +145,124 @@ describe('cwd owned commands through the public CLI', function () {
     expect(start.inspectionSnapshot()).to.deep.equal(before);
   });
 
+  it('rejects dotted cwd spellings before committing staged work or running hooks in either repository', () => {
+    for (const fixture of [start, target]) {
+      fs.writeFileSync(path.join(fixture.repo, 'private.txt'), fixture.repo);
+      fixture.git(['add', 'private.txt']);
+      fs.writeFileSync(
+        path.join(fixture.repo, '.git', 'hooks', 'pre-commit'),
+        `#!${process.execPath}\nrequire('fs').writeFileSync(${JSON.stringify(
+          path.join(fixture.root, 'unexpected-hook')
+        )}, process.cwd());`,
+        { mode: 0o755 }
+      );
+    }
+    const before = [start.inspectionSnapshot(), target.inspectionSnapshot()];
+    const result = start.run([
+      'create',
+      'must-not-create',
+      '--cwd.foo=' + target.repo,
+      '--message=must not commit',
+      '--no-interactive',
+    ]);
+    expect(result.status, result.stdout + result.stderr).to.equal(1);
+    expect(result.stdout).to.equal('');
+    expect(result.stderr).to.include('--cwd');
+    for (const fixture of [start, target])
+      expect(
+        fs.existsSync(path.join(fixture.root, 'unexpected-hook'))
+      ).to.equal(false);
+    expect([
+      start.inspectionSnapshot(),
+      target.inspectionSnapshot(),
+    ]).to.deep.equal(before);
+  });
+
+  it('rejects unsupported dotted cwd keys with or without an exact selection before external tools', () => {
+    const before = [start.inspectionSnapshot(), target.inspectionSnapshot()];
+    const restoreTools = start.refuseExternalTools();
+    try {
+      for (const args of [
+        ['info', '--cwd.foo=' + target.repo],
+        ['info', '--cwd.foo', target.repo],
+        ['info', '--cwd.foo'],
+        ['info', '--cwd.=' + target.repo],
+        ['info', '--cwd..foo=' + target.repo],
+        ['info', '--no-cwd.foo'],
+        ['info', '--no-cwd.foo=false'],
+        ['--cwd.foo=' + target.repo, 'status'],
+        ['--cwd', target.repo, 'info', '--cwd.foo=' + start.repo],
+        ['info', '--cwd.foo', '--cwd', target.repo],
+        ['info', '--cwd=' + target.repo, '--no-cwd.foo'],
+      ]) {
+        const result = start.run([...args, '--no-interactive']);
+        expect(result.status, JSON.stringify(args) + result.stderr).to.equal(1);
+        expect(result.stdout).to.equal('');
+        expect(result.stderr).to.include('Unknown argument:');
+        expect(
+          fs.existsSync(path.join(start.root, 'unexpected-tool'))
+        ).to.equal(false);
+      }
+    } finally {
+      restoreTools();
+    }
+    expect([
+      start.inspectionSnapshot(),
+      target.inspectionSnapshot(),
+    ]).to.deep.equal(before);
+  });
+
+  it('preserves dotted cwd text in messages, owned terminator payload and the complete raw Git tail', () => {
+    const before = start.inspectionSnapshot();
+    const message = '--cwd.foo=/literal --no-cwd.foo';
+    fs.writeFileSync(
+      path.join(target.repo, 'literal.txt'),
+      'literal B content'
+    );
+    target.git(['add', 'literal.txt']);
+    start.ok([
+      'create',
+      'literal-dotted-payload',
+      '--cwd',
+      target.repo,
+      '--message=' + message,
+    ]);
+    expect(target.git(['log', '-1', '--format=%B'])).to.equal(message);
+    for (const payload of ['--cwd.foo=literal', '--no-cwd.foo']) {
+      const ordinary = target.run(['info', '--no-interactive', '--', payload]);
+      const selected = start.run([
+        '--cwd',
+        target.repo,
+        'info',
+        '--no-interactive',
+        '--',
+        payload,
+      ]);
+      expect(selected.status).to.equal(ordinary.status).and.not.equal(0);
+      expect(selected.stdout).to.equal(ordinary.stdout);
+      expect(selected.stderr)
+        .to.equal(ordinary.stderr)
+        .and.include('Could not find branch ' + payload);
+    }
+    const ordinary = target.run(['status', '--cwd.foo=literal']);
+    const selected = start.run([
+      '--cwd',
+      target.repo,
+      'status',
+      '--cwd.foo=literal',
+    ]);
+    expect(selected.status).to.equal(ordinary.status).and.not.equal(0);
+    expect(selected.stdout).to.equal(ordinary.stdout);
+    expect(selected.stderr)
+      .to.equal(ordinary.stderr)
+      .and.not.include('Cannot use --cwd');
+    fs.writeFileSync(path.join(target.repo, '--cwd.foo'), 'literal filename');
+    const staged = start.run(['--cwd', target.repo, 'add', '--', '--cwd.foo']);
+    expect(staged.status, staged.stdout + staged.stderr).to.equal(0);
+    expect(target.git(['show', ':--cwd.foo'])).to.equal('literal filename');
+    expect(start.inspectionSnapshot()).to.deep.equal(before);
+  });
+
   it('uses flag-looking directory names without weakening strict argument validation', () => {
     target.ok(['restack']);
     const cases: ReadonlyArray<readonly [string, readonly string[]]> = [
