@@ -126,6 +126,42 @@ function run(
     );
   return result;
 }
+
+function getInspectionSnapshot(
+  fixture: ReorderCliFixture
+): Readonly<Record<string, unknown>> {
+  const common = path.resolve(
+    fixture.repo,
+    fixture.git(['rev-parse', '--git-common-dir'])
+  );
+  const getBytes = (file: string): string | null =>
+    fs.existsSync(file) ? fs.readFileSync(file).toString('base64') : null;
+  const snapshot = {
+    ...fixture.snapshot(),
+    refs: fixture.git(['for-each-ref', '--format=%(refname) %(objectname)']),
+    persistent: Object.fromEntries(
+      [
+        'config',
+        '.graphite_repo_config',
+        '.gtcontinue',
+        '.graphite_pr_info',
+        '.graphite_cache_lock',
+        '.graphite_cache_persist',
+        'index.lock',
+      ].map((name) => [name, getBytes(path.join(common, name))])
+    ),
+    userConfig: getBytes(fixture.env.GRAPHITE_USER_CONFIG_PATH ?? ''),
+  };
+  const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+  if (evidence) {
+    fs.mkdirSync(evidence, { recursive: true });
+    fs.appendFileSync(
+      path.join(evidence, 'reorder-faults-info-snapshots.jsonl'),
+      JSON.stringify({ fixture: path.basename(fixture.root), snapshot }) + '\n'
+    );
+  }
+  return snapshot;
+}
 // eslint-disable-next-line max-lines-per-function
 describe('stack reorder bounded real Git and storage failures', function () {
   this.timeout(120000);
@@ -152,9 +188,17 @@ describe('stack reorder bounded real Git and storage failures', function () {
       .to.include('Parent graph: incomplete')
       .and.include('Phase: parent graph installation')
       .and.include('Current checkout: child');
+    expect(active(fixture)).to.equal(false);
+    const beforeInspection = getInspectionSnapshot(fixture);
+    const inspect = run(fixture, ['info']);
+    expect(inspect.status).to.equal(1);
+    expect(inspect.stdout).to.equal('');
+    expect(inspect.stderr).to.include('Malformed data at .git/.gtcontinue');
+    expect(getInspectionSnapshot(fixture)).to.deep.equal(beforeInspection);
+    // Ordinary log explicitly performs stale-context cleanup before inspection.
     fs.unlinkSync(refused);
-    fixture.ok(['info']);
     fixture.ok(['log']);
+    fixture.ok(['info']);
     const parents = ['child', 'tip', 'base'].map((name) => [
       name,
       fixture.parent(name),
@@ -622,17 +666,28 @@ fi`
     expect(output).to.include(
       `Saved branch: child -> main; ref: ${fixture.git(['rev-parse', 'child'])}`
     );
-    // A fresh reader must see the durable state and attempt its normal repair,
-    // rather than silently accepting a cache published from the rejected write.
+    // Read-only info refuses the durable unusable tracking without repairing it.
+    const beforeInspection = getInspectionSnapshot(fixture);
     const inspect = run(fixture, ['info']);
-    expect(inspect.status, inspect.stdout + inspect.stderr).not.to.equal(0);
-    expect(inspect.stdout + inspect.stderr).to.include(
-      'replay metadata refused'
+    expect(inspect.status).to.equal(1);
+    expect(inspect.stdout).to.equal('');
+    expect(inspect.stderr).to.include('untracked branch child');
+    expect(getInspectionSnapshot(fixture)).to.deep.equal(beforeInspection);
+    // A fresh ordinary log must still attempt repair through the rejecting hook,
+    // rather than accept a cache published from the rejected metadata write.
+    const beforeRepair = fixture.snapshot();
+    const tracking = fixture.git(['rev-parse', 'refs/branch-metadata/child']);
+    const repair = run(fixture, ['log']);
+    expect(repair.status).not.to.equal(0);
+    expect(repair.stdout + repair.stderr).to.include('replay metadata refused');
+    expect(fixture.snapshot()).to.deep.equal(beforeRepair);
+    expect(fixture.git(['rev-parse', 'refs/branch-metadata/child'])).to.equal(
+      tracking
     );
     fs.unlinkSync(refused);
     const completed = fixture.git(['rev-parse', 'child']);
-    fixture.ok(['info']);
     fixture.ok(['log']);
+    fixture.ok(['info']);
     const parents = ['child', 'tip', 'base'].map((name) => [
       name,
       fixture.parent(name),
