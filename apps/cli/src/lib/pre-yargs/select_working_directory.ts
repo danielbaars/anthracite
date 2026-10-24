@@ -19,6 +19,10 @@ export function selectWorkingDirectory(
       isGitPassthrough = true;
       break;
     }
+    if (argument === '--') {
+      retained.push(...args.slice(index));
+      break;
+    }
     if (argument === '--no-cwd' || argument.startsWith('--no-cwd='))
       throw new CwdSelectionError('--cwd cannot be negated.');
     if (argument === '--cwd') {
@@ -59,9 +63,11 @@ function isDocumentationRequest(
   args: readonly string[],
   commands: readonly CommandModule[]
 ): boolean {
-  if (!args.some((arg) => arg === '--help' || arg === '--version'))
+  const terminator = args.indexOf('--');
+  const options = terminator === -1 ? args : args.slice(0, terminator);
+  if (!options.some((arg) => arg === '--help' || arg === '--version'))
     return false;
-  const command = args.find(
+  const command = options.find(
     (arg) => !arg.startsWith('-') && arg !== 'true' && arg !== 'false'
   );
   if (command === undefined) return true;
