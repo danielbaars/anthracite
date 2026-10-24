@@ -1,4 +1,8 @@
-import { CommandModule } from 'yargs';
+import yargs, { CommandModule } from 'yargs';
+
+import { version } from '../../../package.json';
+import { globalArgumentsOptions } from '../global_arguments';
+import { registerCommands } from '../register_commands';
 
 import { GIT_COMMAND_ALLOWLIST } from './passthrough';
 
@@ -65,21 +69,56 @@ function isDocumentationRequest(
 ): boolean {
   const terminator = args.indexOf('--');
   const options = terminator === -1 ? args : args.slice(0, terminator);
-  if (!options.some((arg) => arg === '--help' || arg === '--version'))
+  // Completion has its own early execution path, before ordinary middleware.
+  if (
+    options.some(
+      (arg) =>
+        /^--get-yargs-completions(?:\.|=|$)/.test(arg) ||
+        /^--no-get-yargs-completions(?:\.[^=]*)?$/.test(arg)
+    )
+  )
     return false;
-  const command = options.find(
-    (arg) => !arg.startsWith('-') && arg !== 'true' && arg !== 'false'
+  let requested = false;
+  const executionBlocked = new Error(
+    'Documentation preflight cannot execute commands.'
   );
-  if (command === undefined) return true;
-  return commands.some((module) => {
-    const names =
-      typeof module.command === 'string' ? [module.command] : module.command;
-    const aliases =
-      typeof module.aliases === 'string'
-        ? [module.aliases]
-        : module.aliases ?? [];
-    return [...(names ?? []), ...aliases].some(
-      (name) => name.split(/\s/)[0] === command
-    );
-  });
+  try {
+    // Reuse real option arities and boolean overrides; this guard stops handlers,
+    // while root documentation can still run middleware after rendering output.
+    registerCommands(yargs(args), commands)
+      .scriptName('ch')
+      .help()
+      .version(version)
+      .options(globalArgumentsOptions)
+      .global(Object.keys(globalArgumentsOptions))
+      .strict()
+      .demandCommand()
+      .showHelpOnFail(false)
+      .parserConfiguration({ 'populate--': true })
+      .middleware((argv) => {
+        if (argv.help || argv.version) return;
+        if (
+          commands.some((module) => {
+            const names =
+              typeof module.command === 'string'
+                ? [module.command]
+                : module.command ?? [];
+            const aliases =
+              typeof module.aliases === 'string'
+                ? [module.aliases]
+                : module.aliases ?? [];
+            return [...names, ...aliases].some(
+              (name) => name.split(/\s/)[0] === argv._[0]
+            );
+          })
+        )
+          throw executionBlocked;
+      })
+      .parseSync(args, {}, (error, argv, output) => {
+        requested = !error && argv._[0] !== 'completion' && output.length > 0;
+      });
+  } catch (error) {
+    if (error !== executionBlocked) throw error;
+  }
+  return requested;
 }
