@@ -1,7 +1,9 @@
-import { expect } from 'chai';
 import fs from 'fs';
-import stripAnsi from 'strip-ansi';
 import path from 'path';
+
+import { expect } from 'chai';
+import stripAnsi from 'strip-ansi';
+
 import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 import { readSubmitPrs } from '../lib/fixtures/submit_gh';
 
