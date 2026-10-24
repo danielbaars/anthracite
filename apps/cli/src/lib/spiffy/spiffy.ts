@@ -20,13 +20,18 @@ export function spiffy<TSpfData, THelperFunctions>(
     );
     return filePaths.find((p) => fs.existsSync(p)) || filePaths[0];
   };
-  const loadHandler = (defaultPathOverride?: string) => {
+  const loadHandler = (
+    defaultPathOverride?: string,
+    options?: { preserveInvalid?: boolean }
+  ) => {
     const filePath = determinePath(defaultPathOverride);
     const _data: TSpfData = readOrInitSpf({
       filePath,
       schema: template.schema,
       initialize: template.initialize,
-      removeIfInvalid: template.options?.removeIfEmpty || false,
+      removeIfInvalid:
+        (!options?.preserveInvalid || !fs.existsSync(filePath)) &&
+        (template.options?.removeIfEmpty || false),
     }) as TSpfData;
     const update = (mutator: TSpfMutator<TSpfData>) => {
       mutator(_data);
@@ -93,7 +98,10 @@ type TSpfInstance<TSpfData, THelperFunctions> = {
 } & THelperFunctions;
 
 type TSpfFactory<TSpfData, THelperFunctions> = {
-  load: (filePath?: string) => TSpfInstance<TSpfData, THelperFunctions>;
+  load: (
+    filePath?: string,
+    options?: { preserveInvalid?: boolean }
+  ) => TSpfInstance<TSpfData, THelperFunctions>;
   loadIfExists: (
     filePath?: string
   ) => TSpfInstance<TSpfData, THelperFunctions> | undefined;

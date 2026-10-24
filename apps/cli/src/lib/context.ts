@@ -43,6 +43,7 @@ export function initContextLite(opts?: {
   quiet?: boolean;
   debug?: boolean;
   userEmail?: string;
+  inspection?: boolean;
 }): TContextLite {
   const userConfig = userConfigFactory.load(
     process.env[USER_CONFIG_OVERRIDE_ENV]
@@ -69,7 +70,9 @@ export function initContextLite(opts?: {
     },
     surveyConfig: surveyConfigFactory.load(),
     userConfig,
-    messageConfig: messageConfigFactory.load(),
+    messageConfig: messageConfigFactory.load(undefined, {
+      preserveInvalid: opts?.inspection,
+    }),
     userEmail: opts?.userEmail,
   };
 }
@@ -82,31 +85,41 @@ export function initContext(
   opts?: {
     verify?: boolean;
     preserveMetadata?: boolean;
+    inspection?: boolean;
   }
 ): TContext {
   const repoConfig = repoConfigFactory.load();
-  if (opts?.preserveMetadata && !repoConfig.graphiteInitialized())
+  if (
+    (opts?.preserveMetadata || opts?.inspection) &&
+    !repoConfig.graphiteInitialized()
+  )
     throw new PreconditionsFailedError(
-      'Stack reorder requires an initialized repository. Run ch init explicitly before retrying.'
+      opts?.inspection
+        ? 'Relation inspection requires an initialized repository. Run ch init explicitly before retrying.'
+        : 'Stack reorder requires an initialized repository. Run ch init explicitly before retrying.'
     );
-  if (!rebaseInProgress()) {
+  if (!opts?.inspection && !rebaseInProgress()) {
     continueConfigFactory.load().delete();
   }
-  const continueConfig = continueConfigFactory.load();
+  const continueConfig = continueConfigFactory.load(undefined, {
+    preserveInvalid: opts?.inspection,
+  });
   const engine = composeEngine({
     git,
     trunkName: repoConfig.data.trunk,
-    currentBranchOverride: continueConfig.data.currentBranchOverride,
+    currentBranchOverride: opts?.inspection
+      ? undefined
+      : continueConfig.data.currentBranchOverride,
     splog: contextLite.splog,
     noVerify: !(opts?.verify ?? true),
     remote: repoConfig.getRemote(),
-    preserveMetadata: opts?.preserveMetadata,
+    preserveMetadata: opts?.preserveMetadata || opts?.inspection,
     restackCommitterDateIsAuthorDate:
       contextLite.userConfig.data.restackCommitterDateIsAuthorDate,
   });
-  const prInfoConfig = prInfoConfigFactory.loadIfExists();
-  if (prInfoConfig) {
-    prInfoConfig.delete();
+  if (!opts?.inspection) {
+    const prInfoConfig = prInfoConfigFactory.loadIfExists();
+    if (prInfoConfig) prInfoConfig.delete();
   }
   return {
     ...contextLite,

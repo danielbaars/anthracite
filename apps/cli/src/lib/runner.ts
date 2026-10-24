@@ -38,6 +38,31 @@ export async function graphite(
   });
 }
 
+/** Direct relation queries share the engine without mutation/recovery cleanup. */
+export async function graphiteInspection(
+  args: yargs.Arguments & TGlobalArguments,
+  handler: (context: TContext) => Promise<void>
+): Promise<void> {
+  try {
+    const git = composeGit();
+    const lite = initContextLite({ ...args, inspection: true });
+    // Engine diagnostics must never become part of the branch-name data stream.
+    lite.splog.debug = args.debug
+      ? (message: string) => {
+          process.stderr.write(`${message}\n`);
+        }
+      : () => void 0;
+    const context = initContext(lite, git, { ...args, inspection: true });
+    await handler(context);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    process.stderr.write(`ERROR: ${message}\n`);
+    if (args.debug && error instanceof Error && error.stack)
+      process.stderr.write(`${error.stack}\n`);
+    process.exitCode = 1;
+  }
+}
+
 export async function graphiteWithoutRepo(
   args: yargs.Arguments & TGlobalArguments,
   canonicalName: string,
