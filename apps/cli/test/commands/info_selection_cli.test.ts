@@ -4,6 +4,7 @@ import path from 'path';
 import { expect } from 'chai';
 import stripAnsi from 'strip-ansi';
 
+import { preparePublicPrRemote } from '../lib/fixtures/public_pr';
 import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 import { readSubmitPrs } from '../lib/fixtures/submit_gh';
 
@@ -160,8 +161,8 @@ describe('info branch selection through the public CLI', function () {
     fixture.git(['add', 'child.txt'], linked);
     fs.writeFileSync(path.join(linked, 'child.txt'), 'linked unstaged');
     fs.writeFileSync(path.join(linked, 'untracked.bin'), Buffer.from([0, 255]));
-    for (const detached of [false, true]) {
-      if (detached) fixture.git(['checkout', '--detach']);
+    for (const isDetached of [false, true]) {
+      if (isDetached) fixture.git(['checkout', '--detach']);
       const before = [
         fixture.inspectionSnapshot(),
         fixture.inspectionSnapshot(linked),
@@ -231,8 +232,8 @@ describe('info branch selection through the public CLI', function () {
 
   it('refuses missing or unusable selected bases without repairing tracking', () => {
     fixture.git(['switch', 'other']);
-    for (const invalidRevision of [true, false]) {
-      if (invalidRevision)
+    for (const hasInvalidRevision of [true, false]) {
+      if (hasInvalidRevision)
         fixture.git(['update-ref', 'refs/heads/child', 'main']);
       else fixture.git(['branch', '-D', 'base']);
       const before = fixture.inspectionSnapshot();
@@ -322,29 +323,8 @@ describe('info branch selection through the public CLI', function () {
   });
 
   it('shows only the selected locally submitted PR identity and body with no query service activity', () => {
-    const bin = path.join(fixture.root, 'gh-bin');
-    fs.mkdirSync(bin);
-    const state = path.join(fixture.root, 'prs.json');
-    const calls = path.join(fixture.root, 'gh.jsonl');
-    fs.writeFileSync(state, '[]');
-    fs.writeFileSync(calls, '');
-    fs.writeFileSync(
-      path.join(bin, 'gh'),
-      `#!${process.execPath}\n${fs.readFileSync(
-        path.join(__dirname, '../lib/fixtures/submit_gh.js'),
-        'utf8'
-      )}`,
-      { mode: 0o755 }
-    );
-    fixture.env.PATH = `${bin}${path.delimiter}${fixture.env.PATH ?? ''}`;
-    fixture.env.CHARCOAL_TEST_GH_STATE = state;
-    fixture.env.CHARCOAL_TEST_GH_LOG = calls;
-    const remote = path.join(fixture.root, 'remote.git');
-    fixture.git(['init', '--bare', remote]);
-    fixture.git(['remote', 'add', 'origin', remote]);
-    fixture.git(['push', '-u', 'origin', 'main']);
-    fixture.ok(['repo', 'owner', '--set', 'fixture']);
-    fixture.ok(['repo', 'name', '--set', 'submit']);
+    const { state, calls, remote, refuseQueries } =
+      preparePublicPrRemote(fixture);
     for (const name of ['pr-selected', 'pr-checkout']) {
       fixture.branch(name, 'main');
       fs.mkdirSync(path.join(fixture.repo, '.github'), { recursive: true });
@@ -383,14 +363,7 @@ describe('info branch selection through the public CLI', function () {
         path.join(evidence, 'selection-pr-external-state.json')
       );
     }
-    fs.writeFileSync(calls, '');
-    fs.writeFileSync(
-      path.join(bin, 'gh'),
-      `#!${process.execPath}\nrequire('fs').appendFileSync(${JSON.stringify(
-        calls
-      )}, 'forbidden');process.exitCode=99;`,
-      { mode: 0o755 }
-    );
+    refuseQueries();
     for (const hook of ['post-checkout', 'post-rewrite', 'pre-commit'])
       fs.writeFileSync(
         path.join(fixture.repo, '.git', 'hooks', hook),
@@ -458,8 +431,8 @@ describe('info branch selection through the public CLI', function () {
     fixture.git(['switch', 'main']);
     fixture.commit('trunk-next');
     fixture.git(['switch', 'base']);
-    for (const merged of [false, true]) {
-      if (merged) {
+    for (const isMerged of [false, true]) {
+      if (isMerged) {
         fixture.git(['switch', 'main']);
         fixture.git(['merge', '--no-ff', 'other', '-m', 'trunk merge']);
         fixture.git(['switch', 'base']);
@@ -468,7 +441,7 @@ describe('info branch selection through the public CLI', function () {
       const expected = fixture
         .git(['log', '--format=%H', 'main~..main'])
         .split('\n');
-      expect(expected.length).to.equal(merged ? 2 : 1);
+      expect(expected.length).to.equal(isMerged ? 2 : 1);
       const result = fixture.run([
         'info',
         '--branch',

@@ -42,7 +42,7 @@ export function composeCacheLoader(
             trunkName,
           },
           splog,
-          !preserveMetadata
+          { repairMetadata: !preserveMetadata, inspection: isInspection }
         )
       );
     },

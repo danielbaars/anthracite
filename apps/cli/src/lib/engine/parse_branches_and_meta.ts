@@ -50,7 +50,10 @@ export type TCacheSeed = {
 export function parseBranchesAndMeta(
   args: TCacheSeed,
   splog: TSplog,
-  repairMetadata = true
+  {
+    repairMetadata = true,
+    inspection: isInspection = false,
+  }: { readonly repairMetadata?: boolean; readonly inspection?: boolean } = {}
 ): Record<string, TCachedMeta> {
   const branchesToParse = getAllBranchesAndMeta(args, splog, repairMetadata);
 
@@ -67,6 +70,12 @@ export function parseBranchesAndMeta(
     (branchesToParse.length * (branchesToParse.length + 1)) / 2;
   while (branchesToParse.length > 0) {
     if (cycleDetector-- <= 0) {
+      if (isInspection) {
+        // Keep cyclic components unusable without blocking unrelated inspection.
+        for (const branch of branchesToParse)
+          parsedBranches[branch.branchName] = getUnusableBranchMeta(branch);
+        break;
+      }
       throw new PreconditionsFailedError('Cycle detected in Charcoal metadata');
     }
 
@@ -157,6 +166,15 @@ export function parseBranchesAndMeta(
   }
 
   return parsedBranches;
+}
+
+function getUnusableBranchMeta(branch: TBranchToParse): TCachedMeta {
+  return {
+    validationResult: 'BAD_PARENT_NAME',
+    branchRevision: branch.branchRevision,
+    prInfo: branch.prInfo,
+    children: [],
+  };
 }
 
 type TBranchToParseWithValidatedParent = TBranchToParse & {

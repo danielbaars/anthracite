@@ -83,7 +83,7 @@ describe('info output policy through the public CLI', function () {
     };
   }
 
-  function terminal(
+  function runTerminal(
     args: ReadonlyArray<string>,
     descriptor = 'both'
   ): { readonly status: number | null; readonly output: string } {
@@ -124,7 +124,7 @@ sys.exit(result.returncode)
     return result;
   }
 
-  function expectUntouched(before: Record<string, unknown>): void {
+  function expectUntouched(before: Readonly<Record<string, unknown>>): void {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
       false
@@ -192,7 +192,7 @@ sys.exit(result.returncode)
     fixture.env.LESS = 'override-less';
     fixture.env.LV = 'override-lv';
     const before = fixture.inspectionSnapshot();
-    const result = terminal(['info']);
+    const result = runTerminal(['info']);
     expect(result.status, result.output).to.equal(0);
     expect(result.output).to.include('PAGER_CONSUMED');
     expect(fs.readFileSync(pager.log, 'utf8'))
@@ -207,7 +207,7 @@ sys.exit(result.returncode)
     const pager = installPager('fail');
     fixture.env.CH_PAGER = pager.command;
     const before = fixture.inspectionSnapshot();
-    const result = terminal(['info', '--interactive']);
+    const result = runTerminal(['info', '--interactive']);
     expect(result.status, result.output).to.equal(1);
     expect(result.output).to.include('PAGER_FAILED').and.include('ERROR:');
     expect(result.output).not.to.include('Parent: main');
@@ -277,7 +277,7 @@ sys.exit(result.returncode)
     for (const mode of ['quit', 'fail']) {
       const pager = installPager(mode);
       fixture.env.CH_PAGER = pager.command;
-      const result = terminal(['info', '--patch', '--interactive']);
+      const result = runTerminal(['info', '--patch', '--interactive']);
       expect(result.status, result.output).to.equal(mode === 'quit' ? 0 : 1);
       expect(result.output).to.include(
         mode === 'quit' ? 'PAGER_QUIT' : 'PAGER_FAILED'
@@ -296,7 +296,7 @@ sys.exit(result.returncode)
     fixture.env.CH_PAGER = pager.command;
     const before = fixture.inspectionSnapshot();
     for (const descriptor of ['stdin-pipe', 'stdout-pipe', 'stdin-closed']) {
-      const result = terminal(['info', '--interactive'], descriptor);
+      const result = runTerminal(['info', '--interactive'], descriptor);
       expect(result.status, result.output).to.equal(0);
       expect(result.output)
         .to.match(/^base\s/)
@@ -314,23 +314,23 @@ sys.exit(result.returncode)
       ['--quiet', '--interactive'],
       ['--quiet', '--no-interactive'],
     ]) {
-      const result = terminal(['info', ...flags]);
+      const result = runTerminal(['info', ...flags]);
       expect(result.status, result.output).to.equal(0);
       expect(result.output).to.equal('');
       expect(fs.existsSync(pager.log)).to.equal(false);
       expectUntouched(before);
     }
-    const noninteractive = terminal(['info', '--no-interactive']);
+    const noninteractive = runTerminal(['info', '--no-interactive']);
     expect(noninteractive.status, noninteractive.output).to.equal(0);
     expect(noninteractive.output).to.match(/^base\s/);
     expect(fs.existsSync(pager.log)).to.equal(false);
     fixture.env.GRAPHITE_INTERACTIVE = '1';
-    const contextDisabled = terminal(['info', '--interactive']);
+    const contextDisabled = runTerminal(['info', '--interactive']);
     expect(contextDisabled.status, contextDisabled.output).to.equal(0);
     expect(contextDisabled.output).to.match(/^base\s/);
     expect(fs.existsSync(pager.log)).to.equal(false);
     delete fixture.env.GRAPHITE_INTERACTIVE;
-    const restored = terminal(['info', '--quiet=false', '--interactive']);
+    const restored = runTerminal(['info', '--quiet=false', '--interactive']);
     expect(restored.status, restored.output).to.equal(0);
     expect(restored.output).to.include('PAGER_CONSUMED');
     expect(fs.readFileSync(pager.input, 'utf8')).to.match(/^base\s/);
@@ -342,7 +342,7 @@ sys.exit(result.returncode)
     fixture.ok(['user', 'pager', '--set', pager.command]);
     delete fixture.env.CH_PAGER;
     const before = fixture.inspectionSnapshot();
-    const configured = terminal(['info']);
+    const configured = runTerminal(['info']);
     expect(configured.status, configured.output).to.equal(0);
     expect(configured.output).to.include('PAGER_CONSUMED');
     expect(fs.readFileSync(pager.log, 'utf8'))
@@ -351,7 +351,7 @@ sys.exit(result.returncode)
     expectUntouched(before);
     fs.unlinkSync(pager.log);
     fixture.env.CH_PAGER = '';
-    const overridden = terminal(['info']);
+    const overridden = runTerminal(['info']);
     expect(overridden.status, overridden.output).to.equal(0);
     expect(overridden.output).to.match(/^base\s/);
     expect(fs.existsSync(pager.log)).to.equal(false);
@@ -359,7 +359,7 @@ sys.exit(result.returncode)
     delete fixture.env.CH_PAGER;
     fixture.ok(['user', 'pager', '--disable']);
     const disabledBefore = fixture.inspectionSnapshot();
-    const disabled = terminal(['info']);
+    const disabled = runTerminal(['info']);
     expect(disabled.status, disabled.output).to.equal(0);
     expect(disabled.output).to.match(/^base\s/);
     expect(fs.existsSync(pager.log)).to.equal(false);
@@ -417,11 +417,11 @@ sys.exit(result.returncode)
       );
     }
     const before = fixture.inspectionSnapshot();
-    const failure = terminal(['info', '--interactive']);
+    const failure = runTerminal(['info', '--interactive']);
     expect(failure.status, failure.output).to.equal(1);
     expect(failure.output).to.include('PAGER_FAILED').and.include('ERROR:');
     expectUntouched(before);
-    const quiet = terminal(['info', '--quiet', '--interactive']);
+    const quiet = runTerminal(['info', '--quiet', '--interactive']);
     expect(quiet.status, quiet.output).to.equal(0);
     expect(quiet.output).to.equal('');
     expect(

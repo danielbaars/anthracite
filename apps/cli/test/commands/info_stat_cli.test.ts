@@ -6,7 +6,7 @@ import stripAnsi from 'strip-ansi';
 
 import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 
-const statLines = (output: string): readonly string[] =>
+const getStatLines = (output: string): readonly string[] =>
   stripAnsi(output)
     .split('\n')
     .map((line) => line.trim().replace(/\s+/g, ' '))
@@ -33,7 +33,9 @@ describe('info diffstat through the public CLI', function () {
     fixture.commit('second-change');
     const selected = fixture.git(['rev-parse', 'child']);
     fixture.git(['switch', 'other']);
-    const expected = statLines(fixture.git(['diff', '--stat', base, selected]));
+    const expected = getStatLines(
+      fixture.git(['diff', '--stat', base, selected])
+    );
     const commits = fixture
       .git(['log', '--format=%H', `${base}..${selected}`])
       .split('\n');
@@ -50,7 +52,7 @@ describe('info diffstat through the public CLI', function () {
       expect(output)
         .to.match(/^child\s/)
         .and.not.include('diff --git');
-      expect(statLines(output)).to.deep.equal(expected);
+      expect(getStatLines(output)).to.deep.equal(expected);
       expect(output.match(/files? changed/g)?.length).to.equal(1);
       expect(output.indexOf(`commit ${commits[0]}`)).to.be.lessThan(
         output.indexOf(`commit ${commits[1]}`)
@@ -70,10 +72,12 @@ describe('info diffstat through the public CLI', function () {
     fixture.git(['commit', '-m', 'replace first']);
     const base = fixture.git(['rev-parse', 'base']);
     const head = fixture.git(['rev-parse', 'child']);
-    const expected = statLines(
+    const expected = getStatLines(
       fixture.git(['log', '--format=', '--stat', `${base}..${head}`])
     );
-    const cumulative = statLines(fixture.git(['diff', '--stat', base, head]));
+    const cumulative = getStatLines(
+      fixture.git(['diff', '--stat', base, head])
+    );
     expect(expected).not.to.deep.equal(cumulative);
     fixture.git(['switch', 'other']);
     const before = fixture.inspectionSnapshot();
@@ -85,7 +89,7 @@ describe('info diffstat through the public CLI', function () {
       '--no-interactive',
     ]);
     expect(result.status, result.stdout + result.stderr).to.equal(0);
-    expect(statLines(result.stdout)).to.deep.equal(expected);
+    expect(getStatLines(result.stdout)).to.deep.equal(expected);
     expect(stripAnsi(result.stdout))
       .not.to.include('diff --git')
       .and.not.to.include('@@');
@@ -113,11 +117,11 @@ describe('info diffstat through the public CLI', function () {
   it('uses the registered parent revision for stat after parent advance and needs-restack', () => {
     const registered = fixture.git(['rev-parse', 'base']);
     const selected = fixture.git(['rev-parse', 'child']);
-    const expected = statLines(
+    const expected = getStatLines(
       fixture.git(['diff', '--stat', registered, selected])
     );
     fixture.commit('parent-advance');
-    const liveParent = statLines(
+    const liveParent = getStatLines(
       fixture.git(['diff', '--stat', 'base', selected])
     );
     expect(expected).not.to.deep.equal(liveParent);
@@ -135,7 +139,7 @@ describe('info diffstat through the public CLI', function () {
       expect(stripAnsi(result.stdout))
         .to.match(/^child \(needs restack\)/)
         .and.not.include('parent-advance');
-      expect(statLines(result.stdout)).to.deep.equal(expected);
+      expect(getStatLines(result.stdout)).to.deep.equal(expected);
       expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     }
   });
@@ -164,7 +168,7 @@ describe('info diffstat through the public CLI', function () {
     fixture.git(['add', 'text.txt']);
     fixture.git(['commit', '-m', 'another text change']);
     const head = fixture.git(['rev-parse', 'HEAD']);
-    const expected = statLines(fixture.git(['diff', '--stat', base, head]));
+    const expected = getStatLines(fixture.git(['diff', '--stat', base, head]));
     expect(expected.join('\n'))
       .to.include('=>')
       .and.include('Bin 3 -> 4 bytes')
@@ -185,11 +189,11 @@ describe('info diffstat through the public CLI', function () {
       ]);
       expect(result.status, result.stdout + result.stderr).to.equal(0);
       const oracle = flags.includes('--patch')
-        ? statLines(
+        ? getStatLines(
             fixture.git(['log', '--format=', '--stat', `${base}..${head}`])
           )
         : expected;
-      expect(statLines(result.stdout)).to.deep.equal(oracle);
+      expect(getStatLines(result.stdout)).to.deep.equal(oracle);
       expect(stripAnsi(result.stdout))
         .not.to.include('diff --git')
         .and.not.to.include('@@');
@@ -203,8 +207,8 @@ describe('info diffstat through the public CLI', function () {
     const expectedPatch = fixture.git(['diff', base, head]);
     const implicitStat = fixture.run(['info', '--stat', '--no-interactive']);
     expect(implicitStat.status, implicitStat.stderr).to.equal(0);
-    expect(statLines(implicitStat.stdout)).to.deep.equal(
-      statLines(fixture.git(['diff', '--stat', base, head]))
+    expect(getStatLines(implicitStat.stdout)).to.deep.equal(
+      getStatLines(fixture.git(['diff', '--stat', base, head]))
     );
     const before = fixture.inspectionSnapshot();
     for (const flags of [[], ['--stat=false'], ['-s=false'], ['--no-stat']]) {
@@ -213,7 +217,7 @@ describe('info diffstat through the public CLI', function () {
       expect(stripAnsi(result.stdout))
         .to.match(/^base\s/)
         .and.include(`commit ${head}`);
-      expect(statLines(result.stdout)).to.deep.equal([]);
+      expect(getStatLines(result.stdout)).to.deep.equal([]);
       expect(stripAnsi(result.stdout)).not.to.include('diff --git');
     }
     for (const flags of [['--patch'], ['--diff'], ['--patch', '--diff']]) {
@@ -225,7 +229,7 @@ describe('info diffstat through the public CLI', function () {
       ]);
       expect(result.status, result.stdout + result.stderr).to.equal(0);
       expect(stripAnsi(result.stdout)).to.include(expectedPatch);
-      expect(statLines(result.stdout)).to.deep.equal([]);
+      expect(getStatLines(result.stdout)).to.deep.equal([]);
     }
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     const help = fixture.run(['info', '--help'], fixture.root);
@@ -242,7 +246,9 @@ describe('info diffstat through the public CLI', function () {
     ]) {
       fixture.branch(name, 'main');
       const head = fixture.git(['rev-parse', `refs/heads/${name}`]);
-      const expected = statLines(fixture.git(['diff', '--stat', 'main', head]));
+      const expected = getStatLines(
+        fixture.git(['diff', '--stat', 'main', head])
+      );
       fixture.git(['switch', 'base']);
       fixture.git(['tag', name, 'base']);
       const before = fixture.inspectionSnapshot();
@@ -253,7 +259,7 @@ describe('info diffstat through the public CLI', function () {
         const result = fixture.run(['info', '--no-interactive', ...args]);
         expect(result.status, result.stdout + result.stderr).to.equal(0);
         expect(stripAnsi(result.stdout).startsWith(`${name} `)).to.equal(true);
-        expect(statLines(result.stdout)).to.deep.equal(expected);
+        expect(getStatLines(result.stdout)).to.deep.equal(expected);
         expect(fixture.inspectionSnapshot()).to.deep.equal(before);
       }
     }
@@ -279,7 +285,7 @@ describe('info diffstat through the public CLI', function () {
         .to.match(/^empty-stat\s/)
         .and.not.include('commit ')
         .and.not.include('diff --git');
-      expect(statLines(result.stdout)).to.deep.equal([]);
+      expect(getStatLines(result.stdout)).to.deep.equal([]);
       const root = fixture.run([
         'info',
         'main',
@@ -294,15 +300,15 @@ describe('info diffstat through the public CLI', function () {
     }
     fixture.git(['switch', 'main']);
     fixture.commit('trunk-next');
-    for (const merge of [false, true]) {
-      if (merge)
+    for (const isMerged of [false, true]) {
+      if (isMerged)
         fixture.git(['merge', '--no-ff', 'other', '-m', 'trunk merge']);
       const base = fixture.git(['rev-parse', 'main~']);
       const head = fixture.git(['rev-parse', 'main']);
       const commits = fixture
         .git(['log', '--format=%H', `${base}..${head}`])
         .split('\n');
-      expect(commits.length).to.equal(merge ? 2 : 1);
+      expect(commits.length).to.equal(isMerged ? 2 : 1);
       const snapshot = fixture.inspectionSnapshot();
       for (const flags of [[], ['--patch'], ['--diff', '--patch']]) {
         const result = fixture.run([
@@ -317,7 +323,7 @@ describe('info diffstat through the public CLI', function () {
           flags.length === 1
             ? fixture.git(['log', '--format=', '--stat', `${base}..${head}`])
             : fixture.git(['diff', '--stat', base, head]);
-        expect(statLines(result.stdout)).to.deep.equal(statLines(oracle));
+        expect(getStatLines(result.stdout)).to.deep.equal(getStatLines(oracle));
         const output = stripAnsi(result.stdout);
         for (const commit of commits)
           expect(output).to.include(`commit ${commit}`);
@@ -365,15 +371,16 @@ describe('info diffstat through the public CLI', function () {
         target === 'child' ? 0 : 1
       );
       if (target === 'missing') expect(result.stdout).to.equal('');
-      else expect(statLines(result.stdout).join('\n')).to.include('child.txt');
+      else
+        expect(getStatLines(result.stdout).join('\n')).to.include('child.txt');
       expect([
         fixture.inspectionSnapshot(),
         fixture.inspectionSnapshot(linked),
       ]).to.deep.equal(before);
     }
     fixture.git(['update-ref', 'refs/heads/child', 'main']);
-    for (const removeParent of [false, true]) {
-      if (removeParent) {
+    for (const shouldRemoveParent of [false, true]) {
+      if (shouldRemoveParent) {
         fixture.git(['switch', 'other']);
         fixture.git(['branch', '-D', 'base']);
       }
@@ -420,8 +427,8 @@ describe('info diffstat through the public CLI', function () {
       '--no-interactive',
     ]);
     expect(ordinary.status, ordinary.stderr).to.equal(0);
-    expect(statLines(ordinary.stdout)).to.deep.equal(
-      statLines(fixture.git(['log', '--format=', '--stat', 'base..child']))
+    expect(getStatLines(ordinary.stdout)).to.deep.equal(
+      getStatLines(fixture.git(['log', '--format=', '--stat', 'base..child']))
     );
     const invalid = fixture.run([
       'info',

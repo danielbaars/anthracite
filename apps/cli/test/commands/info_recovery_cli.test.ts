@@ -6,6 +6,7 @@ import stripAnsi from 'strip-ansi';
 
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 
+import { preparePublicPrRemote } from '../lib/fixtures/public_pr';
 import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 import { readSubmitPrs } from '../lib/fixtures/submit_gh';
 import { runCliInPty } from '../lib/utils/run_cli_in_pty';
@@ -24,29 +25,7 @@ describe('info combined recovery through the public CLI', function () {
   afterEach(() => fixture?.cleanup());
 
   function preparePrs(names: readonly string[]): void {
-    const bin = path.join(fixture.root, 'gh-bin');
-    fs.mkdirSync(bin);
-    const state = path.join(fixture.root, 'prs.json');
-    const calls = path.join(fixture.root, 'gh.jsonl');
-    fs.writeFileSync(state, '[]');
-    fs.writeFileSync(calls, '');
-    fs.writeFileSync(
-      path.join(bin, 'gh'),
-      `#!${process.execPath}\n${fs.readFileSync(
-        path.join(__dirname, '../lib/fixtures/submit_gh.js'),
-        'utf8'
-      )}`,
-      { mode: 0o755 }
-    );
-    fixture.env.PATH = `${bin}${path.delimiter}${fixture.env.PATH ?? ''}`;
-    fixture.env.CHARCOAL_TEST_GH_STATE = state;
-    fixture.env.CHARCOAL_TEST_GH_LOG = calls;
-    const remote = path.join(fixture.root, 'remote.git');
-    fixture.git(['init', '--bare', remote]);
-    fixture.git(['remote', 'add', 'origin', remote]);
-    fixture.git(['push', '-u', 'origin', 'main']);
-    fixture.ok(['repo', 'owner', '--set', 'fixture']);
-    fixture.ok(['repo', 'name', '--set', 'submit']);
+    const { state, refuseQueries } = preparePublicPrRemote(fixture);
     for (const name of names) {
       fixture.branch(name, 'main', true);
       fs.mkdirSync(path.join(fixture.repo, '.github'), { recursive: true });
@@ -72,14 +51,7 @@ describe('info combined recovery through the public CLI', function () {
           path.join(evidence, `${path.basename(fixture.root)}-setup-${name}`)
         );
     }
-    fs.writeFileSync(calls, '');
-    fs.writeFileSync(
-      path.join(bin, 'gh'),
-      `#!${process.execPath}\nrequire('fs').appendFileSync(${JSON.stringify(
-        calls
-      )}, 'forbidden');process.exitCode=99;`,
-      { mode: 0o755 }
-    );
+    refuseQueries();
   }
 
   function prepareConflict(): void {
@@ -108,14 +80,14 @@ describe('info combined recovery through the public CLI', function () {
     expect(fs.readFileSync(file, 'utf8')).to.equal(`refs/heads/${name}\n`);
   }
 
-  function statLines(text: string): string[] {
+  function getStatLines(text: string): readonly string[] {
     return stripAnsi(text)
       .split(/\r?\n/)
       .map((line) => line.trim())
       .filter((line) => /\|/.test(line) || /files? changed/.test(line));
   }
 
-  function snapshot() {
+  function takeSnapshot() {
     return {
       worktrees: observed.map((directory) =>
         fixture.inspectionSnapshot(directory)
@@ -130,10 +102,10 @@ describe('info combined recovery through the public CLI', function () {
     };
   }
 
-  function query(args: readonly string[], cwd = fixture.repo) {
-    const before = snapshot();
+  function runQuery(args: readonly string[], cwd = fixture.repo) {
+    const before = takeSnapshot();
     const result = fixture.run(args, cwd);
-    expect(snapshot(), args.join(' ')).to.deep.equal(before);
+    expect(takeSnapshot(), args.join(' ')).to.deep.equal(before);
     expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
       false
     );
@@ -160,8 +132,8 @@ describe('info combined recovery through the public CLI', function () {
     expect(output).not.to.include('@@');
   }
 
-  function terminal(args: readonly string[], cwd = fixture.repo) {
-    const before = snapshot();
+  function runTerminal(args: readonly string[], cwd = fixture.repo) {
+    const before = takeSnapshot();
     const argv = getTestCliCommand(args);
     const result = runCliInPty(argv, { cwd, env: fixture.env });
     fixture.savePty(result);
@@ -171,7 +143,7 @@ describe('info combined recovery through the public CLI', function () {
         path.join(evidence, 'recovery-pty.jsonl'),
         JSON.stringify({ argv, cwd, result }) + '\n'
       );
-    expect(snapshot()).to.deep.equal(before);
+    expect(takeSnapshot()).to.deep.equal(before);
     expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
       false
     );
@@ -181,10 +153,10 @@ describe('info combined recovery through the public CLI', function () {
     return result;
   }
 
-  function setQueryHooks(enabled: boolean): void {
+  function setQueryHooks(isEnabled: boolean): void {
     for (const hook of ['post-checkout', 'post-rewrite', 'pre-commit']) {
       const file = path.join(fixture.repo, '.git', 'hooks', hook);
-      if (enabled)
+      if (isEnabled)
         fs.writeFileSync(
           file,
           `#!${process.execPath}\nrequire('fs').writeFileSync(${JSON.stringify(
@@ -221,23 +193,29 @@ describe('info combined recovery through the public CLI', function () {
       '--interactive',
     ];
     installPager(0);
-    expect(terminal(flags).status).to.equal(0);
+    expect(runTerminal(flags).status).to.equal(0);
     expectSelected(fs.readFileSync(input, 'utf8'), 'pr-selected');
-    expect(statLines(fs.readFileSync(input, 'utf8'))).to.deep.equal(
-      statLines(selectedStat)
+    expect(getStatLines(fs.readFileSync(input, 'utf8'))).to.deep.equal(
+      getStatLines(selectedStat)
     );
     installPager(23);
-    const failure = terminal(flags, linked);
+    const failure = runTerminal(flags, linked);
     expect(failure.status).to.equal(1);
     expect(failure.output)
       .to.include('ERROR:')
       .and.not.match(/^pr-selected\s/m);
     const pagerCalls = fs.readFileSync(calls);
-    const quiet = terminal([...flags, '--quiet'], linked);
+    const quiet = runTerminal([...flags, '--quiet'], linked);
     expect(quiet.status).to.equal(0);
     expect(quiet.output).to.equal('');
     expect(fs.readFileSync(calls)).to.deep.equal(pagerCalls);
-    const invalid = query(['info', 'missing', '--stat', '--body', '--quiet']);
+    const invalid = runQuery([
+      'info',
+      'missing',
+      '--stat',
+      '--body',
+      '--quiet',
+    ]);
     expect(invalid.status).to.equal(1);
     expect(invalid.stdout).to.equal('');
     expect(invalid.stderr).to.include('ERROR:');
@@ -327,13 +305,13 @@ describe('info combined recovery through the public CLI', function () {
     const editor = fixture.env.CH_EDITOR;
     fixture.env.CH_EDITOR = path.join(fixture.root, 'sentinel-bin', 'editor');
     setQueryHooks(true);
-    const implicit = query(['info', '--stat', '--no-interactive']);
+    const implicit = runQuery(['info', '--stat', '--no-interactive']);
     expect(implicit.status, implicit.stderr).to.equal(0);
     expect(stripAnsi(implicit.stdout)).to.match(/^conflict-base\s/);
-    expect(statLines(implicit.stdout)).to.deep.equal(
-      statLines(fixture.git(['diff', '--stat', main, base]))
+    expect(getStatLines(implicit.stdout)).to.deep.equal(
+      getStatLines(fixture.git(['diff', '--stat', main, base]))
     );
-    const explicit = query([
+    const explicit = runQuery([
       'info',
       'pr-selected',
       '--patch',
@@ -344,15 +322,15 @@ describe('info combined recovery through the public CLI', function () {
     ]);
     expect(explicit.status, explicit.stderr).to.equal(0);
     expectSelected(explicit.stdout, 'pr-selected');
-    expect(statLines(explicit.stdout)).to.deep.equal(
-      statLines(selectedPatchStat)
+    expect(getStatLines(explicit.stdout)).to.deep.equal(
+      getStatLines(selectedPatchStat)
     );
     expect(explicit.stderr).not.to.equal('');
     expect(explicit.stdout).not.to.include('DEBUG');
-    const attached = query(['info', '--stat', '--body'], linked);
+    const attached = runQuery(['info', '--stat', '--body'], linked);
     expect(attached.status, attached.stderr).to.equal(0);
     expectSelected(attached.stdout, 'pr-selected');
-    const alternate = query(
+    const alternate = runQuery(
       ['info', 'pr-checkout', '--diff', '--stat', '--body'],
       linked
     );
@@ -372,18 +350,18 @@ describe('info combined recovery through the public CLI', function () {
     fixture.env.CH_PAGER = '';
     fixture.env.CH_EDITOR = path.join(fixture.root, 'sentinel-bin', 'editor');
     setQueryHooks(true);
-    const next = query(['info', '--stat']);
+    const next = runQuery(['info', '--stat']);
     expect(next.status, next.stderr).to.equal(0);
     expect(stripAnsi(next.stdout)).to.match(/^conflict-base\s/);
     expectSelected(
-      query(['info', '--stat', '--body'], linked).stdout,
+      runQuery(['info', '--stat', '--body'], linked).stdout,
       'pr-selected'
     );
     expectSelected(
-      query(['info', 'pr-checkout', '--stat', '--body']).stdout,
+      runQuery(['info', 'pr-checkout', '--stat', '--body']).stdout,
       'pr-checkout'
     );
-    const quietSecond = query(['info', '--stat', '--body', '--quiet']);
+    const quietSecond = runQuery(['info', '--stat', '--body', '--quiet']);
     expect(quietSecond.status, quietSecond.stderr).to.equal(0);
     expect(quietSecond.stdout).to.equal('');
     setQueryHooks(false);
@@ -427,7 +405,7 @@ describe('info combined recovery through the public CLI', function () {
       expect(fixture.git(['branch', '--show-current'])).to.equal(
         'conflict-child'
       );
-      const attached = query(['info', '--stat']);
+      const attached = runQuery(['info', '--stat']);
       expect(attached.status, attached.stderr).to.equal(0);
       expect(stripAnsi(attached.stdout)).to.match(/^conflict-child\s/);
       expect(() =>
@@ -445,16 +423,16 @@ describe('info combined recovery through the public CLI', function () {
       for (const isResolved of [false, true]) {
         if (isResolved) resolve(isExactRestart ? 'child version' : 'raw Y');
         for (const flags of [[], ['--quiet']]) {
-          const refused = query(['info', '--stat', '--body', ...flags]);
+          const refused = runQuery(['info', '--stat', '--body', ...flags]);
           expect(refused.status).to.equal(1);
           expect(refused.stdout).to.equal('');
           expect(refused.stderr).to.include('ERROR:');
         }
-        const explicit = query(['info', 'pr-selected', '--stat', '--body']);
+        const explicit = runQuery(['info', 'pr-selected', '--stat', '--body']);
         expect(explicit.status, explicit.stderr).to.equal(0);
         expectSelected(explicit.stdout, 'pr-selected');
-        expect(statLines(explicit.stdout)).to.deep.equal(
-          statLines(expectedStat)
+        expect(getStatLines(explicit.stdout)).to.deep.equal(
+          getStatLines(expectedStat)
         );
       }
       setQueryHooks(false);

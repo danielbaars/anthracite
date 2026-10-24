@@ -4,6 +4,7 @@ import path from 'path';
 import { expect } from 'chai';
 import stripAnsi from 'strip-ansi';
 
+import { preparePublicPrRemote } from '../lib/fixtures/public_pr';
 import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 import { readSubmitPrs } from '../lib/fixtures/submit_gh';
 
@@ -100,6 +101,70 @@ describe('read-only info inspection', function () {
       expect(fixture.inspectionSnapshot(), command).to.deep.equal(before);
       expect(fs.readFileSync(cache), command).to.deep.equal(damaged);
     }
+  });
+
+  it('inspects a valid selected branch despite an unrelated tracking cycle without changing opaque state', () => {
+    const args = ['info', 'other', '--stat', '--no-interactive'];
+    const expected = fixture.run(args);
+    expect(expected.status, expected.stderr).to.equal(0);
+    // Reuse real opaque tracking created by public init/track; do not invent fields.
+    const tracking = fixture.git(['rev-parse', 'refs/branch-metadata/tip']);
+    fixture.git(['update-ref', 'refs/branch-metadata/base', tracking]);
+    const before = fixture.inspectionSnapshot();
+    const actual = fixture.run(args);
+    expect(actual.status, actual.stderr).to.equal(0);
+    expect(stripAnsi(actual.stdout)).to.match(/^other\s/);
+    // Relative commit age may tick between the two subprocesses.
+    expect(actual.stdout.split('\n').slice(2)).to.deep.equal(
+      expected.stdout.split('\n').slice(2)
+    );
+    expect(actual.stderr).to.equal('');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+  });
+
+  it('keeps parent and children inspection usable outside a cycle and refuses selected cycles and mutators', () => {
+    fixture.branch('other-tip', 'other');
+    fixture.git(['switch', 'other']);
+    const tracking = fixture.git(['rev-parse', 'refs/branch-metadata/tip']);
+    fixture.git(['update-ref', 'refs/branch-metadata/base', tracking]);
+    const before = fixture.inspectionSnapshot();
+    expect(fixture.ok(['parent'])).to.equal('main\n');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(fixture.ok(['children'])).to.equal('other-tip\n');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    for (const branch of ['base', 'child', 'tip']) {
+      const result = fixture.run([
+        'info',
+        branch,
+        '--stat',
+        '--no-interactive',
+      ]);
+      expect(result.status, branch).to.equal(1);
+      expect(result.stdout, branch).to.equal('');
+      expect(result.stderr, branch).to.include('ERROR:');
+      expect(fixture.inspectionSnapshot(), branch).to.deep.equal(before);
+    }
+    fixture.git(['switch', 'child']);
+    const cyclicBefore = fixture.inspectionSnapshot();
+    for (const command of ['info', 'parent', 'children']) {
+      const result = fixture.run([command, '--no-interactive']);
+      expect(result.status, command).to.equal(1);
+      expect(result.stdout, command).to.equal('');
+      expect(result.stderr, command).to.include('ERROR:');
+      expect(fixture.inspectionSnapshot(), command).to.deep.equal(cyclicBefore);
+    }
+    const mutation = fixture.run([
+      'track',
+      'other',
+      '--parent',
+      'main',
+      '--no-interactive',
+    ]);
+    expect(mutation.status).to.equal(1);
+    expect(mutation.stdout + mutation.stderr).to.include(
+      'Cycle detected in Charcoal metadata'
+    );
+    expect(fixture.inspectionSnapshot()).to.deep.equal(cyclicBefore);
   });
 
   it('rejects a root trunk before emitting any branch content', () => {
@@ -317,29 +382,7 @@ describe('read-only info inspection', function () {
   });
 
   it('renders locally known PR body in all existing modes without service, editor or hook activity', () => {
-    const bin = path.join(fixture.root, 'gh-bin');
-    fs.mkdirSync(bin);
-    const state = path.join(fixture.root, 'prs.json');
-    const calls = path.join(fixture.root, 'gh.jsonl');
-    fs.writeFileSync(state, '[]');
-    fs.writeFileSync(calls, '');
-    fs.writeFileSync(
-      path.join(bin, 'gh'),
-      `#!${process.execPath}\n${fs.readFileSync(
-        path.join(__dirname, '../lib/fixtures/submit_gh.js'),
-        'utf8'
-      )}`,
-      { mode: 0o755 }
-    );
-    fixture.env.PATH = `${bin}${path.delimiter}${fixture.env.PATH ?? ''}`;
-    fixture.env.CHARCOAL_TEST_GH_STATE = state;
-    fixture.env.CHARCOAL_TEST_GH_LOG = calls;
-    const remote = path.join(fixture.root, 'remote.git');
-    fixture.git(['init', '--bare', remote]);
-    fixture.git(['remote', 'add', 'origin', remote]);
-    fixture.git(['push', '-u', 'origin', 'main']);
-    fixture.ok(['repo', 'owner', '--set', 'fixture']);
-    fixture.ok(['repo', 'name', '--set', 'submit']);
+    const { state, calls, refuseQueries } = preparePublicPrRemote(fixture);
     fixture.ok(['submit', '--publish']);
     fs.writeFileSync(
       state,
@@ -352,14 +395,7 @@ describe('read-only info inspection', function () {
       )
     );
     fixture.ok(['sync', '--no-pull', '--no-delete', '--no-restack']);
-    fs.writeFileSync(calls, '');
-    fs.writeFileSync(
-      path.join(bin, 'gh'),
-      `#!${process.execPath}\nrequire('fs').appendFileSync(${JSON.stringify(
-        calls
-      )},'forbidden');process.exitCode=99;`,
-      { mode: 0o755 }
-    );
+    refuseQueries();
     for (const hook of ['post-checkout', 'post-rewrite', 'pre-commit']) {
       fs.writeFileSync(
         path.join(fixture.repo, '.git', 'hooks', hook),
