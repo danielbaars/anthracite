@@ -20,16 +20,20 @@ type TCacheLoader = {
 };
 export function composeCacheLoader(
   splog: TSplog,
-  preserveMetadata = false
+  preserveMetadata = false,
+  isInspection = false
 ): TCacheLoader {
-  const persistedCache = cachePersistenceFactory.load();
+  const persistedCache = isInspection
+    ? undefined
+    : cachePersistenceFactory.load();
   return {
     loadCachedBranches: (trunkName: string | undefined) => {
       splog.debug('Reading cache seed data...');
       const cacheSeed = getCacheSeed(trunkName);
       splog.debug('Loading cache...');
       return (
-        (!preserveMetadata &&
+        (persistedCache &&
+          !preserveMetadata &&
           persistedCache.data.sha === hashSeed(cacheSeed) &&
           Object.fromEntries(persistedCache.data.branches)) ||
         parseBranchesAndMeta(
@@ -47,14 +51,14 @@ export function composeCacheLoader(
       cachedBranches: Record<string, TCachedMeta>
     ) => {
       splog.debug(`Persisting cache...`);
-      persistedCache.update((data) => {
+      persistedCache?.update((data) => {
         data.sha = hashSeed(getCacheSeed(trunkName));
         data.branches = Object.entries(cachedBranches);
       });
     },
     clearPersistedCache: () => {
       splog.debug(`Clearing persisted cache...`);
-      persistedCache.delete();
+      persistedCache?.delete();
     },
   };
 }

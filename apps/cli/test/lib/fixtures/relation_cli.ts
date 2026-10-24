@@ -74,11 +74,12 @@ export class RelationCliFixture extends ReorderCliFixture {
       }
     };
     walk(cwd);
-    return {
+    const snapshot = {
       head: git(['rev-parse', 'HEAD']),
       branch: git(['branch', '--show-current']),
       refs: git(['for-each-ref', '--format=%(refname) %(objectname)']),
       index: bytes(gitPath('index')),
+      indexLock: bytes(gitPath('index.lock')),
       staging: git(['diff', '--cached', '--raw', '-z']),
       status: git(['status', '--porcelain=v1', '-z']),
       files,
@@ -89,10 +90,20 @@ export class RelationCliFixture extends ReorderCliFixture {
           '.gtcontinue',
           '.graphite_pr_info',
           '.graphite_cache_lock',
+          '.graphite_cache_persist',
         ].map((name) => [name, bytes(path.join(common, name))])
       ),
       operation,
       userConfig: bytes(this.env.GRAPHITE_USER_CONFIG_PATH ?? ''),
     };
+    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    if (evidence) {
+      fs.mkdirSync(evidence, { recursive: true });
+      fs.appendFileSync(
+        path.join(evidence, `${path.basename(this.root)}-snapshots.jsonl`),
+        JSON.stringify({ cwd, snapshot }) + '\n'
+      );
+    }
+    return snapshot;
   }
 }

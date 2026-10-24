@@ -38,7 +38,7 @@ export async function graphite(
   });
 }
 
-/** Direct relation queries share the engine without mutation/recovery cleanup. */
+/** Read-only inspections share the engine without mutation/recovery cleanup. */
 export async function graphiteInspection(
   args: yargs.Arguments & TGlobalArguments,
   handler: (context: TContext) => Promise<void>

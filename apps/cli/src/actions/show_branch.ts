@@ -1,5 +1,7 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
+import { PreconditionsFailedError } from '../lib/errors';
+import { getSha } from '../lib/git/get_sha';
 import { TBranchPRInfo } from '../lib/engine/metadata_ref';
 
 export async function showBranchInfo(
@@ -7,6 +9,13 @@ export async function showBranchInfo(
   opts: { patch: boolean; diff: boolean; body: boolean },
   context: TContext
 ): Promise<void> {
+  if (
+    context.engine.isTrunk(branchName) &&
+    !getSha(`${context.engine.getRevision(branchName)}~`)
+  )
+    throw new PreconditionsFailedError(
+      'Info requires a previous commit when inspecting trunk.'
+    );
   const output = getBranchInfo({ branchName }, context);
 
   const parentBranchName = context.engine.getParent(branchName);

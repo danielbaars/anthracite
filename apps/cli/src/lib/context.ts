@@ -96,7 +96,7 @@ export function initContext(
   )
     throw new PreconditionsFailedError(
       opts?.inspection
-        ? 'Relation inspection requires an initialized repository. Run ch init explicitly before retrying.'
+        ? 'Inspection requires an initialized repository. Run ch init explicitly before retrying.'
         : 'Stack reorder requires an initialized repository. Run ch init explicitly before retrying.'
     );
   if (!opts?.inspection && !rebaseInProgress()) {
@@ -123,6 +123,7 @@ export function initContext(
     noVerify: !(opts?.verify ?? true),
     remote: repoConfig.getRemote(),
     preserveMetadata: opts?.preserveMetadata || opts?.inspection,
+    inspection: opts?.inspection,
     restackCommitterDateIsAuthorDate:
       contextLite.userConfig.data.restackCommitterDateIsAuthorDate,
   });

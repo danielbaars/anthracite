@@ -176,6 +176,7 @@ export function composeEngine({
   remote,
   restackCommitterDateIsAuthorDate,
   preserveMetadata = false,
+  inspection: isInspection = false,
 }: {
   git: TGit;
   trunkName?: string;
@@ -185,8 +186,9 @@ export function composeEngine({
   remote: string;
   restackCommitterDateIsAuthorDate?: boolean;
   preserveMetadata?: boolean;
+  readonly inspection?: boolean;
 }): TEngine {
-  const cacheLoader = composeCacheLoader(splog, preserveMetadata);
+  const cacheLoader = composeCacheLoader(splog, preserveMetadata, isInspection);
   void cacheLoader;
   const originallyLoadedBranches = cacheLoader.loadCachedBranches(trunkName);
   let canPersistCache = !preserveMetadata;
