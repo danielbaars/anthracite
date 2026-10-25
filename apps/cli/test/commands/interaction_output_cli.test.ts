@@ -341,4 +341,29 @@ describe('interaction output through the public CLI', function () {
       submit.cleanup();
     }
   });
+
+  it('reports parser usage on stderr and never starts the rejected mutation or its tools', () => {
+    const before = fixture.snapshot();
+    for (const flags of [[], ['--quiet']]) {
+      const restore = fixture.refuseExternalTools();
+      const result = fixture.run([
+        'create',
+        'never-created',
+        '--message',
+        'literal',
+        '--not-an-option',
+        ...flags,
+      ]);
+      restore();
+      expect(result.status).to.equal(1);
+      expect(result.stdout).to.equal('');
+      expect(result.stderr)
+        .to.include('ch create')
+        .and.include('Unknown argument');
+      expect(
+        fs.existsSync(path.join(fixture.root, 'unexpected-tool'))
+      ).to.equal(false);
+      expect(fixture.snapshot()).to.deep.equal(before);
+    }
+  });
 });
