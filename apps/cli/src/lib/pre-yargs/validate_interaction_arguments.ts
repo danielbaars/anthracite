@@ -73,6 +73,8 @@ function isInvalidPolicyToken(argument: string): boolean {
       (suffix.startsWith('=') && !/^=(?:true|false)$/.test(suffix))
     );
   }
-  // With '=' yargs consumes a short token's remainder as its first option value.
-  return /^-q[^-]*=/.test(argument) && !/^-q=(?:true|false)$/.test(argument);
+  // In short groups, '=' belongs to the final option, not an earlier q:
+  // -qm=message sets m, while -mq=invalid sets q. A dot/bracket can start
+  // q's own property/value, but cannot turn an earlier string value into q.
+  return /^-[A-Za-z]*q(?:\.|\[|=(?!(?:true|false)$))/.test(argument);
 }

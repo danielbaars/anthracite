@@ -199,7 +199,10 @@ sys.exit(result.returncode)
       '--no-quiet=invalid',
       '--q=invalid',
       '-q=invalid',
-      '-qf=true',
+      '-aq=invalid',
+      '-mq=invalid',
+      '-qq=invalid',
+      '-q.enabled=true',
       '--quiet.enabled=true',
       '--no-interactive.enabled=false',
       '--quiet[0]=true',
@@ -246,6 +249,26 @@ sys.exit(result.returncode)
     const raw = fixture.run(['status', '--quiet=invalid']);
     expect(raw.status).to.equal(129);
     expect(raw.stderr).to.include('unknown option');
+  });
+
+  it('preserves a quiet short cluster whose message option owns the value', () => {
+    fs.writeFileSync(path.join(fixture.repo, 'cluster'), 'cluster');
+    fixture.git(['add', 'cluster']);
+    const created = fixture.run(['create', 'cluster', '-qm=literal']);
+    expect(created.status, created.stdout + created.stderr).to.equal(0);
+    expect(fixture.git(['log', '-1', '--format=%B'])).to.equal('literal');
+    expect(fixture.git(['branch', '--show-current'])).to.equal('cluster');
+    fs.writeFileSync(path.join(fixture.repo, 'cluster-again'), 'cluster again');
+    fixture.git(['add', 'cluster-again']);
+    const repeated = fixture.run([
+      'create',
+      'cluster-again',
+      '-aqm=--interactive=invalid',
+    ]);
+    expect(repeated.status, repeated.stdout + repeated.stderr).to.equal(0);
+    expect(fixture.git(['log', '-1', '--format=%B'])).to.equal(
+      '--interactive=invalid'
+    );
   });
 
   it('applies quiet and input validation only to the selected cwd repository', () => {
