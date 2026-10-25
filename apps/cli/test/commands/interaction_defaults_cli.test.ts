@@ -82,7 +82,9 @@ describe('noninteractive route defaults through the public CLI', function () {
     fixture.ok(['user', 'tips', '--enable']);
     const ordinary = fixture.run(['untrack', 'base']);
     expect(ordinary.status).to.equal(0);
-    expect(ordinary.stdout).to.include('tip:').and.include('upstack onto');
+    expect(ordinary.stdout)
+      .to.include('tip:')
+      .and.include('ch move --source <child> --onto <new-parent>');
     expect(ordinary.stderr).to.equal('');
     const before = fixture.inspectionSnapshot();
     for (const flags of [[], ['--quiet']]) {
