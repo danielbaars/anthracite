@@ -33,10 +33,17 @@ export function withFrozenCommitGuard(
     for (const name of files) {
       const original = path.join(hooks, name);
       if (!fs.existsSync(original) || !fs.statSync(original).isFile()) continue;
+      let proxyMode = 0o600;
+      try {
+        fs.accessSync(original, fs.constants.X_OK);
+        proxyMode = 0o700;
+      } catch {
+        /* Keep non-executable hooks non-executable. */
+      }
       fs.writeFileSync(
         path.join(proxy, name),
         `${scriptHeader}exec ${quote(original)} "$@"\n`,
-        { mode: fs.statSync(original).mode }
+        { mode: proxyMode }
       );
     }
     const originalReferenceHook = path.join(hooks, 'reference-transaction');

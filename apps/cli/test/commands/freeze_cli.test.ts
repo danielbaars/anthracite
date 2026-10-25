@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import { createHash } from 'crypto';
-import { spawnSync } from 'child_process';
+import { execFileSync, spawnSync } from 'child_process';
 
 import { expect } from 'chai';
 
@@ -659,5 +660,38 @@ describe('manual freeze through the public CLI', function () {
     expect(fs.readFileSync(legacy, 'utf8')).to.equal(
       '{"preserve":"legacy info"}\n'
     );
+  });
+
+  it('forwards an executable original hook according to its actual access permissions', () => {
+    fixture.git(['switch', 'tip']);
+    const hooks = path.join(fixture.root, 'permission hooks');
+    fs.mkdirSync(hooks);
+    const hook = path.join(hooks, 'pre-commit');
+    fs.writeFileSync(
+      hook,
+      '#!/bin/sh\nprintf "permission-controlled hook" > permission-work.txt\ngit add permission-work.txt\n',
+      { mode: 0o755 }
+    );
+    if (process.platform === 'darwin') {
+      // Own-file ACL control needs no chown/sudo and exposes mode-copying bugs.
+      fs.chmodSync(hook, 0o610);
+      execFileSync('/bin/chmod', [
+        '+a',
+        `user:${os.userInfo().username} allow execute`,
+        hook,
+      ]);
+      expect(fs.statSync(hook).mode & 0o100).to.equal(0);
+    }
+    fs.accessSync(hook, fs.constants.X_OK);
+    fixture.git(['config', 'core.hooksPath', hooks]);
+    fixture.write('ordinary-work.txt', 'ordinary content');
+    fixture.ok(['m', '--commit', '--all', '-m', 'permission control']);
+    expect(fixture.git(['show', 'HEAD:permission-work.txt'])).to.equal(
+      'permission-controlled hook'
+    );
+    expect(fixture.git(['show', 'HEAD:ordinary-work.txt'])).to.equal(
+      'ordinary content'
+    );
+    expect(fixture.git(['config', 'core.hooksPath'])).to.equal(hooks);
   });
 });
