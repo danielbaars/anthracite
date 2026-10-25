@@ -92,6 +92,25 @@ describe('effective interaction policy through the public CLI', function () {
     expect(fixture.run(['parent']).stdout).to.equal('main\n');
   });
 
+  it('navigates an ambiguous top after an actual terminal branch choice', () => {
+    fixture.branch('side', 'child');
+    fixture.git(['switch', 'base']);
+    const refs = fixture.refs();
+    const answered = runCliInPty(getTestCliCommand(['top']), {
+      cwd: fixture.repo,
+      env: fixture.env,
+      responses: [
+        { prompt: '❯   tip', input: '\u001b[B' },
+        { prompt: '❯   side', input: '\r' },
+      ],
+    });
+    expect(answered.status, answered.output).to.equal(0);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('side');
+    expect(answered.output).to.include('Checked out side.');
+    expect(fixture.refs()).to.equal(refs);
+    expect(fixture.git(['status', '--porcelain'])).to.equal('');
+  });
+
   it('honors effective booleans and terminal defaults without silently choosing', () => {
     const before = fixture.snapshot();
     for (const args of [

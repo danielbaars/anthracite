@@ -1,4 +1,4 @@
-import { spawnSync } from 'child_process';
+import { execFileSync, spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
@@ -7,7 +7,10 @@ import { expect } from 'chai';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { CwdCliFixture } from '../lib/fixtures/cwd_cli';
 import { SubmitCliFixture } from '../lib/fixtures/submit_cli';
+import { runCliInPty } from '../lib/utils/run_cli_in_pty';
 
+// Independent public CLI scenarios, not one production operation.
+// eslint-disable-next-line max-lines-per-function
 describe('noninteractive route defaults through the public CLI', function () {
   this.timeout(120000);
   let fixture: CwdCliFixture;
@@ -19,9 +22,13 @@ describe('noninteractive route defaults through the public CLI', function () {
   afterEach(() => fixture?.cleanup());
 
   it('navigates a unique child but refuses ambiguous navigation and stack choices', () => {
-    expect(fixture.run(['up']).status).to.equal(0);
+    const up = fixture.run(['up']);
+    expect(up.status).to.equal(0);
+    expect(up.stdout).to.equal('base\n⮑  child\nChecked out child.\n');
     expect(fixture.git(['branch', '--show-current'])).to.equal('child');
-    expect(fixture.run(['down']).status).to.equal(0);
+    const down = fixture.run(['down']);
+    expect(down.status).to.equal(0);
+    expect(down.stdout).to.equal('child\n⮑  base\nChecked out base.\n');
     expect(fixture.git(['branch', '--show-current'])).to.equal('base');
     fixture.branch('side', 'base');
     fixture.git(['switch', 'base']);
@@ -29,9 +36,27 @@ describe('noninteractive route defaults through the public CLI', function () {
     for (const args of [['up'], ['fold', '--stack'], ['reorder', '--stack']]) {
       const result = fixture.run(args);
       expect(result.status, result.stdout + result.stderr).to.equal(1);
-      expect(result.stdout).not.to.include('Checkout a branch');
+      expect(result.stdout).to.equal('');
+      expect(result.stderr).not.to.equal('');
+      if (args[0] === 'up')
+        expect(result.stderr).to.include('multiple choices');
       expect(fixture.snapshot()).to.deep.equal(before);
     }
+  });
+
+  it('refuses top after a deterministic prefix without printing a partial path or changing staged work', () => {
+    fixture.branch('side', 'child');
+    fixture.git(['switch', 'base']);
+    fs.writeFileSync(path.join(fixture.repo, 'base.txt'), 'staged base');
+    fixture.git(['add', 'base.txt']);
+    fs.appendFileSync(path.join(fixture.repo, 'base.txt'), '\nworking base');
+    fixture.git(['status', '--porcelain']);
+    const before = fixture.inspectionSnapshot();
+    const refused = fixture.run(['top']);
+    expect(refused.status).to.equal(1);
+    expect(refused.stdout).to.equal('');
+    expect(refused.stderr).to.include('multiple choices').and.include('side');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
   it('tracks unique parents but requires an explicit parent for ambiguity', () => {
@@ -213,6 +238,46 @@ describe('noninteractive local remote decisions through the public CLI', functio
     return fixture.git('-C', repo, 'rev-parse', 'HEAD');
   }
 
+  function localState(): Record<string, unknown> {
+    const git = (args: readonly string[]): string =>
+      execFileSync('git', args, {
+        cwd: fixture.repo,
+        env: { ...fixture.env, GIT_OPTIONAL_LOCKS: '0' },
+        encoding: 'utf8',
+      });
+    const bytes = (name: string): string | null =>
+      fs.existsSync(name) ? fs.readFileSync(name).toString('base64') : null;
+    const state = {
+      head: git(['rev-parse', 'HEAD']),
+      branch: git(['branch', '--show-current']),
+      tree: git(['rev-parse', 'HEAD^{tree}']),
+      refs: git([
+        'for-each-ref',
+        '--format=%(refname) %(objectname)',
+        'refs/heads',
+        'refs/branch-metadata',
+      ]),
+      index: bytes(path.join(fixture.repo, '.git', 'index')),
+      staging: git(['diff', '--cached', '--raw', '-z']),
+      status: git(['status', '--porcelain=v1', '-z']),
+      files: Object.fromEntries(
+        git(['ls-files', '--cached', '--others', '-z'])
+          .split('\0')
+          .filter(Boolean)
+          .map((file) => [file, bytes(path.join(fixture.repo, file))])
+      ),
+      continuation: bytes(path.join(fixture.repo, '.git', '.gtcontinue')),
+      remote: git(['ls-remote', '--heads', 'origin']),
+    };
+    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    if (evidence)
+      fs.appendFileSync(
+        path.join(evidence, 'interaction-remote-states.jsonl'),
+        JSON.stringify({ cwd: fixture.repo, state }) + '\n'
+      );
+    return state;
+  }
+
   it('gets a real fast-forward but preserves divergent local work without force', () => {
     const repo = producer('child');
     const revision = remoteCommit(repo, 'remote-child');
@@ -227,8 +292,14 @@ describe('noninteractive local remote decisions through the public CLI', functio
       'refs/heads'
     );
     const advanced = remoteCommit(repo, 'remote-divergence');
+    fixture.git('status', '--porcelain');
+    const before = localState();
     const denied = run(['get', 'child', '--quiet']);
     expect(denied.status, denied.stdout + denied.stderr).to.equal(1);
+    expect(denied.stdout).to.equal('');
+    expect(denied.stderr).to.include('child').and.include('diverged');
+    expect(denied.stderr).to.include('--force');
+    expect(localState()).to.deep.equal(before);
     expect(fixture.git('rev-parse', 'child')).to.equal(local);
     expect(
       fixture.git(
@@ -242,6 +313,74 @@ describe('noninteractive local remote decisions through the public CLI', functio
     expect(
       fs.readFileSync(path.join(fixture.repo, 'local-child.txt'), 'utf8')
     ).to.equal('local-child');
+  });
+
+  for (const relation of ['untracked', 'different parent']) {
+    it(`diagnoses quiet get overwrite refusal for a local branch with ${relation}`, () => {
+      const repo = producer('child');
+      fixture.succeed('untrack', 'child');
+      if (relation === 'different parent')
+        fixture.succeed('track', 'child', '--parent', 'main');
+      const local = fixture.commit('local-child');
+      const advanced = remoteCommit(repo, 'remote-child');
+      fixture.git('status', '--porcelain');
+      const before = localState();
+      const refused = run(['get', 'child', '--quiet']);
+      expect(refused.status).to.equal(1);
+      expect(refused.stdout).to.equal('');
+      expect(refused.stderr).to.include('child').and.include('overwrite');
+      expect(refused.stderr).to.include('--force');
+      expect(localState()).to.deep.equal(before);
+      expect(fixture.git('rev-parse', 'child')).to.equal(local);
+      expect(fixture.git('rev-parse', 'origin/child')).to.equal(advanced);
+      const forced = run(['get', 'child', '--quiet', '--force']);
+      expect(forced.status, forced.stderr).to.equal(0);
+      expect(forced.stdout).to.equal('');
+      expect(fixture.git('rev-parse', 'child')).to.equal(advanced);
+      expect(run(['parent']).stdout).to.equal('parent\n');
+      expect(localState().remote).to.equal(before.remote);
+    });
+  }
+
+  it('preserves local work when a terminal user declines get overwrite or selects abort', () => {
+    const repo = producer('child');
+    fixture.commit('local-child');
+    remoteCommit(repo, 'remote-child');
+    for (const choice of ['overwrite', 'abort']) {
+      fixture.succeed('untrack', 'child');
+      if (choice === 'abort')
+        fixture.succeed('track', 'child', '--parent', 'parent');
+      fixture.git('status', '--porcelain');
+      const before = localState();
+      const command = getTestCliCommand(['get', 'child']);
+      const responses = [
+        choice === 'overwrite'
+          ? { prompt: 'with the version from remote?', input: 'n\r' }
+          : {
+              prompt: 'How would you like to handle',
+              input: '\u001b[B\u001b[B\r',
+            },
+      ];
+      const refused = runCliInPty(command, {
+        cwd: fixture.repo,
+        env: fixture.env,
+        responses,
+      });
+      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      if (evidence)
+        fs.appendFileSync(
+          path.join(evidence, 'interaction-get-pty.jsonl'),
+          JSON.stringify({
+            command,
+            cwd: fixture.repo,
+            responses,
+            ...refused,
+          }) + '\n'
+        );
+      expect(refused.status, refused.output).to.equal(1);
+      expect(refused.output).not.to.include('ERROR:');
+      expect(localState()).to.deep.equal(before);
+    }
   });
 
   it('refuses a non-fast-forward trunk reset unless force was requested', () => {

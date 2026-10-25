@@ -15,12 +15,16 @@ export async function switchBranchAction(
   context: TContext
 ): Promise<void> {
   const currentBranchName = context.engine.currentBranchPrecondition;
-  context.splog.info(chalk.blueBright(currentBranchName));
-  const newBranchName = await traverseBranches(
+  const route = await traverseBranches(
     branchNavigation,
     currentBranchName,
     context
   );
+  context.splog.info(chalk.blueBright(currentBranchName));
+  for (const branchName of route.slice(1)) {
+    context.splog.info('⮑  ' + branchName);
+  }
+  const newBranchName = route[route.length - 1];
   if (newBranchName !== currentBranchName) {
     await checkoutBranch({ branchName: newBranchName }, context);
     return;
@@ -39,7 +43,7 @@ async function traverseBranches(
   branchNavigation: TBranchNavigation,
   fromBranchName: string,
   context: TContext
-): Promise<string> {
+): Promise<readonly string[]> {
   switch (branchNavigation.direction) {
     case 'BOTTOM': {
       return traverseDownward(fromBranchName, context);
@@ -68,45 +72,49 @@ function traverseDownward(
   currentBranchName: string,
   context: TContext,
   stepsRemaining: number | 'bottom' = 'bottom'
-): string {
+): readonly string[] {
   if (stepsRemaining === 0 || context.engine.isTrunk(currentBranchName)) {
-    return currentBranchName;
+    return [currentBranchName];
   }
   const parentBranchName =
     context.engine.getParentPrecondition(currentBranchName);
   if (stepsRemaining === 'bottom' && context.engine.isTrunk(parentBranchName)) {
-    return currentBranchName;
+    return [currentBranchName];
   }
-  context.splog.info('⮑  ' + parentBranchName);
-  return traverseDownward(
-    parentBranchName,
-    context,
-    stepsRemaining === 'bottom' ? 'bottom' : stepsRemaining - 1
-  );
+  return [
+    currentBranchName,
+    ...traverseDownward(
+      parentBranchName,
+      context,
+      stepsRemaining === 'bottom' ? 'bottom' : stepsRemaining - 1
+    ),
+  ];
 }
 
 async function traverseUpward(
   currentBranchName: string,
   context: TContext,
   stepsRemaining: number | 'top' = 'top'
-): Promise<string> {
+): Promise<readonly string[]> {
   if (stepsRemaining === 0) {
-    return currentBranchName;
+    return [currentBranchName];
   }
   const children = context.engine.getChildren(currentBranchName);
   if (children.length === 0) {
-    return currentBranchName;
+    return [currentBranchName];
   }
   const childBranchName =
     children.length === 1
       ? children[0]
       : await handleMultipleChildren(children, context);
-  context.splog.info('⮑  ' + childBranchName);
-  return await traverseUpward(
-    childBranchName,
-    context,
-    stepsRemaining === 'top' ? 'top' : stepsRemaining - 1
-  );
+  return [
+    currentBranchName,
+    ...(await traverseUpward(
+      childBranchName,
+      context,
+      stepsRemaining === 'top' ? 'top' : stepsRemaining - 1
+    )),
+  ];
 }
 
 async function handleMultipleChildren(children: string[], context: TContext) {

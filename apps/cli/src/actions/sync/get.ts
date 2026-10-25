@@ -214,8 +214,12 @@ async function maybeOverwriteBranch(
   parentBranchName: string,
   context: TContext
 ) {
+  if (!context.interactive) {
+    throw new ExitFailedError(
+      `Cannot overwrite local branch ${branchName} without confirmation in non-interactive mode. Retry interactively, or use --force to overwrite it with the remote version.`
+    );
+  }
   if (
-    !context.interactive ||
     !(
       await context.prompts({
         type: 'confirm',
@@ -315,6 +319,11 @@ async function handleSameParent(
       context.splog.info(`Synced ${chalk.cyan(args.branchName)} from remote.`);
       break;
     case 'ABORT':
+      if (!context.interactive) {
+        throw new ExitFailedError(
+          `Local branch ${args.branchName} has diverged from remote. Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.`
+        );
+      }
       throw new KilledError();
     default:
       assertUnreachable(fetchChoice);
