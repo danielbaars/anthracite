@@ -293,8 +293,8 @@ ch continue -a
 
 ## Submit & sync
 
-### `submit`
-Idempotently force-push all branches from trunk to the current branch to GitHub, creating or updating a distinct PR for each. **Defaults to the current downstack** (trunk → current); pass `--stack` to also include descendants.
+### `submit` (alias `s`)
+Idempotently force-push all branches from trunk to the current branch to GitHub, creating or updating a distinct PR for each. **Defaults to the current downstack** (trunk → current); pass `--stack` to also include descendants. `ch ss` uses that whole-stack scope by default and accepts the same options. Explicit later `--no-stack` or `--stack=false` overrides the `ss` default; a later `--stack=true` enables it again. `--branch` selects the starting branch for either short form.
 
 | Flag | Description |
 | --- | --- |
@@ -312,9 +312,10 @@ Idempotently force-push all branches from trunk to the current branch to GitHub,
 | `--branch` | Which branch to run from (default: current branch). |
 
 ```
-ch submit              # submit trunk -> current
-ch submit --stack -d   # whole stack, as drafts
-ch submit --dry-run
+ch s                   # submit trunk -> current
+ch ss -d               # whole selected stack, as drafts
+ch ss --no-stack       # explicit downstack override
+ch ss --branch target --dry-run
 ```
 
 ### `sync`

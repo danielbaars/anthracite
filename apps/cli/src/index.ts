@@ -40,6 +40,7 @@ import * as repo from './commands/repo';
 import * as restack from './commands/restack';
 import * as split from './commands/split';
 import * as squash from './commands/squash';
+import * as ss from './commands/ss';
 import * as submit from './commands/submit';
 import * as sync from './commands/sync';
 import * as test from './commands/test';
@@ -98,6 +99,7 @@ const commandModules = [
   restack,
   split,
   squash,
+  ss,
   submit,
   sync,
   test,
