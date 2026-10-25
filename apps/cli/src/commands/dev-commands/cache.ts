@@ -2,6 +2,7 @@ import yargs from 'yargs';
 import { initContext, initContextLite } from '../../lib/context';
 import { getCacheLock } from '../../lib/engine/cache_lock';
 import { composeGit } from '../../lib/git/git';
+import { TGlobalArguments } from '../../lib/global_arguments';
 
 export const command = 'cache';
 export const canonical = 'dev cache';
@@ -16,14 +17,19 @@ const args = {
 } as const;
 export const builder = args;
 
-type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
+type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>> &
+  TGlobalArguments;
 export const handler = async (argv: argsT): Promise<void> => {
   const cacheLock = getCacheLock();
   cacheLock.lock();
-  const context = initContext(initContextLite({ debug: true }), composeGit());
-  if (argv.clear) {
-    context.engine.clear();
+  try {
+    const context = initContext(initContextLite(argv), composeGit());
+    if (argv.clear) {
+      context.engine.clear();
+    }
+    context.splog.info(context.engine.debug);
+    context.splog.debug(context.engine.debug);
+  } finally {
+    cacheLock.release();
   }
-  context.splog.debug(context.engine.debug);
-  cacheLock.release();
 };

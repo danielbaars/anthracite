@@ -24,18 +24,26 @@ export const handler = async (argv: argsT): Promise<void> => {
   return graphiteWithoutRepo(argv, canonical, async (context) => {
     const ghVersion = getGhVersion();
 
-    if (!ghVersion || ghVersion < MIN_GH_VERSION) {
-      context.splog.message(
-        `❌ Please install GitHub CLI version ${MIN_GH_VERSION} or higher.`
+    if (
+      !ghVersion ||
+      ghVersion.localeCompare(MIN_GH_VERSION, undefined, { numeric: true }) < 0
+    ) {
+      throw new Error(
+        `Please install GitHub CLI version ${MIN_GH_VERSION} or higher.`
       );
-      return;
     }
 
     const isGhAuthorized = getGithubAuthorizationStatus();
 
     if (isGhAuthorized) {
-      context.splog.message('✅ Already authenticated with GitHub.');
+      context.splog.info('✅ Already authenticated with GitHub.');
       return;
+    }
+
+    if (!context.canPrompt) {
+      throw new Error(
+        'Charcoal is not authenticated with GitHub. Please authenticate with ch auth from an interactive terminal.'
+      );
     }
 
     context.splog.message(
@@ -47,12 +55,10 @@ export const handler = async (argv: argsT): Promise<void> => {
         stdio: 'inherit',
       });
 
-      context.splog.message(
-        '✅ Successfully authenticated Charcoal with GitHub.'
-      );
+      context.splog.info('✅ Successfully authenticated Charcoal with GitHub.');
     } catch {
-      context.splog.message(
-        '❌ Failed to authenticate Charcoal with GitHub. Please try again.'
+      throw new Error(
+        'Failed to authenticate Charcoal with GitHub. Please try again.'
       );
     }
   });
