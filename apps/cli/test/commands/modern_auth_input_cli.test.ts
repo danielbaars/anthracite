@@ -105,7 +105,33 @@ describe('modern auth input through the public CLI', function () {
       );
     }
   });
-  afterEach(() => fixture.cleanup());
+  afterEach(() => {
+    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    if (evidence) {
+      const destination = path.join(evidence, path.basename(fixture.root));
+      fs.mkdirSync(destination, { recursive: true });
+      for (const name of ['gh-calls.jsonl', 'authorized', 'user-config']) {
+        const file = path.join(fixture.root, name);
+        if (fs.existsSync(file))
+          fs.copyFileSync(file, path.join(destination, name));
+      }
+      const tool = path.join(fixture.root, 'auth-bin', 'gh');
+      if (fs.existsSync(tool))
+        fs.copyFileSync(tool, path.join(destination, 'gh-fixture.js'));
+      fs.writeFileSync(
+        path.join(destination, 'auth-state.json'),
+        JSON.stringify({
+          kind: 'controlled external gh fixture state, not a real account',
+          calls: ghCalls(fixture),
+          authorized: fs.existsSync(path.join(fixture.root, 'authorized')),
+          userConfigExists: fs.existsSync(
+            fixture.env.GRAPHITE_USER_CONFIG_PATH ?? ''
+          ),
+        })
+      );
+    }
+    fixture.cleanup();
+  });
 
   it('refuses offered token input before gh or configuration changes without echoing it', () => {
     const before = fixture.inspectionSnapshot();
@@ -195,6 +221,49 @@ describe('modern auth input through the public CLI', function () {
       ]).to.deep.equal(before);
     } finally {
       target.cleanup();
+    }
+  });
+
+  it('keeps earlier cwd and global-policy failures private and side-effect free', () => {
+    const before = fixture.inspectionSnapshot();
+    const files = outsideState(fixture);
+    const missing = path.join(fixture.root, 'missing-directory');
+    for (const args of [
+      ['auth', '--token', SYNTHETIC_TOKEN, '--cwd', missing],
+      ['--cwd', missing, 'auth', '-t', SYNTHETIC_TOKEN],
+      ['auth', '--token', SYNTHETIC_TOKEN, '--quiet=invalid'],
+      ['--cwd', fixture.repo, 'auth', '-t', SYNTHETIC_TOKEN, '--quiet=invalid'],
+    ]) {
+      const result = fixture.run(args);
+      expect(result.status).to.equal(1);
+      expect(result.stdout).to.equal('');
+      expect(result.stderr).not.to.equal('');
+      expect(result.stderr).not.to.include(SYNTHETIC_TOKEN);
+      expect(ghCalls(fixture)).to.equal('');
+      expect(outsideState(fixture)).to.deep.equal(files);
+      expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    }
+  });
+
+  it('refuses token input before reading or repairing absent and damaged configuration', () => {
+    const config = fixture.env.GRAPHITE_USER_CONFIG_PATH;
+    if (!config) throw new Error('Missing fixture user config path');
+    const outside = path.join(fixture.root, 'outside');
+    fs.mkdirSync(outside);
+    for (const value of ['{invalid fixture json', null]) {
+      if (value === null) fs.unlinkSync(config);
+      else fs.writeFileSync(config, value);
+      const before = outsideState(fixture);
+      const result = fixture.run(
+        ['auth', '--token', SYNTHETIC_TOKEN, '--debug'],
+        outside
+      );
+      expect(result.status).to.equal(1);
+      expect(result.stdout).to.equal('');
+      expect(result.stderr).to.include('Token input is not supported');
+      expect(result.stderr).not.to.include(SYNTHETIC_TOKEN);
+      expect(ghCalls(fixture)).to.equal('');
+      expect(outsideState(fixture)).to.deep.equal(before);
     }
   });
 
