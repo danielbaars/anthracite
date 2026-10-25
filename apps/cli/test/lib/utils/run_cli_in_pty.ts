@@ -1,4 +1,6 @@
 import { spawnSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 
 const ptyRunner = `
 import errno, json, os, pty, select, signal, subprocess, sys, time
@@ -81,9 +83,38 @@ export function runCliInPty(
   );
   if (result.error) throw result.error;
   const output = Buffer.concat([result.stdout, result.stderr]);
-  return {
+  const transcript = {
     status: result.status,
     output: output.toString('utf8'),
     outputBase64: output.toString('base64'),
   };
+  const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+  if (evidence) {
+    fs.mkdirSync(evidence, { recursive: true });
+    fs.appendFileSync(
+      path.join(evidence, 'public-cli-pty.jsonl'),
+      JSON.stringify({
+        command,
+        cwd: options.cwd,
+        responses: options.responses ?? [],
+        environment: Object.fromEntries(
+          [
+            'GRAPHITE_INTERACTIVE',
+            'GRAPHITE_USER_CONFIG_PATH',
+            'GIT_OPTIONAL_LOCKS',
+            'CHARCOAL_TEST_BINARY',
+            'BUN_BE_BUN',
+            'CH_PAGER',
+            'CH_EDITOR',
+            'GIT_EDITOR',
+            'HOME',
+            'CODEX_HOME',
+            'PATH',
+          ].map((key) => [key, options.env[key] ?? null])
+        ),
+        ...transcript,
+      }) + '\n'
+    );
+  }
+  return transcript;
 }

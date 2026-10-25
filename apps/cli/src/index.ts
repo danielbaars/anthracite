@@ -127,13 +127,6 @@ void cli
   .options(globalArgumentsOptions)
   .global(Object.keys(globalArgumentsOptions))
   .strict()
-  .fail((message, error) => {
-    // showHelp also stops yargs from executing a handler after validation fails.
-    cli.showHelp('error');
-    // Avoid a blank console.error(), which writes to stdout in the native runtime.
-    process.stderr.write(
-      `\n${message || error?.message || 'Invalid command input.'}\n`
-    );
-    process.exitCode = 1;
-  })
+  // Avoid yargs' blank automatic-help error line on the native runtime.
+  .showHelpOnFail(false)
   .demandCommand().argv;

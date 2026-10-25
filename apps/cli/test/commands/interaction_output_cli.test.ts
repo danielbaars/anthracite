@@ -376,8 +376,8 @@ describe('interaction output through the public CLI', function () {
       expect(result.status).to.equal(1);
       expect(result.stdout).to.equal('');
       expect(result.stderr)
-        .to.include('ch create')
-        .and.include('Unknown argument');
+        .to.include('Unknown argument')
+        .and.include('not-an-option');
       expect(
         fs.existsSync(path.join(fixture.root, 'unexpected-tool'))
       ).to.equal(false);
