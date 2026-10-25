@@ -6,7 +6,8 @@ const args = {
   token: {
     type: 'string',
     alias: 't',
-    describe: 'Authenticate with the GitHub API using OAuth.',
+    describe: 'Token input is not supported; use ch auth with the GitHub CLI.',
+    hidden: true,
     demandOption: false,
   },
 } as const;
@@ -15,7 +16,17 @@ type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 export const command = 'auth';
 export const description =
   'Authenticate with the GitHub CLI to create and manage PRs in GitHub from Charcoal.';
-export const builder = args;
+// Hide aliases separately; reject before validation or argv tracing can echo input.
+export const builder = (parser: yargs.Argv): yargs.Argv =>
+  parser
+    .options(args)
+    .hide('t')
+    .middleware((argv) => {
+      if (argv.token !== undefined)
+        throw new Error(
+          'Token input is not supported. Use ch auth with the GitHub CLI instead.'
+        );
+    }, true);
 export const canonical = 'auth';
 
 const MIN_GH_VERSION = '2.0.0';

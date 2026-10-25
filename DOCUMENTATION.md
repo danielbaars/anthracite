@@ -338,13 +338,13 @@ ch sync -fr
 ### `auth`
 Authenticate with the GitHub CLI so Charcoal can create and manage PRs.
 
-| Flag | Description |
-| --- | --- |
-| `-t`, `--token` | Authenticate with the GitHub API using an OAuth token. |
+Charcoal uses the existing `gh` authentication flow. Graphite token input via
+`--token` or `-t` is not supported and is refused before any authentication tool
+or configuration changes. Run `ch auth` from an interactive terminal when login
+is needed; an already authenticated GitHub CLI can be checked without interaction.
 
 ```
 ch auth
-ch auth -t <token>
 ```
 
 ---
