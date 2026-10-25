@@ -35,6 +35,7 @@ const args = {
     demandOption: false,
   },
   edit: {
+    alias: 'e',
     type: 'boolean',
     describe: 'Modify the existing commit message when amending.',
     demandOption: false,

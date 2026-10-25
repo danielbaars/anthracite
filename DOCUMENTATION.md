@@ -45,6 +45,7 @@ Create a new branch stacked on top of the current branch and commit staged chang
 | Flag | Description |
 | --- | --- |
 | `[name]` | Positional: name for the new branch. |
+| `-o`, `--onto` | Create above an explicitly selected tracked local branch or trunk. |
 | `-m`, `--message` | Commit staged changes on the new branch with this message. |
 | `-a`, `--all` | Stage all unstaged changes before committing. |
 | `-p`, `--patch` | Pick hunks to stage before committing. |
@@ -62,7 +63,7 @@ Modify the current branch by amending its commit (or creating a new one with `--
 | `-a`, `--all` | Stage all changes before committing. |
 | `-c`, `--commit` | Create a new commit instead of amending the current one. |
 | `-m`, `--message` | The message for the commit. |
-| `--edit` / `-n`, `--no-edit` | Whether to edit the existing message when amending (`--no-edit` takes precedence). |
+| `-e`, `--edit` / `-n`, `--no-edit` | Whether to edit the existing message when amending (`--no-edit` takes precedence). |
 | `-p`, `--patch` | Pick hunks to stage before committing. |
 
 ```
@@ -251,7 +252,7 @@ ch track -p main
 ch track --downstack
 ```
 
-### `untrack` (alias `ut`)
+### `untrack` (aliases `utr`, `ut`)
 Stop tracking a branch with Charcoal. If it has children, they are also untracked. Defaults to the current branch.
 
 | Flag | Description |
@@ -260,7 +261,7 @@ Stop tracking a branch with Charcoal. If it has children, they are also untracke
 | `-f`, `--force` | Don't prompt before untracking a branch with children. |
 
 ```
-ch untrack feature-x
+ch utr feature-x       # modern short form; ch untrack and ch ut remain available
 ```
 
 ### `test`

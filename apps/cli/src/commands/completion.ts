@@ -25,6 +25,7 @@ const BRANCH_COMPLETING_COMMANDS = [
   'track',
   'tr',
   'untrack',
+  'utr',
   'ut',
   'move',
   'get',

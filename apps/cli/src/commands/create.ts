@@ -12,6 +12,7 @@ const args = {
     hidden: true,
   },
   onto: {
+    alias: 'o',
     describe: 'Create above this tracked local branch or trunk.',
     type: 'string',
     requiresArg: true,
