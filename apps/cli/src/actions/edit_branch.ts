@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { RebaseConflictError } from '../lib/errors';
+import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { persistContinuation } from './persist_continuation';
 import { printConflictStatus } from './print_conflict_status';
 import { restackBranches } from './restack';
@@ -10,16 +11,18 @@ import { restackBranches } from './restack';
 export function editBranchAction(context: TContext): void {
   ensureEditorAllowedPrecondition(context);
   const currentBranchName = context.engine.currentBranchPrecondition;
+  const branchesToRestack = context.engine.getRelativeStack(
+    currentBranchName,
+    SCOPE.UPSTACK_EXCLUSIVE
+  );
+  assertBranchesAvailableInWorktrees([currentBranchName, ...branchesToRestack]);
 
   const result = context.engine.rebaseInteractive(currentBranchName);
 
   if (result.result === 'REBASE_CONFLICT') {
     persistContinuation(
       {
-        branchesToRestack: context.engine.getRelativeStack(
-          currentBranchName,
-          SCOPE.UPSTACK_EXCLUSIVE
-        ),
+        branchesToRestack,
         rebasedBranchBase: result.rebasedBranchBase,
       },
       context
@@ -33,11 +36,5 @@ export function editBranchAction(context: TContext): void {
     throw new RebaseConflictError();
   }
 
-  restackBranches(
-    context.engine.getRelativeStack(
-      context.engine.currentBranchPrecondition,
-      SCOPE.UPSTACK_EXCLUSIVE
-    ),
-    context
-  );
+  restackBranches(branchesToRestack, context);
 }

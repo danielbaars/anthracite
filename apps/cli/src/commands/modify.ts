@@ -1,12 +1,19 @@
 import yargs from 'yargs';
 import { commitAmendAction } from '../actions/commit_amend';
 import { commitCreateAction } from '../actions/commit_create';
+import { editBranchAction } from '../actions/edit_branch';
 import { graphite } from '../lib/runner';
 import { PreconditionsFailedError } from '../lib/errors';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 
 const args = {
+  'interactive-rebase': {
+    type: 'boolean',
+    default: false,
+    describe:
+      'Interactively rebase the current branch and restack descendants. Ignores other modify operation options; global interaction and hook rules still apply.',
+  },
   all: {
     describe: `Stage all changes before committing.`,
     demandOption: false,
@@ -58,6 +65,9 @@ export const description =
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {
+    if (argv['interactive-rebase']) {
+      return editBranchAction(context);
+    }
     if (
       !argv.commit &&
       argv.edit === true &&
