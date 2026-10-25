@@ -8,5 +8,9 @@ export const command = 'log <command>';
 export const desc = 'Commands that log your stacks.';
 export const aliases = ['l'];
 export const builder = function (yargs: Argv): Argv {
-  return registerCommands(yargs, [logDefault, logLong, logShort]).strict();
+  return registerCommands(yargs.options(logDefault.builder), [
+    logDefault,
+    logLong,
+    logShort,
+  ]).strict();
 };

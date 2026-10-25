@@ -38,7 +38,7 @@ function displayBranchesInternal(
 }
 
 export function logShortClassic(context: TContext): void {
-  context.splog.info(
+  context.splog.page(
     displayBranchesInternal(
       { branchName: context.engine.trunk, highlightCurrentBranch: true },
       context

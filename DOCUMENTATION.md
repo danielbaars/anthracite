@@ -378,17 +378,20 @@ Shared flags (on `ch log` and `ch log short`):
 
 | Flag | Description |
 | --- | --- |
+| `--classic` | Use the existing classic stack renderer; other log display selectors are ignored. |
 | `-r`, `--reverse` | Print the log upside down. |
 | `-s`, `--stack` | Only show ancestors and descendants of the current branch. |
 | `-n`, `--steps` | Only show this many levels up/downstack. Implies `--stack`. |
 | `-u`, `--show-untracked` | Include untracked branches. |
+
+Classic is available through `ch log --classic`, `ch l --classic`, `ch log short --classic`, and `ch ls --classic`; only the short forms also have `-c`. Without classic (or with `--classic=false`), the normal full/short style remains selected. Global cwd, quiet and interaction rules still apply. A configured pager receives classic content only when both stdin and stdout are terminals and interaction is allowed; pipes receive it directly.
 
 ### `ls`
 Top-level shortcut for `log short`: log all stacks tracked by Charcoal, arranged to show dependencies.
 
 | Flag | Description |
 | --- | --- |
-| `-c`, `--classic` | Use the old logging style (other options are ignored in classic mode). |
+| `-c`, `--classic` | Use the old logging style (other log display selectors are ignored). |
 | `-r`, `--reverse` | Print the log upside down. |
 | `-s`, `--stack` | Only show ancestors and descendants of the current branch. |
 | `-n`, `--steps` | Only show this many levels up/downstack. Implies `--stack`. |

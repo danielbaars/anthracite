@@ -9,7 +9,7 @@ const args = {
     default: false,
     alias: 'c',
     describe:
-      'Use the old logging style, which runs out of screen real estate quicker. Other options will not work in classic mode.',
+      'Use the old logging style. Other log display options are ignored in classic mode.',
   },
   reverse: {
     describe: `Print the log upside down. Handy when you have a lot of branches!`,
