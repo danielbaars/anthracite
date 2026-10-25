@@ -90,7 +90,7 @@ for (const scene of allScenes) {
       expect(scene.repo.currentBranchName()).to.equal('main');
     });
 
-    it('Still prompts for a missing name in an interactive terminal', () => {
+    it('Allows cancelling a missing-name terminal prompt without a timeout', () => {
       scene.repo.createChange('a', 'a');
       scene.repo.runCliCommand(['create', 'a', '-m', 'a']);
       const refs = scene.repo.runGitCommandAndGetOutput([
@@ -108,11 +108,31 @@ for (const scene of allScenes) {
             GRAPHITE_DISABLE_SURVEY: '1',
             GRAPHITE_PROFILE: '',
           },
+          responses: [{ prompt: 'Branch Name', input: '\u0003' }],
         }
       );
+      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      if (evidence) {
+        fs.mkdirSync(evidence, { recursive: true });
+        fs.appendFileSync(
+          path.join(evidence, 'branch-rename-pty.jsonl'),
+          JSON.stringify({
+            scene: scene.toString(),
+            cwd: scene.repo.dir,
+            command: getTestCliCommand(['rename']),
+            responses: [{ prompt: 'Branch Name', input: '\u0003' }],
+            environment: {
+              GRAPHITE_INTERACTIVE: '',
+              GRAPHITE_DISABLE_SURVEY: '1',
+              GRAPHITE_PROFILE: '',
+            },
+            result,
+          }) + '\n'
+        );
+      }
       expect(result.output).to.contain('Enter new name for');
       expect(result.output).to.contain('Branch Name');
-      expect(result.status).to.equal(124);
+      expect(result.status).to.equal(1);
       expect(scene.repo.currentBranchName()).to.equal('a');
       expect(
         scene.repo.runGitCommandAndGetOutput(['show-ref', '--heads'])

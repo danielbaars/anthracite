@@ -24,7 +24,7 @@ export async function splitCurrentBranch(
   args: { style: 'hunk' | 'commit' | undefined },
   context: TContext
 ): Promise<void> {
-  if (!context.interactive) {
+  if (!context.canPrompt) {
     throw new PreconditionsFailedError(
       'This command must be run in interactive mode.'
     );

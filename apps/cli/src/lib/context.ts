@@ -20,12 +20,15 @@ import { TUserConfig, userConfigFactory } from './spiffy/user_config_spf';
 import { composeSplog, TSplog } from './utils/splog';
 import { NonInteractiveError, PreconditionsFailedError } from './errors';
 import { gtPrompts, TPrompts } from './utils/prompts_helpers';
+import {
+  resolveInteractionPolicy,
+  TInteractionPolicy,
+} from './interaction_policy';
 
 export const USER_CONFIG_OVERRIDE_ENV = 'GRAPHITE_USER_CONFIG_PATH' as const;
 
-export type TContextLite = {
+export type TContextLite = TInteractionPolicy & {
   splog: TSplog;
-  interactive: boolean;
   surveyConfig: TSurveyConfig;
   userConfig: TUserConfig;
   messageConfig: TMessageConfig;
@@ -49,6 +52,7 @@ export function initContextLite(opts?: {
   const userConfig = userConfigFactory.load(
     process.env[USER_CONFIG_OVERRIDE_ENV]
   );
+  const policy = resolveInteractionPolicy(opts);
   const splog = composeSplog({
     quiet: opts?.quiet,
     outputDebugLogs: opts?.debug,
@@ -56,15 +60,11 @@ export function initContextLite(opts?: {
     pager: userConfig.getPager(),
   });
 
-  const interactive =
-    // Confusing, but if invoked from GTI, behave as if `--no-interactive` was passed
-    !process.env.GRAPHITE_INTERACTIVE && (opts?.interactive ?? true);
-
   return {
+    ...policy,
     splog,
-    interactive,
     prompts: async (...args: Parameters<TPrompts>) => {
-      if (!interactive) {
+      if (!policy.canPrompt) {
         throw new NonInteractiveError();
       }
       return gtPrompts(...args);

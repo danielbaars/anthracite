@@ -45,7 +45,7 @@ export async function init(
   }
   context.splog.newline();
 
-  if (context.interactive) {
+  if (context.canPrompt) {
     await branchOnboardingFlow(context);
   }
 }
@@ -57,7 +57,7 @@ async function selectTrunkBranch(
   const inferredTrunk =
     context.engine.findRemoteBranch() ?? findCommonlyNamedTrunk(context);
 
-  if (!context.interactive) {
+  if (!context.canPrompt) {
     if (inferredTrunk) {
       return inferredTrunk;
     } else {

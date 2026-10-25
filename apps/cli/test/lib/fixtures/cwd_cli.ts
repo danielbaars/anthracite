@@ -70,6 +70,10 @@ export class CwdCliFixture extends RelationCliFixture {
           environment: Object.fromEntries(
             [
               'GRAPHITE_USER_CONFIG_PATH',
+              'GRAPHITE_INTERACTIVE',
+              'CHARCOAL_TEST_BINARY',
+              'BUN_BE_BUN',
+              'CH_PAGER',
               'GRAPHITE_PROFILE',
               'XDG_CONFIG_HOME',
               'GH_CONFIG_DIR',

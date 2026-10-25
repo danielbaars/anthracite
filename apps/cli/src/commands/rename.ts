@@ -30,7 +30,7 @@ export const builder = args;
 
 export const handler = async (args: argsT): Promise<void> => {
   return graphite(args, canonical, async (context) => {
-    if (!args.name && !context.interactive) {
+    if (!args.name && !context.canPrompt) {
       throw new ExitFailedError(
         `Please supply a new branch name when in non-interactive mode`
       );

@@ -129,7 +129,7 @@ async function graphiteInternal(
       }
     );
   } catch (err) {
-    handleGraphiteError(err, contextLite);
+    handleGraphiteError(err);
     contextLite.splog.debug(err.stack);
     // print errors when debugging tests
     if (process.env.DEBUG) {
@@ -187,7 +187,7 @@ async function graphiteHelper(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function handleGraphiteError(err: any, context: TContextLite): void {
+function handleGraphiteError(err: any): void {
   switch (err.constructor) {
     case CommandKilledError:
     case KilledError: // the user doesn't need a message if they ended ch
@@ -202,7 +202,7 @@ function handleGraphiteError(err: any, context: TContextLite): void {
     case PreconditionsFailedError:
     case CommandFailedError:
     default:
-      context.splog.error(err.message);
+      process.stderr.write(`ERROR: ${err.message}\n`);
       return;
   }
 }

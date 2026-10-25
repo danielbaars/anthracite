@@ -7,10 +7,10 @@ export const globalArgumentsOptions = {
       'Working directory. Use a direct --cwd prefix before the Git command for passthroughs; before or after the command for Charcoal commands.',
   },
   interactive: {
-    default: true,
     type: 'boolean',
     demandOption: false,
-    description: 'Prompt the user. Disable with --no-interactive.',
+    description:
+      'Enable interactive features. Defaults to terminal input and output. Disable with --no-interactive; quiet also disables interaction.',
   },
   quiet: {
     alias: 'q',
