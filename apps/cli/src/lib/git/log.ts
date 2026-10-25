@@ -1,8 +1,9 @@
 import { runGitCommand } from './runner';
 
-export function logLong(): void {
-  runGitCommand({
+export function logLong(): string {
+  return runGitCommand({
     args: [
+      `--no-pager`,
       `log`,
       `--graph`,
       `--abbrev-commit`,
@@ -10,7 +11,6 @@ export function logLong(): void {
       `--format=format:%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)`,
       `--branches`,
     ],
-    options: { stdio: 'inherit' },
     onError: 'throw',
     resource: `logLong`,
   });

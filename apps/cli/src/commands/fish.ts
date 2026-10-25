@@ -12,6 +12,10 @@ export const aliases = ['fish'];
 export const description = 'Set up fish tab completion.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
-  graphiteWithoutRepo(argv, canonical, async (context) => {
-    context.splog.page(FISH_COMPLETION);
+  graphiteWithoutRepo(argv, canonical, async () => {
+    await new Promise<void>((resolve, reject) => {
+      process.stdout.write(`${FISH_COMPLETION}\n`, (error) =>
+        error ? reject(error) : resolve()
+      );
+    });
   });

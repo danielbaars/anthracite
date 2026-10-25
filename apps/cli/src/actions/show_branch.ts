@@ -52,8 +52,8 @@ export async function showBranchInfo(
   }
 
   if (opts.quiet) return;
-  if (context.interactive && process.stdin.isTTY && process.stdout.isTTY) {
-    context.splog.page(output.join('\n'), { fallback: false });
+  if (context.canPage) {
+    context.splog.page(output.join('\n'));
   } else {
     // Await delivery so the native runtime flushes large piped pages.
     await new Promise<void>((resolve, reject) => {

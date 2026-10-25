@@ -562,7 +562,7 @@ export function composeEngine({
     getRebaseHead: git.getRebaseHead,
     getUnstagedChanges: git.getUnstagedChanges,
     getStatus: git.getStatus,
-    logLong: git.logLong,
+    logLong: () => splog.page(git.logLong()),
     showCommits: (
       branchName: string,
       patch: boolean,

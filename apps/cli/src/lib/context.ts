@@ -58,6 +58,7 @@ export function initContextLite(opts?: {
     outputDebugLogs: opts?.debug,
     tips: userConfig.data.tips,
     pager: userConfig.getPager(),
+    canPage: policy.canPage,
   });
 
   return {
