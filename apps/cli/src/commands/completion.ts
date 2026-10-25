@@ -7,15 +7,17 @@ export function registerCompletion(
   yargs: Argv,
   modules: readonly CommandModule[]
 ): Argv {
-  const rootNames = modules.flatMap((module) => [
-    ...(typeof module.command === 'string'
-      ? [module.command]
-      : module.command ?? []
-    ).map((command) => command.split(' ')[0]),
-    ...(typeof module.aliases === 'string'
-      ? [module.aliases]
-      : module.aliases ?? []),
-  ]);
+  const rootNames = modules
+    .filter((module) => module.describe !== false)
+    .flatMap((module) => [
+      ...(typeof module.command === 'string'
+        ? [module.command]
+        : module.command ?? []
+      ).map((command) => command.split(' ')[0]),
+      ...(typeof module.aliases === 'string'
+        ? [module.aliases]
+        : module.aliases ?? []),
+    ]);
   return yargs.completion(
     'completion',
     'Set up bash or zsh tab completion.',
@@ -66,6 +68,8 @@ export function registerCompletion(
 }
 
 const BRANCH_COMPLETING_COMMANDS = [
+  'freeze',
+  'unfreeze',
   'checkout',
   'co',
   'delete',

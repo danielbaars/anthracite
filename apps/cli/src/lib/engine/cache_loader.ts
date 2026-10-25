@@ -75,6 +75,7 @@ function getCacheSeed(trunkName: string | undefined): TCacheSeed {
 
 function hashSeed(data: TCacheSeed): string {
   return createHash('sha1')
+    .update('branch-status-v1')
     .update(JSON.stringify(data))
     .digest('hex')
     .toString();

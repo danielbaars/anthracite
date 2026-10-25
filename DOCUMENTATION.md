@@ -38,6 +38,16 @@ Every command accepts these:
 
 ---
 
+## Frozen branch status
+
+`ch freeze [branch]` marks the selected tracked branch and its downstack before trunk as frozen. `ch unfreeze [branch]` makes the selected branch and every tracked descendant editable, including branching descendants. Both default to the current branch. An explicit local branch selector also works with detached HEAD; trunk, untracked names and invalid scopes are refused before any status writes. There are no extra branch or force flags.
+
+Status persists across processes and linked worktrees. Setting it does not checkout, stage, open an editor, invoke hooks, repair metadata or clear a saved conflict. Dirty and ignored files stay intact. Repeating the same request does not rewrite status refs; the complete validated status set is published in one Git ref transaction.
+
+`ch info`/`ch i`, default `ch log`/`ch l`, and `ch log short`/`ch ls` show `(frozen)`. Classic and Git-based long logs retain their existing format. Ordinary modify/m commits and amends reject a frozen branch before staging, patch selection, hooks or editors. A scoped commit guard checks the current status again before Git publishes the commit ref, after existing hooks/editors have run; their file/index effects remain if publication is refused. Unfreeze explicitly before editing the protected branch.
+
+This candidate slice covers manual status, inspection and modify's basic guard. The remaining stack, lifecycle, get/sync and submit integration is tracked separately in [the freeze/unfreeze implementation](https://github.com/danielbaars/dinky-misc/issues/111). Freeze is not deletion protection or an operating-system lock: direct Git/raw Git and internal debug metadata operations are outside the protection contract. Existing administrative semantics are not replaced by a global read-only repository.
+
 ## Create & modify
 
 ### `create` (alias `c`)

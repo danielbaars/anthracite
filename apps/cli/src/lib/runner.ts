@@ -67,6 +67,26 @@ export async function graphiteInspection(
   }
 }
 
+/** Metadata-only commands avoid incidental cache/recovery/PR-info cleanup. */
+export async function graphiteMetadata(
+  args: yargs.Arguments & TGlobalArguments,
+  handler: (context: TContext) => Promise<void>
+): Promise<void> {
+  try {
+    const context = initContext(
+      initContextLite({ ...args, inspection: true }),
+      composeGit(),
+      { ...args, metadataOnly: true }
+    );
+    await handler(context);
+  } catch (error: unknown) {
+    process.stderr.write(
+      `ERROR: ${error instanceof Error ? error.message : String(error)}\n`
+    );
+    process.exitCode = 1;
+  }
+}
+
 export async function graphiteWithoutRepo(
   args: yargs.Arguments & TGlobalArguments,
   canonicalName: string,

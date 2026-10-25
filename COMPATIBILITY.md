@@ -57,7 +57,8 @@ Each row has its own positive execution alongside its canonical form. The quoted
 | `mg`, PR review/merge or merge queue | Unsupported. Raw `ch merge` and `ch revert` retain Git semantics and do not operate Graphite PRs. |
 | Graphite token transport | Unsupported; rejected explicitly. Existing `ch auth` uses `gh`, not Graphite activation. |
 | Feedback message service | Unsupported. Existing `feedback debug-context` is a local diagnostic route, not a message submission service. |
-| Freeze/unfreeze, absorb, multitrunk | Deferred; no success stubs or newly introduced metadata/guards in this round. |
+| `freeze [branch]`, `unfreeze [branch]` | Manual persistent status, directional cascades, atomic metadata publication, info/log markers and modify commit/amend protection are implemented in the current slice. [Public CLI scenarios](./apps/cli/test/commands/freeze_cli.test.ts) cover actual status/commit effects. Remaining stack/lifecycle/get/sync/submit integration is tracked by [#111](https://github.com/danielbaars/dinky-misc/issues/111); this slice does not claim full workflow parity. |
+| Absorb, multitrunk | Deferred; no success stubs introduced. |
 | Extra staging/selection/restack modes, split-by-file, extra get/submit/sync/delete/checkout modes | Deferred unless explicitly documented in the command reference. A similar existing option does not imply all modern Graphite modes. |
 | AI, update/verbose/into/reset-author, MCP and Graphite browser/service integrations | Outside this compatibility round. Unregistered internal source modules are not supported public commands. |
 | Quiet interactive-rebase behavior | Deliberate Charcoal choice: quiet blocks the editor before mutation. The investigated Graphite invocation opened an editor. |

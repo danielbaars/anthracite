@@ -82,7 +82,7 @@ export function getBranchInfo(
       args.displayAsCurrent
         ? chalk.cyan(`${args.branchName} (current)`)
         : chalk.blueBright(args.branchName)
-    } ${
+    }${context.engine.isBranchFrozen(args.branchName) ? ' (frozen)' : ''} ${
       context.engine.isBranchFixed(args.branchName)
         ? ''
         : chalk.yellow(`(needs restack)`)

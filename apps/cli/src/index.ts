@@ -24,9 +24,12 @@ import * as edit from './commands/edit';
 import * as feedback from './commands/feedback';
 import * as fish from './commands/fish';
 import * as fold from './commands/fold';
+import * as freeze from './commands/freeze';
+import * as unfreeze from './commands/unfreeze';
 import * as get from './commands/get';
 import * as info from './commands/info';
 import * as init from './commands/init';
+import * as internalCommitGuard from './commands/internal_commit_guard';
 import * as ll from './commands/ll';
 import * as log from './commands/log';
 import * as ls from './commands/ls';
@@ -83,9 +86,12 @@ const commandModules = [
   feedback,
   fish,
   fold,
+  freeze,
+  unfreeze,
   get,
   info,
   init,
+  internalCommitGuard,
   ll,
   log,
   ls,

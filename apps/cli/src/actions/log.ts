@@ -290,6 +290,11 @@ function getBranchLines(
           ? '─┐'
           : '─┘'
       }▸${args.branchName}${
+        !args.noStyleBranchName &&
+        context.engine.isBranchFrozen(args.branchName)
+          ? ' (frozen)'
+          : ''
+      }${
         args.noStyleBranchName || context.engine.isBranchFixed(args.branchName)
           ? ''
           : ` ${chalk.reset(`(needs restack)`)}`

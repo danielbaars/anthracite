@@ -56,14 +56,11 @@ export function parseBranchesAndMeta(
   }: { readonly repairMetadata?: boolean; readonly inspection?: boolean } = {}
 ): Record<string, TCachedMeta> {
   const branchesToParse = getAllBranchesAndMeta(args, splog, repairMetadata);
-
   const allBranchNames = new Set(
     branchesToParse.map((meta) => meta.branchName)
   );
   const parsedBranches: Record<string, TCachedMeta> = {};
-
   splog.debug('Validating branches...');
-
   // If we have n branches, it takes at most n(n+1)/2 iterations
   // to parse all of them (worst case is reverse sorted order)
   let cycleDetector =
@@ -78,7 +75,6 @@ export function parseBranchesAndMeta(
       }
       throw new PreconditionsFailedError('Cycle detected in Charcoal metadata');
     }
-
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const current = branchesToParse.shift()!;
     const {
@@ -87,8 +83,8 @@ export function parseBranchesAndMeta(
       parentBranchName,
       parentBranchRevision,
       prInfo,
+      frozen,
     } = current;
-
     if (branchName === args.trunkName) {
       splog.debug(`trunk: ${branchName}`);
       parsedBranches[branchName] = {
@@ -112,6 +108,7 @@ export function parseBranchesAndMeta(
         validationResult: 'BAD_PARENT_NAME',
         branchRevision,
         prInfo,
+        frozen,
         children: [],
       };
       continue;
@@ -138,6 +135,7 @@ export function parseBranchesAndMeta(
         parentBranchRevision,
         branchRevision,
         prInfo,
+        frozen,
         children: [],
       };
       continue;
@@ -159,6 +157,7 @@ export function parseBranchesAndMeta(
         parentBranchName,
         branchRevision,
         prInfo,
+        frozen,
         children: [],
       },
       ...result,
@@ -173,6 +172,7 @@ function getUnusableBranchMeta(branch: TBranchToParse): TCachedMeta {
     validationResult: 'BAD_PARENT_NAME',
     branchRevision: branch.branchRevision,
     prInfo: branch.prInfo,
+    frozen: branch.frozen,
     children: [],
   };
 }
@@ -188,6 +188,7 @@ export function validateOrFixParentBranchRevision(
     parentBranchName,
     parentBranchRevision,
     prInfo,
+    frozen,
     parentBranchCurrentRevision,
   }: TBranchToParseWithValidatedParent,
   splog: TSplog,
@@ -215,6 +216,7 @@ export function validateOrFixParentBranchRevision(
         parentBranchName,
         parentBranchRevision: parentBranchCurrentRevision,
         prInfo,
+        frozen,
       });
       splog.debug(
         `validated and updated parent rev: ${branchName}\n\t${parentBranchCurrentRevision}`
@@ -246,6 +248,7 @@ export function validateOrFixParentBranchRevision(
     parentBranchName,
     parentBranchRevision: parentBranchCurrentRevision,
     prInfo,
+    frozen,
   });
   splog.debug(
     `validated and fixed parent rev: ${branchName}\n\t${parentBranchCurrentRevision}`

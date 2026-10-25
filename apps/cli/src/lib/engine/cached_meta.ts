@@ -7,6 +7,7 @@ export const cachedMetaSchema = t.intersection(
     children: t.array(t.string),
     branchRevision: t.string,
     prInfo: t.optional(prInfoSchema),
+    frozen: t.optional(t.boolean),
   }),
   t.taggedUnion('validationResult' as const, {
     VALID: {

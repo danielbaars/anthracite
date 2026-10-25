@@ -24,11 +24,14 @@ import {
   getMetadataRefList,
   TBranchPRInfo,
   writeMetadataRef,
+  readMetadataRef,
+  writeFrozenMetadata,
 } from './metadata_ref';
 import { validateOrFixParentBranchRevision } from './parse_branches_and_meta';
 import { TScopeSpec } from './scope_spec';
 import fjsh from 'fast-json-stable-hash';
 import { publishFoldStackRefs } from '../git/fold_stack';
+import { assertBranchEditable } from './frozen_branch';
 
 export type TEngine = {
   debug: string;
@@ -43,6 +46,9 @@ export type TEngine = {
   branchExists(branchName: string | undefined): branchName is string;
   allBranchNames: string[];
   isBranchTracked: (branchName: string) => boolean;
+  isBranchFrozen: (branchName: string) => boolean;
+  assertBranchEditable: (branchName: string) => void;
+  setBranchesFrozen: (branchNames: readonly string[], frozen: boolean) => void;
   isDescendantOf: (branchName: string, parentBranchName: string) => boolean;
   trackBranch: (branchName: string, parentBranchName: string) => void;
   untrackBranch: (branchName: string) => void;
@@ -253,6 +259,9 @@ export function composeEngine({
     );
   };
 
+  const isBranchFrozen = (branchName: string): boolean =>
+    branchName !== trunkName && readMetadataRef(branchName).frozen === true;
+
   const isBranchFixed = (branchName: string): boolean => {
     const cachedMeta = cache.branches[branchName];
     if (cachedMeta?.validationResult === 'TRUNK') {
@@ -392,6 +401,7 @@ export function composeEngine({
       parentBranchName: newCachedMeta.parentBranchName,
       parentBranchRevision: newCachedMeta.parentBranchRevision,
       prInfo: newCachedMeta.prInfo,
+      frozen: newCachedMeta.frozen,
     });
 
     splog.debug(
@@ -511,6 +521,15 @@ export function composeEngine({
       return cache.branches[branchName].validationResult === 'VALID';
     },
     isDescendantOf: isDescendantOf,
+    isBranchFrozen,
+    assertBranchEditable,
+    setBranchesFrozen: (branchNames: readonly string[], frozen: boolean) => {
+      for (const branch of branchNames)
+        assertBranchIsValidAndNotTrunkAndGetMeta(branch);
+      writeFrozenMetadata(branchNames, frozen);
+      for (const branch of branchNames)
+        cache.branches[branch] = { ...cache.branches[branch], frozen };
+    },
     trackBranch: (branchName: string, parentBranchName: string) => {
       validateNewParent(branchName, parentBranchName);
       assertBranch(branchName);
@@ -880,7 +899,8 @@ export function composeEngine({
     commit: (opts: TCommitOpts) => {
       const branchName = getCurrentBranchOrThrow();
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
-      git.commit({ ...opts, noVerify, quiet });
+      assertBranchEditable(branchName);
+      git.commit({ ...opts, noVerify, quiet, frozenGuardBranch: branchName });
       cache.branches[branchName] = {
         ...cachedMeta,
         branchRevision: git.getShaOrThrow(branchName),

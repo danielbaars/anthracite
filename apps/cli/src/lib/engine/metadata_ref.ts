@@ -27,6 +27,7 @@ export const prInfoSchema = t.shape({
 export type TBranchPRInfo = t.TypeOf<typeof prInfoSchema>;
 
 const metaSchema = t.shape({
+  frozen: t.optional(t.boolean),
   parentBranchName: t.optional(t.string),
   parentBranchRevision: t.optional(t.string),
   prInfo: t.optional(prInfoSchema),
@@ -105,4 +106,34 @@ export function getMetadataRefList(): Record<string, string> {
     .forEach(([branchName, metaSha]) => (meta[branchName] = metaSha));
 
   return meta;
+}
+
+/** Publish status changes together; expected old refs protect concurrent metadata. */
+export function writeFrozenMetadata(
+  branchNames: readonly string[],
+  frozen: boolean
+): void {
+  const refs = getMetadataRefList();
+  const updates = branchNames.flatMap((branchName) => {
+    const meta = readMetadataRef(branchName);
+    if ((meta.frozen === true) === frozen) return [];
+    const previous = refs[branchName];
+    if (!previous) throw new Error(`Missing metadata for ${branchName}.`);
+    const revision = runGitCommand({
+      args: ['hash-object', '-w', '--stdin'],
+      options: { input: cuteString({ ...meta, frozen }) },
+      onError: 'throw',
+      resource: 'hashFrozenMetadata',
+    });
+    return [
+      `update refs/branch-metadata/${branchName}\0${revision}\0${previous}\0`,
+    ];
+  });
+  if (updates.length === 0) return;
+  runGitCommand({
+    args: ['-c', 'core.hooksPath=/dev/null', 'update-ref', '--stdin', '-z'],
+    options: { input: `start\0${updates.join('')}prepare\0commit\0` },
+    onError: 'throw',
+    resource: 'freezeMetadataRefs',
+  });
 }

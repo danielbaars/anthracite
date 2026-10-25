@@ -66,6 +66,9 @@ export const description =
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {
+    context.engine.assertBranchEditable(
+      context.engine.currentBranchPrecondition
+    );
     if (argv['interactive-rebase']) {
       return editBranchAction(context);
     }

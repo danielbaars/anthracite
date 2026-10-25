@@ -1,4 +1,5 @@
 import { runGitCommand } from './runner';
+import { withFrozenCommitGuard } from './frozen_commit';
 
 export type TCommitOpts = {
   amend?: boolean;
@@ -8,23 +9,33 @@ export type TCommitOpts = {
   patch?: boolean;
 };
 export function commit(
-  opts: TCommitOpts & { noVerify: boolean; readonly quiet?: boolean }
+  opts: TCommitOpts & {
+    noVerify: boolean;
+    readonly quiet?: boolean;
+    readonly frozenGuardBranch?: string;
+  }
 ): void {
-  runGitCommand({
-    args: [
-      'commit',
-      ...(opts.quiet ? ['--quiet'] : []),
-      ...(opts.amend ? [`--amend`] : []),
-      ...(opts.message ? [`-m`, opts.message] : []),
-      ...(opts.noEdit ? [`--no-edit`] : []),
-      ...(opts.edit ? [`-e`] : []),
-      ...(opts.patch ? [`-p`] : []),
-      ...(opts.noVerify ? ['-n'] : []),
-    ],
-    options: {
-      stdio: 'inherit',
-    },
-    onError: 'throw',
-    resource: 'commit',
-  });
+  const run = (prefix: readonly string[]): void => {
+    runGitCommand({
+      args: [
+        ...prefix,
+        'commit',
+        ...(opts.quiet ? ['--quiet'] : []),
+        ...(opts.amend ? [`--amend`] : []),
+        ...(opts.message ? [`-m`, opts.message] : []),
+        ...(opts.noEdit ? [`--no-edit`] : []),
+        ...(opts.edit ? [`-e`] : []),
+        ...(opts.patch ? [`-p`] : []),
+        ...(opts.noVerify ? ['-n'] : []),
+      ],
+      options: {
+        stdio: 'inherit',
+      },
+      onError: 'throw',
+      resource: 'commit',
+    });
+  };
+  if (opts.frozenGuardBranch)
+    withFrozenCommitGuard(opts.frozenGuardBranch, run);
+  else run([]);
 }

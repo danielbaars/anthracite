@@ -63,6 +63,8 @@ Charcoal uses a flat command surface that mirrors modern Graphite, e.g.:
 ```sh
 ch create -m "my change"   # create a branch + commit staged changes
 ch modify -a               # amend the current branch and restack upstack
+ch freeze                  # protect this branch and its downstack before trunk
+ch unfreeze                # make this branch and its upstack editable
 ch ss                      # push the stack and open/update PRs
 ch sync                    # pull trunk, prune merged branches, restack
 ch ls                      # view your stacks

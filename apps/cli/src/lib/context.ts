@@ -88,27 +88,43 @@ export function initContext(
     verify?: boolean;
     preserveMetadata?: boolean;
     readonly inspection?: boolean;
+    readonly metadataOnly?: boolean;
   }
 ): TContext {
-  const repoConfig = repoConfigFactory.load();
+  const preserving = opts?.inspection || opts?.metadataOnly;
+  const repoConfig = repoConfigFactory.load(undefined, {
+    preserveInvalid: preserving,
+  });
   if (
-    (opts?.preserveMetadata || opts?.inspection) &&
+    (opts?.preserveMetadata || preserving) &&
     !repoConfig.graphiteInitialized()
   )
     throw new PreconditionsFailedError(
-      opts?.inspection
+      opts?.metadataOnly
+        ? 'Freeze/unfreeze requires an initialized repository. Run ch init explicitly before retrying.'
+        : opts?.inspection
         ? 'Inspection requires an initialized repository. Run ch init explicitly before retrying.'
         : 'Stack reorder requires an initialized repository. Run ch init explicitly before retrying.'
     );
-  if (!opts?.inspection && !rebaseInProgress()) {
+  if (!preserving && !rebaseInProgress()) {
     continueConfigFactory.load().delete();
   }
-  const continueConfig = continueConfigFactory.load(undefined, {
-    preserveInvalid: opts?.inspection,
-  });
+  // Status changes must not parse or clean unrelated recovery data.
+  const continueConfig: TContinueConfig = opts?.metadataOnly
+    ? {
+        data: { branchesToSync: [], branchesToRestack: [] },
+        path: '',
+        update: () => {
+          throw new Error('Metadata-only commands cannot change continuation.');
+        },
+        delete: () => {
+          throw new Error('Metadata-only commands cannot delete continuation.');
+        },
+      }
+    : continueConfigFactory.load(undefined, { preserveInvalid: preserving });
   // Attached worktrees keep their own subject; only an own local replay may use C.
   const inspectionOverride =
-    opts?.inspection &&
+    preserving &&
     !git.getCurrentBranchName() &&
     ownsRebase(continueConfig.data.rebaseOwnership) &&
     continueConfig.data.rebasedBranchBase
@@ -117,19 +133,19 @@ export function initContext(
   const engine = composeEngine({
     git,
     trunkName: repoConfig.data.trunk,
-    currentBranchOverride: opts?.inspection
+    currentBranchOverride: preserving
       ? inspectionOverride
       : continueConfig.data.currentBranchOverride,
     splog: contextLite.splog,
     quiet: contextLite.quiet,
     noVerify: !(opts?.verify ?? true),
     remote: repoConfig.getRemote(),
-    preserveMetadata: opts?.preserveMetadata || opts?.inspection,
-    inspection: opts?.inspection,
+    preserveMetadata: opts?.preserveMetadata || preserving,
+    inspection: preserving,
     restackCommitterDateIsAuthorDate:
       contextLite.userConfig.data.restackCommitterDateIsAuthorDate,
   });
-  if (!opts?.inspection) {
+  if (!preserving) {
     const prInfoConfig = prInfoConfigFactory.loadIfExists();
     if (prInfoConfig) prInfoConfig.delete();
   }

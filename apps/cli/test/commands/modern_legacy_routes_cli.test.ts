@@ -217,8 +217,6 @@ describe('modern preserved routes through the public CLI', function () {
       for (const args of [
         ['config'],
         ['mg'],
-        ['freeze'],
-        ['unfreeze'],
         ['absorb'],
         ['create', '--into', 'tip'],
         ['modify', '--reset-author'],
