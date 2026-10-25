@@ -121,6 +121,7 @@ export function initContext(
       ? inspectionOverride
       : continueConfig.data.currentBranchOverride,
     splog: contextLite.splog,
+    quiet: contextLite.quiet,
     noVerify: !(opts?.verify ?? true),
     remote: repoConfig.getRemote(),
     preserveMetadata: opts?.preserveMetadata || opts?.inspection,

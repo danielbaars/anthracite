@@ -5,19 +5,21 @@ export function pushBranch(opts: {
   branchName: string;
   noVerify: boolean;
   forcePush: boolean;
+  quiet?: boolean;
 }): void {
   const forceOption = opts.forcePush ? '--force' : '--force-with-lease';
 
   runGitCommand({
     args: [
       `push`,
+      ...(opts.quiet ? ['--quiet'] : []),
       `-u`,
       opts.remote,
       forceOption,
       opts.branchName,
       ...(opts.noVerify ? ['--no-verify'] : []),
     ],
-    options: { stdio: 'pipe' },
+    options: { stdio: 'inherit' },
     onError: 'throw',
     resource: 'pushBranch',
   });

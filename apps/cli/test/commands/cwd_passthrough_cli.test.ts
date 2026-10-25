@@ -29,8 +29,8 @@ describe('cwd Git passthrough through the public CLI', function () {
     ] as const) {
       const result = start.run(args);
       expect(result.status, result.stdout + result.stderr).to.equal(0);
-      expect(result.stdout).to.include('Passing command through to git...');
-      expect(result.stderr).to.equal('');
+      expect(result.stdout).to.equal('');
+      expect(result.stderr).to.include('Passing command through to git...');
       expect(fixture.git(['diff', '--cached', '--name-only'])).to.equal(
         '--cwd'
       );
@@ -74,12 +74,12 @@ describe('cwd Git passthrough through the public CLI', function () {
           prefix.length === 0 ? target.repo : start.repo
         );
         expect(selected.status, JSON.stringify(args)).to.equal(direct.status);
-        expect(selected.stdout).to.equal(
+        expect(selected.stdout).to.equal(direct.stdout.toString('utf8'));
+        expect(selected.stderr).to.equal(
           `Passing command through to git...\nRunning: "git ${args.join(
             ' '
-          )}"\n\n` + direct.stdout.toString('utf8')
+          )}"\n\n` + direct.stderr.toString('utf8')
         );
-        expect(selected.stderr).to.equal(direct.stderr.toString('utf8'));
       }
     }
     expect(start.inspectionSnapshot()).to.deep.equal(beforeStart);
@@ -113,13 +113,14 @@ describe('cwd Git passthrough through the public CLI', function () {
       patch
     );
     expect(selected.status).to.equal(direct.status).and.to.equal(0);
-    expect(selected.stdout).to.equal(
+    expect(selected.stdout).to.equal(direct.stdout.toString('utf8'));
+    expect(selected.stderr).to.equal(
       `Passing command through to git...\nRunning: "git ${args.join(
         ' '
-      )}"\n\n` + direct.stdout.toString('utf8')
+      )}"\n\n` + direct.stderr.toString('utf8')
     );
     expect(selected.stdout).to.include('stream.txt');
-    expect(selected.stderr).to.equal(direct.stderr.toString('utf8'));
+
     expect(fs.existsSync(path.join(target.repo, 'stream.txt'))).to.equal(false);
   });
 

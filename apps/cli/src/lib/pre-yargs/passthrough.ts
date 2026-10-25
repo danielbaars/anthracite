@@ -53,7 +53,7 @@ export function passthrough(args: string[]): void {
     return;
   }
 
-  console.log(
+  console.error(
     chalk.grey(
       [
         `Passing command through to git...`,

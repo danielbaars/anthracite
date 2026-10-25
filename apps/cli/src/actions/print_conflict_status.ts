@@ -6,41 +6,43 @@ export function printConflictStatus(
   errMessage: string,
   context: TContext
 ): void {
-  context.splog.info(chalk.redBright(errMessage));
-  context.splog.newline();
+  diagnostic(chalk.redBright(errMessage));
+  diagnostic('');
 
-  context.splog.info(chalk.yellow(`Unmerged files:`));
-  context.splog.info(
+  diagnostic(chalk.yellow(`Unmerged files:`));
+  diagnostic(
     context.engine
       .getUnmergedFiles()
       .map((line) => chalk.redBright(line))
       .join('\n')
   );
-  context.splog.newline();
+  diagnostic('');
 
   const rebaseHead = context.engine.getRebaseHead();
   // this should never be undefined in this case, but we don't need to fail here
   if (rebaseHead) {
-    context.splog.info(
+    diagnostic(
       chalk.yellow(`You are here (resolving ${chalk.blueBright(rebaseHead)}):`)
     );
     logForConflictStatus(rebaseHead, context);
-    context.splog.newline();
+    diagnostic('');
   }
 
-  context.splog.info(
+  diagnostic(
     chalk.yellow(`To fix and continue your previous Charcoal command:`)
   );
-  context.splog.info(`(1) resolve the listed merge conflicts`);
-  context.splog.info(
-    `(2) mark them as resolved with ${chalk.cyan(`ch add .`)}`
-  );
-  context.splog.info(
+  diagnostic(`(1) resolve the listed merge conflicts`);
+  diagnostic(`(2) mark them as resolved with ${chalk.cyan(`ch add .`)}`);
+  diagnostic(
     `(3) run ${chalk.cyan(
       `ch continue`
     )} to continue executing your previous Charcoal command`
   );
-  context.splog.info(
+  diagnostic(
     'ch rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.'
   );
+}
+
+function diagnostic(message: string): void {
+  process.stderr.write(`${message}\n`);
 }

@@ -105,7 +105,8 @@ function testBranch(
 }
 
 function logState(state: TTestState, refresh: boolean, context: TContext) {
-  if (refresh) {
+  const canRefresh = !context.quiet && !!process.stdout.isTTY;
+  if (refresh && canRefresh) {
     process.stdout.moveCursor(0, -Object.keys(state).length);
   }
   Object.keys(state).forEach((branchName) => {
@@ -122,7 +123,7 @@ function logState(state: TTestState, refresh: boolean, context: TContext) {
     const durationString: string | undefined = duration
       ? new Date(duration).toISOString().split(/T/)[1].replace(/\..+/, '')
       : undefined;
-    process.stdout.clearLine(0);
+    if (canRefresh) process.stdout.clearLine(0);
     // Example:
     // - [success]: tr--Track_CLI_and_Graphite_user_assoicat (00:00:22)
     context.splog.info(

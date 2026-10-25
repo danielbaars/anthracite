@@ -61,7 +61,7 @@ export function logForConflictStatus(
       noStyleBranchName: true,
     },
     context
-  ).forEach((line) => context.splog.info(line));
+  ).forEach((line) => process.stderr.write(`${line}\n`));
 }
 
 export async function interactiveBranchSelection(

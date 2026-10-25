@@ -59,8 +59,8 @@ if (!process.env.DEBUG) {
 tmp.setGracefulCleanup();
 
 process.on('uncaughtException', (err) => {
-  console.log(chalk.redBright(`UNCAUGHT EXCEPTION: ${err.message}`));
-  console.log(chalk.redBright(`UNCAUGHT EXCEPTION: ${err.stack}`));
+  console.error(chalk.redBright(`UNCAUGHT EXCEPTION: ${err.message}`));
+  if (process.env.DEBUG) console.error(chalk.redBright(`${err.stack}`));
   // eslint-disable-next-line no-restricted-syntax
   process.exit(1);
 });

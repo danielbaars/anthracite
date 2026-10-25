@@ -28,13 +28,15 @@ export function composeSplog(
     info: opts.quiet ? () => void 0 : (s: string) => console.log(s),
     debug: opts.outputDebugLogs
       ? (s: string) =>
-          console.log(
+          console.error(
             chalk.dim(`${chalk.bold(`${new Date().toISOString()}:`)} ${s}`)
           )
       : () => void 0,
-    error: (s: string) => console.log(chalk.redBright(`ERROR: ${s}`)),
-    warn: (s: string) => console.log(chalk.yellow(`WARNING: ${s}`)),
-    message: (s: string) => console.log(chalk.yellow(`${chalk.yellow(s)}\n\n`)),
+    error: (s: string) => console.error(chalk.redBright(`ERROR: ${s}`)),
+    warn: (s: string) => console.error(chalk.yellow(`WARNING: ${s}`)),
+    message: opts.quiet
+      ? () => void 0
+      : (s: string) => console.log(chalk.yellow(`${chalk.yellow(s)}\n\n`)),
     tip: (s: string) =>
       opts.tips && !opts.quiet
         ? console.log(

@@ -7,10 +7,13 @@ export type TCommitOpts = {
   edit?: boolean;
   patch?: boolean;
 };
-export function commit(opts: TCommitOpts & { noVerify: boolean }): void {
+export function commit(
+  opts: TCommitOpts & { noVerify: boolean; readonly quiet?: boolean }
+): void {
   runGitCommand({
     args: [
       'commit',
+      ...(opts.quiet ? ['--quiet'] : []),
       ...(opts.amend ? [`--amend`] : []),
       ...(opts.message ? [`-m`, opts.message] : []),
       ...(opts.noEdit ? [`--no-edit`] : []),

@@ -177,6 +177,7 @@ export function composeEngine({
   currentBranchOverride,
   splog,
   noVerify,
+  quiet = false,
   remote,
   restackCommitterDateIsAuthorDate,
   preserveMetadata = false,
@@ -187,6 +188,7 @@ export function composeEngine({
   currentBranchOverride?: string;
   splog: TSplog;
   noVerify: boolean;
+  quiet?: boolean;
   remote: string;
   restackCommitterDateIsAuthorDate?: boolean;
   preserveMetadata?: boolean;
@@ -878,7 +880,7 @@ export function composeEngine({
     commit: (opts: TCommitOpts) => {
       const branchName = getCurrentBranchOrThrow();
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
-      git.commit({ ...opts, noVerify });
+      git.commit({ ...opts, noVerify, quiet });
       cache.branches[branchName] = {
         ...cachedMeta,
         branchRevision: git.getShaOrThrow(branchName),
@@ -901,6 +903,7 @@ export function composeEngine({
           ...opts,
           amend: true,
           noVerify,
+          quiet,
         });
       } catch (e) {
         try {
@@ -1078,7 +1081,7 @@ export function composeEngine({
     },
     pushBranch: (branchName: string, forcePush: boolean) => {
       assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
-      git.pushBranch({ remote, branchName, noVerify, forcePush });
+      git.pushBranch({ remote, branchName, noVerify, forcePush, quiet });
     },
     pullTrunk: () => {
       git.pruneRemote(remote);

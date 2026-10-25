@@ -57,7 +57,11 @@ export async function graphiteInspection(
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     process.stderr.write(`ERROR: ${message}\n`);
-    if (args.debug && error instanceof Error && error.stack)
+    if (
+      (args.debug || process.env.DEBUG) &&
+      error instanceof Error &&
+      error.stack
+    )
       process.stderr.write(`${error.stack}\n`);
     process.exitCode = 1;
   }
@@ -94,12 +98,11 @@ async function graphiteInternal(
     process.exit(1);
   });
   const git = composeGit();
-  const contextLite = initContextLite({
-    ...args,
-    userEmail: git.getUserEmail(),
-  });
-
   try {
+    const contextLite = initContextLite({
+      ...args,
+      userEmail: git.getUserEmail(),
+    });
     await tracer.span(
       {
         name: 'command',
@@ -130,10 +133,8 @@ async function graphiteInternal(
     );
   } catch (err) {
     handleGraphiteError(err);
-    contextLite.splog.debug(err.stack);
-    // print errors when debugging tests
-    if (process.env.DEBUG) {
-      process.stdout.write(err.stack.toString());
+    if ((args.debug || process.env.DEBUG) && err.stack) {
+      process.stderr.write(`${err.stack}\n`);
     }
     process.exitCode = 1;
   }
