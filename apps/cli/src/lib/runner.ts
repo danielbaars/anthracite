@@ -156,11 +156,11 @@ async function graphiteHelper(
       canonicalName !== 'repo init' &&
       !context.repoConfig.graphiteInitialized()
     ) {
+      await init({}, context);
       context.splog.info(
-        `Charcoal has not been initialized, attempting to setup now...`
+        `Charcoal was not initialized; setup is now complete.`
       );
       context.splog.newline();
-      await init({}, context);
     }
 
     await handler.run(context);

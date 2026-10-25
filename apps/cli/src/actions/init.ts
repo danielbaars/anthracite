@@ -14,13 +14,6 @@ export async function init(
 ): Promise<void> {
   const allBranchNames = context.engine.allBranchNames;
 
-  context.splog.info(
-    context.repoConfig.graphiteInitialized()
-      ? `Reinitializing Charcoal...`
-      : `Welcome to Charcoal!`
-  );
-  context.splog.newline();
-
   if (allBranchNames.length === 0) {
     throw new PreconditionsFailedError(
       [
@@ -33,6 +26,13 @@ export async function init(
   const newTrunkName: string =
     (args.trunk ? allBranchNames.find((b) => b === args.trunk) : undefined) ??
     (await selectTrunkBranch(allBranchNames, context));
+
+  context.splog.info(
+    context.repoConfig.graphiteInitialized()
+      ? `Reinitializing Charcoal...`
+      : `Welcome to Charcoal!`
+  );
+  context.splog.newline();
 
   context.repoConfig.setTrunk(newTrunkName);
   context.splog.info(`Trunk set to ${chalk.green(newTrunkName)}`);

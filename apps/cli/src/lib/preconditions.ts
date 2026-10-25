@@ -34,7 +34,7 @@ export function ensureSomeStagedChangesPrecondition(context: TContext): void {
   }
 
   if (unstagedChanges()) {
-    context.splog.tip(
+    context.splog.warn(
       'There are unstaged changes. Use the `--all` option to stage all changes.'
     );
   }

@@ -186,7 +186,7 @@ export async function trackBranch(
     !context.engine.isTrunk(args.parentBranchName) &&
     !context.engine.isDescendantOf(branchName, args.parentBranchName)
   ) {
-    context.splog.tip(
+    context.splog.warn(
       `Are you sure that ${chalk.cyan(
         args.parentBranchName
       )} is the right parent for ${chalk.cyan(

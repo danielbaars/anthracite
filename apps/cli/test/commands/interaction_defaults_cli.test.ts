@@ -78,6 +78,68 @@ describe('noninteractive route defaults through the public CLI', function () {
     expect(fixture.run(['parent']).stdout).to.equal('untracked\n');
   });
 
+  it('keeps ordinary enabled tips but rejects an unrelated explicit parent with empty stdout and stderr advice', () => {
+    fixture.ok(['user', 'tips', '--enable']);
+    const ordinary = fixture.run(['untrack', 'base']);
+    expect(ordinary.status).to.equal(0);
+    expect(ordinary.stdout).to.include('tip:').and.include('upstack onto');
+    expect(ordinary.stderr).to.equal('');
+    const before = fixture.inspectionSnapshot();
+    for (const flags of [[], ['--quiet']]) {
+      const refused = fixture.run([
+        'track',
+        'base',
+        '--parent',
+        'other',
+        ...flags,
+      ]);
+      expect(refused.status).to.equal(1);
+      expect(refused.stdout).to.equal('');
+      expect(refused.stderr)
+        .to.include('not in the history')
+        .and.include('git rebase other base');
+      expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    }
+  });
+
+  it('rejects modify commit with only an untracked file and enabled tips before staging or hooks with empty stdout', () => {
+    fixture.ok(['user', 'tips', '--enable']);
+    fs.writeFileSync(
+      path.join(fixture.repo, 'untracked-only.txt'),
+      'untracked work'
+    );
+    const hook = path.join(fixture.root, 'unexpected-commit-hook');
+    fs.writeFileSync(
+      path.join(fixture.repo, '.git', 'hooks', 'pre-commit'),
+      `#!${process.execPath}\nrequire('fs').writeFileSync(${JSON.stringify(
+        hook
+      )}, 'invoked');`,
+      { mode: 0o755 }
+    );
+    fixture.git(['status', '--porcelain']);
+    const before = fixture.inspectionSnapshot();
+    for (const flags of [[], ['--quiet']]) {
+      const refused = fixture.run([
+        'modify',
+        '--commit',
+        '--message',
+        'literal',
+        '--no-interactive',
+        ...flags,
+      ]);
+      expect(refused.status).to.equal(1);
+      expect(refused.stdout).to.equal('');
+      expect(refused.stderr)
+        .to.include('Cannot run without staged changes')
+        .and.include('--all');
+      expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    }
+    expect(fs.existsSync(hook)).to.equal(false);
+    expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
+      false
+    );
+  });
+
   it('tracks only new downstack ancestors and stops at the existing tracked branch', () => {
     fixture.git(['switch', '-c', 'new-parent', 'child']);
     fixture.commit('new-parent');
@@ -130,8 +192,39 @@ describe('noninteractive route defaults through the public CLI', function () {
       fixture.git(['commit', '-m', name], repo);
     }
     const refs = fixture.git(['show-ref', '--heads'], repo);
+    fixture.git(['status', '--porcelain'], repo);
+    const state = (): Record<string, unknown> => {
+      const snapshot = {
+        ...fixture.snapshot(repo),
+        refs: fixture.git(
+          ['for-each-ref', '--format=%(refname) %(objectname)'],
+          repo
+        ),
+        config: fs.existsSync(path.join(repo, '.git', '.graphite_repo_config'))
+          ? fs
+              .readFileSync(path.join(repo, '.git', '.graphite_repo_config'))
+              .toString('base64')
+          : null,
+      };
+      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      if (evidence)
+        fs.appendFileSync(
+          path.join(evidence, 'init-states.jsonl'),
+          JSON.stringify({ cwd: repo, snapshot }) + '\n'
+        );
+      return snapshot;
+    };
+    const beforeInit = state();
     const missing = fixture.run(['init', '--interactive'], repo);
     expect(missing.status, missing.stdout + missing.stderr).to.equal(1);
+    expect(missing.stdout).to.equal('');
+    expect(missing.stderr).to.include('--trunk');
+    expect(state()).to.deep.equal(beforeInit);
+    const missingAutomatic = fixture.run(['log', 'short'], repo);
+    expect(missingAutomatic.status).to.equal(1);
+    expect(missingAutomatic.stdout).to.equal('');
+    expect(missingAutomatic.stderr).to.include('--trunk');
+    expect(state()).to.deep.equal(beforeInit);
     expect(fixture.git(['show-ref', '--heads'], repo)).to.equal(refs);
     const initialized = fixture.run(
       ['repo', 'init', '--trunk', 'unusual', '--interactive'],
@@ -141,6 +234,9 @@ describe('noninteractive route defaults through the public CLI', function () {
       initialized.status,
       initialized.stdout + initialized.stderr
     ).to.equal(0);
+    expect(initialized.stdout)
+      .to.include('Welcome to Charcoal!')
+      .and.include('Trunk set to unusual');
     expect(initialized.stdout).not.to.include('onboarding');
     expect(fixture.run(['info'], repo).stdout).to.include('unusual');
     expect(fixture.git(['show-ref', '--heads'], repo)).to.equal(refs);
@@ -150,7 +246,27 @@ describe('noninteractive route defaults through the public CLI', function () {
     fixture.git(['remote', 'remove', 'origin'], inferred);
     const automatic = fixture.run(['init', '--interactive'], inferred);
     expect(automatic.status, automatic.stdout + automatic.stderr).to.equal(0);
+    expect(automatic.stdout)
+      .to.include('Welcome to Charcoal!')
+      .and.include('Trunk set to main');
     expect(fixture.run(['info'], inferred).stdout).to.include('main');
+  });
+
+  it('automatically initializes an inferred trunk before showing setup success and ordinary log content', () => {
+    fs.unlinkSync(path.join(fixture.repo, '.git', '.graphite_repo_config'));
+    const before = fixture.snapshot();
+    const automatic = fixture.run(['log', 'short']);
+    expect(automatic.status, automatic.stderr).to.equal(0);
+    expect(automatic.stdout)
+      .to.include('Welcome to Charcoal!')
+      .and.include('Trunk set to main')
+      .and.include('setup is now complete.')
+      .and.include('child');
+    expect(fixture.snapshot()).to.deep.equal(before);
+    expect(fixture.run(['parent']).stdout).to.equal('main\n');
+    expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
+      false
+    );
   });
 });
 

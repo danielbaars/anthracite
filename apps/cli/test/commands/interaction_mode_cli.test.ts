@@ -100,7 +100,7 @@ describe('effective interaction policy through the public CLI', function () {
       cwd: fixture.repo,
       env: fixture.env,
       responses: [
-        { prompt: '❯   tip', input: '\u001b[B' },
+        { prompt: 'Select a branch', input: 'side' },
         { prompt: '❯   side', input: '\r' },
       ],
     });
@@ -109,6 +109,29 @@ describe('effective interaction policy through the public CLI', function () {
     expect(answered.output).to.include('Checked out side.');
     expect(fixture.refs()).to.equal(refs);
     expect(fixture.git(['status', '--porcelain'])).to.equal('');
+  });
+
+  it('retains initialized trunk when terminal onboarding is cancelled', () => {
+    fs.unlinkSync(path.join(fixture.repo, '.git', '.graphite_repo_config'));
+    const before = fixture.snapshot();
+    const cancelled = runCliInPty(
+      getTestCliCommand(['init', '--trunk', 'main']),
+      {
+        cwd: fixture.repo,
+        env: fixture.env,
+        responses: [
+          { prompt: 'Would you like to start tracking', input: '\u0003' },
+        ],
+      }
+    );
+    expect(cancelled.status, cancelled.output).to.equal(1);
+    expect(cancelled.output).to.include('Trunk set to main');
+    expect(fixture.snapshot()).to.deep.equal(before);
+    expect(fixture.run(['parent']).stdout).to.equal('main\n');
+    expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
+      false
+    );
+    fixture.inspectionSnapshot();
   });
 
   it('honors effective booleans and terminal defaults without silently choosing', () => {
