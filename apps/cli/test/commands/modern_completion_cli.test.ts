@@ -248,13 +248,15 @@ describe('modern completion through the public CLI', function () {
     );
     expect(fish.status, fish.stderr).to.equal(0);
     expect(fish.stderr).to.equal('');
-    expect(fish.stdout).to.include('$command --get-yargs-completions');
     expect(fish.stdout).to.include(
-      'checkout co delete dl track tr untrack utr ut move'
+      '$tokens[1] --get-yargs-completions $tokens "$current"'
     );
-    expect(fish.stdout).to.include('get g');
-    expect(fish.stdout).to.include('__fish_git_remote_branches');
-    expect(fish.stdout).not.to.match(/seen_subcommand_from[^\n]*\bmv\b/);
+    // Fish now delegates selection/ownership to the CLI, including get/g remotes.
+    expect(fish.stdout).to.include(
+      'complete -c ch -f -a "(__ch_command_completions)"'
+    );
+    expect(fish.stdout).not.to.include('command git');
+    expect(fish.stdout).not.to.include('__fish_seen_subcommand_from');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
       false
