@@ -26,6 +26,7 @@ export type TRunGitCommandParameters = {
   args: string[];
   options?: Omit<SpawnSyncOptions, 'encoding' | 'maxBuffer'> & {
     noTrim?: boolean;
+    readonly forwardStderr?: boolean;
   };
   onError: 'throw' | 'ignore';
   resource: string | null;
@@ -82,6 +83,11 @@ function runGitCommandInternal(params: TRunGitCommandParameters): string {
     maxBuffer: 1024 * 1024 * 1024,
     windowsHide: true,
   });
+
+  // Preserve owned child bytes while retaining stderr for command-specific errors.
+  if (params.options?.forwardStderr && spawnSyncOutput.stderr) {
+    process.stderr.write(spawnSyncOutput.stderr);
+  }
 
   // this is a syscall failure, not a command failure
   if (spawnSyncOutput.error) {

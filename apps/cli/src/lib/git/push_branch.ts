@@ -19,7 +19,7 @@ export function pushBranch(opts: {
       opts.branchName,
       ...(opts.noVerify ? ['--no-verify'] : []),
     ],
-    options: { stdio: 'inherit' },
+    options: { stdio: ['inherit', 'inherit', 'pipe'], forwardStderr: true },
     onError: 'throw',
     resource: 'pushBranch',
   });
