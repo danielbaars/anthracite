@@ -27,7 +27,6 @@ const BRANCH_COMPLETING_COMMANDS = [
   'untrack',
   'ut',
   'move',
-  'mv',
   'get',
   'g',
 ];

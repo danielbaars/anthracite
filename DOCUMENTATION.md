@@ -215,7 +215,7 @@ ch restack
 ch restack --upstack
 ```
 
-### `move` (alias `mv`)
+### `move`
 Rebase the current branch onto the latest commit of a target branch and restack all of its descendants. With no argument, opens an interactive selector.
 
 | Flag | Description |
@@ -226,6 +226,8 @@ Rebase the current branch onto the latest commit of a target branch and restack 
 ```
 ch move main
 ```
+
+Use `ch move` for branch operations. `ch mv` passes through to Git to move files; it is not a branch alias. A direct `--cwd` prefix may select another repository for this Git operation. Other global prefixes are not supported for raw Git routing and never turn `mv` into a branch operation.
 
 ### `reorder` (alias `ro`)
 Reorder the branches between trunk and the current branch, restacking all descendants. Opens an interactive editor.

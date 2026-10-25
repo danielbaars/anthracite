@@ -41,7 +41,6 @@ const args = {
 
 export const command = 'move [branch]';
 export const canonical = 'move';
-export const aliases = ['mv'];
 export const description =
   'Rebase the current branch onto the latest commit of the target branch and restack all of its descendants. If no branch is passed in, opens an interactive selector.';
 export const builder = args;
