@@ -102,7 +102,11 @@ describe('stack reorder selects a reachable tip through the public terminal and 
     ['reorder', '--stack'],
     ['ro', '--stack', '--quiet', '--interactive'],
   ]) {
-    it(`cancels a real prompt without opening the editor or changing either worktree: ${args.join(
+    it(`${
+      args.includes('--quiet')
+        ? 'refuses quiet selection'
+        : 'cancels a real prompt'
+    } without opening the editor or changing either worktree: ${args.join(
       ' '
     )}`, () => {
       ambiguous();
@@ -144,25 +148,32 @@ describe('stack reorder selects a reachable tip through the public terminal and 
       const result = runCliInPty(getTestCliCommand(args), {
         cwd: fixture.repo,
         env: normalEnv,
-        responses: [{ prompt: 'Choose a tip', input: '' }],
+        responses: args.includes('--quiet')
+          ? []
+          : [{ prompt: 'Choose a tip', input: '\u0003' }],
       });
       fixture.savePty(result);
       expect(result.status, result.output).not.to.equal(0);
       expect(result.status).not.to.equal(124);
-      expect(result.output).to.include('Choose a tip above child');
-      expect(result.output)
-        .to.match(/◯\s+tip/)
-        .and.match(/◯\s+deep/);
-      expect(result.output).not.to.match(
-        /◯\s+(?:base|child|sibling|main|other|downstack-side|unrelated-tip|untracked-tip)\b/
-      );
+      if (args.includes('--quiet')) {
+        expect(result.status).to.equal(1);
+        expect(result.output).to.include('requires interactive mode');
+        expect(result.output).not.to.include('Choose a tip');
+        expect(result.output).not.to.include('\u001b[?25');
+      } else {
+        expect(result.output).to.include('Choose a tip above child');
+        expect(result.output)
+          .to.match(/◯\s+tip/)
+          .and.match(/◯\s+deep/);
+        expect(result.output).not.to.match(
+          /◯\s+(?:base|child|sibling|main|other|downstack-side|unrelated-tip|untracked-tip)\b/
+        );
+      }
       expect(fs.existsSync(fixture.offered)).to.equal(false);
       expect(fs.existsSync(trace)).to.equal(false);
-      expect([
-        fixture.snapshot(),
-        fixture.snapshot(linked),
-        rawRefs(),
-      ]).to.deep.equal(before);
+      const after = [fixture.snapshot(), fixture.snapshot(linked), rawRefs()];
+      preserveState(before, after);
+      expect(after).to.deep.equal(before);
       for (const cwd of [fixture.repo, linked])
         expect(fs.readFileSync(path.join(cwd, privateName))).to.deep.equal(
           bytes
@@ -183,6 +194,8 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         ' '
       )}`, () => {
         ambiguous();
+        const normalEnv = { ...fixture.env };
+        delete normalEnv.GIT_OPTIONAL_LOCKS;
         const before = [fixture.snapshot(), rawRefs()];
         const result = runCliInPty(
           getTestCliCommand([
@@ -193,15 +206,21 @@ describe('stack reorder selects a reachable tip through the public terminal and 
               ? ['--input', fixture.input('base\ntip\nchild\n')]
               : []),
           ]),
-          { cwd: fixture.repo, env: fixture.env }
+          { cwd: fixture.repo, env: normalEnv }
         );
         fixture.savePty(result);
         expect(result.status, result.output).not.to.equal(0);
         expect(result.status).not.to.equal(124);
-        expect(result.output).to.include('unique tip in non-interactive mode');
+        expect(result.output).to.include(
+          useInput
+            ? 'unique tip in non-interactive mode'
+            : 'requires interactive mode or a supported explicit input file'
+        );
         expect(result.output).not.to.include('Choose a tip');
         expect(fs.existsSync(fixture.offered)).to.equal(false);
-        expect([fixture.snapshot(), rawRefs()]).to.deep.equal(before);
+        const after = [fixture.snapshot(), rawRefs()];
+        preserveState(before, after);
+        expect(after).to.deep.equal(before);
         expect(fixture.parent('deep')).to.equal('sibling');
       });
     }
@@ -233,15 +252,16 @@ describe('stack reorder selects a reachable tip through the public terminal and 
     });
   }
 
-  it('keeps an explicitly interactive quiet chosen no-op with repeated true declarations unchanged', () => {
+  it('keeps an explicitly interactive chosen no-op with repeated true declarations unchanged', () => {
+    delete fixture.env.GIT_OPTIONAL_LOCKS;
     ambiguous();
+    fixture.git(['status', '--porcelain']);
     const before = [fixture.snapshot(), rawRefs()];
     const result = choose('deep', [
       'ro',
       '--stack',
       'true',
       '--stack=true',
-      '--quiet',
       '--no-interactive',
       '--interactive',
     ]);
@@ -249,7 +269,38 @@ describe('stack reorder selects a reachable tip through the public terminal and 
     expect(
       fs.readFileSync(fixture.offered, 'utf8').split('\n').slice(0, 4)
     ).to.deep.equal(['deep', 'sibling', 'child', 'base']);
-    expect([fixture.snapshot(), rawRefs()]).to.deep.equal(before);
+    const after = [fixture.snapshot(), rawRefs()];
+    preserveState(before, after);
+    expect(after).to.deep.equal(before);
+    expect(fixture.parent('deep')).to.equal('sibling');
+  });
+
+  it('refuses quiet repeated-boolean selection before the prompt or editor and preserves the no-op graph', () => {
+    ambiguous();
+    const normalEnv = { ...fixture.env };
+    delete normalEnv.GIT_OPTIONAL_LOCKS;
+    const before = [fixture.snapshot(), rawRefs()];
+    const result = runCliInPty(
+      getTestCliCommand([
+        'ro',
+        '--stack',
+        'true',
+        '--stack=true',
+        '--quiet',
+        '--no-interactive',
+        '--interactive',
+      ]),
+      { cwd: fixture.repo, env: normalEnv }
+    );
+    fixture.savePty(result);
+    const after = [fixture.snapshot(), rawRefs()];
+    preserveState(before, after);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('requires interactive mode');
+    expect(result.output).not.to.include('Choose a tip');
+    expect(result.output).not.to.include('\u001b[?25');
+    expect(fs.existsSync(fixture.offered)).to.equal(false);
+    expect(after).to.deep.equal(before);
     expect(fixture.parent('deep')).to.equal('sibling');
   });
 
@@ -273,7 +324,9 @@ describe('stack reorder selects a reachable tip through the public terminal and 
   }
 
   it('refuses unique noninteractive scope without input, and executes it with input', () => {
+    delete fixture.env.GIT_OPTIONAL_LOCKS;
     fixture.git(['switch', 'child']);
+    fixture.git(['status', '--porcelain']);
     const before = [fixture.snapshot(), rawRefs()];
     const result = fixture.run([
       'ro',
@@ -281,12 +334,15 @@ describe('stack reorder selects a reachable tip through the public terminal and 
       '--quiet',
       '--no-interactive',
     ]);
-    expect(result.status).not.to.equal(0);
-    expect(result.stdout + result.stderr).to.include(
-      'interactive editor or --input'
-    );
+    expect(result.status).to.equal(1);
+    expect(result.stdout).to.equal('');
+    expect(result.stderr)
+      .to.include('requires interactive mode')
+      .and.include('supported explicit input file');
     expect(fs.existsSync(fixture.offered)).to.equal(false);
-    expect([fixture.snapshot(), rawRefs()]).to.deep.equal(before);
+    const after = [fixture.snapshot(), rawRefs()];
+    preserveState(before, after);
+    expect(after).to.deep.equal(before);
     fixture.ok([
       'ro',
       '--stack',
@@ -396,6 +452,18 @@ describe('stack reorder selects a reachable tip through the public terminal and 
 
   function rawRefs(): string {
     return fixture.git(['for-each-ref', '--format=%(refname) %(objectname)']);
+  }
+
+  function preserveState(before: unknown, after: unknown): void {
+    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    if (evidence)
+      fs.appendFileSync(
+        path.join(
+          evidence,
+          `${path.basename(fixture.root)}-reorder-state.jsonl`
+        ),
+        JSON.stringify({ before, after }) + '\n'
+      );
   }
 
   function choose(

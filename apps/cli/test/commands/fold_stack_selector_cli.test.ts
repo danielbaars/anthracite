@@ -141,6 +141,7 @@ describe('stack fold tip selection through a real PTY', function () {
   }
 
   it('cancels with only eligible leaves displayed and preserves both worktrees, indexes and literal bytes', () => {
+    delete fixture.env.GIT_OPTIONAL_LOCKS;
     fixture.branch('sibling', 'child');
     fixture.branch('deep', 'sibling');
     fixture.branch('downstack-sibling', 'base');
@@ -174,7 +175,9 @@ describe('stack fold tip selection through a real PTY', function () {
     expect(result.output, result.output).not.to.match(
       /◯\s+(?:base|child|sibling|main|other|unrelated-tip)\b/
     );
-    expect(observeBoth()).to.deep.equal(before);
+    const after = observeBoth();
+    preserveState(before, after);
+    expect(after).to.deep.equal(before);
     expect(fs.existsSync(trace)).to.equal(false);
     for (const cwd of [fixture.repo, fixture.linked]) {
       expect(fs.readFileSync(path.join(cwd, privateName))).to.deep.equal(bytes);
@@ -255,22 +258,27 @@ describe('stack fold tip selection through a real PTY', function () {
     });
   }
 
-  it('keeps the interactive quiet prompt cancellable without silently selecting', () => {
+  it('refuses quiet ambiguous selection without prompting or silently selecting', () => {
+    delete fixture.env.GIT_OPTIONAL_LOCKS;
     prepareAmbiguous();
     const trace = installTrace();
     const before = observeBoth();
-    const result = runCliInPty(
-      getTestCliCommand(['fold', '--stack', '--quiet']),
-      {
-        cwd: fixture.repo,
-        env: fixture.env,
-        responses: [{ prompt: 'Choose a tip', input: '\u0003' }],
-      }
-    );
-    expect(result.status, result.output).not.to.equal(0);
-    expect(result.status).not.to.equal(124);
-    expect(result.output).to.include('Choose a tip');
-    expect(observeBoth()).to.deep.equal(before);
+    for (const flags of [['--quiet'], ['--quiet', '--interactive']]) {
+      const result = runCliInPty(
+        getTestCliCommand(['fold', '--stack', ...flags]),
+        {
+          cwd: fixture.repo,
+          env: fixture.env,
+        }
+      );
+      const after = observeBoth();
+      preserveState(before, after);
+      expect(result.status, result.output).to.equal(1);
+      expect(result.output).to.include('unique tip in non-interactive mode');
+      expect(result.output).not.to.include('Choose a tip');
+      expect(result.output).not.to.include('\u001b[?25');
+      expect(after).to.deep.equal(before);
+    }
     expect(fs.existsSync(trace)).to.equal(false);
     expectParents();
   });
@@ -408,5 +416,14 @@ describe('stack fold tip selection through a real PTY', function () {
       );
       return { snapshot, index };
     });
+  }
+
+  function preserveState(before: unknown, after: unknown): void {
+    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    if (evidence)
+      fs.appendFileSync(
+        path.join(evidence, `${path.basename(fixture.root)}-fold-state.jsonl`),
+        JSON.stringify({ before, after }) + '\n'
+      );
   }
 });

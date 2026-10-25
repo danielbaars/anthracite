@@ -79,14 +79,21 @@ describe('stack reorder preflight and editor recheck through public CLI', functi
   });
   for (const parent of ['base', 'child']) {
     it(`bounds ambiguous fan-out at ${parent} in noninteractive mode before editor or effects`, () => {
+      delete fixture.env.GIT_OPTIONAL_LOCKS;
       fixture.branch('sibling', parent);
       fixture.git(['switch', 'base']);
       const before = fixture.snapshot();
-      const result = fixture.run(['reorder', '--stack', '--no-interactive']);
-      expect(result.status).not.to.equal(0);
-      expect(result.stdout + result.stderr).to.include(
-        'unique tip in non-interactive mode'
-      );
+      const result = fixture.run([
+        'reorder',
+        '--stack',
+        '--input',
+        fixture.input('tip\nchild\nbase\n'),
+        '--no-interactive',
+      ]);
+      expect(result.status).to.equal(1);
+      expect(result.stdout).to.equal('');
+      expect(result.stderr).to.include('unique tip in non-interactive mode');
+      expect(result.stdout + result.stderr).not.to.include('Choose a tip');
       expect(fixture.snapshot()).to.deep.equal(before);
       expect(fs.existsSync(fixture.offered)).to.equal(false);
     });

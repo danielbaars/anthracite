@@ -145,10 +145,24 @@ describe('stack reorder editor and argument contract through public processes', 
     });
   }
   it('accepts identical false declarations and a terminal argument terminator', () => {
+    delete fixture.env.GIT_OPTIONAL_LOCKS;
     fixture.git(['switch', 'child']);
-    fixture.edit(['reorder', '--stack=false', '--stack', 'false', '--']);
+    const before = [fixture.git(['rev-parse', 'HEAD']), fixture.refs()];
+    const result = fixture.run([
+      'reorder',
+      '--stack=false',
+      '--stack',
+      'false',
+      '--interactive',
+      '--',
+    ]);
+    expect(result.status, result.stderr).to.equal(0);
     expect(fs.readFileSync(fixture.offered, 'utf8').split('\n')[0]).to.equal(
       'child'
+    );
+    expect(fixture.git(['branch', '--show-current'])).to.equal('child');
+    expect([fixture.git(['rev-parse', 'HEAD']), fixture.refs()]).to.deep.equal(
+      before
     );
   });
   it('explains scope, top-first ordering and departure return in help', () => {
@@ -159,6 +173,8 @@ describe('stack reorder editor and argument contract through public processes', 
     expect(help).to.include('departure');
   });
   it('refuses a noninteractive editor, including quiet, but accepts validated stack input', () => {
+    delete fixture.env.GIT_OPTIONAL_LOCKS;
+    fixture.git(['status', '--porcelain']);
     const before = fixture.snapshot();
     for (const quiet of [[], ['--quiet']]) {
       const result = fixture.run([
@@ -167,8 +183,11 @@ describe('stack reorder editor and argument contract through public processes', 
         '--no-interactive',
         ...quiet,
       ]);
-      expect(result.status).not.to.equal(0);
-      expect(result.stdout + result.stderr).to.include('--input');
+      expect(result.status).to.equal(1);
+      expect(result.stdout).to.equal('');
+      expect(result.stderr)
+        .to.include('requires interactive mode')
+        .and.include('supported explicit input file');
       expect(fs.existsSync(fixture.offered)).to.equal(false);
       expect(fixture.snapshot()).to.deep.equal(before);
     }
