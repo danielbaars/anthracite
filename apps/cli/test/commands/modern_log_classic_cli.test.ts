@@ -204,19 +204,27 @@ sys.exit(result.returncode)
 
   it('keeps ordinary log display flags local rather than changing long grammar', () => {
     const before = fixture.inspectionSnapshot();
-    for (const args of [
-      ['log', 'long', '--classic'],
-      ['log', 'long', '--reverse'],
-      ['ll', '--classic'],
-      ['ll', '--stack'],
-      ['log', '--classic', 'long'],
-    ]) {
-      const result = fixture.run(args);
-      expect(result.status, args.join(' ')).not.to.equal(0);
-      expect(result.stdout).to.equal('');
-      expect(result.stderr).to.include('Unknown argument:');
-      expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    const restoreTools = fixture.refuseExternalTools();
+    try {
+      for (const args of [
+        ['log', 'long', '--classic'],
+        ['log', 'long', '--reverse'],
+        ['ll', '--classic'],
+        ['ll', '--stack'],
+        ['log', '--classic', 'long'],
+      ]) {
+        const result = fixture.run(args, fixture.root);
+        expect(result.status, args.join(' ')).not.to.equal(0);
+        expect(result.stdout).to.equal('');
+        expect(result.stderr).to.include('Unknown argument:');
+      }
+    } finally {
+      restoreTools();
     }
+    expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
+      false
+    );
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
   it('retains the classic selector rule and effective boolean value', () => {
