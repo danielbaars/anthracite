@@ -193,10 +193,10 @@ describe('modern completion through the public CLI', function () {
       const shellArgs = [
         ...(shell === 'bash' ? [startup, '--norc'] : [startup]),
         '-c',
-        `${setup}; ch() { ${cli.map(quote).join(' ')} \"$@\"; }; ${
+        `${setup}; ch() { ${cli.map(quote).join(' ')} "$@"; }; ${
           shell === 'bash'
-            ? `COMP_WORDS=(ch ''); COMP_CWORD=1; _ch_yargs_completions; printf '%s\\n' \"\${COMPREPLY[@]}\"`
-            : `_describe() { printf '%s\\n' \"\${reply[@]}\"; }; words=(ch ''); CURRENT=2; BUFFER='ch '; CURSOR=3; _ch_yargs_completions`
+            ? `COMP_WORDS=(ch ''); COMP_CWORD=1; _ch_yargs_completions; printf '%s\\n' "\${COMPREPLY[@]}"`
+            : `_describe() { printf '%s\\n' "\${reply[@]}"; }; words=(ch ''); CURRENT=2; BUFFER='ch '; CURSOR=3; _ch_yargs_completions`
         }`,
         'completion-smoke',
         script,
