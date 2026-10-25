@@ -437,12 +437,18 @@ describe('submit under the shared interaction policy', function () {
       ]
     );
     expect(result.status, result.output).to.equal(0);
-    expect(result.output.indexOf('01-first.md')).to.be.lessThan(
-      result.output.indexOf('02-second.md')
+    const firstPosition = result.output.indexOf('01-first.md');
+    const secondPosition = result.output.indexOf('02-second.md');
+    expect(firstPosition).to.be.greaterThan(-1);
+    expect(secondPosition).to.be.greaterThan(-1);
+    const expectedTemplate =
+      firstPosition < secondPosition ? 'SECOND CHOICE' : 'FIRST CHOICE';
+    const editorRecord: unknown = JSON.parse(
+      fs.readFileSync(path.join(fixture.root, 'editor.jsonl'), 'utf8').trim()
     );
-    expect(fs.readFileSync(path.join(fixture.root, 'editor.jsonl'), 'utf8'))
-      .to.include('SECOND CHOICE')
-      .and.not.to.include('FIRST CHOICE');
+    expect(isRecord(editorRecord) && editorRecord.initial).to.equal(
+      expectedTemplate
+    );
     expect(fixture.prs()[0]).to.include({
       title: 'Chosen title',
       isDraft: false,
