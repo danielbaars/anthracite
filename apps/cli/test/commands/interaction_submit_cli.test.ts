@@ -136,6 +136,10 @@ function terminal(
   return result;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
 function failPrLookups(fixture: SubmitCliFixture): void {
   const shim = path.join(fixture.root, 'bin', 'gh');
   const original = shim + '-original';
@@ -372,12 +376,7 @@ describe('submit under the shared interaction policy', function () {
       .split('\n')
       .map((line) => {
         const value: unknown = JSON.parse(line);
-        if (
-          typeof value !== 'object' ||
-          value === null ||
-          !('initial' in value) ||
-          typeof value.initial !== 'string'
-        ) {
+        if (!isRecord(value) || typeof value.initial !== 'string') {
           throw new Error('Invalid external editor record');
         }
         return value.initial;
