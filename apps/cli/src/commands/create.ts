@@ -38,7 +38,7 @@ const args = {
     alias: 'p',
   },
   insert: {
-    describe: `When true, any existing children of the current branch will become children of the new branch.`,
+    describe: `When true, any existing children of the selected parent (--onto, otherwise current branch) will become children of the new branch.`,
     demandOption: false,
     default: false,
     type: 'boolean',
@@ -51,7 +51,7 @@ export const aliases = ['c'];
 export const command = 'create [name]';
 export const canonical = 'create';
 export const description =
-  'Create a new branch stacked on top of the current branch and commit staged changes. If no branch name is specified but a commit message is passed, generate a branch name from the commit message.';
+  'Create a new branch above --onto (or the current branch) and commit staged changes. If no branch name is specified but a commit message is passed, generate a branch name from the commit message.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {

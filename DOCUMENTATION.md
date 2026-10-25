@@ -2,7 +2,7 @@
 
 Charcoal is an open-source fork of the Graphite CLI for working with stacked branches and pull requests on GitHub. The command is `ch`.
 
-> **Migrating from Graphite?** Charcoal is a *flat* CLI: top-level verbs like `ch create`, `ch submit`, and `ch sync` replace the old noun-verb forms (`gt branch create`, `gt stack submit`, …). If you have muscle memory for `gt`, add `alias gt=ch` to your shell profile. The binary is also installed as `charcoal` if you prefer the long name.
+> **Using Graphite alongside Charcoal?** Use `ch` for Charcoal and `gt` for Graphite. Modern top-level names and the twenty supported short forms are listed in [COMPATIBILITY.md](./COMPATIBILITY.md), together with retained legacy entries and explicit feature limits. This reference describes the source candidate, independently of any installed release.
 
 ---
 
@@ -23,9 +23,10 @@ Every command accepts these:
 
 | Flag | Description |
 | --- | --- |
-| `--interactive` / `--no-interactive` | Prompt the user. On by default; disable for scripts/CI. |
-| `-q`, `--quiet` | Minimize output to the terminal. |
-| `--verify` / `--no-verify` | Run git hooks. On by default; `--no-verify` skips them. |
+| `--cwd <directory>` | Select a repository before or after a Charcoal command. Raw Git accepts the existing direct prefix form. Relative paths resolve from the process directory. |
+| `--interactive` / `--no-interactive` | Default: both stdin and stdout must be terminals. Explicit interactive enables supported prompts/editors in pipes; quiet disables interaction. |
+| `-q`, `--quiet` | Suppress progress/tips and interaction. Inspection and help/completion data retain their output. Errors stay on stderr. |
+| `--verify` / `--no-verify` | Run commit/push hooks by default; disable them on those existing paths. This does not disable all Git rebase hooks. |
 | `--debug` | Display debug output. |
 | `--help` | Show help for any command. |
 | `--version` | Show the installed version. |
@@ -49,7 +50,7 @@ Create a new branch stacked on top of the current branch and commit staged chang
 | `-m`, `--message` | Commit staged changes on the new branch with this message. |
 | `-a`, `--all` | Stage all unstaged changes before committing. |
 | `-p`, `--patch` | Pick hunks to stage before committing. |
-| `-i`, `--insert` | Existing children of the current branch become children of the new branch. |
+| `-i`, `--insert` | Existing children of the selected parent (`--onto`, otherwise current branch) become children of the new branch. |
 
 ```
 ch create -am "Add login form"
@@ -65,6 +66,9 @@ Modify the current branch by amending its commit (or creating a new one with `--
 | `-m`, `--message` | The message for the commit. |
 | `-e`, `--edit` / `-n`, `--no-edit` | Whether to edit the existing message when amending (`--no-edit` takes precedence). |
 | `-p`, `--patch` | Pick hunks to stage before committing. |
+| `--interactive-rebase` | Edit the current branch’s commit sequence and restack descendants; replaces the ordinary amend/create-commit operation when true. |
+
+Explicit `--message` avoids the message editor; `--no-edit` takes precedence over `--edit`. Interactive rebase ignores ordinary operation options (`--commit`, `--all`, `--patch`, `--message`, `--edit`/`--no-edit`), while global cwd/quiet/interaction rules still apply. An occupied involved worktree is refused before the editor. A conflict can leave partial progress: resolve and run `ch continue` or `ch cont`; there is no general transaction rollback. `--interactive-rebase=false` retains ordinary modify behavior.
 
 ```
 ch modify -a            # amend current commit with all changes
@@ -84,7 +88,7 @@ ch squash -m "Implement feature"
 ```
 
 ### `edit` (alias `e`)
-Run an interactive rebase on the current branch's commits and restack upstack branches.
+Retained legacy entry for `ch modify --interactive-rebase`: edit the current branch’s commits and restack descendants with the same editor and worktree guards.
 
 ```
 ch edit
@@ -107,14 +111,15 @@ Fold a branch's changes into its parent, update descendants' dependencies, and r
 
 | Flag | Description |
 | --- | --- |
-| `-k`, `--keep` | Keep the current branch's name instead of the parent's name. |
+| `--stack` | Fold the full trunk-to-tip feature chain into its original bottom branch, retaining separate commits. |
+| `-k`, `--keep` | Ordinary fold keeps the current name; stack fold keeps the chosen tip name instead of the original bottom name. |
 
 ```
 ch fold
 ```
 
 ### `rename` (alias `rn`)
-Rename a branch and update metadata referencing it. If no name is supplied, you'll be prompted. **This removes any associated GitHub pull request.**
+Rename a branch and update metadata referencing it. If no name is supplied, you'll be prompted. **This drops the local PR association; it does not close or delete the remote PR.** In non-interactive mode supply the new name.
 
 | Flag | Description |
 | --- | --- |
@@ -222,7 +227,9 @@ Rebase the current branch onto the latest commit of a target branch and restack 
 | Flag | Description |
 | --- | --- |
 | `[branch]` | Positional: the target branch to rebase onto. |
-| `--source` | Branch to rebase (defaults to current branch). |
+| `-o`, `--onto` | Target tracked local branch or trunk, also accepted positionally. Both selectors must agree when supplied together. |
+| `-s`, `--source` | Branch to rebase (defaults to current branch). |
+| `--only` | Move only the selected source, leaving its children on its old parent; default moves its upstack too. |
 
 ```
 ch move main
@@ -231,7 +238,7 @@ ch move main
 Use `ch move` for branch operations. `ch mv` passes through to Git to move files; it is not a branch alias. A direct `--cwd` prefix may select another repository for this Git operation. Other global prefixes are not supported for raw Git routing and never turn `mv` into a branch operation.
 
 ### `reorder` (alias `ro`)
-Reorder the branches between trunk and the current branch, restacking all descendants. Opens an interactive editor.
+Reorder the branches between trunk and the current branch, restacking all descendants. Opens an interactive editor. `--stack` selects the full trunk-to-tip feature chain in a top-first editor and returns to the original departure branch.
 
 ```
 ch reorder
@@ -300,8 +307,8 @@ Idempotently force-push all branches from trunk to the current branch to GitHub,
 | Flag | Description |
 | --- | --- |
 | `-s`, `--stack` | Also submit the current branch's descendants, in addition to its ancestors. |
-| `-d`, `--draft` | Mark PRs as draft. In `--no-interactive` mode, new PRs are created as drafts. |
-| `-p`, `--publish` | Publish PRs (the inverse of draft). |
+| `-d`, `--draft` | Create drafts or turn existing ready PRs into drafts. Conflicts with `--publish`. |
+| `-p`, `--publish` | Create ready PRs or publish existing drafts, including without interaction. With neither flag, new non-interactive PRs default to draft; existing status is retained. |
 | `-e`, `--edit` / `-n`, `--no-edit` | Edit PR fields inline. `--no-edit` takes precedence. |
 | `-r`, `--reviewers` | Prompt for reviewers, or pass a comma-separated list. |
 | `--dry-run` | Report which PRs would be submitted, then exit. Nothing is pushed. |
@@ -410,10 +417,12 @@ ch ll
 ```
 
 ### `info` (alias `i`)
-Display information about the current branch.
+Display information about the current or selected tracked local branch.
 
 | Flag | Description |
 | --- | --- |
+| `[branch]` / `--branch <branch>` | Choose a tracked local branch; defaults to current branch. If both are supplied, they must agree. |
+| `-s`, `--stat` | Show diffstat instead of full patches. |
 | `-p`, `--patch` | Show the changes made by each commit. |
 | `-d`, `--diff` | Show the diff between this branch and its parent. Takes precedence over `--patch`. |
 | `-b`, `--body` | Show the PR body, if it exists. |
@@ -482,7 +491,7 @@ ch init --trunk main
 ```
 
 ### `completion`
-Print a yargs bash/zsh completion script to stdout. Append it to your shell profile to enable tab completion.
+Print a yargs bash/zsh completion script to stdout for the current shell. Root candidates include supported aliases; command option queries use their actual builders. Cwd selects branch candidates without prompts or a pager. Fish generator content is checked separately; full interactive fish behavior is not certified.
 
 ```
 ch completion >> ~/.bashrc

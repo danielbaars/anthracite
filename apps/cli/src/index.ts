@@ -111,7 +111,8 @@ const commandModules = [
 ] as unknown as CommandModule[];
 
 const cli = registerCompletion(
-  registerCommands(yargs(getYargsInput(commandModules)), commandModules)
+  registerCommands(yargs(getYargsInput(commandModules)), commandModules),
+  commandModules
 );
 
 void cli
@@ -124,7 +125,7 @@ void cli
   // to the cwd, which is wrong in the single-file binary / outside apps/cli.
   .version(version)
   .usage(
-    'Charcoal is a command line tool that makes working with stacked changes fast & intuitive.\n\nhttps://docs.graphite.dev/guides/graphite-cli'
+    'Charcoal is a command line tool that makes working with stacked changes fast & intuitive.\n\nRun ch <command> --help for command-specific options.'
   )
   .options(globalArgumentsOptions)
   .global(Object.keys(globalArgumentsOptions))

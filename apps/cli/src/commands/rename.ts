@@ -25,7 +25,7 @@ export const command = 'rename [name]';
 export const aliases = ['rn'];
 export const canonical = 'rename';
 export const description =
-  'Rename a branch and update metadata referencing it. If no branch name is supplied, you will be prompted for a new branch name. Note that this removes any associated GitHub pull request.';
+  'Rename a branch and update metadata referencing it. If no branch name is supplied, you will be prompted for a new branch name. Requires --force for a linked PR and drops its local association; the remote PR is not closed or deleted.';
 export const builder = args;
 
 export const handler = async (args: argsT): Promise<void> => {

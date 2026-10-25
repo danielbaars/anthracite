@@ -27,13 +27,9 @@ ch --help
 ```
 
 > [!IMPORTANT]
-> As of `v1.0.0` the binary is `ch` (previously `gt`). This avoids colliding with
-> Graphite's own `gt` if you have both installed. If you have muscle memory for
-> `gt`, alias it in your shell:
->
-> ```sh
-> alias gt=ch   # add to ~/.zshrc or ~/.bashrc
-> ```
+> As of `v1.0.0` the binary is `ch` (previously `gt`). Use `ch` for
+> Charcoal and `gt` for Graphite when both are installed. Their commands and
+> service features differ; see [the compatibility matrix](./COMPATIBILITY.md).
 
 ## Announcement
 
@@ -47,7 +43,7 @@ From Graphite:
 
 ## What is Charcoal?
 
-Charcoal is simply the Graphite CLI, but open source!
+Charcoal is an open-source fork of the formerly public Graphite CLI. It supports local stacked-branch workflows and GitHub PRs through `gh`; it does not implement every current Graphite feature.
 
 On 7/14/2023 the Graphite team announced that they closed open source development of the Graphite CLI and [moved development to their private monorepo](https://github.com/withgraphite/graphite-cli). They also added a pay wall limiting free users to 10 open stacks at a time per organization starting 8/7/2023.
 
@@ -67,14 +63,14 @@ Charcoal uses a flat command surface that mirrors modern Graphite, e.g.:
 ```sh
 ch create -m "my change"   # create a branch + commit staged changes
 ch modify -a               # amend the current branch and restack upstack
-ch submit --stack          # push the stack and open/update PRs
+ch ss                      # push the stack and open/update PRs
 ch sync                    # pull trunk, prune merged branches, restack
 ch ls                      # view your stacks
 ch up / ch down            # move through the stack
 ch checkout                # interactively switch branches
 ```
 
-See **[DOCUMENTATION.md](./DOCUMENTATION.md)** for the full command reference.
+See **[DOCUMENTATION.md](./DOCUMENTATION.md)** for the command reference and **[COMPATIBILITY.md](./COMPATIBILITY.md)** for supported aliases, deliberate differences and deferred features. Source-candidate changes do not imply that an installed release already includes them.
 
 > [!NOTE]
 > Graphite's own docs (<https://graphite.dev/docs/graphite-cli/>) have diverged

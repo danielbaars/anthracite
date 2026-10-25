@@ -13,14 +13,14 @@ const args = {
   },
   draft: {
     describe:
-      'If set, marks PR as draft. If --no-interactive is true, new PRs will be created in draft mode.',
+      'Create draft PRs or mark existing PRs as draft. Conflicts with --publish.',
     type: 'boolean',
     default: false,
     alias: 'd',
   },
   publish: {
     describe:
-      'If set, publishes PR. If --no-interactive is true, new PRs will be created in draft mode.',
+      'Create ready PRs or publish existing drafts, including without interaction. Without --draft/--publish, new non-interactive PRs default to draft.',
     type: 'boolean',
     default: false,
     alias: 'p',

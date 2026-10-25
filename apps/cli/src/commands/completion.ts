@@ -1,18 +1,41 @@
-import { Argv, Arguments } from 'yargs';
+import { Argv, Arguments, CommandModule } from 'yargs';
 import { composeGit } from '../lib/git/git';
 
-export function registerCompletion(yargs: Argv): Argv {
+export function registerCompletion(
+  yargs: Argv,
+  modules: readonly CommandModule[]
+): Argv {
+  const aliases = modules.flatMap((module) =>
+    typeof module.aliases === 'string' ? [module.aliases] : module.aliases ?? []
+  );
   return yargs.completion(
     'completion',
     'Set up bash or zsh tab completion.',
     //@ts-expect-error types/yargs is out of date with yargs
     // eslint-disable-next-line max-params
     (current, argv, defaultCompletion, done) => {
-      return shouldCompleteBranch(current, argv)
-        ? // we don't want to load a full context here, so we'll just use the git call directly
-          // once we persist the meta cache to disk, we can consider using a context here
-          done(Object.keys(composeGit().getBranchNamesAndRevisions()))
-        : defaultCompletion();
+      if (shouldCompleteBranch(current, argv)) {
+        // Branch candidates do not require loading a mutating repository context.
+        return done(Object.keys(composeGit().getBranchNamesAndRevisions()));
+      }
+      if (argv['_'].length <= 2 && !current.startsWith('-')) {
+        return defaultCompletion(
+          (error: Error | null, candidates: string[]) => {
+            if (error) throw error;
+            done([
+              ...candidates,
+              ...aliases.filter(
+                (alias, index) =>
+                  aliases.indexOf(alias) === index &&
+                  !candidates.some(
+                    (candidate) => candidate.split(':')[0] === alias
+                  )
+              ),
+            ]);
+          }
+        );
+      }
+      return defaultCompletion();
     }
   );
 }
@@ -37,6 +60,7 @@ function shouldCompleteBranch(current: string, argv: Arguments): boolean {
   return (
     argv['_'].length <= 3 &&
     BRANCH_COMPLETING_COMMANDS.includes('' + argv['_'][1]) &&
-    typeof current === 'string'
+    typeof current === 'string' &&
+    !current.startsWith('-')
   );
 }
