@@ -624,4 +624,40 @@ describe('manual freeze through the public CLI', function () {
     expect(fs.existsSync(marker)).to.equal(false);
     expect(fixture.git(['config', 'core.hooksPath'])).to.equal(hooks);
   });
+
+  it('refuses a known frozen modify before ordinary context can repair metadata', () => {
+    fixture.ok(['freeze', 'child']);
+    const original = objectFromJson(
+      fixture.git(['cat-file', '-p', 'refs/branch-metadata/child'])
+    );
+    const old = path.join(fixture.root, 'repairable-metadata.json');
+    fs.writeFileSync(
+      old,
+      JSON.stringify({
+        ...original,
+        parentBranchRevision: fixture.git(['rev-parse', 'main']),
+      })
+    );
+    fixture.git([
+      'update-ref',
+      'refs/branch-metadata/child',
+      fixture.git(['hash-object', '-w', old]),
+    ]);
+    fixture.git(['switch', 'child']);
+    const refs = metadataRefs(fixture);
+    const recovery = path.join(fixture.repo, '.git', '.gtcontinue');
+    const legacy = path.join(fixture.repo, '.git', '.graphite_pr_info');
+    fs.writeFileSync(recovery, '{"preserve":"recovery"}\n');
+    fs.writeFileSync(legacy, '{"preserve":"legacy info"}\n');
+    const result = fixture.run(['m', '--no-edit']);
+    expect(result.status).to.equal(1);
+    expect(result.stderr).to.include('frozen branch child');
+    expect(metadataRefs(fixture)).to.equal(refs);
+    expect(fs.readFileSync(recovery, 'utf8')).to.equal(
+      '{"preserve":"recovery"}\n'
+    );
+    expect(fs.readFileSync(legacy, 'utf8')).to.equal(
+      '{"preserve":"legacy info"}\n'
+    );
+  });
 });

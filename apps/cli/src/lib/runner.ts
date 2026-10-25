@@ -26,6 +26,7 @@ import { composeGit } from './git/git';
 import { TGlobalArguments } from './global_arguments';
 import { tracer } from './utils/tracer';
 import { CommandFailedError, CommandKilledError } from './git/runner';
+import { assertBranchEditable } from './engine/frozen_branch';
 
 export async function graphite(
   args: yargs.Arguments & TGlobalArguments,
@@ -119,6 +120,11 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
+    // Known frozen targets must stop before ordinary context repair can write refs.
+    if (canonicalName === 'modify') {
+      const currentBranch = git.getCurrentBranchName();
+      if (currentBranch) assertBranchEditable(currentBranch);
+    }
     const contextLite = initContextLite({
       ...args,
       userEmail: git.getUserEmail(),
