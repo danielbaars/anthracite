@@ -83,6 +83,8 @@ export class CwdCliFixture extends RelationCliFixture {
               'HOME',
               'CODEX_HOME',
               'PATH',
+              'SHELL',
+              'ZSH_NAME',
             ].map((key) => [key, this.env[key] ?? null])
           ),
         }) + '\n'
