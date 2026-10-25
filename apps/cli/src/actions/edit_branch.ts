@@ -1,3 +1,4 @@
+import { ensureEditorAllowedPrecondition } from '../lib/preconditions';
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
@@ -7,6 +8,7 @@ import { printConflictStatus } from './print_conflict_status';
 import { restackBranches } from './restack';
 
 export function editBranchAction(context: TContext): void {
+  ensureEditorAllowedPrecondition(context);
   const currentBranchName = context.engine.currentBranchPrecondition;
 
   const result = context.engine.rebaseInteractive(currentBranchName);

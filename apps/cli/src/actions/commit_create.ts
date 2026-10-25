@@ -1,7 +1,13 @@
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
-import { ensureSomeStagedChangesPrecondition } from '../lib/preconditions';
-import { BlockedDuringRebaseError } from '../lib/errors';
+import {
+  ensurePatchInputPrecondition,
+  ensureSomeStagedChangesPrecondition,
+} from '../lib/preconditions';
+import {
+  BlockedDuringRebaseError,
+  PreconditionsFailedError,
+} from '../lib/errors';
 import { restackBranches } from './restack';
 
 export function commitCreateAction(
@@ -14,6 +20,19 @@ export function commitCreateAction(
 ): void {
   if (context.engine.rebaseInProgress()) {
     throw new BlockedDuringRebaseError();
+  }
+
+  ensurePatchInputPrecondition(opts.patch && !opts.addAll, context);
+
+  if (
+    !context.canEdit &&
+    !opts.message?.trim() &&
+    (context.engine.detectStagedChanges() ||
+      (opts.addAll && context.engine.getStatus().length > 0))
+  ) {
+    throw new PreconditionsFailedError(
+      'Must specify a commit message in non-interactive mode.'
+    );
   }
 
   if (opts.addAll) {

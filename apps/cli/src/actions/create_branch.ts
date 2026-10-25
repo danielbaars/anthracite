@@ -4,6 +4,7 @@ import { addPatch } from '../lib/git/add_patch';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { hasCreateChanges } from '../lib/git/create_changes';
 import { assertRestackFilesAvailable } from '../lib/git/restack_files';
+import { ensurePatchInputPrecondition } from '../lib/preconditions';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { ExitFailedError } from '../lib/errors';
@@ -23,17 +24,7 @@ export async function createBranchAction(
   opts: TCreateBranchOptions,
   context: TContext
 ): Promise<void> {
-  if (
-    opts.onto !== undefined &&
-    opts.patch &&
-    !opts.all &&
-    !context.interactive &&
-    context.engine.getUnstagedChanges().length > 0
-  ) {
-    throw new ExitFailedError(
-      '--patch requires interactive input with --onto.'
-    );
-  }
+  ensurePatchInputPrecondition(Boolean(opts.patch && !opts.all), context);
 
   const branchName = newBranchName(opts.branchName, opts.message, context);
   if (!branchName) {
@@ -43,9 +34,8 @@ export async function createBranchAction(
   }
 
   if (
-    opts.onto !== undefined &&
-    !context.interactive &&
-    !opts.message &&
+    !context.canEdit &&
+    !opts.message?.trim() &&
     (context.engine.detectStagedChanges() ||
       (opts.all && context.engine.getStatus().length > 0))
   ) {

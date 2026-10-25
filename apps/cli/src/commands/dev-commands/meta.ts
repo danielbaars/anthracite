@@ -1,3 +1,4 @@
+import { ensureEditorAllowedPrecondition } from '../../lib/preconditions';
 import fs from 'fs-extra';
 import path from 'path';
 import tmp from 'tmp';
@@ -37,6 +38,7 @@ export const handler = async (argv: argsT): Promise<void> => {
       context.splog.info(metaString);
       return;
     }
+    ensureEditorAllowedPrecondition(context);
     const tmpfilePath = path.join(tmp.dirSync().name, 'meta');
     fs.writeFileSync(tmpfilePath, metaString);
     context.userConfig.execEditor(tmpfilePath);

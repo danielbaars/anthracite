@@ -1,5 +1,6 @@
 import yargs from 'yargs';
 import { squashCurrentBranch } from '../actions/squash';
+import { PreconditionsFailedError } from '../lib/errors';
 import { graphite } from '../lib/runner';
 
 const args = {
@@ -13,7 +14,6 @@ const args = {
     type: 'boolean',
     describe: 'Modify the existing commit message.',
     demandOption: false,
-    default: true,
   },
   'no-edit': {
     type: 'boolean',
@@ -33,12 +33,25 @@ export const description =
   'Squash all commits in the current branch and restack upstack branches.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
-  graphite(argv, canonical, async (context) =>
-    squashCurrentBranch(
+  graphite(argv, canonical, async (context) => {
+    if (
+      argv.edit === true &&
+      !argv['no-edit'] &&
+      !argv.message?.trim() &&
+      !context.canEdit
+    ) {
+      throw new PreconditionsFailedError(
+        'An explicit editor request requires interactive mode.'
+      );
+    }
+    return squashCurrentBranch(
       {
         message: argv.message,
-        noEdit: argv['no-edit'] || !argv.edit,
+        noEdit:
+          argv['no-edit'] ||
+          argv.edit === false ||
+          (!context.canEdit && argv.edit === undefined),
       },
       context
-    )
-  );
+    );
+  });

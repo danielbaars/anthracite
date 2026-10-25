@@ -1,3 +1,4 @@
+import { ensurePatchInputPrecondition } from '../lib/preconditions';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import {
@@ -21,6 +22,8 @@ export function commitAmendAction(
   if (context.engine.rebaseInProgress()) {
     throw new BlockedDuringRebaseError();
   }
+
+  ensurePatchInputPrecondition(opts.patch && !opts.addAll, context);
 
   if (opts.addAll) {
     context.engine.addAll();

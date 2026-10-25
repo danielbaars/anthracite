@@ -53,3 +53,26 @@ export function currentGitRepoPrecondition(): string {
   }
   return repoRootPath;
 }
+
+export function ensurePatchInputPrecondition(
+  patch: boolean,
+  context: TContext
+): void {
+  if (
+    patch &&
+    !context.canPrompt &&
+    context.engine.getUnstagedChanges().length > 0
+  ) {
+    throw new PreconditionsFailedError(
+      '--patch requires interactive terminal input.'
+    );
+  }
+}
+
+export function ensureEditorAllowedPrecondition(context: TContext): void {
+  if (!context.canEdit) {
+    throw new PreconditionsFailedError(
+      'An editor requires interactive mode or a supported explicit input file.'
+    );
+  }
+}

@@ -2,6 +2,7 @@ import yargs from 'yargs';
 import { commitAmendAction } from '../actions/commit_amend';
 import { commitCreateAction } from '../actions/commit_create';
 import { graphite } from '../lib/runner';
+import { PreconditionsFailedError } from '../lib/errors';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 
@@ -30,7 +31,6 @@ const args = {
     type: 'boolean',
     describe: 'Modify the existing commit message when amending.',
     demandOption: false,
-    default: true,
   },
   patch: {
     describe: `Pick hunks to stage before committing.`,
@@ -58,6 +58,17 @@ export const description =
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {
+    if (
+      !argv.commit &&
+      argv.edit === true &&
+      !argv['no-edit'] &&
+      !argv.message?.trim() &&
+      !context.canEdit
+    ) {
+      throw new PreconditionsFailedError(
+        'An explicit editor request requires interactive mode.'
+      );
+    }
     assertBranchesAvailableInWorktrees(
       context.engine.getRelativeStack(
         context.engine.currentBranchPrecondition,
@@ -76,7 +87,10 @@ export const handler = async (argv: argsT): Promise<void> => {
       : commitAmendAction(
           {
             message: argv.message,
-            noEdit: argv['no-edit'] || !argv.edit,
+            noEdit:
+              argv['no-edit'] ||
+              argv.edit === false ||
+              (!context.canEdit && argv.edit === undefined),
             addAll: argv.all,
             patch: argv.patch,
           },

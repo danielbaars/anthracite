@@ -1,3 +1,4 @@
+import { ensureEditorAllowedPrecondition } from '../../lib/preconditions';
 import { TContext } from '../../lib/context';
 import { SCOPE } from '../../lib/engine/scope_spec';
 import { performInTmpDir } from '../../lib/utils/perform_in_tmp_dir';
@@ -8,6 +9,7 @@ export async function editDownstack(
   inputPath: string | undefined,
   context: TContext
 ): Promise<void> {
+  if (!inputPath) ensureEditorAllowedPrecondition(context);
   // First, reorder the parent pointers of the branches
   const branchNames = inputPath
     ? parseEditFile(inputPath) // allow users to pass a pre-written file, mostly for unit tests.

@@ -10,7 +10,10 @@ import { assertNoGitOperation } from '../../lib/git/assert_no_operation';
 import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
 import { runGitCommand } from '../../lib/git/runner';
 import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
-import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
+import {
+  ensureEditorAllowedPrecondition,
+  uncommittedTrackedChangesPrecondition,
+} from '../../lib/preconditions';
 import { performInTmpDir } from '../../lib/utils/perform_in_tmp_dir';
 import { restackBranches } from '../restack';
 import { clearContinuation } from '../persist_continuation';
@@ -23,6 +26,7 @@ export async function reorderStack(
   inputPath: string | undefined,
   context: TContext
 ): Promise<void> {
+  if (!inputPath) ensureEditorAllowedPrecondition(context);
   assertNoGitOperation('reorder');
   uncommittedTrackedChangesPrecondition();
   const departure = context.engine.currentBranchPrecondition;
@@ -51,10 +55,6 @@ export async function reorderStack(
       },
     ])
   );
-  if (!inputPath && !context.interactive)
-    throw new PreconditionsFailedError(
-      'Stack reorder requires an interactive editor or --input.'
-    );
   const order = inputPath
     ? parseStackOrder(inputPath, chain)
     : await performInTmpDir((tmpDir) => {
