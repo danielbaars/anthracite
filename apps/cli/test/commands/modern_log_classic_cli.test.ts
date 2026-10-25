@@ -193,11 +193,18 @@ sys.exit(result.returncode)
     const alias = fixture.run(['ll', '--no-interactive']);
     expect(canonical.status, canonical.stderr).to.equal(0);
     expect(alias.status, alias.stderr).to.equal(0);
-    expect(alias.stdout).to.equal(canonical.stdout);
-    expect(alias.stdout).to.include('base').and.include('main');
-    expect(alias.stdout).to.include(
-      fixture.git(['rev-parse', '--short', 'base'])
-    );
+    const stable = (output: string): string =>
+      output.replace(/(\b[0-9a-f]+ - )\([^)]*\)/g, '$1(commit age)');
+    expect(stable(alias.stdout)).to.equal(stable(canonical.stdout));
+    for (const branch of ['main', 'base', 'child', 'tip', 'other']) {
+      expect(alias.stdout).to.include(branch);
+      expect(alias.stdout).to.include(
+        fixture.git(['rev-parse', '--short', branch])
+      );
+      expect(alias.stdout).to.include(
+        fixture.git(['log', '-1', '--format=%s', branch])
+      );
+    }
     expect(alias.stdout).not.to.include('↱ $');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });

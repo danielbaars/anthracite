@@ -183,7 +183,7 @@ describe('modern completion through the public CLI', function () {
       expect(generated.stdout).to.include('--get-yargs-completions');
       const script = path.join(fixture.root, `${shell}-completion`);
       fs.writeFileSync(script, generated.stdout);
-      const cli = getTestCliCommand(['--get-yargs-completions', 'ch', '']);
+      const cli = getTestCliCommand([]);
       const quote = (value: string): string =>
         `'${value.replace(/'/g, "'\\''")}'`;
       const setup =
@@ -193,7 +193,11 @@ describe('modern completion through the public CLI', function () {
       const shellArgs = [
         ...(shell === 'bash' ? [startup, '--norc'] : [startup]),
         '-c',
-        `${setup}; ${cli.map(quote).join(' ')}`,
+        `${setup}; ch() { ${cli.map(quote).join(' ')} \"$@\"; }; ${
+          shell === 'bash'
+            ? `COMP_WORDS=(ch ''); COMP_CWORD=1; _ch_yargs_completions; printf '%s\\n' \"\${COMPREPLY[@]}\"`
+            : `_describe() { printf '%s\\n' \"\${reply[@]}\"; }; words=(ch ''); CURRENT=2; BUFFER='ch '; CURSOR=3; _ch_yargs_completions`
+        }`,
         'completion-smoke',
         script,
       ];
