@@ -161,8 +161,17 @@ describe('modern preserved routes through the public CLI', function () {
       const short = fixture.run(['log', alias, '--no-interactive']);
       const long = fixture.run(['log', canonical, '--no-interactive']);
       expect(short.status, short.stdout + short.stderr).to.equal(0);
-      expect(short.stdout).to.equal(long.stdout);
-      expect(short.stdout).to.include('base');
+      expect(long.status, long.stdout + long.stderr).to.equal(0);
+      const stable = (output: string): string =>
+        output.replace(/(\b[0-9a-f]+ - )\([^)]*\)/g, '$1(commit age)');
+      expect(stable(short.stdout)).to.equal(stable(long.stdout));
+      for (const branch of ['main', 'base', 'child', 'tip', 'other']) {
+        expect(short.stdout).to.include(branch);
+        if (canonical === 'long')
+          expect(short.stdout).to.include(
+            fixture.git(['rev-parse', '--short', branch])
+          );
+      }
     }
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
