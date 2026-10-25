@@ -167,12 +167,19 @@ describe('modern short options through the public CLI', function () {
   });
 
   it('completes utr branches through the public query and includes it in fish branch rules', () => {
+    fixture.env.SHELL = '/usr/local/bin/fish';
+    delete fixture.env.ZSH_NAME;
     const before = fixture.inspectionSnapshot();
     const args = ['--get-yargs-completions', 'ch'];
     const canonical = fixture.run([...args, 'untrack', '']);
     const short = fixture.run([...args, 'utr', '']);
+    const legacy = fixture.run([...args, 'ut', '']);
     expect(canonical.status, canonical.stdout + canonical.stderr).to.equal(0);
     expect(short.status, short.stdout + short.stderr).to.equal(0);
+    expect(legacy.status, legacy.stdout + legacy.stderr).to.equal(0);
+    expect(canonical.stderr).to.equal('');
+    expect(short.stderr).to.equal('');
+    expect(legacy.stderr).to.equal('');
     expect(short.stdout.split('\n').filter(Boolean)).to.have.members([
       'main',
       'base',
@@ -181,12 +188,19 @@ describe('modern short options through the public CLI', function () {
       'other',
     ]);
     expect(short.stdout).to.equal(canonical.stdout);
+    expect(legacy.stdout).to.equal(canonical.stdout);
     const fish = fixture.run(['fish', '--quiet']);
     expect(fish.status, fish.stdout + fish.stderr).to.equal(0);
-    expect(fish.stdout).to.match(
-      /__fish_seen_subcommand_from[^\n]*untrack[^\n]*utr[^\n]*ut[^\n]*move/
+    expect(fish.stderr).to.equal('');
+    expect(fish.stdout).to.include(
+      '$tokens[1] --get-yargs-completions $tokens "$current"'
     );
+    expect(fish.stdout).not.to.include('__fish_seen_subcommand_from');
+    expect(fish.stdout).not.to.include('command git');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
+      false
+    );
   });
 
   for (const command of ['untrack', 'ut'])

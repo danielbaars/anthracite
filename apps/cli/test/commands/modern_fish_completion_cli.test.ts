@@ -85,15 +85,17 @@ describe('modern Fish completion through the public CLI', function () {
           'another-remote',
         ]);
       }
-      fixture.env.SHELL = '/bin/bash';
-      expect(candidates(['--cwd', selected, command, ''])).to.have.members([
-        'main',
-        'base',
-        'child',
-        'tip',
-        'other',
-        'selected-only',
-      ]);
+      for (const shell of ['/bin/bash', '/bin/zsh', '']) {
+        fixture.env.SHELL = shell;
+        expect(candidates(['--cwd', selected, command, ''])).to.have.members([
+          'main',
+          'base',
+          'child',
+          'tip',
+          'other',
+          'selected-only',
+        ]);
+      }
       fixture.env.SHELL = '/usr/local/bin/fish';
     }
     expect(fixture.inspectionSnapshot(selected)).to.deep.equal(before);

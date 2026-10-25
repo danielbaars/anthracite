@@ -251,17 +251,49 @@ describe('modern mv ownership through the public CLI', function () {
 
   it('keeps branch completion for move and never offers branches for raw mv', () => {
     start.git(['branch', 'completion-only-branch']);
+    start.env.SHELL = '/usr/local/bin/fish';
+    delete start.env.ZSH_NAME;
+    const before = [start.inspectionSnapshot(), target.inspectionSnapshot()];
     const move = start.run(['--get-yargs-completions', 'ch', 'move', '']);
     expect(move.status, move.stdout + move.stderr).to.equal(0);
-    expect(move.stdout.split('\n')).to.include('completion-only-branch');
+    expect(move.stderr).to.equal('');
+    expect(move.stdout.split('\n').filter(Boolean)).to.have.members([
+      'main',
+      'base',
+      'child',
+      'tip',
+      'other',
+      'completion-only-branch',
+    ]);
     const raw = start.run(['--get-yargs-completions', 'ch', 'mv', '']);
     expect(raw.status, raw.stdout + raw.stderr).to.equal(0);
-    expect(raw.stdout.split('\n')).not.to.include('completion-only-branch');
+    expect(raw.stderr).to.equal('');
+    for (const name of [
+      'main',
+      'base',
+      'child',
+      'tip',
+      'other',
+      'completion-only-branch',
+    ])
+      expect(raw.stdout.split('\n')).not.to.include(name);
     const fish = start.run(['fish', '--quiet']);
     expect(fish.status, fish.stdout + fish.stderr).to.equal(0);
-    expect(fish.stdout).not.to.match(
-      /__fish_seen_subcommand_from[^"\n]*\bmv\b/
+    expect(fish.stderr).to.equal('');
+    expect(fish.stdout).to.include(
+      '$tokens[1] --get-yargs-completions $tokens "$current"'
     );
-    expect(fish.stdout).to.match(/__fish_seen_subcommand_from[^"\n]*\bmove\b/);
+    expect(fish.stdout).not.to.include('__fish_seen_subcommand_from');
+    expect(fish.stdout).not.to.include('command git');
+    expect([
+      start.inspectionSnapshot(),
+      target.inspectionSnapshot(),
+    ]).to.deep.equal(before);
+    expect(fs.existsSync(path.join(start.root, 'unexpected-tool'))).to.equal(
+      false
+    );
+    expect(fs.existsSync(path.join(target.root, 'unexpected-tool'))).to.equal(
+      false
+    );
   });
 });
