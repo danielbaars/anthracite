@@ -191,9 +191,9 @@ describe('explicit reviewers through the built CLI', function () {
       reviewRequests: [{ login: 'alice' }],
     });
   });
-  it('still prompts for reviewers interactively before pushing when the option has no value', () => {
+  it('accepts an answered terminal reviewer prompt and creates the requested draft PR', () => {
     fixture.branch('target', 'main');
-    const refs = fixture.git('ls-remote', '--heads', 'origin');
+    const head = fixture.git('rev-parse', 'target');
     const result = runCliInPty(
       getTestCliCommand([
         'submit',
@@ -202,16 +202,24 @@ describe('explicit reviewers through the built CLI', function () {
         '--draft',
         '--interactive',
       ]),
-      { cwd: fixture.repo, env: fixture.env }
+      {
+        cwd: fixture.repo,
+        env: fixture.env,
+        responses: [
+          {
+            prompt: 'Reviewers (comma-separated GitHub usernames)',
+            input: 'alice,bob\r',
+          },
+        ],
+      }
     );
-    expect(result.status).to.equal(124);
+    expect(result.status, result.output).to.equal(0);
     expect(result.output).to.include(
       'Reviewers (comma-separated GitHub usernames)'
     );
-    expect(fixture.git('ls-remote', '--heads', 'origin')).to.equal(refs);
-    expect(fixture.prs()).to.deep.equal([]);
+    expect(fixture.remoteSha('target')).to.equal(head);
     expect(
-      fixture.calls().some((args) => ['create', 'edit'].includes(args[1]))
-    ).to.equal(false);
+      fixture.prs().map((pr) => [pr.headRefName, pr.isDraft, pr.reviewRequests])
+    ).to.deep.equal([['target', true, [{ login: 'alice' }, { login: 'bob' }]]]);
   });
 });

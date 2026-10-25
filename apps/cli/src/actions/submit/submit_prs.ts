@@ -138,15 +138,19 @@ async function submitPrToGithub({
   let prInfo: unknown;
   try {
     prInfo = JSON.parse(
-      execFileSync('gh', [
-        'pr',
-        'view',
-        request.head,
-        '--repo',
-        repo,
-        '--json',
-        'headRefName,url,number,baseRefName,body,isDraft',
-      ]).toString()
+      execFileSync(
+        'gh',
+        [
+          'pr',
+          'view',
+          request.head,
+          '--repo',
+          repo,
+          '--json',
+          'headRefName,url,number,baseRefName,body,isDraft',
+        ],
+        { stdio: ['ignore', 'pipe', 'pipe'] }
+      ).toString()
     );
   } catch (error) {
     if (

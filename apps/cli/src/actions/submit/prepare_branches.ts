@@ -256,7 +256,7 @@ async function getPRCreationInfo(
 
   const createAsDraft = args.publish
     ? false
-    : args.draft || !context.interactive
+    : args.draft || !context.canPrompt
     ? true
     : await getPRDraftStatus(context);
 

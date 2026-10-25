@@ -7,7 +7,10 @@ export async function getPRTemplate(
   context: TContext
 ): Promise<string | undefined> {
   const templateFiles = getPRTemplateFilepaths();
-  if (templateFiles.length === 0) {
+  if (
+    templateFiles.length === 0 ||
+    (templateFiles.length > 1 && !context.canPrompt)
+  ) {
     return undefined;
   }
 

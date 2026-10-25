@@ -39,7 +39,7 @@ export async function submitAction(
     );
   }
   if (
-    !context.interactive &&
+    !context.canPrompt &&
     args.reviewers !== undefined &&
     args.reviewers.split(',').some((reviewer) => !reviewer.trim())
   ) {
@@ -56,10 +56,14 @@ export async function submitAction(
     );
     context.splog.newline();
     args.editPRFieldsInline = false;
+    args.select = false;
+    args.confirm = false;
   }
 
-  if (!context.interactive) {
+  if (!context.canPrompt) {
     args.editPRFieldsInline = false;
+    args.select = false;
+    args.confirm = false;
 
     context.splog.info(
       `Running in non-interactive mode. Inline prompts to fill PR fields will be skipped${
@@ -99,7 +103,7 @@ export async function submitAction(
   const submissionInfos = await getPRInfoForBranches(
     {
       branchNames: branchNames,
-      editPRFieldsInline: args.editPRFieldsInline && context.interactive,
+      editPRFieldsInline: args.editPRFieldsInline && context.canPrompt,
       draft: args.draft,
       publish: args.publish,
       updateOnly: args.updateOnly,
@@ -274,7 +278,7 @@ async function shouldAbort(
   }
 
   if (
-    context.interactive &&
+    context.canPrompt &&
     args.confirm &&
     !(
       await context.prompts({
