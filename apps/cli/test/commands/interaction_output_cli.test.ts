@@ -270,6 +270,24 @@ describe('interaction output through the public CLI', function () {
 
   it('preserves real push hook bytes, no-verify and remote progress in ordinary and quiet modes', () => {
     const submit = new SubmitCliFixture();
+    const environment = Object.fromEntries(
+      [
+        'GRAPHITE_USER_CONFIG_PATH',
+        'GRAPHITE_INTERACTIVE',
+        'GRAPHITE_PROFILE',
+        'GIT_CONFIG_NOSYSTEM',
+        'GIT_CONFIG_GLOBAL',
+        'HOME',
+        'CODEX_HOME',
+        'GH_CONFIG_DIR',
+        'XDG_CONFIG_HOME',
+        'CHARCOAL_TEST_BINARY',
+        'BUN_BE_BUN',
+        'CHARCOAL_TEST_GH_STATE',
+        'CHARCOAL_TEST_GH_LOG',
+        'PATH',
+      ].map((key) => [key, submit.env[key] ?? null])
+    );
     try {
       submit.branch('pushed', 'main');
       submit.succeed('submit');
@@ -291,7 +309,7 @@ describe('interaction output through the public CLI', function () {
           JSON.stringify({
             args: ['submit', ...flags, '--no-interactive'],
             cwd: submit.repo,
-            environment: submit.env,
+            environment,
             status: result.status,
             stdoutBase64: Buffer.from(result.stdout).toString('base64'),
             stderrBase64: Buffer.from(result.stderr).toString('base64'),
@@ -328,7 +346,7 @@ describe('interaction output through the public CLI', function () {
         JSON.stringify({
           args: ['submit', '--quiet', '--no-interactive'],
           cwd: submit.repo,
-          environment: submit.env,
+          environment,
           ...rejected,
           remote: submit.remoteSha('pushed'),
         }) + '\n'
