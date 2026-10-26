@@ -14,7 +14,7 @@ import { persistContinuation } from '../persist_continuation';
 import { printConflictStatus } from '../print_conflict_status';
 
 export async function getAction(
-  args: { branchName: string | undefined; force: boolean },
+  args: { branchName: string | undefined; force: boolean; unfrozen: boolean },
   context: TContext
 ): Promise<void> {
   const trunk = context.engine.trunk;
@@ -69,7 +69,12 @@ export async function getAction(
   }
 
   const updatedBranches = await getBranchesFromRemote(
-    { downstack, base: trunk, force: args.force },
+    {
+      downstack,
+      base: trunk,
+      force: args.force,
+      importDecisions: decideImports(downstack, args.unfrozen, context),
+    },
     context
   );
 
@@ -124,8 +129,87 @@ function prFieldOrThrow(
   return value;
 }
 
+export type GetImportDecision = {
+  branchName: string;
+  wasTracked: boolean;
+  frozen: boolean;
+};
+
+function optionalGhJson(args: string[]): unknown {
+  try {
+    return JSON.parse(
+      execFileSync('gh', args, {
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }).toString()
+    );
+  } catch {
+    return undefined;
+  }
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function trustedLogin(value: unknown): string | undefined {
+  if (!isObject(value)) return undefined;
+  const login = value.login;
+  return typeof login === 'string' &&
+    /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(login) &&
+    !login.includes('--')
+    ? login.toLowerCase()
+    : undefined;
+}
+
+function decideImports(
+  downstack: string[],
+  unfrozen: boolean,
+  context: TContext
+): GetImportDecision[] {
+  const newBranches = downstack.filter(
+    (name) => !getSha(`refs/branch-metadata/${name}`)
+  );
+  const account =
+    !unfrozen && newBranches.length > 0
+      ? trustedLogin(optionalGhJson(['api', 'user']))
+      : undefined;
+  const repo = githubRepoSlug(context);
+  return downstack.map((branchName) => {
+    const wasTracked = !newBranches.includes(branchName);
+    if (wasTracked)
+      return {
+        branchName,
+        wasTracked,
+        frozen: context.engine.isBranchFrozen(branchName),
+      };
+    const pr =
+      !unfrozen && account
+        ? optionalGhJson([
+            'pr',
+            'view',
+            branchName,
+            '--repo',
+            repo,
+            '--json',
+            'author',
+          ])
+        : undefined;
+    const author = isObject(pr) ? trustedLogin(pr.author) : undefined;
+    return {
+      branchName,
+      wasTracked,
+      frozen: !unfrozen && (!account || author !== account),
+    };
+  });
+}
+
 export async function getBranchesFromRemote(
-  args: { downstack: string[]; base: string; force: boolean },
+  args: {
+    downstack: string[];
+    base: string;
+    force: boolean;
+    importDecisions?: GetImportDecision[];
+  },
   context: TContext
 ): Promise<string[]> {
   const updatedBranches: string[] = [];
@@ -133,6 +217,15 @@ export async function getBranchesFromRemote(
   try {
     let parentBranchName = args.base;
     for (const [index, branchName] of args.downstack.entries()) {
+      const decision = args.importDecisions?.find(
+        (item) => item.branchName === branchName
+      );
+      const importFrozen =
+        decision &&
+        !decision.wasTracked &&
+        !getSha(`refs/branch-metadata/${branchName}`)
+          ? decision.frozen
+          : undefined;
       const previousRevision = getSha(`refs/heads/${branchName}`);
       const previousMetadata = getSha(`refs/branch-metadata/${branchName}`);
       let completed = false;
@@ -156,11 +249,15 @@ export async function getBranchesFromRemote(
         } else if (args.force || !context.engine.branchExists(branchName)) {
           context.engine.checkoutBranchFromFetched(
             branchName,
-            parentBranchName
+            parentBranchName,
+            importFrozen
           );
           context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
         } else if (!context.engine.isBranchTracked(branchName)) {
-          await handleUntrackedLocally(branchName, parentBranchName, context);
+          await handleUntrackedLocally(
+            { branchName, parentBranchName, importFrozen },
+            context
+          );
         } else if (
           context.engine.getParentPrecondition(branchName) !== parentBranchName
         ) {
@@ -178,7 +275,12 @@ export async function getBranchesFromRemote(
         } else {
           const remainingBranchesToSync = args.downstack.slice(index + 1);
           await handleSameParent(
-            { branchName, parentBranchName, remainingBranchesToSync },
+            {
+              branchName,
+              parentBranchName,
+              remainingBranchesToSync,
+              importDecisions: args.importDecisions,
+            },
             context
           );
         }
@@ -210,10 +312,14 @@ export async function getBranchesFromRemote(
 }
 
 async function handleUntrackedLocally(
-  branchName: string,
-  parentBranchName: string,
+  args: {
+    branchName: string;
+    parentBranchName: string;
+    importFrozen?: boolean;
+  },
   context: TContext
 ): Promise<void> {
+  const { branchName, parentBranchName } = args;
   context.splog.info(
     [
       `${chalk.yellow(
@@ -223,7 +329,10 @@ async function handleUntrackedLocally(
       `If you do not wish to overwrite your copy, the command will be aborted.`,
     ].join('\n')
   );
-  await maybeOverwriteBranch(branchName, parentBranchName, context);
+  await maybeOverwriteBranch(
+    { branchName, parentBranchName, importFrozen: args.importFrozen },
+    context
+  );
 }
 
 async function handleDifferentParents(
@@ -240,15 +349,19 @@ async function handleDifferentParents(
       `If you do not wish to overwrite your copy, the command will be aborted.`,
     ].join('\n')
   );
-  await maybeOverwriteBranch(branchName, parentBranchName, context);
+  await maybeOverwriteBranch({ branchName, parentBranchName }, context);
 }
 
 // Helper function for cases where we can either overwrite local or abort
 async function maybeOverwriteBranch(
-  branchName: string,
-  parentBranchName: string,
+  args: {
+    branchName: string;
+    parentBranchName: string;
+    importFrozen?: boolean;
+  },
   context: TContext
-) {
+): Promise<void> {
+  const { branchName, parentBranchName } = args;
   if (!context.interactive) {
     throw new ExitFailedError(
       `Cannot overwrite local branch ${branchName} without confirmation in non-interactive mode. Retry interactively, or use --force to overwrite it with the remote version.`
@@ -269,7 +382,11 @@ async function maybeOverwriteBranch(
     throw new KilledError();
   }
 
-  context.engine.checkoutBranchFromFetched(branchName, parentBranchName);
+  context.engine.checkoutBranchFromFetched(
+    branchName,
+    parentBranchName,
+    args.importFrozen
+  );
   context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
 }
 
@@ -281,6 +398,7 @@ async function handleSameParent(
     branchName: string;
     parentBranchName: string;
     remainingBranchesToSync: string[];
+    importDecisions?: GetImportDecision[];
   },
   context: TContext
 ): Promise<void> {
@@ -331,6 +449,7 @@ async function handleSameParent(
         persistContinuation(
           {
             branchesToSync: args.remainingBranchesToSync,
+            getImportDecisions: args.importDecisions,
             rebasedBranchBase: result.rebasedBranchBase,
           },
           context

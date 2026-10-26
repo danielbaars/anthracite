@@ -165,7 +165,8 @@ export type TEngine = {
   ) => boolean;
   checkoutBranchFromFetched: (
     branchName: string,
-    parentBranchName: string
+    parentBranchName: string,
+    importFrozen?: boolean
   ) => void;
   rebaseBranchOntoFetched: (branchName: string) =>
     | {
@@ -1260,7 +1261,8 @@ export function composeEngine({
     },
     checkoutBranchFromFetched: (
       branchName: string,
-      parentBranchName: string
+      parentBranchName: string,
+      importFrozen?: boolean
     ) => {
       validateNewParent(branchName, parentBranchName);
       assertBranch(parentBranchName);
@@ -1278,6 +1280,7 @@ export function composeEngine({
 
       updateMeta(branchName, {
         ...readMetadataRef(branchName),
+        frozen: readMetadataRef(branchName).frozen ?? importFrozen,
         validationResult: 'VALID',
         parentBranchName,
         parentBranchRevision: base,

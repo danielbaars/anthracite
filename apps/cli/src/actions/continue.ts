@@ -119,6 +119,7 @@ export async function continueAction(
     await getBranchesFromRemote(
       {
         downstack: branchesToSync,
+        importDecisions: context.continueConfig.data.getImportDecisions,
         base: context.engine.currentBranchPrecondition,
         force: false,
       },

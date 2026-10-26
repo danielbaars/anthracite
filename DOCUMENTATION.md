@@ -373,12 +373,20 @@ Get branches from trunk to the specified branch from remote, prompting to resolv
 
 | Flag | Description |
 | --- | --- |
-| `[branch]` | Positional: branch to fetch down to. |
-| `-f`, `--force` | Overwrite all fetched branches with the remote source of truth. |
+| `[branch]` | Positional: branch or numeric PR number to fetch down to. Omit for the current branch. |
+| `-f`, `--force` | Overwrite all fetched branches with the remote source of truth, preserving existing frozen status and work/worktree checks. |
+| `-U`, `--unfrozen` | Make only new imports editable. Default false, including explicit `--unfrozen=false`. |
 
 ```
-ch get teammate-branch
+ch get teammate-branch       # protect new imports from other or unknown authors
+ch g 123 -U                  # explicitly make new imports editable
 ```
+
+Each new import is frozen unless its PR author login matches the current `gh` account login, or `--unfrozen` is true. A mixed stack is decided per branch. Missing, invalid or unavailable optional identity information conservatively means frozen; the required PR head/base chain must still resolve to trunk. Charcoal uses read-only `gh` requests and does not infer ownership from Git names or email or start a login flow.
+
+Existing tracked branches keep their current status through no-op, fast-forward and permitted remote overwrite, even with force or `-U`. Frozen divergence offers remote overwrite or abort; use explicit `ch unfreeze` before local replay. An editable get rebase conflict saves the pending new-import decisions for a fresh `continue`/`cont`; account changes do not change those saved defaults. An active replay that becomes frozen stops before `--all` staging until explicitly unfrozen. Late failures report reached refs and unfinished metadata/status publication; earlier imports remain completed.
+
+These behaviors are tested against controlled external `gh` responses and local bare remotes, not a live Graphite service.
 
 ---
 

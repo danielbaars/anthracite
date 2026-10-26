@@ -15,6 +15,15 @@ import { spiffy } from './spiffy';
  * hit a merge conflict, as we cannot pull this information from Git.
  */
 const ContinueSchema = t.shape({
+  getImportDecisions: t.optional(
+    t.array(
+      t.shape({
+        branchName: t.string,
+        wasTracked: t.boolean,
+        frozen: t.boolean,
+      })
+    )
+  ),
   branchesToSync: t.array(t.string),
   branchesToRestack: t.array(t.string),
   currentBranchOverride: t.optional(t.string),

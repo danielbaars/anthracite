@@ -37,13 +37,14 @@ export class FrozenGetFixture {
     PATH: `${this.bin}${path.delimiter}${process.env.PATH}`,
   };
   readonly prs = path.join(this.root, 'prs.json');
+  readonly identities = path.join(this.root, 'identities.json');
   readonly ghCalls = path.join(this.root, 'gh-calls.jsonl');
   cwd = this.consumer;
   readonly details = path.join(this.root, 'pr-details.json');
   readonly oldParent: string;
   readonly oldChild: string;
 
-  constructor() {
+  constructor(importBranches = true) {
     delete this.env.GH_TOKEN;
     delete this.env.GITHUB_TOKEN;
     delete this.env.GIT_OPTIONAL_LOCKS;
@@ -58,6 +59,15 @@ export class FrozenGetFixture {
 require('fs').appendFileSync(${JSON.stringify(
         this.ghCalls
       )}, JSON.stringify(args) + '\\n');
+const identity = require('fs').existsSync(${JSON.stringify(
+        this.identities
+      )}) ? JSON.parse(require('fs').readFileSync(${JSON.stringify(
+        this.identities
+      )}, 'utf8')) : {};
+if (args[0] === 'api' && args[1] === 'user') {
+  if (identity.accountError) process.exit(7);
+  console.log(identity.accountRaw === undefined ? JSON.stringify(identity.account || {}) : identity.accountRaw); process.exit(0);
+}
 if (args[0] !== 'pr' || args[1] !== 'view' || args[4] !== 'get-fixture/repo' || args[5] !== '--json') process.exit(2);
 const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : args[2];
 const base = require('fs').readFileSync(${JSON.stringify(this.prs)}, 'utf8');
@@ -68,6 +78,10 @@ const details = JSON.parse(require('fs').readFileSync(${JSON.stringify(
         this.details
       )}, 'utf8'));
 const response = { headRefName: head, baseRefName: parent, number: head === 'parent' ? 1 : 2, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : 2), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
+if (args[6] === 'author') {
+  if (identity.authorError) process.exit(8);
+  console.log(identity.authorRaw === undefined ? JSON.stringify({author: (identity.authors || {})[head]}) : identity.authorRaw); process.exit(0);
+}
 const selected = {};
 for (const field of args[6].split(',')) { if (!(field in response)) process.exit(2); selected[field] = response[field]; }
 console.log(JSON.stringify(selected));\n`,
@@ -85,7 +99,7 @@ console.log(JSON.stringify(selected));\n`,
     this.oldChild = this.commit(this.producer, 'child.txt', 'child-old');
     this.git(this.producer, 'push', 'origin', 'main', 'parent', 'child');
     this.freshConsumer();
-    this.ok('get', 'child');
+    if (importBranches) this.ok('get', 'child');
   }
 
   freshConsumer(): void {
@@ -187,7 +201,12 @@ console.log(JSON.stringify(selected));\n`,
     const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
     const before = evidence ? this.observe() : undefined;
     if (interactive) {
-      const result = runCliInPty(command, { cwd, env: this.env, responses });
+      const result = runCliInPty(command, {
+        cwd,
+        env: this.env,
+        responses,
+        timeoutMs: 20000,
+      });
       if (evidence)
         fs.appendFileSync(
           path.join(evidence, 'frozen-get-pty-observations.jsonl'),
@@ -246,6 +265,9 @@ console.log(JSON.stringify(selected));\n`,
             'refs/remotes'
           ),
           ghCalls: fs.readFileSync(this.ghCalls, 'utf8'),
+          controlledIdentities: fs.existsSync(this.identities)
+            ? fs.readFileSync(this.identities, 'utf8')
+            : null,
           bareRefs: this.git(
             this.remote,
             'for-each-ref',

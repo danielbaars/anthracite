@@ -1,3 +1,4 @@
+import { GetImportDecision } from './sync/get';
 import { TContext } from '../lib/context';
 import { recordRebaseOwnership } from '../lib/git/rebase_ownership';
 
@@ -5,6 +6,7 @@ export function persistContinuation(
   args: {
     branchesToRestack?: string[];
     branchesToSync?: string[];
+    getImportDecisions?: GetImportDecision[];
     rebasedBranchBase: string;
   },
   context: TContext
@@ -27,6 +29,8 @@ export function persistContinuation(
   );
   const rebaseOwnership = recordRebaseOwnership();
   context.continueConfig.update((data) => {
+    data.getImportDecisions =
+      args.getImportDecisions ?? data.getImportDecisions;
     data.branchesToSync = branchesToSync;
     data.branchesToRestack = branchesToRestack;
     data.currentBranchOverride = context.engine.currentBranch;
@@ -37,6 +41,7 @@ export function persistContinuation(
 
 export function clearContinuation(context: TContext): void {
   context.continueConfig.update((data) => {
+    data.getImportDecisions = undefined;
     data.branchesToSync = [];
     data.branchesToRestack = [];
     data.currentBranchOverride = undefined;
