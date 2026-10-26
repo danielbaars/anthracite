@@ -15,6 +15,7 @@ export function currentBranchOnto(
   opts: { source?: string; only?: boolean } = {}
 ): void {
   const source = opts.source ?? context.engine.currentBranchPrecondition;
+  context.engine.assertBranchEditable(source);
   const only = opts.only ?? false;
   assertNoGitOperation();
   const departure = getCurrentBranchName();
@@ -39,6 +40,8 @@ export function currentBranchOnto(
     [source, ontoBranchName] as const,
   ]);
   const changingBranches = getBranchesToRestack(queue, context, { parents });
+  for (const name of new Set([source, ...children, ...changingBranches]))
+    context.engine.assertBranchEditable(name);
   assertBranchesAvailableInWorktrees([
     source,
     ...children,
@@ -59,13 +62,19 @@ export function currentBranchOnto(
     skipTrackedPaths: true,
     operation: 'move',
   });
-  children.forEach((child) => context.engine.setParent(child, oldParent));
-  context.engine.setParent(source, ontoBranchName);
+  const mandatory = [...new Set([source, ...children, ...changingBranches])];
+  children.forEach((child) =>
+    context.engine.setParent(child, oldParent, mandatory)
+  );
+  context.engine.setParent(source, ontoBranchName, mandatory);
   context.continueConfig.update((data) => {
+    data.branchesToSync ??= [];
+    data.branchesToRestack ??= [];
     data.move = {
       source,
       only,
       returnBranch: departure,
+      mandatory,
       completed: [],
     };
   });

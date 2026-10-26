@@ -42,7 +42,7 @@ const args = {
 export const command = 'move [branch]';
 export const canonical = 'move';
 export const description =
-  'Rebase the current branch onto the latest commit of the target branch and restack all of its descendants. If no branch is passed in, opens an interactive selector.';
+  'Rebase the current branch onto the latest commit of the target branch and restack all of its descendants. If no branch is passed in, opens an interactive selector. Frozen mandatory participants are refused; a frozen destination may be used as an unchanged anchor.';
 export const builder = args;
 type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 export const handler = async (argv: argsT): Promise<void> => {
@@ -57,6 +57,7 @@ export const handler = async (argv: argsT): Promise<void> => {
     }
     const selectedSource = source ?? context.engine.currentBranchPrecondition;
     context.engine.getBaseRevision(selectedSource);
+    context.engine.assertBranchEditable(selectedSource);
     const dest =
       onto ??
       positional ??

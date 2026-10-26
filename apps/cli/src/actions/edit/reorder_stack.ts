@@ -26,6 +26,7 @@ export async function reorderStack(
   inputPath: string | undefined,
   context: TContext
 ): Promise<void> {
+  context.engine.assertBranchEditable(context.engine.currentBranchPrecondition);
   if (!inputPath) ensureEditorAllowedPrecondition(context);
   assertNoGitOperation('reorder');
   uncommittedTrackedChangesPrecondition();
@@ -107,6 +108,8 @@ export async function reorderStack(
       changesTip ? (revision === from ? parentTip : undefined) : revision
     );
   }
+  for (const name of [departure, ...changing])
+    context.engine.assertBranchEditable(name);
   for (const name of changing) assertNoPrAssociation(name, context);
   assertBranchesAvailableInWorktrees(changing);
   assertRestackFilesAvailable({

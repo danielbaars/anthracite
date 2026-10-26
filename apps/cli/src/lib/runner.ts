@@ -31,7 +31,11 @@ import { composeGit } from './git/git';
 import { TGlobalArguments } from './global_arguments';
 import { tracer } from './utils/tracer';
 import { CommandFailedError, CommandKilledError } from './git/runner';
-import { assertBranchEditable } from './engine/frozen_branch';
+import {
+  assertBranchEditable,
+  assertContinuationBranchesEditable,
+} from './engine/frozen_branch';
+import { continueConfigFactory } from './spiffy/continuation_spf';
 
 export async function graphite(
   args: yargs.Arguments & TGlobalArguments,
@@ -126,12 +130,29 @@ async function graphiteInternal(
   const git = composeGit();
   try {
     // Known frozen targets must stop before ordinary context repair can write refs.
-    if (['modify', 'edit', 'squash', 'split', 'pop'].includes(canonicalName)) {
+    if (
+      ['modify', 'edit', 'squash', 'split', 'pop', 'fold', 'reorder'].includes(
+        canonicalName
+      )
+    ) {
       const currentBranch = git.getCurrentBranchName();
       if (currentBranch) assertBranchEditable(currentBranch);
     }
+    if (canonicalName === 'move') {
+      const source =
+        typeof args.source === 'string'
+          ? args.source
+          : args.source === undefined
+          ? git.getCurrentBranchName()
+          : undefined;
+      if (source) assertBranchEditable(source);
+    }
     if (canonicalName === 'continue' && git.rebaseInProgress()) {
       const activeBranch = git.getRebaseHead();
+      assertContinuationBranchesEditable(
+        continueConfigFactory.load(undefined, { preserveInvalid: true }).data,
+        activeBranch
+      );
       if (activeBranch) assertBranchEditable(activeBranch);
       assertDeleteRecoveryEditable(
         continueConfigFactory.load(undefined, { preserveInvalid: true }).data

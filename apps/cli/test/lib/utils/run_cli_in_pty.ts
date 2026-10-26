@@ -79,9 +79,9 @@ export function runCliInPty(
       ptyRunner,
       JSON.stringify(command),
       JSON.stringify(options.responses ?? []),
-      String((options.timeoutMs ?? 5000) / 1000),
+      String((options.timeoutMs ?? 20000) / 1000),
     ],
-    { ...options, timeout: (options.timeoutMs ?? 5000) + 5000 }
+    { ...options, timeout: (options.timeoutMs ?? 20000) + 5000 }
   );
   if (result.error) throw result.error;
   const output = Buffer.concat([result.stdout, result.stderr]);

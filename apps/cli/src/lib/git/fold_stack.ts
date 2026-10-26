@@ -1,4 +1,5 @@
 import { runGitCommand } from './runner';
+import { withFrozenCommitGuard } from './frozen_commit';
 
 /** Publish just the selected branch refs together, checking every original tip. */
 export function publishFoldStackRefs(
@@ -11,10 +12,16 @@ export function publishFoldStackRefs(
       ? `update refs/heads/${name}\0${tip}\0${revision}\0`
       : `delete refs/heads/${name}\0${revision}\0`
   );
-  runGitCommand({
-    args: ['update-ref', '--stdin', '-z'],
-    options: { input: `start\0${commands.join('')}prepare\0commit\0` },
-    onError: 'throw',
-    resource: 'foldStackRefs',
-  });
+  withFrozenCommitGuard(
+    survivor,
+    (prefix) => {
+      runGitCommand({
+        args: [...prefix, 'update-ref', '--stdin', '-z'],
+        options: { input: `start\0${commands.join('')}prepare\0commit\0` },
+        onError: 'throw',
+        resource: 'foldStackRefs',
+      });
+    },
+    { participants: chain.map(({ name }) => name), allRefs: true }
+  );
 }

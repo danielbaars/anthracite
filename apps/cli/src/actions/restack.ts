@@ -1,6 +1,10 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
 import {
+  assertContinuationBranchesEditable,
+  getMandatoryBranches,
+} from '../lib/engine/frozen_branch';
+import {
   RebaseCheckoutError,
   RebaseConflictError,
   RebaseMetadataError,
@@ -61,12 +65,10 @@ export function restackBranches(
   branchNames: string[],
   context: TContext
 ): void {
-  const skipFrozen = !(
-    context.continueConfig.data.move ||
-    context.continueConfig.data.fold ||
-    context.continueConfig.data.reorder
-  );
-  assertDeleteRecoveryEditable(context.continueConfig.data.delete);
+  const data = context.continueConfig.data;
+  const skipFrozen = !(data.move || data.fold || data.insert || data.reorder);
+  assertDeleteRecoveryEditable(data.delete);
+  assertContinuationBranchesEditable(data);
   try {
     assertBranchesAvailableInWorktrees(
       getBranchesToRestack(branchNames, context, { skipFrozen })
@@ -98,6 +100,7 @@ export function restackBranches(
 
     try {
       assertDeleteRecoveryEditable(context.continueConfig.data.delete);
+      assertContinuationBranchesEditable(context.continueConfig.data);
       if (context.continueConfig.data.reorder) {
         uncommittedTrackedChangesPrecondition();
         assertReorderFilesAvailable(context);
@@ -114,7 +117,7 @@ export function restackBranches(
       }
       const result = context.engine.restackBranch(
         branchName,
-        context.continueConfig.data.delete?.mandatory
+        getMandatoryBranches(context.continueConfig.data)
       );
       context.splog.debug(`${result}: ${branchName}`);
       switch (result.result) {

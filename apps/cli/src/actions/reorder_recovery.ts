@@ -19,6 +19,8 @@ export function beginReorder(
   context: TContext
 ): void {
   context.continueConfig.update((data) => {
+    data.branchesToSync ??= [];
+    data.branchesToRestack ??= [];
     data.reorder = {
       returnBranch: args.returnBranch,
       graphApplied: false,
@@ -37,7 +39,10 @@ export function beginReorder(
     for (const name of args.order) {
       const parent = args.parents.get(name);
       if (!parent) throw new PreconditionsFailedError('Invalid reorder plan.');
-      context.engine.setParent(name, parent);
+      context.engine.setParent(name, parent, [
+        args.returnBranch,
+        ...args.pending,
+      ]);
     }
     context.continueConfig.update((data) => {
       if (data.reorder) data.reorder.graphApplied = true;

@@ -32,6 +32,13 @@ const ContinueSchema = t.shape({
   delete: t.optional(
     t.shape({ branch: t.string, mandatory: t.array(t.string) })
   ),
+  insert: t.optional(
+    t.shape({
+      branch: t.string,
+      mandatory: t.array(t.string),
+      completed: t.array(t.string),
+    })
+  ),
   reorder: t.optional(
     t.shape({
       returnBranch: t.string,
@@ -49,6 +56,7 @@ const ContinueSchema = t.shape({
     t.shape({
       survivor: t.string,
       removed: t.array(t.string),
+      mandatory: t.optional(t.array(t.string)),
       completed: t.array(t.string),
     })
   ),
@@ -57,6 +65,7 @@ const ContinueSchema = t.shape({
       source: t.string,
       only: t.boolean,
       returnBranch: t.string,
+      mandatory: t.optional(t.array(t.string)),
       completed: t.array(t.string),
     })
   ),

@@ -23,7 +23,8 @@ export function moveBranch(newName: string): void {
 
 export function deleteBranch(
   branchName: string,
-  frozenGuardBranch?: string
+  frozenGuardBranch?: string,
+  participants?: readonly string[]
 ): void {
   const run = (prefix: readonly string[]): void => {
     runGitCommand({
@@ -33,7 +34,11 @@ export function deleteBranch(
       resource: 'deleteBranch',
     });
   };
-  if (frozenGuardBranch) withFrozenCommitGuard(frozenGuardBranch, run);
+  if (frozenGuardBranch)
+    withFrozenCommitGuard(frozenGuardBranch, run, {
+      participants,
+      allRefs: true,
+    });
   else run([]);
 }
 
@@ -73,20 +78,29 @@ export function switchBranch(
 export function forceCheckoutNewBranch(
   branchName: string,
   sha: string,
-  opts?: { preserveIgnored?: boolean }
+  opts?: { preserveIgnored?: boolean; participants?: readonly string[] }
 ): void {
-  runGitCommand({
-    args: [
-      `switch`,
-      ...(opts?.preserveIgnored ? ['--no-overwrite-ignore'] : []),
-      `-C`,
-      branchName,
-      sha,
-    ],
-    options: { stdio: 'pipe' },
-    onError: 'throw',
-    resource: 'forceCheckoutNewBranch',
-  });
+  const run = (prefix: readonly string[]): void => {
+    runGitCommand({
+      args: [
+        ...prefix,
+        `switch`,
+        ...(opts?.preserveIgnored ? ['--no-overwrite-ignore'] : []),
+        `-C`,
+        branchName,
+        sha,
+      ],
+      options: { stdio: 'pipe' },
+      onError: 'throw',
+      resource: 'forceCheckoutNewBranch',
+    });
+  };
+  if (opts?.participants?.length)
+    withFrozenCommitGuard(branchName, run, {
+      participants: opts.participants,
+      allRefs: true,
+    });
+  else run([]);
 }
 
 export function forceCreateBranch(

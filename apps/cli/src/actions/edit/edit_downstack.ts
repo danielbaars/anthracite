@@ -2,42 +2,72 @@ import { ensureEditorAllowedPrecondition } from '../../lib/preconditions';
 import { TContext } from '../../lib/context';
 import { SCOPE } from '../../lib/engine/scope_spec';
 import { performInTmpDir } from '../../lib/utils/perform_in_tmp_dir';
-import { restackBranches } from '../restack';
+import { getBranchesToRestack, restackBranches } from '../restack';
 import { createStackEditFile, parseEditFile } from './stack_edit_file';
+import { beginReorder, finishReorder } from '../reorder_recovery';
+import { clearContinuation } from '../persist_continuation';
 
 export async function editDownstack(
   inputPath: string | undefined,
   context: TContext
 ): Promise<void> {
+  context.engine.assertBranchEditable(context.engine.currentBranchPrecondition);
   if (!inputPath) ensureEditorAllowedPrecondition(context);
   // First, reorder the parent pointers of the branches
   const branchNames = inputPath
     ? parseEditFile(inputPath) // allow users to pass a pre-written file, mostly for unit tests.
     : await promptForEdit(context);
-  reorderBranches(context.engine.trunk, branchNames, context);
-
-  // Restack starting from the bottom of the new stack upwards
-  const branchesToRestack = context.engine.getRelativeStack(
-    branchNames[0],
-    SCOPE.UPSTACK
+  const parents = new Map<string, string>();
+  let parent = context.engine.trunk;
+  for (const name of branchNames) {
+    parents.set(name, parent);
+    parent = name;
+  }
+  const branches = [
+    ...new Set(
+      branchNames.flatMap((name) =>
+        context.engine.getRelativeStack(name, SCOPE.UPSTACK)
+      )
+    ),
+  ];
+  const reparented = branchNames.filter(
+    (name) => context.engine.getParent(name) !== parents.get(name)
+  );
+  const changing = getBranchesToRestack(
+    [...branchNames, ...branches.filter((name) => !branchNames.includes(name))],
+    context,
+    { parents }
+  );
+  for (const name of new Set([
+    context.engine.currentBranchPrecondition,
+    ...reparented,
+    ...changing,
+  ]))
+    context.engine.assertBranchEditable(name);
+  for (const name of branches)
+    if (!parents.has(name))
+      parents.set(name, context.engine.getParentPrecondition(name));
+  beginReorder(
+    {
+      returnBranch: context.engine.currentBranchPrecondition,
+      order: branchNames,
+      parents,
+      original: new Map(
+        branches.map((name) => [
+          name,
+          { from: context.engine.getBaseRevision(name) },
+        ])
+      ),
+      pending: changing,
+    },
+    context
   );
 
   // We to check out the top of the new stack BEFORE we restack in case of conflicts.
   context.engine.checkoutBranch(branchNames.reverse()[0]);
-  restackBranches(branchesToRestack, context);
-}
-
-function reorderBranches(
-  parentBranchName: string,
-  branchNames: string[],
-  context: TContext
-): void {
-  if (branchNames.length === 0) {
-    return;
-  }
-  context.engine.setParent(branchNames[0], parentBranchName);
-  context.splog.debug(`Set parent of ${branchNames[0]} to ${parentBranchName}`);
-  reorderBranches(branchNames[0], branchNames.slice(1), context);
+  restackBranches(changing, context);
+  finishReorder(context);
+  clearContinuation(context);
 }
 
 async function promptForEdit(context: TContext): Promise<string[]> {

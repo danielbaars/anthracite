@@ -10,6 +10,7 @@ import { SCOPE } from '../lib/engine/scope_spec';
 import { ExitFailedError } from '../lib/errors';
 import { newBranchName } from '../lib/utils/branch_name';
 import { getBranchesToRestack, restackBranches } from './restack';
+import { clearContinuation } from './persist_continuation';
 
 type TCreateBranchOptions = {
   branchName?: string;
@@ -24,6 +25,8 @@ export async function createBranchAction(
   opts: TCreateBranchOptions,
   context: TContext
 ): Promise<void> {
+  const insertPlan = opts.insert ? getInsertChildren(opts, context) : undefined;
+
   ensurePatchInputPrecondition(Boolean(opts.patch && !opts.all), context);
 
   const branchName = newBranchName(opts.branchName, opts.message, context);
@@ -45,14 +48,28 @@ export async function createBranchAction(
   }
 
   const sourceBranch = context.engine.currentBranch;
-  const insertChildren = opts.insert
-    ? getInsertChildren(opts, context)
-    : undefined;
   const originalIndex = opts.onto !== undefined ? readIndex() : undefined;
   context.engine.checkoutNewBranch(branchName, opts.onto);
+  if (insertPlan) {
+    try {
+      for (const name of insertPlan.mandatory)
+        context.engine.assertBranchEditable(name);
+    } catch (error) {
+      context.splog.warn(
+        `Insertion stopped after creating ${branchName}; its checkout, index and files remain. Existing children have not been reparented.`
+      );
+      throw error;
+    }
+  }
 
   commitNewBranch(
-    { ...opts, branchName, sourceBranch, originalIndex },
+    {
+      ...opts,
+      branchName,
+      sourceBranch,
+      originalIndex,
+      participants: insertPlan?.mandatory,
+    },
     context
   );
 
@@ -61,7 +78,7 @@ export async function createBranchAction(
   // show the tip if the user creates a branch with siblings.
 
   const siblings =
-    insertChildren ??
+    insertPlan?.children ??
     context.engine
       .getChildren(context.engine.getParentPrecondition(branchName))
       .filter((childBranchName) => childBranchName !== branchName);
@@ -94,10 +111,26 @@ function insertBranch(
       .slice(0, 7)}; inserting beneath the chosen parent's existing children.`
   );
   try {
-    children.forEach((child) => context.engine.setParent(child, branchName));
     const branches = children.flatMap((child) =>
       context.engine.getRelativeStack(child, SCOPE.UPSTACK)
     );
+    const parents = new Map(children.map((child) => [child, branchName]));
+    const mandatory = [
+      ...new Set([
+        ...children,
+        ...getBranchesToRestack(branches, context, { parents }),
+      ]),
+    ];
+    for (const name of mandatory) context.engine.assertBranchEditable(name);
+    context.continueConfig.update((data) => {
+      data.branchesToSync ??= [];
+      data.branchesToRestack ??= [];
+      data.insert = { branch: branchName, mandatory, completed: [] };
+    });
+    for (const child of children) {
+      for (const name of mandatory) context.engine.assertBranchEditable(name);
+      context.engine.setParent(child, branchName, mandatory);
+    }
     const changingBranches = getBranchesToRestack(branches, context);
     if (
       changingBranches.length > 0 &&
@@ -118,6 +151,7 @@ function insertBranch(
       operation: 'insert',
     });
     restackBranches(branches, context);
+    clearContinuation(context);
   } catch (e) {
     if (context.engine.rebaseInProgress()) {
       context.splog.warn(
@@ -135,7 +169,7 @@ function insertBranch(
 function getInsertChildren(
   opts: TCreateBranchOptions,
   context: TContext
-): string[] {
+): { children: string[]; mandatory: string[] } {
   const parent = opts.onto ?? context.engine.currentBranchPrecondition;
   const scope = context.engine.getRelativeStack(parent, SCOPE.UPSTACK);
   const children = scope.filter(
@@ -149,6 +183,8 @@ function getInsertChildren(
     context,
     { willChange: createsCommit ? children : [] }
   );
+  const mandatory = [...new Set([...children, ...branchesToRestack])];
+  for (const name of mandatory) context.engine.assertBranchEditable(name);
   assertBranchesAvailableInWorktrees([...children, ...branchesToRestack]);
   if (
     branchesToRestack.length > 0 &&
@@ -167,7 +203,7 @@ function getInsertChildren(
     all: opts.all ?? false,
     operation: 'insert',
   });
-  return children;
+  return { children, mandatory };
 }
 
 function commitNewBranch(
@@ -175,6 +211,7 @@ function commitNewBranch(
     branchName: string;
     sourceBranch?: string;
     originalIndex?: Buffer;
+    readonly participants?: readonly string[];
   },
   context: TContext
 ): void {
@@ -192,8 +229,17 @@ function commitNewBranch(
       context.engine.commit({
         message: opts.message,
         patch: opts.onto === undefined && !opts.all && opts.patch,
+        participants: opts.participants,
       });
     } catch (e) {
+      if (
+        opts.participants?.some((name) => context.engine.isBranchFrozen(name))
+      ) {
+        context.splog.warn(
+          `Insertion stopped after creating ${opts.branchName}; its checkout, index and files remain. Existing children have not been reparented.`
+        );
+        throw e;
+      }
       try {
         if (preparedWork !== undefined && preparedWork !== getWorkState()) {
           context.splog.warn(

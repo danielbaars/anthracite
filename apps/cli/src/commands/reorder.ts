@@ -27,7 +27,7 @@ type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 export const command = 'reorder';
 export const canonical = 'reorder';
 export const description =
-  'Reorder the branches between trunk and the current branch, restacking all of their descendants.';
+  'Reorder the branches between trunk and the current branch, restacking all of their descendants. Frozen sources and mandatory parent changes or replays are refused.';
 export const builder = args;
 export const aliases = ['ro'];
 

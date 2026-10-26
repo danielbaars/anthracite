@@ -1,6 +1,10 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
 import {
+  assertContinuationBranchesEditable,
+  getMandatoryBranches,
+} from '../lib/engine/frozen_branch';
+import {
   NoGraphiteContinue,
   RebaseCheckoutError,
   RebaseConflictError,
@@ -37,6 +41,7 @@ export async function continueAction(
   }
 
   const activeBranch = context.engine.getRebaseHead();
+  assertContinuationBranchesEditable(context.continueConfig.data, activeBranch);
   if (activeBranch) context.engine.assertBranchEditable(activeBranch);
 
   assertDeleteRecoveryEditable(context.continueConfig.data.delete);
@@ -70,7 +75,7 @@ export async function continueAction(
     }
     cont = context.engine.continueRebase(
       rebasedBranchBase,
-      context.continueConfig.data.delete?.mandatory
+      getMandatoryBranches(context.continueConfig.data)
     );
   } catch (error) {
     if (

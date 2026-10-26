@@ -3,9 +3,15 @@ import { assertRestackFilesAvailable } from '../lib/git/restack_files';
 import { getCurrentBranchName } from '../lib/git/branch_ops';
 
 export function recordMoveCompletion(branch: string, context: TContext): void {
-  if (!context.continueConfig.data.move && !context.continueConfig.data.fold)
+  if (
+    !context.continueConfig.data.move &&
+    !context.continueConfig.data.fold &&
+    !context.continueConfig.data.insert
+  )
     return;
   context.continueConfig.update((data) => {
+    if (data.insert && !data.insert.completed.includes(branch))
+      data.insert.completed.push(branch);
     if (data.fold && !data.fold.completed.includes(branch))
       data.fold.completed.push(branch);
     if (data.move && !data.move.completed.includes(branch)) {

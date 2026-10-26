@@ -32,6 +32,7 @@ import { validateOrFixParentBranchRevision } from './parse_branches_and_meta';
 import { TScopeSpec } from './scope_spec';
 import { publishFoldStackRefs } from '../git/fold_stack';
 import { assertBranchEditable } from './frozen_branch';
+import { withFrozenCommitGuard } from '../git/frozen_commit';
 
 export type TEngine = {
   debug: string;
@@ -108,7 +109,7 @@ export type TEngine = {
     opts?: { preserveIgnored?: boolean }
   ) => void;
   renameCurrentBranch: (branchName: string) => void;
-  foldCurrentBranch: (keep: boolean) => void;
+  foldCurrentBranch: (keep: boolean, participants?: readonly string[]) => void;
   foldStack: (
     chain: readonly string[],
     survivor: string,
@@ -336,7 +337,7 @@ export function composeEngine({
     branchName: string,
     parentBranchName: string,
     participants?: readonly string[]
-  ): void => {
+  ) => {
     validateNewParent(branchName, parentBranchName);
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
@@ -346,17 +347,7 @@ export function composeEngine({
     }
 
     assertBranchIsValidOrTrunkAndGetMeta(parentBranchName);
-    if (participants) {
-      withFrozenCommitGuard(
-        branchName,
-        (prefix) => {
-          updateMeta(branchName, { ...cachedMeta, parentBranchName }, prefix);
-        },
-        { allRefs: true, participants }
-      );
-    } else {
-      updateMeta(branchName, { ...cachedMeta, parentBranchName });
-    }
+    updateMeta(branchName, { ...cachedMeta, parentBranchName }, participants);
   };
 
   const getParent = (branchName: string) => {
@@ -394,7 +385,7 @@ export function composeEngine({
   const updateMeta = (
     branchName: string,
     newCachedMeta: TValidCachedMetaExceptTrunk,
-    prefix?: readonly string[]
+    participants?: readonly string[]
   ) => {
     // Ordinary writers must retain status published by a hook or another process.
     newCachedMeta = {
@@ -428,16 +419,20 @@ export function composeEngine({
       cache.branches[newParentBranchName].children.push(branchName);
     }
 
-    writeMetadataRef(
-      branchName,
-      {
-        parentBranchName: newCachedMeta.parentBranchName,
-        parentBranchRevision: newCachedMeta.parentBranchRevision,
-        prInfo: newCachedMeta.prInfo,
-        frozen: newCachedMeta.frozen,
-      },
-      prefix ? { prefix } : undefined
-    );
+    const metadata = {
+      parentBranchName: newCachedMeta.parentBranchName,
+      parentBranchRevision: newCachedMeta.parentBranchRevision,
+      prInfo: newCachedMeta.prInfo,
+      frozen: newCachedMeta.frozen,
+    };
+    const publish = (prefix: readonly string[]): void =>
+      writeMetadataRef(branchName, metadata, { prefix });
+    if (participants?.length)
+      withFrozenCommitGuard(branchName, publish, {
+        participants,
+        allRefs: true,
+      });
+    else publish([]);
 
     splog.debug(
       `Updated cached meta for branch ${branchName}:\n${cuteString(
@@ -474,13 +469,21 @@ export function composeEngine({
     });
   };
 
-  const deleteAllBranchData = (branchName: string) => {
+  const deleteAllBranchData = (
+    branchName: string,
+    participants?: readonly string[]
+  ) => {
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
     removeChild(cachedMeta.parentBranchName, branchName);
     delete cache.branches[branchName];
     try {
-      git.deleteBranch(branchName);
+      git.deleteBranch(
+        branchName,
+        participants?.length ? branchName : undefined,
+        participants
+      );
+      for (const name of participants ?? []) assertBranchEditable(name);
       deleteMetadataRef(branchName);
     } catch (error) {
       splog.warn(
@@ -829,8 +832,10 @@ export function composeEngine({
         // A detached checkout prepares the real index/tree before any names go.
         git.switchBranch(tip, { detach: true, preserveIgnored: true });
         cache.currentBranch = undefined;
+        for (const name of [...chain, ...roots]) assertBranchEditable(name);
         publishFoldStackRefs(saved, survivor, tip);
         published = true;
+        for (const name of [survivor, ...roots]) assertBranchEditable(name);
         const meta = assertBranchIsValidAndNotTrunkAndGetMeta(survivor);
         const next = {
           ...meta,
@@ -840,9 +845,16 @@ export function composeEngine({
           children: meta.children.filter((name) => !chain.includes(name)),
         };
         // Tracking is published only after the selected Git refs are confirmed.
-        writeMetadataRef(survivor, next);
+        withFrozenCommitGuard(
+          survivor,
+          (prefix) => {
+            writeMetadataRef(survivor, next, { prefix });
+          },
+          { participants: roots, allRefs: true }
+        );
         cache.branches[survivor] = next;
-        for (const root of roots) setParent(root, survivor);
+        for (const root of roots)
+          setParent(root, survivor, [survivor, ...roots]);
         for (const name of [...chain]
           .reverse()
           .filter((name) => name !== survivor)) {
@@ -901,7 +913,7 @@ export function composeEngine({
         );
       }
     },
-    foldCurrentBranch: (keep: boolean) => {
+    foldCurrentBranch: (keep: boolean, participants) => {
       const currentBranchName = getCurrentBranchOrThrow();
       const cachedMeta =
         assertBranchIsValidAndNotTrunkAndGetMeta(currentBranchName);
@@ -911,28 +923,41 @@ export function composeEngine({
         assertBranchIsValidAndNotTrunkAndGetMeta(parentBranchName);
 
       if (keep) {
-        updateMeta(currentBranchName, {
-          ...cachedMeta,
-          parentBranchName: parentCachedMeta.parentBranchName,
-          parentBranchRevision: parentCachedMeta.parentBranchRevision,
-        });
+        updateMeta(
+          currentBranchName,
+          {
+            ...cachedMeta,
+            parentBranchName: parentCachedMeta.parentBranchName,
+            parentBranchRevision: parentCachedMeta.parentBranchRevision,
+          },
+          participants
+        );
         parentCachedMeta.children
           .filter((childBranchName) => childBranchName !== currentBranchName)
           .forEach((childBranchName) =>
-            setParent(childBranchName, currentBranchName)
+            setParent(childBranchName, currentBranchName, participants)
           );
-        deleteAllBranchData(parentBranchName);
+        deleteAllBranchData(parentBranchName, participants);
       } else {
-        git.forceCheckoutNewBranch(parentBranchName, cachedMeta.branchRevision);
-        updateMeta(parentBranchName, {
-          ...parentCachedMeta,
-          branchRevision: cachedMeta.branchRevision,
-        });
-        cachedMeta.children.forEach((childBranchName) =>
-          setParent(childBranchName, parentBranchName)
+        git.forceCheckoutNewBranch(
+          parentBranchName,
+          cachedMeta.branchRevision,
+          { participants }
+        );
+        for (const name of participants ?? []) assertBranchEditable(name);
+        updateMeta(
+          parentBranchName,
+          {
+            ...parentCachedMeta,
+            branchRevision: cachedMeta.branchRevision,
+          },
+          participants
+        );
+        [...cachedMeta.children].forEach((childBranchName) =>
+          setParent(childBranchName, parentBranchName, participants)
         );
         checkoutBranch(cachedMeta.parentBranchName);
-        deleteAllBranchData(currentBranchName);
+        deleteAllBranchData(currentBranchName, participants);
       }
     },
     deleteBranch: (branchName: string, beforeDelete?: () => void) => {
@@ -1104,7 +1129,7 @@ export function composeEngine({
     forceCheckoutBranch: (branchToSplit: string) => {
       git.switchBranch(branchToSplit, { force: true });
     },
-    restackBranch: (branchName: string, participants?: readonly string[]) => {
+    restackBranch: (branchName: string, participants) => {
       const cachedMeta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
       if (isBranchFixed(branchName)) {
         return { result: 'REBASE_UNNEEDED' };
@@ -1152,14 +1177,11 @@ export function composeEngine({
       handleSuccessfulRebase(branchName, cachedMeta.parentBranchRevision);
       return { result: 'REBASE_DONE' };
     },
-    continueRebase: (
-      parentBranchRevision: string,
-      participants?: readonly string[]
-    ) => {
+    continueRebase: (parentBranchRevision: string, participants) => {
       const activeBranch = git.getRebaseHead();
       if (activeBranch) assertBranchEditable(activeBranch);
       const result = git.rebaseContinue(activeBranch, participants);
-      for (const branch of participants ?? []) assertBranchEditable(branch);
+      for (const name of participants ?? []) assertBranchEditable(name);
       if (result === 'REBASE_CONFLICT') {
         if (activeBranch) assertBranchEditable(activeBranch);
         return { result };

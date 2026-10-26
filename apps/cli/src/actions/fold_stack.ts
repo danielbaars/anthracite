@@ -31,6 +31,7 @@ export async function foldStack(
   }
   if (chain.length === 0)
     throw new PreconditionsFailedError('Cannot fold trunk.');
+  for (const name of chain) context.engine.assertBranchEditable(name);
   const tip = await selectFoldTip(departure, childrenOf, context);
   const upstack: string[] = [];
   branch = tip;
@@ -89,12 +90,9 @@ export async function foldStack(
   const protectedBranches = [
     ...new Set([...chain, ...reparented, ...changing]),
   ];
-  for (const name of protectedBranches) {
-    if (context.engine.getPrInfo(name)?.number !== undefined)
-      throw new PreconditionsFailedError(
-        `Cannot fold ${name}: it has a locally known PR association. PR-aware stack fold is not supported.`
-      );
-  }
+  for (const name of protectedBranches)
+    context.engine.assertBranchEditable(name);
+  assertNoFoldPrAssociations(protectedBranches, context);
   if (chain.length === 1) return;
   assertBranchesAvailableInWorktrees(protectedBranches);
   assertRestackFilesAvailable({
@@ -114,9 +112,12 @@ export async function foldStack(
   context.engine.foldStack(chain, survivor, roots);
   if (queue.length > 0) {
     context.continueConfig.update((data) => {
+      data.branchesToSync ??= [];
+      data.branchesToRestack ??= [];
       data.fold = {
         survivor,
         removed: chain.filter((name) => name !== survivor),
+        mandatory: [...new Set([...reparented, ...changing])],
         completed: [],
       };
     });
@@ -160,4 +161,16 @@ async function selectFoldTip(
   if (!tips.includes(tip))
     throw new PreconditionsFailedError('Invalid fold tip selection.');
   return tip;
+}
+
+function assertNoFoldPrAssociations(
+  branches: readonly string[],
+  context: TContext
+): void {
+  for (const name of branches) {
+    if (context.engine.getPrInfo(name)?.number !== undefined)
+      throw new PreconditionsFailedError(
+        `Cannot fold ${name}: it has a locally known PR association. PR-aware stack fold is not supported.`
+      );
+  }
 }

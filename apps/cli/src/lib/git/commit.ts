@@ -7,6 +7,7 @@ export type TCommitOpts = {
   noEdit?: boolean;
   edit?: boolean;
   patch?: boolean;
+  readonly participants?: readonly string[];
 };
 export function commit(
   opts: TCommitOpts & {
@@ -36,6 +37,8 @@ export function commit(
     });
   };
   if (opts.frozenGuardBranch)
-    withFrozenCommitGuard(opts.frozenGuardBranch, run);
+    withFrozenCommitGuard(opts.frozenGuardBranch, run, {
+      participants: opts.participants,
+    });
   else run([]);
 }

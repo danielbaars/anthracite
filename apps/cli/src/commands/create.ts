@@ -38,7 +38,7 @@ const args = {
     alias: 'p',
   },
   insert: {
-    describe: `When true, any existing children of the selected parent (--onto, otherwise current branch) will become children of the new branch.`,
+    describe: `When true, any existing children of the selected parent (--onto, otherwise current branch) will become children of the new branch. Refuses frozen parent-change or mandatory replay participants before creation.`,
     demandOption: false,
     default: false,
     type: 'boolean',

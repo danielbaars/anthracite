@@ -28,7 +28,7 @@ type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 export const command = 'fold';
 export const canonical = 'fold';
 export const description =
-  "Fold a branch's changes into its parent, update dependencies of descendants of the new combined branch, and restack.";
+  "Fold a branch's changes into its parent, update dependencies of descendants of the new combined branch, and restack. Frozen contributors, survivors and mandatory participants are refused.";
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(argv, canonical, async (context) =>
