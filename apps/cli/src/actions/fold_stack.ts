@@ -109,7 +109,10 @@ export async function foldStack(
     skipTrackedPaths: true,
     operation: 'fold',
   });
-  context.engine.foldStack(chain, survivor, roots);
+  context.engine.foldStack(chain, survivor, {
+    roots,
+    participants: protectedBranches,
+  });
   if (queue.length > 0) {
     context.continueConfig.update((data) => {
       data.branchesToSync ??= [];

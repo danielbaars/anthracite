@@ -112,7 +112,10 @@ export type TEngine = {
   foldStack: (
     chain: readonly string[],
     survivor: string,
-    roots?: readonly string[]
+    opts?: {
+      readonly roots?: readonly string[];
+      readonly participants?: readonly string[];
+    }
   ) => void;
   deleteBranch: (
     branchName: string,
@@ -810,7 +813,9 @@ export function composeEngine({
 
       cache.currentBranch = branchName;
     },
-    foldStack: (chain, survivor, roots = []) => {
+    foldStack: (chain, survivor, opts = {}) => {
+      const roots = opts.roots ?? [];
+      const participants = opts.participants ?? chain;
       const first = chain[0];
       const last = chain[chain.length - 1];
       if (!first || !last || !chain.includes(survivor)) {
@@ -841,10 +846,10 @@ export function composeEngine({
         // A detached checkout prepares the real index/tree before any names go.
         git.switchBranch(tip, { detach: true, preserveIgnored: true });
         cache.currentBranch = undefined;
-        for (const name of [...chain, ...roots]) assertBranchEditable(name);
-        publishFoldStackRefs(saved, survivor, tip);
+        for (const name of participants) assertBranchEditable(name);
+        publishFoldStackRefs(saved, survivor, { tip, participants });
         published = true;
-        for (const name of [survivor, ...roots]) assertBranchEditable(name);
+        for (const name of participants) assertBranchEditable(name);
         const meta = assertBranchIsValidAndNotTrunkAndGetMeta(survivor);
         const next = {
           ...meta,
@@ -859,11 +864,10 @@ export function composeEngine({
           (prefix) => {
             writeMetadataRef(survivor, next, { prefix });
           },
-          { participants: roots, allRefs: true }
+          { participants, allRefs: true }
         );
         cache.branches[survivor] = next;
-        for (const root of roots)
-          setParent(root, survivor, [survivor, ...roots]);
+        for (const root of roots) setParent(root, survivor, participants);
         for (const name of [...chain]
           .reverse()
           .filter((name) => name !== survivor)) {

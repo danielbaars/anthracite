@@ -353,4 +353,37 @@ describe('frozen structural route coverage through the public CLI', function () 
       fixture.git(['for-each-ref', '--format=%(refname) %(objectname)'], remote)
     ).to.equal(remoteRefs);
   });
+  it('stack fold preserves an unchanged frozen off-chain root when collapsing an empty chain', () => {
+    fixture.ok(['c', 'empty-a', '-o', 'main']);
+    fixture.ok(['c', 'empty-b']);
+    fixture.branch('frozen-side', 'empty-a');
+    fixture.ok(['freeze', 'frozen-side']);
+    fixture.ok(['track', 'frozen-side', '--parent', 'main']);
+    fixture.ok(['unfreeze', 'empty-a']);
+    fixture.ok(['track', 'frozen-side', '--parent', 'empty-a']);
+    fixture.git(['switch', 'empty-b']);
+    const anchor = fixture.git(['rev-parse', 'frozen-side']);
+    const metadata = fixture.git([
+      'rev-parse',
+      'refs/branch-metadata/frozen-side',
+    ]);
+    const main = fixture.git(['rev-parse', 'main']);
+    const refs = fixture
+      .refs()
+      .split('\n')
+      .filter((line) => !line.startsWith('refs/heads/empty-b '));
+    fixture.ok(['fold', '--stack']);
+    expect(fixture.git(['branch', '--list', 'empty-b'])).to.equal('');
+    expect(fixture.git(['rev-parse', 'empty-a'])).to.equal(main);
+    expect(fixture.git(['rev-parse', 'frozen-side'])).to.equal(anchor);
+    expect(
+      fixture.git(['rev-parse', 'refs/branch-metadata/frozen-side'])
+    ).to.equal(metadata);
+    expect(fixture.ok(['info', 'frozen-side'])).to.include('Parent: empty-a');
+    expect(fixture.ok(['info', 'frozen-side'])).to.include('(frozen)');
+    expect(fixture.git(['show', 'frozen-side:frozen-side.txt'])).to.equal(
+      'frozen-side'
+    );
+    expect(fixture.refs().split('\n')).to.deep.equal(refs);
+  });
 });

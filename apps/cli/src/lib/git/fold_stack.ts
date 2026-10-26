@@ -5,11 +5,11 @@ import { withFrozenCommitGuard } from './frozen_commit';
 export function publishFoldStackRefs(
   chain: readonly { readonly name: string; readonly revision: string }[],
   survivor: string,
-  tip: string
+  opts: { readonly tip: string; readonly participants: readonly string[] }
 ): void {
   const commands = chain.map(({ name, revision }) =>
     name === survivor
-      ? `update refs/heads/${name}\0${tip}\0${revision}\0`
+      ? `update refs/heads/${name}\0${opts.tip}\0${revision}\0`
       : `delete refs/heads/${name}\0${revision}\0`
   );
   withFrozenCommitGuard(
@@ -22,6 +22,6 @@ export function publishFoldStackRefs(
         resource: 'foldStackRefs',
       });
     },
-    { participants: chain.map(({ name }) => name), allRefs: true }
+    { participants: opts.participants, allRefs: true }
   );
 }
