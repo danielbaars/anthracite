@@ -98,7 +98,7 @@ function executeCleanupGroup(
     }
     for (const branch of [...opts.group].reverse()) {
       check();
-      context.engine.deleteBranch(branch, check);
+      context.engine.deleteBranch(branch, check, opts.plan.mandatory);
       context.splog.info(`Deleted branch ${chalk.red(branch)}`);
     }
   } catch (error) {

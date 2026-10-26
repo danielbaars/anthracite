@@ -652,6 +652,52 @@ fi
         fixture.git('cat-file', '-p', `refs/branch-metadata/${branch}`)
       ).to.include('"parentBranchName": "candidate"');
   });
+  it('blocks physical cleanup deletion after its prepared ref hook freezes a mandatory survivor', () => {
+    fixture.branch('candidate', 'main');
+    closed('candidate');
+    fixture.branch('survivor', 'candidate');
+    fixture.succeed('freeze', 'candidate');
+    fixture.succeed('checkout', 'main');
+    const heads = ['candidate', 'survivor'].map((branch) =>
+      fixture.git('rev-parse', branch)
+    );
+    const before = fixture.observe();
+    const hook = path.join(fixture.repo, '.git', 'hooks', 'reference-transaction');
+    const freeze = getTestCliCommand(['freeze', 'survivor', '--no-interactive']);
+    fs.writeFileSync(
+      hook,
+      `#!/bin/sh
+input=$(cat)
+if [ "$1" = prepared ]; then
+ case "$input" in *" 0000000000000000000000000000000000000000 refs/heads/candidate"*) ${freeze
+        .map((value) => "'" + value.replace(/'/g, "'\\''") + "'")
+        .join(' ')} ;; esac
+fi
+`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['sync', '--no-pull', '--force', '--no-interactive']);
+    expect(result.status, result.stdout + result.stderr).to.equal(1);
+    expect(result.stderr)
+      .to.include('frozen branch survivor')
+      .and.to.include('Completed cleanup changes are retained');
+    expect(fixture.git('branch', '--list', 'candidate')).to.include('candidate');
+    expect(['candidate', 'survivor'].map((branch) => fixture.git('rev-parse', branch)))
+      .to.deep.equal(heads);
+    const after = fixture.observe();
+    expect(after.index).to.equal(before.index);
+    expect(after.files).to.deep.equal(before.files);
+    expect(after.remote).to.equal(before.remote);
+    expect(after.recovery).to.deep.equal(before.recovery);
+    expect(fixture.succeed('info', 'survivor')).to.include('Parent: main');
+    expect(fixture.succeed('info', 'survivor')).to.include('(frozen)');
+    expect(fixture.succeed('info', 'candidate')).to.include('(frozen)');
+    fs.unlinkSync(hook);
+    fixture.succeed('unfreeze', 'survivor');
+    fixture.succeed('sync', '--no-pull', '--force');
+    expect(fixture.git('branch', '--list', 'candidate')).to.equal('');
+    expect(fixture.git('show', 'survivor:survivor.txt')).to.equal('survivor');
+  });
   it('keeps a real eligible warm cache and raw index unchanged during an explained protected cleanup skip', () => {
     fixture.branch('candidate', 'main');
     closed('candidate');

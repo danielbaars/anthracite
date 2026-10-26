@@ -360,6 +360,47 @@ describe('frozen structural participants through the public CLI', function () {
     expect(fixture.ok(['info', 'child'])).to.include('Parent: base');
   });
 
+  for (const onto of [false, true])
+    it(`refreshes initially empty insertion replay participants after checkout hooks stage work with onto=${onto}`, () => {
+      fixture.ok(['freeze', 'tip']);
+      if (onto) fixture.git(['switch', 'other']);
+      const base = fixture.git(['rev-parse', 'base']);
+      const heads = ['child', 'tip', 'other'].map((branch) =>
+        fixture.git(['rev-parse', branch])
+      );
+      const savedIndex = path.join(fixture.root, 'hook-index');
+      const hook = path.join(fixture.repo, '.git', 'hooks', 'post-checkout');
+      fs.writeFileSync(
+        hook,
+        `#!/bin/sh
+printf 'staged checkout work' > hook-selected.txt
+git add hook-selected.txt
+cp .git/index '${savedIndex}'
+`,
+        { mode: 0o755 }
+      );
+      const result = fixture.run([
+        'create', 'inserted', '--insert', '-m', 'hook selected commit',
+        ...(onto ? ['--onto', 'base'] : []),
+      ]);
+      expect(result.status, result.stdout + result.stderr).to.equal(1);
+      expect(result.stderr).to.include('ch unfreeze tip');
+      expect(fixture.git(['rev-parse', 'inserted'])).to.equal(base);
+      expect(fixture.git(['branch', '--show-current'])).to.equal('inserted');
+      expect(['child', 'tip', 'other'].map((branch) =>
+        fixture.git(['rev-parse', branch])
+      )).to.deep.equal(heads);
+      expect(fs.readFileSync(path.join(fixture.repo, '.git', 'index')))
+        .to.deep.equal(fs.readFileSync(savedIndex));
+      expect(fixture.git(['show', ':hook-selected.txt'])).to.equal('staged checkout work');
+      expect(fs.readFileSync(path.join(fixture.repo, 'hook-selected.txt'), 'utf8'))
+        .to.equal('staged checkout work');
+      expect(fixture.ok(['info', 'child'])).to.include('Parent: base');
+      expect(fixture.ok(['info', 'tip'])).to.include('Parent: child').and.include('(frozen)');
+      expect(fs.existsSync(path.join(fixture.repo, '.git', 'rebase-merge'))).to.equal(false);
+      expect(fs.existsSync(path.join(fixture.repo, '.git', '.gtcontinue'))).to.equal(false);
+    });
+
   it('checks existing insertion participants after the commit editor before publishing the new commit', () => {
     const base = fixture.git(['rev-parse', 'base']);
     const cli = getTestCliCommand(['freeze', 'child', '--no-interactive']);
