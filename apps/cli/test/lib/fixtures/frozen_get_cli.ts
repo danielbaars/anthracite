@@ -37,6 +37,7 @@ export class FrozenGetFixture {
     PATH: `${this.bin}${path.delimiter}${process.env.PATH}`,
   };
   readonly prs = path.join(this.root, 'prs.json');
+  readonly ghResponses = path.join(this.root, 'gh-responses.jsonl');
   readonly identities = path.join(this.root, 'identities.json');
   readonly ghCalls = path.join(this.root, 'gh-calls.jsonl');
   cwd = this.consumer;
@@ -53,38 +54,45 @@ export class FrozenGetFixture {
     fs.writeJsonSync(this.prs, { parent: 'main', child: 'parent' });
     fs.writeJsonSync(this.details, {});
     fs.writeFileSync(this.ghCalls, '');
+    fs.writeFileSync(this.ghResponses, '');
     fs.writeFileSync(
       path.join(this.bin, 'gh'),
       `#!${process.execPath}\nconst args = process.argv.slice(2);
 require('fs').appendFileSync(${JSON.stringify(
         this.ghCalls
       )}, JSON.stringify(args) + '\\n');
+function respond(stdout, exit = 0, stderr = '') {
+  require('fs').appendFileSync(${JSON.stringify(
+    this.ghResponses
+  )}, JSON.stringify({args, stdout, stderr, exit}) + '\\n');
+  process.stdout.write(stdout); process.stderr.write(stderr); process.exit(exit);
+}
 const identity = require('fs').existsSync(${JSON.stringify(
         this.identities
       )}) ? JSON.parse(require('fs').readFileSync(${JSON.stringify(
         this.identities
       )}, 'utf8')) : {};
 if (args[0] === 'api' && args[1] === 'user') {
-  if (identity.accountError) process.exit(7);
-  console.log(identity.accountRaw === undefined ? JSON.stringify(identity.account || {}) : identity.accountRaw); process.exit(0);
+  if (identity.accountError) respond('', 7);
+  respond((identity.accountRaw === undefined ? JSON.stringify(identity.account || {}) : identity.accountRaw) + '\\n');
 }
-if (args[0] !== 'pr' || args[1] !== 'view' || args[4] !== 'get-fixture/repo' || args[5] !== '--json') process.exit(2);
+if (args[0] !== 'pr' || args[1] !== 'view' || args[4] !== 'get-fixture/repo' || args[5] !== '--json') respond('', 2);
 const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : args[2];
 const base = require('fs').readFileSync(${JSON.stringify(this.prs)}, 'utf8');
 const parents = JSON.parse(base);
 const parent = parents[head];
-if (!parent) { console.error('no pull requests found'); process.exit(3); }
+if (!parent) respond('', 3, 'no pull requests found\\n');
 const details = JSON.parse(require('fs').readFileSync(${JSON.stringify(
         this.details
       )}, 'utf8'));
 const response = { headRefName: head, baseRefName: parent, number: head === 'parent' ? 1 : 2, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : 2), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
 if (args[6] === 'author') {
-  if (identity.authorError) process.exit(8);
-  console.log(identity.authorRaw === undefined ? JSON.stringify({author: (identity.authors || {})[head]}) : identity.authorRaw); process.exit(0);
+  if (identity.authorError) respond('', 8);
+  respond((identity.authorRaw === undefined ? JSON.stringify({author: (identity.authors || {})[head]}) : identity.authorRaw) + '\\n');
 }
 const selected = {};
-for (const field of args[6].split(',')) { if (!(field in response)) process.exit(2); selected[field] = response[field]; }
-console.log(JSON.stringify(selected));\n`,
+for (const field of args[6].split(',')) { if (!(field in response)) respond('', 2); selected[field] = response[field]; }
+respond(JSON.stringify(selected) + '\\n');\n`,
       { mode: 0o755 }
     );
     fs.writeJsonSync(path.join(this.root, 'user.json'), {});
@@ -212,6 +220,28 @@ console.log(JSON.stringify(selected));\n`,
           path.join(evidence, 'frozen-get-pty-observations.jsonl'),
           JSON.stringify({
             command,
+            cwd,
+            timeoutMs: 20000,
+            explicitEnvironment: Object.fromEntries(
+              [
+                'HOME',
+                'GH_CONFIG_DIR',
+                'PATH',
+                'GRAPHITE_USER_CONFIG_PATH',
+                'GRAPHITE_INTERACTIVE',
+                'GIT_CONFIG_GLOBAL',
+                'GIT_CONFIG_NOSYSTEM',
+                'GIT_EDITOR',
+                'GIT_CONFIG_PARAMETERS',
+                'TERM',
+                'NO_COLOR',
+              ].map((key) => [key, this.env[key] ?? null])
+            ),
+            ghCalls: fs.readFileSync(this.ghCalls, 'utf8'),
+            ghResponses: fs.readFileSync(this.ghResponses, 'utf8'),
+            controlledIdentities: fs.existsSync(this.identities)
+              ? fs.readFileSync(this.identities, 'utf8')
+              : null,
             before,
             after: this.observe(),
             ...result,
@@ -238,6 +268,7 @@ console.log(JSON.stringify(selected));\n`,
         JSON.stringify({
           command,
           cwd,
+          timeoutMs: 15000,
           explicitEnvironment: Object.fromEntries(
             [
               'HOME',
@@ -265,6 +296,7 @@ console.log(JSON.stringify(selected));\n`,
             'refs/remotes'
           ),
           ghCalls: fs.readFileSync(this.ghCalls, 'utf8'),
+          ghResponses: fs.readFileSync(this.ghResponses, 'utf8'),
           controlledIdentities: fs.existsSync(this.identities)
             ? fs.readFileSync(this.identities, 'utf8')
             : null,

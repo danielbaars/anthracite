@@ -46,7 +46,7 @@ Status persists across processes and linked worktrees. Setting it does not check
 
 `ch info`/`ch i`, default `ch log`/`ch l`, and `ch log short`/`ch ls` show `(frozen)`. Classic and Git-based long logs retain their existing format. Ordinary modify/m commits and amends reject a frozen branch before staging, patch selection, hooks or editors. A scoped commit guard checks the current status again before Git publishes the commit ref, after existing hooks/editors have run; their file/index effects remain if publication is refused. Unfreeze explicitly before editing the protected branch.
 
-This candidate slice covers manual status, inspection and modify's basic guard. The remaining stack, lifecycle, get/sync and submit integration is tracked separately in [the freeze/unfreeze implementation](https://github.com/danielbaars/dinky-misc/issues/111). Freeze is not deletion protection or an operating-system lock: direct Git/raw Git and internal debug metadata operations are outside the protection contract. Existing administrative semantics are not replaced by a global read-only repository.
+This candidate slice covers manual status, inspection and modify's basic guard. The remaining stack, lifecycle, sync and submit integration is tracked separately in [the freeze/unfreeze implementation](https://github.com/danielbaars/dinky-misc/issues/111). Freeze is not deletion protection or an operating-system lock: direct Git/raw Git and internal debug metadata operations are outside the protection contract. Existing administrative semantics are not replaced by a global read-only repository.
 
 ## Create & modify
 
