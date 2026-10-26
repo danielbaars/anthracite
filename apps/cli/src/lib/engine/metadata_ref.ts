@@ -37,8 +37,10 @@ export type TMeta = t.TypeOf<typeof metaSchema>;
 export function writeMetadataRef(
   branchName: string,
   meta: TMeta,
-  cwd?: string
+  location?: string | { readonly prefix: readonly string[] }
 ): void {
+  const cwd = typeof location === 'string' ? location : undefined;
+  const prefix = typeof location === 'object' ? location.prefix : [];
   const metaSha = runGitCommand({
     args: [`hash-object`, `-w`, `--stdin`],
     options: {
@@ -49,7 +51,12 @@ export function writeMetadataRef(
     resource: 'hashMetadataRef',
   });
   runGitCommand({
-    args: [`update-ref`, `refs/branch-metadata/${branchName}`, metaSha],
+    args: [
+      ...prefix,
+      `update-ref`,
+      `refs/branch-metadata/${branchName}`,
+      metaSha,
+    ],
     options: {
       stdio: 'pipe',
       cwd,

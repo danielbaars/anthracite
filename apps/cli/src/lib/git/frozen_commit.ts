@@ -13,6 +13,7 @@ export function withFrozenCommitGuard(
     readonly sequenceEditor?: boolean;
     readonly allRefs?: boolean;
     readonly preRebase?: boolean;
+    readonly participants?: readonly string[];
   } = {}
 ): void {
   const hooks = runGitCommand({
@@ -61,6 +62,7 @@ export function withFrozenCommitGuard(
       branch,
       path.join(proxy, 'absent'),
       'before-mutation',
+      ...(opts.participants ?? []).map((name) => `--participant=${name}`),
     ]
       .map(quote)
       .join(' ');
@@ -103,6 +105,7 @@ exec ${[
         branch,
         originalReferenceHook,
         ...(opts.allRefs ? ['--all-refs'] : []),
+        ...(opts.participants ?? []).map((name) => `--participant=${name}`),
       ]
         .map(quote)
         .join(' ')} "$@"\n`,

@@ -64,8 +64,7 @@ export function restackBranches(
   const skipFrozen = !(
     context.continueConfig.data.move ||
     context.continueConfig.data.fold ||
-    context.continueConfig.data.reorder ||
-    context.continueConfig.data.delete
+    context.continueConfig.data.reorder
   );
   assertDeleteRecoveryEditable(context.continueConfig.data.delete);
   try {
@@ -81,6 +80,7 @@ export function restackBranches(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')
   );
   while (branchNames.length > 0) {
+    assertDeleteRecoveryEditable(context.continueConfig.data.delete);
     const branchName = branchNames.shift();
     if (!branchName) continue;
 
@@ -112,7 +112,10 @@ export function restackBranches(
           context
         );
       }
-      const result = context.engine.restackBranch(branchName);
+      const result = context.engine.restackBranch(
+        branchName,
+        context.continueConfig.data.delete?.mandatory
+      );
       context.splog.debug(`${result}: ${branchName}`);
       switch (result.result) {
         case 'REBASE_DONE':

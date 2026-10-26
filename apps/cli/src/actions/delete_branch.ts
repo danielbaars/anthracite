@@ -32,19 +32,28 @@ export function assertDeleteAllowed(
   assertBranchesAvailableInWorktrees([args.branchName, ...plan.replay]);
 }
 
-function getDeleteSurvivors(
+export function getDeleteSurvivors(
   branchName: string,
-  context: TContext
+  context: TContext,
+  deleting: readonly string[] = [branchName]
 ): { mandatory: string[]; replay: string[] } {
-  const parent = context.engine.getParentPrecondition(branchName);
-  const children = context.engine.getChildren(branchName);
-  const descendants = context.engine.getRelativeStack(
-    branchName,
-    SCOPE.UPSTACK_EXCLUSIVE
+  const upstack = context.engine.getRelativeStack(branchName, SCOPE.UPSTACK);
+  const removed = new Set(
+    deleting.filter((branch) => upstack.includes(branch))
   );
-  const parents = new Map(children.map((child) => [child, parent]));
+  const descendants = upstack.filter(
+    (branch) => branch !== branchName && !removed.has(branch)
+  );
+  const parents = new Map<string, string>();
+  for (const branch of descendants) {
+    const parent = context.engine.getParentPrecondition(branch);
+    let survivor = parent;
+    while (removed.has(survivor))
+      survivor = context.engine.getParentPrecondition(survivor);
+    if (parent !== survivor) parents.set(branch, survivor);
+  }
   const replay = getBranchesToRestack(descendants, context, { parents });
-  return { mandatory: [...new Set([...children, ...replay])], replay };
+  return { mandatory: [...new Set([...parents.keys(), ...replay])], replay };
 }
 
 export function deleteBranchAction(args: TDeleteArgs, context: TContext): void {

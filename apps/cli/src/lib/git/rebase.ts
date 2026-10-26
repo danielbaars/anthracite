@@ -10,6 +10,7 @@ export function rebase(args: {
   from: string;
   branchName: string;
   restackCommitterDateIsAuthorDate?: boolean;
+  participants?: readonly string[];
 }): TRebaseResult {
   let result: TRebaseResult = 'REBASE_DONE';
   withFrozenCommitGuard(
@@ -29,12 +30,15 @@ export function rebase(args: {
         resource: 'rebase',
       });
     },
-    { preRebase: true }
+    { preRebase: true, participants: args.participants }
   );
   return result;
 }
 
-export function rebaseContinue(branchName?: string): TRebaseResult {
+export function rebaseContinue(
+  branchName?: string,
+  participants?: readonly string[]
+): TRebaseResult {
   const run = (prefix: readonly string[]): TRebaseResult =>
     rebaseInternal({
       args: ['--continue'],
@@ -46,9 +50,13 @@ export function rebaseContinue(branchName?: string): TRebaseResult {
     });
   if (!branchName) return run([]);
   let result: TRebaseResult = 'REBASE_DONE';
-  withFrozenCommitGuard(branchName, (prefix) => {
-    result = run(prefix);
-  });
+  withFrozenCommitGuard(
+    branchName,
+    (prefix) => {
+      result = run(prefix);
+    },
+    { participants }
+  );
   return result;
 }
 

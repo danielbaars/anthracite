@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { TContext } from '../../lib/context';
+import { clearContinuation } from '../persist_continuation';
 import { SCOPE } from '../../lib/engine/scope_spec';
 import { KilledError } from '../../lib/errors';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
@@ -18,6 +19,9 @@ export async function syncAction(
   context: TContext
 ): Promise<void> {
   uncommittedTrackedChangesPrecondition();
+  context.splog.info(
+    'Sync updates trunk and PR info; use ch get to refresh feature heads from remote.'
+  );
 
   if (opts.pull) {
     await pullTrunk(opts.force, context);
@@ -25,6 +29,7 @@ export async function syncAction(
   }
 
   const branchesToRestack: string[] = [];
+  let mandatory: string[] = [];
 
   await syncPrInfo(context.engine.allBranchNames, context);
 
@@ -33,7 +38,11 @@ export async function syncAction(
       `🧹 Checking if any branches have been merged/closed and can be deleted...`
     );
     const branchesWithNewParents = await cleanBranches(
-      { showDeleteProgress: opts.showDeleteProgress, force: opts.force },
+      {
+        showDeleteProgress: opts.showDeleteProgress,
+        force: opts.force,
+        restack: opts.restack,
+      },
       context
     );
     context.splog.tip(
@@ -55,7 +64,8 @@ export async function syncAction(
       return;
     }
 
-    branchesWithNewParents
+    mandatory = branchesWithNewParents.mandatory;
+    branchesWithNewParents.changed
       .flatMap((branchName) =>
         context.engine.getRelativeStack(branchName, SCOPE.UPSTACK)
       )
@@ -75,11 +85,11 @@ export async function syncAction(
   // we don't want to append to our existing branchesToRestack
   // because trunk's stack will include everything anyway.
   if (currentBranch && context.engine.isTrunk(currentBranch)) {
-    restackBranches(
-      context.engine.getRelativeStack(currentBranch, SCOPE.STACK),
-      context
+    branchesToRestack.splice(
+      0,
+      branchesToRestack.length,
+      ...context.engine.getRelativeStack(currentBranch, SCOPE.STACK)
     );
-    return;
   }
 
   if (
@@ -92,7 +102,15 @@ export async function syncAction(
       .forEach((branchName) => branchesToRestack.push(branchName));
   }
 
+  if (mandatory.length) {
+    context.continueConfig.update((data) => {
+      data.delete = { branch: 'Cleanup candidates', mandatory };
+      data.branchesToRestack = [...branchesToRestack];
+      data.branchesToSync = [];
+    });
+  }
   restackBranches(branchesToRestack, context);
+  if (mandatory.length) clearContinuation(context);
 }
 
 export async function pullTrunk(

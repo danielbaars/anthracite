@@ -12,7 +12,8 @@ export const builder = (cli: yargs.Argv): yargs.Argv =>
     .positional('branch', { type: 'string', demandOption: true })
     .positional('originalHook', { type: 'string', demandOption: true })
     .positional('phase', { type: 'string', demandOption: true })
-    .option('all-refs', { type: 'boolean', default: false });
+    .option('all-refs', { type: 'boolean', default: false })
+    .option('participant', { type: 'string', array: true, nargs: 1 });
 
 // This subprocess intentionally avoids context initialization, locks and repair.
 export const handler = (
@@ -21,6 +22,7 @@ export const handler = (
     readonly originalHook: string;
     readonly phase: string;
     readonly 'all-refs': boolean;
+    readonly participant?: string[];
   }>
 ): void => {
   const input = fs.readFileSync(0);
@@ -54,7 +56,8 @@ export const handler = (
   if (!changesBranch && !args['all-refs'] && args.phase !== 'before-mutation')
     return;
   try {
-    assertBranchEditable(args.branch);
+    for (const branch of [args.branch, ...(args.participant ?? [])])
+      assertBranchEditable(branch);
   } catch (error: unknown) {
     process.stderr.write(
       `ERROR: ${error instanceof Error ? error.message : String(error)}\n`

@@ -68,7 +68,10 @@ export async function continueAction(
         context
       );
     }
-    cont = context.engine.continueRebase(rebasedBranchBase);
+    cont = context.engine.continueRebase(
+      rebasedBranchBase,
+      context.continueConfig.data.delete?.mandatory
+    );
   } catch (error) {
     if (
       error instanceof RebaseCheckoutError ||

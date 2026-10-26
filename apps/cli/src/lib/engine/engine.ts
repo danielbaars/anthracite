@@ -1,3 +1,4 @@
+import { withFrozenCommitGuard } from '../git/frozen_commit';
 import chalk from 'chalk';
 import {
   DetachedError,
@@ -91,7 +92,11 @@ export type TEngine = {
   getChildren: (branchName: string) => string[];
   getChildrenPrecondition: (branchName: string) => string[];
 
-  setParent: (branchName: string, parentBranchName: string) => void;
+  setParent: (
+    branchName: string,
+    parentBranchName: string,
+    participants?: readonly string[]
+  ) => void;
   getParent: (branchName: string) => string | undefined;
   getParentPrecondition: (branchName: string) => string;
 
@@ -124,7 +129,10 @@ export type TEngine = {
   }) => void;
   forceCheckoutBranch: (branchToSplit: string) => void;
 
-  restackBranch: (branchName: string) =>
+  restackBranch: (
+    branchName: string,
+    participants?: readonly string[]
+  ) =>
     | {
         result: 'REBASE_CONFLICT';
         rebasedBranchBase: string;
@@ -137,7 +145,10 @@ export type TEngine = {
         rebasedBranchBase: string;
       }
     | { result: 'REBASE_DONE' };
-  continueRebase: (parentBranchRevision: string) =>
+  continueRebase: (
+    parentBranchRevision: string,
+    participants?: readonly string[]
+  ) =>
     | {
         result: 'REBASE_DONE';
         branchName: string;
@@ -321,7 +332,11 @@ export function composeEngine({
     }
   };
 
-  const setParent = (branchName: string, parentBranchName: string) => {
+  const setParent = (
+    branchName: string,
+    parentBranchName: string,
+    participants?: readonly string[]
+  ): void => {
     validateNewParent(branchName, parentBranchName);
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
@@ -331,7 +346,17 @@ export function composeEngine({
     }
 
     assertBranchIsValidOrTrunkAndGetMeta(parentBranchName);
-    updateMeta(branchName, { ...cachedMeta, parentBranchName });
+    if (participants) {
+      withFrozenCommitGuard(
+        branchName,
+        (prefix) => {
+          updateMeta(branchName, { ...cachedMeta, parentBranchName }, prefix);
+        },
+        { allRefs: true, participants }
+      );
+    } else {
+      updateMeta(branchName, { ...cachedMeta, parentBranchName });
+    }
   };
 
   const getParent = (branchName: string) => {
@@ -368,7 +393,8 @@ export function composeEngine({
   // Revalidates 'INVALID_PARENT' children
   const updateMeta = (
     branchName: string,
-    newCachedMeta: TValidCachedMetaExceptTrunk
+    newCachedMeta: TValidCachedMetaExceptTrunk,
+    prefix?: readonly string[]
   ) => {
     // Ordinary writers must retain status published by a hook or another process.
     newCachedMeta = {
@@ -402,12 +428,16 @@ export function composeEngine({
       cache.branches[newParentBranchName].children.push(branchName);
     }
 
-    writeMetadataRef(branchName, {
-      parentBranchName: newCachedMeta.parentBranchName,
-      parentBranchRevision: newCachedMeta.parentBranchRevision,
-      prInfo: newCachedMeta.prInfo,
-      frozen: newCachedMeta.frozen,
-    });
+    writeMetadataRef(
+      branchName,
+      {
+        parentBranchName: newCachedMeta.parentBranchName,
+        parentBranchRevision: newCachedMeta.parentBranchRevision,
+        prInfo: newCachedMeta.prInfo,
+        frozen: newCachedMeta.frozen,
+      },
+      prefix ? { prefix } : undefined
+    );
 
     splog.debug(
       `Updated cached meta for branch ${branchName}:\n${cuteString(
@@ -1074,7 +1104,7 @@ export function composeEngine({
     forceCheckoutBranch: (branchToSplit: string) => {
       git.switchBranch(branchToSplit, { force: true });
     },
-    restackBranch: (branchName: string) => {
+    restackBranch: (branchName: string, participants?: readonly string[]) => {
       const cachedMeta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
       if (isBranchFixed(branchName)) {
         return { result: 'REBASE_UNNEEDED' };
@@ -1091,6 +1121,7 @@ export function composeEngine({
           onto: newBase,
           from: cachedMeta.parentBranchRevision,
           restackCommitterDateIsAuthorDate,
+          participants,
         }) === 'REBASE_CONFLICT'
       ) {
         return {
@@ -1121,10 +1152,13 @@ export function composeEngine({
       handleSuccessfulRebase(branchName, cachedMeta.parentBranchRevision);
       return { result: 'REBASE_DONE' };
     },
-    continueRebase: (parentBranchRevision: string) => {
+    continueRebase: (
+      parentBranchRevision: string,
+      participants?: readonly string[]
+    ) => {
       const activeBranch = git.getRebaseHead();
       if (activeBranch) assertBranchEditable(activeBranch);
-      const result = git.rebaseContinue(activeBranch);
+      const result = git.rebaseContinue(activeBranch, participants);
       if (result === 'REBASE_CONFLICT') {
         if (activeBranch) assertBranchEditable(activeBranch);
         return { result };

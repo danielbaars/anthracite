@@ -1,158 +1,114 @@
 import { default as chalk } from 'chalk';
 import { TContext } from '../../lib/context';
-import { deleteBranchAction, isSafeToDelete } from '../delete_branch';
+import { getDeleteSurvivors, isSafeToDelete } from '../delete_branch';
+import { SCOPE } from '../../lib/engine/scope_spec';
+import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
+import { assertNoGitOperation } from '../../lib/git/assert_no_operation';
+import { ExitFailedError } from '../../lib/errors';
 
-/**
- * This method is assumed to be idempotent -- if a merge conflict interrupts
- * execution of this method, we simply restart the method upon running `ch
- * continue`.
- *
- * It returns a list of branches whose parents have changed so that we know
- * which branches to restack.
- */
-// eslint-disable-next-line max-lines-per-function
+/** Selection retains the existing DFS scope: only descend through candidates. */
 export async function cleanBranches(
-  opts: {
-    showDeleteProgress: boolean;
-    force: boolean;
-  },
+  opts: { showDeleteProgress: boolean; force: boolean; restack: boolean },
   context: TContext
-): Promise<string[]> {
-  /**
-   * To find and delete all of the merged/closed branches, we traverse all of
-   * the stacks off of trunk, greedily deleting the base branches and rebasing
-   * the remaining branches.
-   *
-   * To greedily delete the branches, we keep track of the branches we plan
-   * to delete as well as a live snapshot of their children. When a branch
-   * we plan to delete has no more children, we know that it is safe to
-   * eagerly delete.
-   *
-   * This eager deletion doesn't matter much in small repos, but matters
-   * a lot if a repo has a lot of branches to delete. Whereas previously
-   * any error in `repo sync` would throw away all of the work the command did
-   * to determine what could and couldn't be deleted, now we take advantage
-   * of that work as soon as we can.
-   */
-
-  const branchesToProcess = context.engine.getChildren(context.engine.trunk);
-  const branchesToDelete: Record<string, Set<string>> = {};
-  const branchesWithNewParents: string[] = [];
-
-  /**
-   * Since we're doing a DFS, assuming rather even distribution of stacks off
-   * of trunk children, we can trace the progress of the DFS through the trunk
-   * children to give the user a sense of how far the repo sync has progressed.
-   * Note that we only do this if the user has a large number of branches off
-   * of trunk (> 50).
-   */
-  const progressMarkers = opts.showDeleteProgress
-    ? getProgressMarkers(branchesToProcess)
-    : {};
-
-  while (branchesToProcess.length > 0) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const branchName = branchesToProcess.pop()!;
-
-    if (branchName in branchesToDelete) {
-      continue;
-    }
-
-    if (branchName in progressMarkers) {
+): Promise<{ changed: string[]; mandatory: string[] }> {
+  const queue = [...context.engine.getChildren(context.engine.trunk)];
+  const progress = opts.showDeleteProgress ? getProgressMarkers(queue) : {};
+  const selected: string[] = [];
+  while (queue.length) {
+    const branch = queue.pop();
+    if (!branch) continue;
+    if (branch in progress)
       context.splog.info(
-        `${progressMarkers[branchName]} done searching for merged/closed branches to delete...`
+        `${progress[branch]} done searching for merged/closed branches to delete...`
       );
+    if (
+      await shouldDeleteBranch(
+        { branchName: branch, force: opts.force },
+        context
+      )
+    ) {
+      selected.push(branch);
+      queue.push(...context.engine.getChildren(branch));
     }
+  }
 
-    context.splog.debug(`Checking if should delete ${branchName}...`);
-    const shouldDelete = await shouldDeleteBranch(
-      {
-        branchName: branchName,
-        force: opts.force,
-      },
+  // Plan before removing any candidate: filtering frozen replay tips here loses survivors.
+  const allowed = selected.filter((branch) => {
+    const plan = getDeleteSurvivors(branch, context, selected);
+    const frozen = plan.mandatory.filter(context.engine.isBranchFrozen);
+    if (frozen.length)
+      context.splog.info(
+        `Skipping cleanup of ${branch}: frozen mandatory survivors ${frozen.join(
+          ', '
+        )}. Unfreeze them before cleanup.`
+      );
+    return frozen.length === 0;
+  });
+  const result: { changed: string[]; mandatory: string[] } = {
+    changed: [],
+    mandatory: [],
+  };
+  for (const root of allowed.filter(
+    (branch) => !allowed.includes(context.engine.getParentPrecondition(branch))
+  )) {
+    const group = context.engine
+      .getRelativeStack(root, SCOPE.UPSTACK)
+      .filter((branch) => allowed.includes(branch));
+    const plan = getDeleteSurvivors(root, context, group);
+    const changed = executeCleanupGroup(
+      { group, plan, restack: opts.restack },
       context
     );
-    if (shouldDelete) {
-      const children = context.engine.getChildren(branchName);
-
-      // We concat children here (because we pop above) to make our search a DFS.
-      children.forEach((b) => branchesToProcess.push(b));
-
-      // Value in branchesToDelete is a list of children blocking deletion.
-      branchesToDelete[branchName] = new Set(children);
-      context.splog.debug(
-        `Marked ${branchName} for deletion. Blockers: ${children}`
-      );
-    } else {
-      // We know this branch isn't being deleted.
-      // If its parent IS being deleted, we have to change its parent.
-
-      // First, find the nearest ancestor that isn't being deleted.
-      const parentBranchName = context.engine.getParentPrecondition(branchName);
-      let newParentBranchName = parentBranchName;
-      while (newParentBranchName in branchesToDelete) {
-        newParentBranchName =
-          context.engine.getParentPrecondition(newParentBranchName);
-      }
-
-      // If the nearest ancestor is not already the parent, we make it so.
-      if (newParentBranchName !== parentBranchName) {
-        context.engine.setParent(branchName, newParentBranchName);
-        context.splog.info(
-          `Set parent of ${chalk.cyan(branchName)} to ${chalk.blueBright(
-            newParentBranchName
-          )}.`
-        );
-        branchesWithNewParents.push(branchName);
-
-        // This branch is no longer blocking its parent's deletion.
-        branchesToDelete[parentBranchName].delete(branchName);
-        context.splog.debug(
-          `Removed a blocker for ${parentBranchName}. Blockers: ${[
-            ...branchesToDelete[parentBranchName].entries(),
-          ]}`
-        );
-      }
-    }
-
-    greedilyDeleteUnblockedBranches(branchesToDelete, context);
+    result.changed.push(...changed);
+    result.mandatory.push(...plan.replay);
   }
-  return branchesWithNewParents;
+  return result;
 }
 
-// With either path in the above, we may have unblocked a branch that can
-// be deleted immediately. We repeatedly check for branches that can be
-// deleted, because the act of deleting one branch may free up another.
-function greedilyDeleteUnblockedBranches(
-  branchesToDelete: Record<string, Set<string>>,
+function executeCleanupGroup(
+  opts: {
+    group: string[];
+    plan: ReturnType<typeof getDeleteSurvivors>;
+    restack: boolean;
+  },
   context: TContext
-) {
-  const unblockedBranches = Object.keys(branchesToDelete).filter(
-    (branchToDelete) => branchesToDelete[branchToDelete].size === 0
-  );
-  context.splog.debug(`Unblocked branches: ${unblockedBranches}`);
-
-  while (unblockedBranches.length > 0) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const branchName = unblockedBranches.pop()!;
-    const parentBranchName = context.engine.getParentPrecondition(branchName);
-
-    deleteBranchAction({ branchName: branchName, force: true }, context);
-
-    // This branch is no longer blocking its parent's deletion.
-    // Remove it from the parents list of blockers and check if parent is
-    // now unblocked for deletion.
-    if (
-      branchesToDelete[parentBranchName]?.delete(branchName) &&
-      branchesToDelete[parentBranchName].size === 0
-    ) {
-      context.splog.debug(`${parentBranchName} is now unblocked.`);
-      unblockedBranches.push(parentBranchName);
+): string[] {
+  const check = (): void => {
+    for (const survivor of opts.plan.mandatory)
+      context.engine.assertBranchEditable(survivor);
+  };
+  check();
+  if (opts.restack && opts.plan.replay.length)
+    assertNoGitOperation('sync cleanup');
+  assertBranchesAvailableInWorktrees([...opts.group, ...opts.plan.replay]);
+  const changed: string[] = [];
+  try {
+    for (const branch of opts.plan.mandatory) {
+      const parent = context.engine.getParentPrecondition(branch);
+      let survivor = parent;
+      while (opts.group.includes(survivor))
+        survivor = context.engine.getParentPrecondition(survivor);
+      if (parent === survivor) continue;
+      check();
+      context.engine.setParent(branch, survivor, opts.plan.mandatory);
+      changed.push(branch);
+      context.splog.info(
+        `Set parent of ${chalk.cyan(branch)} to ${chalk.blueBright(survivor)}.`
+      );
     }
-
-    // Remove the branch from the list of branches to delete.
-    delete branchesToDelete[branchName];
+    for (const branch of [...opts.group].reverse()) {
+      check();
+      context.engine.deleteBranch(branch, check);
+      context.splog.info(`Deleted branch ${chalk.red(branch)}`);
+    }
+  } catch (error) {
+    if (error instanceof Error)
+      throw new ExitFailedError(
+        `${error.message}\nCompleted cleanup changes are retained; inspect parents and remaining branches before retrying sync.`
+      );
+    throw error;
   }
+  return changed;
 }
 
 function getProgressMarkers(trunkChildren: string[]): Record<string, string> {
