@@ -68,13 +68,13 @@ ch unfreeze                # make this branch and its upstack editable
 ch get teammate-branch     # new imports from other/unknown authors are frozen
 ch g 123 -U                # explicitly import new branches editable
 ch ss                      # push the stack and open/update PRs
-ch sync                    # pull trunk, prune merged branches, restack
+ch sync                    # sync trunk/PR info, safe cleanup and optional restack
 ch ls                      # view your stacks
 ch up / ch down            # move through the stack
 ch checkout                # interactively switch branches
 ```
 
-See **[DOCUMENTATION.md](./DOCUMENTATION.md)** for the command reference and **[COMPATIBILITY.md](./COMPATIBILITY.md)** for supported aliases, deliberate differences and deferred features. Source-candidate changes do not imply that an installed release already includes them.
+See **[DOCUMENTATION.md](./DOCUMENTATION.md)** for the command reference and **[COMPATIBILITY.md](./COMPATIBILITY.md)** for supported aliases, deliberate differences and deferred features. Frozen branches block managed content/structural edits and publication while remaining usable as anchors for editable children. Administration and direct/raw Git have explicit boundaries in the compatibility document. Source-candidate changes do not imply that an installed release already includes them.
 
 > [!NOTE]
 > Graphite's own docs (<https://graphite.dev/docs/graphite-cli/>) have diverged

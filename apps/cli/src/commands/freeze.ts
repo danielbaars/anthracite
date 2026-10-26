@@ -4,7 +4,7 @@ import { graphiteMetadata } from '../lib/runner';
 
 export const command = 'freeze [branch]';
 export const description =
-  'Freeze a tracked branch and its downstack before trunk. Defaults to the current branch. Local edits are blocked; rename/untrack and permitted delete remain administrative operations. Direct Git is outside this protection.';
+  'Freeze a tracked branch and its downstack before trunk. Defaults to the current branch. Local edits are blocked; an editable child may still be created. Restack and submit skip frozen branches. Rename/untrack and permitted delete remain administrative operations. Direct Git and raw Git are outside this protection.';
 export const builder = (cli: yargs.Argv): yargs.Argv =>
   cli
     .parserConfiguration({ 'parse-positional-numbers': false })

@@ -240,7 +240,11 @@ describe('modern completion through the public CLI', function () {
       expect(smoke.status, smoke.stdout + smoke.stderr).to.equal(0);
       expect(smoke.stdout.split('\n').map((line) => line.split(':')[0]))
         .to.include('ss')
-        .and.include('co');
+        .and.include('co')
+        .and.include('freeze')
+        .and.include('unfreeze');
+      expect(smoke.stdout).not.to.include('internal-commit-guard');
+      expect(smoke.stdout).not.to.include('internal-push-guard');
     }
     const fish = fixture.run(
       ['fish', '--quiet', '--no-interactive'],

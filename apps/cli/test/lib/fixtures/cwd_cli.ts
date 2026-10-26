@@ -53,8 +53,6 @@ export class CwdCliFixture extends RelationCliFixture {
       timeout: 20000,
       input,
     });
-    if (result.error) throw result.error;
-    if (result.signal) throw new Error(`CLI killed by ${result.signal}`);
     if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
       fs.appendFileSync(
         path.join(this.root, 'cli.jsonl'),
@@ -62,7 +60,10 @@ export class CwdCliFixture extends RelationCliFixture {
           executable,
           args: cliArgs,
           cwd,
+          timeoutMs: 20000,
           status: result.status,
+          signal: result.signal,
+          error: result.error?.message,
           stdinBase64:
             input === undefined ? null : Buffer.from(input).toString('base64'),
           stdoutBase64: result.stdout.toString('base64'),
@@ -89,6 +90,8 @@ export class CwdCliFixture extends RelationCliFixture {
           ),
         }) + '\n'
       );
+    if (result.error) throw result.error;
+    if (result.signal) throw new Error(`CLI killed by ${result.signal}`);
     return {
       ...result,
       output: result.output.map((output) => output?.toString('utf8') ?? ''),
