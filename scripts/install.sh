@@ -34,6 +34,8 @@ trap 'rm -rf "$stage"' EXIT HUP INT TERM
 fetch() {
   if [ -n "${ANTHRACITE_RELEASE_DIR:-}" ]; then
     cp "$ANTHRACITE_RELEASE_DIR/$1" "$stage/$1"
+  elif command -v gh >/dev/null 2>&1; then
+    gh release download "v$version" --repo danielbaars/anthracite --pattern "$1" --dir "$stage"
   else
     curl -fLsS "https://github.com/danielbaars/anthracite/releases/download/v$version/$1" -o "$stage/$1"
   fi

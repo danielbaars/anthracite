@@ -8,11 +8,12 @@ Anthracite builds on [Charcoal](https://github.com/danerwilliams/charcoal) and t
 
 Standalone binaries for macOS ARM64, macOS x64 and Linux x64 are available from [GitHub Releases](https://github.com/danielbaars/anthracite/releases). Node.js and Bun are not required to run a binary. Git is required; GitHub workflows also require an installed, authenticated [GitHub CLI](https://cli.github.com/).
 
-Download and inspect the versioned installer, then run it:
+The repository is currently private. Authenticate with `gh auth login`, then clone it and run the installer:
 
 ```sh
-curl -fsSLO https://raw.githubusercontent.com/danielbaars/anthracite/v0.1.1/scripts/install.sh
-sh install.sh 0.1.1
+gh repo clone danielbaars/anthracite
+cd anthracite
+sh scripts/install.sh 0.1.1
 ```
 
 The installer checks the release SHA-256 checksum and binary version, installs under `~/.local/share/anthracite/0.1.1`, and creates `~/.local/bin/an` and `~/.local/bin/anthracite`. It refuses to replace unrelated commands. It installs zsh completion for both names and preserves the previous shell configuration. Add `~/.local/bin` to your PATH if needed and open a new terminal.

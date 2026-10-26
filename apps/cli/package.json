@@ -32,11 +32,11 @@
     "build-binary": "bun build --compile ./dist/src/index.js",
     "dev": "./scripts/installation/develop.sh",
     "cli": "node ./dist/src/index.js",
-    "test": "tsc && mocha \"dist/test/**/*.test.js\" --ignore dist/test/large_repo.test.js --parallel --jobs 2",
-    "test-ci": "tsc && mocha \"dist/test/**/*.test.js\" --ignore dist/test/large_repo.test.js --parallel --jobs 2",
+    "test": "tsc && node ../../scripts/test-cli.cjs node",
+    "test-ci": "tsc && node ../../scripts/test-cli.cjs node",
     "test-one": "tsc && yarn mocha",
     "test-grep": "tsc && yarn mocha \"dist/test/**/*.test.js\" -g",
-    "test-native": "mocha \"dist/test/commands/**/*.test.js\" --parallel --jobs 2",
+    "test-native": "node ../../scripts/test-cli.cjs native",
     "test-large-repos": "tsc && mocha dist/test/large_repo.test.js"
   },
   "nyc": {

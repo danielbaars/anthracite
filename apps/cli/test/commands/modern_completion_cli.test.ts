@@ -237,7 +237,10 @@ describe('modern completion through the public CLI', function () {
             stderrBase64: Buffer.from(smoke.stderr ?? '').toString('base64'),
           }) + '\n'
         );
-      expect(smoke.status, smoke.stdout + smoke.stderr).to.equal(0);
+      expect(
+        smoke.status,
+        smoke.error?.message ?? smoke.stdout + smoke.stderr
+      ).to.equal(0);
       expect(smoke.stdout.split('\n').map((line) => line.split(':')[0]))
         .to.include('ss')
         .and.include('co')

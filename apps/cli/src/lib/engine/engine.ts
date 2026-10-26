@@ -902,18 +902,18 @@ export function composeEngine({
           published && offChain.length > 0 && trackingComplete
             ? ` Off-chain replay has not started. After preserving blocking local work and resolving the Git/hook error, run these surviving branches in order (resolve and an continue any new conflict before the next command):\n${offChain
                 .map(({ name }) => `an restack --branch ${quote(name)} --only`)
-                .join('\n')}\nch checkout ${quote(survivor)}`
+                .join('\n')}\nan checkout ${quote(survivor)}`
             : published && offChain.length > 0
-            ? ` Off-chain replay has not started. After moving blocking local work aside and resolving the Git/hook error, repair the survivor tracking first, then replay these frozen own ranges in order. Resolve and stage any conflict and use git rebase --continue before the next command:\nch track ${quote(
+            ? ` Off-chain replay has not started. After moving blocking local work aside and resolving the Git/hook error, repair the survivor tracking first, then replay these frozen own ranges in order. Resolve and stage any conflict and use git rebase --continue before the next command:\nan track ${quote(
                 survivor
               )} --parent ${quote(bottom.parentBranchName)}\n${offChain
                 .map(
                   ({ name, from, parent }) =>
                     `git rebase --onto ${quote(parent)} ${quote(from)} ${quote(
                       name
-                    )}\nch track ${quote(name)} --parent ${quote(parent)}`
+                    )}\nan track ${quote(name)} --parent ${quote(parent)}`
                 )
-                .join('\n')}\nch checkout ${quote(survivor)}`
+                .join('\n')}\nan checkout ${quote(survivor)}`
             : '';
         throw new PreconditionsFailedError(
           `Stack fold failed. ${progress} Current checkout: ${

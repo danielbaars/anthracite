@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { CreateCliFixture } from '../lib/fixtures/create_cli';
+import { unicodeObstructionPath } from '../lib/utils/unicode_path';
 import { expectParent } from '../lib/utils/expect_parent';
 
 function quote(value: string): string {
@@ -293,7 +294,8 @@ for (const keep of [false, true]) {
       });
     }
 
-    it('distinguishes a completed fresh-continue rewrite from its failed Unicode-alias return', () => {
+    it('distinguishes a completed fresh-continue rewrite from its failed Unicode-path return', () => {
+      const unicodePath = unicodeObstructionPath(fixture.root);
       fixture.git(['switch', 'base']);
       fixture.stage('café.txt', 'selected Unicode content');
       fixture.git(['commit', '-m', 'selected Unicode path']);
@@ -318,7 +320,7 @@ for (const keep of [false, true]) {
       const blocker = hook(
         fixture,
         'post-rewrite',
-        `printf '\\000\\377\\200\\013' > ${quote('cafe\u0301.txt')}`
+        `printf '\\000\\377\\200\\013' > ${quote(unicodePath)}`
       );
       const result = fixture.run(['continue']);
       const output = result.stdout + result.stderr;
@@ -340,7 +342,7 @@ for (const keep of [false, true]) {
       expectLinked(fixture, linked);
       const bytes = Buffer.from([0, 255, 128, 11]);
       expect(
-        fs.readFileSync(path.join(fixture.repo, 'cafe\u0301.txt'))
+        fs.readFileSync(path.join(fixture.repo, unicodePath))
       ).to.deep.equal(bytes);
       const completed = fixture.git(['rev-parse', "b'root"]);
       const before = fixture.snapshot();
@@ -349,7 +351,7 @@ for (const keep of [false, true]) {
       expect(fixture.snapshot()).to.deep.equal(before);
       expect(index(fixture)).to.deep.equal(stagedIndex);
       const saved = path.join(fixture.root, 'saved-private');
-      fs.renameSync(path.join(fixture.repo, 'cafe\u0301.txt'), saved);
+      fs.renameSync(path.join(fixture.repo, unicodePath), saved);
       fs.unlinkSync(blocker);
       executeRecovery(fixture, output, [`an checkout '${survivor}'`]);
       expect(fixture.git(['branch', '--show-current'])).to.equal(survivor);

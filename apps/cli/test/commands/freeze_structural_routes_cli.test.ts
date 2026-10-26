@@ -270,7 +270,7 @@ describe('frozen structural route coverage through the public CLI', function () 
       {
         cwd: fixture.repo,
         env: fixture.env,
-        responses: [{ prompt: 'Choose a new base', input: '\u001b[A\r' }],
+        responses: [{ prompt: 'Choose a new base', input: 'other\r' }],
       }
     );
     expect(result.status, result.output).to.equal(0);

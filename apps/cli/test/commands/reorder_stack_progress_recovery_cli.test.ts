@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { ReorderCliFixture } from '../lib/fixtures/reorder_cli';
+import { unicodeObstructionPath } from '../lib/utils/unicode_path';
 
 function change(
   fixture: ReorderCliFixture,
@@ -348,6 +349,7 @@ describe('stack reorder persistent progress and executable recovery', function (
     it(`records a completed rewrite before its failed ${
       finalReplay ? 'final' : 'intermediate'
     } return checkout and offers only actual pending recovery`, () => {
+      const unicodePath = unicodeObstructionPath(fixture.root);
       if (finalReplay) fixture.ok(['delete', 'r-deep', '--force']);
       fixture.git(['switch', 'r-base']);
       fs.writeFileSync(
@@ -417,9 +419,7 @@ describe('stack reorder persistent progress and executable recovery', function (
       const hook = path.join(fixture.repo, '.git/hooks/post-rewrite');
       fs.writeFileSync(
         hook,
-        `#!/bin/sh\nprintf '\\000\\377\\200\\013' > ${quote(
-          'cafe\u0301.txt'
-        )}\n`,
+        `#!/bin/sh\nprintf '\\000\\377\\200\\013' > ${quote(unicodePath)}\n`,
         { mode: 0o755 }
       );
       const stopped = fixture.run(['continue']);
@@ -436,13 +436,13 @@ describe('stack reorder persistent progress and executable recovery', function (
       const completed = fixture.git(['rev-parse', "side'$(false)"]);
       const bytes = Buffer.from([0, 255, 128, 11]);
       expect(
-        fs.readFileSync(path.join(fixture.repo, 'cafe\u0301.txt'))
+        fs.readFileSync(path.join(fixture.repo, unicodePath))
       ).to.deep.equal(bytes);
       const saved = fixture.snapshot();
       expect(fixture.run(['continue']).status).not.to.equal(0);
       expect(fixture.snapshot()).to.deep.equal(saved);
       fs.renameSync(
-        path.join(fixture.repo, 'cafe\u0301.txt'),
+        path.join(fixture.repo, unicodePath),
         path.join(fixture.root, 'saved-local-bytes')
       );
       fs.unlinkSync(hook);

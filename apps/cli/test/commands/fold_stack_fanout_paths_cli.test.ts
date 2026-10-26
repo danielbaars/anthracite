@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import fs from 'fs';
 import path from 'path';
 import { CreateCliFixture } from '../lib/fixtures/create_cli';
+import { unicodeObstructionPath } from '../lib/utils/unicode_path';
 
 for (const keep of [false, true]) {
   // eslint-disable-next-line max-lines-per-function
@@ -82,7 +83,7 @@ for (const keep of [false, true]) {
           fixture.git(['config', 'core.ignorecase', 'true']);
           actual = 'case.txt';
         }
-        if (kind === 'unicode') actual = 'cafe\u0301.txt';
+        if (kind === 'unicode') actual = unicodeObstructionPath(fixture.root);
         if (kind === 'directory') {
           fs.mkdirSync(path.join(fixture.repo, name));
           actual = `${name}/private`;

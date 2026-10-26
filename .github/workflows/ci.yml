@@ -5,22 +5,31 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      focused:
+        description: Run the release compatibility regression files only
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
   tests:
-    name: CLI tests (${{ matrix.runtime }})
+    name: CLI tests (${{ matrix.runtime }}, shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
         runtime: [node, native]
+        shard: [0, 1, 2, 3]
     env:
       TERM: dumb
       NO_COLOR: '1'
+      TEST_SHARD: ${{ matrix.shard }}
+      TEST_SHARDS: '4'
+      TEST_FILTER: ${{ inputs.focused && 'fold_stack_fanout|fold_stack_late_recovery|reorder_stack_progress_recovery|freeze_lifecycle|freeze_structural_routes|modern_completion|move_only|move_rotation' || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -31,6 +40,8 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version: 1.3.14
+      - name: Install shell completion test prerequisite
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y zsh
       - name: Install exact dependencies
         run: node .yarn/releases/yarn-3.2.1.cjs install --immutable
       - name: Build and lint
@@ -53,10 +64,19 @@ jobs:
       - name: Test native CLI
         if: matrix.runtime == 'native'
         run: node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-native
+      - name: Preserve per-file test reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: test-results-${{ matrix.runtime }}-${{ matrix.shard }}
+          path: .test-results/${{ matrix.runtime }}/
+          include-hidden-files: true
+          if-no-files-found: warn
 
   release-assets:
     name: Build and verify release assets
     needs: tests
+    if: ${{ !inputs.focused }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

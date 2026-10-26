@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import fs from 'fs';
 import path from 'path';
 import { CreateCliFixture } from '../lib/fixtures/create_cli';
+import { unicodeObstructionPath } from '../lib/utils/unicode_path';
 
 for (const keep of [false, true]) {
   // eslint-disable-next-line max-lines-per-function
@@ -113,7 +114,8 @@ for (const keep of [false, true]) {
       ).to.equal('deep');
       expect(fs.readFileSync(saved)).to.deep.equal(bytes);
     });
-    it('distinguishes completed replay from blocked return and preserves late Unicode alias bytes', () => {
+    it('distinguishes completed replay from blocked return and preserves late Unicode obstruction bytes', () => {
+      const unicodePath = unicodeObstructionPath(fixture.root);
       fixture.git(['switch', 'base']);
       fixture.stage('café.txt', 'selected Unicode content');
       fixture.git(['commit', '-m', 'selected Unicode path']);
@@ -127,7 +129,7 @@ for (const keep of [false, true]) {
       const hook = path.join(fixture.repo, '.git/hooks/post-rewrite');
       fs.writeFileSync(
         hook,
-        '#!/bin/sh\nprintf private-Unicode-bytes > "cafe\u0301.txt"\n',
+        `#!/bin/sh\nprintf private-Unicode-bytes > '${unicodePath}'\n`,
         { mode: 0o755 }
       );
       const result = fixture.run(['fold', '--stack', `--keep=${keep}`]);
@@ -144,7 +146,7 @@ for (const keep of [false, true]) {
       expect(result.stdout + result.stderr).to.include('return');
       expect(fixture.git(['branch', '--show-current'])).to.equal('a-root');
       expect(
-        fs.readFileSync(path.join(fixture.repo, 'cafe\u0301.txt'), 'utf8')
+        fs.readFileSync(path.join(fixture.repo, unicodePath), 'utf8')
       ).to.equal('private-Unicode-bytes');
       expect(
         fixture.git([
@@ -156,7 +158,7 @@ for (const keep of [false, true]) {
       ).to.equal('a-root\nown Unicode removal');
       const completed = fixture.git(['rev-parse', 'a-root']);
       const saved = path.join(fixture.root, 'saved-private');
-      fs.renameSync(path.join(fixture.repo, 'cafe\u0301.txt'), saved);
+      fs.renameSync(path.join(fixture.repo, unicodePath), saved);
       fs.unlinkSync(hook);
       fixture.ok(['restack', '--branch', 'z-root', '--only']);
       fixture.ok(['checkout', keep ? 'tip' : 'base']);

@@ -1,6 +1,6 @@
 # Installation, upgrades and rollback
 
-Install the standalone binary with `sh scripts/install.sh 0.1.1`. The versioned installer downloads only from this project's GitHub Releases. Supported assets are `an-macos-arm64`, `an-macos-x64` and `an-linux-x64`. `SHA256SUMS`, `LICENSE` and `CREDITS.md` accompany every release.
+Install the standalone binary with `sh scripts/install.sh 0.1.1`. The versioned installer downloads only from this project's GitHub Releases. While the repository is private, an authenticated `gh` installation is required. When `gh` is available it downloads assets with that account; public releases also support curl. Supported assets are `an-macos-arm64`, `an-macos-x64` and `an-linux-x64`. `SHA256SUMS`, `LICENSE` and `CREDITS.md` accompany every release.
 
 For an already downloaded release, set `ANTHRACITE_RELEASE_DIR` to its directory before invoking the installer. The same checksum and version checks apply; this also supports offline installation.
 

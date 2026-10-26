@@ -18,7 +18,7 @@ node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite check
 node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test
 ```
 
-The regular suite uses real local Git repositories and boundary fixtures. It excludes only the separate large-repository benchmark, which clones external projects and is available through `test-large-repos`. Live GitHub tests are separate and require deliberate authorization for their remote changes.
+The regular suite runs every file in a fresh process, using real local Git repositories and boundary fixtures. CI distributes the same files over four deterministic shards per runtime and preserves each JSON test report. It excludes only the separate large-repository benchmark, which clones external projects and is available through `test-large-repos`. Live GitHub tests are separate and require deliberate authorization for their remote changes.
 
 For a focused file after building:
 

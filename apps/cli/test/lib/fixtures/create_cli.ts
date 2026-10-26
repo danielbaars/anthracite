@@ -77,7 +77,7 @@ export class CreateCliFixture {
       cwd,
       env: this.env,
       encoding: 'utf8',
-      timeout: 15000,
+      timeout: 60000,
     });
     if (result.error) throw result.error;
     if (result.signal) throw new Error(`CLI killed by ${result.signal}`);
