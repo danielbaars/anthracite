@@ -36,6 +36,7 @@ import {
   assertContinuationBranchesEditable,
 } from './engine/frozen_branch';
 import { continueConfigFactory } from './spiffy/continuation_spf';
+import { repoConfigFactory } from './spiffy/repo_config_spf';
 
 export async function graphite(
   args: yargs.Arguments & TGlobalArguments,
@@ -181,9 +182,19 @@ async function graphiteInternal(
           return;
         }
 
+        const structural =
+          ['move', 'fold', 'reorder'].includes(canonicalName) ||
+          (canonicalName === 'create' && args.insert === true);
+        const preserveStructuralMetadata =
+          structural &&
+          repoConfigFactory
+            .load(undefined, { preserveInvalid: true })
+            .graphiteInitialized();
         const context = initContext(contextLite, git, {
           ...args,
-          preserveMetadata: canonicalName === 'reorder' && args.stack === true,
+          preserveMetadata:
+            preserveStructuralMetadata ||
+            (canonicalName === 'reorder' && args.stack === true),
         });
         return await graphiteHelper(
           canonicalName,

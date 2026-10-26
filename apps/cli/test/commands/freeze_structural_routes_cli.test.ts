@@ -234,4 +234,94 @@ describe('frozen structural route coverage through the public CLI', function () 
       expect(fixture.observe()).to.deep.equal(before);
     }
   });
+
+  it('moves editable work from an explicit cwd quietly onto an unchanged frozen destination', () => {
+    fixture.ok(['freeze', 'other']);
+    const destination = fixture.git(['rev-parse', 'other']);
+    const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/other']);
+    const base = fixture.git(['rev-parse', 'base']);
+    const child = fixture.git(['rev-parse', 'child']);
+    const result = fixture.run(
+      ['--cwd', fixture.repo, 'move', '-s', 'tip', '-o', 'other', '-q'],
+      fixture.root
+    );
+    expect(result.status, result.stdout + result.stderr).to.equal(0);
+    expect(result.stdout).to.equal('');
+    expect(result.stderr).to.equal('');
+    expect(fixture.git(['rev-parse', 'tip^'])).to.equal(destination);
+    expect(fixture.git(['show', 'tip:tip.txt'])).to.equal('tip');
+    expect(fixture.git(['show', 'tip:other.txt'])).to.equal('other');
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
+    expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
+    expect(fixture.git(['rev-parse', 'refs/branch-metadata/other'])).to.equal(
+      metadata
+    );
+  });
+
+  it('selects a frozen destination in a real terminal while retaining the raw branch name', () => {
+    fixture.ok(['freeze', 'other']);
+    fixture.git(['switch', 'main']);
+    const destination = fixture.git(['rev-parse', 'other']);
+    const result = runCliInPty(
+      getTestCliCommand(['move', '-s', 'tip', '--only']),
+      {
+        cwd: fixture.repo,
+        env: fixture.env,
+        responses: [{ prompt: 'Choose a new base', input: '\u001b[A\r' }],
+      }
+    );
+    expect(result.status, result.output).to.equal(0);
+    expect(fixture.git(['rev-parse', 'tip^'])).to.equal(destination);
+    expect(fixture.git(['show', 'tip:tip.txt'])).to.equal('tip');
+    expect(fixture.git(['show', 'tip:other.txt'])).to.equal('other');
+    expect(fixture.git(['branch', '--show-current'])).to.equal('main');
+    expect(fixture.ok(['info', 'other'])).to.include('(frozen)');
+  });
+
+  it('rechecks a source frozen by another public CLI process while its destination selector is open', () => {
+    const refs = fixture.refs();
+    const index = fs.readFileSync(path.join(fixture.repo, '.git', 'index'));
+    const result = runCliInPty(getTestCliCommand(['move', '-s', 'base']), {
+      cwd: fixture.repo,
+      env: fixture.env,
+      responses: [
+        {
+          prompt: 'Choose a new base',
+          input: '\u001b[A\r',
+          beforeInput: getTestCliCommand([
+            'freeze',
+            'base',
+            '--no-interactive',
+          ]),
+        },
+      ],
+    });
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('ch unfreeze base');
+    expect(fixture.refs()).to.equal(refs);
+    expect(
+      fs.readFileSync(path.join(fixture.repo, '.git', 'index'))
+    ).to.deep.equal(index);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('base');
+  });
+
+  it('explains frozen structural participants and strict insert refusal in public help without writes', () => {
+    fixture.ok(['freeze', 'base']);
+    const before = fixture.observe();
+    for (const command of ['move', 'fold', 'reorder', 'ro', 'create', 'c'])
+      expect(fixture.ok([command, '--help']).toLowerCase()).to.include(
+        'frozen'
+      );
+    expect(fixture.ok(['create', '--help'])).to.include('--insert');
+    expect(fixture.observe()).to.deep.equal(before);
+  });
+
+  it('refuses mandatory frozen replay before ordinary context repair can publish an editable source base', () => {
+    freezeOnly(fixture, 'tip', 'child');
+    fixture.git(['switch', 'main']);
+    fixture.commit('advanced-main');
+    fixture.git(['switch', 'base']);
+    fixture.git(['merge', '--no-edit', 'main']);
+    refused(fixture, ['move', '-o', 'other'], 'tip');
+  });
 });

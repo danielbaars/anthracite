@@ -421,4 +421,27 @@ describe('frozen structural participants through the public CLI', function () {
       fs.readFileSync(path.join(fixture.repo, 'hook-work.txt'), 'utf8')
     ).to.equal('late fold work');
   });
+  it('rechecks a stack reorder source frozen by its external editor before any parent write', () => {
+    fixture.git(['switch', 'tip']);
+    const refs = fixture.refs();
+    const cli = getTestCliCommand(['freeze', 'tip', '--no-interactive']);
+    const editor = path.join(fixture.root, 'editor');
+    fs.writeFileSync(
+      editor,
+      `#!/bin/sh\nprintf 'tip\\nbase\\nchild\\n' > "$1"\n${cli
+        .map((value) => `'${value.replace(/'/g, `'"'"'`)}'`)
+        .join(' ')}\n`,
+      { mode: 0o755 }
+    );
+    fixture.env.GIT_EDITOR = editor;
+    const index = fs.readFileSync(path.join(fixture.repo, '.git', 'index'));
+    const result = fixture.run(['ro', '--stack', '--interactive']);
+    expect(result.status).to.equal(1);
+    expect(result.stderr).to.include('ch unfreeze tip');
+    expect(fixture.refs()).to.equal(refs);
+    expect(
+      fs.readFileSync(path.join(fixture.repo, '.git', 'index'))
+    ).to.deep.equal(index);
+    expect(fixture.ok(['info', 'base'])).to.include('Parent: main');
+  });
 });

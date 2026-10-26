@@ -67,6 +67,7 @@ export async function reorderStack(
         return parseStackOrder(file, chain);
       });
   // Read Git directly: rebuilding a stale engine can repair metadata itself.
+  context.engine.assertBranchEditable(departure);
   if (captureReorderState() !== before)
     throw new PreconditionsFailedError(
       'Cannot reorder: repository state changed while the editor was open. Retry from the current state.'
