@@ -9,7 +9,11 @@ const quote = (value: string): string => `'${value.replace(/'/g, `'"'"'`)}'`;
 export function withFrozenCommitGuard(
   branch: string,
   commit: (options: readonly string[], env?: NodeJS.ProcessEnv) => void,
-  opts: { readonly sequenceEditor?: boolean; readonly allRefs?: boolean } = {}
+  opts: {
+    readonly sequenceEditor?: boolean;
+    readonly allRefs?: boolean;
+    readonly preRebase?: boolean;
+  } = {}
 ): void {
   const hooks = runGitCommand({
     args: ['rev-parse', '--path-format=absolute', '--git-path', 'hooks'],
@@ -74,6 +78,8 @@ export function withFrozenCommitGuard(
         { mode: 0o700 }
       );
       env = { ...process.env, GIT_SEQUENCE_EDITOR: quote(sequence) };
+    }
+    if (opts.sequenceEditor || opts.preRebase) {
       const preRebase = path.join(hooks, 'pre-rebase');
       fs.writeFileSync(
         path.join(proxy, 'pre-rebase'),

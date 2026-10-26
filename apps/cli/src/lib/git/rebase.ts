@@ -11,28 +11,45 @@ export function rebase(args: {
   branchName: string;
   restackCommitterDateIsAuthorDate?: boolean;
 }): TRebaseResult {
-  return rebaseInternal({
-    args: [
-      ...(args.restackCommitterDateIsAuthorDate
-        ? [`--committer-date-is-author-date`]
-        : []),
-      `--onto`,
-      args.onto,
-      args.from,
-      args.branchName,
-    ],
-    resource: 'rebase',
-  });
+  let result: TRebaseResult = 'REBASE_DONE';
+  withFrozenCommitGuard(
+    args.branchName,
+    (prefix) => {
+      result = rebaseInternal({
+        args: [
+          ...(args.restackCommitterDateIsAuthorDate
+            ? [`--committer-date-is-author-date`]
+            : []),
+          `--onto`,
+          args.onto,
+          args.from,
+          args.branchName,
+        ],
+        prefix,
+        resource: 'rebase',
+      });
+    },
+    { preRebase: true }
+  );
+  return result;
 }
 
-export function rebaseContinue(): TRebaseResult {
-  return rebaseInternal({
-    args: ['--continue'],
-    options: {
-      env: { ...process.env, GIT_EDITOR: 'true' },
-    },
-    resource: 'rebaseContinue',
+export function rebaseContinue(branchName?: string): TRebaseResult {
+  const run = (prefix: readonly string[]): TRebaseResult =>
+    rebaseInternal({
+      args: ['--continue'],
+      prefix,
+      options: {
+        env: { ...process.env, GIT_EDITOR: 'true' },
+      },
+      resource: 'rebaseContinue',
+    });
+  if (!branchName) return run([]);
+  let result: TRebaseResult = 'REBASE_DONE';
+  withFrozenCommitGuard(branchName, (prefix) => {
+    result = run(prefix);
   });
+  return result;
 }
 
 export function rebaseAbort(): void {

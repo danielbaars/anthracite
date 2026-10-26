@@ -456,6 +456,7 @@ export function composeEngine({
 
     const branchRevision = git.getShaOrThrow(`refs/heads/${branchName}`);
     try {
+      assertBranchEditable(branchName);
       updateMeta(branchName, {
         ...cachedMeta,
         branchRevision,
@@ -1101,8 +1102,9 @@ export function composeEngine({
     continueRebase: (parentBranchRevision: string) => {
       const activeBranch = git.getRebaseHead();
       if (activeBranch) assertBranchEditable(activeBranch);
-      const result = git.rebaseContinue();
+      const result = git.rebaseContinue(activeBranch);
       if (result === 'REBASE_CONFLICT') {
+        if (activeBranch) assertBranchEditable(activeBranch);
         return { result };
       }
       const branchName = git.getCurrentBranchName();

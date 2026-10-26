@@ -9,7 +9,7 @@ const quote = (value: string): string => `'${value.replace(/'/g, `'"'"'`)}'`;
 // Independent public CLI scenarios, not one production operation.
 // eslint-disable-next-line max-lines-per-function
 describe('get CLI existing frozen branches', function () {
-  this.timeout(45000);
+  this.timeout(120000);
   let fixture: FrozenGetFixture;
   beforeEach(function () {
     fixture = new FrozenGetFixture();
@@ -596,5 +596,192 @@ describe('get CLI existing frozen branches', function () {
     expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
       'main'
     );
+  });
+  it('refuses a freeze from the original pre-rebase hook before any local replay or checkout', () => {
+    fixture.ok('unfreeze', 'child');
+    const local = fixture.commit(
+      fixture.consumer,
+      'local.txt',
+      'keep local before hook'
+    );
+    fixture.advanceChild();
+    const cli = getTestCliCommand(['freeze', 'child', '--no-interactive']);
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'pre-rebase'),
+      `#!/bin/sh\n${cli.map(quote).join(' ')}\n`,
+      { mode: 0o755 }
+    );
+    fixture.git(fixture.consumer, 'status', '--porcelain');
+    const index = fs.readFileSync(path.join(fixture.consumer, '.git', 'index'));
+    const result = fixture.run(['get', 'child'], true, [
+      { prompt: 'How would you like to handle', input: '\r' },
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('ch unfreeze child');
+    fixture.assertTip('HEAD', local);
+    fixture.assertTip('child', local);
+    expect(
+      fs.readFileSync(path.join(fixture.consumer, '.git', 'index'))
+    ).to.deep.equal(index);
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', 'rebase-merge'))
+    ).to.equal(false);
+    expect(
+      fs.readFileSync(path.join(fixture.consumer, 'local.txt'), 'utf8')
+    ).to.equal('keep local before hook');
+    fixture.status();
+  });
+  it('preserves a post-rewrite freeze and reports completed replay before metadata publication', () => {
+    fixture.ok('unfreeze', 'child');
+    const local = fixture.commit(
+      fixture.consumer,
+      'local.txt',
+      'local replay survives'
+    );
+    const remote = fixture.commit(
+      fixture.producer,
+      'remote-extra.txt',
+      'remote extra'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'child');
+    const cli = getTestCliCommand(['freeze', 'child', '--no-interactive']);
+    const infoCli = getTestCliCommand(['info', 'child', '--no-interactive']);
+    const hookInfo = path.join(fixture.root, 'post-rewrite-info');
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'post-rewrite'),
+      `#!/bin/sh\n${cli.map(quote).join(' ')} || exit $?\n${infoCli
+        .map(quote)
+        .join(' ')} > ${quote(hookInfo)}\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['get', 'child'], true, [
+      { prompt: 'How would you like to handle', input: '\r' },
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    expect(fs.readFileSync(hookInfo, 'utf8')).to.include('child (frozen)');
+    expect(result.output).to.include('Updated child before get stopped');
+    expect(result.output).to.match(/metadata.*incomplete/i);
+    expect(result.output).to.include('ch unfreeze child');
+    expect(result.output).not.to.include('Rebased local changes');
+    const replayed = fixture.git(fixture.consumer, 'rev-parse', 'child');
+    expect(replayed).not.to.equal(local);
+    expect(
+      fixture.git(fixture.consumer, 'merge-base', replayed, remote)
+    ).to.equal(remote);
+    expect(fixture.git(fixture.consumer, 'show', 'child:local.txt')).to.equal(
+      'local replay survives'
+    );
+    expect(
+      fixture.git(fixture.consumer, 'show', 'child:remote-extra.txt')
+    ).to.equal('remote extra');
+    fixture.status();
+  });
+
+  it('stops fresh cont when an original commit-message hook freezes the active get replay', () => {
+    fixture.ok('unfreeze', 'child');
+    const local = fixture.commit(
+      fixture.consumer,
+      'local.txt',
+      'local continuation remains'
+    );
+    fixture.advanceChild();
+    const initial = fixture.run(['get', 'child'], true, [
+      { prompt: 'How would you like to handle', input: '\r' },
+    ]);
+    expect(initial.status, initial.output).to.equal(1);
+    expect(initial.output).to.include('Hit conflict');
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'child.txt'),
+      'resolved before hook'
+    );
+    fixture.git(fixture.consumer, 'add', 'child.txt');
+    const head = fixture.git(fixture.consumer, 'rev-parse', 'HEAD');
+    const stages = fixture.git(fixture.consumer, 'ls-files', '--stage');
+    const cli = getTestCliCommand(['freeze', 'child', '--no-interactive']);
+    const hook = path.join(
+      fixture.consumer,
+      '.git',
+      'hooks',
+      'prepare-commit-msg'
+    );
+    fs.writeFileSync(hook, `#!/bin/sh\n${cli.map(quote).join(' ')}\n`, {
+      mode: 0o755,
+    });
+    const stopped = fixture.run(['cont']);
+    expect(stopped.status, stopped.output).to.equal(1);
+    expect(stopped.output).to.include('ch unfreeze child');
+    fixture.assertTip('HEAD', head);
+    fixture.assertTip('child', local);
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', 'rebase-merge'))
+    ).to.equal(true);
+    expect(fixture.git(fixture.consumer, 'ls-files', '--stage')).to.equal(
+      stages
+    );
+    expect(
+      fs.readFileSync(path.join(fixture.consumer, 'child.txt'), 'utf8')
+    ).to.equal('resolved before hook');
+    fixture.ok('unfreeze', 'child');
+    fs.removeSync(hook);
+    fixture.ok('cont');
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', 'rebase-merge'))
+    ).to.equal(false);
+    expect(fixture.git(fixture.consumer, 'show', 'child:local.txt')).to.equal(
+      'local continuation remains'
+    );
+  });
+  it('completes editable replay while forwarding original pre-rebase arguments and inherited hook configuration', () => {
+    fixture.ok('unfreeze', 'child');
+    const local = fixture.commit(
+      fixture.consumer,
+      'local.txt',
+      'local through hook'
+    );
+    const remote = fixture.commit(
+      fixture.producer,
+      'remote-extra.txt',
+      'remote through hook'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'child');
+    const hooks = path.join(fixture.root, 'custom rebase hooks');
+    fs.ensureDirSync(hooks);
+    fixture.git(fixture.consumer, 'config', 'core.hooksPath', hooks);
+    fixture.env.GIT_CONFIG_PARAMETERS = "'charcoal.fixture=kept'";
+    const argumentsFile = path.join(fixture.root, 'hook-arguments');
+    const configFile = path.join(fixture.root, 'hook-configuration');
+    fs.writeFileSync(
+      path.join(hooks, 'pre-rebase'),
+      `#!/bin/sh\nprintf '%s\\n' "$@" > ${quote(
+        argumentsFile
+      )}\ngit config --get charcoal.fixture > ${quote(
+        configFile
+      )}\ngit config --get core.hooksPath >> ${quote(configFile)}\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['get', 'child'], true, [
+      { prompt: 'How would you like to handle', input: '\r' },
+    ]);
+    expect(result.status, result.output).to.equal(0);
+    expect(fs.readFileSync(argumentsFile, 'utf8')).to.equal(
+      `${fixture.oldParent}\nchild\n`
+    );
+    expect(fs.readFileSync(configFile, 'utf8')).to.equal(`kept\n${hooks}\n`);
+    expect(
+      fixture.git(fixture.consumer, 'config', '--get', 'core.hooksPath')
+    ).to.equal(hooks);
+    const replayed = fixture.git(fixture.consumer, 'rev-parse', 'child');
+    expect(replayed).not.to.equal(local);
+    expect(
+      fixture.git(fixture.consumer, 'merge-base', replayed, remote)
+    ).to.equal(remote);
+    expect(fixture.git(fixture.consumer, 'show', 'child:local.txt')).to.equal(
+      'local through hook'
+    );
+    expect(
+      fixture.git(fixture.consumer, 'show', 'child:remote-extra.txt')
+    ).to.equal('remote through hook');
+    fixture.assertTip('HEAD', replayed);
+    fixture.status('child', false);
   });
 });

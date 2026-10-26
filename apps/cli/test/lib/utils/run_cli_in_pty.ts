@@ -11,7 +11,7 @@ pid, fd = pty.fork()
 if pid == 0:
     os.execv(command[0], command)
 output = bytearray()
-deadline = time.monotonic() + 5
+deadline = time.monotonic() + float(sys.argv[3])
 status = None
 reading = True
 while time.monotonic() < deadline:
@@ -60,6 +60,7 @@ export function runCliInPty(
   options: {
     readonly cwd: string;
     readonly env: NodeJS.ProcessEnv;
+    readonly timeoutMs?: number;
     readonly responses?: readonly {
       readonly prompt: string;
       readonly input: string;
@@ -78,8 +79,9 @@ export function runCliInPty(
       ptyRunner,
       JSON.stringify(command),
       JSON.stringify(options.responses ?? []),
+      String((options.timeoutMs ?? 5000) / 1000),
     ],
-    { ...options, timeout: 10000 }
+    { ...options, timeout: (options.timeoutMs ?? 5000) + 5000 }
   );
   if (result.error) throw result.error;
   const output = Buffer.concat([result.stdout, result.stderr]);

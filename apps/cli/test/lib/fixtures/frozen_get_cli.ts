@@ -46,6 +46,8 @@ export class FrozenGetFixture {
   constructor() {
     delete this.env.GH_TOKEN;
     delete this.env.GITHUB_TOKEN;
+    delete this.env.GIT_OPTIONAL_LOCKS;
+    delete this.env.GIT_CONFIG_PARAMETERS;
     fs.ensureDirSync(this.bin);
     fs.writeJsonSync(this.prs, { parent: 'main', child: 'parent' });
     fs.writeJsonSync(this.details, {});
@@ -226,10 +228,12 @@ console.log(JSON.stringify(selected));\n`,
               'GRAPHITE_INTERACTIVE',
               'GIT_CONFIG_GLOBAL',
               'GIT_CONFIG_NOSYSTEM',
+              'GIT_OPTIONAL_LOCKS',
+              'GIT_CONFIG_PARAMETERS',
               'GIT_EDITOR',
               'TERM',
               'NO_COLOR',
-            ].map((key) => [key, this.env[key]])
+            ].map((key) => [key, this.env[key] ?? null])
           ),
           before,
           after: this.observe(),
