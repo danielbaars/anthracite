@@ -1,5 +1,6 @@
 import { SpawnSyncOptions } from 'child_process';
 import { runGitCommand } from './runner';
+import { withFrozenCommitGuard } from './frozen_commit';
 
 import { rebaseInProgress } from './rebase_in_progress';
 
@@ -47,21 +48,31 @@ export function rebaseInteractive(args: {
   parentBranchRevision: string;
   branchName: string;
 }): TRebaseResult {
-  return rebaseInternal({
-    args: [`-i`, args.parentBranchRevision, args.branchName],
-    resource: 'rebaseInteractive',
-    options: { stdio: 'inherit' },
-  });
+  let result: TRebaseResult = 'REBASE_DONE';
+  withFrozenCommitGuard(
+    args.branchName,
+    (prefix, env) => {
+      result = rebaseInternal({
+        args: [`-i`, args.parentBranchRevision, args.branchName],
+        prefix,
+        resource: 'rebaseInteractive',
+        options: { stdio: 'inherit', env },
+      });
+    },
+    { sequenceEditor: true }
+  );
+  return result;
 }
 
 function rebaseInternal(params: {
   args: string[];
+  prefix?: readonly string[];
   options?: Pick<SpawnSyncOptions, 'stdio' | 'env'>;
   resource: string;
 }) {
   try {
     runGitCommand({
-      args: ['rebase', ...params.args],
+      args: [...(params.prefix ?? []), 'rebase', ...params.args],
       options: { stdio: 'pipe', ...params.options },
       onError: 'throw',
       resource: params.resource,

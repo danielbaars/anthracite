@@ -121,7 +121,7 @@ async function graphiteInternal(
   const git = composeGit();
   try {
     // Known frozen targets must stop before ordinary context repair can write refs.
-    if (canonicalName === 'modify') {
+    if (['modify', 'edit', 'squash', 'split', 'pop'].includes(canonicalName)) {
       const currentBranch = git.getCurrentBranchName();
       if (currentBranch) assertBranchEditable(currentBranch);
     }

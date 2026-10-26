@@ -909,6 +909,7 @@ export function composeEngine({
     },
     squashCurrentBranch: (opts: Pick<TCommitOpts, 'message' | 'noEdit'>) => {
       const branchName = getCurrentBranchOrThrow();
+      assertBranchEditable(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
       git.softReset(
         git
@@ -917,16 +918,20 @@ export function composeEngine({
             cachedMeta.branchRevision,
             'SHA'
           )
-          .reverse()[0]
+          .reverse()[0],
+        branchName
       );
+      assertBranchEditable(branchName);
       try {
         git.commit({
           ...opts,
           amend: true,
           noVerify,
           quiet,
+          frozenGuardBranch: branchName,
         });
       } catch (e) {
+        if (readMetadataRef(branchName).frozen === true) throw e;
         try {
           git.softReset(cachedMeta.branchRevision);
         } catch {
@@ -942,23 +947,41 @@ export function composeEngine({
     addAll: git.addAll,
     detach() {
       const branchName = getCurrentBranchOrThrow();
+      assertBranchEditable(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
-      git.switchBranch(cachedMeta.branchRevision, { detach: true });
+      git.switchBranch(cachedMeta.branchRevision, {
+        detach: true,
+        frozenGuardBranch: branchName,
+      });
     },
     unbranch() {
       const branchName = getCurrentBranchOrThrow();
+      assertBranchEditable(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
-      git.switchBranch(cachedMeta.branchRevision, { detach: true });
+      git.switchBranch(cachedMeta.branchRevision, {
+        detach: true,
+        frozenGuardBranch: branchName,
+      });
       const parentBranchName = cachedMeta.parentBranchName;
-      deleteAllBranchData(branchName);
+      assertBranchEditable(branchName);
+      git.deleteBranch(branchName, branchName);
+      assertBranchEditable(branchName);
+      removeChild(cachedMeta.parentBranchName, branchName);
+      delete cache.branches[branchName];
+      deleteMetadataRef(branchName);
       git.mixedReset(parentBranchName);
       git.switchBranch(parentBranchName);
     },
     detachAndResetBranchChanges() {
       const branchName = getCurrentBranchOrThrow();
+      assertBranchEditable(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
-      git.switchBranch(cachedMeta.branchRevision, { detach: true });
-      git.trackedReset(cachedMeta.parentBranchRevision);
+      git.switchBranch(cachedMeta.branchRevision, {
+        detach: true,
+        frozenGuardBranch: branchName,
+      });
+      assertBranchEditable(branchName);
+      git.trackedReset(cachedMeta.parentBranchRevision, branchName);
     },
     applySplitToCommits({
       branchToSplit,
@@ -969,6 +992,7 @@ export function composeEngine({
       branchNames: string[];
       branchPoints: number[];
     }) {
+      assertBranchEditable(branchToSplit);
       if (branchNames.length !== branchPoints.length) {
         splog.debug(branchNames.toString());
         splog.debug(branchPoints.toString());
@@ -989,10 +1013,12 @@ export function composeEngine({
         revision: cachedMeta.parentBranchRevision,
       };
       branchNames.forEach((branchName, idx) => {
+        assertBranchEditable(branchToSplit);
         const branchRevision = git.getShaOrThrow(
           `@~${reversedBranchPoints[idx]}`
         );
-        git.forceCreateBranch(branchName, branchRevision);
+        git.forceCreateBranch(branchName, branchRevision, branchToSplit);
+        assertBranchEditable(branchToSplit);
         updateMeta(branchName, {
           validationResult: 'VALID',
           branchRevision,
@@ -1004,13 +1030,20 @@ export function composeEngine({
         lastBranch.name = branchName;
         lastBranch.revision = branchRevision;
       });
+      assertBranchEditable(branchToSplit);
       if (lastBranch.name !== branchToSplit) {
-        children.forEach((childBranchName) =>
-          setParent(childBranchName, lastBranch.name)
-        );
+        children.forEach((childBranchName) => {
+          assertBranchEditable(branchToSplit);
+          setParent(childBranchName, lastBranch.name);
+        });
       }
       if (!branchNames.includes(branchToSplit)) {
-        deleteAllBranchData(branchToSplit);
+        assertBranchEditable(branchToSplit);
+        git.deleteBranch(branchToSplit, branchToSplit);
+        assertBranchEditable(branchToSplit);
+        removeChild(cachedMeta.parentBranchName, branchToSplit);
+        delete cache.branches[branchToSplit];
+        deleteMetadataRef(branchToSplit);
       }
       cache.currentBranch = lastBranch.name;
       git.switchBranch(lastBranch.name);
@@ -1046,6 +1079,7 @@ export function composeEngine({
       return { result: 'REBASE_DONE' };
     },
     rebaseInteractive: (branchName: string) => {
+      assertBranchEditable(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
       if (

@@ -30,7 +30,7 @@ export const command = 'squash';
 export const canonical = 'squash';
 export const aliases = ['sq'];
 export const description =
-  'Squash all commits in the current branch and restack upstack branches.';
+  'Squash all commits in the current branch and restack upstack branches. Frozen sources require ch unfreeze first.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(argv, canonical, async (context) => {

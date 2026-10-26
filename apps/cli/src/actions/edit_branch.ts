@@ -6,15 +6,17 @@ import { RebaseConflictError } from '../lib/errors';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { persistContinuation } from './persist_continuation';
 import { printConflictStatus } from './print_conflict_status';
-import { restackBranches } from './restack';
+import { getBranchesToRestack, restackBranches } from './restack';
 
 export function editBranchAction(context: TContext): void {
-  ensureEditorAllowedPrecondition(context);
   const currentBranchName = context.engine.currentBranchPrecondition;
-  const branchesToRestack = context.engine.getRelativeStack(
-    currentBranchName,
-    SCOPE.UPSTACK_EXCLUSIVE
-  );
+  context.engine.assertBranchEditable(currentBranchName);
+  ensureEditorAllowedPrecondition(context);
+  const branchesToRestack = getBranchesToRestack(
+    context.engine.getRelativeStack(currentBranchName, SCOPE.UPSTACK),
+    context,
+    { willChange: [currentBranchName], skipFrozen: true }
+  ).filter((branch) => branch !== currentBranchName);
   assertBranchesAvailableInWorktrees([currentBranchName, ...branchesToRestack]);
 
   const result = context.engine.rebaseInteractive(currentBranchName);

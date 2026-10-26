@@ -1,4 +1,5 @@
 import { runGitCommand } from './runner';
+import { withFrozenCommitGuard } from './frozen_commit';
 
 export function getCurrentBranchName(): string | undefined {
   const branchName = runGitCommand({
@@ -20,13 +21,20 @@ export function moveBranch(newName: string): void {
   });
 }
 
-export function deleteBranch(branchName: string): void {
-  runGitCommand({
-    args: [`branch`, `-D`, branchName],
-    options: { stdio: 'pipe' },
-    onError: 'throw',
-    resource: 'deleteBranch',
-  });
+export function deleteBranch(
+  branchName: string,
+  frozenGuardBranch?: string
+): void {
+  const run = (prefix: readonly string[]): void => {
+    runGitCommand({
+      args: [...prefix, 'branch', '-D', branchName],
+      options: { stdio: 'pipe' },
+      onError: 'throw',
+      resource: 'deleteBranch',
+    });
+  };
+  if (frozenGuardBranch) withFrozenCommitGuard(frozenGuardBranch, run);
+  else run([]);
 }
 
 export function switchBranch(
@@ -37,22 +45,29 @@ export function switchBranch(
     force?: boolean;
     startPoint?: string;
     preserveIgnored?: boolean;
+    frozenGuardBranch?: string;
   }
 ): void {
-  runGitCommand({
-    args: [
-      `switch`,
-      ...(opts?.detach ? ['-d'] : []),
-      ...(opts?.preserveIgnored ? ['--no-overwrite-ignore'] : []),
-      ...(opts?.force ? ['-f'] : []),
-      ...(opts?.new ? ['-c'] : []),
-      branch,
-      ...(opts?.startPoint ? [opts.startPoint] : []),
-    ],
-    options: { stdio: 'pipe' },
-    onError: 'throw',
-    resource: 'switchBranch',
-  });
+  const run = (prefix: readonly string[]): void => {
+    runGitCommand({
+      args: [
+        ...prefix,
+        `switch`,
+        ...(opts?.detach ? ['-d'] : []),
+        ...(opts?.preserveIgnored ? ['--no-overwrite-ignore'] : []),
+        ...(opts?.force ? ['-f'] : []),
+        ...(opts?.new ? ['-c'] : []),
+        branch,
+        ...(opts?.startPoint ? [opts.startPoint] : []),
+      ],
+      options: { stdio: 'pipe' },
+      onError: 'throw',
+      resource: 'switchBranch',
+    });
+  };
+  if (opts?.frozenGuardBranch)
+    withFrozenCommitGuard(opts.frozenGuardBranch, run);
+  else run([]);
 }
 
 export function forceCheckoutNewBranch(branchName: string, sha: string): void {
@@ -64,13 +79,22 @@ export function forceCheckoutNewBranch(branchName: string, sha: string): void {
   });
 }
 
-export function forceCreateBranch(branchName: string, sha: string): void {
-  runGitCommand({
-    args: [`branch`, `-f`, branchName, sha],
-    options: { stdio: 'pipe' },
-    onError: 'throw',
-    resource: 'forceCreateBranch',
-  });
+export function forceCreateBranch(
+  branchName: string,
+  sha: string,
+  frozenGuardBranch?: string
+): void {
+  const run = (prefix: readonly string[]): void => {
+    runGitCommand({
+      args: [...prefix, 'branch', '-f', branchName, sha],
+      options: { stdio: 'pipe' },
+      onError: 'throw',
+      resource: 'forceCreateBranch',
+    });
+  };
+  if (frozenGuardBranch)
+    withFrozenCommitGuard(frozenGuardBranch, run, { allRefs: true });
+  else run([]);
 }
 
 export function fastForward(revision: string): void {

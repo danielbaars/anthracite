@@ -24,14 +24,14 @@ export async function splitCurrentBranch(
   args: { style: 'hunk' | 'commit' | undefined },
   context: TContext
 ): Promise<void> {
+  const branchToSplit = context.engine.currentBranchPrecondition;
+  context.engine.assertBranchEditable(branchToSplit);
   if (!context.canPrompt) {
     throw new PreconditionsFailedError(
       'This command must be run in interactive mode.'
     );
   }
   uncommittedTrackedChangesPrecondition();
-
-  const branchToSplit = context.engine.currentBranchPrecondition;
 
   if (!context.engine.isBranchTracked(branchToSplit)) {
     await trackBranch(
@@ -72,6 +72,7 @@ export async function splitCurrentBranch(
     },
   };
 
+  context.engine.assertBranchEditable(branchToSplit);
   const split = await actions[style](branchToSplit, context);
 
   const children = context.engine.getRelativeStack(
@@ -273,6 +274,7 @@ async function splitByHunk(
       context.splog.info(
         chalk.yellow(`Stage changes for branch ${branchNames.length + 1}:`)
       );
+      context.engine.assertBranchEditable(branchToSplit);
       context.engine.commit({
         message: defaultCommitMessage,
         edit: true,
@@ -283,6 +285,7 @@ async function splitByHunk(
       );
     }
   } catch (e) {
+    if (context.engine.isBranchFrozen(branchToSplit)) throw e;
     // Handle a CTRL-C gracefully
     context.engine.forceCheckoutBranch(branchToSplit);
     context.splog.newline();
@@ -351,6 +354,7 @@ async function promptNextBranchName(
         : true;
     },
   });
+  context.engine.assertBranchEditable(branchToSplit);
   context.splog.newline();
   return replaceUnsupportedCharacters(branchName, context);
 }

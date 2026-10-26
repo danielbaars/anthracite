@@ -11,7 +11,8 @@ export const builder = (cli: yargs.Argv): yargs.Argv =>
     .parserConfiguration({ 'parse-positional-numbers': false })
     .positional('branch', { type: 'string', demandOption: true })
     .positional('originalHook', { type: 'string', demandOption: true })
-    .positional('phase', { type: 'string', demandOption: true });
+    .positional('phase', { type: 'string', demandOption: true })
+    .option('all-refs', { type: 'boolean', default: false });
 
 // This subprocess intentionally avoids context initialization, locks and repair.
 export const handler = (
@@ -19,6 +20,7 @@ export const handler = (
     readonly branch: string;
     readonly originalHook: string;
     readonly phase: string;
+    readonly 'all-refs': boolean;
   }>
 ): void => {
   const input = fs.readFileSync(0);
@@ -40,7 +42,7 @@ export const handler = (
       return;
     }
   }
-  if (args.phase !== 'prepared') return;
+  if (args.phase !== 'prepared' && args.phase !== 'before-mutation') return;
   const changesBranch = input
     .toString('utf8')
     .split('\n')
@@ -49,7 +51,8 @@ export const handler = (
         line.split(' ')[2] === `refs/heads/${args.branch}` ||
         line.split(' ')[2] === 'HEAD'
     );
-  if (!changesBranch) return;
+  if (!changesBranch && !args['all-refs'] && args.phase !== 'before-mutation')
+    return;
   try {
     assertBranchEditable(args.branch);
   } catch (error: unknown) {
