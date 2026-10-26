@@ -93,7 +93,7 @@ export const command = 'submit';
 export const aliases = ['s'];
 export const canonical = 'submit';
 export const description =
-  'Idempotently force push all branches from trunk to the current branch to GitHub, creating or updating distinct pull requests for each. Pass --stack to also submit descendants of the current branch.';
+  'Idempotently force push all branches from trunk to the current branch to GitHub, creating or updating distinct pull requests for each. Pass --stack to also submit descendants of the current branch. Frozen branches are skipped; editable descendants keep their frozen parent as an existing base.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   await graphite(argv, canonical, async (context) => {

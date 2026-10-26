@@ -667,6 +667,7 @@ export function composeEngine({
       }
       updateMeta(branchName, {
         ...meta,
+        frozen: readMetadataRef(branchName).frozen,
         prInfo: { ...meta.prInfo, ...prInfo },
       });
     },
@@ -1102,6 +1103,7 @@ export function composeEngine({
       return cachedMeta.branchRevision === remoteParentRevision;
     },
     pushBranch: (branchName: string, forcePush: boolean) => {
+      assertBranchEditable(branchName);
       assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
       git.pushBranch({ remote, branchName, noVerify, forcePush, quiet });
     },

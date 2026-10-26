@@ -204,6 +204,7 @@ export function validateOrFixParentBranchRevision(
   ) {
     if (
       repairMetadata &&
+      frozen !== true &&
       parentBranchRevision !== parentBranchCurrentRevision &&
       getMergeBase(parentBranchRevision, parentBranchCurrentRevision) ===
         parentBranchRevision &&
@@ -241,7 +242,8 @@ export function validateOrFixParentBranchRevision(
     return { validationResult: 'BAD_PARENT_REVISION' };
   }
 
-  if (!repairMetadata) return { validationResult: 'BAD_PARENT_REVISION' };
+  if (!repairMetadata || frozen === true)
+    return { validationResult: 'BAD_PARENT_REVISION' };
 
   // PBR can be fixed because we see the parent in the branch's history
   writeMetadataRef(branchName, {

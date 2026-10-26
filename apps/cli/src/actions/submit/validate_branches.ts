@@ -22,6 +22,7 @@ export async function validateBranchesToSubmit(
   }
 
   await syncPrInfoPromise;
+  branchNames.forEach(context.engine.assertBranchEditable);
   await validateNoMergedOrClosedBranches(branchNames, context);
   return branchNames;
 }
@@ -79,6 +80,7 @@ async function validateNoMergedOrClosedBranches(
   if (response.empty_branches_options === 'abort') {
     throw new KilledError();
   }
+  branchNames.forEach(context.engine.assertBranchEditable);
   branchNames.map((branchName) => context.engine.clearPrInfo(branchName));
   context.splog.newline();
 }

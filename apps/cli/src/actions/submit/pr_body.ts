@@ -16,6 +16,7 @@ export async function getPRBody(
     context
   );
 
+  context.engine.assertBranchEditable(args.branchName);
   if (args.editPRFieldsInline === false) {
     return priorSubmitBody ?? inferredBody;
   }
@@ -31,6 +32,7 @@ export async function getPRBody(
       })
     ).confirm;
 
+  context.engine.assertBranchEditable(args.branchName);
   const body = usePriorSubmitBody ? priorSubmitBody : inferredBody;
 
   if (args.editPRFieldsInline === undefined) {
@@ -58,6 +60,7 @@ export async function getPRBody(
     }
   }
 
+  context.engine.assertBranchEditable(args.branchName);
   return await editPRBody(body, context);
 }
 

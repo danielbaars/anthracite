@@ -47,6 +47,7 @@ export async function getPRInfoForBranches(
 ): Promise<TPRSubmissionInfo> {
   const submissionInfo: TPRSubmissionInfo = [];
   for await (const branchName of args.branchNames) {
+    context.engine.assertBranchEditable(branchName);
     const action = await getPRAction(
       {
         branchName,
@@ -65,6 +66,7 @@ export async function getPRInfoForBranches(
       continue;
     }
 
+    context.engine.assertBranchEditable(branchName);
     const parentBranchName = context.engine.getParentPrecondition(
       action.branchName
     );
@@ -90,6 +92,7 @@ export async function getPRInfoForBranches(
             draft: false,
           };
 
+    context.engine.assertBranchEditable(branchName);
     submissionInfo.push({
       head: action.branchName,
       headSha: context.engine.getRevision(action.branchName),
@@ -188,7 +191,7 @@ async function getPRAction(
   }
 
   const shouldSkipUpdate =
-    args.always === false && (args.dryRun || status === 'NOOP');
+    args.dryRun || (args.always === false && status === 'NOOP');
 
   return shouldSkipUpdate
     ? undefined
@@ -215,6 +218,7 @@ async function getPRCreationInfo(
   reviewers: string[];
   draft: boolean;
 }> {
+  context.engine.assertBranchEditable(args.branchName);
   if (args.editPRFieldsInline) {
     context.splog.newline();
     context.splog.info(
@@ -237,6 +241,7 @@ async function getPRCreationInfo(
       context
     );
 
+    context.engine.assertBranchEditable(args.branchName);
     submitInfo.body = await getPRBody(
       {
         branchName: args.branchName,
@@ -245,15 +250,18 @@ async function getPRCreationInfo(
       context
     );
   } finally {
-    // Save locally in case this command fails
+    // Save locally in case this command fails, unless an external UI froze it.
+    context.engine.assertBranchEditable(args.branchName);
     context.engine.upsertPrInfo(args.branchName, submitInfo);
   }
 
+  context.engine.assertBranchEditable(args.branchName);
   const reviewers = await getReviewersMaybeInteractively(
     args.reviewers,
     context
   );
 
+  context.engine.assertBranchEditable(args.branchName);
   const createAsDraft = args.publish
     ? false
     : args.draft || !context.canPrompt
@@ -303,6 +311,7 @@ async function getPRUpdateInfo(
         context
       );
 
+      context.engine.assertBranchEditable(args.branchName);
       const prInfo = context.engine.getPrInfo(args.branchName);
       if (prInfo === undefined) {
         context.splog.warn(
@@ -312,16 +321,19 @@ async function getPRUpdateInfo(
       const body = prInfo?.body || '';
       submitInfo.body = await editPRBody(body, context);
     } finally {
-      // Save locally in case this command fails
+      // Save locally in case this command fails, unless an external UI froze it.
+      context.engine.assertBranchEditable(args.branchName);
       context.engine.upsertPrInfo(args.branchName, submitInfo);
     }
   }
 
+  context.engine.assertBranchEditable(args.branchName);
   const reviewers = await getReviewersMaybeInteractively(
     args.reviewers,
     context
   );
 
+  context.engine.assertBranchEditable(args.branchName);
   const draft = args.draft ? true : args.publish ? false : undefined;
 
   return {

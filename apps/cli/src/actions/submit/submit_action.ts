@@ -47,7 +47,6 @@ export async function submitAction(
       'Provide a non-empty reviewer username with --reviewers in non-interactive mode.'
     );
   }
-  const populateRemoteShasPromise = context.engine.populateRemoteShas();
   if (args.dryRun) {
     context.splog.info(
       chalk.yellow(
@@ -75,16 +74,27 @@ export async function submitAction(
     context.splog.newline();
   }
 
-  const allBranchNames = context.engine
-    .getRelativeStack(
-      args.branch ?? context.engine.currentBranchPrecondition,
-      args.scope
-    )
-    .filter((branchName) => !context.engine.isTrunk(branchName));
+  const allBranchNames = filterFrozenBranches(
+    context.engine
+      .getRelativeStack(
+        args.branch ?? context.engine.currentBranchPrecondition,
+        args.scope
+      )
+      .filter((branchName) => !context.engine.isTrunk(branchName)),
+    context
+  );
 
   const branchNames = args.select
-    ? await selectBranches(context, allBranchNames)
+    ? filterFrozenBranches(
+        await selectBranches(context, allBranchNames),
+        context
+      )
     : allBranchNames;
+
+  if (branchNames.length === 0) {
+    context.splog.info('No editable branches to submit.');
+    return;
+  }
 
   context.splog.info(
     chalk.blueBright(
@@ -92,6 +102,7 @@ export async function submitAction(
     )
   );
   context.splog.newline();
+  await context.engine.populateRemoteShas();
   await validateBranchesToSubmit(branchNames, context);
 
   context.splog.info(
@@ -99,7 +110,6 @@ export async function submitAction(
       '✏️  Preparing to submit PRs for the following branches...'
     )
   );
-  await populateRemoteShasPromise;
   const submissionInfos = await getPRInfoForBranches(
     {
       branchNames: branchNames,
@@ -129,6 +139,7 @@ export async function submitAction(
   );
 
   for (const submissionInfo of submissionInfos) {
+    context.engine.assertBranchEditable(submissionInfo.head);
     try {
       context.engine.pushBranch(submissionInfo.head, args.forcePush);
     } catch (err) {
@@ -177,6 +188,7 @@ export async function submitAction(
   }
 
   for (const branch of branchesToUpdate) {
+    if (context.engine.isBranchFrozen(branch)) continue;
     const prInfo = context.engine.getPrInfo(branch);
 
     // A branch with no open PR (e.g. an unsubmitted leaf under --update-only)
@@ -239,12 +251,24 @@ export function updatePrBodyFooter(
   return body.replace(footerBlock, '').trimEnd() + footer;
 }
 
+function filterFrozenBranches(
+  branches: readonly string[],
+  context: TContext
+): string[] {
+  return branches.filter((branch) => {
+    if (!context.engine.isBranchFrozen(branch)) return true;
+    context.splog.info(`Skipping frozen branch ${branch}.`);
+    return false;
+  });
+}
+
 async function selectBranches(
   context: TContext,
   branchNames: string[]
 ): Promise<string[]> {
   const result = [];
   for (const branchName of branchNames) {
+    if (!filterFrozenBranches([branchName], context).length) continue;
     const selected = (
       await context.prompts({
         name: 'value',

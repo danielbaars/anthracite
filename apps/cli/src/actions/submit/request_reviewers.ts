@@ -1,5 +1,6 @@
 import { execFileSync } from 'child_process';
 import * as t from '@withgraphite/retype';
+import { assertBranchEditable } from '../../lib/engine/frozen_branch';
 
 const reviewStateSchema = t.shape({
   headRefName: t.string,
@@ -53,6 +54,7 @@ export function requestReviewers(
 ): void {
   if (!reviewers.length) return;
   const before = readReviewState(target);
+  assertBranchEditable(target.head);
   execFileSync('gh', [
     'pr',
     'edit',

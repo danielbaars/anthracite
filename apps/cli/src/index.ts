@@ -30,6 +30,7 @@ import * as get from './commands/get';
 import * as info from './commands/info';
 import * as init from './commands/init';
 import * as internalCommitGuard from './commands/internal_commit_guard';
+import * as internalPushGuard from './commands/internal_push_guard';
 import * as ll from './commands/ll';
 import * as log from './commands/log';
 import * as ls from './commands/ls';
@@ -92,6 +93,7 @@ const commandModules = [
   info,
   init,
   internalCommitGuard,
+  internalPushGuard,
   ll,
   log,
   ls,

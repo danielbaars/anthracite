@@ -3,6 +3,7 @@ import * as t from '@withgraphite/retype';
 import chalk from 'chalk';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
+import { assertBranchEditable } from '../../lib/engine/frozen_branch';
 import { ExitFailedError } from '../../lib/errors';
 import { Unpacked } from '../../lib/utils/ts_helpers';
 import { execFileSync } from 'child_process';
@@ -157,6 +158,7 @@ async function submitPrToGithub({
       error instanceof Error &&
       error.message.includes('no pull requests found')
     ) {
+      assertBranchEditable(request.head);
       const result = execFileSync('gh', [
         'pr',
         'create',
@@ -206,6 +208,7 @@ async function submitPrToGithub({
   const editArgs = [...(prBaseChanged ? ['--base', request.base] : [])];
 
   if (editArgs.length) {
+    assertBranchEditable(request.head);
     execFileSync('gh', [
       'pr',
       'edit',
@@ -217,6 +220,7 @@ async function submitPrToGithub({
   }
 
   if (request.draft !== undefined && request.draft !== prInfo.isDraft) {
+    assertBranchEditable(request.head);
     execFileSync('gh', [
       'pr',
       'ready',
