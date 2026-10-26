@@ -495,15 +495,11 @@ export function composeEngine({
       return cuteString(cache);
     },
     persist(discardChangedCache = false) {
-      if (!canPersistCache) {
+      if (originalBranchState === JSON.stringify(cache.branches)) return;
+      // Failed commands retain durable progress, never an unpublished cache fact.
+      if (!canPersistCache || discardChangedCache)
         cacheLoader.clearPersistedCache();
-        return;
-      }
-      if (originalBranchState !== JSON.stringify(cache.branches)) {
-        // Failed commands retain durable progress, never an unpublished cache fact.
-        if (discardChangedCache) cacheLoader.clearPersistedCache();
-        else cacheLoader.persistCache(trunkName, cache.branches);
-      }
+      else cacheLoader.persistCache(trunkName, cache.branches);
     },
     clear() {
       cacheLoader.clearPersistedCache();
