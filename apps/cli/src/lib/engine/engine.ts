@@ -1159,6 +1159,7 @@ export function composeEngine({
       const activeBranch = git.getRebaseHead();
       if (activeBranch) assertBranchEditable(activeBranch);
       const result = git.rebaseContinue(activeBranch, participants);
+      for (const branch of participants ?? []) assertBranchEditable(branch);
       if (result === 'REBASE_CONFLICT') {
         if (activeBranch) assertBranchEditable(activeBranch);
         return { result };

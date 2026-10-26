@@ -972,7 +972,7 @@ fi
     expect(
       fixture.git('cat-file', '-p', 'refs/branch-metadata/z-later')
     ).to.include(originalSurvivor);
-    expect(fixture.git('rev-parse', 'survivor^')).to.equal(
+    expect(fixture.git('rev-parse', 'survivor~2')).to.equal(
       fixture.git('rev-parse', 'candidate')
     );
     expect(fixture.git('show', 'survivor:main.txt')).to.equal('resolved');
