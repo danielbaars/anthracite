@@ -209,8 +209,10 @@ describe('read-only info inspection', function () {
       'external coordination'
     );
     fixture.git(['branch', '-D', 'tip']);
-    const before = fixture.inspectionSnapshot();
     const cache = path.join(fixture.repo, '.git', '.graphite_cache_persist');
+    // Public tracking now persists a real cache; this scenario deliberately tests absence.
+    fs.rmSync(cache, { force: true });
+    const before = fixture.inspectionSnapshot();
     expect(fs.existsSync(cache)).to.equal(false);
     for (const flags of [
       [],

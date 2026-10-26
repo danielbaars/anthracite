@@ -5,6 +5,7 @@ import { ExitFailedError } from '../lib/errors';
 import { getBranchesToRestack, restackBranches } from './restack';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { clearContinuation } from './persist_continuation';
+import { assertNoGitOperation } from '../lib/git/assert_no_operation';
 
 type TDeleteArgs = { branchName: string; force?: boolean };
 
@@ -27,6 +28,7 @@ export function assertDeleteAllowed(
   const plan = getDeleteSurvivors(args.branchName, context);
   for (const branch of plan.mandatory)
     context.engine.assertBranchEditable(branch);
+  if (plan.replay.length) assertNoGitOperation('delete');
   assertBranchesAvailableInWorktrees([args.branchName, ...plan.replay]);
 }
 
@@ -51,7 +53,8 @@ export function deleteBranchAction(args: TDeleteArgs, context: TContext): void {
     args.branchName,
     SCOPE.UPSTACK_EXCLUSIVE
   );
-  const mandatory = getDeleteSurvivors(args.branchName, context).mandatory;
+  const plan = getDeleteSurvivors(args.branchName, context);
+  const mandatory = plan.mandatory;
   const departure = context.engine.currentBranch;
   context.engine.deleteBranch(args.branchName, () => {
     try {
@@ -67,6 +70,7 @@ export function deleteBranchAction(args: TDeleteArgs, context: TContext): void {
     }
   });
   context.splog.info(`Deleted branch ${chalk.red(args.branchName)}`);
+  if (plan.replay.length === 0) return;
   context.continueConfig.update((data) => {
     data.delete = { branch: args.branchName, mandatory };
     data.branchesToRestack = [...branchesToRestack];

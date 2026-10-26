@@ -823,4 +823,54 @@ describe('frozen branch lifecycle through the public CLI', function () {
     expect(result.stderr).to.include('completed');
     expect(result.stderr).to.include('retained');
   });
+  for (const hasChild of [false, true]) {
+    it(
+      hasChild
+        ? 'refuses a delete needing mandatory replays before disturbing an existing Git operation'
+        : 'deletes a frozen leaf without replacing an unrelated active continuation',
+      () => {
+        if (hasChild) fixture.branch('other-child', 'other');
+        fixture.git(['switch', 'child']);
+        fixture.stage('base.txt', 'child edit');
+        fixture.git(['commit', '-m', 'child edit']);
+        fixture.git(['switch', 'base']);
+        fixture.stage('base.txt', 'parent edit');
+        fixture.git(['commit', '-m', 'parent edit']);
+        expect(fixture.run(['restack', '--upstack']).status).to.equal(1);
+        fixture.ok(['freeze', 'other']);
+        const recovery = fs.readFileSync(
+          path.join(fixture.repo, '.git', '.gtcontinue')
+        );
+        const before = fixture.observe();
+        const result = fixture.run(['delete', 'other', '--force']);
+        if (hasChild) {
+          expect(result.status).to.equal(1);
+          expect(result.stderr).to.include('while Git operation');
+          expect(fixture.observe()).to.deep.equal(before);
+        } else {
+          expect(result.status).to.equal(0);
+          expect(
+            fixture.git([
+              'for-each-ref',
+              '--format=%(refname)',
+              'refs/heads/other',
+              'refs/branch-metadata/other',
+            ])
+          ).to.equal('');
+        }
+        expect(
+          fs.readFileSync(path.join(fixture.repo, '.git', '.gtcontinue'))
+        ).to.deep.equal(recovery);
+        fixture.write('base.txt', 'resolved child');
+        fixture.ok(['continue', '--all']);
+        expect(fixture.git(['rev-parse', 'tip^'])).to.equal(
+          fixture.git(['rev-parse', 'child'])
+        );
+        expect(fixture.git(['show', 'child:base.txt'])).to.equal(
+          'resolved child'
+        );
+        expect(fixture.git(['status', '--porcelain'])).to.equal('');
+      }
+    );
+  }
 });
