@@ -1055,4 +1055,42 @@ printf 'real original hook work' > hook-work.txt
       .and.not.to.include('How would you like to proceed?');
     expect(fixture.observe()).to.deep.equal(before);
   });
+  it('preserves disabled user hooks with core.hooksPath=/dev/null while publishing only editable branches', () => {
+    fixture.branch('target', 'main');
+    fixture.git('config', 'core.hooksPath', '/dev/null');
+    const head = fixture.git('rev-parse', 'target');
+    const result = fixture.run([
+      'submit',
+      '--no-interactive',
+      '--publish',
+      '--reviewers',
+      'alice',
+    ]);
+    expect(result.status, result.stdout + result.stderr).to.equal(0);
+    expect(fixture.remoteSha('target')).to.equal(head);
+    expect(fixture.prs()[0]).to.include({
+      headRefName: 'target',
+      baseRefName: 'main',
+      isDraft: false,
+    });
+    expect(fixture.prs()[0]?.reviewRequests).to.deep.equal([
+      { login: 'alice' },
+    ]);
+    expect(fixture.git('config', '--get', 'core.hooksPath')).to.equal(
+      '/dev/null'
+    );
+    fixture.succeed('freeze');
+    fixture.commit('direct-git-disabled-hooks');
+    const before = fixture.observe();
+    const skipped = fixture.run([
+      'ss',
+      '--no-interactive',
+      '--no-verify',
+      '--force',
+      '--always',
+      '--publish',
+    ]);
+    expect(skipped.status, skipped.stdout + skipped.stderr).to.equal(0);
+    expect(fixture.observe()).to.deep.equal(before);
+  });
 });

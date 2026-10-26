@@ -26,7 +26,7 @@ export function withFrozenPushGuard(
         )}\nexport GIT_CONFIG_PARAMETERS\n`);
   try {
     // Leave other push-related hooks with their existing executable semantics.
-    if (fs.existsSync(hooks)) {
+    if (fs.existsSync(hooks) && fs.statSync(hooks).isDirectory()) {
       for (const name of fs.readdirSync(hooks)) {
         const original = path.join(hooks, name);
         if (!fs.existsSync(original) || !fs.statSync(original).isFile())
