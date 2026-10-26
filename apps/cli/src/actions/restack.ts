@@ -83,6 +83,7 @@ export function restackBranches(
   );
   while (branchNames.length > 0) {
     assertDeleteRecoveryEditable(context.continueConfig.data.delete);
+    assertContinuationBranchesEditable(context.continueConfig.data);
     const branchName = branchNames.shift();
     if (!branchName) continue;
 
@@ -99,8 +100,6 @@ export function restackBranches(
     }
 
     try {
-      assertDeleteRecoveryEditable(context.continueConfig.data.delete);
-      assertContinuationBranchesEditable(context.continueConfig.data);
       if (context.continueConfig.data.reorder) {
         uncommittedTrackedChangesPrecondition();
         assertReorderFilesAvailable(context);
@@ -169,6 +168,7 @@ export function restackBranches(
       ) {
         recordRestackCompletion(error.branchName, context);
       }
+      assertDeleteRecoveryEditable(context.continueConfig.data.delete);
       reportMoveFailure(branchName, branchNames, context);
       reportReorderFailure(
         context,

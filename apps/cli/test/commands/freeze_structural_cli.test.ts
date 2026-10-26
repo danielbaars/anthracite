@@ -449,4 +449,198 @@ describe('frozen structural participants through the public CLI', function () {
     ).to.deep.equal(index);
     expect(fixture.ok(['info', 'base'])).to.include('Parent: main');
   });
+  it('guards a mandatory parent-name change even when every selected tip is identical', () => {
+    fixture.ok(['c', 'empty-a', '-o', 'main']);
+    fixture.ok(['c', 'empty-b']);
+    fixture.ok(['c', 'empty-c']);
+    const input = path.join(fixture.root, 'empty-order');
+    fs.writeFileSync(input, 'empty-c\nempty-a\nempty-b\n');
+    const parent = fixture.git(['rev-parse', 'refs/branch-metadata/empty-b']);
+    const refs = fixture.refs();
+    const cli = getTestCliCommand(['freeze', 'empty-a', '--no-interactive']);
+    const marker = path.join(fixture.root, 'once');
+    const hook = path.join(
+      fixture.repo,
+      '.git',
+      'hooks',
+      'reference-transaction'
+    );
+    fs.writeFileSync(
+      hook,
+      `#!/bin/sh\ninput=$(cat)\nif [ "$1" = prepared ] && [ ! -f '${marker}' ]; then\ncase "$input" in\n*refs/branch-metadata/empty-b*)\n: > '${marker}'\n${cli
+        .map((value) => `'${value.replace(/'/g, `'"'"'`)}'`)
+        .join(' ')}\n;;\nesac\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['reorder', '--input', input]);
+    expect(result.status).to.equal(1);
+    expect(result.stderr).to.include('ch unfreeze empty-a');
+    expect(fixture.git(['rev-parse', 'refs/branch-metadata/empty-b'])).to.equal(
+      parent
+    );
+    expect(fixture.refs()).to.equal(refs);
+    expect(fixture.ok(['info', 'empty-b'])).to.include('Parent: empty-a');
+    fs.unlinkSync(hook);
+    fixture.ok(['unfreeze', 'empty-a']);
+    fixture.ok(['ro', '--input', input]);
+    expect(fixture.ok(['info', 'empty-b'])).to.include('Parent: main');
+    expect(fixture.ok(['info', 'empty-a'])).to.include('Parent: empty-b');
+    expect(fixture.ok(['info', 'empty-c'])).to.include('Parent: empty-a');
+    expect(fixture.refs()).to.equal(refs);
+  });
+
+  it('protects a remaining DELETE survivor through the same real pre-rebase hook boundary', () => {
+    fixture.branch('z-sibling', 'base');
+    fixture.git(['switch', 'child']);
+    fixture.env.GIT_COMMITTER_DATE = '2030-01-01T00:00:00Z';
+    fixture.git(['commit', '--amend', '--no-edit']);
+    delete fixture.env.GIT_COMMITTER_DATE;
+    fixture.ok(['restack', '--upstack']);
+    fixture.git(['switch', 'base']);
+    const child = fixture.git(['rev-parse', 'child']);
+    const sibling = fixture.git(['rev-parse', 'z-sibling']);
+    const cli = getTestCliCommand(['freeze', 'z-sibling', '--no-interactive']);
+    const hook = path.join(fixture.repo, '.git', 'hooks', 'pre-rebase');
+    fs.writeFileSync(
+      hook,
+      `#!/bin/sh\nif [ "$2" = child ]; then\n${cli
+        .map((value) => `'${value.replace(/'/g, `'"'"'`)}'`)
+        .join(' ')}\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['delete', 'base', '--force']);
+    expect(result.status).to.equal(1);
+    expect(result.stdout + result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stdout + result.stderr).to.include('already been deleted');
+    expect(fixture.git(['branch', '--list', 'base'])).to.equal('');
+    expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
+    expect(fixture.git(['rev-parse', 'z-sibling'])).to.equal(sibling);
+    fs.unlinkSync(hook);
+    fixture.ok(['unfreeze', 'z-sibling']);
+    fixture.ok(['restack', '--branch', 'child']);
+    fixture.ok(['restack', '--branch', 'z-sibling']);
+    expect(fixture.git(['rev-parse', 'child^'])).to.equal(
+      fixture.git(['rev-parse', 'main'])
+    );
+    expect(fixture.git(['rev-parse', 'z-sibling^'])).to.equal(
+      fixture.git(['rev-parse', 'main'])
+    );
+    expect(fixture.git(['show', 'child:child.txt'])).to.equal('child');
+    expect(fixture.git(['show', 'z-sibling:z-sibling.txt'])).to.equal(
+      'z-sibling'
+    );
+  });
+
+  it('retains an actual completed move rewrite and blocks metadata publication after a post-rewrite hook freezes remaining work', () => {
+    fixture.branch('z-sibling', 'base');
+    fixture.git(['switch', 'child']);
+    fixture.env.GIT_COMMITTER_DATE = '2030-01-01T00:00:00Z';
+    fixture.git(['commit', '--amend', '--no-edit']);
+    delete fixture.env.GIT_COMMITTER_DATE;
+    fixture.ok(['restack', '--upstack']);
+    fixture.git(['switch', 'base']);
+    const child = fixture.git(['rev-parse', 'child']);
+    const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/child']);
+    const cli = getTestCliCommand(['freeze', 'z-sibling', '--no-interactive']);
+    const hook = path.join(fixture.repo, '.git', 'hooks', 'post-rewrite');
+    fs.writeFileSync(
+      hook,
+      `#!/bin/sh\ninput=$(cat)\ncase "$input" in\n*${child}*)\n${cli
+        .map((value) => `'${value.replace(/'/g, `'"'"'`)}'`)
+        .join(' ')}\n;;\nesac\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['move', '-o', 'other']);
+    expect(result.status).to.equal(1);
+    expect(result.stdout + result.stderr).to.include('ch unfreeze z-sibling');
+    const completed = fixture.git(['rev-parse', 'child']);
+    expect(completed).not.to.equal(child);
+    expect(fixture.git(['show', 'child:child.txt'])).to.equal('child');
+    expect(fixture.git(['show', 'child:other.txt'])).to.equal('other');
+    expect(fixture.git(['rev-parse', 'refs/branch-metadata/child'])).to.equal(
+      metadata
+    );
+    expect(result.stdout + result.stderr).to.include(
+      'Rewrite of child completed, but metadata publication failed'
+    );
+    expect(result.stdout + result.stderr).to.include(
+      'Completed branches: base, child'
+    );
+    fs.unlinkSync(hook);
+    fixture.ok(['unfreeze', 'z-sibling']);
+    fixture.ok(['track', 'child', '--parent', 'base']);
+    fixture.ok(['restack', '--branch', 'tip']);
+    fixture.ok(['restack', '--branch', 'z-sibling']);
+    expect(fixture.git(['rev-parse', 'child'])).to.equal(completed);
+    expect(fixture.git(['rev-parse', 'tip^'])).to.equal(completed);
+    expect(fixture.git(['rev-parse', 'child^'])).to.equal(
+      fixture.git(['rev-parse', 'base'])
+    );
+  });
+
+  it('guards local DELETE parent metadata after a prepared hook freezes another survivor while still allowing a frozen target', () => {
+    fixture.branch('z-sibling', 'base');
+    fixture.git(['switch', 'child']);
+    fixture.env.GIT_COMMITTER_DATE = '2030-01-01T00:00:00Z';
+    fixture.git(['commit', '--amend', '--no-edit']);
+    delete fixture.env.GIT_COMMITTER_DATE;
+    fixture.ok(['restack', '--upstack']);
+    fixture.git(['switch', 'base']);
+    fixture.ok(['freeze', 'base']);
+    const refs = fixture.refs();
+    const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/child']);
+    const cli = getTestCliCommand(['freeze', 'z-sibling', '--no-interactive']);
+    const marker = path.join(fixture.root, 'once');
+    const hook = path.join(
+      fixture.repo,
+      '.git',
+      'hooks',
+      'reference-transaction'
+    );
+    fs.writeFileSync(
+      hook,
+      `#!/bin/sh\ninput=$(cat)\nif [ "$1" = prepared ] && [ ! -f '${marker}' ]; then\ncase "$input" in\n*refs/branch-metadata/child*)\n: > '${marker}'\n${cli
+        .map((value) => `'${value.replace(/'/g, `'"'"'`)}'`)
+        .join(' ')}\n;;\nesac\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['delete', 'base', '--force']);
+    expect(result.status).to.equal(1);
+    expect(result.stderr).to.include('ch unfreeze z-sibling');
+    expect(fixture.refs()).to.equal(refs);
+    expect(fixture.git(['rev-parse', 'refs/branch-metadata/child'])).to.equal(
+      metadata
+    );
+    expect(fixture.git(['branch', '--show-current'])).to.equal('main');
+    expect(fixture.ok(['info', 'child'])).to.include('Parent: base');
+    expect(fixture.ok(['info', 'base'])).to.include('(frozen)');
+    fs.unlinkSync(hook);
+    fixture.ok(['unfreeze', 'z-sibling']);
+    fixture.ok(['delete', 'base', '--force']);
+    expect(fixture.git(['branch', '--list', 'base'])).to.equal('');
+    expect(fixture.git(['rev-parse', 'child^'])).to.equal(
+      fixture.git(['rev-parse', 'main'])
+    );
+    expect(fixture.git(['rev-parse', 'z-sibling^'])).to.equal(
+      fixture.git(['rev-parse', 'main'])
+    );
+    expect(fixture.git(['show', 'child:child.txt'])).to.equal('child');
+  });
+  for (const command of ['fold', 'reorder'])
+    it(`${command} refuses a new ordinary structural plan before changing an existing replay or recovery ownership`, () => {
+      moveConflict(fixture);
+      const input = path.join(fixture.root, 'unrelated-order');
+      fs.writeFileSync(input, 'base\n');
+      const before = fixture.observe();
+      const saved = recovery(fixture);
+      const result = fixture.run(
+        command === 'fold' ? ['fold', '--keep'] : ['ro', '--input', input]
+      );
+      expect(result.status).to.equal(1);
+      expect(fixture.observe()).to.deep.equal(before);
+      expect(recovery(fixture)).to.deep.equal(saved);
+      expect(result.stderr).to.include(
+        'while Git operation rebase-merge is active'
+      );
+    });
 });

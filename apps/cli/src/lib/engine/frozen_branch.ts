@@ -32,6 +32,7 @@ export function assertContinuationBranchesEditable(
 }
 
 export function getMandatoryBranches(data: TContinueConfig['data']): string[] {
+  if (data.delete) return [...data.delete.mandatory];
   const role = data.move ?? data.fold ?? data.insert ?? data.reorder;
   if (!role) return [];
   const names =

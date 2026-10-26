@@ -35,8 +35,6 @@ import {
   assertBranchEditable,
   assertContinuationBranchesEditable,
 } from './engine/frozen_branch';
-import { continueConfigFactory } from './spiffy/continuation_spf';
-import { repoConfigFactory } from './spiffy/repo_config_spf';
 
 export async function graphite(
   args: yargs.Arguments & TGlobalArguments,
@@ -150,15 +148,12 @@ async function graphiteInternal(
     }
     if (canonicalName === 'continue' && git.rebaseInProgress()) {
       const activeBranch = git.getRebaseHead();
-      assertContinuationBranchesEditable(
-        continueConfigFactory.load(undefined, { preserveInvalid: true }).data,
-        activeBranch
-      );
       if (activeBranch) assertBranchEditable(activeBranch);
-      assertDeleteRecoveryEditable(
-        continueConfigFactory.load(undefined, { preserveInvalid: true }).data
-          .delete
-      );
+      const data = continueConfigFactory.load(undefined, {
+        preserveInvalid: true,
+      }).data;
+      assertContinuationBranchesEditable(data, activeBranch);
+      assertDeleteRecoveryEditable(data.delete);
     }
     await preflightLifecycle(args, canonicalName, git);
     const contextLite = initContextLite({

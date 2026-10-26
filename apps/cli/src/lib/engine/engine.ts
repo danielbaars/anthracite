@@ -32,7 +32,6 @@ import { validateOrFixParentBranchRevision } from './parse_branches_and_meta';
 import { TScopeSpec } from './scope_spec';
 import { publishFoldStackRefs } from '../git/fold_stack';
 import { assertBranchEditable } from './frozen_branch';
-import { withFrozenCommitGuard } from '../git/frozen_commit';
 
 export type TEngine = {
   debug: string;
@@ -115,7 +114,11 @@ export type TEngine = {
     survivor: string,
     roots?: readonly string[]
   ) => void;
-  deleteBranch: (branchName: string, beforeDelete?: () => void) => void;
+  deleteBranch: (
+    branchName: string,
+    beforeDelete?: () => void,
+    participants?: readonly string[]
+  ) => void;
   commit: (opts: TCommitOpts) => void;
   squashCurrentBranch: (opts: { message?: string; noEdit?: boolean }) => void;
 
@@ -471,7 +474,8 @@ export function composeEngine({
 
   const deleteAllBranchData = (
     branchName: string,
-    participants?: readonly string[]
+    participants?: readonly string[],
+    frozenGuardBranch?: string
   ) => {
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
@@ -480,7 +484,7 @@ export function composeEngine({
     try {
       git.deleteBranch(
         branchName,
-        participants?.length ? branchName : undefined,
+        participants?.length ? frozenGuardBranch ?? branchName : undefined,
         participants
       );
       for (const name of participants ?? []) assertBranchEditable(name);
@@ -495,18 +499,23 @@ export function composeEngine({
 
   const handleSuccessfulRebase = (
     branchName: string,
-    parentBranchRevision: string
+    parentBranchRevision: string,
+    participants?: readonly string[]
   ) => {
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
     const branchRevision = git.getShaOrThrow(`refs/heads/${branchName}`);
     try {
       assertBranchEditable(branchName);
-      updateMeta(branchName, {
-        ...cachedMeta,
-        branchRevision,
-        parentBranchRevision,
-      });
+      updateMeta(
+        branchName,
+        {
+          ...cachedMeta,
+          branchRevision,
+          parentBranchRevision,
+        },
+        participants
+      );
     } catch (error) {
       throw new RebaseMetadataError(branchName, error);
     }
@@ -960,7 +969,11 @@ export function composeEngine({
         deleteAllBranchData(currentBranchName, participants);
       }
     },
-    deleteBranch: (branchName: string, beforeDelete?: () => void) => {
+    deleteBranch: (
+      branchName: string,
+      beforeDelete?: () => void,
+      participants?: readonly string[]
+    ) => {
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
       if (branchName === cache.currentBranch) {
@@ -970,10 +983,10 @@ export function composeEngine({
       beforeDelete?.();
       for (const childBranchName of [...cachedMeta.children]) {
         beforeDelete?.();
-        setParent(childBranchName, cachedMeta.parentBranchName);
+        setParent(childBranchName, cachedMeta.parentBranchName, participants);
       }
       beforeDelete?.();
-      deleteAllBranchData(branchName);
+      deleteAllBranchData(branchName, participants, participants?.[0]);
     },
     commit: (opts: TCommitOpts) => {
       const branchName = getCurrentBranchOrThrow();
@@ -1154,7 +1167,7 @@ export function composeEngine({
           rebasedBranchBase: newBase,
         };
       }
-      handleSuccessfulRebase(branchName, newBase);
+      handleSuccessfulRebase(branchName, newBase, participants);
       return { result: 'REBASE_DONE' };
     },
     rebaseInteractive: (branchName: string) => {
@@ -1181,8 +1194,8 @@ export function composeEngine({
       const activeBranch = git.getRebaseHead();
       if (activeBranch) assertBranchEditable(activeBranch);
       const result = git.rebaseContinue(activeBranch, participants);
-      for (const name of participants ?? []) assertBranchEditable(name);
       if (result === 'REBASE_CONFLICT') {
+        for (const name of participants ?? []) assertBranchEditable(name);
         if (activeBranch) assertBranchEditable(activeBranch);
         return { result };
       }
@@ -1193,7 +1206,7 @@ export function composeEngine({
         );
       }
       assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
-      handleSuccessfulRebase(branchName, parentBranchRevision);
+      handleSuccessfulRebase(branchName, parentBranchRevision, participants);
       return { result, branchName };
     },
     abortRebase: () => {

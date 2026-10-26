@@ -65,19 +65,26 @@ export function deleteBranchAction(args: TDeleteArgs, context: TContext): void {
   const plan = getDeleteSurvivors(args.branchName, context);
   const mandatory = plan.mandatory;
   const departure = context.engine.currentBranch;
-  context.engine.deleteBranch(args.branchName, () => {
-    try {
-      for (const branch of mandatory)
-        context.engine.assertBranchEditable(branch);
-      assertDeleteAllowed(args, context);
-    } catch (error) {
-      if (context.engine.currentBranch !== departure && error instanceof Error)
-        throw new ExitFailedError(
-          `${error.message}\nChecked out ${context.engine.currentBranch}; ${args.branchName} has not been deleted. Completed metadata changes are retained.`
-        );
-      throw error;
-    }
-  });
+  context.engine.deleteBranch(
+    args.branchName,
+    () => {
+      try {
+        for (const branch of mandatory)
+          context.engine.assertBranchEditable(branch);
+        assertDeleteAllowed(args, context);
+      } catch (error) {
+        if (
+          context.engine.currentBranch !== departure &&
+          error instanceof Error
+        )
+          throw new ExitFailedError(
+            `${error.message}\nChecked out ${context.engine.currentBranch}; ${args.branchName} has not been deleted. Completed metadata changes are retained.`
+          );
+        throw error;
+      }
+    },
+    mandatory
+  );
   context.splog.info(`Deleted branch ${chalk.red(args.branchName)}`);
   if (plan.replay.length === 0) return;
   context.continueConfig.update((data) => {

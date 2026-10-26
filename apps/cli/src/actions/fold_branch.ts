@@ -4,8 +4,10 @@ import { SCOPE } from '../lib/engine/scope_spec';
 import { getBranchesToRestack, restackBranches } from './restack';
 import { clearContinuation } from './persist_continuation';
 import { getCurrentBranchName } from '../lib/git/branch_ops';
+import { assertNoGitOperation } from '../lib/git/assert_no_operation';
 
 export function foldCurrentBranch(keep: boolean, context: TContext): void {
+  assertNoGitOperation('fold');
   const currentBranchName = context.engine.currentBranchPrecondition;
   const parentBranchName =
     context.engine.getParentPrecondition(currentBranchName);

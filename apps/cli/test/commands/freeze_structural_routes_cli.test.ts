@@ -327,4 +327,30 @@ describe('frozen structural route coverage through the public CLI', function () 
     fixture.git(['merge', '--no-edit', 'main']);
     refused(fixture, ['move', '-o', 'other'], 'tip');
   });
+  it('ordinary fold keep preserves an unchanged frozen child as a read-only anchor', () => {
+    freezeOnly(fixture, 'tip', 'child');
+    fixture.git(['switch', 'child']);
+    const child = fixture.git(['rev-parse', 'child']);
+    const tip = fixture.git(['rev-parse', 'tip']);
+    const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/tip']);
+    const remote = path.join(fixture.root, 'remote.git');
+    const remoteRefs = fixture.git(
+      ['for-each-ref', '--format=%(refname) %(objectname)'],
+      remote
+    );
+    fixture.ok(['fold', '--keep']);
+    expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
+    expect(fixture.git(['rev-parse', 'tip'])).to.equal(tip);
+    expect(fixture.git(['rev-parse', 'refs/branch-metadata/tip'])).to.equal(
+      metadata
+    );
+    expect(fixture.git(['branch', '--list', 'base'])).to.equal('');
+    expect(fixture.ok(['info', 'child'])).to.include('Parent: main');
+    expect(fixture.ok(['info', 'tip'])).to.include('Parent: child');
+    expect(fixture.ok(['info', 'tip'])).to.include('(frozen)');
+    expect(fixture.git(['show', 'tip:tip.txt'])).to.equal('tip');
+    expect(
+      fixture.git(['for-each-ref', '--format=%(refname) %(objectname)'], remote)
+    ).to.equal(remoteRefs);
+  });
 });

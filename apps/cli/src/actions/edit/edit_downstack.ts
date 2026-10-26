@@ -7,11 +7,13 @@ import { getBranchesToRestack, restackBranches } from '../restack';
 import { createStackEditFile, parseEditFile } from './stack_edit_file';
 import { beginReorder, finishReorder } from '../reorder_recovery';
 import { clearContinuation } from '../persist_continuation';
+import { assertNoGitOperation } from '../../lib/git/assert_no_operation';
 
 export async function editDownstack(
   inputPath: string | undefined,
   context: TContext
 ): Promise<void> {
+  assertNoGitOperation('reorder');
   context.engine.assertBranchEditable(context.engine.currentBranchPrecondition);
   if (!inputPath) ensureEditorAllowedPrecondition(context);
   // First, reorder the parent pointers of the branches
@@ -37,15 +39,17 @@ export async function editDownstack(
   const reparented = branchNames.filter(
     (name) => context.engine.getParent(name) !== parents.get(name)
   );
-  const changing = getBranchesToRestack(
-    [...branchNames, ...branches.filter((name) => !branchNames.includes(name))],
-    context,
-    { parents }
+  const restackOrder = [
+    ...branchNames,
+    ...branches.filter((name) => !branchNames.includes(name)),
+  ];
+  const changing = getBranchesToRestack(restackOrder, context, { parents });
+  const mandatory = restackOrder.filter(
+    (name) => reparented.includes(name) || changing.includes(name)
   );
   for (const name of new Set([
     context.engine.currentBranchPrecondition,
-    ...reparented,
-    ...changing,
+    ...mandatory,
   ]))
     context.engine.assertBranchEditable(name);
   for (const name of branches)
@@ -62,14 +66,14 @@ export async function editDownstack(
           { from: context.engine.getBaseRevision(name) },
         ])
       ),
-      pending: changing,
+      pending: mandatory,
     },
     context
   );
 
   // We to check out the top of the new stack BEFORE we restack in case of conflicts.
   context.engine.checkoutBranch(top);
-  restackBranches(changing, context);
+  restackBranches(mandatory, context);
   finishReorder(context);
   clearContinuation(context);
 }

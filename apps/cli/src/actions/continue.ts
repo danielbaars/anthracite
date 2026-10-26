@@ -82,6 +82,7 @@ export async function continueAction(
       error instanceof RebaseCheckoutError ||
       error instanceof RebaseMetadataError
     ) {
+      recordDeleteCompletion(error.branchName, context);
       recordMoveCompletion(error.branchName, context);
       recordReorderCompletion(error.branchName, context);
     }
