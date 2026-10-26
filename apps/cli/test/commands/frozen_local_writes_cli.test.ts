@@ -662,4 +662,97 @@ const r=cp.spawnSync(${JSON.stringify(freeze[0])},${JSON.stringify(
     expect(fixture.refs()).to.equal(refs);
     expect(fixture.git(['branch', '--list', 'lower', 'upper'])).to.equal('');
   });
+  it('preserves a final post-rewrite freeze before interactive metadata writes', () => {
+    fixture.git(['switch', 'tip']);
+    const before = fixture.git(['rev-parse', 'tip']);
+    fixture.env.GIT_SEQUENCE_EDITOR = script(
+      'sequence',
+      "const f=process.argv[2];fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace(/^pick /m,'reword '));"
+    );
+    fixture.env.GIT_EDITOR = script(
+      'message',
+      "fs.writeFileSync(process.argv[2],'rewritten before final hook\\n');"
+    );
+    fs.writeFileSync(
+      path.join(fixture.repo, '.git/hooks/post-rewrite'),
+      `#!/bin/sh\nif [ "$1" = rebase ]; then ${freezeCommand()} || exit $?; printf 'final hook work' > final-hook.txt; fi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['e', '--interactive']);
+    expect(fixture.ok(['info', 'tip'])).to.include('(frozen)');
+    expect(result.status, result.stdout + result.stderr).to.equal(1);
+    expect(result.stderr).to.include('frozen branch tip');
+    expect(fixture.git(['rev-parse', 'tip'])).not.to.equal(before);
+    expect(fixture.git(['log', '-1', '--format=%s', 'tip'])).to.equal(
+      'rewritten before final hook'
+    );
+    expect(fixture.ok(['info', 'tip'])).to.include('(frozen)');
+    expect(
+      fs.readFileSync(path.join(fixture.repo, 'final-hook.txt'), 'utf8')
+    ).to.equal('final hook work');
+    expect(
+      fs.existsSync(path.join(fixture.repo, '.git/rebase-merge'))
+    ).to.equal(false);
+  });
+  it('preserves tracked editor work when an editable hunk editor fails', () => {
+    fixture.git(['switch', 'tip']);
+    const head = fixture.git(['rev-parse', 'tip']);
+    fixture.env.GIT_EDITOR = script(
+      'editor',
+      "fs.writeFileSync('main.txt','editor tracked work');fs.writeFileSync('extra.txt','editor untracked work');process.exitCode=17;"
+    );
+    const result = runCliInPty(getTestCliCommand(['sp', '--by-hunk']), {
+      cwd: fixture.repo,
+      env: fixture.env,
+      responses: [{ prompt: 'Stage addition', input: 'y\r' }],
+    });
+    expect(result.status, result.output).to.equal(1);
+    expect(
+      fs.readFileSync(path.join(fixture.repo, 'main.txt'), 'utf8')
+    ).to.equal('editor tracked work');
+    expect(
+      fs.readFileSync(path.join(fixture.repo, 'extra.txt'), 'utf8')
+    ).to.equal('editor untracked work');
+    expect(fixture.git(['rev-parse', 'tip'])).to.equal(head);
+    expect(fixture.git(['show', ':tip.txt'])).to.equal('');
+    expect(fixture.git(['branch', '--show-current'])).to.equal('');
+    fixture.git(['switch', '-c', 'hunk-recovery']);
+    fixture.git(['add', 'tip.txt']);
+    fixture.git(['commit', '-m', 'save split content']);
+    expect(fixture.git(['rev-parse', 'hunk-recovery^{tree}'])).to.equal(
+      fixture.git(['rev-parse', 'tip^{tree}'])
+    );
+    fixture.ok(['checkout', 'tip']);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('tip');
+    expect(
+      fs.readFileSync(path.join(fixture.repo, 'main.txt'), 'utf8')
+    ).to.equal('editor tracked work');
+  });
+  it('rechecks a successful hunk commit hook freeze before the next prompt', () => {
+    fixture.git(['switch', 'tip']);
+    const source = fixture.git(['rev-parse', 'tip']);
+    const tree = fixture.git(['rev-parse', 'tip^{tree}']);
+    fixture.env.GIT_EDITOR = 'true';
+    fs.writeFileSync(
+      path.join(fixture.repo, '.git/hooks/post-commit'),
+      `#!/bin/sh\n${freezeCommand()} || exit $?\nprintf 'post commit work' > post-work.txt\n`,
+      { mode: 0o755 }
+    );
+    const result = runCliInPty(getTestCliCommand(['split', '-h']), {
+      cwd: fixture.repo,
+      env: fixture.env,
+      responses: [{ prompt: 'Stage addition', input: 'y\r' }],
+    });
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output)
+      .to.include('frozen branch tip')
+      .and.not.include('Choose a name for branch');
+    expect(fixture.git(['rev-parse', 'tip'])).to.equal(source);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('');
+    expect(fixture.git(['rev-parse', 'HEAD^{tree}'])).to.equal(tree);
+    expect(
+      fs.readFileSync(path.join(fixture.repo, 'post-work.txt'), 'utf8')
+    ).to.equal('post commit work');
+    expect(fixture.ok(['info', 'tip'])).to.include('(frozen)');
+  });
 });

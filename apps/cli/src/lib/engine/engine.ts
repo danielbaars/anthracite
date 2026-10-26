@@ -1094,6 +1094,7 @@ export function composeEngine({
         };
       }
 
+      assertBranchEditable(branchName);
       handleSuccessfulRebase(branchName, cachedMeta.parentBranchRevision);
       return { result: 'REBASE_DONE' };
     },

@@ -285,14 +285,12 @@ async function splitByHunk(
       );
     }
   } catch (e) {
-    if (context.engine.isBranchFrozen(branchToSplit)) throw e;
-    // Handle a CTRL-C gracefully
-    context.engine.forceCheckoutBranch(branchToSplit);
+    // External editors may have added work that a forced checkout would erase.
     context.splog.newline();
     context.splog.info(
-      `Exited early: no new branches created. You are still on ${chalk.cyan(
+      `Split stopped before new branch names were created. Index and working tree preserved; original branch ${chalk.cyan(
         branchToSplit
-      )}.`
+      )} remains available for recovery.`
     );
     throw e;
   }
@@ -340,6 +338,7 @@ async function promptNextBranchName(
   },
   context: TContext
 ): Promise<string> {
+  context.engine.assertBranchEditable(branchToSplit);
   const { branchName } = await context.prompts({
     type: 'text',
     name: 'branchName',
