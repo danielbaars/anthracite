@@ -190,6 +190,19 @@ respond(JSON.stringify(selected) + '\\n');\n`,
         ? fs.readFileSync(recovery).toString('base64')
         : null,
       rebase: fs.existsSync(rebase),
+      rebaseFiles: fs.existsSync(rebase)
+        ? Object.fromEntries(
+            fs
+              .readdirSync(rebase, { withFileTypes: true })
+              .filter((entry) => entry.isFile())
+              .map((entry) => [
+                entry.name,
+                fs
+                  .readFileSync(path.join(rebase, entry.name))
+                  .toString('base64'),
+              ])
+          )
+        : null,
       files,
     };
   }

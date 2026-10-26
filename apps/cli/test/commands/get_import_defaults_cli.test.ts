@@ -544,12 +544,24 @@ describe('get CLI new import defaults', function () {
     fixture.git(other, 'add', 'main.txt');
     fs.appendFileSync(path.join(other, 'main.txt'), ' and unstaged');
     fixture.git(other, 'status', '--porcelain');
+    const linkedBefore = fixture.observe(other);
     const index = fixture.git(other, 'rev-parse', '--git-path', 'index');
     const indexBytes = fs.readFileSync(index);
     const stages = fixture.git(other, 'ls-files', '--stage');
     const result = fixture.run(['g', '2', '-f', '-U']);
     expect(result.status, result.output).to.equal(1);
     expect(result.output).to.include(other);
+    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    if (evidence)
+      fs.appendFileSync(
+        path.join(evidence, 'import-worktree-observations.jsonl'),
+        JSON.stringify({
+          root: fixture.root,
+          other,
+          before: linkedBefore,
+          after: fixture.observe(other),
+        }) + '\n'
+      );
     expect(fs.readFileSync(index)).to.deep.equal(indexBytes);
     expect(fixture.git(other, 'ls-files', '--stage')).to.equal(stages);
     expect(fs.readFileSync(path.join(other, 'main.txt'), 'utf8')).to.equal(
