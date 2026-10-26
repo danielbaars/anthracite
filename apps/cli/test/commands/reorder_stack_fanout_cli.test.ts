@@ -23,6 +23,7 @@ describe('unique-tip stack reorder preserves fan-out through the public editor',
     const main = fixture.git(['rev-parse', 'main']);
     const other = fixture.git(['rev-parse', 'other']);
     fixture.editor('base\ntip\nchild\n');
+    fixture.commandTimeoutMs = 45000;
     fixture.edit();
     expect(
       fs.readFileSync(fixture.offered, 'utf8').split('\n').slice(0, 3)

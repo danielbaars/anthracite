@@ -10,6 +10,7 @@ export class ReorderCliFixture {
   readonly repo = path.join(this.root, 'repo');
   readonly offered = path.join(this.root, 'offered');
   readonly env: NodeJS.ProcessEnv;
+  commandTimeoutMs = 20000;
   constructor(environment: NodeJS.ProcessEnv = process.env) {
     fs.mkdirSync(this.repo);
     const config = path.join(this.root, 'user-config');
@@ -59,26 +60,31 @@ export class ReorderCliFixture {
     return output;
   }
   run(args: readonly string[], cwd = this.repo): SpawnSyncReturns<string> {
+    const timeoutMs = this.commandTimeoutMs;
     const [executable, ...cliArgs] = getTestCliCommand(args);
     const result = spawnSync(executable, cliArgs, {
       cwd,
       env: this.env,
       encoding: 'utf8',
-      timeout: 20000,
+      timeout: timeoutMs,
     });
-    if (result.error) throw result.error;
-    if (result.signal) throw new Error(`CLI killed by ${result.signal}`);
     if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
       fs.appendFileSync(
         path.join(this.root, 'cli.jsonl'),
         JSON.stringify({
           args,
+          command: [executable, ...cliArgs],
           cwd,
+          timeoutMs,
+          signal: result.signal,
+          error: result.error?.message,
           status: result.status,
           stdout: result.stdout,
           stderr: result.stderr,
         }) + '\n'
       );
+    if (result.error) throw result.error;
+    if (result.signal) throw new Error(`CLI killed by ${result.signal}`);
     return result;
   }
   ok(args: readonly string[], cwd = this.repo): string {

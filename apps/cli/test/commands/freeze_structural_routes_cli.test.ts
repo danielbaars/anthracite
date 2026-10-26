@@ -159,6 +159,9 @@ describe('frozen structural route coverage through the public CLI', function () 
           fixture.git(['rev-parse', 'refs/branch-metadata/base'])
         ).to.equal(metadata);
         expect(fixture.git(['rev-parse', 'other'])).to.equal(other);
+        expect(fixture.git(['branch', '--show-current'])).to.equal(
+          stack ? 'tip' : 'child'
+        );
       });
     }
 

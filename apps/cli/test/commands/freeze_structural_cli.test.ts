@@ -254,6 +254,11 @@ describe('frozen structural participants through the public CLI', function () {
 
   it('rechecks the entire remaining move plan after a pre-rebase hook freezes a later sibling', () => {
     fixture.branch('z-sibling', 'base');
+    fixture.git(['switch', 'child']);
+    fixture.env.GIT_COMMITTER_DATE = '2030-01-01T00:00:00Z';
+    fixture.git(['commit', '--amend', '--no-edit']);
+    delete fixture.env.GIT_COMMITTER_DATE;
+    fixture.ok(['restack', '--upstack']);
     fixture.git(['switch', 'base']);
     const child = fixture.git(['rev-parse', 'child']);
     const base = fixture.git(['rev-parse', 'base']);

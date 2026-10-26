@@ -1,5 +1,6 @@
 import { ensureEditorAllowedPrecondition } from '../../lib/preconditions';
 import { TContext } from '../../lib/context';
+import { PreconditionsFailedError } from '../../lib/errors';
 import { SCOPE } from '../../lib/engine/scope_spec';
 import { performInTmpDir } from '../../lib/utils/perform_in_tmp_dir';
 import { getBranchesToRestack, restackBranches } from '../restack';
@@ -17,6 +18,9 @@ export async function editDownstack(
   const branchNames = inputPath
     ? parseEditFile(inputPath) // allow users to pass a pre-written file, mostly for unit tests.
     : await promptForEdit(context);
+  const top = branchNames[branchNames.length - 1];
+  if (!top)
+    throw new PreconditionsFailedError('Reorder requires at least one branch.');
   const parents = new Map<string, string>();
   let parent = context.engine.trunk;
   for (const name of branchNames) {
@@ -49,7 +53,7 @@ export async function editDownstack(
       parents.set(name, context.engine.getParentPrecondition(name));
   beginReorder(
     {
-      returnBranch: context.engine.currentBranchPrecondition,
+      returnBranch: top,
       order: branchNames,
       parents,
       original: new Map(
@@ -64,7 +68,7 @@ export async function editDownstack(
   );
 
   // We to check out the top of the new stack BEFORE we restack in case of conflicts.
-  context.engine.checkoutBranch(branchNames.reverse()[0]);
+  context.engine.checkoutBranch(top);
   restackBranches(changing, context);
   finishReorder(context);
   clearContinuation(context);

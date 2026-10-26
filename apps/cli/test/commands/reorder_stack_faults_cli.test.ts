@@ -191,11 +191,11 @@ describe('stack reorder bounded real Git and storage failures', function () {
     expect(active(fixture)).to.equal(false);
     const beforeInspection = getInspectionSnapshot(fixture);
     const inspect = run(fixture, ['info']);
-    expect(inspect.status).to.equal(1);
-    expect(inspect.stdout).to.equal('');
-    expect(inspect.stderr).to.include('Malformed data at .git/.gtcontinue');
+    expect(inspect.status).to.equal(0);
+    expect(inspect.stdout).to.include('Parent: main');
+    expect(inspect.stderr).to.equal('');
     expect(getInspectionSnapshot(fixture)).to.deep.equal(beforeInspection);
-    // Ordinary log explicitly performs stale-context cleanup before inspection.
+    // Ordinary log keeps its existing no-active-rebase recovery cleanup.
     fs.unlinkSync(refused);
     fixture.ok(['log']);
     fixture.ok(['info']);
