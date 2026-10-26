@@ -250,6 +250,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@danerwilliams/gti-cli-shared-types@workspace:*, @danerwilliams/gti-cli-shared-types@workspace:libs/gti-cli-shared-types":
+  version: 0.0.0-use.local
+  resolution: "@danerwilliams/gti-cli-shared-types@workspace:libs/gti-cli-shared-types"
+  dependencies:
+    typescript: ^4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@danielbaars/anthracite@workspace:apps/cli":
   version: 0.0.0-use.local
   resolution: "@danielbaars/anthracite@workspace:apps/cli"
@@ -295,14 +303,6 @@ __metadata:
   bin:
     an: dist/src/index.js
     anthracite: dist/src/index.js
-  languageName: unknown
-  linkType: soft
-
-"@danerwilliams/gti-cli-shared-types@workspace:*, @danerwilliams/gti-cli-shared-types@workspace:libs/gti-cli-shared-types":
-  version: 0.0.0-use.local
-  resolution: "@danerwilliams/gti-cli-shared-types@workspace:libs/gti-cli-shared-types"
-  dependencies:
-    typescript: ^4.6.4
   languageName: unknown
   linkType: soft
 
@@ -1251,6 +1251,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"anthracite@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "anthracite@workspace:."
+  dependencies:
+    "@typescript-eslint/eslint-plugin": ^5.47.0
+    "@typescript-eslint/parser": ^5.47.0
+    "@yarnpkg/sdks": ^3.0.0-rc.34
+    eslint: ^8.30.0
+    eslint-config-prettier: ^8.5.0
+    eslint-import-resolver-typescript: 3.6.1
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-simple-import-sort: ^8.0.0
+    husky: ^8.0.1
+    nyc: ^15.1.0
+    prettier: ^2.8.1
+    pretty-quick: ^3.1.3
+    ts-mocha: ^10.0.0
+    turbo: ^1.10.7
+    typescript: ^4.9.4
+  languageName: unknown
+  linkType: soft
+
 "anymatch@npm:~3.1.2":
   version: 3.1.2
   resolution: "anymatch@npm:3.1.2"
@@ -1601,29 +1624,6 @@ __metadata:
   checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
   languageName: node
   linkType: hard
-
-"anthracite@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "anthracite@workspace:."
-  dependencies:
-    "@typescript-eslint/eslint-plugin": ^5.47.0
-    "@typescript-eslint/parser": ^5.47.0
-    "@yarnpkg/sdks": ^3.0.0-rc.34
-    eslint: ^8.30.0
-    eslint-config-prettier: ^8.5.0
-    eslint-import-resolver-typescript: 3.6.1
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-simple-import-sort: ^8.0.0
-    husky: ^8.0.1
-    nyc: ^15.1.0
-    prettier: ^2.8.1
-    pretty-quick: ^3.1.3
-    ts-mocha: ^10.0.0
-    turbo: ^1.10.7
-    typescript: ^4.9.4
-  languageName: unknown
-  linkType: soft
 
 "check-error@npm:^1.0.2":
   version: 1.0.2
