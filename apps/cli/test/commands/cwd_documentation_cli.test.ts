@@ -136,7 +136,7 @@ describe('cwd documentation grammar through the public CLI', function () {
         expect(result.status, JSON.stringify(args) + result.stderr).to.equal(0);
         expect(result.stderr).to.equal('');
         if (args.includes('--version=true'))
-          expect(result.stdout).to.match(/^1\.0\.1\s*$/);
+          expect(result.stdout).to.match(/^0\.1\.0\s*$/);
         else expect(result.stdout).to.include('--cwd');
         expect(
           fs.existsSync(path.join(start.root, 'unexpected-tool'))
@@ -239,7 +239,7 @@ describe('cwd documentation grammar through the public CLI', function () {
       expect(selected.stdout)
         .to.include('completion-only-B')
         .and.not.include('completion-only-A')
-        .and.not.include('1.0.1');
+        .and.not.include('0.1.0');
       const restoreTools = start.refuseExternalTools();
       try {
         const rejected = start.run(['--cwd', missing, ...args]);

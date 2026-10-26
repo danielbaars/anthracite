@@ -77,7 +77,7 @@ describe('cwd owned commands through the public CLI', function () {
       expect(result.status, result.stdout + result.stderr).to.equal(0);
       expect(result.stderr).to.equal('');
       if (documentation === '--help') expect(result.stdout).to.include('--cwd');
-      else expect(result.stdout).to.match(/^1\.0\.1\s*$/);
+      else expect(result.stdout).to.match(/^0\.1\.0\s*$/);
     }
     expect(fs.existsSync(missing)).to.equal(false);
   });
