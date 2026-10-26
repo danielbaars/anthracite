@@ -13,6 +13,39 @@ function parseRecord(json: string): Record<string, unknown> {
   return value;
 }
 
+function prepareMixedQueuedImports(fixture: FrozenGetFixture): {
+  otherTip: string;
+  ownTip: string;
+} {
+  fixture.git(fixture.producer, 'switch', '-c', 'otherTip');
+  const otherTip = fixture.commit(
+    fixture.producer,
+    'other-tip.txt',
+    'other queued bytes'
+  );
+  fixture.git(fixture.producer, 'switch', '-c', 'ownTip');
+  const ownTip = fixture.commit(
+    fixture.producer,
+    'own-tip.txt',
+    'own queued bytes'
+  );
+  fixture.git(fixture.producer, 'push', 'origin', 'otherTip', 'ownTip');
+  fs.writeJsonSync(fixture.prs, {
+    parent: 'main',
+    child: 'parent',
+    otherTip: 'child',
+    ownTip: 'otherTip',
+  });
+  fs.writeJsonSync(fixture.identities, {
+    account: { login: 'current-user' },
+    authors: {
+      otherTip: { login: 'other-user' },
+      ownTip: { login: 'current-user' },
+    },
+  });
+  return { otherTip, ownTip };
+}
+
 // Independent public CLI workflows, not one production function.
 // eslint-disable-next-line max-lines-per-function
 describe('get CLI new import defaults', function () {
@@ -315,32 +348,7 @@ describe('get CLI new import defaults', function () {
       fixture.ok('get', 'child', '-U');
       fixture.commit(fixture.consumer, 'local.txt', 'local replay');
       const remoteChild = fixture.advanceChild();
-      fixture.git(fixture.producer, 'switch', '-c', 'otherTip');
-      const otherTip = fixture.commit(
-        fixture.producer,
-        'other-tip.txt',
-        'other queued bytes'
-      );
-      fixture.git(fixture.producer, 'switch', '-c', 'ownTip');
-      const ownTip = fixture.commit(
-        fixture.producer,
-        'own-tip.txt',
-        'own queued bytes'
-      );
-      fixture.git(fixture.producer, 'push', 'origin', 'otherTip', 'ownTip');
-      fs.writeJsonSync(fixture.prs, {
-        parent: 'main',
-        child: 'parent',
-        otherTip: 'child',
-        ownTip: 'otherTip',
-      });
-      fs.writeJsonSync(fixture.identities, {
-        account: { login: 'current-user' },
-        authors: {
-          otherTip: { login: 'other-user' },
-          ownTip: { login: 'current-user' },
-        },
-      });
+      const { otherTip, ownTip } = prepareMixedQueuedImports(fixture);
       const initial = fixture.run(['get', 'ownTip'], true, [
         { prompt: 'How would you like to handle', input: '\r' },
       ]);

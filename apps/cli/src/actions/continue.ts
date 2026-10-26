@@ -12,24 +12,20 @@ import {
 } from '../lib/errors';
 import { clearContinuation, persistContinuation } from './persist_continuation';
 import { printConflictStatus } from './print_conflict_status';
-import { getBranchesToRestack, restackBranches } from './restack';
-import { getBranchesFromRemote } from './sync/get';
 import {
-  assertDeleteRecoveryEditable,
-  recordDeleteCompletion,
-} from './delete_recovery';
+  getBranchesToRestack,
+  recordRestackCompletion,
+  restackBranches,
+} from './restack';
+import { getBranchesFromRemote } from './sync/get';
+import { assertDeleteRecoveryEditable } from './delete_recovery';
 import {
   assertReorderContinuationClean,
   assertReorderFilesAvailable,
   finishReorder,
-  recordReorderCompletion,
   reportReorderFailure,
 } from './reorder_recovery';
-import {
-  assertMoveFilesAvailable,
-  recordMoveCompletion,
-  reportMoveFailure,
-} from './move_recovery';
+import { assertMoveFilesAvailable, reportMoveFailure } from './move_recovery';
 
 export async function continueAction(
   opts: { addAll: boolean },
@@ -82,9 +78,7 @@ export async function continueAction(
       error instanceof RebaseCheckoutError ||
       error instanceof RebaseMetadataError
     ) {
-      recordDeleteCompletion(error.branchName, context);
-      recordMoveCompletion(error.branchName, context);
-      recordReorderCompletion(error.branchName, context);
+      recordRestackCompletion(error.branchName, context);
     }
     reportMoveFailure(
       error instanceof RebaseCheckoutError ||
@@ -117,9 +111,7 @@ export async function continueAction(
     throw new RebaseConflictError();
   }
 
-  recordDeleteCompletion(cont.branchName, context);
-  recordMoveCompletion(cont.branchName, context);
-  recordReorderCompletion(cont.branchName, context);
+  recordRestackCompletion(cont.branchName, context);
   context.splog.info(
     `Resolved rebase conflict for ${chalk.green(cont.branchName)}.`
   );

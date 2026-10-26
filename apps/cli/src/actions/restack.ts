@@ -181,7 +181,10 @@ export function restackBranches(
   }
 }
 
-function recordRestackCompletion(branch: string, context: TContext): void {
+export function recordRestackCompletion(
+  branch: string,
+  context: TContext
+): void {
   recordDeleteCompletion(branch, context);
   recordMoveCompletion(branch, context);
   recordReorderCompletion(branch, context);

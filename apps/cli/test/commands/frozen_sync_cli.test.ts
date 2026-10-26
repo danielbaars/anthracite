@@ -5,6 +5,7 @@ import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { runCliInPty } from '../lib/utils/run_cli_in_pty';
 import { FrozenSyncCliFixture } from '../lib/fixtures/frozen_sync_cli';
 
+// eslint-disable-next-line max-lines-per-function
 describe('frozen sync through the public CLI', function () {
   this.timeout(120000);
   let fixture: FrozenSyncCliFixture;
@@ -662,28 +663,47 @@ fi
       fixture.git('rev-parse', branch)
     );
     const before = fixture.observe();
-    const hook = path.join(fixture.repo, '.git', 'hooks', 'reference-transaction');
-    const freeze = getTestCliCommand(['freeze', 'survivor', '--no-interactive']);
+    const hook = path.join(
+      fixture.repo,
+      '.git',
+      'hooks',
+      'reference-transaction'
+    );
+    const freeze = getTestCliCommand([
+      'freeze',
+      'survivor',
+      '--no-interactive',
+    ]);
     fs.writeFileSync(
       hook,
       `#!/bin/sh
 input=$(cat)
 if [ "$1" = prepared ]; then
  case "$input" in *" 0000000000000000000000000000000000000000 refs/heads/candidate"*) ${freeze
-        .map((value) => "'" + value.replace(/'/g, "'\\''") + "'")
-        .join(' ')} ;; esac
+   .map((value) => "'" + value.replace(/'/g, "'\\''") + "'")
+   .join(' ')} ;; esac
 fi
 `,
       { mode: 0o755 }
     );
-    const result = fixture.run(['sync', '--no-pull', '--force', '--no-interactive']);
+    const result = fixture.run([
+      'sync',
+      '--no-pull',
+      '--force',
+      '--no-interactive',
+    ]);
     expect(result.status, result.stdout + result.stderr).to.equal(1);
     expect(result.stderr)
       .to.include('frozen branch survivor')
       .and.to.include('Completed cleanup changes are retained');
-    expect(fixture.git('branch', '--list', 'candidate')).to.include('candidate');
-    expect(['candidate', 'survivor'].map((branch) => fixture.git('rev-parse', branch)))
-      .to.deep.equal(heads);
+    expect(fixture.git('branch', '--list', 'candidate')).to.include(
+      'candidate'
+    );
+    expect(
+      ['candidate', 'survivor'].map((branch) =>
+        fixture.git('rev-parse', branch)
+      )
+    ).to.deep.equal(heads);
     const after = fixture.observe();
     expect(after.index).to.equal(before.index);
     expect(after.files).to.deep.equal(before.files);

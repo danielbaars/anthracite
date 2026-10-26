@@ -207,6 +207,25 @@ respond(JSON.stringify(selected) + '\\n');\n`,
     };
   }
 
+  private evidenceEnvironment(): Record<string, string | null> {
+    return Object.fromEntries(
+      [
+        'HOME',
+        'GH_CONFIG_DIR',
+        'PATH',
+        'GRAPHITE_USER_CONFIG_PATH',
+        'GRAPHITE_INTERACTIVE',
+        'GIT_CONFIG_GLOBAL',
+        'GIT_CONFIG_NOSYSTEM',
+        'GIT_OPTIONAL_LOCKS',
+        'GIT_CONFIG_PARAMETERS',
+        'GIT_EDITOR',
+        'TERM',
+        'NO_COLOR',
+      ].map((key) => [key, this.env[key] ?? null])
+    );
+  }
+
   run(
     args: string[],
     interactive = false,
@@ -235,21 +254,7 @@ respond(JSON.stringify(selected) + '\\n');\n`,
             command,
             cwd,
             timeoutMs: 20000,
-            explicitEnvironment: Object.fromEntries(
-              [
-                'HOME',
-                'GH_CONFIG_DIR',
-                'PATH',
-                'GRAPHITE_USER_CONFIG_PATH',
-                'GRAPHITE_INTERACTIVE',
-                'GIT_CONFIG_GLOBAL',
-                'GIT_CONFIG_NOSYSTEM',
-                'GIT_EDITOR',
-                'GIT_CONFIG_PARAMETERS',
-                'TERM',
-                'NO_COLOR',
-              ].map((key) => [key, this.env[key] ?? null])
-            ),
+            explicitEnvironment: this.evidenceEnvironment(),
             ghCalls: fs.readFileSync(this.ghCalls, 'utf8'),
             ghResponses: fs.readFileSync(this.ghResponses, 'utf8'),
             controlledIdentities: fs.existsSync(this.identities)
@@ -282,22 +287,7 @@ respond(JSON.stringify(selected) + '\\n');\n`,
           command,
           cwd,
           timeoutMs: 15000,
-          explicitEnvironment: Object.fromEntries(
-            [
-              'HOME',
-              'GH_CONFIG_DIR',
-              'PATH',
-              'GRAPHITE_USER_CONFIG_PATH',
-              'GRAPHITE_INTERACTIVE',
-              'GIT_CONFIG_GLOBAL',
-              'GIT_CONFIG_NOSYSTEM',
-              'GIT_OPTIONAL_LOCKS',
-              'GIT_CONFIG_PARAMETERS',
-              'GIT_EDITOR',
-              'TERM',
-              'NO_COLOR',
-            ].map((key) => [key, this.env[key] ?? null])
-          ),
+          explicitEnvironment: this.evidenceEnvironment(),
           before,
           after: this.observe(),
           ...transcript,

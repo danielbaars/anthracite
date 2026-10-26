@@ -25,7 +25,7 @@ export async function createBranchAction(
   opts: TCreateBranchOptions,
   context: TContext
 ): Promise<void> {
-  const insertPlan = opts.insert ? getInsertChildren(opts, context) : undefined;
+  let insertPlan = opts.insert ? getInsertChildren(opts, context) : undefined;
 
   ensurePatchInputPrecondition(Boolean(opts.patch && !opts.all), context);
 
@@ -52,8 +52,7 @@ export async function createBranchAction(
   context.engine.checkoutNewBranch(branchName, opts.onto);
   if (insertPlan) {
     try {
-      for (const name of insertPlan.mandatory)
-        context.engine.assertBranchEditable(name);
+      insertPlan = getInsertPlan({ ...opts, ...insertPlan }, context);
     } catch (error) {
       context.splog.warn(
         `Insertion stopped after creating ${branchName}; its checkout, index and files remain. Existing children have not been reparented.`
@@ -169,17 +168,27 @@ function insertBranch(
 function getInsertChildren(
   opts: TCreateBranchOptions,
   context: TContext
-): { children: string[]; mandatory: string[] } {
+): { parent: string; children: string[]; mandatory: string[] } {
   const parent = opts.onto ?? context.engine.currentBranchPrecondition;
   const scope = context.engine.getRelativeStack(parent, SCOPE.UPSTACK);
   const children = scope.filter(
     (branch) => context.engine.getParent(branch) === parent
   );
+  return getInsertPlan({ ...opts, parent, children }, context);
+}
+
+function getInsertPlan(
+  opts: TCreateBranchOptions & { parent: string; children: string[] },
+  context: TContext
+): { parent: string; children: string[]; mandatory: string[] } {
+  const { parent, children } = opts;
   const createsCommit =
     hasCreateChanges(parent, opts.all ?? false) ||
     (opts.patch && context.engine.getUnstagedChanges().length > 0);
   const branchesToRestack = getBranchesToRestack(
-    scope.filter((branch) => branch !== parent),
+    children.flatMap((child) =>
+      context.engine.getRelativeStack(child, SCOPE.UPSTACK)
+    ),
     context,
     { willChange: createsCommit ? children : [] }
   );
@@ -203,7 +212,7 @@ function getInsertChildren(
     all: opts.all ?? false,
     operation: 'insert',
   });
-  return { children, mandatory };
+  return { parent, children, mandatory };
 }
 
 function commitNewBranch(
