@@ -762,4 +762,36 @@ describe('frozen branch lifecycle through the public CLI', function () {
       fs.readFileSync(path.join(fixture.repo, '.git', '.gtcontinue'), 'utf8')
     ).not.to.include('"delete"');
   });
+  it('keeps fresh public navigation consistent with stored parents after a rejected administrative metadata publication', () => {
+    fixture.ok(['freeze', 'child']);
+    fixture.git(['switch', 'child']);
+    fixture.stage('pending.txt', 'pending');
+    const before = fixture.snapshot();
+    const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/child']);
+    const hook = path.join(
+      fixture.repo,
+      '.git',
+      'hooks',
+      'reference-transaction'
+    );
+    fs.writeFileSync(
+      hook,
+      '#!/bin/sh\n[ "$1" = prepared ] || exit 0\nwhile read old new ref; do [ "$ref" != refs/branch-metadata/child ] || exit 42; done\n',
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['tr', 'child', '--parent', 'main']);
+    expect(result.status).to.equal(1);
+    expect(fixture.snapshot()).to.deep.equal(before);
+    expect(fixture.git(['rev-parse', 'refs/branch-metadata/child'])).to.equal(
+      metadata
+    );
+    fs.unlinkSync(hook);
+    expect(fixture.ok(['parent']).trim()).to.equal('base');
+    fixture.ok(['down']);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('base');
+    expect(fixture.ok(['info', 'child'])).to.include('(frozen)');
+    expect(
+      fs.existsSync(path.join(fixture.repo, '.git', '.graphite_cache_persist'))
+    ).to.equal(false);
+  });
 });

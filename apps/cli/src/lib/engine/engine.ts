@@ -401,13 +401,18 @@ export function composeEngine({
       cache.branches[newParentBranchName].children.push(branchName);
     }
 
-    // Write to disk
-    writeMetadataRef(branchName, {
-      parentBranchName: newCachedMeta.parentBranchName,
-      parentBranchRevision: newCachedMeta.parentBranchRevision,
-      prInfo: newCachedMeta.prInfo,
-      frozen: newCachedMeta.frozen,
-    });
+    // A rejected ref publication must not make the proposed metadata a cache fact.
+    try {
+      writeMetadataRef(branchName, {
+        parentBranchName: newCachedMeta.parentBranchName,
+        parentBranchRevision: newCachedMeta.parentBranchRevision,
+        prInfo: newCachedMeta.prInfo,
+        frozen: newCachedMeta.frozen,
+      });
+    } catch (error) {
+      canPersistCache = false;
+      throw error;
+    }
 
     splog.debug(
       `Updated cached meta for branch ${branchName}:\n${cuteString(
