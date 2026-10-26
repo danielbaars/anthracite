@@ -2,19 +2,20 @@ import chalk from 'chalk';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { ExitFailedError } from '../lib/errors';
-import { restackBranches } from './restack';
+import { getBranchesToRestack, restackBranches } from './restack';
+import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
+import { clearContinuation } from './persist_continuation';
 
-export function deleteBranchAction(
-  args: {
-    branchName: string;
-    force?: boolean;
-  },
+type TDeleteArgs = { branchName: string; force?: boolean };
+
+/** Deletion may remove a frozen target, but surviving mandatory edits may not. */
+export function assertDeleteAllowed(
+  args: TDeleteArgs,
   context: TContext
 ): void {
   if (context.engine.isTrunk(args.branchName)) {
     throw new ExitFailedError('Cannot delete trunk!');
   }
-
   if (!args.force && !isSafeToDelete(args.branchName, context).result) {
     throw new ExitFailedError(
       [
@@ -23,15 +24,56 @@ export function deleteBranchAction(
       ].join('\n')
     );
   }
+  const plan = getDeleteSurvivors(args.branchName, context);
+  for (const branch of plan.mandatory)
+    context.engine.assertBranchEditable(branch);
+  assertBranchesAvailableInWorktrees([args.branchName, ...plan.replay]);
+}
 
+function getDeleteSurvivors(
+  branchName: string,
+  context: TContext
+): { mandatory: string[]; replay: string[] } {
+  const parent = context.engine.getParentPrecondition(branchName);
+  const children = context.engine.getChildren(branchName);
+  const descendants = context.engine.getRelativeStack(
+    branchName,
+    SCOPE.UPSTACK_EXCLUSIVE
+  );
+  const parents = new Map(children.map((child) => [child, parent]));
+  const replay = getBranchesToRestack(descendants, context, { parents });
+  return { mandatory: [...new Set([...children, ...replay])], replay };
+}
+
+export function deleteBranchAction(args: TDeleteArgs, context: TContext): void {
+  assertDeleteAllowed(args, context);
   const branchesToRestack = context.engine.getRelativeStack(
     args.branchName,
     SCOPE.UPSTACK_EXCLUSIVE
   );
-  context.engine.deleteBranch(args.branchName);
+  const mandatory = getDeleteSurvivors(args.branchName, context).mandatory;
+  const departure = context.engine.currentBranch;
+  context.engine.deleteBranch(args.branchName, () => {
+    try {
+      for (const branch of mandatory)
+        context.engine.assertBranchEditable(branch);
+      assertDeleteAllowed(args, context);
+    } catch (error) {
+      if (context.engine.currentBranch !== departure && error instanceof Error)
+        throw new ExitFailedError(
+          `${error.message}\nChecked out ${context.engine.currentBranch}; ${args.branchName} has not been deleted. Completed metadata changes are retained.`
+        );
+      throw error;
+    }
+  });
   context.splog.info(`Deleted branch ${chalk.red(args.branchName)}`);
-
+  context.continueConfig.update((data) => {
+    data.delete = { branch: args.branchName, mandatory };
+    data.branchesToRestack = [...branchesToRestack];
+    data.branchesToSync = [];
+  });
   restackBranches(branchesToRestack, context);
+  clearContinuation(context);
 }
 
 // Where did we merge this? If it was merged on GitHub, we see where it was

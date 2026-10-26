@@ -11,6 +11,10 @@ import { printConflictStatus } from './print_conflict_status';
 import { getBranchesToRestack, restackBranches } from './restack';
 import { getBranchesFromRemote } from './sync/get';
 import {
+  assertDeleteRecoveryEditable,
+  recordDeleteCompletion,
+} from './delete_recovery';
+import {
   assertReorderContinuationClean,
   assertReorderFilesAvailable,
   finishReorder,
@@ -35,6 +39,7 @@ export async function continueAction(
   const activeBranch = context.engine.getRebaseHead();
   if (activeBranch) context.engine.assertBranchEditable(activeBranch);
 
+  assertDeleteRecoveryEditable(context.continueConfig.data.delete);
   if (opts.addAll) {
     context.engine.addAll();
   }
@@ -103,6 +108,7 @@ export async function continueAction(
     throw new RebaseConflictError();
   }
 
+  recordDeleteCompletion(cont.branchName, context);
   recordMoveCompletion(cont.branchName, context);
   recordReorderCompletion(cont.branchName, context);
   context.splog.info(

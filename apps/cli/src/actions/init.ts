@@ -5,13 +5,13 @@ import { suggest } from '../lib/utils/prompts_helpers';
 import { checkoutBranch } from './checkout_branch';
 import { trackBranchInteractive } from './track_branch';
 
-export async function init(
+export async function selectInitTrunk(
   args: {
     trunk?: string;
     reset?: boolean;
   },
   context: TContext
-): Promise<void> {
+): Promise<string> {
   const allBranchNames = context.engine.allBranchNames;
 
   if (allBranchNames.length === 0) {
@@ -27,6 +27,16 @@ export async function init(
     (args.trunk ? allBranchNames.find((b) => b === args.trunk) : undefined) ??
     (await selectTrunkBranch(allBranchNames, context));
 
+  if (!args.reset) context.engine.assertBranchEditable(newTrunkName);
+  return newTrunkName;
+}
+
+export async function init(
+  args: { trunk?: string; reset?: boolean },
+  context: TContext
+): Promise<void> {
+  const newTrunkName = await selectInitTrunk(args, context);
+
   context.splog.info(
     context.repoConfig.graphiteInitialized()
       ? `Reinitializing Charcoal...`
@@ -34,6 +44,7 @@ export async function init(
   );
   context.splog.newline();
 
+  if (!args.reset) context.engine.assertBranchEditable(newTrunkName);
   context.repoConfig.setTrunk(newTrunkName);
   context.splog.info(`Trunk set to ${chalk.green(newTrunkName)}`);
 

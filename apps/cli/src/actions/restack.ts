@@ -8,6 +8,10 @@ import {
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { assertUnreachable } from '../lib/utils/assert_unreachable';
 import { persistContinuation } from './persist_continuation';
+import {
+  assertDeleteRecoveryEditable,
+  recordDeleteCompletion,
+} from './delete_recovery';
 import { printConflictStatus } from './print_conflict_status';
 import {
   assertMoveFilesAvailable,
@@ -60,8 +64,10 @@ export function restackBranches(
   const skipFrozen = !(
     context.continueConfig.data.move ||
     context.continueConfig.data.fold ||
-    context.continueConfig.data.reorder
+    context.continueConfig.data.reorder ||
+    context.continueConfig.data.delete
   );
+  assertDeleteRecoveryEditable(context.continueConfig.data.delete);
   try {
     assertBranchesAvailableInWorktrees(
       getBranchesToRestack(branchNames, context, { skipFrozen })
@@ -91,6 +97,7 @@ export function restackBranches(
     }
 
     try {
+      assertDeleteRecoveryEditable(context.continueConfig.data.delete);
       if (context.continueConfig.data.reorder) {
         uncommittedTrackedChangesPrecondition();
         assertReorderFilesAvailable(context);
@@ -109,8 +116,7 @@ export function restackBranches(
       context.splog.debug(`${result}: ${branchName}`);
       switch (result.result) {
         case 'REBASE_DONE':
-          recordMoveCompletion(branchName, context);
-          recordReorderCompletion(branchName, context);
+          recordRestackCompletion(branchName, context);
           context.splog.info(
             `Restacked ${chalk.green(branchName)} on ${chalk.cyan(
               context.engine.getParentPrecondition(branchName)
@@ -137,8 +143,7 @@ export function restackBranches(
           throw new RebaseConflictError();
 
         case 'REBASE_UNNEEDED':
-          recordMoveCompletion(branchName, context);
-          recordReorderCompletion(branchName, context);
+          recordRestackCompletion(branchName, context);
           context.splog.info(
             `${chalk.cyan(
               branchName
@@ -156,8 +161,7 @@ export function restackBranches(
         error instanceof RebaseCheckoutError ||
         error instanceof RebaseMetadataError
       ) {
-        recordMoveCompletion(error.branchName, context);
-        recordReorderCompletion(error.branchName, context);
+        recordRestackCompletion(error.branchName, context);
       }
       reportMoveFailure(branchName, branchNames, context);
       reportReorderFailure(
@@ -169,4 +173,10 @@ export function restackBranches(
       throw error;
     }
   }
+}
+
+function recordRestackCompletion(branch: string, context: TContext): void {
+  recordDeleteCompletion(branch, context);
+  recordMoveCompletion(branch, context);
+  recordReorderCompletion(branch, context);
 }

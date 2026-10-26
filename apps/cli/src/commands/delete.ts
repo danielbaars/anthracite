@@ -25,7 +25,7 @@ export const aliases = ['dl'];
 export const command = 'delete [name]';
 export const canonical = 'delete';
 export const description =
-  'Delete a branch and its corresponding Charcoal metadata.';
+  'Delete a branch and its corresponding Charcoal metadata, including a frozen target within existing safety rules. Unlike Graphite, refuse before deletion when a surviving frozen branch must change parent or replay; force does not override this protection.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(argv, canonical, async (context) =>

@@ -4,7 +4,12 @@
 import yargs from 'yargs';
 import chalk from 'chalk';
 import { version } from '../../package.json';
-import { init } from '../actions/init';
+import { init, selectInitTrunk } from '../actions/init';
+import { repoConfigFactory } from './spiffy/repo_config_spf';
+import { TGit } from './git/git';
+import { assertDeleteRecoveryEditable } from '../actions/delete_recovery';
+import { continueConfigFactory } from './spiffy/continuation_spf';
+import { assertDeleteAllowed } from '../actions/delete_branch';
 import {
   initContext,
   initContextLite,
@@ -128,7 +133,12 @@ async function graphiteInternal(
     if (canonicalName === 'continue' && git.rebaseInProgress()) {
       const activeBranch = git.getRebaseHead();
       if (activeBranch) assertBranchEditable(activeBranch);
+      assertDeleteRecoveryEditable(
+        continueConfigFactory.load(undefined, { preserveInvalid: true }).data
+          .delete
+      );
     }
+    await preflightLifecycle(args, canonicalName, git);
     const contextLite = initContextLite({
       ...args,
       userEmail: git.getUserEmail(),
@@ -168,6 +178,40 @@ async function graphiteInternal(
     }
     process.exitCode = 1;
   }
+}
+
+/** Resolve protected lifecycle participants without incidental context repair. */
+async function preflightLifecycle(
+  args: yargs.Arguments & TGlobalArguments,
+  canonicalName: string,
+  git: TGit
+): Promise<void> {
+  const isInit = canonicalName === 'repo init' || canonicalName === 'init';
+  if (!isInit && canonicalName !== 'delete') return;
+  if (isInit && args.reset === true) return;
+  if (isInit && typeof args.trunk === 'string')
+    assertBranchEditable(args.trunk);
+  if (
+    !repoConfigFactory
+      .load(undefined, { preserveInvalid: true })
+      .graphiteInitialized()
+  )
+    return;
+  const preservingContext = initContext(
+    initContextLite({ ...args, inspection: true }),
+    git,
+    { ...args, inspection: true }
+  );
+  if (canonicalName === 'delete' && typeof args.name === 'string')
+    assertDeleteAllowed(
+      { branchName: args.name, force: args.force === true },
+      preservingContext
+    );
+  if (isInit)
+    args.trunk = await selectInitTrunk(
+      { trunk: typeof args.trunk === 'string' ? args.trunk : undefined },
+      preservingContext
+    );
 }
 
 // eslint-disable-next-line max-params

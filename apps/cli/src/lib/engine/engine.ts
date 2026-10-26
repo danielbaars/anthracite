@@ -29,7 +29,6 @@ import {
 } from './metadata_ref';
 import { validateOrFixParentBranchRevision } from './parse_branches_and_meta';
 import { TScopeSpec } from './scope_spec';
-import fjsh from 'fast-json-stable-hash';
 import { publishFoldStackRefs } from '../git/fold_stack';
 import { assertBranchEditable } from './frozen_branch';
 
@@ -110,7 +109,7 @@ export type TEngine = {
     survivor: string,
     roots?: readonly string[]
   ) => void;
-  deleteBranch: (branchName: string) => void;
+  deleteBranch: (branchName: string, beforeDelete?: () => void) => void;
   commit: (opts: TCommitOpts) => void;
   squashCurrentBranch: (opts: { message?: string; noEdit?: boolean }) => void;
 
@@ -203,6 +202,7 @@ export function composeEngine({
   const cacheLoader = composeCacheLoader(splog, preserveMetadata, isInspection);
   void cacheLoader;
   const originallyLoadedBranches = cacheLoader.loadCachedBranches(trunkName);
+  const originalBranchState = JSON.stringify(originallyLoadedBranches);
   let canPersistCache = !preserveMetadata;
   const cache = {
     currentBranch: currentBranchOverride ?? git.getCurrentBranchName(),
@@ -369,6 +369,11 @@ export function composeEngine({
     branchName: string,
     newCachedMeta: TValidCachedMetaExceptTrunk
   ) => {
+    // Ordinary writers must retain status published by a hook or another process.
+    newCachedMeta = {
+      ...newCachedMeta,
+      frozen: readMetadataRef(branchName).frozen ?? newCachedMeta.frozen,
+    };
     // Get current meta and ensure this branch isn't trunk.
     const oldCachedMeta = cache.branches[branchName] ?? {
       validationResult: 'BAD_PARENT_NAME',
@@ -488,10 +493,7 @@ export function composeEngine({
         cacheLoader.clearPersistedCache();
         return;
       }
-      if (
-        fjsh.hash(originallyLoadedBranches, 'sha256') !==
-        fjsh.hash(cache.branches, 'sha256')
-      ) {
+      if (originalBranchState !== JSON.stringify(cache.branches)) {
         cacheLoader.persistCache(trunkName, cache.branches);
       }
     },
@@ -551,6 +553,7 @@ export function composeEngine({
       cache.branches[branchName] = {
         ...cachedMeta,
         validationResult: 'BAD_PARENT_NAME',
+        frozen: undefined,
       };
 
       // We have to fix validation state for any recursive children
@@ -566,7 +569,7 @@ export function composeEngine({
             validationResult: 'INVALID_PARENT',
           };
         }
-        childrenToUntrack.concat(childCachedMeta.children);
+        childrenToUntrack.push(...childCachedMeta.children);
       }
     },
     get currentBranch() {
@@ -737,15 +740,28 @@ export function composeEngine({
         assertBranchIsValidAndNotTrunkAndGetMeta(currentBranchName);
 
       git.moveBranch(branchName);
-      updateMeta(branchName, { ...cachedMeta, prInfo: {} });
+      try {
+        updateMeta(branchName, {
+          ...cachedMeta,
+          frozen: readMetadataRef(currentBranchName).frozen,
+        });
 
-      cachedMeta.children.forEach((childBranchName) =>
-        setParent(childBranchName, branchName)
-      );
+        [...cachedMeta.children].forEach((childBranchName) =>
+          setParent(childBranchName, branchName)
+        );
 
-      removeChild(cachedMeta.parentBranchName, currentBranchName);
-      delete cache.branches[currentBranchName];
-      deleteMetadataRef(currentBranchName);
+        removeChild(cachedMeta.parentBranchName, currentBranchName);
+        delete cache.branches[currentBranchName];
+        deleteMetadataRef(currentBranchName);
+      } catch (error) {
+        canPersistCache = false;
+        throw new PreconditionsFailedError(
+          `Renamed ${currentBranchName} to ${branchName}, but metadata update failed. ${
+            error instanceof Error ? error.message : String(error)
+          }`
+        );
+      }
+
       cache.currentBranch = branchName;
     },
     foldStack: (chain, survivor, roots = []) => {
@@ -885,17 +901,19 @@ export function composeEngine({
         deleteAllBranchData(currentBranchName);
       }
     },
-    deleteBranch: (branchName: string) => {
+    deleteBranch: (branchName: string, beforeDelete?: () => void) => {
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
       if (branchName === cache.currentBranch) {
         checkoutBranch(cachedMeta.parentBranchName);
       }
 
-      cachedMeta.children.forEach((childBranchName) =>
-        setParent(childBranchName, cachedMeta.parentBranchName)
-      );
-
+      beforeDelete?.();
+      for (const childBranchName of [...cachedMeta.children]) {
+        beforeDelete?.();
+        setParent(childBranchName, cachedMeta.parentBranchName);
+      }
+      beforeDelete?.();
       deleteAllBranchData(branchName);
     },
     commit: (opts: TCommitOpts) => {

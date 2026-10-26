@@ -10,7 +10,7 @@ const args = {
     type: 'string',
   },
   reset: {
-    describe: `Untrack all branches.`,
+    describe: `Deliberately remove all tracking and stored frozen status, including for a chosen new trunk.`,
     default: false,
     type: 'boolean',
   },
@@ -22,7 +22,7 @@ export const command = 'init';
 export const aliases = ['i'];
 export const canonical = 'repo init';
 export const description =
-  'Create or regenerate a `.graphite_repo_config` file.';
+  'Create or regenerate a `.graphite_repo_config` file while preserving frozen status. Unfreeze a new trunk first, or deliberately remove all tracking with --reset.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(

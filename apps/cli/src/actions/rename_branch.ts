@@ -45,7 +45,7 @@ export async function renameCurrentBranch(
 
   if (context.engine.getPrInfo(oldBranchName)?.number && !args.force) {
     context.splog.tip(
-      `Renaming a branch that is already associated with a PR removes the association.`
+      `Renaming preserves the local PR association; the remote PR branch is unchanged.`
     );
 
     throw new ExitFailedError(

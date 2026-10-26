@@ -42,6 +42,7 @@ export function clearContinuation(context: TContext): void {
     data.currentBranchOverride = undefined;
     data.rebasedBranchBase = undefined;
     data.rebaseOwnership = undefined;
+    data.delete = undefined;
     data.move = undefined;
     data.fold = undefined;
     data.reorder = undefined;

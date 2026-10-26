@@ -274,7 +274,7 @@ for (const scene of allScenes) {
       expect(scene.repo.currentBranchName()).to.equal('main');
     });
 
-    it('Requires force for an associated PR and warns before removing the association', () => {
+    it('Requires force for an associated PR and preserves the association', () => {
       scene.repo.createChange('a', 'a');
       scene.repo.runCliCommand(['create', 'a', '-m', 'a']);
       const binDir = path.join(scene.repo.dir, '.git', 'rename-bin');
@@ -334,7 +334,7 @@ if (process.argv[2] === 'pr' && process.argv[3] === 'view' && ['a', '17'].includ
         'requires the `--force` option'
       );
       expect(rejected.stdout + rejected.stderr).to.contain(
-        'removes the association'
+        'preserves the local PR association'
       );
       expect(scene.repo.currentBranchName()).to.equal('a');
       expect(
@@ -352,7 +352,7 @@ if (process.argv[2] === 'pr' && process.argv[3] === 'view' && ['a', '17'].includ
       expect(scene.repo.getRef('refs/heads/a')).to.equal('');
       expect(scene.repo.currentBranchName()).to.equal('a1');
       expect(scene.repo.getRef('refs/heads/a1')).to.equal(head);
-      expect(runBuiltCli(scene.repo.dir, ['info'], env).stdout).not.to.contain(
+      expect(runBuiltCli(scene.repo.dir, ['info'], env).stdout).to.contain(
         'PR #17'
       );
       expect(
