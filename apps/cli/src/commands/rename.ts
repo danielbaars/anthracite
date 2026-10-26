@@ -25,7 +25,7 @@ export const command = 'rename [name]';
 export const aliases = ['rn'];
 export const canonical = 'rename';
 export const description =
-  'Rename a branch and update metadata referencing it. If no branch name is supplied, you will be prompted for a new branch name. Frozen branches may be renamed with their status and PR information preserved. Requires --force for a linked PR; the remote PR is not closed or deleted.';
+  'Rename a branch and update metadata referencing it. If no branch name is supplied, you will be prompted for a new branch name. Frozen branches may be renamed with their status and PR information preserved. Requires --force for a linked PR and preserves its local association; the remote PR is not closed or deleted.';
 export const builder = args;
 
 export const handler = async (args: argsT): Promise<void> => {
