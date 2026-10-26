@@ -3,6 +3,16 @@ import fs from 'fs-extra';
 import path from 'path';
 import { FrozenGetFixture } from '../lib/fixtures/frozen_get_cli';
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function parseRecord(json: string): Record<string, unknown> {
+  const value: unknown = JSON.parse(json);
+  if (!isRecord(value)) throw new Error('Expected a fixture JSON object');
+  return value;
+}
+
 // Independent public CLI workflows, not one production function.
 // eslint-disable-next-line max-lines-per-function
 describe('get CLI new import defaults', function () {
@@ -67,12 +77,14 @@ describe('get CLI new import defaults', function () {
     expect(fixture.git(fixture.consumer, 'show', 'child:own.txt')).to.equal(
       'own new work'
     );
-    const calls: string[][] = fs
+    const calls: unknown[] = fs
       .readFileSync(fixture.ghCalls, 'utf8')
       .trim()
       .split('\n')
       .map((line) => JSON.parse(line));
-    expect(calls.filter((args) => args[0] === 'api')).to.have.length(1);
+    expect(
+      calls.filter((args) => Array.isArray(args) && args[0] === 'api')
+    ).to.have.length(1);
   });
 
   it('decides mixed chain authors independently without cascading the frozen child to its own parent', () => {
@@ -335,17 +347,21 @@ describe('get CLI new import defaults', function () {
       expect(initial.status, initial.output).to.equal(1);
       expect(initial.output).to.include('Hit conflict');
       const recovery = path.join(fixture.consumer, '.git', '.gtcontinue');
-      expect(fs.readJsonSync(recovery).getImportDecisions).to.deep.include({
+      expect(
+        parseRecord(fs.readFileSync(recovery, 'utf8')).getImportDecisions
+      ).to.deep.include({
         branchName: 'otherTip',
         wasTracked: false,
         frozen: true,
       });
-      expect(fs.readJsonSync(recovery).getImportDecisions).to.deep.include({
+      expect(
+        parseRecord(fs.readFileSync(recovery, 'utf8')).getImportDecisions
+      ).to.deep.include({
         branchName: 'ownTip',
         wasTracked: false,
         frozen: false,
       });
-      const saved = fs.readJsonSync(recovery);
+      const saved = parseRecord(fs.readFileSync(recovery, 'utf8'));
       fs.writeJsonSync(fixture.identities, {
         accountError: true,
         authorError: true,
@@ -353,7 +369,7 @@ describe('get CLI new import defaults', function () {
       fs.writeFileSync(fixture.ghCalls, '');
       const unresolved = fixture.run([continuation]);
       expect(unresolved.status, unresolved.output).to.equal(1);
-      const repeated = fs.readJsonSync(recovery);
+      const repeated = parseRecord(fs.readFileSync(recovery, 'utf8'));
       expect(repeated.getImportDecisions).to.deep.equal(
         saved.getImportDecisions
       );
@@ -505,7 +521,7 @@ describe('get CLI new import defaults', function () {
 
   it('retains stored frozen protection while repairing an invalid parent through force import and U', () => {
     fixture.ok('get', 'child');
-    const metadata = JSON.parse(
+    const metadata = parseRecord(
       fixture.git(fixture.consumer, 'show', 'refs/branch-metadata/child')
     );
     metadata.parentBranchName = 'missing-parent';
