@@ -78,16 +78,16 @@ describe('stack fold fan-out through the public CLI', function () {
         'Current checkout: detached HEAD.'
       );
       expect(result.stdout + result.stderr).to.include(
-        "ch restack --branch 'conflict' --only"
+        "an restack --branch 'conflict' --only"
       );
       expect(result.stdout + result.stderr).to.include(
-        "ch restack --branch 'deep' --only"
+        "an restack --branch 'deep' --only"
       );
       expect(result.stdout + result.stderr).to.include(
-        "ch restack --branch 'cousin' --only"
+        "an restack --branch 'cousin' --only"
       );
       expect(result.stdout + result.stderr).to.include(
-        `ch checkout '${keep ? 'tip' : 'base'}'`
+        `an checkout '${keep ? 'tip' : 'base'}'`
       );
       expect(fixture.git(['ls-files', '--unmerged'])).not.to.equal('');
       const rebaseDir = path.resolve(
@@ -157,10 +157,10 @@ describe('stack fold fan-out through the public CLI', function () {
         `git rebase --onto '${survivor}' '${from}' 'sibling'`
       );
       expect(result.stdout + result.stderr).to.include(
-        "ch track 'deep' --parent 'sibling'"
+        "an track 'deep' --parent 'sibling'"
       );
       expect(result.stdout + result.stderr).to.include(
-        `ch track 'cousin' --parent '${survivor}'`
+        `an track 'cousin' --parent '${survivor}'`
       );
       expect(fixture.git(['rev-parse', survivor])).to.equal(tip);
       expect(fixture.git(['branch', '--list', 'child'])).to.equal('');
@@ -171,13 +171,13 @@ describe('stack fold fan-out through the public CLI', function () {
         .map((argument) => `'${argument.replace(/'/g, "'\\''")}'`)
         .join(' ');
       fs.writeFileSync(
-        path.join(fixture.root, 'bin/ch'),
+        path.join(fixture.root, 'bin/an'),
         `#!/bin/sh\nexec ${command} "$@" --no-interactive\n`,
         { mode: 0o755 }
       );
       const recovery = (result.stdout + result.stderr)
         .split('\n')
-        .filter((line) => /^(ch track |git rebase |ch checkout )/.test(line))
+        .filter((line) => /^(an track |git rebase |an checkout )/.test(line))
         .join('\n');
       const retry = spawnSync('/bin/sh', ['-ec', recovery], {
         cwd: fixture.repo,
@@ -226,8 +226,8 @@ describe('stack fold fan-out through the public CLI', function () {
       expect(result.status).not.to.equal(0);
       expect(output).to.include(`Selected refs were folded into ${survivor}`);
       expect(output).to.include(`Current checkout: ${survivor}`);
-      expect(output).to.include("ch restack --branch 'sibling' --only");
-      expect(output).to.include("ch restack --branch 'deep' --only");
+      expect(output).to.include("an restack --branch 'sibling' --only");
+      expect(output).to.include("an restack --branch 'deep' --only");
       expect(output).not.to.include('git rebase --onto');
       expect(fixture.git(['branch', '--list', 'child'])).to.equal('');
       expect(fixture.git(['rev-parse', survivor])).to.equal(tip);

@@ -86,7 +86,7 @@ describe('get CLI new import defaults', function () {
     const before = fixture.observe();
     const refused = fixture.run(['modify', '--all', '-m', 'must not commit']);
     expect(refused.status, refused.output).to.equal(1);
-    expect(refused.output).to.include('ch unfreeze child');
+    expect(refused.output).to.include('an unfreeze child');
     expect(fixture.observe()).to.deep.equal(before);
   });
   it('imports verified own PRs editable and permits an actual new local commit', () => {
@@ -326,14 +326,14 @@ describe('get CLI new import defaults', function () {
       expect(help).to.include('-U');
       const options = fixture.ok(
         '--get-yargs-completions',
-        'ch',
+        'an',
         command,
         '--'
       ).output;
       expect(options).to.include('--unfrozen');
       const branches = fixture.ok(
         '--get-yargs-completions',
-        'ch',
+        'an',
         command,
         ''
       ).output;
@@ -397,7 +397,7 @@ describe('get CLI new import defaults', function () {
       const before = fixture.observe();
       const refused = fixture.run([continuation, '--all']);
       expect(refused.status, refused.output).to.equal(1);
-      expect(refused.output).to.include('ch unfreeze child');
+      expect(refused.output).to.include('an unfreeze child');
       expect(fixture.observe()).to.deep.equal(before);
       fixture.ok('unfreeze', 'child');
       fs.removeSync(path.join(fixture.consumer, 'unstaged.txt'));
@@ -436,7 +436,7 @@ describe('get CLI new import defaults', function () {
         'blocked queued edit',
       ]);
       expect(stopped.status, stopped.output).to.equal(1);
-      expect(stopped.output).to.include('ch unfreeze otherTip');
+      expect(stopped.output).to.include('an unfreeze otherTip');
       expect(fs.readFileSync(fixture.ghCalls, 'utf8')).to.equal('');
       expect(
         fs.existsSync(path.join(fixture.consumer, '.git', 'rebase-merge'))
@@ -556,7 +556,7 @@ describe('get CLI new import defaults', function () {
     const before = fixture.observe();
     const blocked = fixture.run(['modify', '--all', '-m', 'blocked repair']);
     expect(blocked.status, blocked.output).to.equal(1);
-    expect(blocked.output).to.include('ch unfreeze child');
+    expect(blocked.output).to.include('an unfreeze child');
     expect(fixture.observe()).to.deep.equal(before);
   });
 

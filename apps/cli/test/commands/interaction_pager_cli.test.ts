@@ -190,7 +190,7 @@ sys.exit(result.returncode)
     for (const route of [
       ['fish'],
       ['completion'],
-      ['--get-yargs-completions', 'ch', 'checkout', ''],
+      ['--get-yargs-completions', 'an', 'checkout', ''],
     ]) {
       const direct = fixture.run([...route, '--quiet']);
       expect(direct.status, direct.stderr).to.equal(0);
@@ -201,7 +201,7 @@ sys.exit(result.returncode)
     for (const flags of [['--quiet', '--interactive'], ['--interactive']]) {
       const fish = terminal(['fish', ...flags]);
       expect(fish.status, fish.output).to.equal(0);
-      expect(fish.output).to.include('function __ch_command_completions');
+      expect(fish.output).to.include('function __an_command_completions');
     }
     expect(fs.existsSync(selected.log)).to.equal(false);
   });

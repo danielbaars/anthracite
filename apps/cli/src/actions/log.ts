@@ -276,7 +276,7 @@ function getBranchLines(
     );
   }
 
-  // `ch log short` case
+  // `an log short` case
   if (args.short) {
     return [
       `${'│ '.repeat(args.indentLevel)}${'◯'}${
@@ -302,7 +302,7 @@ function getBranchLines(
     ];
   }
 
-  // `ch log` case
+  // `an log` case
   const outputDeep = [
     args.skipBranchingLine
       ? []

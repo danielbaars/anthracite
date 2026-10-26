@@ -178,7 +178,7 @@ describe('cwd combined recovery through the public CLI', function () {
     expect(target.git(['diff', '--exit-code'])).to.equal('');
     expect(target.git(['diff', '--cached', '--exit-code'])).to.equal('');
     const linkedAfter = target.inspectionSnapshot(linked);
-    // Shared refs and Charcoal persistence legitimately change during recovery.
+    // Shared refs and Anthracite persistence legitimately change during recovery.
     expect({ ...linkedAfter, refs: '', persistent: null }).to.deep.equal({
       ...linkedBefore,
       refs: '',
@@ -356,7 +356,7 @@ describe('cwd combined recovery through the public CLI', function () {
       if (mode === 'raw-abort' || mode === 'foreign') {
         expect(selected.status).to.equal(1);
         expect(selected.stdout + selected.stderr).to.include(
-          'No Charcoal operation to continue.'
+          'No Anthracite operation to continue.'
         );
       } else if (mode === 'stale-foreign') {
         // Ordinary continue completes Git replay before its existing untracked-branch guard.

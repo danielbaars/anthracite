@@ -6,7 +6,7 @@ import { getTestCliCommand } from './test_cli_command';
 
 const TEXT_FILE_NAME = 'test.txt';
 
-// This class should only be used by tests and `ch demo`
+// This class should only be used by tests and `an demo`
 export class GitRepo {
   dir: string;
   userConfigPath: string;

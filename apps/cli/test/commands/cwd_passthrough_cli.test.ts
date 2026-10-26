@@ -158,7 +158,7 @@ describe('cwd Git passthrough through the public CLI', function () {
     expect(start.inspectionSnapshot()).to.deep.equal(beforeStart);
   });
 
-  it('clones a local bare remote from the selected non-Git directory without loading Charcoal configuration', () => {
+  it('clones a local bare remote from the selected non-Git directory without loading Anthracite configuration', () => {
     const bare = path.join(target.root, 'remote.git');
     target.git(['clone', '--bare', target.repo, bare], target.root);
     const destination = path.join(target.root, 'destination');

@@ -120,8 +120,8 @@ describe('create --onto --insert replay path protection through the public CLI',
       expect(output).to.include('transient.txt');
       expect(output).to.match(/insertion is incomplete/i);
       expect(output).to.match(/parent relationships remain/i);
-      expect(output).to.include('ch restack --upstack');
-      expect(output).not.to.include('ch continue');
+      expect(output).to.include('an restack --upstack');
+      expect(output).not.to.include('an continue');
       expect(fixture.ok(['log', 'short'])).to.match(/child[^\n]*needs restack/);
       const inserted = fixture.git(['rev-parse', 'inserted']);
       const saved = path.join(fixture.root, 'retained-hook-work.txt');

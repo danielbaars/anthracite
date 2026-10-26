@@ -52,7 +52,7 @@ for (const keep of [false, true]) {
         `Current checkout: ${survivor}`
       );
       expect(result.stdout + result.stderr).to.include(
-        `ch checkout '${survivor}'`
+        `an checkout '${survivor}'`
       );
       expect(result.stdout + result.stderr).to.include('return hook refused');
       expect(fixture.git(['branch', '--show-current'])).to.equal(survivor);

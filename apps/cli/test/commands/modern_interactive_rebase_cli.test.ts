@@ -376,7 +376,7 @@ describe('modern interactive branch rebase through the public CLI', function () 
         .and.include('Ignores other modify');
       const completion = fixture.run([
         '--get-yargs-completions',
-        'ch',
+        'an',
         command,
         '--',
       ]);

@@ -29,17 +29,17 @@ export function printConflictStatus(
   }
 
   diagnostic(
-    chalk.yellow(`To fix and continue your previous Charcoal command:`)
+    chalk.yellow(`To fix and continue your previous Anthracite command:`)
   );
   diagnostic(`(1) resolve the listed merge conflicts`);
-  diagnostic(`(2) mark them as resolved with ${chalk.cyan(`ch add .`)}`);
+  diagnostic(`(2) mark them as resolved with ${chalk.cyan(`an add .`)}`);
   diagnostic(
     `(3) run ${chalk.cyan(
-      `ch continue`
-    )} to continue executing your previous Charcoal command`
+      `an continue`
+    )} to continue executing your previous Anthracite command`
   );
   diagnostic(
-    'ch rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.'
+    'an rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.'
   );
 }
 

@@ -48,14 +48,14 @@ export function reportMoveFailure(
     );
     if (context.engine.rebaseInProgress())
       context.splog.info(
-        'Resolve the conflict, git add the resolution and run ch continue. ch rebase --abort only cancels the active rebase; the selected collapse, removed names, parent changes and completed restacks remain.'
+        'Resolve the conflict, git add the resolution and run an continue. an rebase --abort only cancels the active rebase; the selected collapse, removed names, parent changes and completed restacks remain.'
       );
     context.splog.info(
-      'After abort, or after moving blocking local work aside and resolving the Git/hook error, retry each remaining branch in this order (resolve and ch continue any new conflict before the next command):'
+      'After abort, or after moving blocking local work aside and resolving the Git/hook error, retry each remaining branch in this order (resolve and an continue any new conflict before the next command):'
     );
     for (const name of pending)
-      context.splog.info(`ch restack --branch ${shellQuote(name)} --only`);
-    context.splog.info(`ch checkout ${shellQuote(fold.survivor)}`);
+      context.splog.info(`an restack --branch ${shellQuote(name)} --only`);
+    context.splog.info(`an checkout ${shellQuote(fold.survivor)}`);
     return;
   }
   if (!move) return;
@@ -79,15 +79,15 @@ export function reportMoveFailure(
   context.splog.info(`Remaining branches: ${pending.join(', ') || 'none'}.`);
   if (context.engine.rebaseInProgress()) {
     context.splog.info(
-      'Resolve the conflict, git add the resolution and run ch continue. ch rebase --abort only cancels the active rebase; it keeps parent changes and completed restacks.'
+      'Resolve the conflict, git add the resolution and run an continue. an rebase --abort only cancels the active rebase; it keeps parent changes and completed restacks.'
     );
   }
   context.splog.info(
-    'After abort, or after preserving the blocking local work, retry each remaining branch in this order (resolve and ch continue any new conflict before the next command):'
+    'After abort, or after preserving the blocking local work, retry each remaining branch in this order (resolve and an continue any new conflict before the next command):'
   );
   for (const name of pending)
-    context.splog.info(`ch restack --branch ${shellQuote(name)} --only`);
-  context.splog.info(`ch checkout ${shellQuote(move.returnBranch)}`);
+    context.splog.info(`an restack --branch ${shellQuote(name)} --only`);
+  context.splog.info(`an checkout ${shellQuote(move.returnBranch)}`);
 }
 
 function shellQuote(value: string): string {

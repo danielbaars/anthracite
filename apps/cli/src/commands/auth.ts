@@ -6,7 +6,7 @@ const args = {
   token: {
     type: 'string',
     alias: 't',
-    describe: 'Token input is not supported; use ch auth with the GitHub CLI.',
+    describe: 'Token input is not supported; use an auth with the GitHub CLI.',
     hidden: true,
     demandOption: false,
   },
@@ -15,7 +15,7 @@ type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 
 export const command = 'auth';
 export const description =
-  'Authenticate with the GitHub CLI to create and manage PRs in GitHub from Charcoal.';
+  'Authenticate with the GitHub CLI to create and manage PRs in GitHub from Anthracite.';
 // Hide aliases separately; reject before validation or argv tracing can echo input.
 export const builder = (parser: yargs.Argv): yargs.Argv =>
   parser
@@ -24,7 +24,7 @@ export const builder = (parser: yargs.Argv): yargs.Argv =>
     .middleware((argv) => {
       if (argv.token !== undefined)
         throw new Error(
-          'Token input is not supported. Use ch auth with the GitHub CLI instead.'
+          'Token input is not supported. Use an auth with the GitHub CLI instead.'
         );
     }, true);
 export const canonical = 'auth';
@@ -53,12 +53,12 @@ export const handler = async (argv: argsT): Promise<void> => {
 
     if (!context.canPrompt) {
       throw new Error(
-        'Charcoal is not authenticated with GitHub. Please authenticate with ch auth from an interactive terminal.'
+        'Anthracite is not authenticated with GitHub. Please authenticate with an auth from an interactive terminal.'
       );
     }
 
     context.splog.message(
-      '❌ Charcoal is not authenticated with GitHub. Please authenticate.'
+      '❌ Anthracite is not authenticated with GitHub. Please authenticate.'
     );
 
     try {
@@ -66,10 +66,12 @@ export const handler = async (argv: argsT): Promise<void> => {
         stdio: 'inherit',
       });
 
-      context.splog.info('✅ Successfully authenticated Charcoal with GitHub.');
+      context.splog.info(
+        '✅ Successfully authenticated Anthracite with GitHub.'
+      );
     } catch {
       throw new Error(
-        'Failed to authenticate Charcoal with GitHub. Please try again.'
+        'Failed to authenticate Anthracite with GitHub. Please try again.'
       );
     }
   });

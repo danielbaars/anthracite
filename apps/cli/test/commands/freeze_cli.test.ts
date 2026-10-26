@@ -59,7 +59,7 @@ describe('manual freeze through the public CLI', function () {
       'blocked',
     ]);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(fixture.snapshot()).to.deep.equal(before);
     expect(fixture.refs()).to.equal(refs);
     expect(
@@ -233,7 +233,7 @@ describe('manual freeze through the public CLI', function () {
     expect(fixture.snapshot(fixture.linked)).to.deep.equal(linked);
     const rejected = fixture.run(['m', '--no-edit'], fixture.linked);
     expect(rejected.status).to.equal(1);
-    expect(rejected.stderr).to.include('ch unfreeze tip');
+    expect(rejected.stderr).to.include('an unfreeze tip');
     fixture.ok(['unfreeze', 'child'], fixture.linked);
     expect(fixture.ok(['info', 'tip'])).not.to.include('(frozen)');
   });
@@ -266,7 +266,7 @@ describe('manual freeze through the public CLI', function () {
     );
   });
 
-  it('shows status only in the native Charcoal renderers and offers public completion without exposing its hook bridge', () => {
+  it('shows status only in the native Anthracite renderers and offers public completion without exposing its hook bridge', () => {
     fixture.ok(['freeze', 'child']);
     for (const args of [['log'], ['l'], ['log', 'short'], ['ls']])
       expect(fixture.ok(args)).to.include('(frozen)');
@@ -283,14 +283,14 @@ describe('manual freeze through the public CLI', function () {
       expect(help).to.include(command === 'freeze' ? 'downstack' : 'upstack');
       const completed = fixture.ok([
         '--get-yargs-completions',
-        'ch',
+        'an',
         command,
         '',
       ]);
       expect(completed).to.include('child');
       expect(completed).to.include('other');
     }
-    const root = fixture.ok(['--get-yargs-completions', 'ch', '']);
+    const root = fixture.ok(['--get-yargs-completions', 'an', '']);
     expect(root).to.include('freeze');
     expect(root).to.include('unfreeze');
     expect(root).not.to.include('internal-commit-guard');

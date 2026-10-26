@@ -34,11 +34,11 @@ function executeRecovery(
   const commands = output
     .split('\n')
     .map((line) => line.trim())
-    .filter((line) => /^ch (restack --branch|checkout) /.test(line));
+    .filter((line) => /^an (restack --branch|checkout) /.test(line));
   expect(commands).to.deep.equal(expected);
   const cli = getTestCliCommand([]).map(quote).join(' ');
   fs.writeFileSync(
-    path.join(fixture.root, 'bin/ch'),
+    path.join(fixture.root, 'bin/an'),
     `#!/bin/sh\nexec ${cli} "$@" --no-interactive\n`,
     { mode: 0o755 }
   );
@@ -151,9 +151,9 @@ for (const keep of [false, true]) {
       const completed = fixture.git(['rev-parse', 'a-completed']);
       fs.unlinkSync(refusal);
       executeRecovery(fixture, output, [
-        `ch restack --branch ${quote("z'root")} --only`,
-        "ch restack --branch 'deep' --only",
-        `ch checkout '${survivor}'`,
+        `an restack --branch ${quote("z'root")} --only`,
+        "an restack --branch 'deep' --only",
+        `an checkout '${survivor}'`,
       ]);
       expect(fixture.git(['branch', '--show-current'])).to.equal(survivor);
       expect(fixture.git(['rev-parse', 'a-completed'])).to.equal(completed);
@@ -208,8 +208,8 @@ for (const keep of [false, true]) {
         fs.renameSync(path.join(fixture.repo, literal), saved);
         fs.unlinkSync(blocker);
         executeRecovery(fixture, output, [
-          `ch restack --branch ${quote("z'root")} --only`,
-          `ch checkout '${survivor}'`,
+          `an restack --branch ${quote("z'root")} --only`,
+          `an checkout '${survivor}'`,
         ]);
         expect(fixture.git(['branch', '--show-current'])).to.equal(survivor);
         expect(fixture.git(['rev-parse', 'a-completed'])).to.equal(completed);
@@ -351,7 +351,7 @@ for (const keep of [false, true]) {
       const saved = path.join(fixture.root, 'saved-private');
       fs.renameSync(path.join(fixture.repo, 'cafe\u0301.txt'), saved);
       fs.unlinkSync(blocker);
-      executeRecovery(fixture, output, [`ch checkout '${survivor}'`]);
+      executeRecovery(fixture, output, [`an checkout '${survivor}'`]);
       expect(fixture.git(['branch', '--show-current'])).to.equal(survivor);
       expect(fixture.git(['rev-parse', "b'root"])).to.equal(completed);
       expect(fixture.git(['status', '--porcelain'])).to.equal('');

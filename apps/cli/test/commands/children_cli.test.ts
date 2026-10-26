@@ -77,7 +77,7 @@ describe('children through the public CLI', function () {
       expect(result.status, result.stdout + result.stderr).to.equal(1);
       expect(result.stdout).to.equal('');
       expect(result.stderr).to.include('zzz-broken');
-      expect(result.stderr).to.include('ch track');
+      expect(result.stderr).to.include('an track');
       expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     }
     // A valid parent query does not repair or audit unrelated invalid children.
@@ -268,7 +268,7 @@ describe('children through the public CLI', function () {
       expect(result.status, result.stdout + result.stderr).to.equal(1);
       expect(result.stdout).to.equal('');
       expect(result.stderr).to.include('ERROR:');
-      if (subject !== 'detached') expect(result.stderr).to.include('ch track');
+      if (subject !== 'detached') expect(result.stderr).to.include('an track');
       expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     });
   }

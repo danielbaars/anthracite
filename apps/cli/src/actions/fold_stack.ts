@@ -44,10 +44,10 @@ export async function foldStack(
     const parent = context.engine.getParentPrecondition(name);
     if (!context.engine.isBranchFixed(name)) {
       throw new PreconditionsFailedError(
-        `Cannot fold ${name}: needs restack. Run ch checkout '${name.replace(
+        `Cannot fold ${name}: needs restack. Run an checkout '${name.replace(
           /'/g,
           "'\\''"
-        )}' and ch restack before retrying fold --stack.`
+        )}' and an restack before retrying fold --stack.`
       );
     }
     if (
@@ -55,7 +55,7 @@ export async function foldStack(
       context.engine.getRevision(parent)
     ) {
       throw new PreconditionsFailedError(
-        `Cannot fold ${name}: needs restack. Run ch restack before retrying.`
+        `Cannot fold ${name}: needs restack. Run an restack before retrying.`
       );
     }
   }

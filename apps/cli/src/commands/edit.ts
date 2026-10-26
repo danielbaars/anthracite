@@ -9,7 +9,7 @@ export const aliases = ['e'];
 export const command = 'edit';
 export const canonical = 'edit';
 export const description =
-  "Run an interactive rebase on the current branch's commits and restack upstack branches. Frozen sources require ch unfreeze first.";
+  "Run an interactive rebase on the current branch's commits and restack upstack branches. Frozen sources require an unfreeze first.";
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) =>

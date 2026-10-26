@@ -38,8 +38,8 @@ export const command = 'track [branch]';
 export const canonical = 'track';
 export const aliases = ['tr'];
 export const description = [
-  'Start tracking the current (or provided) branch with Charcoal by selecting its parent.',
-  'This command can also be used to fix corrupted Charcoal metadata. Administrative parent changes preserve frozen status without rewriting commits.',
+  'Start tracking the current (or provided) branch with Anthracite by selecting its parent.',
+  'This command can also be used to fix corrupted Anthracite metadata. Administrative parent changes preserve frozen status without rewriting commits.',
 ].join(' ');
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>

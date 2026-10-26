@@ -89,7 +89,7 @@ describe('frozen structural recovery through fresh public CLI processes', functi
         const saved = recovery(fixture);
         const result = fixture.run(['cont', '--all']);
         expect(result.status).to.equal(1);
-        expect(result.stderr).to.include('ch unfreeze conflict');
+        expect(result.stderr).to.include('an unfreeze conflict');
         expect(fixture.observe()).to.deep.equal(before);
         expect(recovery(fixture)).to.deep.equal(saved);
         fixture.ok(['unfreeze', 'conflict']);
@@ -118,7 +118,7 @@ describe('frozen structural recovery through fresh public CLI processes', functi
     const saved = recovery(fixture);
     const result = fixture.run(['continue', '--all']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stderr).to.include('an unfreeze z-sibling');
     expect(result.stdout + result.stderr).to.include(
       'Parent changes and completed restacks remain'
     );
@@ -157,7 +157,7 @@ describe('frozen structural recovery through fresh public CLI processes', functi
     const saved = recovery(fixture);
     const result = fixture.run(['cont', '--all']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stderr).to.include('an unfreeze z-sibling');
     expect(fixture.observe()).to.deep.equal(before);
     expect(recovery(fixture)).to.deep.equal(saved);
     fixture.ok(['unfreeze', 'z-sibling']);
@@ -194,7 +194,7 @@ describe('frozen structural recovery through fresh public CLI processes', functi
       const saved = recovery(fixture);
       const blocked = fixture.run(['continue', '--all']);
       expect(blocked.status).to.equal(1);
-      expect(blocked.stderr).to.include('ch unfreeze child');
+      expect(blocked.stderr).to.include('an unfreeze child');
       expect(fixture.observe()).to.deep.equal(before);
       expect(recovery(fixture)).to.deep.equal(saved);
       fixture.ok(['unfreeze', 'child']);

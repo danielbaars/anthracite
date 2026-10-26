@@ -86,7 +86,7 @@ describe('linear reorder own work and first conflict recovery through fresh proc
     fixture.editor('conflict-base\nconflict-child\n');
     const result = fixture.run(['reorder', '--stack', '--interactive']);
     expect(result.status).not.to.equal(0);
-    expect(result.stdout + result.stderr).to.include('ch continue');
+    expect(result.stdout + result.stderr).to.include('an continue');
     expect(
       fs.existsSync(
         path.resolve(
@@ -135,7 +135,7 @@ describe('linear reorder own work and first conflict recovery through fresh proc
   it('executes the public raw abort, retains published parents and refuses continue without a rebase', () => {
     const before = fixture.refs();
     const output = conflict();
-    expect(output).to.include('ch rebase --abort');
+    expect(output).to.include('an rebase --abort');
     const abortedResult = fixture.run(['rebase', '--abort']);
     expect(abortedResult.status).to.equal(0);
     expect(fixture.parent('conflict-child')).to.equal('main');

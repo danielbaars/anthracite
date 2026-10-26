@@ -53,7 +53,7 @@ describe('frozen structural participants through the public CLI', function () {
     const before = fixture.observe();
     const result = fixture.run(['move', '--source', 'base', '--onto', 'main']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(fixture.observe()).to.deep.equal(before);
   });
 
@@ -70,7 +70,7 @@ describe('frozen structural participants through the public CLI', function () {
       'insert',
     ]);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(fixture.observe()).to.deep.equal(before);
   });
 
@@ -93,7 +93,7 @@ describe('frozen structural participants through the public CLI', function () {
       'inserted commit',
     ]);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
     expect(fixture.git(['show', 'inserted:insert-work.txt'])).to.equal(
       'created work'
@@ -107,7 +107,7 @@ describe('frozen structural participants through the public CLI', function () {
     const before = fixture.observe();
     const result = fixture.run(['fold']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(fixture.observe()).to.deep.equal(before);
   });
 
@@ -116,7 +116,7 @@ describe('frozen structural participants through the public CLI', function () {
     const before = fixture.observe();
     const result = fixture.run(['fold', '--stack']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(fixture.observe()).to.deep.equal(before);
   });
 
@@ -125,7 +125,7 @@ describe('frozen structural participants through the public CLI', function () {
     const before = fixture.observe();
     const result = fixture.run(['ro', '--interactive']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(fixture.observe()).to.deep.equal(before);
   });
 
@@ -137,7 +137,7 @@ describe('frozen structural participants through the public CLI', function () {
     const before = fixture.observe();
     const result = fixture.run(['reorder', '--input', input]);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(fixture.observe()).to.deep.equal(before);
   });
 
@@ -149,7 +149,7 @@ describe('frozen structural participants through the public CLI', function () {
     const before = fixture.observe();
     const result = fixture.run(['ro', '--stack', '--input', input]);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(fixture.observe()).to.deep.equal(before);
   });
 
@@ -178,7 +178,7 @@ describe('frozen structural participants through the public CLI', function () {
     const saved = recovery(fixture);
     const result = fixture.run(['continue', '--all']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stderr).to.include('an unfreeze z-sibling');
     expect(result.stdout + result.stderr).to.include(
       'Completed branches: base'
     );
@@ -232,7 +232,7 @@ describe('frozen structural participants through the public CLI', function () {
     );
     const result = fixture.run(['cont']);
     expect(result.status).to.equal(1);
-    expect(result.stdout + result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stdout + result.stderr).to.include('an unfreeze z-sibling');
     expect(fixture.git(['rev-parse', 'HEAD'])).to.equal(head);
     expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
     expect(fixture.git(['rev-parse', 'z-sibling'])).to.equal(sibling);
@@ -272,7 +272,7 @@ describe('frozen structural participants through the public CLI', function () {
     );
     const result = fixture.run(['move', '-o', 'other']);
     expect(result.status).to.equal(1);
-    expect(result.stdout + result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stdout + result.stderr).to.include('an unfreeze z-sibling');
     expect(result.stdout + result.stderr).to.include(
       'Completed branches: base'
     );
@@ -297,7 +297,7 @@ describe('frozen structural participants through the public CLI', function () {
     );
     const result = fixture.run(['fold', '--stack']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(result.stdout + result.stderr).to.include(
       'Selected refs were not published'
     );
@@ -321,7 +321,7 @@ describe('frozen structural participants through the public CLI', function () {
     );
     const result = fixture.run(['move', '-o', 'other', '--only']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(fixture.refs()).to.equal(refs);
     expect(fixture.ok(['info', 'child'])).to.include('Parent: base');
     expect(fixture.ok(['info', 'base'])).to.include('Parent: main');
@@ -348,7 +348,7 @@ describe('frozen structural participants through the public CLI', function () {
       'blocked insert commit',
     ]);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(fixture.git(['rev-parse', 'inserted'])).to.equal(base);
     expect(
       fs.readFileSync(path.join(fixture.repo, '.git', 'index'))
@@ -394,7 +394,7 @@ cp .git/index '${savedIndex}'
         ...(onto ? ['--onto', 'base'] : []),
       ]);
       expect(result.status, result.stdout + result.stderr).to.equal(1);
-      expect(result.stderr).to.include('ch unfreeze tip');
+      expect(result.stderr).to.include('an unfreeze tip');
       expect(fixture.git(['rev-parse', 'inserted'])).to.equal(base);
       expect(fixture.git(['branch', '--show-current'])).to.equal('inserted');
       expect(
@@ -444,7 +444,7 @@ cp .git/index '${savedIndex}'
       '--no-verify',
     ]);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(fixture.git(['rev-parse', 'inserted'])).to.equal(base);
     expect(fixture.git(['show', ':new-work.txt'])).to.equal(
       'selected insertion work'
@@ -469,7 +469,7 @@ cp .git/index '${savedIndex}'
     );
     const result = fixture.run(['fold']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze base');
+    expect(result.stderr).to.include('an unfreeze base');
     expect(result.stdout + result.stderr).to.include(
       'completed ref and parent writes remain'
     );
@@ -505,7 +505,7 @@ cp .git/index '${savedIndex}'
     const index = fs.readFileSync(path.join(fixture.repo, '.git', 'index'));
     const result = fixture.run(['ro', '--stack', '--interactive']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze tip');
+    expect(result.stderr).to.include('an unfreeze tip');
     expect(fixture.refs()).to.equal(refs);
     expect(
       fs.readFileSync(path.join(fixture.repo, '.git', 'index'))
@@ -537,7 +537,7 @@ cp .git/index '${savedIndex}'
     );
     const result = fixture.run(['reorder', '--input', input]);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze empty-a');
+    expect(result.stderr).to.include('an unfreeze empty-a');
     expect(fixture.git(['rev-parse', 'refs/branch-metadata/empty-b'])).to.equal(
       parent
     );
@@ -573,7 +573,7 @@ cp .git/index '${savedIndex}'
     );
     const result = fixture.run(['delete', 'base', '--force']);
     expect(result.status).to.equal(1);
-    expect(result.stdout + result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stdout + result.stderr).to.include('an unfreeze z-sibling');
     expect(result.stdout + result.stderr).to.include('already been deleted');
     expect(fixture.git(['branch', '--list', 'base'])).to.equal('');
     expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
@@ -615,7 +615,7 @@ cp .git/index '${savedIndex}'
     );
     const result = fixture.run(['move', '-o', 'other']);
     expect(result.status).to.equal(1);
-    expect(result.stdout + result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stdout + result.stderr).to.include('an unfreeze z-sibling');
     const completed = fixture.git(['rev-parse', 'child']);
     expect(completed).not.to.equal(child);
     expect(fixture.git(['show', 'child:child.txt'])).to.equal('child');
@@ -669,7 +669,7 @@ cp .git/index '${savedIndex}'
     );
     const result = fixture.run(['delete', 'base', '--force']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze z-sibling');
+    expect(result.stderr).to.include('an unfreeze z-sibling');
     expect(fixture.refs()).to.equal(refs);
     expect(fixture.git(['rev-parse', 'refs/branch-metadata/child'])).to.equal(
       metadata

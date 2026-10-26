@@ -78,7 +78,7 @@ export async function getPrInfoForBranches(
         throw new ExitFailedError(
           [
             `Failed to fetch pull request info from GitHub (via \`gh\`) for "${prId}".`,
-            `Ensure the GitHub CLI is installed and authenticated (run \`ch auth\`).`,
+            `Ensure the GitHub CLI is installed and authenticated (run \`an auth\`).`,
             detail.trim(),
           ].join('\n')
         );

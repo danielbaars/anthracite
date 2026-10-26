@@ -4,7 +4,7 @@ export const globalArgumentsOptions = {
   cwd: {
     type: 'string',
     description:
-      'Working directory. Use a direct --cwd prefix before the Git command for passthroughs; before or after the command for Charcoal commands.',
+      'Working directory. Use a direct --cwd prefix before the Git command for passthroughs; before or after the command for Anthracite commands.',
   },
   interactive: {
     type: 'boolean',

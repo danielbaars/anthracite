@@ -521,7 +521,7 @@ describe('modern submit aliases through the public CLI', function () {
       else expect(result.stdout).to.include('trunk to the current branch');
       const completion = invoke(fixture, [
         '--get-yargs-completions',
-        'ch',
+        'an',
         alias,
         '--',
       ]);
@@ -533,7 +533,7 @@ describe('modern submit aliases through the public CLI', function () {
         .and.include('--branch')
         .and.include('--stack');
     }
-    const roots = invoke(fixture, ['--get-yargs-completions', 'ch', '']);
+    const roots = invoke(fixture, ['--get-yargs-completions', 'an', '']);
     expect(roots.status, roots.stderr).to.equal(0);
     expect(roots.stdout).to.match(/^ss(?::|$)/m);
   });

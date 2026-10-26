@@ -364,7 +364,7 @@ sys.exit(result.returncode)
       const result = fixture.run([
         '--version=true',
         ...flags,
-        'ch',
+        'an',
         'checkout',
         '',
         '--quiet=invalid',

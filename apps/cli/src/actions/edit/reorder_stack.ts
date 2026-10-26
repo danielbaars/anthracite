@@ -138,7 +138,7 @@ export async function reorderStack(
 function assertAlignedBranch(name: string, context: TContext): void {
   if (!context.engine.isBranchFixed(name))
     throw new PreconditionsFailedError(
-      `Cannot reorder ${name}: needs restack. Run ch restack --branch '${name.replace(
+      `Cannot reorder ${name}: needs restack. Run an restack --branch '${name.replace(
         /'/g,
         "'\\''"
       )}' before retrying reorder --stack.`

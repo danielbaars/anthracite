@@ -10,7 +10,7 @@ import * as repoSync from './repo-commands/repo_sync';
 
 export const command = 'repo <command>';
 export const desc =
-  "Read or write Charcoal's configuration settings for the current repo. Run `ch repo --help` to learn more.";
+  "Read or write Anthracite's configuration settings for the current repo. Run `an repo --help` to learn more.";
 
 export const builder = function (yargs: Argv): Argv {
   return registerCommands(yargs, [

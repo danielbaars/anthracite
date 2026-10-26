@@ -91,7 +91,7 @@ function isDocumentationRequest(
     // Reuse real option arities and boolean overrides; this guard stops handlers,
     // while root documentation can still run middleware after rendering output.
     registerCommands(yargs(args), commands)
-      .scriptName('ch')
+      .scriptName('an')
       .help()
       .version(version)
       .options(globalArgumentsOptions)

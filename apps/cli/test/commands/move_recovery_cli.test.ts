@@ -38,7 +38,7 @@ function retryCommands(output: string): string[] {
   return output
     .split('\n')
     .map((line) => line.trim())
-    .filter((line) => /^ch (restack --branch|checkout) /.test(line));
+    .filter((line) => /^an (restack --branch|checkout) /.test(line));
 }
 function rawAbort(fixture: CreateCliFixture): void {
   const [executable, ...args] = getTestCliCommand(['rebase', '--abort']);
@@ -57,7 +57,7 @@ function executeRetry(
 ): void {
   const command = getTestCliCommand([]).map(quote).join(' ');
   fs.writeFileSync(
-    path.join(fixture.root, 'bin', 'ch'),
+    path.join(fixture.root, 'bin', 'an'),
     `#!/bin/sh\nexec ${command} "$@" --no-interactive\n`,
     { mode: 0o755 }
   );
@@ -104,10 +104,10 @@ describe('move recovery through new public CLI processes', function () {
     expect(output).to.match(/completed branches[^\n]*child[^\n]*tip/i);
     const commands = retryCommands(output);
     expect(commands).to.deep.equal([
-      "ch restack --branch 'conflicting' --only",
-      "ch restack --branch 'tail' --only",
-      "ch restack --branch 'base' --only",
-      "ch checkout 'other'",
+      "an restack --branch 'conflicting' --only",
+      "an restack --branch 'tail' --only",
+      "an restack --branch 'base' --only",
+      "an checkout 'other'",
     ]);
     rawAbort(fixture);
     expectRebase(fixture, false);
@@ -239,8 +239,8 @@ describe('move recovery through new public CLI processes', function () {
     const tip = fixture.git(['rev-parse', 'tip']);
     const commands = retryCommands(result.stdout + result.stderr);
     expect(commands).to.deep.equal([
-      "ch restack --branch 'base' --only",
-      "ch checkout 'tip'",
+      "an restack --branch 'base' --only",
+      "an checkout 'tip'",
     ]);
     expect(result.stdout + result.stderr)
       .to.include('source phase (base)')
@@ -321,7 +321,7 @@ describe('move recovery through new public CLI processes', function () {
       .to.match(/rewrite[^\n]*tip[^\n]*completed/i)
       .and.match(/return[^\n]*departure[^\n]*failed/i)
       .and.match(/checkout[^\n]*tip/i);
-    expect(retryCommands(output)).to.deep.equal(["ch checkout 'departure'"]);
+    expect(retryCommands(output)).to.deep.equal(["an checkout 'departure'"]);
     const saved = path.join(fixture.root, 'retained-ignored-work.txt');
     fs.renameSync(path.join(fixture.repo, 'departure.txt'), saved);
     executeRetry(fixture, retryCommands(output));
@@ -368,9 +368,9 @@ describe('move recovery through new public CLI processes', function () {
       .to.include('Completed branches: child')
       .and.include('left-behind child phase (tip)');
     expect(retryCommands(output)).to.deep.equal([
-      "ch restack --branch 'tip' --only",
-      "ch restack --branch 'base' --only",
-      "ch checkout 'other'",
+      "an restack --branch 'tip' --only",
+      "an restack --branch 'base' --only",
+      "an checkout 'other'",
     ]);
     const saved = path.join(fixture.root, 'saved-late-replay-work');
     fs.renameSync(path.join(fixture.repo, 'base.txt'), saved);
@@ -481,8 +481,8 @@ describe('move recovery through new public CLI processes', function () {
       .and.include('Completed branches: none')
       .and.include('Parent changes and completed restacks remain');
     expect(retryCommands(output)).to.deep.equal([
-      "ch restack --branch 'tip'\\''quote' --only",
-      "ch checkout 'depart'\\''quote'",
+      "an restack --branch 'tip'\\''quote' --only",
+      "an checkout 'depart'\\''quote'",
     ]);
     fs.unlinkSync(hook);
     expectParent(fixture, "tip'quote", 'other');
@@ -540,7 +540,7 @@ describe('move recovery through new public CLI processes', function () {
       .to.match(/rewrite[^\n]*tip[^\n]*completed/i)
       .and.include('Completed branches: tip')
       .and.include('Remaining branches: none');
-    expect(retryCommands(output)).to.deep.equal(["ch checkout 'departure'"]);
+    expect(retryCommands(output)).to.deep.equal(["an checkout 'departure'"]);
     const before = fixture.snapshot();
     expect(fixture.run(['continue']).status).not.to.equal(0);
     expect(fixture.snapshot()).to.deep.equal(before);

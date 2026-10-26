@@ -54,7 +54,7 @@ describe('modern Fish completion through the public CLI', function () {
 
   function candidates(args: readonly string[]): string[] {
     const result = fixture.run(
-      ['--get-yargs-completions', 'ch', ...args],
+      ['--get-yargs-completions', 'an', ...args],
       departure
     );
     expect(result.status, result.stdout + result.stderr).to.equal(0);
@@ -154,7 +154,7 @@ describe('modern Fish completion through the public CLI', function () {
         const result = fixture.run(
           [
             '--get-yargs-completions',
-            'ch',
+            'an',
             '--cwd',
             path.join(fixture.root, 'missing repo ü'),
             '--quiet',

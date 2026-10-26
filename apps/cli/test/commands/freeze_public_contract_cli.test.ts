@@ -142,7 +142,7 @@ describe('frozen public contract through the CLI', function () {
     );
     expect(refused.status).to.equal(1);
     expect(refused.stdout).to.equal('');
-    expect(refused.stderr).to.include('ch unfreeze base');
+    expect(refused.stderr).to.include('an unfreeze base');
     expect(fixture.inspectionSnapshot()).to.deep.equal(mainBefore);
     expect(fixture.inspectionSnapshot(linked)).to.deep.equal(linkedBefore);
     const unfrozen = fixture.run(
@@ -202,7 +202,7 @@ describe('frozen public contract through the CLI', function () {
     fixture.ok(['info', 'child']);
     const before = fixture.inspectionSnapshot();
     const names = (args: readonly string[]): string[] => {
-      const result = fixture.run(['--get-yargs-completions', 'ch', ...args]);
+      const result = fixture.run(['--get-yargs-completions', 'an', ...args]);
       expect(result.status, result.stderr).to.equal(0);
       expect(result.stderr).to.equal('');
       return result.stdout
@@ -254,7 +254,7 @@ describe('frozen public contract through the CLI', function () {
       });
       expect(result.status, result.output).to.equal(status);
       if (status === 0) expect(result.output).to.equal('');
-      else expect(result.output).to.include('ch unfreeze base');
+      else expect(result.output).to.include('an unfreeze base');
     }
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
@@ -295,6 +295,6 @@ describe('frozen public contract through the CLI', function () {
     expect(fixture.ok(['i', 'base'])).to.include('base (frozen)');
     expect(
       fixture.run(['m', '--no-edit', '--no-interactive']).stderr
-    ).to.include('ch unfreeze base');
+    ).to.include('an unfreeze base');
   });
 });

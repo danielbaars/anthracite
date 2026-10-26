@@ -188,7 +188,7 @@ describe('relation inspection during a real own conflictrebase', function () {
     fixture.editor('conflict-base\nconflict-child\n');
     const first = fixture.run(['reorder', '--stack', '--interactive']);
     expect(first.status).to.equal(1);
-    expect(first.stdout + first.stderr).to.include('ch continue');
+    expect(first.stdout + first.stderr).to.include('an continue');
     expectReplay('conflict-child');
     fs.utimesSync(
       path.join(fixture.repo, 'stable.txt'),

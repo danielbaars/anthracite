@@ -78,7 +78,7 @@ const args = {
   },
   always: {
     describe:
-      'Always push updates, even if the branch has not changed. Can be helpful for fixing an inconsistent Charcoal stack view on Web/GitHub resulting from downtime/a bug.',
+      'Always push updates, even if the branch has not changed. Can be helpful for fixing an inconsistent Anthracite stack view on Web/GitHub resulting from downtime/a bug.',
     type: 'boolean',
     default: false,
   },

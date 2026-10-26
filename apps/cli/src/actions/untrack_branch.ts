@@ -12,7 +12,7 @@ export async function untrackBranch(
 
   if (!context.engine.isBranchTracked(branchName)) {
     context.splog.info(
-      `Branch ${chalk.yellow(branchName)} is not tracked by Charcoal.`
+      `Branch ${chalk.yellow(branchName)} is not tracked by Anthracite.`
     );
     return;
   }
@@ -20,7 +20,7 @@ export async function untrackBranch(
   const children = context.engine.getChildren(branchName);
   if (children.length) {
     context.splog.tip(
-      'If you would like to keep these branches tracked, use `ch move --source <child> --onto <new-parent>` to change their parent before untracking.'
+      'If you would like to keep these branches tracked, use `an move --source <child> --onto <new-parent>` to change their parent before untracking.'
     );
     if (
       !(await shouldUntrackBranchWithChildren(

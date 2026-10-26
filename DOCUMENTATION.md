@@ -1,14 +1,14 @@
-# Charcoal command reference
+# Anthracite command reference
 
-Charcoal is an open-source fork of the Graphite CLI for working with stacked branches and pull requests on GitHub. The command is `ch`.
+Anthracite is an open-source fork of the Graphite CLI for working with stacked branches and pull requests on GitHub. The command is `an`.
 
-> **Using Graphite alongside Charcoal?** Use `ch` for Charcoal and `gt` for Graphite. Modern top-level names and the twenty supported short forms are listed in [COMPATIBILITY.md](./COMPATIBILITY.md), together with retained legacy entries and explicit feature limits. This reference describes the source candidate, independently of any installed release.
+> **Using Graphite alongside Anthracite?** Use `an` for Anthracite and `gt` for Graphite. Modern top-level names and the twenty supported short forms are listed in [COMPATIBILITY.md](./COMPATIBILITY.md), together with retained legacy entries and explicit feature limits. This reference describes the source candidate, independently of any installed release.
 
 ---
 
 ## Concepts
 
-- **Stack** — a chain of dependent branches, each based on the one below it. Charcoal tracks the parent/child relationships so it can keep the whole chain rebased and submitted together.
+- **Stack** — a chain of dependent branches, each based on the one below it. Anthracite tracks the parent/child relationships so it can keep the whole chain rebased and submitted together.
 - **Trunk** — your repo's base branch (e.g. `main`). Every stack starts from trunk.
 - **Downstack** — the branches *below* the current one, toward trunk (its ancestors).
 - **Upstack** — the branches *above* the current one, away from trunk (its descendants).
@@ -23,7 +23,7 @@ Every command accepts these:
 
 | Flag | Description |
 | --- | --- |
-| `--cwd <directory>` | Select a repository before or after a Charcoal command. Raw Git accepts the existing direct prefix form. Relative paths resolve from the process directory. |
+| `--cwd <directory>` | Select a repository before or after a Anthracite command. Raw Git accepts the existing direct prefix form. Relative paths resolve from the process directory. |
 | `--interactive` / `--no-interactive` | Default: both stdin and stdout must be terminals. Explicit interactive enables supported prompts/editors in pipes; quiet disables interaction. |
 | `-q`, `--quiet` | Suppress progress/tips and interaction. Inspection and help/completion data retain their output. Errors stay on stderr. |
 | `--verify` / `--no-verify` | Run commit/push hooks by default; disable them on those existing paths. This does not disable all Git rebase hooks. |
@@ -33,18 +33,18 @@ Every command accepts these:
 
 **Environment overrides** (apply to a single invocation):
 
-- `CH_EDITOR` — override the editor Charcoal opens.
-- `CH_PAGER` — override the pager Charcoal opens.
+- `CH_EDITOR` — override the editor Anthracite opens.
+- `CH_PAGER` — override the pager Anthracite opens.
 
 ---
 
 ## Frozen branch status
 
-`ch freeze [branch]` marks the selected tracked branch and its downstack before trunk as frozen. `ch unfreeze [branch]` makes the selected branch and every tracked descendant editable, including branching descendants. Both default to the current branch. An explicit local branch selector also works with detached HEAD; trunk, untracked names and invalid scopes are refused before any status writes. There are no extra branch or force flags.
+`an freeze [branch]` marks the selected tracked branch and its downstack before trunk as frozen. `an unfreeze [branch]` makes the selected branch and every tracked descendant editable, including branching descendants. Both default to the current branch. An explicit local branch selector also works with detached HEAD; trunk, untracked names and invalid scopes are refused before any status writes. There are no extra branch or force flags.
 
 Status persists across processes and linked worktrees. Setting it does not checkout, stage, open an editor, invoke hooks, repair metadata or clear a saved conflict. Dirty and ignored files stay intact. Repeating the same request does not rewrite status refs; the complete validated status set is published in one Git ref transaction.
 
-`ch info`/`ch i`, default `ch log`/`ch l`, and `ch log short`/`ch log s`/`ch ls` show `(frozen)`. Classic and Git-based long logs (`log long`, `log l`, `ll`) retain their existing format. Navigation, parent/children, diff, patch and stat inspection remain available. Completion includes frozen local selectors without changing status; freeze/unfreeze have no extra aliases.
+`an info`/`an i`, default `an log`/`an l`, and `an log short`/`an log s`/`an ls` show `(frozen)`. Classic and Git-based long logs (`log long`, `log l`, `ll`) retain their existing format. Navigation, parent/children, diff, patch and stat inspection remain available. Completion includes frozen local selectors without changing status; freeze/unfreeze have no extra aliases.
 
 Content edits through modify/m (including interactive rebase), edit/e, squash/sq, split/sp and pop refuse a frozen source before staging, prompts, editors or hooks. Move, fold, reorder/ro and create/c --insert refuse frozen mandatory parent-change or replay participants before effects. A frozen destination may remain an unchanged anchor. Ordinary create/c, including --onto/-o, creates an editable child above a frozen parent. Generic restack/r skips frozen branches, explains the skips outside quiet and replays editable descendants against their actual parent tips. Force and no-verify never imply unfreeze.
 
@@ -71,7 +71,7 @@ Create a new branch stacked on top of the current branch and commit staged chang
 | `-i`, `--insert` | Existing children of the selected parent (`--onto`, otherwise current branch) become children of the new branch. |
 
 ```
-ch create -am "Add login form"
+an create -am "Add login form"
 ```
 
 ### `modify` (alias `m`)
@@ -86,11 +86,11 @@ Modify the current branch by amending its commit (or creating a new one with `--
 | `-p`, `--patch` | Pick hunks to stage before committing. |
 | `--interactive-rebase` | Edit the current branch’s commit sequence and restack descendants; replaces the ordinary amend/create-commit operation when true. |
 
-Explicit `--message` avoids the message editor; `--no-edit` takes precedence over `--edit`. Interactive rebase ignores ordinary operation options (`--commit`, `--all`, `--patch`, `--message`, `--edit`/`--no-edit`), while global cwd/quiet/interaction rules still apply. An occupied involved worktree is refused before the editor. A conflict can leave partial progress: resolve and run `ch continue` or `ch cont`; there is no general transaction rollback. `--interactive-rebase=false` retains ordinary modify behavior.
+Explicit `--message` avoids the message editor; `--no-edit` takes precedence over `--edit`. Interactive rebase ignores ordinary operation options (`--commit`, `--all`, `--patch`, `--message`, `--edit`/`--no-edit`), while global cwd/quiet/interaction rules still apply. An occupied involved worktree is refused before the editor. A conflict can leave partial progress: resolve and run `an continue` or `an cont`; there is no general transaction rollback. `--interactive-rebase=false` retains ordinary modify behavior.
 
 ```
-ch modify -a            # amend current commit with all changes
-ch modify -c -m "Fix"   # add a new commit instead
+an modify -a            # amend current commit with all changes
+an modify -c -m "Fix"   # add a new commit instead
 ```
 
 ### `squash` (alias `sq`)
@@ -102,14 +102,14 @@ Squash all commits in the current branch into one and restack upstack branches.
 | `--edit` / `-n`, `--no-edit` | Whether to modify the existing commit message (`--no-edit` takes precedence). |
 
 ```
-ch squash -m "Implement feature"
+an squash -m "Implement feature"
 ```
 
 ### `edit` (alias `e`)
-Retained legacy entry for `ch modify --interactive-rebase`: edit the current branch’s commits and restack descendants with the same editor and worktree guards.
+Retained legacy entry for `an modify --interactive-rebase`: edit the current branch’s commits and restack descendants with the same editor and worktree guards.
 
 ```
-ch edit
+an edit
 ```
 
 ### `split` (alias `sp`)
@@ -121,7 +121,7 @@ Split the current branch into multiple single-commit branches.
 | `-h`, `--by-hunk`, `--hunk` | Split by hunk into new single-commit branches. |
 
 ```
-ch split --by-commit
+an split --by-commit
 ```
 
 ### `fold`
@@ -133,7 +133,7 @@ Fold a branch's changes into its parent, update descendants' dependencies, and r
 | `-k`, `--keep` | Ordinary fold keeps the current name; stack fold keeps the chosen tip name instead of the original bottom name. |
 
 ```
-ch fold
+an fold
 ```
 
 ### `rename` (alias `rn`)
@@ -145,11 +145,11 @@ Rename a branch and update metadata referencing it. If no name is supplied, you'
 | `-f`, `--force` | Allow renaming a branch already associated with an open PR. |
 
 ```
-ch rename better-name
+an rename better-name
 ```
 
 ### `delete` (alias `dl`)
-Delete a branch and its corresponding Charcoal metadata.
+Delete a branch and its corresponding Anthracite metadata.
 
 | Flag | Description |
 | --- | --- |
@@ -157,14 +157,14 @@ Delete a branch and its corresponding Charcoal metadata.
 | `-f`, `--force` | Delete even if the branch is not merged or closed. |
 
 ```
-ch delete old-branch -f
+an delete old-branch -f
 ```
 
 ### `pop`
 Delete the current branch but retain the state of files in the working tree.
 
 ```
-ch pop
+an pop
 ```
 
 ---
@@ -180,8 +180,8 @@ Switch to a branch. With no argument, opens an interactive selector.
 | `-u`, `--show-untracked` | Include untracked branches in the interactive selector. |
 
 ```
-ch co            # interactive
-ch co my-branch
+an co            # interactive
+an co my-branch
 ```
 
 ### `up` (alias `u`)
@@ -192,7 +192,7 @@ Switch to the child of the current branch. Prompts if ambiguous.
 | `[steps]` / `-n`, `--steps` | Number of levels to traverse upstack (default 1). |
 
 ```
-ch up 2
+an up 2
 ```
 
 ### `down` (alias `d`)
@@ -203,21 +203,21 @@ Switch to the parent of the current branch.
 | `[steps]` / `-n`, `--steps` | Number of levels to traverse downstack (default 1). |
 
 ```
-ch down
+an down
 ```
 
 ### `top` (alias `t`)
 Switch to the tip branch of the current stack. Prompts if ambiguous.
 
 ```
-ch top
+an top
 ```
 
 ### `bottom` (alias `b`)
 Switch to the first branch from trunk in the current stack.
 
 ```
-ch bottom
+an bottom
 ```
 
 ---
@@ -235,8 +235,8 @@ Ensure each branch in the current stack is based on its parent, rebasing if nece
 | `-o`, `--only` | Only restack this branch. |
 
 ```
-ch restack
-ch restack --upstack
+an restack
+an restack --upstack
 ```
 
 ### `move`
@@ -250,20 +250,20 @@ Rebase the current branch onto the latest commit of a target branch and restack 
 | `--only` | Move only the selected source, leaving its children on its old parent; default moves its upstack too. |
 
 ```
-ch move main
+an move main
 ```
 
-Use `ch move` for branch operations. `ch mv` passes through to Git to move files; it is not a branch alias. A direct `--cwd` prefix may select another repository for this Git operation. Other global prefixes are not supported for raw Git routing and never turn `mv` into a branch operation.
+Use `an move` for branch operations. `an mv` passes through to Git to move files; it is not a branch alias. A direct `--cwd` prefix may select another repository for this Git operation. Other global prefixes are not supported for raw Git routing and never turn `mv` into a branch operation.
 
 ### `reorder` (alias `ro`)
 Reorder the branches between trunk and the current branch, restacking all descendants. Opens an interactive editor. `--stack` selects the full trunk-to-tip feature chain in a top-first editor and returns to the original departure branch.
 
 ```
-ch reorder
+an reorder
 ```
 
 ### `track` (alias `tr`)
-Start tracking the current (or provided) branch with Charcoal by selecting its parent. Also used to fix corrupted Charcoal metadata.
+Start tracking the current (or provided) branch with Anthracite by selecting its parent. Also used to fix corrupted Anthracite metadata.
 
 | Flag | Description |
 | --- | --- |
@@ -273,12 +273,12 @@ Start tracking the current (or provided) branch with Charcoal by selecting its p
 | `-d`, `--downstack` | Track a chain of untracked branches downstack, from the current branch down to the first tracked branch. |
 
 ```
-ch track -p main
-ch track --downstack
+an track -p main
+an track --downstack
 ```
 
 ### `untrack` (aliases `utr`, `ut`)
-Stop tracking a branch with Charcoal. If it has children, they are also untracked. Defaults to the current branch.
+Stop tracking a branch with Anthracite. If it has children, they are also untracked. Defaults to the current branch.
 
 | Flag | Description |
 | --- | --- |
@@ -286,7 +286,7 @@ Stop tracking a branch with Charcoal. If it has children, they are also untracke
 | `-f`, `--force` | Don't prompt before untracking a branch with children. |
 
 ```
-ch utr feature-x       # modern short form; ch untrack and ch ut remain available
+an utr feature-x       # modern short form; an untrack and an ut remain available
 ```
 
 ### `test`
@@ -300,19 +300,19 @@ Run a command on each branch in the current stack and aggregate the results. Use
 | `-t`, `--trunk` | Also run on the trunk branch. |
 
 ```
-ch test "npm test"
-ch test --upstack "npm run lint"
+an test "npm test"
+an test --upstack "npm run lint"
 ```
 
 ### `continue` (alias `cont`)
-Continue the most recent Charcoal command halted by a merge conflict (e.g. during a restack or sync).
+Continue the most recent Anthracite command halted by a merge conflict (e.g. during a restack or sync).
 
 | Flag | Description |
 | --- | --- |
 | `-a`, `--all` | Stage all changes before continuing. |
 
 ```
-ch continue -a
+an continue -a
 ```
 
 ---
@@ -320,7 +320,7 @@ ch continue -a
 ## Submit & sync
 
 ### `submit` (alias `s`)
-Idempotently force-push all branches from trunk to the current branch to GitHub, creating or updating a distinct PR for each. **Defaults to the current downstack** (trunk → current); pass `--stack` to also include descendants. `ch ss` uses that whole-stack scope by default and accepts the same options. Explicit later `--no-stack` or `--stack=false` overrides the `ss` default; a later `--stack=true` enables it again. `--branch` selects the starting branch for either short form.
+Idempotently force-push all branches from trunk to the current branch to GitHub, creating or updating a distinct PR for each. **Defaults to the current downstack** (trunk → current); pass `--stack` to also include descendants. `an ss` uses that whole-stack scope by default and accepts the same options. Explicit later `--no-stack` or `--stack=false` overrides the `ss` default; a later `--stack=true` enables it again. `--branch` selects the starting branch for either short form.
 
 | Flag | Description |
 | --- | --- |
@@ -338,10 +338,10 @@ Idempotently force-push all branches from trunk to the current branch to GitHub,
 | `--branch` | Which branch to run from (default: current branch). |
 
 ```
-ch s                   # submit trunk -> current
-ch ss -d               # whole selected stack, as drafts
-ch ss --no-stack       # explicit downstack override
-ch ss --branch target --dry-run
+an s                   # submit trunk -> current
+an ss -d               # whole selected stack, as drafts
+an ss --no-stack       # explicit downstack override
+an ss --branch target --dry-run
 ```
 
 ### `sync`
@@ -356,20 +356,20 @@ Pull the trunk branch from remote and delete any branches that have been merged.
 | `-r`, `--restack` | Restack the current stack and any stacks with deleted branches. |
 
 ```
-ch sync
-ch sync -fr
+an sync
+an sync -fr
 ```
 
 ### `auth`
-Authenticate with the GitHub CLI so Charcoal can create and manage PRs.
+Authenticate with the GitHub CLI so Anthracite can create and manage PRs.
 
-Charcoal uses the existing `gh` authentication flow. Graphite token input via
+Anthracite uses the existing `gh` authentication flow. Graphite token input via
 `--token` or `-t` is not supported and is refused before any authentication tool
-or configuration changes. Run `ch auth` from an interactive terminal when login
+or configuration changes. Run `an auth` from an interactive terminal when login
 is needed; an already authenticated GitHub CLI can be checked without interaction.
 
 ```
-ch auth
+an auth
 ```
 
 ---
@@ -386,13 +386,13 @@ Get branches from trunk to the specified branch from remote, prompting to resolv
 | `-U`, `--unfrozen` | Make only new imports editable. Default false, including explicit `--unfrozen=false`. |
 
 ```
-ch get teammate-branch       # protect new imports from other or unknown authors
-ch g 123 -U                  # explicitly make new imports editable
+an get teammate-branch       # protect new imports from other or unknown authors
+an g 123 -U                  # explicitly make new imports editable
 ```
 
-Each new import is frozen unless its PR author login matches the current `gh` account login, or `--unfrozen` is true. A mixed stack is decided per branch. Missing, invalid or unavailable optional identity information conservatively means frozen; the required PR head/base chain must still resolve to trunk. Charcoal uses read-only `gh` requests and does not infer ownership from Git names or email or start a login flow.
+Each new import is frozen unless its PR author login matches the current `gh` account login, or `--unfrozen` is true. A mixed stack is decided per branch. Missing, invalid or unavailable optional identity information conservatively means frozen; the required PR head/base chain must still resolve to trunk. Anthracite uses read-only `gh` requests and does not infer ownership from Git names or email or start a login flow.
 
-Existing tracked branches keep their current status through no-op, fast-forward and permitted remote overwrite, even with force or `-U`. Frozen divergence offers remote overwrite or abort; use explicit `ch unfreeze` before local replay. An editable get rebase conflict saves the pending new-import decisions for a fresh `continue`/`cont`; account changes do not change those saved defaults. An active replay that becomes frozen stops before `--all` staging until explicitly unfrozen. Late failures report reached refs and unfinished metadata/status publication; earlier imports remain completed.
+Existing tracked branches keep their current status through no-op, fast-forward and permitted remote overwrite, even with force or `-U`. Frozen divergence offers remote overwrite or abort; use explicit `an unfreeze` before local replay. An editable get rebase conflict saves the pending new-import decisions for a fresh `continue`/`cont`; account changes do not change those saved defaults. An active replay that becomes frozen stops before `--all` staging until explicitly unfrozen. Late failures report reached refs and unfinished metadata/status publication; earlier imports remain completed.
 
 These behaviors are tested against controlled external `gh` responses and local bare remotes, not a live Graphite service.
 
@@ -403,11 +403,11 @@ These behaviors are tested against controlled external `gh` responses and local 
 ### `log` (alias `l`)
 Command group that logs your stacks.
 
-- `ch log` (default) — log all branches tracked by Charcoal, showing dependencies and info for each.
-- `ch log short` (alias `s`) — log all stacks, arranged to show dependencies.
-- `ch log long` (alias `l`) — display a graph of the commit ancestry of all branches.
+- `an log` (default) — log all branches tracked by Anthracite, showing dependencies and info for each.
+- `an log short` (alias `s`) — log all stacks, arranged to show dependencies.
+- `an log long` (alias `l`) — display a graph of the commit ancestry of all branches.
 
-Shared flags (on `ch log` and `ch log short`):
+Shared flags (on `an log` and `an log short`):
 
 | Flag | Description |
 | --- | --- |
@@ -417,10 +417,10 @@ Shared flags (on `ch log` and `ch log short`):
 | `-n`, `--steps` | Only show this many levels up/downstack. Implies `--stack`. |
 | `-u`, `--show-untracked` | Include untracked branches. |
 
-Classic is available through `ch log --classic`, `ch l --classic`, `ch log short --classic`, and `ch ls --classic`; only the short forms also have `-c`. Without classic (or with `--classic=false`), the normal full/short style remains selected. Global cwd, quiet and interaction rules still apply. A configured pager receives classic content only when both stdin and stdout are terminals and interaction is allowed; pipes receive it directly.
+Classic is available through `an log --classic`, `an l --classic`, `an log short --classic`, and `an ls --classic`; only the short forms also have `-c`. Without classic (or with `--classic=false`), the normal full/short style remains selected. Global cwd, quiet and interaction rules still apply. A configured pager receives classic content only when both stdin and stdout are terminals and interaction is allowed; pipes receive it directly.
 
 ### `ls`
-Top-level shortcut for `log short`: log all stacks tracked by Charcoal, arranged to show dependencies.
+Top-level shortcut for `log short`: log all stacks tracked by Anthracite, arranged to show dependencies.
 
 | Flag | Description |
 | --- | --- |
@@ -431,15 +431,15 @@ Top-level shortcut for `log short`: log all stacks tracked by Charcoal, arranged
 | `-u`, `--show-untracked` | Include untracked branches. |
 
 ```
-ch ls
-ch ls -s
+an ls
+an ls -s
 ```
 
 ### `ll`
 Top-level shortcut for `log long`: display a graph of the commit ancestry of all branches.
 
 ```
-ch ll
+an ll
 ```
 
 ### `info` (alias `i`)
@@ -454,7 +454,7 @@ Display information about the current or selected tracked local branch.
 | `-b`, `--body` | Show the PR body, if it exists. |
 
 ```
-ch info -d
+an info -d
 ```
 
 ---
@@ -462,33 +462,33 @@ ch info -d
 ## Config
 
 ### `repo`
-Read or write Charcoal's per-repo configuration. Sub-commands generally read the current value when run with no flag and write it with `-s`/`--set`.
+Read or write Anthracite's per-repo configuration. Sub-commands generally read the current value when run with no flag and write it with `-s`/`--set`.
 
 | Sub-command | Description |
 | --- | --- |
 | `repo init` (alias `i`) | Create or regenerate a `.graphite_repo_config` file. Flags: `--trunk <name>`, `--reset` (untrack all branches). |
 | `repo sync` (alias `s`) | Same as the top-level `sync` (pull trunk, delete merged branches). Flags: `-p`/`--pull`, `-d`/`--delete`, `--show-delete-progress`, `-f`/`--force`, `-r`/`--restack`. |
-| `repo name` | The repo's name in Charcoal (e.g. `charcoal` in `danerwilliams/charcoal`). `-s`/`--set` to override. |
-| `repo owner` | The repo owner's name in Charcoal. `-s`/`--set` to override. |
-| `repo remote` | The remote Charcoal pushes to / pulls from (defaults to `origin`). `-s`/`--set` to override. |
+| `repo name` | The repo's name in Anthracite (e.g. `charcoal` in `danerwilliams/charcoal`). `-s`/`--set` to override. |
+| `repo owner` | The repo owner's name in Anthracite. `-s`/`--set` to override. |
+| `repo remote` | The remote Anthracite pushes to / pulls from (defaults to `origin`). `-s`/`--set` to override. |
 | `repo pr-templates` | List your GitHub PR templates, used to pre-fill PR bodies on submit. |
 | `repo github` | Toggle the GitHub integration for this repo. `--enable` to set on/off. |
 
 ```
-ch repo init --trunk main
-ch repo remote -s upstream
+an repo init --trunk main
+an repo remote -s upstream
 ```
 
 > The previous command name `repo disable-github` is now `repo github` (toggle via `--enable`).
 
 ### `user`
-Read or write Charcoal's user-level configuration. Sub-commands read the current value with no flag and write it with the flags below.
+Read or write Anthracite's user-level configuration. Sub-commands read the current value with no flag and write it with the flags below.
 
 | Sub-command | Description |
 | --- | --- |
-| `user editor` | The editor Charcoal opens. `--set <editor>` (e.g. `--set vim`), `--unset`. |
-| `user pager` | The pager Charcoal opens. `--set "less -FRX"`, `--disable`, `--unset` (fall back to git's pager). |
-| `user tips` | Show tips while using Charcoal. `--enable`, `--disable`. |
+| `user editor` | The editor Anthracite opens. `--set <editor>` (e.g. `--set vim`), `--unset`. |
+| `user pager` | The pager Anthracite opens. `--set "less -FRX"`, `--disable`, `--unset` (fall back to git's pager). |
+| `user tips` | Show tips while using Anthracite. `--enable`, `--disable`. |
 | `user branch-prefix` | Prefix prepended to generated branch names. `-s`/`--set <prefix>`, `-r`/`--reset` (takes precedence over `--set`). |
 | `user branch-date` | Prepend the date to auto-generated branch names. `--enable`, `--disable`. |
 | `user branch-replacement` | Character that replaces unsupported characters in generated branch names. `--set-underscore`, `--set-dash`, `--set-empty`. |
@@ -496,8 +496,8 @@ Read or write Charcoal's user-level configuration. Sub-commands read the current
 | `user submit-body` | Defaults for PR descriptions. `--include-commit-messages` includes commit messages in the PR body by default. |
 
 ```
-ch user editor --set "code --wait"
-ch user branch-prefix -s dane/
+an user editor --set "code --wait"
+an user branch-prefix -s dane/
 ```
 
 ---
@@ -513,35 +513,35 @@ Create or regenerate a `.graphite_repo_config` file for the current repo (same a
 | `--reset` | Untrack all branches. |
 
 ```
-ch init --trunk main
+an init --trunk main
 ```
 
 ### `completion`
 Print a yargs bash/zsh completion script to stdout for the current shell. Root candidates include supported aliases; command option queries use their actual builders. Cwd selects branch candidates without prompts or a pager. Fish generator content is checked separately; full interactive fish behavior is not certified.
 
 ```
-ch completion >> ~/.bashrc
+an completion >> ~/.bashrc
 ```
 
 ### `fish`
 Set up fish-shell tab completion.
 
 ```
-ch fish
+an fish
 ```
 
 ### `feedback`
 Command group for providing feedback and debug state.
 
-- `ch feedback debug-context` — print a debug summary of your repo, useful for bug reports.
+- `an feedback debug-context` — print a debug summary of your repo, useful for bug reports.
 
 ```
-ch feedback debug-context
+an feedback debug-context
 ```
 
 ### `demo`
-Run an interactive demo of Charcoal.
+Run an interactive demo of Anthracite.
 
 ```
-ch demo
+an demo
 ```

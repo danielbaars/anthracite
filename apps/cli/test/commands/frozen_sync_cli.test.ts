@@ -114,7 +114,7 @@ describe('frozen sync through the public CLI', function () {
       const result = fixture.run([...command, '--no-interactive']);
       expect(result.status, result.stdout + result.stderr).to.equal(0);
       expect(result.stdout)
-        .to.include('use ch get')
+        .to.include('use an get')
         .and.to.include('feature heads');
       expect(fixture.git('rev-parse', 'main')).to.equal(remoteTrunk);
       expect(fixture.git('rev-parse', 'feature')).to.equal(feature);
@@ -145,7 +145,7 @@ describe('frozen sync through the public CLI', function () {
       fixture.env.SHELL = '/bin/zsh';
       const completion = fixture.run([
         '--get-yargs-completions',
-        'ch',
+        'an',
         ...command.slice(0, -1),
         '',
       ]);

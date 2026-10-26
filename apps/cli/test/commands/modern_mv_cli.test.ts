@@ -237,7 +237,7 @@ describe('modern mv ownership through the public CLI', function () {
     expect(root.stdout).not.to.include('aliases: mv');
     const move = start.run(['move', '--help', '--quiet']);
     expect(move.status, move.stdout + move.stderr).to.equal(0);
-    expect(move.stdout).to.include('ch move [branch]');
+    expect(move.stdout).to.include('an move [branch]');
     expect(move.stdout).to.include('--onto');
     expect(move.stdout).not.to.include('aliases: mv');
     expect(fs.existsSync(path.join(start.root, 'unexpected-tool'))).to.equal(
@@ -254,7 +254,7 @@ describe('modern mv ownership through the public CLI', function () {
     start.env.SHELL = '/usr/local/bin/fish';
     delete start.env.ZSH_NAME;
     const before = [start.inspectionSnapshot(), target.inspectionSnapshot()];
-    const move = start.run(['--get-yargs-completions', 'ch', 'move', '']);
+    const move = start.run(['--get-yargs-completions', 'an', 'move', '']);
     expect(move.status, move.stdout + move.stderr).to.equal(0);
     expect(move.stderr).to.equal('');
     expect(move.stdout.split('\n').filter(Boolean)).to.have.members([
@@ -265,7 +265,7 @@ describe('modern mv ownership through the public CLI', function () {
       'other',
       'completion-only-branch',
     ]);
-    const raw = start.run(['--get-yargs-completions', 'ch', 'mv', '']);
+    const raw = start.run(['--get-yargs-completions', 'an', 'mv', '']);
     expect(raw.status, raw.stdout + raw.stderr).to.equal(0);
     expect(raw.stderr).to.equal('');
     for (const name of [

@@ -105,11 +105,11 @@ describe('frozen branch lifecycle through the public CLI', function () {
       });
       expect(fixture.ok(['info'])).to.include('PR #17');
       expect(fixture.run(['modify', '-m', 'blocked']).stderr).to.include(
-        'ch unfreeze renamed'
+        'an unfreeze renamed'
       );
       expect(
         fixture.run(['modify', '-m', 'blocked'], fixture.linked).stderr
-      ).to.include('ch unfreeze child');
+      ).to.include('an unfreeze child');
       expect(fixture.ok(['parent'], fixture.linked).trim()).to.equal('renamed');
     });
   }
@@ -135,7 +135,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
         const before = fixture.observe();
         const result = fixture.run([command, 'base', '--force']);
         expect(result.status).to.equal(1);
-        expect(result.stderr).to.include(`ch unfreeze ${protectedBranch}`);
+        expect(result.stderr).to.include(`an unfreeze ${protectedBranch}`);
         expect(fixture.observe()).to.deep.equal(before);
         expect(fixture.snapshot(fixture.linked)).to.deep.equal(linked);
       });
@@ -154,7 +154,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
       const before = fixture.observe();
       const result = fixture.run([...args, '--trunk', 'base']);
       expect(result.status).to.equal(1);
-      expect(result.stderr).to.include('ch unfreeze base');
+      expect(result.stderr).to.include('an unfreeze base');
       expect(fixture.observe()).to.deep.equal(before);
     });
   }
@@ -196,7 +196,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
       fixture.git(['worktree', 'add', fixture.linked, 'tip']);
       expect(
         fixture.run(['modify', '-m', 'blocked'], fixture.linked).stderr
-      ).to.include('ch unfreeze tip');
+      ).to.include('an unfreeze tip');
       fixture.ok(['modify', '-m', 'editable again']);
       expect(fixture.git(['log', '-1', '--format=%s'])).to.equal(
         'editable again'
@@ -223,13 +223,13 @@ describe('frozen branch lifecycle through the public CLI', function () {
       expect(fixture.ok(['parent'], fixture.linked).trim()).to.equal('main');
       expect(
         fixture.run(['modify', '-m', 'blocked'], fixture.linked).stderr
-      ).to.include('ch unfreeze child');
+      ).to.include('an unfreeze child');
       fixture.ok([command, 'child', '--force']);
       fixture.ok([command, 'child', '--downstack', '--force']);
       expect(fixture.ok(['parent'], fixture.linked).trim()).to.equal('base');
       expect(
         fixture.run(['modify', '-m', 'blocked'], fixture.linked).stderr
-      ).to.include('ch unfreeze child');
+      ).to.include('an unfreeze child');
       expect(fixture.snapshot()).to.deep.equal(work);
     });
   }
@@ -297,7 +297,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     const base = fixture.git(['rev-parse', 'base']);
     const result = fixture.run(['delete', 'base', '--force']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(result.stderr).to.include('Checked out main');
     expect(fixture.git(['branch', '--show-current'])).to.equal('main');
     expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
@@ -335,7 +335,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     ).to.match(/"frozen": true/);
     expect(fixture.git(['rev-parse', 'renamed'])).to.equal(head);
     expect(fixture.run(['modify', '-m', 'blocked']).stderr).to.include(
-      'ch unfreeze renamed'
+      'an unfreeze renamed'
     );
     expect(fixture.ok(['info'])).to.include('(frozen)');
   });
@@ -366,7 +366,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
         ])
       ).to.equal(refs);
       expect(fixture.run(['modify', '-m', 'blocked']).stderr).to.include(
-        'ch unfreeze base'
+        'an unfreeze base'
       );
       fixture.ok([...args, '--trunk', 'base', '--reset']);
       expect(fixture.snapshot()).to.deep.equal(before);
@@ -418,7 +418,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     expect(fixture.snapshot()).to.deep.equal(work);
     expect(fixture.ok(['info'])).to.include('(frozen)');
     expect(fixture.run(['modify', '-m', 'blocked']).stderr).to.include(
-      'ch unfreeze created'
+      'an unfreeze created'
     );
   });
   it('refuses an inferred frozen new trunk before unrelated metadata repair', () => {
@@ -430,7 +430,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     fixture.git(['switch', 'other']);
     fixture.git(['merge', '--no-edit', 'main']);
     const before = fixture.observe();
-    expect(fixture.run(['init']).stderr).to.include('ch unfreeze base');
+    expect(fixture.run(['init']).stderr).to.include('an unfreeze base');
     expect(fixture.observe()).to.deep.equal(before);
   });
   it('reports a completed rename honestly when a real metadata ref transaction fails', () => {
@@ -514,7 +514,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     expect(fixture.ok(['repo', 'i', '--help'])).to.include(
       'stored frozen status'
     );
-    const root = fixture.ok(['--get-yargs-completions', 'ch', '']);
+    const root = fixture.ok(['--get-yargs-completions', 'an', '']);
     for (const name of [
       'rename',
       'rn',
@@ -541,7 +541,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     ]) {
       const result = fixture.run([
         '--get-yargs-completions',
-        'ch',
+        'an',
         command,
         '',
       ]);
@@ -602,12 +602,12 @@ describe('frozen branch lifecycle through the public CLI', function () {
     fixture.git(['switch', 'child']);
     expect(fixture.ok(['parent']).trim()).to.equal('renamed');
     expect(fixture.run(['modify', '-m', 'blocked']).stderr).to.include(
-      'ch unfreeze child'
+      'an unfreeze child'
     );
     fixture.git(['switch', 'sibling']);
     expect(fixture.ok(['parent']).trim()).to.equal('renamed');
     expect(fixture.run(['modify', '-m', 'blocked']).stderr).to.include(
-      'ch unfreeze sibling'
+      'an unfreeze sibling'
     );
     expect(
       fixture
@@ -650,7 +650,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     const child = fixture.git(['rev-parse', 'child']);
     const result = fixture.run(['dl', 'base', '--force']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
     expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
     fixture.git(['switch', 'child']);
@@ -681,7 +681,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     );
     const refused = fixture.run(['continue', '--all']);
     expect(refused.status).to.equal(1);
-    expect(refused.stderr).to.include('ch unfreeze tip');
+    expect(refused.stderr).to.include('an unfreeze tip');
     expect(fixture.observe()).to.deep.equal(before);
     expect(
       fs.readFileSync(path.join(fixture.repo, '.git', '.gtcontinue'))
@@ -721,7 +721,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
     const tip = fixture.git(['rev-parse', 'tip']);
     const result = fixture.run(['delete', 'base', '--force']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze tip');
+    expect(result.stderr).to.include('an unfreeze tip');
     expect(result.stderr).to.include('base has already been deleted');
     expect(result.stdout).not.to.include('Skipping frozen branch');
     expect(

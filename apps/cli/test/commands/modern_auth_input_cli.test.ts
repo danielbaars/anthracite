@@ -140,7 +140,7 @@ describe('modern auth input through the public CLI', function () {
     expect(result.status, result.stdout + result.stderr).to.equal(1);
     expect(result.stdout).to.equal('');
     expect(result.stderr).to.include('Token input is not supported');
-    expect(result.stderr).to.include('ch auth');
+    expect(result.stderr).to.include('an auth');
     expect(result.stderr).not.to.include(SYNTHETIC_TOKEN);
     expect(ghCalls(fixture)).to.equal('');
     expect(outsideState(fixture)).to.deep.equal(files);
@@ -295,7 +295,7 @@ describe('modern auth input through the public CLI', function () {
     ]) {
       const help = fixture.run(['auth', ...flags], outside);
       expect(help.status).to.equal(0);
-      expect(help.stdout).to.include('ch auth');
+      expect(help.stdout).to.include('an auth');
       expect(help.stdout).to.include('GitHub CLI');
       expect(help.stdout).not.to.include('--token');
       expect(help.stdout).not.to.include(SYNTHETIC_TOKEN);
@@ -303,7 +303,7 @@ describe('modern auth input through the public CLI', function () {
     }
     for (const tail of ['--', '-']) {
       const completion = fixture.run(
-        ['--get-yargs-completions', 'ch', 'auth', tail],
+        ['--get-yargs-completions', 'an', 'auth', tail],
         outside
       );
       expect(completion.status).to.equal(0);

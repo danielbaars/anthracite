@@ -894,14 +894,14 @@ export function composeEngine({
         // Do not persist a partly updated cache or run mutating repair in this error path.
         canPersistCache = false;
         const progress = published
-          ? `Selected refs were folded into ${survivor}; selected names are already removed. Tracking or the final checkout did not finish. Inspect with ch info; if needed run ch track ${quote(
+          ? `Selected refs were folded into ${survivor}; selected names are already removed. Tracking or the final checkout did not finish. Inspect with an info; if needed run an track ${quote(
               survivor
             )} --parent ${quote(bottom.parentBranchName)}.`
           : 'Selected refs were not published; all original selected names remain.';
         const recovery =
           published && offChain.length > 0 && trackingComplete
-            ? ` Off-chain replay has not started. After preserving blocking local work and resolving the Git/hook error, run these surviving branches in order (resolve and ch continue any new conflict before the next command):\n${offChain
-                .map(({ name }) => `ch restack --branch ${quote(name)} --only`)
+            ? ` Off-chain replay has not started. After preserving blocking local work and resolving the Git/hook error, run these surviving branches in order (resolve and an continue any new conflict before the next command):\n${offChain
+                .map(({ name }) => `an restack --branch ${quote(name)} --only`)
                 .join('\n')}\nch checkout ${quote(survivor)}`
             : published && offChain.length > 0
             ? ` Off-chain replay has not started. After moving blocking local work aside and resolving the Git/hook error, repair the survivor tracking first, then replay these frozen own ranges in order. Resolve and stage any conflict and use git rebase --continue before the next command:\nch track ${quote(
@@ -918,7 +918,7 @@ export function composeEngine({
         throw new PreconditionsFailedError(
           `Stack fold failed. ${progress} Current checkout: ${
             cache.currentBranch ?? 'detached HEAD'
-          }. Move obstructing local work aside and resolve the reported Git/hook error before recovery with ch checkout ${quote(
+          }. Move obstructing local work aside and resolve the reported Git/hook error before recovery with an checkout ${quote(
             published ? survivor : departure
           )}. ${
             error instanceof Error ? error.message : String(error)

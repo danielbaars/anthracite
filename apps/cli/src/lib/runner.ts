@@ -260,7 +260,7 @@ async function graphiteHelper(
     ) {
       await init({}, context);
       context.splog.info(
-        `Charcoal was not initialized; setup is now complete.`
+        `Anthracite was not initialized; setup is now complete.`
       );
       context.splog.newline();
     }
@@ -273,7 +273,7 @@ async function graphiteHelper(
       context.engine.rebaseInProgress()
     ) {
       throw new DetachedError(
-        `Did you mean to run ${chalk.cyan(`ch continue`)}?`
+        `Did you mean to run ${chalk.cyan(`an continue`)}?`
       );
     }
     throw err;
@@ -282,7 +282,7 @@ async function graphiteHelper(
       context.engine.persist(commandFailed);
     } catch (persistError) {
       context.engine.clear();
-      context.splog.debug(`Failed to persist Charcoal cache`);
+      context.splog.debug(`Failed to persist Anthracite cache`);
     }
     handler.cacheLock.release();
   }
@@ -294,7 +294,7 @@ async function graphiteHelper(
 function handleGraphiteError(err: any): void {
   switch (err.constructor) {
     case CommandKilledError:
-    case KilledError: // the user doesn't need a message if they ended ch
+    case KilledError: // the user doesn't need a message if they ended an
     case RebaseConflictError: // we've already logged a message
       // pass
       return;

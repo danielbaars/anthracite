@@ -11,7 +11,7 @@ import * as tips from './user-commands/tips';
 
 export const command = 'user <command>';
 export const desc =
-  "Read or write Charcoal's user configuration settings. Run `ch user --help` to learn more.";
+  "Read or write Anthracite's user configuration settings. Run `an user --help` to learn more.";
 
 export const builder = function (yargs: Argv): Argv {
   return registerCommands(yargs, [

@@ -230,7 +230,7 @@ describe('cwd documentation grammar through the public CLI', function () {
       ['--get-yargs-completions.child=false'],
       ['--no-get-yargs-completions.child'],
     ]) {
-      const args = ['--version=true', ...flags, 'ch', 'checkout', ''];
+      const args = ['--version=true', ...flags, 'an', 'checkout', ''];
       const ordinary = target.run(args);
       const selected = start.run(['--cwd', target.repo, ...args]);
       expect(ordinary.status, ordinary.stderr).to.equal(0);

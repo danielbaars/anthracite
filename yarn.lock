@@ -250,9 +250,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@danerwilliams/charcoal@workspace:apps/cli":
+"@danielbaars/anthracite@workspace:apps/cli":
   version: 0.0.0-use.local
-  resolution: "@danerwilliams/charcoal@workspace:apps/cli"
+  resolution: "@danielbaars/anthracite@workspace:apps/cli"
   dependencies:
     "@danerwilliams/gti-cli-shared-types": "workspace:*"
     "@types/chai": ^4.3.1
@@ -293,8 +293,8 @@ __metadata:
     typescript: ^4.7.3
     yargs: ^17.5.1
   bin:
-    ch: dist/src/index.js
-    charcoal: dist/src/index.js
+    an: dist/src/index.js
+    anthracite: dist/src/index.js
   languageName: unknown
   linkType: soft
 
@@ -1602,9 +1602,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"charcoal@workspace:.":
+"anthracite@workspace:.":
   version: 0.0.0-use.local
-  resolution: "charcoal@workspace:."
+  resolution: "anthracite@workspace:."
   dependencies:
     "@typescript-eslint/eslint-plugin": ^5.47.0
     "@typescript-eslint/parser": ^5.47.0

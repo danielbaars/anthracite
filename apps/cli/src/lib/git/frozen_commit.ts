@@ -21,7 +21,7 @@ export function withFrozenCommitGuard(
     onError: 'throw',
     resource: 'commitHooksPath',
   });
-  const proxy = fs.mkdtempSync(path.join(os.tmpdir(), 'ch-commit-hooks-'));
+  const proxy = fs.mkdtempSync(path.join(os.tmpdir(), 'an-commit-hooks-'));
   // Do not propagate our temporary hook override into tools run by user hooks.
   const inheritedConfig = process.env.GIT_CONFIG_PARAMETERS;
   const scriptHeader =

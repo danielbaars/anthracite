@@ -25,7 +25,7 @@ type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 export const command = 'branch-prefix';
 export const canonical = 'user branch-prefix';
 export const description =
-  'The prefix which Charcoal will prepend to generated branch names.';
+  'The prefix which Anthracite will prepend to generated branch names.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphiteWithoutRepo(argv, canonical, async (context) => {
@@ -41,7 +41,7 @@ export const handler = async (argv: argsT): Promise<void> => {
     } else {
       context.splog.info(
         context.userConfig.data.branchPrefix ||
-          'branch-prefix is not set. Try running `ch user branch-prefix --set <prefix>` to update the value.'
+          'branch-prefix is not set. Try running `an user branch-prefix --set <prefix>` to update the value.'
       );
     }
   });

@@ -156,7 +156,7 @@ describe('children preservation through the public CLI', function () {
     const result = fixture.run(['children', '--interactive']);
     expect(result.status).to.equal(1);
     expect(result.stdout).to.equal('');
-    expect(result.stderr).to.include('ch init');
+    expect(result.stderr).to.include('an init');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(fs.existsSync(config)).to.equal(false);
   });
@@ -187,7 +187,7 @@ describe('children preservation through the public CLI', function () {
       const result = fixture.run(['children'], repo);
       expect(result.status).to.equal(1);
       expect(result.stdout).to.equal('');
-      expect(result.stderr).to.include('ch init');
+      expect(result.stderr).to.include('an init');
       expect(
         fs.existsSync(path.join(repo, '.git', '.graphite_repo_config'))
       ).to.equal(false);
@@ -201,7 +201,7 @@ describe('children preservation through the public CLI', function () {
   it('serves help outside Git and preserves malformed configuration on startup failure', () => {
     const help = fixture.run(['children', '--help'], fixture.root);
     expect(help.status).to.equal(0);
-    expect(help.stdout).to.include('ch children');
+    expect(help.stdout).to.include('an children');
     expect(help.stderr).to.equal('');
     const outside = fixture.run(['children'], fixture.root);
     expect(outside.status).to.equal(1);

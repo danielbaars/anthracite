@@ -52,7 +52,7 @@ export function foldCurrentBranch(keep: boolean, context: TContext): void {
     context.splog.warn(
       `Fold stopped at checkout ${
         getCurrentBranchName() ?? 'detached HEAD'
-      }; completed ref and parent writes remain. Inspect ch info, the index and local files before retrying.`
+      }; completed ref and parent writes remain. Inspect an info, the index and local files before retrying.`
     );
     throw error;
   }

@@ -124,8 +124,8 @@ describe('create --onto insert recovery through the public CLI', function () {
     expect(output)
       .to.match(/resolve/i)
       .and.match(/add/)
-      .and.match(/ch continue/);
-    expect(output).to.match(/ch rebase --abort/);
+      .and.match(/an continue/);
+    expect(output).to.match(/an rebase --abort/);
     expect(output).to.match(/abort[^\n]*(keeps|retains|preserves)/i);
     expect(output).to.match(/parent[^\n]*completed restacks/i);
   });
@@ -189,7 +189,7 @@ describe('create --onto insert recovery through the public CLI', function () {
     const noOperation = fixture.run(['continue']);
     expect(noOperation.status).not.to.equal(0);
     expect(noOperation.stdout + noOperation.stderr).to.match(
-      /no Charcoal operation to continue/i
+      /no Anthracite operation to continue/i
     );
     expect(fixture.snapshot()).to.deep.equal(snapshot);
     expect(fixture.ok(['log', 'short'])).to.equal(topology);
@@ -311,7 +311,7 @@ describe('create --onto insert recovery through the public CLI', function () {
     const noOperation = fixture.run(['continue']);
     expect(noOperation.status).not.to.equal(0);
     expect(noOperation.stdout + noOperation.stderr).to.match(
-      /no Charcoal operation to continue/i
+      /no Anthracite operation to continue/i
     );
     expect(fixture.snapshot()).to.deep.equal(snapshot);
     expect(fixture.ok(['log', 'short'])).to.equal(topology);
@@ -393,8 +393,8 @@ describe('create --onto insert recovery through the public CLI', function () {
       const output = result.stdout + result.stderr;
       expect(output).to.match(/insertion is incomplete/i);
       expect(output).to.match(/parent relationships remain/i);
-      expect(output).to.match(/ch restack --upstack/);
-      expect(output).not.to.include('ch continue');
+      expect(output).to.match(/an restack --upstack/);
+      expect(output).not.to.include('an continue');
       expect(fixture.ok(['log', 'short'])).to.match(/child[^\n]*needs restack/);
       const saved = path.join(fixture.root, 'retained-hook-work.txt');
       fs.renameSync(path.join(fixture.repo, 'child.txt'), saved);
@@ -462,8 +462,8 @@ describe('create --onto insert recovery through the public CLI', function () {
       const output = result.stdout + result.stderr;
       expect(output).to.match(/remaining tracked changes after commit/i);
       expect(output).to.match(/insertion is incomplete/i);
-      expect(output).to.match(/ch restack --upstack/);
-      expect(output).not.to.include('ch continue');
+      expect(output).to.match(/an restack --upstack/);
+      expect(output).not.to.include('an continue');
       expect(fixture.ok(['log', 'short'])).to.match(/child[^\n]*needs restack/);
     });
   }

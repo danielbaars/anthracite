@@ -170,7 +170,7 @@ describe('frozen anchors and recovery through the public CLI', function () {
     );
     const result = fixture.run(['continue', '--all']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(fixture.observe()).to.deep.equal(before);
     expect(recoveryFiles(fixture)).to.deep.equal(rebase);
     expect(fs.readFileSync(legacy, 'utf8')).to.equal('{"preserve":"legacy"}');
@@ -333,7 +333,7 @@ ${cli.map(quote).join(' ')}
       const rebase = recoveryFiles(fixture);
       const result = fixture.run([command, '-a']);
       expect(result.status).to.equal(1);
-      expect(result.stderr).to.include('ch unfreeze child');
+      expect(result.stderr).to.include('an unfreeze child');
       expect(fixture.observe()).to.deep.equal(before);
       expect(recoveryFiles(fixture)).to.deep.equal(rebase);
       fixture.git(['checkout', '--', 'child.txt']);
@@ -565,7 +565,7 @@ ${cli.map(quote).join(' ')}
     const rebase = recoveryFiles(fixture);
     const result = fixture.run(['cont', '--all']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(fixture.observe()).to.deep.equal(before);
     expect(recoveryFiles(fixture)).to.deep.equal(rebase);
   });

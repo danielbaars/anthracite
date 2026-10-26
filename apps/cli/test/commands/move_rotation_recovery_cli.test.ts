@@ -77,7 +77,7 @@ function retryCommands(output: string): string[] {
   return output
     .split('\n')
     .map((line) => line.trim())
-    .filter((line) => /^ch (restack --branch|checkout) /.test(line));
+    .filter((line) => /^an (restack --branch|checkout) /.test(line));
 }
 function rawAbort(fixture: CreateCliFixture): void {
   const [command, ...args] = getTestCliCommand(['rebase', '--abort']);
@@ -96,7 +96,7 @@ function executeRetry(
   commands: readonly string[]
 ): void {
   fs.writeFileSync(
-    path.join(fixture.root, 'bin/ch'),
+    path.join(fixture.root, 'bin/an'),
     `#!/bin/sh\nexec ${getTestCliCommand([])
       .map(quote)
       .join(' ')} "$@" --no-interactive\n`,
@@ -185,23 +185,23 @@ describe('move only descendant recovery through fresh public CLI processes', fun
     const sibling = fixture.git(['rev-parse', 'sibling']);
     const siblingTip = fixture.git(['rev-parse', 'sibling-tip']);
     const expected = [
-      "ch restack --branch 'child' --only",
-      "ch restack --branch 'tip' --only",
-      "ch restack --branch 'base' --only",
-      "ch checkout 'other'",
+      "an restack --branch 'child' --only",
+      "an restack --branch 'tip' --only",
+      "an restack --branch 'base' --only",
+      "an checkout 'other'",
     ];
     if (sibling === oldSibling)
-      expected.push("ch restack --branch 'sibling' --only");
+      expected.push("an restack --branch 'sibling' --only");
     if (siblingTip === oldSiblingTip)
-      expected.push("ch restack --branch 'sibling-tip' --only");
+      expected.push("an restack --branch 'sibling-tip' --only");
     expect([...commands].sort()).to.deep.equal(expected.sort());
     expect(
-      commands.indexOf("ch restack --branch 'child' --only")
-    ).to.be.lessThan(commands.indexOf("ch restack --branch 'tip' --only"));
+      commands.indexOf("an restack --branch 'child' --only")
+    ).to.be.lessThan(commands.indexOf("an restack --branch 'tip' --only"));
     expect(commands[commands.length - 2]).to.equal(
-      "ch restack --branch 'base' --only"
+      "an restack --branch 'base' --only"
     );
-    expect(commands[commands.length - 1]).to.equal("ch checkout 'other'");
+    expect(commands[commands.length - 1]).to.equal("an checkout 'other'");
     rawAbort(fixture);
     expect(fixture.git(['rev-parse', 'base'])).to.equal(source);
     expect(fixture.git(['rev-parse', 'sibling'])).to.equal(sibling);
@@ -239,8 +239,8 @@ describe('move only descendant recovery through fresh public CLI processes', fun
     );
     const commands = retryCommands(second.stdout + second.stderr);
     expect(commands).to.deep.equal([
-      "ch restack --branch 'base' --only",
-      "ch checkout 'tip'",
+      "an restack --branch 'base' --only",
+      "an checkout 'tip'",
     ]);
     rawAbort(fixture);
     expect(fixture.git(['rev-parse', 'base'])).to.equal(source);

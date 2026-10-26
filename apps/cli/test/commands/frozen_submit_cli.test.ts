@@ -493,15 +493,15 @@ ${freeze.map((part) => "'" + part.replace(/'/g, "'\\''") + "'").join(' ')}
         .and.to.include('existing base');
       const completed = fixture.run([
         '--get-yargs-completions',
-        'ch',
+        'an',
         alias,
         '--branch',
-        'ch',
+        'an',
       ]);
       expect(completed.status, completed.stderr).to.equal(0);
       expect(completed.stdout.trim().split('\n')).to.include('child');
     }
-    const roots = fixture.run(['--get-yargs-completions', 'ch', '']);
+    const roots = fixture.run(['--get-yargs-completions', 'an', '']);
     expect(roots.stdout).not.to.include('internal-push-guard');
     expect(fixture.observe()).to.deep.equal(before);
   });

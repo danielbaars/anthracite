@@ -48,13 +48,13 @@ function commands(output: string): string[] {
   return output
     .split('\n')
     .map((line) => line.trim())
-    .filter((line) => /^ch (restack --branch|checkout) /.test(line));
+    .filter((line) => /^an (restack --branch|checkout) /.test(line));
 }
 function execute(fixture: ReorderCliFixture, command: string): string {
   const bin = path.join(fixture.root, 'bin');
   fs.mkdirSync(bin, { recursive: true });
   fs.writeFileSync(
-    path.join(bin, 'ch'),
+    path.join(bin, 'an'),
     `#!/bin/sh\nexec ${getTestCliCommand([]).map(quote).join(' ')} "$@"\n`,
     { mode: 0o755 }
   );
@@ -206,21 +206,21 @@ describe('stack reorder persistent progress and executable recovery', function (
     const stopped = fixture.run(['continue']);
     const output = stopped.stdout + stopped.stderr;
     expect(stopped.status).not.to.equal(0);
-    expect(output).to.include('ch rebase --abort');
+    expect(output).to.include('an rebase --abort');
     const completed = ['r-child', 'r-tip'].map((name) =>
       fixture.git(['rev-parse', name])
     );
-    execute(fixture, 'ch rebase --abort');
+    execute(fixture, 'an rebase --abort');
     expect(active(fixture)).to.equal(false);
     const saved = fixture.snapshot();
     expect(fixture.run(['continue']).status).not.to.equal(0);
     expect(fixture.snapshot()).to.deep.equal(saved);
     const retries = commands(output);
     expect(retries).to.deep.equal([
-      "ch restack --branch 'r-base' --only",
-      `ch restack --branch ${quote("side'$(false)")} --only`,
-      "ch restack --branch 'r-deep' --only",
-      "ch checkout 'r-child'",
+      "an restack --branch 'r-base' --only",
+      `an restack --branch ${quote("side'$(false)")} --only`,
+      "an restack --branch 'r-deep' --only",
+      "an checkout 'r-child'",
     ]);
     for (const command of retries) execute(fixture, command);
     expectFinal(fixture);
@@ -448,8 +448,8 @@ describe('stack reorder persistent progress and executable recovery', function (
       fs.unlinkSync(hook);
       const retries = commands(output);
       expect(retries).to.deep.equal([
-        ...(finalReplay ? [] : ["ch restack --branch 'r-deep' --only"]),
-        "ch checkout 'r-child'",
+        ...(finalReplay ? [] : ["an restack --branch 'r-deep' --only"]),
+        "an checkout 'r-child'",
       ]);
       for (const command of retries) execute(fixture, command);
       expect(fixture.git(['branch', '--show-current'])).to.equal('r-child');

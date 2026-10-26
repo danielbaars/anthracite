@@ -116,7 +116,7 @@ const r=cp.spawnSync(${JSON.stringify(freeze[0])},${JSON.stringify(
       expect(result.status, result.stdout + result.stderr).to.equal(1);
       expect(result.stderr)
         .to.include('frozen branch tip')
-        .and.include('ch unfreeze tip');
+        .and.include('an unfreeze tip');
       expect(fixture.observe()).to.deep.equal(before);
     });
 

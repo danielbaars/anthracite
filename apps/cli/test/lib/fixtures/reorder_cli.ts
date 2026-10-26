@@ -6,7 +6,7 @@ import { getTestCliCommand } from '../../../src/lib/utils/test_cli_command';
 
 /** Public setup and real external editor; configuration stays in the fixture. */
 export class ReorderCliFixture {
-  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'ch-reorder-'));
+  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'an-reorder-'));
   readonly repo = path.join(this.root, 'repo');
   readonly offered = path.join(this.root, 'offered');
   readonly env: NodeJS.ProcessEnv;

@@ -67,7 +67,7 @@ describe('stack reorder preflight and editor recheck through public CLI', functi
       fixture.git(['switch', 'tip']);
       refuse('needs restack');
       const result = fixture.run(['reorder', '--stack', '--interactive']);
-      expect(result.stdout + result.stderr).to.include('ch restack --branch');
+      expect(result.stdout + result.stderr).to.include('an restack --branch');
       expect(fs.existsSync(fixture.offered)).to.equal(false);
     });
   }

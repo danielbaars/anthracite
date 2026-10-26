@@ -49,7 +49,7 @@ for (const keep of [false, true]) {
         fixture.git(['switch', 'tip']);
         refuse('needs restack');
         const result = fixture.run(['fold', '--stack', ...keepArgs]);
-        expect(result.stdout + result.stderr).to.include('ch restack');
+        expect(result.stdout + result.stderr).to.include('an restack');
         expectParent(fixture, 'child', 'base');
         expectParent(fixture, 'base', 'main');
       });

@@ -58,7 +58,7 @@ describe('interaction output through the public CLI', function () {
     const result = fixture.run(['restack', '--quiet']);
     expect(result.status).to.equal(1);
     expect(result.stdout).to.equal('');
-    expect(result.stderr).to.include('conflict').and.include('ch continue');
+    expect(result.stderr).to.include('conflict').and.include('an continue');
     const replay = fixture.git(['rev-parse', '--git-path', 'rebase-merge']);
     const continuation = fixture.git([
       'rev-parse',
@@ -78,7 +78,7 @@ describe('interaction output through the public CLI', function () {
     expect(continued.stdout).to.equal('');
     expect(continued.stderr)
       .to.include('not yet resolved')
-      .and.include('ch continue');
+      .and.include('an continue');
     expect(fixture.refs()).to.equal(refs);
     expect(fixture.git(['rev-parse', 'HEAD'])).to.equal(head);
     expect(fixture.git(['ls-files', '--unmerged'])).to.equal(unmerged);

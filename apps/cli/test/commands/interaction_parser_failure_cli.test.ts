@@ -122,15 +122,15 @@ describe('parser failure boundaries through the public CLI', function () {
     const restore = fixture.refuseExternalTools();
     try {
       for (const [args, content] of [
-        [['--help', '--quiet'], /Charcoal is a command line tool/],
+        [['--help', '--quiet'], /Anthracite is a command line tool/],
         [
           ['children', '--help', '--quiet'],
           /Print the direct tracked children/,
         ],
         [['info', '--help', '--quiet'], /Display information/],
-        [['repo', 'name', '--help', '--quiet'], /ch repo name/],
+        [['repo', 'name', '--help', '--quiet'], /an repo name/],
         [['--version', '--quiet'], /^\d+\.\d+\.\d+\n$/],
-        [['completion', '--quiet'], /ch-completions/],
+        [['completion', '--quiet'], /an-completions/],
       ] as const) {
         const result = fixture.run(args);
         expect(result.status, result.stderr).to.equal(0);

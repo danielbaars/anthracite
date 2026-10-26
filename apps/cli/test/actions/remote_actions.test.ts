@@ -83,7 +83,7 @@ for (const scene of [new CloneScene()]) {
           },
           scene.getContext()
         )
-      ).to.eventually.be.rejectedWith('Killed Charcoal early.');
+      ).to.eventually.be.rejectedWith('Killed Anthracite early.');
     });
 
     it('can reset trunk from remote', async () => {
@@ -109,9 +109,7 @@ for (const scene of [new CloneScene()]) {
     it('get errors clearly when a branch cannot be traced to trunk', () => {
       // The test harness has no GitHub PRs, so PR-based stack resolution fails
       // gracefully (rather than silently no-op'ing like the old stub).
-      expect(() =>
-        scene.repo.runCliCommand([`get`, `nonexistent`])
-      ).to.throw();
+      expect(() => scene.repo.runCliCommand([`get`, `nonexistent`])).to.throw();
     });
   });
 }

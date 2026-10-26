@@ -30,7 +30,7 @@ describe('modern completion through the public CLI', function () {
   afterEach(() => fixture?.cleanup());
 
   function candidates(args: readonly string[], cwd = fixture.root): string[] {
-    const result = fixture.run(['--get-yargs-completions', 'ch', ...args], cwd);
+    const result = fixture.run(['--get-yargs-completions', 'an', ...args], cwd);
     expect(result.status, result.stdout + result.stderr).to.equal(0);
     expect(result.stderr).to.equal('');
     return result.stdout
@@ -153,7 +153,7 @@ describe('modern completion through the public CLI', function () {
         ['--cwd', fixture.repo, '--quiet=invalid', 'co', ''],
       ]) {
         const result = fixture.run(
-          ['--get-yargs-completions', 'ch', ...args],
+          ['--get-yargs-completions', 'an', ...args],
           fixture.root
         );
         expect(result.status).not.to.equal(0);
@@ -193,10 +193,10 @@ describe('modern completion through the public CLI', function () {
       const shellArgs = [
         ...(shell === 'bash' ? [startup, '--norc'] : [startup]),
         '-c',
-        `${setup}; ch() { ${cli.map(quote).join(' ')} "$@"; }; ${
+        `${setup}; an() { ${cli.map(quote).join(' ')} "$@"; }; ${
           shell === 'bash'
-            ? `COMP_WORDS=(ch ''); COMP_CWORD=1; _ch_yargs_completions; printf '%s\\n' "\${COMPREPLY[@]}"`
-            : `_describe() { printf '%s\\n' "\${reply[@]}"; }; words=(ch ''); CURRENT=2; BUFFER='ch '; CURSOR=3; _ch_yargs_completions`
+            ? `COMP_WORDS=(an ''); COMP_CWORD=1; _an_yargs_completions; printf '%s\\n' "\${COMPREPLY[@]}"`
+            : `_describe() { printf '%s\\n' "\${reply[@]}"; }; words=(an ''); CURRENT=2; BUFFER='an '; CURSOR=3; _an_yargs_completions`
         }`,
         'completion-smoke',
         script,
@@ -257,7 +257,7 @@ describe('modern completion through the public CLI', function () {
     );
     // Fish now delegates selection/ownership to the CLI, including get/g remotes.
     expect(fish.stdout).to.include(
-      'complete -c ch -f -a "(__ch_command_completions)"'
+      'complete -c an -f -a "(__an_command_completions)"'
     );
     expect(fish.stdout).not.to.include('command git');
     expect(fish.stdout).not.to.include('__fish_seen_subcommand_from');

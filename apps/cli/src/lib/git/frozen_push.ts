@@ -15,7 +15,7 @@ export function withFrozenPushGuard(
     onError: 'throw',
     resource: 'pushHooksPath',
   });
-  const proxy = fs.mkdtempSync(path.join(os.tmpdir(), 'ch-push-hooks-'));
+  const proxy = fs.mkdtempSync(path.join(os.tmpdir(), 'an-push-hooks-'));
   const inheritedConfig = process.env.GIT_CONFIG_PARAMETERS;
   const header =
     '#!/bin/sh\n' +

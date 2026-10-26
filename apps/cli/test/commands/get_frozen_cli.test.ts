@@ -214,7 +214,7 @@ describe('get CLI existing frozen branches', function () {
       const before = fixture.observe();
       const stopped = fixture.run([continuation, '--all']);
       expect(stopped.status, stopped.output).to.equal(1);
-      expect(stopped.output).to.include('ch unfreeze child');
+      expect(stopped.output).to.include('an unfreeze child');
       expect(fixture.observe()).to.deep.equal(before);
       fixture.ok('unfreeze', 'child');
       fs.removeSync(path.join(fixture.consumer, 'loose.txt'));
@@ -406,7 +406,7 @@ describe('get CLI existing frozen branches', function () {
     ]);
     expect(result.status, result.output).to.equal(1);
     expect(result.stdout).to.equal('');
-    expect(result.stderr).to.include('ch unfreeze child');
+    expect(result.stderr).to.include('an unfreeze child');
     expect(result.stderr).to.include('--force');
     expect(result.output).not.to.include('How would you like');
     expect(fixture.observe()).to.deep.equal(before);
@@ -429,7 +429,7 @@ describe('get CLI existing frozen branches', function () {
       },
     ]);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('ch unfreeze child');
+    expect(result.output).to.include('an unfreeze child');
     fixture.assertTip('HEAD', local);
     fixture.assertTip('child', local);
     expect(
@@ -493,7 +493,7 @@ describe('get CLI existing frozen branches', function () {
       expect(help).to.include('-f');
     }
     const completion = fixture
-      .ok('--get-yargs-completions', 'ch', '')
+      .ok('--get-yargs-completions', 'an', '')
       .output.split('\n')
       .map((line) => line.split(':')[0]);
     expect(completion).to.include('get');
@@ -528,7 +528,7 @@ describe('get CLI existing frozen branches', function () {
       },
     ]);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('ch unfreeze child');
+    expect(result.output).to.include('an unfreeze child');
     fixture.assertTip('HEAD', local);
     fixture.assertTip('child', local);
     expect(
@@ -617,7 +617,7 @@ describe('get CLI existing frozen branches', function () {
       { prompt: 'How would you like to handle', input: '\r' },
     ]);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('ch unfreeze child');
+    expect(result.output).to.include('an unfreeze child');
     fixture.assertTip('HEAD', local);
     fixture.assertTip('child', local);
     expect(
@@ -661,7 +661,7 @@ describe('get CLI existing frozen branches', function () {
     expect(fs.readFileSync(hookInfo, 'utf8')).to.include('child (frozen)');
     expect(result.output).to.include('Updated child before get stopped');
     expect(result.output).to.match(/metadata.*incomplete/i);
-    expect(result.output).to.include('ch unfreeze child');
+    expect(result.output).to.include('an unfreeze child');
     expect(result.output).not.to.include('Rebased local changes');
     const replayed = fixture.git(fixture.consumer, 'rev-parse', 'child');
     expect(replayed).not.to.equal(local);
@@ -709,7 +709,7 @@ describe('get CLI existing frozen branches', function () {
     });
     const stopped = fixture.run(['cont']);
     expect(stopped.status, stopped.output).to.equal(1);
-    expect(stopped.output).to.include('ch unfreeze child');
+    expect(stopped.output).to.include('an unfreeze child');
     fixture.assertTip('HEAD', head);
     fixture.assertTip('child', local);
     expect(

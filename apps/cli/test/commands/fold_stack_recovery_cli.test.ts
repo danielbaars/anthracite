@@ -16,7 +16,7 @@ function retries(output: string): string[] {
   return output
     .split('\n')
     .map((line) => line.trim())
-    .filter((line) => /^ch (restack --branch|checkout) /.test(line));
+    .filter((line) => /^an (restack --branch|checkout) /.test(line));
 }
 function expectRebase(
   fixture: CreateCliFixture,
@@ -41,7 +41,7 @@ function runShell(
 ): ReturnType<typeof fixture.run> {
   const cli = getTestCliCommand([]).map(quote).join(' ');
   fs.writeFileSync(
-    path.join(fixture.root, 'bin/ch'),
+    path.join(fixture.root, 'bin/an'),
     `#!/bin/sh\nexec ${cli} "$@" --no-interactive\n`,
     { mode: 0o755 }
   );
@@ -184,10 +184,10 @@ for (const keep of [false, true]) {
       expect(output).to.include('parent changes and completed restacks remain');
       const commands = retries(output);
       expect(commands).to.deep.equal([
-        `ch restack --branch ${quote(root)} --only`,
-        `ch restack --branch ${quote(deep)} --only`,
-        `ch restack --branch ${quote(last)} --only`,
-        `ch checkout ${quote(survivor)}`,
+        `an restack --branch ${quote(root)} --only`,
+        `an restack --branch ${quote(deep)} --only`,
+        `an restack --branch ${quote(last)} --only`,
+        `an checkout ${quote(survivor)}`,
       ]);
       expect(output).not.to.include('git rebase --onto');
       const completed = fixture.git(['rev-parse', 'a-completed']);

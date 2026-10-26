@@ -367,7 +367,7 @@ function cliAuthPrecondition(context: TContext): boolean {
 
   if (isGithubIntegrationEnabled && !isGhInstalled()) {
     throw new PreconditionsFailedError(
-      `The GitHub CLI (\`gh\`) is required but was not found on your PATH. Install it from https://cli.github.com and run \`ch auth\`. To use Charcoal without GitHub integration, run \`ch repo github --no-enable\`.`
+      `The GitHub CLI (\`gh\`) is required but was not found on your PATH. Install it from https://cli.github.com and run \`an auth\`. To use Anthracite without GitHub integration, run \`an repo github --no-enable\`.`
     );
   }
 
@@ -375,7 +375,7 @@ function cliAuthPrecondition(context: TContext): boolean {
 
   if (isGithubIntegrationEnabled && !isGhAuthorized) {
     throw new PreconditionsFailedError(
-      `Please authenticate your CLI with Github by running ch auth and then retry. To ignore this message in the future and use Charcoal without Github integration, run ch repo github --no-enable.`
+      `Please authenticate your CLI with Github by running an auth and then retry. To ignore this message in the future and use Anthracite without Github integration, run an repo github --no-enable.`
     );
   }
 

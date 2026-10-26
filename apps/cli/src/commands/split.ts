@@ -24,7 +24,7 @@ export const command = 'split';
 export const canonical = 'split';
 export const aliases = ['sp'];
 export const description =
-  'Split the current branch into multiple single-commit branches. Frozen sources require ch unfreeze first.';
+  'Split the current branch into multiple single-commit branches. Frozen sources require an unfreeze first.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(argv, canonical, async (context) =>

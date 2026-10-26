@@ -90,7 +90,7 @@ export async function createBranchAction(
     context.splog.tip(
       [
         'To insert a created branch into the middle of your stack, use the `--insert` flag.',
-        "If you meant to insert this branch, you can rearrange your stack's dependencies with `ch move`",
+        "If you meant to insert this branch, you can rearrange your stack's dependencies with `an move`",
       ].join('\n')
     );
     return;
@@ -154,11 +154,11 @@ function insertBranch(
   } catch (e) {
     if (context.engine.rebaseInProgress()) {
       context.splog.warn(
-        `Insertion is incomplete. Aborting with ch rebase --abort keeps ${branchName} and its commit, parent changes and completed restacks; it only cancels the active rebase.`
+        `Insertion is incomplete. Aborting with an rebase --abort keeps ${branchName} and its commit, parent changes and completed restacks; it only cancels the active rebase.`
       );
     } else {
       context.splog.warn(
-        `Insertion is incomplete. ${branchName}, its commit and changed parent relationships remain; completed restacks are retained. Resolve the reported problem, then run ch restack --upstack from ${branchName}. No rebase is active.`
+        `Insertion is incomplete. ${branchName}, its commit and changed parent relationships remain; completed restacks are retained. Resolve the reported problem, then run an restack --upstack from ${branchName}. No rebase is active.`
       );
     }
     throw e;

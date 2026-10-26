@@ -10,7 +10,7 @@ import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 
 class ExternalContextFixture {
   readonly root = fs.realpathSync(
-    fs.mkdtempSync(path.join(os.tmpdir(), 'ch-context-'))
+    fs.mkdtempSync(path.join(os.tmpdir(), 'an-context-'))
   );
   readonly bin = path.join(this.root, 'bin');
   readonly calls = path.join(this.root, 'gh.jsonl');

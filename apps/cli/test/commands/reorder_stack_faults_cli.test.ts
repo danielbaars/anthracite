@@ -25,7 +25,7 @@ function execute(
   const bin = path.join(fixture.root, 'bin');
   fs.mkdirSync(bin, { recursive: true });
   fs.writeFileSync(
-    path.join(bin, 'ch'),
+    path.join(bin, 'an'),
     `#!/bin/sh\nexec ${getTestCliCommand([]).map(quote).join(' ')} "$@"\n`,
     { mode: 0o755 }
   );
@@ -84,7 +84,7 @@ function commands(output: string): string[] {
   return output
     .split('\n')
     .map((row) => row.trim())
-    .filter((row) => /^ch (restack --branch|checkout) /.test(row));
+    .filter((row) => /^an (restack --branch|checkout) /.test(row));
 }
 function hook(
   fixture: ReorderCliFixture,
@@ -410,7 +410,7 @@ fi`
       .and.include('Remaining branches: none')
       .and.include('Current checkout: child')
       .and.include('Conflict branch: none');
-    expect(commands(output)).to.deep.equal(["ch checkout 'child'"]);
+    expect(commands(output)).to.deep.equal(["an checkout 'child'"]);
     const completed = fixture.refs();
     const before = fixture.snapshot();
     expect(run(fixture, ['continue']).status).not.to.equal(0);
@@ -712,9 +712,9 @@ fi`
     // one by one and resolve that conflict before the final literal checkout.
     const retries = commands(output);
     expect(retries).to.deep.equal([
-      "ch restack --branch 'tip' --only",
-      "ch restack --branch 'base' --only",
-      "ch checkout 'child'",
+      "an restack --branch 'tip' --only",
+      "an restack --branch 'base' --only",
+      "an checkout 'child'",
     ]);
     execute(fixture, output, {
       resolveConflict: () => {

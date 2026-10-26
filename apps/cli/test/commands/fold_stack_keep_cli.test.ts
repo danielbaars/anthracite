@@ -156,10 +156,10 @@ describe('keeping the chosen stack tip through the public CLI', function () {
     const result = fixture.run(['fold', '--stack', '--keep']);
     const output = result.stdout + result.stderr;
     expect(result.status).not.to.equal(0);
-    const recovery = "ch checkout 'tip'\\''quote'";
+    const recovery = "an checkout 'tip'\\''quote'";
     expect(output).to.include(recovery);
-    expect(output).not.to.include("ch checkout 'child'");
-    expect(output).not.to.include("ch track 'child'");
+    expect(output).not.to.include("an checkout 'child'");
+    expect(output).not.to.include("an track 'child'");
     expect(fixture.git(['branch', '--list', 'base', 'child'])).to.equal('');
     expect(fixture.git(['rev-parse', survivor])).to.equal(tip);
     fs.unlinkSync(hook);
@@ -167,7 +167,7 @@ describe('keeping the chosen stack tip through the public CLI', function () {
       .map((argument) => `'${argument.replace(/'/g, "'\\''")}'`)
       .join(' ');
     fs.writeFileSync(
-      path.join(fixture.root, 'bin', 'ch'),
+      path.join(fixture.root, 'bin', 'an'),
       `#!/bin/sh\nexec ${command} "$@" --no-interactive\n`,
       { mode: 0o755 }
     );

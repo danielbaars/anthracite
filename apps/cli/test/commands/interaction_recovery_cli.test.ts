@@ -175,7 +175,7 @@ describe('interaction policy combined recovery through the public CLI', function
     );
     expect(first.status, first.stderr).to.equal(1);
     expect(first.stdout).to.equal('');
-    expect(first.stderr).to.include('conflict').and.include('ch continue');
+    expect(first.stderr).to.include('conflict').and.include('an continue');
     expectReplay(target, 'conflict-child');
     expect(departure.inspectionSnapshot()).to.deep.equal(departureBefore);
     const replayBefore = target.inspectionSnapshot();
@@ -207,7 +207,7 @@ describe('interaction policy combined recovery through the public CLI', function
     );
     expect(second.status, second.stderr).to.equal(1);
     expect(second.stdout).to.equal('');
-    expect(second.stderr).to.include('conflict').and.include('ch continue');
+    expect(second.stderr).to.include('conflict').and.include('an continue');
     expectReplay(target, 'conflict-base');
     expect(departure.inspectionSnapshot()).to.deep.equal(departureBefore);
     resolve(target, 'target base version');

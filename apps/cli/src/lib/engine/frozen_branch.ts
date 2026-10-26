@@ -6,7 +6,7 @@ import { TContinueConfig } from '../spiffy/continuation_spf';
 export function assertBranchEditable(branchName: string): void {
   if (readMetadataRef(branchName).frozen === true)
     throw new PreconditionsFailedError(
-      `Cannot modify frozen branch ${branchName}. Run ch unfreeze ${branchName} first.`
+      `Cannot modify frozen branch ${branchName}. Run an unfreeze ${branchName} first.`
     );
 }
 
@@ -23,7 +23,7 @@ export function assertContinuationBranchesEditable(
   for (const name of remaining) {
     if (readMetadataRef(name).frozen !== true) continue;
     throw new PreconditionsFailedError(
-      `Cannot modify frozen branch ${name}. Run ch unfreeze ${name} first. ` +
+      `Cannot modify frozen branch ${name}. Run an unfreeze ${name} first. ` +
         'Structural operation is incomplete. Parent changes and completed restacks remain. ' +
         `Completed branches: ${role.completed.join(', ') || 'none'}. ` +
         `Remaining branches: ${remaining.join(', ') || 'none'}.`

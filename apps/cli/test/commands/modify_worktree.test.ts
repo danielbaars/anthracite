@@ -6,7 +6,7 @@ import path from 'path';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 
 class WorktreeFixture {
-  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'ch-worktrees-'));
+  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'an-worktrees-'));
   readonly repo = path.join(this.root, 'repo');
   readonly linked = path.join(this.root, 'child worktree');
   readonly env = {

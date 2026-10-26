@@ -24,7 +24,7 @@ export const command = 'untrack [branch]';
 export const canonical = 'untrack';
 export const aliases = ['utr', 'ut'];
 export const description =
-  'Stop tracking a branch with Charcoal, including a frozen branch. Its own stored status is removed; descendants become untracked while retaining their stored metadata and status. Defaults to the current branch.';
+  'Stop tracking a branch with Anthracite, including a frozen branch. Its own stored status is removed; descendants become untracked while retaining their stored metadata and status. Defaults to the current branch.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(argv, canonical, async (context) =>

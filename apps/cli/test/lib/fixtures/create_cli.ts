@@ -5,7 +5,7 @@ import path from 'path';
 import { getTestCliCommand } from '../../../src/lib/utils/test_cli_command';
 
 export class CreateCliFixture {
-  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'ch-create-'));
+  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'an-create-'));
   readonly repo = path.join(this.root, 'repo');
   readonly linked = path.join(this.root, 'linked worktree');
   readonly env: NodeJS.ProcessEnv;

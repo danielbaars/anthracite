@@ -1,35 +1,10 @@
-# Charcoal
+# Anthracite
 
-> A CLI for managing stacked pull requests
+A local fork of [Charcoal](https://github.com/danerwilliams/charcoal), extended toward modern Graphite CLI compatibility. Modified on 26 October 2026.
 
-<img width="1346" alt="CleanShot 2023-09-09 at 19 48 49@2x" src="https://github.com/danerwilliams/graphite-cli/assets/22798229/17385828-f235-4b56-84dd-ad73350d55b9">
+## Local version 0.1.0
 
-## Install
-
-`brew install danerwilliams/tap/charcoal`
-
-Homebrew works on both macOS and Linux. Without Homebrew (e.g. on Linux), grab the
-binary for your platform from the [latest release](https://github.com/danerwilliams/charcoal/releases/latest)
-and put it on your `PATH`:
-
-```sh
-# Linux x64 example
-curl -L -o ch https://github.com/danerwilliams/charcoal/releases/latest/download/ch-linux
-chmod +x ch && sudo mv ch /usr/local/bin/
-```
-
-(macOS binaries are `ch-macos-arm64` and `ch-macos-x64`.)
-
-The command is `ch`:
-
-```sh
-ch --help
-```
-
-> [!IMPORTANT]
-> As of `v1.0.0` the binary is `ch` (previously `gt`). Use `ch` for
-> Charcoal and `gt` for Graphite when both are installed. Their commands and
-> service features differ; see [the compatibility matrix](./COMPATIBILITY.md).
+Use **`an`** or **`anthracite`**. See [the local release guide](ANTHRACITE-0.1.0.md) for installation paths, completion, configuration compatibility and rollback. This version is not published to npm, Homebrew or GitHub releases. The original Charcoal installation scripts do not install Anthracite.
 
 ## Announcement
 
@@ -54,24 +29,24 @@ However, many organizations aren't interested in paying for Graphite's team plan
 The Graphite CLI does not need to depend on Graphite's API, so this project lets you use it with your own GitHub repositories, entirely for free.
 
 > [!NOTE]
-> Charcoal talks to GitHub through the [GitHub CLI (`gh`)](https://cli.github.com) rather than Graphite's API, so PR features (`submit`, `get`, PR-aware `sync`) require `gh` to be installed and authenticated (`ch auth`) and work with **GitHub** repositories. Local stacking commands work with any git repo. (Earlier versions aspired to support GitLab/Bitbucket; that isn't implemented.)
+> Anthracite talks to GitHub through the [GitHub CLI (`gh`)](https://cli.github.com) rather than Graphite's API, so PR features (`submit`, `get`, PR-aware `sync`) require `gh` to be installed and authenticated (`an auth`) and work with **GitHub** repositories. Local stacking commands work with any git repo. (Earlier versions aspired to support GitLab/Bitbucket; that isn't implemented.)
 
 ## Commands
 
-Charcoal uses a flat command surface that mirrors modern Graphite, e.g.:
+Anthracite uses a flat command surface that mirrors modern Graphite, e.g.:
 
 ```sh
-ch create -m "my change"   # create a branch + commit staged changes
-ch modify -a               # amend the current branch and restack upstack
-ch freeze                  # protect this branch and its downstack before trunk
-ch unfreeze                # make this branch and its upstack editable
-ch get teammate-branch     # new imports from other/unknown authors are frozen
-ch g 123 -U                # explicitly import new branches editable
-ch ss                      # push the stack and open/update PRs
-ch sync                    # sync trunk/PR info, safe cleanup and optional restack
-ch ls                      # view your stacks
-ch up / ch down            # move through the stack
-ch checkout                # interactively switch branches
+an create -m "my change"   # create a branch + commit staged changes
+an modify -a               # amend the current branch and restack upstack
+an freeze                  # protect this branch and its downstack before trunk
+an unfreeze                # make this branch and its upstack editable
+an get teammate-branch     # new imports from other/unknown authors are frozen
+an g 123 -U                # explicitly import new branches editable
+an ss                      # push the stack and open/update PRs
+an sync                    # sync trunk/PR info, safe cleanup and optional restack
+an ls                      # view your stacks
+an up / an down            # move through the stack
+an checkout                # interactively switch branches
 ```
 
 See **[DOCUMENTATION.md](./DOCUMENTATION.md)** for the command reference and **[COMPATIBILITY.md](./COMPATIBILITY.md)** for supported aliases, deliberate differences and deferred features. Frozen branches block managed content/structural edits and publication while remaining usable as anchors for editable children. Administration and direct/raw Git have explicit boundaries in the compatibility document. Source-candidate changes do not imply that an installed release already includes them.

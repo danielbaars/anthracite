@@ -7,5 +7,5 @@ export const desc = 'Commands for providing feedback and debug state.';
 export const builder = function (yargs: Argv): Argv {
   return registerCommands(yargs, [debugContext])
     .strict()
-    .showHelpOnFail(false, `Use 'ch feedback --help' for usage`);
+    .showHelpOnFail(false, `Use 'an feedback --help' for usage`);
 };

@@ -250,7 +250,7 @@ describe('info branch selection through the public CLI', function () {
     }
   });
 
-  it('inspects an explicit target during a raw Git conflict without Charcoal continuation', () => {
+  it('inspects an explicit target during a raw Git conflict without Anthracite continuation', () => {
     const commit = (contents: string): void => {
       fs.writeFileSync(path.join(fixture.repo, 'main.txt'), contents);
       fixture.git(['add', 'main.txt']);

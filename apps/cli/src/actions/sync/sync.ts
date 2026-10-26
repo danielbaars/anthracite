@@ -20,7 +20,7 @@ export async function syncAction(
 ): Promise<void> {
   uncommittedTrackedChangesPrecondition();
   context.splog.info(
-    'Sync updates trunk and PR info; use ch get to refresh feature heads from remote.'
+    'Sync updates trunk and PR info; use an get to refresh feature heads from remote.'
   );
 
   if (opts.pull) {

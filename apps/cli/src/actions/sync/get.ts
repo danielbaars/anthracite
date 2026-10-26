@@ -37,7 +37,7 @@ export async function getAction(
     return;
   }
 
-  // Charcoal doesn't push branch metadata to the remote, so we reconstruct the
+  // Anthracite doesn't push branch metadata to the remote, so we reconstruct the
   // downstack chain (trunk -> target) by walking each PR's base ref.
   const downstack: string[] = [];
   const seen = new Set<string>();
@@ -61,7 +61,7 @@ export async function getAction(
         `Could not trace ${chalk.yellow(target)} back to trunk (${chalk.cyan(
           trunk
         )}) from its pull requests.`,
-        `\`ch get\` reconstructs a stack from open PRs, so every branch from trunk to ${chalk.yellow(
+        `\`an get\` reconstructs a stack from open PRs, so every branch from trunk to ${chalk.yellow(
           target
         )} needs one.`,
       ].join('\n')
@@ -324,7 +324,7 @@ async function handleUntrackedLocally(
     [
       `${chalk.yellow(
         branchName
-      )} shares a name with a local branch that is not tracked by Charcoal.`,
+      )} shares a name with a local branch that is not tracked by Anthracite.`,
       `In order to sync it, you must overwrite your local copy of the branch.`,
       `If you do not wish to overwrite your copy, the command will be aborted.`,
     ].join('\n')
@@ -409,7 +409,7 @@ async function handleSameParent(
         args.branchName
       )} shares a name with a local branch, and they have the same parent.`,
       frozen
-        ? `This branch is frozen. Use ch unfreeze ${args.branchName} before rebasing local changes, or explicitly overwrite it with the remote version.`
+        ? `This branch is frozen. Use an unfreeze ${args.branchName} before rebasing local changes, or explicitly overwrite it with the remote version.`
         : `You can either overwrite your copy of the branch, or rebase your local changes onto the remote version.`,
       `You can also abort the command entirely and keep your local state as is.`,
     ].join('\n')
@@ -484,7 +484,7 @@ async function handleSameParent(
         throw new ExitFailedError(
           `Local branch ${args.branchName} has diverged from remote.${
             frozen
-              ? ` It is frozen; use ch unfreeze ${args.branchName} before rebasing local changes.`
+              ? ` It is frozen; use an unfreeze ${args.branchName} before rebasing local changes.`
               : ''
           } Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.`
         );

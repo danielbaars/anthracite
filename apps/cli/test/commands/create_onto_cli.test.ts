@@ -692,7 +692,7 @@ describe('create --onto through the public CLI', function () {
 
       expect(result.status).not.to.equal(0);
       if (target === 'untracked')
-        expect(result.stdout + result.stderr).to.include('ch track');
+        expect(result.stdout + result.stderr).to.include('an track');
       expect(fixture.snapshot()).to.deep.equal(before);
     });
   }
@@ -821,7 +821,7 @@ describe('create --onto through the public CLI', function () {
     fixture.ok(['checkout', 'untracked-source']);
     const result = fixture.run(['down']);
     expect(result.status).not.to.equal(0);
-    expect(result.stdout + result.stderr).to.include('ch track');
+    expect(result.stdout + result.stderr).to.include('an track');
   });
 
   it('creates directly above a parent active in another worktree without touching that work', () => {

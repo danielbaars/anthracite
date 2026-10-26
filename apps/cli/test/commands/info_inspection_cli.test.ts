@@ -162,7 +162,7 @@ describe('read-only info inspection', function () {
     ]);
     expect(mutation.status).to.equal(1);
     expect(mutation.stdout + mutation.stderr).to.include(
-      'Cycle detected in Charcoal metadata'
+      'Cycle detected in Anthracite metadata'
     );
     expect(fixture.inspectionSnapshot()).to.deep.equal(cyclicBefore);
   });
@@ -327,7 +327,7 @@ describe('read-only info inspection', function () {
     const recovery = fixture.run(['continue', '--no-interactive']);
     expect(recovery.status).to.equal(1);
     expect(recovery.stdout + recovery.stderr).to.include(
-      'No Charcoal operation to continue.'
+      'No Anthracite operation to continue.'
     );
     expect(fixture.git(['branch', '--show-current'])).to.equal(
       'conflict-child'

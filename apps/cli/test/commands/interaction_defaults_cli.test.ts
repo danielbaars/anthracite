@@ -84,7 +84,7 @@ describe('noninteractive route defaults through the public CLI', function () {
     expect(ordinary.status).to.equal(0);
     expect(ordinary.stdout)
       .to.include('tip:')
-      .and.include('ch move --source <child> --onto <new-parent>');
+      .and.include('an move --source <child> --onto <new-parent>');
     expect(ordinary.stderr).to.equal('');
     const before = fixture.inspectionSnapshot();
     for (const flags of [[], ['--quiet']]) {
@@ -237,7 +237,7 @@ describe('noninteractive route defaults through the public CLI', function () {
       initialized.stdout + initialized.stderr
     ).to.equal(0);
     expect(initialized.stdout)
-      .to.include('Welcome to Charcoal!')
+      .to.include('Welcome to Anthracite!')
       .and.include('Trunk set to unusual');
     expect(initialized.stdout).not.to.include('onboarding');
     expect(fixture.run(['info'], repo).stdout).to.include('unusual');
@@ -249,7 +249,7 @@ describe('noninteractive route defaults through the public CLI', function () {
     const automatic = fixture.run(['init', '--interactive'], inferred);
     expect(automatic.status, automatic.stdout + automatic.stderr).to.equal(0);
     expect(automatic.stdout)
-      .to.include('Welcome to Charcoal!')
+      .to.include('Welcome to Anthracite!')
       .and.include('Trunk set to main');
     expect(fixture.run(['info'], inferred).stdout).to.include('main');
   });
@@ -260,7 +260,7 @@ describe('noninteractive route defaults through the public CLI', function () {
     const automatic = fixture.run(['log', 'short']);
     expect(automatic.status, automatic.stderr).to.equal(0);
     expect(automatic.stdout)
-      .to.include('Welcome to Charcoal!')
+      .to.include('Welcome to Anthracite!')
       .and.include('Trunk set to main')
       .and.include('setup is now complete.')
       .and.include('child');

@@ -153,7 +153,7 @@ describe('updatePrBodyFooter', () => {
   });
 
   it('does not duplicate the footer when content was appended after it', () => {
-    // e.g. an external bot appended a section after Charcoal's footer (#118)
+    // e.g. an external bot appended a section after Anthracite's footer (#118)
     const existing = `${description}${newFooter}\n\n---\n_posted by a bot_`;
     const result = updatePrBodyFooter(existing, newFooter);
     expect(footerCount(result)).to.equal(1);

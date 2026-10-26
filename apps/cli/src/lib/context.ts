@@ -101,10 +101,10 @@ export function initContext(
   )
     throw new PreconditionsFailedError(
       opts?.metadataOnly
-        ? 'Freeze/unfreeze requires an initialized repository. Run ch init explicitly before retrying.'
+        ? 'Freeze/unfreeze requires an initialized repository. Run an init explicitly before retrying.'
         : opts?.inspection
-        ? 'Inspection requires an initialized repository. Run ch init explicitly before retrying.'
-        : 'Stack reorder requires an initialized repository. Run ch init explicitly before retrying.'
+        ? 'Inspection requires an initialized repository. Run an init explicitly before retrying.'
+        : 'Stack reorder requires an initialized repository. Run an init explicitly before retrying.'
     );
   if (!preserving && !rebaseInProgress()) {
     continueConfigFactory.load().delete();

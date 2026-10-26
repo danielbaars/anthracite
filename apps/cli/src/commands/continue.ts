@@ -18,7 +18,7 @@ export const command = 'continue';
 export const canonical = 'continue';
 export const aliases = ['cont'];
 export const description =
-  'Continues the most recent Charcoal command halted by a merge conflict. A frozen active branch must be explicitly unfrozen before continuing or staging with --all.';
+  'Continues the most recent Anthracite command halted by a merge conflict. A frozen active branch must be explicitly unfrozen before continuing or staging with --all.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(

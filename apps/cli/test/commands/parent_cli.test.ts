@@ -152,7 +152,7 @@ describe('parent through the public CLI', function () {
         subject === 'missing-parent' ||
         subject === 'bad-revision'
       )
-        expect(result.stderr).to.include('ch track');
+        expect(result.stderr).to.include('an track');
       expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     });
   }
@@ -164,7 +164,7 @@ describe('parent through the public CLI', function () {
     const result = fixture.run(['parent', '--interactive']);
     expect(result.status).to.equal(1);
     expect(result.stdout).to.equal('');
-    expect(result.stderr).to.include('ch init');
+    expect(result.stderr).to.include('an init');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(fs.existsSync(config)).to.equal(false);
   });
@@ -194,7 +194,7 @@ describe('parent through the public CLI', function () {
       const result = fixture.run(['parent'], repo);
       expect(result.status).to.equal(1);
       expect(result.stdout).to.equal('');
-      expect(result.stderr).to.include('ch init');
+      expect(result.stderr).to.include('an init');
       expect(
         fs.existsSync(path.join(repo, '.git', '.graphite_repo_config'))
       ).to.equal(false);
@@ -207,7 +207,7 @@ describe('parent through the public CLI', function () {
   it('serves help outside Git and reports outside-Git or malformed config errors on stderr', () => {
     const help = fixture.run(['parent', '--help'], fixture.root);
     expect(help.status).to.equal(0);
-    expect(help.stdout).to.include('ch parent');
+    expect(help.stdout).to.include('an parent');
     expect(help.stderr).to.equal('');
     const outside = fixture.run(['parent'], fixture.root);
     expect(outside.status).to.equal(1);

@@ -24,7 +24,7 @@ function refused(
   const before = fixture.observe();
   const result = fixture.run(args);
   expect(result.status, result.stdout + result.stderr).to.equal(1);
-  expect(result.stderr).to.include(`ch unfreeze ${name}`);
+  expect(result.stderr).to.include(`an unfreeze ${name}`);
   expect(fixture.observe()).to.deep.equal(before);
 }
 
@@ -218,7 +218,7 @@ describe('frozen structural route coverage through the public CLI', function () 
       responses: [],
     });
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('ch unfreeze base');
+    expect(result.output).to.include('an unfreeze base');
     expect(result.output).not.to.include('Choose a new base');
     expect(fixture.observe()).to.deep.equal(before);
   });
@@ -233,7 +233,7 @@ describe('frozen structural route coverage through the public CLI', function () 
       const result = fixture.run(args, fixture.root);
       expect(result.status).to.equal(1);
       expect(result.stdout).to.equal('');
-      expect(result.stderr).to.include('ch unfreeze base');
+      expect(result.stderr).to.include('an unfreeze base');
       expect(fixture.observe()).to.deep.equal(before);
     }
   });
@@ -300,7 +300,7 @@ describe('frozen structural route coverage through the public CLI', function () 
       ],
     });
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('ch unfreeze base');
+    expect(result.output).to.include('an unfreeze base');
     expect(fixture.refs()).to.equal(refs);
     expect(
       fs.readFileSync(path.join(fixture.repo, '.git', 'index'))

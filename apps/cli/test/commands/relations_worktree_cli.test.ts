@@ -165,7 +165,7 @@ describe('relation inspection across worktrees and raw abort', function () {
     const bin = path.join(fixture.root, 'named-recovery-bin');
     fs.mkdirSync(bin, { recursive: true });
     fs.writeFileSync(
-      path.join(bin, 'ch'),
+      path.join(bin, 'an'),
       `#!/bin/sh\nexec ${getTestCliCommand([]).map(quote).join(' ')} "$@"\n`,
       { mode: 0o755 }
     );
@@ -276,11 +276,11 @@ describe('relation inspection across worktrees and raw abort', function () {
     const recoveryCommands = (first.stdout + first.stderr)
       .split('\n')
       .map((line) => line.trim())
-      .filter((line) => /^ch (restack --branch|checkout) /.test(line));
+      .filter((line) => /^an (restack --branch|checkout) /.test(line));
     expect(recoveryCommands).to.deep.equal([
-      "ch restack --branch 'conflict-child' --only",
-      "ch restack --branch 'conflict-base' --only",
-      "ch checkout 'conflict-base'",
+      "an restack --branch 'conflict-child' --only",
+      "an restack --branch 'conflict-base' --only",
+      "an checkout 'conflict-base'",
     ]);
     fixture.git(['rebase', '--abort']);
     expect(fixture.git(['branch', '--show-current'])).to.equal(
@@ -301,7 +301,7 @@ describe('relation inspection across worktrees and raw abort', function () {
     const noRebase = fixture.run(['continue', '--no-interactive']);
     expect(noRebase.status).to.equal(1);
     expect(noRebase.stdout + noRebase.stderr).to.include(
-      'No Charcoal operation to continue.'
+      'No Anthracite operation to continue.'
     );
     fixture.git(['update-index', '--refresh']);
     for (const [index, command] of recoveryCommands.entries()) {

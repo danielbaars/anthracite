@@ -474,7 +474,7 @@ sys.exit(result.returncode)
           .and.include('Other log display options');
         expect(help.stderr).to.equal('');
         const completion = fixture.run(
-          ['--quiet', '--get-yargs-completions', 'ch', ...route, '--'],
+          ['--quiet', '--get-yargs-completions', 'an', ...route, '--'],
           fixture.root
         );
         expect(completion.status, completion.stderr).to.equal(0);

@@ -127,13 +127,13 @@ void cli
   // Pin the program name; yargs otherwise derives it from the process, which is
   // the runtime ("bun") in the compiled single-file binary, or "index.js" under
   // node.
-  .scriptName('ch')
+  .scriptName('an')
   .help()
   // Pin to the bundled version; yargs' default resolves package.json relative
   // to the cwd, which is wrong in the single-file binary / outside apps/cli.
   .version(version)
   .usage(
-    'Charcoal is a command line tool that makes working with stacked changes fast & intuitive.\n\nRun ch <command> --help for command-specific options.'
+    'Anthracite is a command line tool that makes working with stacked changes fast & intuitive.\n\nRun an <command> --help for command-specific options.'
   )
   .options(globalArgumentsOptions)
   .global(Object.keys(globalArgumentsOptions))

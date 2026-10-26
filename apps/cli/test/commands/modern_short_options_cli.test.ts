@@ -170,7 +170,7 @@ describe('modern short options through the public CLI', function () {
     fixture.env.SHELL = '/usr/local/bin/fish';
     delete fixture.env.ZSH_NAME;
     const before = fixture.inspectionSnapshot();
-    const args = ['--get-yargs-completions', 'ch'];
+    const args = ['--get-yargs-completions', 'an'];
     const canonical = fixture.run([...args, 'untrack', '']);
     const short = fixture.run([...args, 'utr', '']);
     const legacy = fixture.run([...args, 'ut', '']);
@@ -554,8 +554,8 @@ describe('modern short options through the public CLI', function () {
     const restore = fixture.refuseExternalTools();
     try {
       for (const [command, pattern] of [
-        ['utr', /ch untrack/],
-        ['ut', /ch untrack/],
+        ['utr', /an untrack/],
+        ['ut', /an untrack/],
         ['c', /-o, --onto/],
         ['m', /-e, --edit/],
       ] as const) {
@@ -572,7 +572,7 @@ describe('modern short options through the public CLI', function () {
         ['m', '--edit'],
       ] as const) {
         const result = fixture.run(
-          ['--get-yargs-completions', 'ch', command, '--'],
+          ['--get-yargs-completions', 'an', command, '--'],
           fixture.root
         );
         expect(result.status, result.stdout + result.stderr).to.equal(0);

@@ -1,6 +1,6 @@
 import path from 'path';
 
-// Shared by the test harnesses and GitRepo, which also powers `ch demo`.
+// Shared by the test harnesses and GitRepo, which also powers `an demo`.
 export function getTestCliCommand(
   args: readonly string[]
 ): [string, ...string[]] {
