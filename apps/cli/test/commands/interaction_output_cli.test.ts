@@ -281,10 +281,10 @@ describe('interaction output through the public CLI', function () {
         'CODEX_HOME',
         'GH_CONFIG_DIR',
         'XDG_CONFIG_HOME',
-        'CHARCOAL_TEST_BINARY',
+        'ANTHRACITE_TEST_BINARY',
         'BUN_BE_BUN',
-        'CHARCOAL_TEST_GH_STATE',
-        'CHARCOAL_TEST_GH_LOG',
+        'ANTHRACITE_TEST_GH_STATE',
+        'ANTHRACITE_TEST_GH_LOG',
         'PATH',
       ].map((key) => [key, submit.env[key] ?? null])
     );

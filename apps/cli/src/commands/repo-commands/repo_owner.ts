@@ -16,7 +16,7 @@ type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 export const command = 'owner';
 export const canonical = 'repo owner';
 export const description =
-  "The current repo owner's name stored in Anthracite. e.g. in 'danerwilliams/charcoal', this is 'charcoal'.";
+  "The current repo owner's name stored in Anthracite. e.g. in 'danielbaars/anthracite', this is 'danielbaars'.";
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {

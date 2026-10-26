@@ -10,6 +10,7 @@ import { submitPullRequest } from './submit_prs';
 import {
   createPrBodyFooter,
   footerFooter,
+  legacyFooterFooter,
   footerTitle,
 } from '../create_pr_body_footer';
 import { execFileSync } from 'child_process';
@@ -232,10 +233,11 @@ export function updatePrBodyFooter(
 
   // Get the core title and footer text without extra whitespace
   const titleText = footerTitle.trim().replace(/^\s*\n+|\n+\s*$/g, '');
-  const footerText = footerFooter.trim().replace(/^\s*\n+|\n+\s*$/g, '');
 
   const escapedTitleText = titleText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const escapedFooterText = footerText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escapedFooterText = [footerFooter, legacyFooterFooter]
+    .map((text) => text.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('|');
 
   // Strip every existing footer block (and the blank lines before it), wherever
   // it sits in the body — not just at the very end. Anchoring to end-of-body
@@ -244,7 +246,7 @@ export function updatePrBodyFooter(
   // re-appending a single footer keeps exactly one, and preserves any other
   // content (e.g. bot sections) that followed it.
   const footerBlock = new RegExp(
-    `\\s*${escapedTitleText}[\\s\\S]*?${escapedFooterText}`,
+    `\\s*${escapedTitleText}[\\s\\S]*?(?:${escapedFooterText})`,
     'g'
   );
 

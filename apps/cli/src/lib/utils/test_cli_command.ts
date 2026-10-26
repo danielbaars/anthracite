@@ -4,9 +4,10 @@ import path from 'path';
 export function getTestCliCommand(
   args: readonly string[]
 ): [string, ...string[]] {
-  const binary = process.env.CHARCOAL_TEST_BINARY;
+  const binary =
+    process.env.ANTHRACITE_TEST_BINARY ?? process.env.CHARCOAL_TEST_BINARY;
   if (binary && !path.isAbsolute(binary)) {
-    throw new Error('CHARCOAL_TEST_BINARY must be an absolute path');
+    throw new Error('ANTHRACITE_TEST_BINARY must be an absolute path');
   }
   return binary
     ? [binary, ...args]

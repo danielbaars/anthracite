@@ -14,7 +14,7 @@ type CliResult = {
 };
 
 export class FrozenGetFixture {
-  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'charcoal-get-'));
+  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'anthracite-get-'));
   readonly producer = path.join(this.root, 'producer');
   readonly consumer = path.join(this.root, 'consumer');
   readonly remote = path.join(this.root, 'remote.git');
@@ -238,7 +238,7 @@ respond(JSON.stringify(selected) + '\\n');\n`,
         ? []
         : ['--no-interactive']),
     ]);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     const before = evidence ? this.observe() : undefined;
     if (interactive) {
       const result = runCliInPty(command, {

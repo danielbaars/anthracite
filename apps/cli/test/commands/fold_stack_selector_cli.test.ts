@@ -419,7 +419,7 @@ describe('stack fold tip selection through a real PTY', function () {
   }
 
   function preserveState(before: unknown, after: unknown): void {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, `${path.basename(fixture.root)}-fold-state.jsonl`),

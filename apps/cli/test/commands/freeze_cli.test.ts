@@ -28,7 +28,7 @@ describe('manual freeze through the public CLI', function () {
   let fixture: FreezeCliFixture;
   beforeEach(function () {
     fixture = new FreezeCliFixture();
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(

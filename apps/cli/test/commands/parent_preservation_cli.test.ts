@@ -28,8 +28,8 @@ describe('parent persistent operation and PR state through the public CLI', func
       { mode: 0o755 }
     );
     fixture.env.PATH = `${bin}${path.delimiter}${fixture.env.PATH ?? ''}`;
-    fixture.env.CHARCOAL_TEST_GH_STATE = state;
-    fixture.env.CHARCOAL_TEST_GH_LOG = calls;
+    fixture.env.ANTHRACITE_TEST_GH_STATE = state;
+    fixture.env.ANTHRACITE_TEST_GH_LOG = calls;
     const remote = path.join(fixture.root, 'remote.git');
     fixture.git(['init', '--bare', remote]);
     fixture.git(['remote', 'add', 'origin', remote]);

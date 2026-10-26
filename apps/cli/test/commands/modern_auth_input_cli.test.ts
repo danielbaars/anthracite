@@ -61,7 +61,7 @@ function outsideState(fixture: CwdCliFixture): Record<string, string> {
     }
   };
   walk(fixture.root);
-  const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+  const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
   if (evidence)
     fs.appendFileSync(
       path.join(evidence, 'modern-auth-outside-snapshots.jsonl'),
@@ -93,7 +93,7 @@ describe('modern auth input through the public CLI', function () {
   beforeEach(function () {
     fixture = new CwdCliFixture();
     configureGh(fixture);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -106,7 +106,7 @@ describe('modern auth input through the public CLI', function () {
     }
   });
   afterEach(() => {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       const destination = path.join(evidence, path.basename(fixture.root));
       fs.mkdirSync(destination, { recursive: true });

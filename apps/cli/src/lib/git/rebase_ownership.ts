@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import { getRebaseDirectory } from './rebase_in_progress';
 
+// Keep the 0.1.0 marker so interrupted operations survive an upgrade.
 const OWNERSHIP_FILE = 'charcoal-continuation';
 
 /** Git removes this marker on abort or completion, even for an identical retry. */

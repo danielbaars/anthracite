@@ -99,7 +99,7 @@ describe('interaction policy combined recovery through the public CLI', function
     });
     if (result.error) throw result.error;
     if (result.signal) throw new Error(`CLI killed by ${result.signal}`);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'combined-remote-cli.jsonl'),
@@ -117,7 +117,7 @@ describe('interaction policy combined recovery through the public CLI', function
               'HOME',
               'CODEX_HOME',
               'GIT_OPTIONAL_LOCKS',
-              'CHARCOAL_TEST_BINARY',
+              'ANTHRACITE_TEST_BINARY',
               'BUN_BE_BUN',
               'CH_PAGER',
               'PATH',
@@ -360,7 +360,7 @@ describe('interaction policy combined recovery through the public CLI', function
       expect(
         fs.readFileSync(path.join(remote.repo, 'local-child.txt'), 'utf8')
       ).to.equal('local-child');
-      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
       if (evidence)
         fs.writeFileSync(
           path.join(evidence, 'combined-get-state.json'),

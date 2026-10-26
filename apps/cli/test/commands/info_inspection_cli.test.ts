@@ -22,7 +22,7 @@ describe('read-only info inspection', function () {
     const before = cwds.map((cwd) => fixture.inspectionSnapshot(cwd));
     const result = fixture.run(['info', '--no-interactive'], cwds[0]);
     const after = cwds.map((cwd) => fixture.inspectionSnapshot(cwd));
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(

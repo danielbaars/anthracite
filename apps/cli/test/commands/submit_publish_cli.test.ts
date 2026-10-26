@@ -38,8 +38,8 @@ describe('publish existing PRs through the built CLI', function () {
     fixture.branch('target', 'parent');
     fixture.succeed('submit');
     const targetHead = fixture.commit('target-update');
-    fixture.env.CHARCOAL_TEST_GH_STATUS_HEAD = 'target';
-    fixture.env.CHARCOAL_TEST_GH_STATUS_MODE = 'reject';
+    fixture.env.ANTHRACITE_TEST_GH_STATUS_HEAD = 'target';
+    fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE = 'reject';
 
     const result = fixture.cli('submit', '--publish');
 
@@ -56,7 +56,7 @@ describe('publish existing PRs through the built CLI', function () {
       .to.include('GitHub refused ready transition')
       .and.include('Code for target was already pushed');
     expect(result.stdout).not.to.match(/^target: https.*ready for review/m);
-    delete fixture.env.CHARCOAL_TEST_GH_STATUS_MODE;
+    delete fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE;
     expect(fixture.succeed('submit', '--publish')).to.include('target');
     expect(fixture.prs().every((pr) => !pr.isDraft)).to.equal(true);
   });
@@ -77,8 +77,8 @@ describe('publish existing PRs through the built CLI', function () {
     fixture.branch('target', 'main');
     fixture.succeed('submit');
     fixture.clearCalls();
-    fixture.env.CHARCOAL_TEST_GH_STATUS_HEAD = 'target';
-    fixture.env.CHARCOAL_TEST_GH_STATUS_MODE = 'read-missing';
+    fixture.env.ANTHRACITE_TEST_GH_STATUS_HEAD = 'target';
+    fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE = 'read-missing';
 
     const result = fixture.cli('submit', '--publish');
 
@@ -91,7 +91,7 @@ describe('publish existing PRs through the built CLI', function () {
       fixture.calls().filter((args) => args[1] === 'create')
     ).to.deep.equal([]);
     expect(fixture.prs()).to.have.length(1);
-    delete fixture.env.CHARCOAL_TEST_GH_STATUS_MODE;
+    delete fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE;
     expect(fixture.succeed('submit', '--publish')).to.include(
       'All PRs up to date'
     );
@@ -101,8 +101,8 @@ describe('publish existing PRs through the built CLI', function () {
     it(`rejects an unconfirmed publication (${mode}) and remains honest in a following command`, () => {
       fixture.branch('target', 'main');
       fixture.succeed('submit');
-      fixture.env.CHARCOAL_TEST_GH_STATUS_HEAD = 'target';
-      fixture.env.CHARCOAL_TEST_GH_STATUS_MODE = mode;
+      fixture.env.ANTHRACITE_TEST_GH_STATUS_HEAD = 'target';
+      fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE = mode;
 
       const result = fixture.cli('submit', '--publish');
 
@@ -111,7 +111,7 @@ describe('publish existing PRs through the built CLI', function () {
         mode === 'unchanged' ? 'did not confirm' : 'Could not confirm status'
       );
       expect(result.stdout).not.to.match(/^target: https.*ready for review/m);
-      delete fixture.env.CHARCOAL_TEST_GH_STATUS_MODE;
+      delete fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE;
       if (mode === 'unchanged') {
         expect(fixture.prs()[0]?.isDraft).to.equal(true);
         expect(fixture.succeed('submit', '--publish')).to.include(

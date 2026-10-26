@@ -15,7 +15,7 @@ describe('modern log classic through the public CLI', function () {
     fixture = new CwdCliFixture();
     delete fixture.env.GRAPHITE_INTERACTIVE;
     for (const key of ['CH_PAGER', 'PAGER', 'GIT_PAGER']) fixture.env[key] = '';
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -28,7 +28,7 @@ describe('modern log classic through the public CLI', function () {
     }
   });
   afterEach(() => {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       const target = path.join(evidence, path.basename(fixture.root));
       fs.mkdirSync(target, { recursive: true });

@@ -13,7 +13,7 @@ function preserveObservation(
   name: string,
   file: string
 ): void {
-  const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+  const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
   if (!evidence) return;
   fs.mkdirSync(evidence, { recursive: true });
   fs.copyFileSync(
@@ -77,7 +77,7 @@ describe('cwd owned commands through the public CLI', function () {
       expect(result.status, result.stdout + result.stderr).to.equal(0);
       expect(result.stderr).to.equal('');
       if (documentation === '--help') expect(result.stdout).to.include('--cwd');
-      else expect(result.stdout).to.match(/^0\.1\.0\s*$/);
+      else expect(result.stdout).to.match(/^0\.1\.1\s*$/);
     }
     expect(fs.existsSync(missing)).to.equal(false);
   });

@@ -42,7 +42,7 @@ function execute(
       timeout: 20000,
     });
     if (result.error) throw result.error;
-    if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+    if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
       fs.appendFileSync(
         path.join(fixture.root, 'cli.jsonl'),
         JSON.stringify({
@@ -113,7 +113,7 @@ function run(
     }
   );
   if (result.error) throw result.error;
-  if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+  if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
     fs.appendFileSync(
       path.join(fixture.root, 'cli.jsonl'),
       JSON.stringify({
@@ -152,7 +152,7 @@ function getInspectionSnapshot(
     ),
     userConfig: getBytes(fixture.env.GRAPHITE_USER_CONFIG_PATH ?? ''),
   };
-  const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+  const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
   if (evidence) {
     fs.mkdirSync(evidence, { recursive: true });
     fs.appendFileSync(
@@ -552,7 +552,7 @@ fi`
           { prompt: `› ${tip}\r\n`, input: '\r' },
         ],
       });
-      if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+      if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
         fs.appendFileSync(
           path.join(fixture.root, 'cli.jsonl'),
           JSON.stringify({ pty: result }) + '\n'

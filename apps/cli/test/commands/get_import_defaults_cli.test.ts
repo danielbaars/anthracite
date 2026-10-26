@@ -53,7 +53,7 @@ describe('get CLI new import defaults', function () {
   let fixture: FrozenGetFixture;
   beforeEach(function () {
     fixture = new FrozenGetFixture(false);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'import-default-cases.jsonl'),
@@ -575,7 +575,7 @@ describe('get CLI new import defaults', function () {
     const result = fixture.run(['g', '2', '-f', '-U']);
     expect(result.status, result.output).to.equal(1);
     expect(result.output).to.include(other);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'import-worktree-observations.jsonl'),

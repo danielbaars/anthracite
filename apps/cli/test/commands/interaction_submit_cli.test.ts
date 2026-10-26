@@ -57,7 +57,7 @@ function observedEnvironment(fixture: SubmitCliFixture) {
       'GIT_CONFIG_NOSYSTEM',
       'GIT_CONFIG_GLOBAL',
       'GIT_OPTIONAL_LOCKS',
-      'CHARCOAL_TEST_BINARY',
+      'ANTHRACITE_TEST_BINARY',
     ].map((key) => [key, fixture.env[key]])
   );
 }
@@ -184,7 +184,7 @@ describe('submit under the shared interaction policy', function () {
     }
   });
   afterEach(function () {
-    const destination = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const destination = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (destination) {
       const target = path.join(destination, path.basename(fixture.root));
       fs.mkdirSync(target, { recursive: true });

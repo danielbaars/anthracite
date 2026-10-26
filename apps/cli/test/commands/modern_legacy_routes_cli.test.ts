@@ -12,7 +12,7 @@ describe('modern preserved routes through the public CLI', function () {
   let fixture: CwdCliFixture;
   beforeEach(function () {
     fixture = new CwdCliFixture();
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -25,7 +25,7 @@ describe('modern preserved routes through the public CLI', function () {
     }
   });
   afterEach(() => {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence && fixture) {
       const files = Object.fromEntries(
         ['sequence', 'message', 'sentinel-bin/gh'].map((name) => {

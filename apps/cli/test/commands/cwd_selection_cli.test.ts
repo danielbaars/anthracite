@@ -138,7 +138,7 @@ describe('cwd selection through the public CLI', function () {
         expect(result.status, JSON.stringify(args) + result.stderr).to.equal(0);
         expect(result.stderr).to.equal('');
         if (args.includes('--version'))
-          expect(result.stdout).to.match(/^0\.1\.0\s*$/);
+          expect(result.stdout).to.match(/^0\.1\.1\s*$/);
         else
           expect(result.stdout)
             .to.include('--cwd')

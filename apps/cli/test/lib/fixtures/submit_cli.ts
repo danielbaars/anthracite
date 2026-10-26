@@ -7,7 +7,7 @@ import { readSubmitPrs, SubmitPr } from './submit_gh';
 
 // Every instance owns its repo, bare remote, HOME, and external gh state.
 export class SubmitCliFixture {
-  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'charcoal-submit-'));
+  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'anthracite-submit-'));
   readonly repo = path.join(this.root, 'repo');
   readonly remote = path.join(this.root, 'remote.git');
   readonly state = path.join(this.root, 'prs.json');
@@ -41,8 +41,8 @@ export class SubmitCliFixture {
       GRAPHITE_USER_CONFIG_PATH: userConfig,
       GRAPHITE_PROFILE: '',
       PATH: `${bin}${path.delimiter}${process.env.PATH ?? ''}`,
-      CHARCOAL_TEST_GH_STATE: this.state,
-      CHARCOAL_TEST_GH_LOG: this.log,
+      ANTHRACITE_TEST_GH_STATE: this.state,
+      ANTHRACITE_TEST_GH_LOG: this.log,
       GIT_CONFIG_NOSYSTEM: '1',
       GIT_CONFIG_GLOBAL: '/dev/null',
     };

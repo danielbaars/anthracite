@@ -86,7 +86,7 @@ describe('explicit reviewers through the built CLI', function () {
 
   it('fails honestly when gh exits zero without assigning a requested reviewer after creation', () => {
     fixture.branch('target', 'main');
-    fixture.env.CHARCOAL_TEST_GH_REVIEW_MODE = 'ignore';
+    fixture.env.ANTHRACITE_TEST_GH_REVIEW_MODE = 'ignore';
     const result = fixture.cli('submit', '--reviewers', 'author');
     expect(result.status).not.to.equal(0);
     expect(result.stdout + result.stderr)
@@ -105,7 +105,7 @@ describe('explicit reviewers through the built CLI', function () {
     fixture.branch('target', 'main');
     fixture.succeed('submit');
     const head = fixture.commit('code-update');
-    fixture.env.CHARCOAL_TEST_GH_REVIEW_MODE = 'reject';
+    fixture.env.ANTHRACITE_TEST_GH_REVIEW_MODE = 'reject';
     const result = fixture.cli('submit', '--reviewers', 'unknown');
     expect(result.status).not.to.equal(0);
     expect(result.stdout + result.stderr)
@@ -121,7 +121,7 @@ describe('explicit reviewers through the built CLI', function () {
 
   it('identifies confirmed and unconfirmed names when only part of a reviewer list is assigned', () => {
     fixture.branch('target', 'main');
-    fixture.env.CHARCOAL_TEST_GH_REVIEW_MODE = 'partial';
+    fixture.env.ANTHRACITE_TEST_GH_REVIEW_MODE = 'partial';
     const result = fixture.cli('submit', '--reviewers', 'alice,denied');
     expect(result.status).not.to.equal(0);
     expect(result.stdout + result.stderr)
@@ -141,7 +141,7 @@ describe('explicit reviewers through the built CLI', function () {
         reviews: [{ id: 'old-review', author: { login: 'alice' } }],
       }))
     );
-    fixture.env.CHARCOAL_TEST_GH_REVIEW_MODE = 'ignore';
+    fixture.env.ANTHRACITE_TEST_GH_REVIEW_MODE = 'ignore';
     const ignored = fixture.cli('submit', '--reviewers', 'alice');
     expect(ignored.status).not.to.equal(0);
     expect(ignored.stdout + ignored.stderr).to.include(
@@ -159,7 +159,7 @@ describe('explicit reviewers through the built CLI', function () {
   it('recognizes a newly submitted review when the pending request has already been fulfilled', () => {
     fixture.branch('target', 'main');
     fixture.succeed('submit');
-    fixture.env.CHARCOAL_TEST_GH_REVIEW_MODE = 'reviewed';
+    fixture.env.ANTHRACITE_TEST_GH_REVIEW_MODE = 'reviewed';
     fixture.succeed('submit', '--reviewers', 'alice');
     expect(fixture.prs()[0]?.reviewRequests).to.deep.equal([]);
     expect(fixture.prs()[0]?.reviews).to.deep.equal([
@@ -169,7 +169,7 @@ describe('explicit reviewers through the built CLI', function () {
 
   it('fails when reviewer readback names a different PR even though gh assigned the reviewer', () => {
     fixture.branch('target', 'main');
-    fixture.env.CHARCOAL_TEST_GH_REVIEW_MODE = 'invalid';
+    fixture.env.ANTHRACITE_TEST_GH_REVIEW_MODE = 'invalid';
     const result = fixture.cli('submit', '--reviewers', 'alice');
     expect(result.status).not.to.equal(0);
     expect(result.stdout + result.stderr)

@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: CLI tests (${{ matrix.runtime }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        runtime: [node, native]
+    env:
+      TERM: dumb
+      NO_COLOR: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: 1.3.14
+      - name: Install exact dependencies
+        run: node .yarn/releases/yarn-3.2.1.cjs install --immutable
+      - name: Build and lint
+        run: node .yarn/releases/yarn-3.2.1.cjs turbo run build
+      - name: Typecheck
+        run: node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite check
+      - name: Configure fixture author
+        run: |
+          git config --global user.name 'Anthracite CI'
+          git config --global user.email 'ci@example.test'
+      - name: Test Node CLI
+        if: matrix.runtime == 'node'
+        run: node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-ci
+      - name: Compile native CLI
+        if: matrix.runtime == 'native'
+        run: |
+          mkdir -p release
+          bun build --compile apps/cli/dist/src/index.js --outfile release/an
+          echo "ANTHRACITE_TEST_BINARY=$PWD/release/an" >> "$GITHUB_ENV"
+      - name: Test native CLI
+        if: matrix.runtime == 'native'
+        run: node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-native
+
+  release-assets:
+    name: Build and verify release assets
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: 1.3.14
+      - run: node .yarn/releases/yarn-3.2.1.cjs install --immutable
+      - run: node .yarn/releases/yarn-3.2.1.cjs turbo run build
+      - name: Build all platform binaries and checksums
+        run: sh scripts/build-release.sh release
+      - name: Test actual native installation and removal
+        run: node scripts/test-install.cjs release
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: anthracite-release-${{ github.sha }}
+          path: release/*
+          if-no-files-found: error

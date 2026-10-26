@@ -73,7 +73,7 @@ describe('cwd read-only inspection through the public CLI', function () {
       observe(target),
       ...(fs.existsSync(linked) ? [observe(target, linked)] : []),
     ];
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'cwd-selected-config-observations.jsonl'),
@@ -377,7 +377,7 @@ describe('cwd read-only inspection through the public CLI', function () {
       ['destination', targetRemote],
     ] as const) {
       expect(fs.readFileSync(remote.calls, 'utf8')).to.equal('');
-      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
       if (evidence)
         for (const [name, file] of [
           ['prs.json', remote.state],
@@ -430,7 +430,7 @@ describe('cwd read-only inspection through the public CLI', function () {
     ]);
     const result = runCliInPty(command, { cwd: start.repo, env: start.env });
     start.savePty(result);
-    const terminalEvidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const terminalEvidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (terminalEvidence)
       fs.appendFileSync(
         path.join(terminalEvidence, 'cwd-info-pager-pty.jsonl'),
@@ -472,7 +472,7 @@ describe('cwd read-only inspection through the public CLI', function () {
       input,
     });
     expect(snapshots()).to.deep.equal(before);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.copyFileSync(
         receipt,

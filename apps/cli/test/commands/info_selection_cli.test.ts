@@ -352,7 +352,7 @@ describe('info branch selection through the public CLI', function () {
     const checkoutPr = prs.find((pr) => pr.headRefName === 'pr-checkout');
     if (!selectedPr || !checkoutPr)
       throw new Error('Both public submissions must create a PR.');
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.copyFileSync(
         calls,

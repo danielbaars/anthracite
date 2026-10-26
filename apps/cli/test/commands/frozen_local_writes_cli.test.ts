@@ -13,7 +13,7 @@ describe('frozen local writes through the public CLI', function () {
     fixture = new FreezeCliFixture();
   });
   afterEach(function () {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       const files: Record<string, string> = {};
@@ -228,7 +228,7 @@ const r=cp.spawnSync(${JSON.stringify(freeze[0])},${JSON.stringify(
   ): ReturnType<typeof executeCliInPty> {
     const before = fixture.observe();
     const result = executeCliInPty(command, options);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -248,7 +248,7 @@ const r=cp.spawnSync(${JSON.stringify(freeze[0])},${JSON.stringify(
               'NO_COLOR',
               'GIT_EDITOR',
               'GIT_SEQUENCE_EDITOR',
-              'CHARCOAL_TEST_BINARY',
+              'ANTHRACITE_TEST_BINARY',
               'GIT_CONFIG_NOSYSTEM',
               'GIT_CONFIG_GLOBAL',
             ].map((key) => [key, options.env[key]])

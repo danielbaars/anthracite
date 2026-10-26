@@ -62,8 +62,8 @@ function isSubmitPr(value: unknown): value is SubmitPr {
 // eslint-disable-next-line max-lines-per-function
 function main(): void {
   const args = process.argv.slice(2);
-  const statePath = process.env.CHARCOAL_TEST_GH_STATE;
-  const logPath = process.env.CHARCOAL_TEST_GH_LOG;
+  const statePath = process.env.ANTHRACITE_TEST_GH_STATE;
+  const logPath = process.env.ANTHRACITE_TEST_GH_LOG;
   if (!statePath || !logPath) throw new Error('Missing submit fixture paths');
   fs.appendFileSync(logPath, `${JSON.stringify(args)}\n`);
   if (args[0] === '--version') {
@@ -101,7 +101,7 @@ function main(): void {
       headRefOid,
     };
     if (
-      process.env.CHARCOAL_TEST_GH_REVIEW_MODE === 'invalid' &&
+      process.env.ANTHRACITE_TEST_GH_REVIEW_MODE === 'invalid' &&
       option('--json')?.includes('reviews') &&
       pr.reviewRequests.length
     )
@@ -111,8 +111,8 @@ function main(): void {
     if (
       fields.length === 3 &&
       fields.includes('isDraft') &&
-      process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName &&
-      process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'read-missing'
+      process.env.ANTHRACITE_TEST_GH_STATUS_HEAD === pr.headRefName &&
+      process.env.ANTHRACITE_TEST_GH_STATUS_MODE === 'read-missing'
     ) {
       process.stderr.write('no pull requests found during status readback\n');
       process.exitCode = 1;
@@ -121,8 +121,8 @@ function main(): void {
     if (
       fields.length === 3 &&
       fields.includes('isDraft') &&
-      process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName &&
-      process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'read-invalid'
+      process.env.ANTHRACITE_TEST_GH_STATUS_HEAD === pr.headRefName &&
+      process.env.ANTHRACITE_TEST_GH_STATUS_MODE === 'read-invalid'
     ) {
       process.stdout.write('{not valid JSON');
       return;
@@ -157,7 +157,7 @@ function main(): void {
       isDraft: args.includes('--draft'),
       reviewDecision: 'REVIEW_REQUIRED',
       reviewRequests:
-        process.env.CHARCOAL_TEST_GH_REVIEW_MODE === 'ignore'
+        process.env.ANTHRACITE_TEST_GH_REVIEW_MODE === 'ignore'
           ? []
           : args.flatMap((arg, index) =>
               arg === '--reviewer' ? [{ login: args[index + 1] }] : []
@@ -172,8 +172,8 @@ function main(): void {
     const requestedDraft = args.includes('--undo');
     if (pr.isDraft === requestedDraft)
       throw new Error('PR already has the requested status');
-    if (process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName) {
-      if (process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'reject') {
+    if (process.env.ANTHRACITE_TEST_GH_STATUS_HEAD === pr.headRefName) {
+      if (process.env.ANTHRACITE_TEST_GH_STATUS_MODE === 'reject') {
         process.stderr.write(
           `GitHub refused ${requestedDraft ? 'draft' : 'ready'} transition\n`
         );
@@ -182,8 +182,8 @@ function main(): void {
       }
     }
     if (
-      process.env.CHARCOAL_TEST_GH_STATUS_HEAD === pr.headRefName &&
-      process.env.CHARCOAL_TEST_GH_STATUS_MODE === 'unchanged'
+      process.env.ANTHRACITE_TEST_GH_STATUS_HEAD === pr.headRefName &&
+      process.env.ANTHRACITE_TEST_GH_STATUS_MODE === 'unchanged'
     )
       return;
     pr.isDraft = requestedDraft;
@@ -193,7 +193,7 @@ function main(): void {
   if (args[1] === 'edit' && pr) {
     if (option('--base')) pr.baseRefName = option('--base') ?? pr.baseRefName;
     if (option('--body') !== undefined) pr.body = option('--body') ?? '';
-    const reviewMode = process.env.CHARCOAL_TEST_GH_REVIEW_MODE;
+    const reviewMode = process.env.ANTHRACITE_TEST_GH_REVIEW_MODE;
     if (args.includes('--add-reviewer') && reviewMode === 'reject') {
       process.stderr.write(
         'review request rejected: unknown or unauthorized reviewer\n'

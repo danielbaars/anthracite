@@ -208,7 +208,7 @@ describe('noninteractive route defaults through the public CLI', function () {
               .toString('base64')
           : null,
       };
-      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
       if (evidence)
         fs.appendFileSync(
           path.join(evidence, 'init-states.jsonl'),
@@ -302,7 +302,7 @@ describe('noninteractive local remote decisions through the public CLI', functio
     });
     if (result.error) throw result.error;
     if (result.signal) throw new Error(`Unexpected signal: ${result.signal}`);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'interaction-remote-cli.jsonl'),
@@ -316,7 +316,7 @@ describe('noninteractive local remote decisions through the public CLI', functio
               'GIT_OPTIONAL_LOCKS',
               'HOME',
               'CODEX_HOME',
-              'CHARCOAL_TEST_BINARY',
+              'ANTHRACITE_TEST_BINARY',
               'BUN_BE_BUN',
               'CH_PAGER',
             ].map((key) => [key, fixture.env[key] ?? null])
@@ -387,7 +387,7 @@ describe('noninteractive local remote decisions through the public CLI', functio
       continuation: bytes(path.join(fixture.repo, '.git', '.gtcontinue')),
       remote: git(['ls-remote', '--heads', 'origin']),
     };
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'interaction-remote-states.jsonl'),
@@ -484,7 +484,7 @@ describe('noninteractive local remote decisions through the public CLI', functio
         env: fixture.env,
         responses,
       });
-      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
       if (evidence)
         fs.appendFileSync(
           path.join(evidence, 'interaction-get-pty.jsonl'),

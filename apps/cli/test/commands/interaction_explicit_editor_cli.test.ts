@@ -19,7 +19,7 @@ describe('explicit editor policy through the public CLI', function () {
     fixture.git(['status', '--porcelain']);
   });
   afterEach(() => {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.writeFileSync(

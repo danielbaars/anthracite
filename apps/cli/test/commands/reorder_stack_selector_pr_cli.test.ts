@@ -28,8 +28,8 @@ describe('chosen stack reorder keeps its local PR boundary', function () {
       { mode: 0o755 }
     );
     fixture.env.PATH = `${bin}${path.delimiter}${fixture.env.PATH ?? ''}`;
-    fixture.env.CHARCOAL_TEST_GH_STATE = state;
-    fixture.env.CHARCOAL_TEST_GH_LOG = calls;
+    fixture.env.ANTHRACITE_TEST_GH_STATE = state;
+    fixture.env.ANTHRACITE_TEST_GH_LOG = calls;
     fixture.git(['init', '--bare', path.join(fixture.root, 'remote.git')]);
     fixture.git([
       'remote',

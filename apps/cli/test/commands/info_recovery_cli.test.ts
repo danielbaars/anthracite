@@ -42,7 +42,7 @@ describe('info combined recovery through the public CLI', function () {
     expect(prs.map((pr) => pr.headRefName).sort()).to.deep.equal(
       [...names].sort()
     );
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       for (const name of ['prs.json', 'gh.jsonl'])
@@ -137,7 +137,7 @@ describe('info combined recovery through the public CLI', function () {
     const argv = getTestCliCommand(args);
     const result = runCliInPty(argv, { cwd, env: fixture.env });
     fixture.savePty(result);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'recovery-pty.jsonl'),
@@ -220,7 +220,7 @@ describe('info combined recovery through the public CLI', function () {
     expect(invalid.stdout).to.equal('');
     expect(invalid.stderr).to.include('ERROR:');
     expect(fs.readFileSync(calls)).to.deep.equal(pagerCalls);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       for (const file of [input, calls])
         fs.copyFileSync(

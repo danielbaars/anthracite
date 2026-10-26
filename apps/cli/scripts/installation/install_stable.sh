@@ -1,3 +1,3 @@
-#!/bin/bash
-
-npm i -g @danerwilliams/charcoal
+#!/bin/sh
+set -eu
+exec sh "$(dirname "$0")/../../../../scripts/install.sh" "$@"

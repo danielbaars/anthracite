@@ -53,7 +53,7 @@ describe('cwd Git passthrough through the public CLI', function () {
         env: target.env,
       });
       if (direct.error) throw direct.error;
-      if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+      if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
         fs.appendFileSync(
           path.join(target.root, 'git.jsonl'),
           JSON.stringify({
@@ -95,7 +95,7 @@ describe('cwd Git passthrough through the public CLI', function () {
       input: patch,
     });
     if (direct.error) throw direct.error;
-    if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+    if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
       fs.appendFileSync(
         path.join(target.root, 'git.jsonl'),
         JSON.stringify({

@@ -95,7 +95,7 @@ export class FrozenSubmitCliFixture extends SubmitCliFixture {
             'CH_EDITOR',
             'GIT_CONFIG_NOSYSTEM',
             'GIT_CONFIG_GLOBAL',
-            'CHARCOAL_TEST_BINARY',
+            'ANTHRACITE_TEST_BINARY',
           ].map((key) => [key, this.env[key]])
         ),
         status: result.status,
@@ -144,7 +144,7 @@ process.exitCode = result.status ?? 1;
   }
 
   saveEvidence(test: string | undefined): void {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (!evidence) return;
     const target = path.join(evidence, path.basename(this.root));
     fs.mkdirSync(target, { recursive: true });

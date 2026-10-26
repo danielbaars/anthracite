@@ -59,7 +59,7 @@ describe('frozen branch lifecycle through the public CLI', function () {
   let fixture: LifecycleCliFixture;
   beforeEach(function () {
     fixture = new LifecycleCliFixture();
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(

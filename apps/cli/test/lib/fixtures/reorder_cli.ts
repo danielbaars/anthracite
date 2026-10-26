@@ -52,7 +52,7 @@ export class ReorderCliFixture {
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'pipe'],
     }).trim();
-    if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+    if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
       fs.appendFileSync(
         path.join(this.root, 'git.jsonl'),
         JSON.stringify({ args, cwd, output }) + '\n'
@@ -68,7 +68,7 @@ export class ReorderCliFixture {
       encoding: 'utf8',
       timeout: timeoutMs,
     });
-    if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+    if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
       fs.appendFileSync(
         path.join(this.root, 'cli.jsonl'),
         JSON.stringify({
@@ -207,7 +207,7 @@ export class ReorderCliFixture {
     readonly status: number | null;
     readonly output: string;
   }): void {
-    const directory = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const directory = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (directory) {
       fs.mkdirSync(directory, { recursive: true });
       fs.appendFileSync(
@@ -217,7 +217,7 @@ export class ReorderCliFixture {
     }
   }
   cleanup(): void {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       const destination = path.join(evidence, path.basename(this.root));
       fs.mkdirSync(destination, { recursive: true });

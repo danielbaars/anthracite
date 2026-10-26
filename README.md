@@ -1,61 +1,38 @@
 # Anthracite
 
-A local fork of [Charcoal](https://github.com/danerwilliams/charcoal), extended toward modern Graphite CLI compatibility. Modified on 26 October 2026.
+A standalone CLI for stacked Git branches and GitHub pull requests. Use **`an`** or **`anthracite`**.
 
-## Local version 0.1.0
+Anthracite builds on [Charcoal](https://github.com/danerwilliams/charcoal) and the formerly open-source Graphite CLI. See [credits and provenance](CREDITS.md). It supports local stacks and GitHub PRs through `gh`; it does not implement every current Graphite feature or require a Graphite subscription.
 
-Use **`an`** or **`anthracite`**. See [the local release guide](ANTHRACITE-0.1.0.md) for installation paths, completion, configuration compatibility and rollback. This version is not published to npm, Homebrew or GitHub releases. The original Charcoal installation scripts do not install Anthracite.
+## Install
 
-## Announcement
+Standalone binaries for macOS ARM64, macOS x64 and Linux x64 are available from [GitHub Releases](https://github.com/danielbaars/anthracite/releases). Node.js and Bun are not required to run a binary. Git is required; GitHub workflows also require an installed, authenticated [GitHub CLI](https://cli.github.com/).
 
-Check out my blog post announcement [here](https://danewilliams.com/announcing-charcoal) 🙂
-
-## What is Graphite?
-
-From Graphite:
-
-> [Graphite](https://graphite.dev) is a **fast, simple code review platform** designed for engineers who want to **write and review smaller pull requests, stay unblocked, and ship faster**. Anyone can start using Graphite individually without needing their coworkers to change tools - we'll seamlessly sync your code changes and reviews. We built Graphite because we missed internal code review tools like Phabricator (at Facebook) and Critique (Google) that help engineers create, approve, and ship small, incremental changes, and long-term we’re passionate about creating products & workflows that help fast-moving eng teams achieve more.
-
-## What is Charcoal?
-
-Charcoal is an open-source fork of the formerly public Graphite CLI. It supports local stacked-branch workflows and GitHub PRs through `gh`; it does not implement every current Graphite feature.
-
-On 7/14/2023 the Graphite team announced that they closed open source development of the Graphite CLI and [moved development to their private monorepo](https://github.com/withgraphite/graphite-cli). They also added a pay wall limiting free users to 10 open stacks at a time per organization starting 8/7/2023.
-
-Graphite is an amazing company and you should absolutely check out their products. In addition to a stacking CLI, they have an entire code review platform, merge queue, and more developer productivity tools.
-
-However, many organizations aren't interested in paying for Graphite's team plan at this time.
-
-The Graphite CLI does not need to depend on Graphite's API, so this project lets you use it with your own GitHub repositories, entirely for free.
-
-> [!NOTE]
-> Anthracite talks to GitHub through the [GitHub CLI (`gh`)](https://cli.github.com) rather than Graphite's API, so PR features (`submit`, `get`, PR-aware `sync`) require `gh` to be installed and authenticated (`an auth`) and work with **GitHub** repositories. Local stacking commands work with any git repo. (Earlier versions aspired to support GitLab/Bitbucket; that isn't implemented.)
-
-## Commands
-
-Anthracite uses a flat command surface that mirrors modern Graphite, e.g.:
+Download and inspect the versioned installer, then run it:
 
 ```sh
-an create -m "my change"   # create a branch + commit staged changes
-an modify -a               # amend the current branch and restack upstack
-an freeze                  # protect this branch and its downstack before trunk
-an unfreeze                # make this branch and its upstack editable
-an get teammate-branch     # new imports from other/unknown authors are frozen
-an g 123 -U                # explicitly import new branches editable
-an ss                      # push the stack and open/update PRs
-an sync                    # sync trunk/PR info, safe cleanup and optional restack
-an ls                      # view your stacks
-an up / an down            # move through the stack
-an checkout                # interactively switch branches
+curl -fsSLO https://raw.githubusercontent.com/danielbaars/anthracite/v0.1.1/scripts/install.sh
+sh install.sh 0.1.1
 ```
 
-See **[DOCUMENTATION.md](./DOCUMENTATION.md)** for the command reference and **[COMPATIBILITY.md](./COMPATIBILITY.md)** for supported aliases, deliberate differences and deferred features. Frozen branches block managed content/structural edits and publication while remaining usable as anchors for editable children. Administration and direct/raw Git have explicit boundaries in the compatibility document. Source-candidate changes do not imply that an installed release already includes them.
+The installer checks the release SHA-256 checksum and binary version, installs under `~/.local/share/anthracite/0.1.1`, and creates `~/.local/bin/an` and `~/.local/bin/anthracite`. It refuses to replace unrelated commands. It installs zsh completion for both names and preserves the previous shell configuration. Add `~/.local/bin` to your PATH if needed and open a new terminal.
 
-> [!NOTE]
-> Graphite's own docs (<https://graphite.dev/docs/graphite-cli/>) have diverged
-> from this fork — they now require a Graphite account and document commands that
-> differ from Charcoal's. Use [DOCUMENTATION.md](./DOCUMENTATION.md) instead.
+```sh
+an --version
+an auth
+an init --trunk main
+an create my-change --message "Add my change"
+an modify --commit --message "Extend my change"
+an log short --stack
+an submit --stack --draft
+```
 
-## Contributing
+Stage changes with Git before `create` or `modify`, or choose the command's staging options deliberately. Use `an <command> --help` for details.
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
+To uninstall the command links and completion block, use `sh scripts/uninstall.sh` from a clone. Version directories and preferences are retained for rollback. See [installation and upgrades](docs/installation.md), the [command reference](DOCUMENTATION.md), and [compatibility](COMPATIBILITY.md).
+
+## Development
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for pinned build tools, tests and release preparation. Source code, documentation, commit messages, issues and pull requests in this repository are written in English.
+
+Licensed under the GNU Affero General Public License version 3; see [LICENSE](LICENSE) and [CREDITS.md](CREDITS.md).

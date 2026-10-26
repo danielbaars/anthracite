@@ -1,11 +1,11 @@
 {
   "name": "@danielbaars/anthracite",
-  "version": "0.1.0",
-  "license": "None",
+  "version": "0.1.1",
+  "license": "AGPL-3.0-only",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
-  "homepage": "https://github.com/danerwilliams/charcoal",
-  "repository": "github:danerwilliams/charcoal",
+  "homepage": "https://github.com/danielbaars/anthracite",
+  "repository": "github:danielbaars/anthracite",
   "dependencies": {
     "@danerwilliams/gti-cli-shared-types": "workspace:*",
     "@withgraphite/graphite-cli-routes": "^0.31.0",
@@ -32,10 +32,12 @@
     "build-binary": "bun build --compile ./dist/src/index.js",
     "dev": "./scripts/installation/develop.sh",
     "cli": "node ./dist/src/index.js",
-    "test": "tsc && yarn mocha \"dist/test/**/*.test.js\"  --parallel --jobs 8",
-    "test-ci": "tsc && nyc --reporter=lcovonly yarn mocha \"dist/test/**/*.test.js\"  --parallel --jobs 8",
+    "test": "tsc && mocha \"dist/test/**/*.test.js\" --ignore dist/test/large_repo.test.js --parallel --jobs 2",
+    "test-ci": "tsc && mocha \"dist/test/**/*.test.js\" --ignore dist/test/large_repo.test.js --parallel --jobs 2",
     "test-one": "tsc && yarn mocha",
-    "test-grep": "tsc && yarn mocha \"dist/test/**/*.test.js\" -g"
+    "test-grep": "tsc && yarn mocha \"dist/test/**/*.test.js\" -g",
+    "test-native": "mocha \"dist/test/commands/**/*.test.js\" --parallel --jobs 2",
+    "test-large-repos": "tsc && mocha dist/test/large_repo.test.js"
   },
   "nyc": {
     "exclude": ".yarn/**/*"
@@ -75,5 +77,8 @@
     "ts-node": "^10.8.1",
     "typescript": "^4.7.3"
   },
-  "private": true
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/danielbaars/anthracite/issues"
+  }
 }

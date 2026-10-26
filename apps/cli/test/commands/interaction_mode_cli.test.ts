@@ -34,7 +34,7 @@ describe('effective interaction policy through the public CLI', function () {
           'GIT_OPTIONAL_LOCKS',
           'HOME',
           'CODEX_HOME',
-          'CHARCOAL_TEST_BINARY',
+          'ANTHRACITE_TEST_BINARY',
           'BUN_BE_BUN',
           'CH_PAGER',
         ].map((key) => [key, options.env[key] ?? null])

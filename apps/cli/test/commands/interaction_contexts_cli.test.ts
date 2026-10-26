@@ -87,7 +87,7 @@ class ExternalContextFixture {
         'GIT_CONFIG_GLOBAL',
         'GIT_OPTIONAL_LOCKS',
         'GRAPHITE_INTERACTIVE',
-        'CHARCOAL_TEST_BINARY',
+        'ANTHRACITE_TEST_BINARY',
         'DEBUG',
         'PATH',
       ].map((key) => [key, this.env[key] ?? null])
@@ -155,7 +155,7 @@ class ExternalContextFixture {
   }
 
   cleanup(): void {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       const destination = path.join(evidence, path.basename(this.root));
       fs.mkdirSync(destination, { recursive: true });

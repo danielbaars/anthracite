@@ -90,7 +90,7 @@ export function runCliInPty(
     output: output.toString('utf8'),
     outputBase64: output.toString('base64'),
   };
-  const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+  const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
   if (evidence) {
     fs.mkdirSync(evidence, { recursive: true });
     fs.appendFileSync(
@@ -104,7 +104,7 @@ export function runCliInPty(
             'GRAPHITE_INTERACTIVE',
             'GRAPHITE_USER_CONFIG_PATH',
             'GIT_OPTIONAL_LOCKS',
-            'CHARCOAL_TEST_BINARY',
+            'ANTHRACITE_TEST_BINARY',
             'BUN_BE_BUN',
             'CH_PAGER',
             'CH_EDITOR',

@@ -111,7 +111,7 @@ for (const scene of allScenes) {
           responses: [{ prompt: 'Branch Name', input: '\u0003' }],
         }
       );
-      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
       if (evidence) {
         fs.mkdirSync(evidence, { recursive: true });
         fs.appendFileSync(

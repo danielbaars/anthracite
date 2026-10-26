@@ -71,11 +71,13 @@ describe('relation inspection during a real own conflictrebase', function () {
     label: string
   ): void {
     const after = fixture.inspectionSnapshot();
-    if (process.env.CHARCOAL_TEST_EVIDENCE_DIR) {
-      fs.mkdirSync(process.env.CHARCOAL_TEST_EVIDENCE_DIR, { recursive: true });
+    if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR) {
+      fs.mkdirSync(process.env.ANTHRACITE_TEST_EVIDENCE_DIR, {
+        recursive: true,
+      });
       fs.appendFileSync(
         path.join(
-          process.env.CHARCOAL_TEST_EVIDENCE_DIR,
+          process.env.ANTHRACITE_TEST_EVIDENCE_DIR,
           `${path.basename(fixture.root)}-inspection.jsonl`
         ),
         JSON.stringify({ label, before, after }) + '\n'

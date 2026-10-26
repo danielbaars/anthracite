@@ -17,7 +17,7 @@ describe('frozen public contract through the CLI', function () {
     fixture = new CwdCliFixture();
     fixture.env.HOME = path.join(fixture.root, 'home');
     fs.mkdirSync(fixture.env.HOME);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(

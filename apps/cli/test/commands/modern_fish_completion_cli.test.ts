@@ -35,7 +35,7 @@ describe('modern Fish completion through the public CLI', function () {
     );
     fs.symlinkSync(fixture.repo, selected, 'dir');
     fixture.git(['branch', 'selected-only']);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(

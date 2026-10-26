@@ -21,7 +21,7 @@ describe('modern interactive branch rebase through the public CLI', function () 
     fixture.git(['status', '--porcelain']);
   });
   afterEach(function () {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -41,7 +41,7 @@ describe('modern interactive branch rebase through the public CLI', function () 
               'PATH',
               'GIT_CONFIG_NOSYSTEM',
               'GIT_CONFIG_GLOBAL',
-              'CHARCOAL_TEST_BINARY',
+              'ANTHRACITE_TEST_BINARY',
             ].map((key) => [key, fixture.env[key] ?? null])
           ),
           tools: Object.fromEntries(

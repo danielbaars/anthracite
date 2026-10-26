@@ -61,7 +61,7 @@ function invoke(
           'GIT_CONFIG_NOSYSTEM',
           'GIT_CONFIG_GLOBAL',
           'PATH',
-          'CHARCOAL_TEST_BINARY',
+          'ANTHRACITE_TEST_BINARY',
         ].map((key) => [key, env[key]])
       ),
       before,
@@ -110,7 +110,7 @@ describe('modern submit aliases through the public CLI', function () {
     fixture.clearCalls();
   });
   afterEach(function () {
-    const destination = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const destination = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (destination) {
       const target = path.join(destination, path.basename(fixture.root));
       fs.mkdirSync(target, { recursive: true });

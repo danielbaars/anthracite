@@ -46,8 +46,8 @@ describe('draft existing PRs through the built CLI', function () {
     fixture.branch('target', 'parent');
     fixture.succeed('submit', '--publish');
     const head = fixture.commit('target-update');
-    fixture.env.CHARCOAL_TEST_GH_STATUS_HEAD = 'target';
-    fixture.env.CHARCOAL_TEST_GH_STATUS_MODE = 'reject';
+    fixture.env.ANTHRACITE_TEST_GH_STATUS_HEAD = 'target';
+    fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE = 'reject';
 
     const result = fixture.cli('submit', '--draft');
 
@@ -64,7 +64,7 @@ describe('draft existing PRs through the built CLI', function () {
       .to.include('GitHub refused draft transition')
       .and.include('Code for target was already pushed');
     expect(result.stdout).not.to.match(/^target: https.*; draft/m);
-    delete fixture.env.CHARCOAL_TEST_GH_STATUS_MODE;
+    delete fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE;
     expect(fixture.succeed('submit', '--draft')).to.include('target');
     expect(fixture.prs().every((pr) => pr.isDraft)).to.equal(true);
   });
@@ -74,8 +74,8 @@ describe('draft existing PRs through the built CLI', function () {
       fixture.branch('target', 'main');
       fixture.succeed('submit', '--publish');
       fixture.clearCalls();
-      fixture.env.CHARCOAL_TEST_GH_STATUS_HEAD = 'target';
-      fixture.env.CHARCOAL_TEST_GH_STATUS_MODE = mode;
+      fixture.env.ANTHRACITE_TEST_GH_STATUS_HEAD = 'target';
+      fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE = mode;
 
       const result = fixture.cli('submit', '--draft');
 
@@ -88,7 +88,7 @@ describe('draft existing PRs through the built CLI', function () {
         fixture.calls().filter((args) => args[1] === 'create')
       ).to.deep.equal([]);
       expect(fixture.prs()).to.have.length(1);
-      delete fixture.env.CHARCOAL_TEST_GH_STATUS_MODE;
+      delete fixture.env.ANTHRACITE_TEST_GH_STATUS_MODE;
       if (mode === 'unchanged') {
         expect(fixture.prs()[0]?.isDraft).to.equal(false);
         expect(fixture.succeed('submit', '--draft')).to.include(

@@ -21,7 +21,7 @@ export function validateInteractionArguments(
     .filter(({ argument }) => isInvalidPolicyToken(argument));
   if (!candidates.length) return;
 
-  let prefix = '__charcoal_interaction_probe_';
+  let prefix = '__anthracite_interaction_probe_';
   while (args.some((argument) => argument.includes(prefix))) prefix += '_';
   const probeArgs = [...args];
   const options: Record<string, Options> = {};

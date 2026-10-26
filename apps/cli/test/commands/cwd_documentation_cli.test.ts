@@ -58,11 +58,11 @@ describe('cwd documentation grammar through the public CLI', function () {
     expect(fs.readFileSync(targetMarker, 'utf8')).to.equal(
       fs.realpathSync(target.repo)
     );
-    if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+    if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
       fs.copyFileSync(
         targetMarker,
         path.join(
-          process.env.CHARCOAL_TEST_EVIDENCE_DIR,
+          process.env.ANTHRACITE_TEST_EVIDENCE_DIR,
           path.basename(target.root) + '-documentation-target-hook'
         )
       );
@@ -136,7 +136,7 @@ describe('cwd documentation grammar through the public CLI', function () {
         expect(result.status, JSON.stringify(args) + result.stderr).to.equal(0);
         expect(result.stderr).to.equal('');
         if (args.includes('--version=true'))
-          expect(result.stdout).to.match(/^0\.1\.0\s*$/);
+          expect(result.stdout).to.match(/^0\.1\.1\s*$/);
         else expect(result.stdout).to.include('--cwd');
         expect(
           fs.existsSync(path.join(start.root, 'unexpected-tool'))
@@ -239,7 +239,7 @@ describe('cwd documentation grammar through the public CLI', function () {
       expect(selected.stdout)
         .to.include('completion-only-B')
         .and.not.include('completion-only-A')
-        .and.not.include('0.1.0');
+        .and.not.include('0.1.1');
       const restoreTools = start.refuseExternalTools();
       try {
         const rejected = start.run(['--cwd', missing, ...args]);

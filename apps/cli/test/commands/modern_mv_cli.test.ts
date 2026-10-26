@@ -14,7 +14,7 @@ describe('modern mv ownership through the public CLI', function () {
   beforeEach(function () {
     start = new CwdCliFixture();
     target = new CwdCliFixture();
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -146,7 +146,7 @@ describe('modern mv ownership through the public CLI', function () {
       });
       if (direct.error) throw direct.error;
       expect(direct.signal).to.equal(null);
-      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
       if (evidence)
         fs.appendFileSync(
           path.join(evidence, 'modern-mv-direct-git.jsonl'),

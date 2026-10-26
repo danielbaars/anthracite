@@ -15,7 +15,7 @@ describe('modern completion through the public CLI', function () {
   beforeEach(function () {
     fixture = new CwdCliFixture();
     fixture.env.CH_PAGER = path.join(fixture.root, 'sentinel-bin', 'pager');
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -214,7 +214,7 @@ describe('modern completion through the public CLI', function () {
         encoding: 'utf8',
         timeout: 20000,
       });
-      const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+      const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
       if (evidence)
         fs.appendFileSync(
           path.join(evidence, 'shell-smoke.jsonl'),

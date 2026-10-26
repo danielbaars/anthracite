@@ -65,7 +65,7 @@ function execute(fixture: ReorderCliFixture, command: string): string {
     timeout: 20000,
   });
   if (result.error) throw result.error;
-  if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+  if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
     fs.appendFileSync(
       path.join(fixture.root, 'cli.jsonl'),
       JSON.stringify({

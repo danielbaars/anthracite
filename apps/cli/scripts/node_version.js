@@ -1,5 +1,5 @@
 /* eslint-disable */
-const requiredVersion = '>=v14';
+const requiredVersion = '>=v24';
 const semver = require('semver');
 try {
  if (!semver.satisfies(process.version, requiredVersion)) {
@@ -11,5 +11,5 @@ try {
     process.exit(1);
   }
 } catch {
-  console.error(`Unable to validate Node.js version.  Note that Charcoal requires v14 or higher.`)
+  console.error(`Unable to validate Node.js version.  Note that Anthracite requires v24 or higher.`)
 }

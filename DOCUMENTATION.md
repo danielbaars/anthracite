@@ -468,7 +468,7 @@ Read or write Anthracite's per-repo configuration. Sub-commands generally read t
 | --- | --- |
 | `repo init` (alias `i`) | Create or regenerate a `.graphite_repo_config` file. Flags: `--trunk <name>`, `--reset` (untrack all branches). |
 | `repo sync` (alias `s`) | Same as the top-level `sync` (pull trunk, delete merged branches). Flags: `-p`/`--pull`, `-d`/`--delete`, `--show-delete-progress`, `-f`/`--force`, `-r`/`--restack`. |
-| `repo name` | The repo's name in Anthracite (e.g. `charcoal` in `danerwilliams/charcoal`). `-s`/`--set` to override. |
+| `repo name` | The repo's name in Anthracite (e.g. `anthracite` in `danielbaars/anthracite`). `-s`/`--set` to override. |
 | `repo owner` | The repo owner's name in Anthracite. `-s`/`--set` to override. |
 | `repo remote` | The remote Anthracite pushes to / pulls from (defaults to `origin`). `-s`/`--set` to override. |
 | `repo pr-templates` | List your GitHub PR templates, used to pre-fill PR bodies on submit. |

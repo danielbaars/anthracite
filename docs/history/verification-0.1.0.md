@@ -18,4 +18,4 @@ Real GitHub smoke tests used installed `~/.local/bin/an`, real Git, real `gh` an
 
 Only synthetic fixture branches were published. No source fork, npm package, Homebrew package or GitHub release was published. Merge queues, organization-specific permissions, external hooks and platform variants other than this macOS ARM64 machine were not exercised.
 
-Native binary SHA-256: `b5047161b5297a2588d83088140fae25d517899aa43e0ec7ea861326d9c7f0ea`. Raw local results and command transcripts: `/private/tmp/anthracite-release-0.1.0/`; a durable subset is retained with the versioned local installation. See `ANTHRACITE-0.1.0.md` for usage and rollback.
+Native binary SHA-256: `b5047161b5297a2588d83088140fae25d517899aa43e0ec7ea861326d9c7f0ea`. Raw local results and command transcripts: `/private/tmp/anthracite-release-0.1.0/`; a durable subset is retained with the versioned local installation. See [the 0.1.0 guide](anthracite-0.1.0.md) for usage and rollback.

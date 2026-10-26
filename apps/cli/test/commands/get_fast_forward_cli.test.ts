@@ -9,7 +9,7 @@ import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 type CliResult = { status: number | null; output: string };
 
 class GetFixture {
-  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'charcoal-get-'));
+  readonly root = fs.mkdtempSync(path.join(os.tmpdir(), 'anthracite-get-'));
   readonly producer = path.join(this.root, 'producer');
   readonly consumer = path.join(this.root, 'consumer');
   readonly remote = path.join(this.root, 'remote.git');

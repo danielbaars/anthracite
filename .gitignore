@@ -19,3 +19,7 @@ pkg/
 
 # we use yarn, not npm
 package-lock.json
+
+# Local release assets and Bun compiler intermediates
+release/
+.*.bun-build

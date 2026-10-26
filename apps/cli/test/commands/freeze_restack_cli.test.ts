@@ -57,7 +57,7 @@ function abortReplay(fixture: FreezeCliFixture): void {
     encoding: 'utf8',
     timeout: 15000,
   });
-  const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+  const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
   if (evidence)
     fs.appendFileSync(
       path.join(evidence, 'restack-abort.jsonl'),
@@ -111,7 +111,7 @@ describe('frozen anchors and recovery through the public CLI', function () {
   let fixture: RestackCliFixture;
   beforeEach(function () {
     fixture = new RestackCliFixture();
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(

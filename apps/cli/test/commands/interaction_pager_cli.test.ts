@@ -25,7 +25,7 @@ describe('pager and completion policy through the public CLI', function () {
     );
   }
   afterEach(() => {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       const directory = path.join(evidence, path.basename(fixture.root));
       fs.mkdirSync(directory, { recursive: true });
@@ -107,7 +107,7 @@ sys.exit(result.returncode)
           ];
     const result = runCliInPty(argv, { cwd: fixture.repo, env: fixture.env });
     fixture.savePty(result);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'pager-commands.jsonl'),

@@ -18,7 +18,7 @@ describe('commit and editor interaction through the public CLI', function () {
     fixture.env.GIT_SEQUENCE_EDITOR = fixture.env.GIT_EDITOR;
   });
   afterEach(() => {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.writeFileSync(

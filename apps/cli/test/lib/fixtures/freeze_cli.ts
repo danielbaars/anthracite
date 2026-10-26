@@ -47,7 +47,7 @@ export class FreezeCliFixture extends CreateCliFixture {
         ? []
         : ['--no-interactive']),
     ]);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     const before = evidence ? this.observe() : undefined;
     const [executable, ...argv] = command;
     const result = spawnSync(executable, argv, {

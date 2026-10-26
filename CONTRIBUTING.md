@@ -1,97 +1,51 @@
 # Contributing
 
-Contributions are welcome! Please first open an issue so that we can discuss before opening a PR. I have limited bandwidth to maintain this project so please bear with me if responses and reviews are slow.
+Please open an issue before a substantial change. Use English for source comments, documentation, commit messages, issues and pull requests. Preserve upstream attribution and compatibility with existing stacks.
 
-## Getting Started
+## Build
 
-[Install nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) to ensure you're using the right node version. Once that is installed, from the repository directory run:
+Use Node.js 24.19.0 (`nvm use`), the checked-in Yarn 3.2.1 release and Bun 1.3.14 for native release builds. No global Yarn or Turbo installation is needed.
 
-```
-nvm use
-```
-
-You'll need to install yarn on your machine
-
-```
-npm install --global yarn
+```sh
+node .yarn/releases/yarn-3.2.1.cjs install --immutable
+node .yarn/releases/yarn-3.2.1.cjs turbo run build
+node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite check
 ```
 
-You'll also need to install turbo
+## Test
 
-```
-npm install --global turbo
-```
-
-Build the monorepo
-
-```
-yarn install
-turbo run build
+```sh
+node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test
 ```
 
-Build the CLI
+The regular suite uses real local Git repositories and boundary fixtures. It excludes only the separate large-repository benchmark, which clones external projects and is available through `test-large-repos`. Live GitHub tests are separate and require deliberate authorization for their remote changes.
 
-```
+For a focused file after building:
+
+```sh
 cd apps/cli
-yarn install
-yarn build
+node ../../node_modules/mocha/bin/mocha.js dist/test/commands/anthracite_identity_cli.test.js
 ```
 
-## Running Tests
+Set `ANTHRACITE_TEST_BINARY` to an absolute native binary path to run command fixtures against that executable. The legacy `CHARCOAL_TEST_BINARY` override remains a fallback. `ANTHRACITE_TEST_EVIDENCE_DIR` enables fixture evidence output. On macOS, supply an existing TMPDIR when running PTY tests.
 
-```
-cd apps/cli
-DEBUG=1 yarn test --full-trace
-```
+## Run and install a development build
 
-Running a subset of tests
-
-```
-cd apps/cli
-DEBUG=1 yarn test --full-trace -g "test pattern"
+```sh
+node apps/cli/dist/src/index.js --help
+sh apps/cli/scripts/installation/develop.sh
 ```
 
-Running one test
+The development installer uses separate versioned `-dev.<timestamp>` directories. It does not uninstall another CLI or replace a versioned release directory.
 
-```
-cd apps/cli
-DEBUG=1 yarn test-one "<path to .js test file in dist folder>"
-```
+## Prepare a release
 
-## Run CLI from Local Build
+After the build and tests pass, compile release binaries and checksums with:
 
-```
-cd apps/cli
-yarn cli <command> # (to run `ch <command>`)
+```sh
+sh scripts/build-release.sh release
 ```
 
-Linking `ch` to a locally built version (includes a build)
+CI tests the source and Linux native CLI and uploads the three platform binaries with their checksums, license and credits. Before tagging a version, confirm CI passed for the exact commit, verify installation from those assets in a fresh HOME, and smoke-test the macOS ARM64 binary on that platform. Publish the matching `v<version>` tag and GitHub release assets together. Do not publish the private workspace package to npm.
 
-```
-cd apps/cli
-yarn dev
-# then to run commands:
-ch <command>
-```
-
-## Release Binaries
-
-Binaries are standalone executables compiled with [Bun](https://bun.sh)
-(`bun build --compile`). The release workflow cross-compiles all three from a
-single Linux runner on a `v*` tag: `ch-macos-arm64`, `ch-macos-x64`, and
-`ch-linux`.
-
-To build one locally (requires `bun`; from the cli app directory after
-`yarn build`), e.g. the macOS ARM binary:
-
-```
-yarn build-binary --target=bun-darwin-arm64 --outfile ch-macos-arm64
-```
-
-## Getting Hashes for the Homebrew Tap
-
-Download all 3 binaries and then run:
-
-```
-shasum -a 256 /path/to/mybinary
-```
+Original commit history and historical external research references are retained as provenance. New work belongs in this repository's issue tracker.

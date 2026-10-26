@@ -13,7 +13,7 @@ describe('get CLI existing frozen branches', function () {
   let fixture: FrozenGetFixture;
   beforeEach(function () {
     fixture = new FrozenGetFixture();
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence)
       fs.appendFileSync(
         path.join(evidence, 'frozen-get-cases.jsonl'),
@@ -747,14 +747,14 @@ describe('get CLI existing frozen branches', function () {
     const hooks = path.join(fixture.root, 'custom rebase hooks');
     fs.ensureDirSync(hooks);
     fixture.git(fixture.consumer, 'config', 'core.hooksPath', hooks);
-    fixture.env.GIT_CONFIG_PARAMETERS = "'charcoal.fixture=kept'";
+    fixture.env.GIT_CONFIG_PARAMETERS = "'anthracite.fixture=kept'";
     const argumentsFile = path.join(fixture.root, 'hook-arguments');
     const configFile = path.join(fixture.root, 'hook-configuration');
     fs.writeFileSync(
       path.join(hooks, 'pre-rebase'),
       `#!/bin/sh\nprintf '%s\\n' "$@" > ${quote(
         argumentsFile
-      )}\ngit config --get charcoal.fixture > ${quote(
+      )}\ngit config --get anthracite.fixture > ${quote(
         configFile
       )}\ngit config --get core.hooksPath >> ${quote(configFile)}\n`,
       { mode: 0o755 }

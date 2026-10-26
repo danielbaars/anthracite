@@ -53,7 +53,7 @@ export class CwdCliFixture extends RelationCliFixture {
       timeout: 20000,
       input,
     });
-    if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+    if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
       fs.appendFileSync(
         path.join(this.root, 'cli.jsonl'),
         JSON.stringify({
@@ -72,7 +72,7 @@ export class CwdCliFixture extends RelationCliFixture {
             [
               'GRAPHITE_USER_CONFIG_PATH',
               'GRAPHITE_INTERACTIVE',
-              'CHARCOAL_TEST_BINARY',
+              'ANTHRACITE_TEST_BINARY',
               'BUN_BE_BUN',
               'CH_PAGER',
               'GRAPHITE_PROFILE',

@@ -113,7 +113,7 @@ sys.exit(result.returncode)
           ];
     const result = runCliInPty(argv, { cwd: fixture.repo, env: fixture.env });
     fixture.savePty(result);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -129,7 +129,7 @@ sys.exit(result.returncode)
     expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
       false
     );
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       for (const name of ['pager.jsonl', 'pager-input']) {
@@ -238,7 +238,7 @@ sys.exit(result.returncode)
       timeout: 20000,
     });
     if (direct.error) throw direct.error;
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(

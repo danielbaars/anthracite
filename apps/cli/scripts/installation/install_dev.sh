@@ -1,4 +1,3 @@
-#!/bin/bash
-
-cd $(dirname $0)
-npm install --location=global ../../
+#!/bin/sh
+set -eu
+exec sh "$(dirname "$0")/develop.sh" "$@"

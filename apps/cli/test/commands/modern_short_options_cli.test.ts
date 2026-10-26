@@ -14,7 +14,7 @@ describe('modern short options through the public CLI', function () {
     fixture = new CwdCliFixture();
     delete fixture.env.GRAPHITE_INTERACTIVE;
     fixture.git(['status', '--porcelain']);
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -27,7 +27,7 @@ describe('modern short options through the public CLI', function () {
     }
   });
   afterEach(() => {
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence && fixture) {
       fs.writeFileSync(
         path.join(evidence, `${path.basename(fixture.root)}-editor.json`),

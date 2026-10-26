@@ -40,7 +40,7 @@ describe('parser failure boundaries through the public CLI', function () {
         }
         const after = fixture.inspectionSnapshot();
         const marker = path.join(fixture.root, 'unexpected-tool');
-        const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+        const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
         if (evidence && fs.existsSync(marker))
           fs.copyFileSync(
             marker,

@@ -23,7 +23,7 @@ describe('relation inspection across worktrees and raw abort', function () {
     label: string
   ): void {
     const after = observed.map((cwd) => fixture.inspectionSnapshot(cwd));
-    const evidence = process.env.CHARCOAL_TEST_EVIDENCE_DIR;
+    const evidence = process.env.ANTHRACITE_TEST_EVIDENCE_DIR;
     if (evidence) {
       fs.mkdirSync(evidence, { recursive: true });
       fs.appendFileSync(
@@ -177,7 +177,7 @@ describe('relation inspection across worktrees and raw abort', function () {
     });
     if (result.error) throw result.error;
     if (result.signal) throw new Error(`Recovery killed by ${result.signal}`);
-    if (process.env.CHARCOAL_TEST_EVIDENCE_DIR)
+    if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
       fs.appendFileSync(
         path.join(fixture.root, 'cli.jsonl'),
         JSON.stringify({
