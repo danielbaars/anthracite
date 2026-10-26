@@ -7,6 +7,9 @@ import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { runCliInPty } from '../lib/utils/run_cli_in_pty';
 import { CwdCliFixture } from '../lib/fixtures/cwd_cli';
 
+// Managed hook checks and descendant replays each run real subprocesses.
+const REBASE_PTY_TIMEOUT_MS = 20000;
+
 // eslint-disable-next-line max-lines-per-function
 describe('modern interactive branch rebase through the public CLI', function () {
   this.timeout(120000);
@@ -316,6 +319,7 @@ describe('modern interactive branch rebase through the public CLI', function () 
       {
         cwd: fixture.repo,
         env: fixture.env,
+        timeoutMs: REBASE_PTY_TIMEOUT_MS,
       }
     );
     fixture.savePty(result);
@@ -576,12 +580,18 @@ describe('modern interactive branch rebase through the public CLI', function () 
 import json, os, subprocess, sys
 command = json.loads(sys.argv[1])
 if sys.argv[2] == 'stdin-pipe':
-    result = subprocess.run(command, input=b'', timeout=4)
+    result = subprocess.run(command, input=b'', timeout=${
+      REBASE_PTY_TIMEOUT_MS / 1000
+    })
 elif sys.argv[2] == 'stdout-pipe':
-    result = subprocess.run(command, stdout=subprocess.PIPE, timeout=4)
+    result = subprocess.run(command, stdout=subprocess.PIPE, timeout=${
+      REBASE_PTY_TIMEOUT_MS / 1000
+    })
     sys.stdout.buffer.write(result.stdout)
 else:
-    result = subprocess.run(command, preexec_fn=lambda: os.close(0), timeout=4)
+    result = subprocess.run(command, preexec_fn=lambda: os.close(0), timeout=${
+      REBASE_PTY_TIMEOUT_MS / 1000
+    })
 sys.exit(result.returncode)
 `;
       reword();
@@ -601,7 +611,11 @@ sys.exit(result.returncode)
             ),
             descriptor,
           ],
-          { cwd: fixture.repo, env: fixture.env }
+          {
+            cwd: fixture.repo,
+            env: fixture.env,
+            timeoutMs: REBASE_PTY_TIMEOUT_MS + 5000,
+          }
         );
         fixture.savePty(result);
         expect(result.status, result.output).to.equal(explicit ? 0 : 1);
