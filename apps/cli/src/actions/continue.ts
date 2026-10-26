@@ -90,7 +90,7 @@ export async function continueAction(
   }
   if (cont.result === 'REBASE_CONFLICT') {
     persistContinuation(
-      { branchesToRestack: branchesToRestack, rebasedBranchBase },
+      { branchesToRestack, branchesToSync, rebasedBranchBase },
       context
     );
     printConflictStatus(`Rebase conflict is not yet resolved.`, context);

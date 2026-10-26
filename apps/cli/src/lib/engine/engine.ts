@@ -1218,7 +1218,7 @@ export function composeEngine({
       ) {
         return false;
       }
-      checkoutBranch(branchName);
+      checkoutBranch(branchName, { preserveIgnored: true });
       git.fastForward(head);
       if (git.getShaOrThrow(branchName) !== head) {
         throw new PreconditionsFailedError(
@@ -1228,6 +1228,7 @@ export function composeEngine({
       git.setRemoteTracking({ remote, branchName, sha: head });
       updateMeta(branchName, {
         ...cachedMeta,
+        ...readMetadataRef(branchName),
         parentBranchName,
         parentBranchRevision: base,
         branchRevision: head,
@@ -1244,19 +1245,26 @@ export function composeEngine({
         head: git.readFetchHead(),
         base: git.readFetchBase(),
       };
-      git.forceCheckoutNewBranch(branchName, head);
+      git.forceCheckoutNewBranch(branchName, head, { preserveIgnored: true });
+      if (git.getShaOrThrow(branchName) !== head) {
+        throw new PreconditionsFailedError(
+          `${branchName} changed while getting the stack. Please retry.`
+        );
+      }
       git.setRemoteTracking({ remote, branchName, sha: head });
 
       updateMeta(branchName, {
+        ...readMetadataRef(branchName),
         validationResult: 'VALID',
         parentBranchName,
         parentBranchRevision: base,
         branchRevision: head,
-        children: [],
+        children: cache.branches[branchName]?.children ?? [],
       });
       cache.currentBranch = branchName;
     },
     rebaseBranchOntoFetched: (branchName: string) => {
+      assertBranchEditable(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
       const { head, base } = {
@@ -1264,6 +1272,7 @@ export function composeEngine({
         base: git.readFetchBase(),
       };
       git.setRemoteTracking({ remote, branchName, sha: head });
+      assertBranchEditable(branchName);
 
       // setting the current branch to this branch is correct in either case
       // failure case, we want it so that currentBranchOverride will be set

@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import { execFileSync } from 'child_process';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
+import { getSha } from '../../lib/git/get_sha';
 import {
   ExitFailedError,
   KilledError,
@@ -67,12 +68,25 @@ export async function getAction(
     );
   }
 
-  await getBranchesFromRemote(
+  const updatedBranches = await getBranchesFromRemote(
     { downstack, base: trunk, force: args.force },
     context
   );
 
-  context.engine.checkoutBranch(target);
+  try {
+    context.engine.checkoutBranch(target, { preserveIgnored: true });
+  } catch (error) {
+    if (updatedBranches.length > 0) {
+      throw new ExitFailedError(
+        `Updated ${updatedBranches.join(
+          ', '
+        )} before get stopped. Final checkout of ${target} failed.\n${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
+    throw error;
+  }
 }
 
 function prFieldMaybe(
@@ -113,52 +127,70 @@ function prFieldOrThrow(
 export async function getBranchesFromRemote(
   args: { downstack: string[]; base: string; force: boolean },
   context: TContext
-): Promise<void> {
+): Promise<string[]> {
   const updatedBranches: string[] = [];
+  let incompleteBranch: string | undefined;
   try {
     let parentBranchName = args.base;
     for (const [index, branchName] of args.downstack.entries()) {
-      const previousRevision = context.engine.branchExists(branchName)
-        ? context.engine.getRevision(branchName)
-        : undefined;
-      context.engine.fetchBranch(branchName, parentBranchName);
-      if (
-        !args.force &&
-        (!context.engine.branchExists(branchName) ||
-          !context.engine.branchMatchesFetched(branchName))
-      ) {
-        uncommittedTrackedChangesPrecondition();
-      }
-      if (args.force || !context.engine.branchExists(branchName)) {
-        context.engine.checkoutBranchFromFetched(branchName, parentBranchName);
-        context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
-      } else if (!context.engine.isBranchTracked(branchName)) {
-        await handleUntrackedLocally(branchName, parentBranchName, context);
-      } else if (
-        context.engine.getParentPrecondition(branchName) !== parentBranchName
-      ) {
-        await handleDifferentParents(branchName, parentBranchName, context);
-      } else if (context.engine.branchMatchesFetched(branchName)) {
-        context.splog.info(`${chalk.cyan(branchName)} is up to date.`);
-      } else if (
-        context.engine.fastForwardBranchFromFetched(
-          branchName,
-          parentBranchName
-        )
-      ) {
-        context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
-        if (context.engine.getChildren(branchName).length > 0) {
-          context.splog.info('Local children may need to be restacked.');
+      const previousRevision = getSha(`refs/heads/${branchName}`);
+      const previousMetadata = getSha(`refs/branch-metadata/${branchName}`);
+      let completed = false;
+      try {
+        context.engine.fetchBranch(branchName, parentBranchName);
+        if (
+          args.force ||
+          !context.engine.branchExists(branchName) ||
+          !context.engine.branchMatchesFetched(branchName)
+        ) {
+          uncommittedTrackedChangesPrecondition();
         }
-      } else {
-        const remainingBranchesToSync = args.downstack.slice(index + 1);
-        await handleSameParent(
-          { branchName, parentBranchName, remainingBranchesToSync },
-          context
-        );
-      }
-      if (context.engine.getRevision(branchName) !== previousRevision) {
-        updatedBranches.push(branchName);
+        if (
+          context.engine.branchExists(branchName) &&
+          context.engine.isBranchTracked(branchName) &&
+          context.engine.getParentPrecondition(branchName) ===
+            parentBranchName &&
+          context.engine.branchMatchesFetched(branchName)
+        ) {
+          context.splog.info(`${chalk.cyan(branchName)} is up to date.`);
+        } else if (args.force || !context.engine.branchExists(branchName)) {
+          context.engine.checkoutBranchFromFetched(
+            branchName,
+            parentBranchName
+          );
+          context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
+        } else if (!context.engine.isBranchTracked(branchName)) {
+          await handleUntrackedLocally(branchName, parentBranchName, context);
+        } else if (
+          context.engine.getParentPrecondition(branchName) !== parentBranchName
+        ) {
+          await handleDifferentParents(branchName, parentBranchName, context);
+        } else if (
+          context.engine.fastForwardBranchFromFetched(
+            branchName,
+            parentBranchName
+          )
+        ) {
+          context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
+          if (context.engine.getChildren(branchName).length > 0) {
+            context.splog.info('Local children may need to be restacked.');
+          }
+        } else {
+          const remainingBranchesToSync = args.downstack.slice(index + 1);
+          await handleSameParent(
+            { branchName, parentBranchName, remainingBranchesToSync },
+            context
+          );
+        }
+        completed = true;
+      } finally {
+        if (
+          getSha(`refs/heads/${branchName}`) !== previousRevision ||
+          getSha(`refs/branch-metadata/${branchName}`) !== previousMetadata
+        ) {
+          updatedBranches.push(branchName);
+          if (!completed) incompleteBranch = branchName;
+        }
       }
       parentBranchName = branchName;
     }
@@ -166,12 +198,15 @@ export async function getBranchesFromRemote(
     if (updatedBranches.length > 0) {
       throw new ExitFailedError(
         `Updated ${updatedBranches.join(', ')} before get stopped.\n${
-          error instanceof Error ? error.message : String(error)
-        }`
+          incompleteBranch
+            ? `Metadata/status publication for ${incompleteBranch} may be incomplete.\n`
+            : ''
+        }${error instanceof Error ? error.message : String(error)}`
       );
     }
     throw error;
   }
+  return updatedBranches;
 }
 
 async function handleUntrackedLocally(
@@ -249,12 +284,15 @@ async function handleSameParent(
   },
   context: TContext
 ): Promise<void> {
+  const frozen = context.engine.isBranchFrozen(args.branchName);
   context.splog.info(
     [
       `${chalk.yellow(
         args.branchName
       )} shares a name with a local branch, and they have the same parent.`,
-      `You can either overwrite your copy of the branch, or rebase your local changes onto the remote version.`,
+      frozen
+        ? `This branch is frozen. Use ch unfreeze ${args.branchName} before rebasing local changes, or explicitly overwrite it with the remote version.`
+        : `You can either overwrite your copy of the branch, or rebase your local changes onto the remote version.`,
       `You can also abort the command entirely and keep your local state as is.`,
     ].join('\n')
   );
@@ -269,10 +307,14 @@ async function handleSameParent(
             args.branchName
           )}?`,
           choices: [
-            {
-              title: 'Rebase your changes on top of the remote version',
-              value: 'REBASE',
-            },
+            ...(frozen
+              ? []
+              : [
+                  {
+                    title: 'Rebase your changes on top of the remote version',
+                    value: 'REBASE',
+                  },
+                ]),
             {
               title: 'Overwrite the local copy with the remote version',
               value: 'OVERWRITE',
@@ -321,7 +363,11 @@ async function handleSameParent(
     case 'ABORT':
       if (!context.interactive) {
         throw new ExitFailedError(
-          `Local branch ${args.branchName} has diverged from remote. Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.`
+          `Local branch ${args.branchName} has diverged from remote.${
+            frozen
+              ? ` It is frozen; use ch unfreeze ${args.branchName} before rebasing local changes.`
+              : ''
+          } Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.`
         );
       }
       throw new KilledError();

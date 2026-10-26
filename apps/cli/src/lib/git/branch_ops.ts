@@ -70,9 +70,19 @@ export function switchBranch(
   else run([]);
 }
 
-export function forceCheckoutNewBranch(branchName: string, sha: string): void {
+export function forceCheckoutNewBranch(
+  branchName: string,
+  sha: string,
+  opts?: { preserveIgnored?: boolean }
+): void {
   runGitCommand({
-    args: [`switch`, `-C`, branchName, sha],
+    args: [
+      `switch`,
+      ...(opts?.preserveIgnored ? ['--no-overwrite-ignore'] : []),
+      `-C`,
+      branchName,
+      sha,
+    ],
     options: { stdio: 'pipe' },
     onError: 'throw',
     resource: 'forceCheckoutNewBranch',
@@ -99,7 +109,13 @@ export function forceCreateBranch(
 
 export function fastForward(revision: string): void {
   runGitCommand({
-    args: ['merge', '--ff-only', '--no-edit', revision],
+    args: [
+      'merge',
+      '--ff-only',
+      '--no-edit',
+      '--no-overwrite-ignore',
+      revision,
+    ],
     options: { stdio: 'pipe' },
     onError: 'throw',
     resource: 'fastForward',
