@@ -32,6 +32,9 @@ export async function continueAction(
     throw new NoGraphiteContinue();
   }
 
+  const activeBranch = context.engine.getRebaseHead();
+  if (activeBranch) context.engine.assertBranchEditable(activeBranch);
+
   if (opts.addAll) {
     context.engine.addAll();
   }
@@ -44,7 +47,6 @@ export async function continueAction(
     throw new NoGraphiteContinue('git rebase --continue');
   }
 
-  const activeBranch = context.engine.getRebaseHead();
   let cont: ReturnType<TContext['engine']['continueRebase']>;
   try {
     assertReorderContinuationClean(context);

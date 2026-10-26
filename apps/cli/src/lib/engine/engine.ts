@@ -1063,6 +1063,8 @@ export function composeEngine({
       return { result: 'REBASE_DONE' };
     },
     continueRebase: (parentBranchRevision: string) => {
+      const activeBranch = git.getRebaseHead();
+      if (activeBranch) assertBranchEditable(activeBranch);
       const result = git.rebaseContinue();
       if (result === 'REBASE_CONFLICT') {
         return { result };

@@ -149,7 +149,7 @@ export function parseBranchesAndMeta(
           parsedBranches[parentBranchName].branchRevision,
       } as TBranchToParseWithValidatedParent,
       splog,
-      repairMetadata
+      repairMetadata && frozen !== true
     );
 
     parsedBranches[branchName] = {

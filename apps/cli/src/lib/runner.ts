@@ -125,6 +125,10 @@ async function graphiteInternal(
       const currentBranch = git.getCurrentBranchName();
       if (currentBranch) assertBranchEditable(currentBranch);
     }
+    if (canonicalName === 'continue' && git.rebaseInProgress()) {
+      const activeBranch = git.getRebaseHead();
+      if (activeBranch) assertBranchEditable(activeBranch);
+    }
     const contextLite = initContextLite({
       ...args,
       userEmail: git.getUserEmail(),

@@ -33,7 +33,7 @@ export const aliases = ['r'];
 export const command = 'restack';
 export const canonical = 'restack';
 export const description =
-  'Ensure each branch in the current stack is based on its parent, rebasing if necessary. Use --upstack, --downstack, or --only to limit the scope.';
+  'Ensure each branch in the current stack is based on its parent, rebasing if necessary. Skip frozen branches and use their unchanged tips as anchors. Use --upstack, --downstack, or --only to limit the scope.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(argv, canonical, async (context) => {

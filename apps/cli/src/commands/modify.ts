@@ -1,4 +1,5 @@
 import yargs from 'yargs';
+import { getBranchesToRestack } from '../actions/restack';
 import { commitAmendAction } from '../actions/commit_amend';
 import { commitCreateAction } from '../actions/commit_create';
 import { editBranchAction } from '../actions/edit_branch';
@@ -83,11 +84,13 @@ export const handler = async (argv: argsT): Promise<void> => {
         'An explicit editor request requires interactive mode.'
       );
     }
+    const currentBranch = context.engine.currentBranchPrecondition;
     assertBranchesAvailableInWorktrees(
-      context.engine.getRelativeStack(
-        context.engine.currentBranchPrecondition,
-        SCOPE.UPSTACK_EXCLUSIVE
-      )
+      getBranchesToRestack(
+        context.engine.getRelativeStack(currentBranch, SCOPE.UPSTACK),
+        context,
+        { willChange: [currentBranch], skipFrozen: true }
+      ).filter((branch) => branch !== currentBranch)
     );
     return argv.commit
       ? commitCreateAction(

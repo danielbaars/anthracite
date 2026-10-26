@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { runGitCommand, runGitCommandAndSplitLines } from './runner';
+import { runGitCommandAndSplitLines } from './runner';
+import { getRebaseDirectory } from './rebase_in_progress';
 
 export function getUnmergedFiles(): string[] {
   return runGitCommandAndSplitLines({
@@ -17,13 +18,9 @@ export function getUnmergedFiles(): string[] {
 }
 
 export function getRebaseHead(): string | undefined {
-  const gitDir = runGitCommand({
-    args: [`rev-parse`, `--git-dir`],
-    onError: 'throw',
-    resource: 'getRebaseHead',
-  });
-
-  const rebaseHeadPath = path.join(`${gitDir}`, `rebase-merge`, `head-name`);
+  const directory = getRebaseDirectory();
+  if (!directory) return undefined;
+  const rebaseHeadPath = path.join(directory, 'head-name');
 
   return fs.existsSync(rebaseHeadPath)
     ? fs

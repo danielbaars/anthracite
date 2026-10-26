@@ -21,18 +21,20 @@ import {
   reportReorderFailure,
 } from './reorder_recovery';
 
-/** Plan parent-first restacks, optionally including branches a pending commit will change. */
+/** Keep mandatory plans unfiltered; generic callers explicitly skip frozen anchors. */
 export function getBranchesToRestack(
   branchNames: readonly string[],
   context: TContext,
   opts: {
     willChange?: readonly string[];
     parents?: ReadonlyMap<string, string>;
+    skipFrozen?: boolean;
   } = {}
 ): string[] {
   const branchesToChange = new Set<string>();
   for (const branchName of branchNames) {
     if (context.engine.isTrunk(branchName)) continue;
+    if (opts.skipFrozen && context.engine.isBranchFrozen(branchName)) continue;
     const parent =
       opts.parents?.get(branchName) ??
       context.engine.getParentPrecondition(branchName);
@@ -55,9 +57,14 @@ export function restackBranches(
   branchNames: string[],
   context: TContext
 ): void {
+  const skipFrozen = !(
+    context.continueConfig.data.move ||
+    context.continueConfig.data.fold ||
+    context.continueConfig.data.reorder
+  );
   try {
     assertBranchesAvailableInWorktrees(
-      getBranchesToRestack(branchNames, context)
+      getBranchesToRestack(branchNames, context, { skipFrozen })
     );
   } catch (error) {
     reportReorderFailure(context);
@@ -75,6 +82,11 @@ export function restackBranches(
       context.splog.info(
         `${chalk.cyan(branchName)} does not need to be restacked.`
       );
+      continue;
+    }
+
+    if (skipFrozen && context.engine.isBranchFrozen(branchName)) {
+      context.splog.info(`Skipping frozen branch ${branchName}.`);
       continue;
     }
 
