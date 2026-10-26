@@ -224,6 +224,7 @@ async function graphiteHelper(
   cacheAfter: string;
 }> {
   const cacheBefore = context.engine.debug;
+  let commandFailed = true;
 
   try {
     if (
@@ -238,6 +239,7 @@ async function graphiteHelper(
     }
 
     await handler.run(context);
+    commandFailed = false;
   } catch (err) {
     if (
       err.constructor === DetachedError &&
@@ -250,7 +252,7 @@ async function graphiteHelper(
     throw err;
   } finally {
     try {
-      context.engine.persist();
+      context.engine.persist(commandFailed);
     } catch (persistError) {
       context.engine.clear();
       context.splog.debug(`Failed to persist Charcoal cache`);

@@ -34,7 +34,7 @@ import { assertBranchEditable } from './frozen_branch';
 
 export type TEngine = {
   debug: string;
-  persist: () => void;
+  persist: (discardChangedCache?: boolean) => void;
   clear: () => void;
 
   reset: (newTrunkName?: string) => void;
@@ -401,18 +401,12 @@ export function composeEngine({
       cache.branches[newParentBranchName].children.push(branchName);
     }
 
-    // A rejected ref publication must not make the proposed metadata a cache fact.
-    try {
-      writeMetadataRef(branchName, {
-        parentBranchName: newCachedMeta.parentBranchName,
-        parentBranchRevision: newCachedMeta.parentBranchRevision,
-        prInfo: newCachedMeta.prInfo,
-        frozen: newCachedMeta.frozen,
-      });
-    } catch (error) {
-      canPersistCache = false;
-      throw error;
-    }
+    writeMetadataRef(branchName, {
+      parentBranchName: newCachedMeta.parentBranchName,
+      parentBranchRevision: newCachedMeta.parentBranchRevision,
+      prInfo: newCachedMeta.prInfo,
+      frozen: newCachedMeta.frozen,
+    });
 
     splog.debug(
       `Updated cached meta for branch ${branchName}:\n${cuteString(
@@ -454,8 +448,15 @@ export function composeEngine({
 
     removeChild(cachedMeta.parentBranchName, branchName);
     delete cache.branches[branchName];
-    git.deleteBranch(branchName);
-    deleteMetadataRef(branchName);
+    try {
+      git.deleteBranch(branchName);
+      deleteMetadataRef(branchName);
+    } catch (error) {
+      splog.warn(
+        `Deletion of ${branchName} stopped; completed checkout and parent metadata changes are retained.`
+      );
+      throw error;
+    }
   };
 
   const handleSuccessfulRebase = (
@@ -493,13 +494,15 @@ export function composeEngine({
     get debug() {
       return cuteString(cache);
     },
-    persist() {
+    persist(discardChangedCache = false) {
       if (!canPersistCache) {
         cacheLoader.clearPersistedCache();
         return;
       }
       if (originalBranchState !== JSON.stringify(cache.branches)) {
-        cacheLoader.persistCache(trunkName, cache.branches);
+        // Failed commands retain durable progress, never an unpublished cache fact.
+        if (discardChangedCache) cacheLoader.clearPersistedCache();
+        else cacheLoader.persistCache(trunkName, cache.branches);
       }
     },
     clear() {
@@ -759,7 +762,6 @@ export function composeEngine({
         delete cache.branches[currentBranchName];
         deleteMetadataRef(currentBranchName);
       } catch (error) {
-        canPersistCache = false;
         throw new PreconditionsFailedError(
           `Renamed ${currentBranchName} to ${branchName}, but metadata update failed. ${
             error instanceof Error ? error.message : String(error)

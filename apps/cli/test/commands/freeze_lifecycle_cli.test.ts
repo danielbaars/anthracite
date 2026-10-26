@@ -794,4 +794,33 @@ describe('frozen branch lifecycle through the public CLI', function () {
       fs.existsSync(path.join(fixture.repo, '.git', '.graphite_cache_persist'))
     ).to.equal(false);
   });
+  it('retains actual parent progress and permits fresh administration after a rejected local delete ref', () => {
+    fixture.ok(['freeze', 'base']);
+    fixture.git(['switch', 'main']);
+    const base = fixture.git(['rev-parse', 'base']);
+    const child = fixture.git(['rev-parse', 'child']);
+    const hook = path.join(
+      fixture.repo,
+      '.git',
+      'hooks',
+      'reference-transaction'
+    );
+    fs.writeFileSync(
+      hook,
+      '#!/bin/sh\n[ "$1" = prepared ] || exit 0\nwhile read old new ref; do [ "$ref" != refs/heads/base ] || exit 42; done\n',
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['delete', 'base', '--force']);
+    expect(result.status).to.equal(1);
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
+    expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
+    fs.unlinkSync(hook);
+    fixture.ok(['track', 'base', '--parent', 'main']);
+    fixture.git(['switch', 'child']);
+    expect(fixture.ok(['parent']).trim()).to.equal('main');
+    fixture.git(['switch', 'base']);
+    expect(fixture.ok(['info'])).to.include('(frozen)');
+    expect(result.stderr).to.include('completed');
+    expect(result.stderr).to.include('retained');
+  });
 });
