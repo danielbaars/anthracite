@@ -60,6 +60,15 @@ try {
   assert.equal(fs.readFileSync(path.join(protectedHome, '.local/bin/an'), 'utf8'), 'unrelated executable');
   assert.ok(!fs.existsSync(path.join(protectedHome, '.local/share/anthracite', version)));
   cases++;
+  const unrelatedLink = directory('unrelated symlink');
+  fs.mkdirSync(path.join(unrelatedLink, '.local/bin'), { recursive: true });
+  const target = path.join(unrelatedLink, '.local/share/anthracite') + '/../other/an';
+  fs.symlinkSync(target, path.join(unrelatedLink, '.local/bin/an'));
+  run('install.sh', unrelatedLink, 1);
+  assert.equal(fs.readlinkSync(path.join(unrelatedLink, '.local/bin/an')), target);
+  run('uninstall.sh', unrelatedLink);
+  assert.equal(fs.readlinkSync(path.join(unrelatedLink, '.local/bin/an')), target);
+  cases++;
   const corrupt = directory('corrupt assets');
   for (const name of [asset, 'LICENSE', 'CREDITS.md', 'SHA256SUMS']) fs.copyFileSync(path.join(assets, name), path.join(corrupt, name));
   fs.appendFileSync(path.join(corrupt, asset), 'corrupted');

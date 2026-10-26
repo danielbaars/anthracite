@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 version=${1:-0.1.1}
+case "$version" in [0-9]*) :;; *) printf '%s\n' 'Invalid release version.' >&2; exit 1;; esac
 case "$version" in ''|*[!0-9A-Za-z.-]*) printf '%s\n' 'Invalid release version.' >&2; exit 1;; esac
 case "$(uname -s)-$(uname -m)" in
   Darwin-arm64) asset=an-macos-arm64;;
@@ -10,15 +11,21 @@ case "$(uname -s)-$(uname -m)" in
 esac
 root="$HOME/.local/share/anthracite"
 bin="$HOME/.local/bin"
+is_owned_link() {
+  link_target=$(readlink "$1") || return 1
+  case "$link_target" in "$root/"*/an) :;; *) return 1;; esac
+  owned_version=${link_target#"$root/"}
+  owned_version=${owned_version%/an}
+  case "$owned_version" in [0-9]*) :;; *) return 1;; esac
+  case "$owned_version" in *[!0-9A-Za-z.-]*) return 1;; esac
+  [ ! -L "$root/$owned_version" ]
+}
 destination="$root/$version"
 # Refuse unrelated commands before downloading or changing the active version.
 for name in an anthracite; do
   if [ -e "$bin/$name" ] || [ -L "$bin/$name" ]; then
     if [ ! -L "$bin/$name" ]; then printf 'Refusing to replace %s\n' "$bin/$name" >&2; exit 1; fi
-    case "$(readlink "$bin/$name")" in
-      "$root/"*/an) :;;
-      *) printf 'Refusing to replace %s\n' "$bin/$name" >&2; exit 1;;
-    esac
+    is_owned_link "$bin/$name" || { printf 'Refusing to replace %s\n' "$bin/$name" >&2; exit 1; }
   fi
 done
 mkdir -p "$root" "$bin"
