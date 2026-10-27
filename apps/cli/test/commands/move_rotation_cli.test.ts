@@ -176,6 +176,23 @@ describe('move only descendant rotation through the public CLI', function () {
   }
 
   it('selects an original descendant in a real terminal and returns to a different departure', () => {
+    delete fixture.env.FORCE_COLOR;
+    const baseDate = Number(
+      fixture.git(['show', '-s', '--format=%ct', 'base'])
+    );
+    const originalDate = fixture.env.GIT_COMMITTER_DATE;
+    try {
+      // Equal feature dates above a newer trunk change the selector's positions.
+      fixture.git(['switch', 'main']);
+      fixture.env.GIT_COMMITTER_DATE = `${baseDate + 1} +0000`;
+      fixture.git(['commit', '--allow-empty', '-m', 'updated trunk']);
+      fixture.git(['switch', 'other']);
+      fixture.env.GIT_COMMITTER_DATE = `${baseDate} +0000`;
+      fixture.git(['commit', '--amend', '--no-edit']);
+    } finally {
+      if (originalDate === undefined) delete fixture.env.GIT_COMMITTER_DATE;
+      else fixture.env.GIT_COMMITTER_DATE = originalDate;
+    }
     fixture.git(['switch', 'other']);
     const oldChild = fixture.git(['rev-parse', 'child']);
     const result = runCliInPty(
@@ -184,7 +201,8 @@ describe('move only descendant rotation through the public CLI', function () {
         cwd: fixture.repo,
         env: fixture.env,
         responses: [
-          { prompt: 'Choose a new base', input: '\u001b[A\u001b[A\r' },
+          { prompt: 'Choose a new base', input: 'tip' },
+          { prompt: '› tip\r\n❯', input: '\r' },
         ],
       }
     );
