@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-27T20:49:12.979Z",
+    "end": "2026-10-27T20:49:50.780Z",
+    "duration": 37801
+  },
+  "tests": [
+    {
+      "title": "scenarios 12–13: validates and documents MCP-only integer execution limits before transport startup",
+      "fullTitle": "MCP execution bounds through stdio scenarios 12–13: validates and documents MCP-only integer execution limits before transport startup",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_bounds_cli.test.js",
+      "duration": 1529,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 12: returns a complete 96KiB UTF-8 subject, ancestry tail and final LF, then bounds an explicit cap",
+      "fullTitle": "MCP execution bounds through stdio scenario 12: returns a complete 96KiB UTF-8 subject, ancestry tail and final LF, then bounds an explicit cap",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_bounds_cli.test.js",
+      "duration": 2848,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 6: serializes overlapping repository and linked-worktree calls in FIFO order with isolated IDs and directories",
+      "fullTitle": "MCP execution bounds through stdio scenario 6: serializes overlapping repository and linked-worktree calls in FIFO order with isolated IDs and directories",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_bounds_cli.test.js",
+      "duration": 6928,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 13: times out a real hook and grandchild, preserves foreign ownership and staged state, then serves queued work",
+      "fullTitle": "MCP execution bounds through stdio scenario 13: times out a real hook and grandchild, preserves foreign ownership and staged state, then serves queued work",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_bounds_cli.test.js",
+      "duration": 14764,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "scenarios 12–13: validates and documents MCP-only integer execution limits before transport startup",
+      "fullTitle": "MCP execution bounds through stdio scenarios 12–13: validates and documents MCP-only integer execution limits before transport startup",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_bounds_cli.test.js",
+      "duration": 1529,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 12: returns a complete 96KiB UTF-8 subject, ancestry tail and final LF, then bounds an explicit cap",
+      "fullTitle": "MCP execution bounds through stdio scenario 12: returns a complete 96KiB UTF-8 subject, ancestry tail and final LF, then bounds an explicit cap",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_bounds_cli.test.js",
+      "duration": 2848,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 6: serializes overlapping repository and linked-worktree calls in FIFO order with isolated IDs and directories",
+      "fullTitle": "MCP execution bounds through stdio scenario 6: serializes overlapping repository and linked-worktree calls in FIFO order with isolated IDs and directories",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_bounds_cli.test.js",
+      "duration": 6928,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 13: times out a real hook and grandchild, preserves foreign ownership and staged state, then serves queued work",
+      "fullTitle": "MCP execution bounds through stdio scenario 13: times out a real hook and grandchild, preserves foreign ownership and staged state, then serves queued work",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_bounds_cli.test.js",
+      "duration": 14764,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

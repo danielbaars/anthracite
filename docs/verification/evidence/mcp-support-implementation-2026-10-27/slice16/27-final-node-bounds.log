@@ -1,0 +1,11 @@
+
+
+  MCP execution bounds through stdio
+    ✔ scenarios 12–13: validates and documents MCP-only integer execution limits before transport startup (1385ms)
+    ✔ scenario 12: returns a complete 96KiB UTF-8 subject, ancestry tail and final LF, then bounds an explicit cap (2659ms)
+    ✔ scenario 6: serializes overlapping repository and linked-worktree calls in FIFO order with isolated IDs and directories (6973ms)
+    ✔ scenario 13: times out a real hook and grandchild, preserves foreign ownership and staged state, then serves queued work (14809ms)
+
+
+  4 passing (36s)
+

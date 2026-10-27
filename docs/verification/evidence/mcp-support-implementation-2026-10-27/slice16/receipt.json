@@ -1,0 +1,145 @@
+{
+  "ticket": 16,
+  "commit": "4954d307b66aa7fa7c04e021af43d1926a6e7d2e",
+  "base": "4f40f26065f4be33a4a6a4636d9554f790196cad",
+  "branch": "mcp-execution-bounds",
+  "clean": true,
+  "runtime": {
+    "node": "v24.19.0",
+    "bun": "1.3.14",
+    "sdk": "1.32.2",
+    "typescript": "5.5.4"
+  },
+  "results": {
+    "node_bounds": {
+      "log": "27-final-node-bounds.log",
+      "passed": 4
+    },
+    "native_bounds": {
+      "log": "28-final-native-bounds.log",
+      "passed": 4
+    },
+    "node_controls": {
+      "log": "16-node-controls.log",
+      "passed": 49
+    },
+    "native_controls": {
+      "log": "19-native-controls.log",
+      "passed": 49
+    },
+    "build": "21-final-build.log",
+    "typecheck": "22-final-typecheck.log",
+    "post_rebase_check": "29-post-rebase-check.log",
+    "uncached_source_lint": "25-final-source-lint.log",
+    "changed_test_lint": "26-final-test-lint.log"
+  },
+  "process_records": {
+    "node": {
+      "file": "/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket16-evidence/final-node/timeout-processes-36360.json",
+      "server": 47923,
+      "owned": {
+        "cli": 50082,
+        "hook": 50102,
+        "grandchild": 50138,
+        "before": "50082 47923 50082 Ss   /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n50100 50082 50082 S    /Library/Developer/CommandLineTools/usr/bin/git\n50102 50100 50082 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n50138 50102 50082 R    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n"
+      },
+      "afterStop": "50082 47923 50082 Ts   /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n50102 50100 50082 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n50138 50102 50082 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n",
+      "afterCleanup": {
+        "status": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "signal": "SIGKILL",
+      "exitCode": null,
+      "ownedLockRemoved": true,
+      "controlStillRunning": true
+    },
+    "native": {
+      "file": "/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket16-evidence/final-native/timeout-processes-40541.json",
+      "server": 50172,
+      "owned": {
+        "cli": 50844,
+        "hook": 50852,
+        "grandchild": 50868,
+        "before": "50844 50172 50844 Ss   /private/tmp/anthracite-mcp-implementation-2026-10-27/ticket16-evidence/anthracite-native\n50851 50844 50844 S    /Library/Developer/CommandLineTools/usr/bin/git\n50852 50851 50844 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n50868 50852 50844 R    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n"
+      },
+      "afterStop": "50844 50172 50844 Ts   /private/tmp/anthracite-mcp-implementation-2026-10-27/ticket16-evidence/anthracite-native\n50852 50851 50844 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n50868 50852 50844 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n",
+      "afterCleanup": {
+        "status": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "signal": "SIGINT",
+      "exitCode": null,
+      "ownedLockRemoved": true,
+      "controlStillRunning": true
+    }
+  },
+  "native_sha256": "f15e61f99173b41940eb6eda8067de8a6d6d9b75a8c7f4f42b0d0175fe2b94a8",
+  "limits": [
+    "Linux zombie handling is implemented but this host validation is macOS ARM64.",
+    "Runtime-observed forced raw-Git signal is SIGKILL on Node, SIGINT on native Bun; process snapshots independently prove direct CLI identity, stopped state and absence after cleanup. No synthetic status.",
+    "No full suite/matrix, Actions dispatch, release, live GitHub publication, global install or client configuration."
+  ],
+  "tdd": {
+    "settings": [
+      "01-settings-red.log",
+      "02-settings-green.log"
+    ],
+    "output": [
+      "03-output-red.log",
+      "04-output-green.log"
+    ],
+    "fifo": [
+      "05-fifo-red.log",
+      "06-fifo-green.log"
+    ],
+    "foreign_lock": [
+      "07-timeout-red.log",
+      "27-final-node-bounds.log",
+      "28-final-native-bounds.log"
+    ]
+  },
+  "sha256": {
+    "00-baseline-build.log": "b4ff8f9fa41239ac8969290427cb05cc1014ed713d03dac8f74992cdb8a92f99",
+    "01-settings-red.log": "e11ed4a66e969cbb8aa6e9777d4011903c5943ad82d79014c62f0e60916ad360",
+    "02-settings-green.log": "bcabffba8aa6d6c6c021a50c52b68a54e1218a016a6375d3efb499b0ff92dab3",
+    "03-output-red.log": "ca924fdb644700c1d27293a35e9a81c9990e1b4fdaa22556f6551fe999b4ad82",
+    "04-output-green.log": "666dc383c7732cd63076bdce88ca9c93a179b89cad87c751186b37d0be99541c",
+    "05-fifo-red.log": "f00ac786e960c3c5c6048e1d8cee7387737979ae5b2c15edf3e93b19bcb18827",
+    "06-fifo-green.log": "7fcfae9fa0d1954b83aad6de0b0ec4c6430957cca961d0b734d406c359f59746",
+    "07-timeout-red.log": "f1542cddcd117912b8ba6569795ff827b66e80920a2da0c4ea9c1129eade894d",
+    "08-timeout-green.log": "15ee168449004c4690dea45987daf98404510732cb299df6ac3407591b245cba",
+    "09-build.log": "99cfc3dfdc31a85c6787b11ef5920298e5c025345b12064b6774f0c8e983af30",
+    "10-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "11-node-bounds.log": "2f978866d32811d957b1f9a88cd860416a9a6b6af74e4708daba96f1ff8fbdc3",
+    "12-native-build.log": "36950b9235c88d3afd41593686cc3cc82e4bb9b05ee5894fdfd36eb6bba7f816",
+    "13-source-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "14-test-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "15-native-bounds.log": "15236c340ace97b475d255d91303910b8cad4aae7bc99a73c30b37f65458d644",
+    "16-node-controls.log": "f8ffd1fd809780d73d1353caa5c6762bcc75e97b8e88b7123e9a60dd9a673949",
+    "17-native-pgid-timeout.log": "7b4478044e118c79700aeca90ef2f5106f9034d26ba112eeacbbddef4cccbeb2",
+    "18-node-pgid-timeout.log": "fab181ec0aa45dde84992a6d570f523859eb3a3872fdd2d0dbba4ba922a506ba",
+    "19-native-controls.log": "6662101830a95b84cc679f2c1470204f7c38870ee41906d698abf8f3a5ff1dbb",
+    "20-native-observed-timeout.log": "69c590e38f2ca85c8de74906d43a6c8108bf46f6efa614a363a124ee355f8ef4",
+    "21-final-build.log": "4bb0530ac6ce02920165fca1ed14dd9021b63754c55886724a06cf72f935ea1f",
+    "22-final-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "23-final-native-build.log": "942dc3b6769512fcf697d75fa2c872b91232d34c46aa1e712b812e15839e197c",
+    "24-native-sha256.txt": "9ee802b8daedc8ea47611453c39eb43ebd9c2f261448f1d24363cee1c85d4561",
+    "25-final-source-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "26-final-test-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "27-final-node-bounds.log": "96133ef3d60b18b4efce2e8c16f21e39dc3aa7103315dc4890c119f3f4f105ae",
+    "28-final-native-bounds.log": "0b278b67f06987b5b747eb78c81b8d3de4f5406bfae2403700a09d0bcafab135",
+    "29-post-rebase-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-native/mcp-40541-1793132363190.json": "4fce24581427142acb7c302493a1829de23da6a3e6028b474990c41cbb4b210e",
+    "final-native/mcp-40541-1793132364190.json": "7d53687ab6b423be8e7f2a0e6fac66e2e383a46508c7d380dd21c163b58d68f7",
+    "final-native/mcp-40541-1793132372639.json": "2b4f28f48ee54331fc54cafd5974067037e7789c3c14762e5469f480a8533005",
+    "final-native/mcp-40541-1793132389393.json": "29ae1c83c21a3f3c62e469b717374c74dc46c7bbd8631bbc1a86fcb77f09f25e",
+    "final-native/timeout-processes-40541.json": "2cf59cabee556d8a78f3a4f361a53a86bb739dad0c2804d3f45a8407a5532777",
+    "final-node/mcp-36360-1793132353805.json": "4fce24581427142acb7c302493a1829de23da6a3e6028b474990c41cbb4b210e",
+    "final-node/mcp-36360-1793132354917.json": "7d53687ab6b423be8e7f2a0e6fac66e2e383a46508c7d380dd21c163b58d68f7",
+    "final-node/mcp-36360-1793132364369.json": "bcf288107055a686b7f2149da167c4a955336b6bbd1f4122a9cbec50d42763af",
+    "final-node/mcp-36360-1793132381691.json": "827d6def899eb761b220dcc96dfdac10e46916f679cd7cba32cba1eb5c6760ca",
+    "final-node/timeout-processes-36360.json": "c4b664224aa8336f50f8755ed1098bb9da5a50da130fe98d585f5f9b8b8223e2"
+  }
+}

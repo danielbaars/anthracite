@@ -1,0 +1,45 @@
+{
+  "server": 21323,
+  "pids": {
+    "cli": 21324,
+    "hook": 21346,
+    "grandchild": 21382,
+    "before": "21324 21323 21324 Ss   /private/tmp/anthracite-mcp-implementation-2026-10-27/ticket16-evidence/anthracite-native\n21345 21324 21324 S    /Library/Developer/CommandLineTools/usr/bin/git\n21346 21345 21324 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n21382 21346 21324 R    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n"
+  },
+  "owned": {
+    "cli": 23835,
+    "hook": 23858,
+    "grandchild": 24046,
+    "before": "23835 21323 23835 Ss   /private/tmp/anthracite-mcp-implementation-2026-10-27/ticket16-evidence/anthracite-native\n23844 23835 23835 S    /Library/Developer/CommandLineTools/usr/bin/git\n23858 23844 23835 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n24046 23858 23835 R    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n"
+  },
+  "stoppedState": "23835 21323 23835 Ts   /private/tmp/anthracite-mcp-implementation-2026-10-27/ticket16-evidence/anthracite-native\n23858 23844 23835 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n24046 23858 23835 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n",
+  "result": {
+    "status": "timeout",
+    "stdout": "",
+    "stderr": "",
+    "exitCode": 1,
+    "signal": null,
+    "truncated": false,
+    "message": "Command exceeded 5000ms; owned work stopped. Inspect repository state before retrying; interruption does not roll back changes.",
+    "isError": true
+  },
+  "forcedResult": {
+    "status": "timeout",
+    "stdout": "A\tpending.txt\n",
+    "stderr": "Passing command through to git...\nRunning: \"git switch --detach HEAD\"\n\nHEAD is now at 82e6362 other\nééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé",
+    "exitCode": null,
+    "signal": "SIGINT",
+    "truncated": true,
+    "message": "Command exceeded 5000ms; owned work stopped. Inspect repository state before retrying; interruption does not roll back changes.",
+    "isError": true
+  },
+  "afterCleanup": {
+    "status": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "foreignLock": "{\"pid\":21308,\"timestamp\":123}",
+  "foreignControl": 21308,
+  "controlStillRunning": true,
+  "ownedLockRemoved": true
+}

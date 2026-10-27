@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-27T20:49:12.896Z",
+    "end": "2026-10-27T20:49:19.246Z",
+    "duration": 6350
+  },
+  "tests": [
+    {
+      "title": "reports the release version and Anthracite help outside Git without tools",
+      "fullTitle": "Anthracite release identity through the public CLI reports the release version and Anthracite help outside Git without tools",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/anthracite_identity_cli.test.js",
+      "duration": 284,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "writes its own user preferences while preserving legacy preferences",
+      "fullTitle": "Anthracite release identity through the public CLI writes its own user preferences while preserving legacy preferences",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/anthracite_identity_cli.test.js",
+      "duration": 186,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "reports the release version and Anthracite help outside Git without tools",
+      "fullTitle": "Anthracite release identity through the public CLI reports the release version and Anthracite help outside Git without tools",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/anthracite_identity_cli.test.js",
+      "duration": 284,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "writes its own user preferences while preserving legacy preferences",
+      "fullTitle": "Anthracite release identity through the public CLI writes its own user preferences while preserving legacy preferences",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/anthracite_identity_cli.test.js",
+      "duration": 186,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

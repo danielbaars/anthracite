@@ -1,0 +1,22 @@
+
+
+  MCP startup and learning through stdio
+    1) scenario 1: discovers a working learning tool outside Git without credentials
+
+
+  0 passing (119ms)
+  1 failing
+
+  1) MCP startup and learning through stdio
+       scenario 1: discovers a working learning tool outside Git without credentials:
+     McpError: MCP error -32000: Connection closed
+      at McpError.fromError (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-14/node_modules/@modelcontextprotocol/sdk/dist/cjs/types.js:2086:16)
+      at Client._onclose (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-14/node_modules/@modelcontextprotocol/sdk/dist/cjs/shared/protocol.js:271:43)
+      at _transport.onclose (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-14/node_modules/@modelcontextprotocol/sdk/dist/cjs/shared/protocol.js:231:18)
+      at ChildProcess.<anonymous> (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-14/node_modules/@modelcontextprotocol/sdk/dist/cjs/client/stdio.js:92:31)
+      at ChildProcess.emit (node:events:509:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5)
+
+
+

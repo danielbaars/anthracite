@@ -32,6 +32,10 @@ Stage changes with Git before `create` or `modify`, or choose the command's stag
 
 To uninstall the command links and completion block, use `sh scripts/uninstall.sh` from a clone. Version directories and preferences are retained for rollback. See [installation and upgrades](docs/installation.md), the [command reference](DOCUMENTATION.md), and [compatibility](COMPATIBILITY.md).
 
+## MCP
+
+Coding agents can use `an mcp` or `anthracite mcp` as a local stdio server. See [MCP configuration, tools and recovery](docs/mcp.md) for a generic client configuration, explicit request arguments, execution limits and interruption behavior.
+
 ## Development
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for pinned build tools, tests and release preparation. Source code, documentation, commit messages, issues and pull requests in this repository are written in English.

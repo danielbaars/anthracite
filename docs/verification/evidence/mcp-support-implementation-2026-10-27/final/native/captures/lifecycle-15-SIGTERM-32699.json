@@ -1,0 +1,267 @@
+{
+  "serverPid": 55383,
+  "owned": {
+    "cli": 55388,
+    "hook": 55397,
+    "grandchild": 55411
+  },
+  "beforeProcesses": {
+    "status": 0,
+    "stdout": "55388 55383 55388 Ss  \n55397 55395 55388 S   \n55411 55397 55388 S   \n",
+    "stderr": ""
+  },
+  "afterProcesses": {
+    "status": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "reachedState": {
+    "head": "d6126b29b15671bdcf8bfaf237d3b19395d8af2c\n",
+    "branch": "",
+    "refs": "refs/branch-metadata/base 6dd477aa71b5610919090e889a08fcb5f0fd69e5\nrefs/branch-metadata/child 7930bb26b41dff96c7673c2dcad96bc955822a03\nrefs/branch-metadata/other 6dd477aa71b5610919090e889a08fcb5f0fd69e5\nrefs/branch-metadata/tip 3e95c70eaf895a359450079fce2a1a505cf042c2\nrefs/heads/base d6126b29b15671bdcf8bfaf237d3b19395d8af2c\nrefs/heads/child ea9d5225d5495bae6ee52cf954439bd01399c77e\nrefs/heads/main d9736406f95dcba87c0b7661ff4a99bb3b068b55\nrefs/heads/other 1d983b68108fa6707d74a628cdebd4976524c29b\nrefs/heads/tip 1afcf62aade2eb4cd1a996771b23c9df7f428576\n",
+    "index": "RElSQwAAAAIAAAACauEOdAK4KxRq4Q50ArgrFAEAABALXJprAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAauEOcTHJBCZq4Q5xMckEJgEAABALXJjHAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMiAwCkivimC2jCgvuM98trfZsJaMboGhbhmGbXXyRXYwMDX2n2L83BFoccQ=",
+    "indexLock": null,
+    "staging": "",
+    "status": "",
+    "files": {
+      "base.txt": "YmFzZQ==",
+      "main.txt": "bWFpbg=="
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+      ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+      ".gtcontinue": null,
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": "eyJwaWQiOjUxNjQ5LCJ0aW1lc3RhbXAiOjEyM30=",
+      ".graphite_cache_persist": "ewogICJzaGEiOiAiMGEyZjk5NmM2MjgwMjY3NGE2ZGQ1MGY5YmM5Yjg2YTM1MjQxMWI2NCIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAib3RoZXIiLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIxZDk4M2I2ODEwOGZhNjcwN2Q3NGE2MjhjZGViZDQ5NzY1MjRjMjliIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZDk3MzY0MDZmOTVkY2JhODdjMGI3NjYxZmY0YTk5YmIzYjA2OGI1NSIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgIm1haW4iLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVFJVTksiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICJkOTczNjQwNmY5NWRjYmE4N2MwYjc2NjFmZjRhOTliYjNiMDY4YjU1IiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAiYmFzZSIsCiAgICAgICAgICAib3RoZXIiCiAgICAgICAgXQogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiZDYxMjZiMjliMTU2NzFiZGNmOGJmYWYyMzdkM2IxOTM5NWQ4YWYyYyIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJkOTczNjQwNmY5NWRjYmE4N2MwYjc2NjFmZjRhOTliYjNiMDY4YjU1IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImVhOWQ1MjI1ZDU0OTViYWU2ZWU1MmNmOTU0NDM5YmQwMTM5OWM3N2UiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJ0aXAiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogImQ2MTI2YjI5YjE1NjcxYmRjZjhiZmFmMjM3ZDNiMTkzOTVkOGFmMmMiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJ0aXAiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIxYWZjZjYyYWFkZTJlYjRjZDFhOTk2NzcxYjIzYzlkZjdmNDI4NTc2IiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogImVhOWQ1MjI1ZDU0OTViYWU2ZWU1MmNmOTU0NDM5YmQwMTM5OWM3N2UiCiAgICAgIH0KICAgIF0KICBdCn0="
+    },
+    "operation": {
+      "rebase-merge": null,
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "recoveryBefore": {
+    "head": "b0ea9b00ec35726f885984466cc8b9a587cb1b78\n",
+    "branch": "",
+    "refs": "refs/branch-metadata/base a526a44d90c079925f2c49b62666807e34aedf3d\nrefs/branch-metadata/child d8535bd75186ea420632c8b5025294f164d96fcb\nrefs/branch-metadata/conflict-base bc2ac2069a5da6bb5fabbd0ce7a49576c1362c21\nrefs/branch-metadata/conflict-child ebf30ab4b9d3c0c7bc7c02fdea1ecd601a0ffb63\nrefs/branch-metadata/other a526a44d90c079925f2c49b62666807e34aedf3d\nrefs/branch-metadata/tip 03d3716b79f88e490e6c3d02b5c047ed9ebf2467\nrefs/heads/base b54c3e5bb6e5dfdffef697c6a8695d26244ece42\nrefs/heads/child c455b81c1489886a5103fadad76276cc8e894cf4\nrefs/heads/conflict-base e90f5898f54404b4aa8cb562fc59014991394761\nrefs/heads/conflict-child aa2d611e371a93cdeb05c58389ba896d7cb4286d\nrefs/heads/main b0ea9b00ec35726f885984466cc8b9a587cb1b78\nrefs/heads/other 5bed2633e60d279193bf0b7f4fff13101933c27a\nrefs/heads/tip 2b3f384a5e8eca57a74ae3ff6b674798a2d493e3\n",
+    "index": "RElSQwAAAAIAAAABauEOewDBZgpq4Q57AMFmCgEAABALXJ8JAACBpAAAAfUAAAAUAAAAH5pN4Dnm6och7d2qi06ROVG7QMptAAhtYWluLnR4dAAAVFJFRQAAAAYALTEgMApSRVVDAAAAWm1haW4udHh0ADEwMDY0NAAxMDA2NDQAMTAwNjQ0AIwGrCow1teP2+qdwc4K38pAw5KfiNBQsZCAV7U9OLQnAuvGWePX9pbN2QrokXPAMsap5fd/dBw8Wv9e7Mva57mbw4RaPapji0WyBKg7TUQu",
+    "indexLock": null,
+    "staging": ":100644 100644 88d050b 9a4de03 M\u0000main.txt\u0000",
+    "status": "M  main.txt\u0000",
+    "files": {
+      "main.txt": "ZGVsaWJlcmF0ZWx5IHN0YWdlZCByZXNvbHV0aW9uCg=="
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+      ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+      ".gtcontinue": "ewogICJicmFuY2hlc1RvU3luYyI6IFtdLAogICJicmFuY2hlc1RvUmVzdGFjayI6IFsKICAgICJjb25mbGljdC1iYXNlIgogIF0sCiAgInJlb3JkZXIiOiB7CiAgICAicmV0dXJuQnJhbmNoIjogImNvbmZsaWN0LWJhc2UiLAogICAgImdyYXBoQXBwbGllZCI6IHRydWUsCiAgICAicGxhbiI6IFsKICAgICAgewogICAgICAgICJuYW1lIjogImNvbmZsaWN0LWNoaWxkIiwKICAgICAgICAicGFyZW50IjogIm1haW4iLAogICAgICAgICJmcm9tIjogImU5MGY1ODk4ZjU0NDA0YjRhYThjYjU2MmZjNTkwMTQ5OTEzOTQ3NjEiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJjb25mbGljdC1iYXNlIiwKICAgICAgICAicGFyZW50IjogImNvbmZsaWN0LWNoaWxkIiwKICAgICAgICAiZnJvbSI6ICJiMGVhOWIwMGVjMzU3MjZmODg1OTg0NDY2Y2M4YjlhNTg3Y2IxYjc4IgogICAgICB9CiAgICBdLAogICAgImNvbXBsZXRlZCI6IFtdLAogICAgInBlbmRpbmciOiBbCiAgICAgICJjb25mbGljdC1jaGlsZCIsCiAgICAgICJjb25mbGljdC1iYXNlIgogICAgXSwKICAgICJjb25mbGljdEJyYW5jaCI6ICJjb25mbGljdC1jaGlsZCIKICB9LAogICJjdXJyZW50QnJhbmNoT3ZlcnJpZGUiOiAiY29uZmxpY3QtYmFzZSIsCiAgInJlYmFzZWRCcmFuY2hCYXNlIjogImIwZWE5YjAwZWMzNTcyNmY4ODU5ODQ0NjZjYzhiOWE1ODdjYjFiNzgiLAogICJyZWJhc2VPd25lcnNoaXAiOiAiMGZkM2FlYjgtZjY5Yi00MjdhLWFhYjEtNDhjZTM5MDdjNjZiIgp9",
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": null
+    },
+    "operation": {
+      "rebase-merge": {
+        "author-script": "R0lUX0FVVEhPUl9OQU1FPSdSZW9yZGVyIGZpeHR1cmUnCkdJVF9BVVRIT1JfRU1BSUw9J3Jlb3JkZXJAZXhhbXBsZS50ZXN0JwpHSVRfQVVUSE9SX0RBVEU9J0AxNzkzMTM0MTk5ICswMTAwJwo=",
+        "charcoal-continuation": "MGZkM2FlYjgtZjY5Yi00MjdhLWFhYjEtNDhjZTM5MDdjNjZi",
+        "done": "cGljayBhYTJkNjExZTM3MWE5M2NkZWIwNWM1ODM4OWJhODk2ZDdjYjQyODZkICMgY2hpbGQgb3duCg==",
+        "drop_redundant_commits": "",
+        "end": "MQo=",
+        "git-rebase-todo": "",
+        "git-rebase-todo.backup": "cGljayBhYTJkNjExZTM3MWE5M2NkZWIwNWM1ODM4OWJhODk2ZDdjYjQyODZkICMgY2hpbGQgb3duCgojIFJlYmFzZSBlOTBmNTg5Li5hYTJkNjExIG9udG8gYjBlYTliMCAoMSBjb21tYW5kKQojCiMgQ29tbWFuZHM6CiMgcCwgcGljayA8Y29tbWl0PiA9IHVzZSBjb21taXQKIyByLCByZXdvcmQgPGNvbW1pdD4gPSB1c2UgY29tbWl0LCBidXQgZWRpdCB0aGUgY29tbWl0IG1lc3NhZ2UKIyBlLCBlZGl0IDxjb21taXQ+ID0gdXNlIGNvbW1pdCwgYnV0IHN0b3AgZm9yIGFtZW5kaW5nCiMgcywgc3F1YXNoIDxjb21taXQ+ID0gdXNlIGNvbW1pdCwgYnV0IG1lbGQgaW50byBwcmV2aW91cyBjb21taXQKIyBmLCBmaXh1cCBbLUMgfCAtY10gPGNvbW1pdD4gPSBsaWtlICJzcXVhc2giIGJ1dCBrZWVwIG9ubHkgdGhlIHByZXZpb3VzCiMgICAgICAgICAgICAgICAgICAgIGNvbW1pdCdzIGxvZyBtZXNzYWdlLCB1bmxlc3MgLUMgaXMgdXNlZCwgaW4gd2hpY2ggY2FzZQojICAgICAgICAgICAgICAgICAgICBrZWVwIG9ubHkgdGhpcyBjb21taXQncyBtZXNzYWdlOyAtYyBpcyBzYW1lIGFzIC1DIGJ1dAojICAgICAgICAgICAgICAgICAgICBvcGVucyB0aGUgZWRpdG9yCiMgeCwgZXhlYyA8Y29tbWFuZD4gPSBydW4gY29tbWFuZCAodGhlIHJlc3Qgb2YgdGhlIGxpbmUpIHVzaW5nIHNoZWxsCiMgYiwgYnJlYWsgPSBzdG9wIGhlcmUgKGNvbnRpbnVlIHJlYmFzZSBsYXRlciB3aXRoICdnaXQgcmViYXNlIC0tY29udGludWUnKQojIGQsIGRyb3AgPGNvbW1pdD4gPSByZW1vdmUgY29tbWl0CiMgbCwgbGFiZWwgPGxhYmVsPiA9IGxhYmVsIGN1cnJlbnQgSEVBRCB3aXRoIGEgbmFtZQojIHQsIHJlc2V0IDxsYWJlbD4gPSByZXNldCBIRUFEIHRvIGEgbGFiZWwKIyBtLCBtZXJnZSBbLUMgPGNvbW1pdD4gfCAtYyA8Y29tbWl0Pl0gPGxhYmVsPiBbIyA8b25lbGluZT5dCiMgICAgICAgICBjcmVhdGUgYSBtZXJnZSBjb21taXQgdXNpbmcgdGhlIG9yaWdpbmFsIG1lcmdlIGNvbW1pdCdzCiMgICAgICAgICBtZXNzYWdlIChvciB0aGUgb25lbGluZSwgaWYgbm8gb3JpZ2luYWwgbWVyZ2UgY29tbWl0IHdhcwojICAgICAgICAgc3BlY2lmaWVkKTsgdXNlIC1jIDxjb21taXQ+IHRvIHJld29yZCB0aGUgY29tbWl0IG1lc3NhZ2UKIyB1LCB1cGRhdGUtcmVmIDxyZWY+ID0gdHJhY2sgYSBwbGFjZWhvbGRlciBmb3IgdGhlIDxyZWY+IHRvIGJlIHVwZGF0ZWQKIyAgICAgICAgICAgICAgICAgICAgICAgdG8gdGhpcyBwb3NpdGlvbiBpbiB0aGUgbmV3IGNvbW1pdHMuIFRoZSA8cmVmPiBpcwojICAgICAgICAgICAgICAgICAgICAgICB1cGRhdGVkIGF0IHRoZSBlbmQgb2YgdGhlIHJlYmFzZQojCiMgVGhlc2UgbGluZXMgY2FuIGJlIHJlLW9yZGVyZWQ7IHRoZXkgYXJlIGV4ZWN1dGVkIGZyb20gdG9wIHRvIGJvdHRvbS4KIwojIElmIHlvdSByZW1vdmUgYSBsaW5lIGhlcmUgVEhBVCBDT01NSVQgV0lMTCBCRSBMT1NULgojCiMgSG93ZXZlciwgaWYgeW91IHJlbW92ZSBldmVyeXRoaW5nLCB0aGUgcmViYXNlIHdpbGwgYmUgYWJvcnRlZC4KIwo=",
+        "head-name": "cmVmcy9oZWFkcy9jb25mbGljdC1jaGlsZAo=",
+        "interactive": "",
+        "message": "Y2hpbGQgb3duCgojIENvbmZsaWN0czoKIwltYWluLnR4dAo=",
+        "msgnum": "MQo=",
+        "no-reschedule-failed-exec": "",
+        "onto": "YjBlYTliMDBlYzM1NzI2Zjg4NTk4NDQ2NmNjOGI5YTU4N2NiMWI3OAo=",
+        "orig-head": "YWEyZDYxMWUzNzFhOTNjZGViMDVjNTgzODliYTg5NmQ3Y2I0Mjg2ZAo=",
+        "patch": "ZGlmZiAtLWdpdCBhL21haW4udHh0IGIvbWFpbi50eHQKaW5kZXggOGMwNmFjMi4uY2RkOTBhZSAxMDA2NDQKLS0tIGEvbWFpbi50eHQKKysrIGIvbWFpbi50eHQKQEAgLTEgKzEgQEAKLWJhc2Ugb3duCitjaGlsZCBvd24K",
+        "stopped-sha": "YWEyZDYxMWUzNzFhOTNjZGViMDVjNTgzODliYTg5NmQ3Y2I0Mjg2ZAo="
+      },
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "recovered": {
+    "head": "b0ea9b00ec35726f885984466cc8b9a587cb1b78\n",
+    "branch": "",
+    "refs": "refs/branch-metadata/base a526a44d90c079925f2c49b62666807e34aedf3d\nrefs/branch-metadata/child d8535bd75186ea420632c8b5025294f164d96fcb\nrefs/branch-metadata/conflict-base bc2ac2069a5da6bb5fabbd0ce7a49576c1362c21\nrefs/branch-metadata/conflict-child ebf30ab4b9d3c0c7bc7c02fdea1ecd601a0ffb63\nrefs/branch-metadata/other a526a44d90c079925f2c49b62666807e34aedf3d\nrefs/branch-metadata/tip 03d3716b79f88e490e6c3d02b5c047ed9ebf2467\nrefs/heads/base b54c3e5bb6e5dfdffef697c6a8695d26244ece42\nrefs/heads/child c455b81c1489886a5103fadad76276cc8e894cf4\nrefs/heads/conflict-base e90f5898f54404b4aa8cb562fc59014991394761\nrefs/heads/conflict-child aa2d611e371a93cdeb05c58389ba896d7cb4286d\nrefs/heads/main b0ea9b00ec35726f885984466cc8b9a587cb1b78\nrefs/heads/other 5bed2633e60d279193bf0b7f4fff13101933c27a\nrefs/heads/tip 2b3f384a5e8eca57a74ae3ff6b674798a2d493e3\n",
+    "index": "RElSQwAAAAIAAAABauEOewDBZgpq4Q57AMFmCgEAABALXJ8JAACBpAAAAfUAAAAUAAAAH5pN4Dnm6och7d2qi06ROVG7QMptAAhtYWluLnR4dAAAVFJFRQAAAAYALTEgMApSRVVDAAAAWm1haW4udHh0ADEwMDY0NAAxMDA2NDQAMTAwNjQ0AIwGrCow1teP2+qdwc4K38pAw5KfiNBQsZCAV7U9OLQnAuvGWePX9pbN2QrokXPAMsap5fd/dBw8Wv9e7Mva57mbw4RaPapji0WyBKg7TUQu",
+    "indexLock": null,
+    "staging": ":100644 100644 88d050b 9a4de03 M\u0000main.txt\u0000",
+    "status": "M  main.txt\u0000",
+    "files": {
+      "main.txt": "ZGVsaWJlcmF0ZWx5IHN0YWdlZCByZXNvbHV0aW9uCg=="
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+      ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+      ".gtcontinue": "ewogICJicmFuY2hlc1RvU3luYyI6IFtdLAogICJicmFuY2hlc1RvUmVzdGFjayI6IFsKICAgICJjb25mbGljdC1iYXNlIgogIF0sCiAgInJlb3JkZXIiOiB7CiAgICAicmV0dXJuQnJhbmNoIjogImNvbmZsaWN0LWJhc2UiLAogICAgImdyYXBoQXBwbGllZCI6IHRydWUsCiAgICAicGxhbiI6IFsKICAgICAgewogICAgICAgICJuYW1lIjogImNvbmZsaWN0LWNoaWxkIiwKICAgICAgICAicGFyZW50IjogIm1haW4iLAogICAgICAgICJmcm9tIjogImU5MGY1ODk4ZjU0NDA0YjRhYThjYjU2MmZjNTkwMTQ5OTEzOTQ3NjEiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJjb25mbGljdC1iYXNlIiwKICAgICAgICAicGFyZW50IjogImNvbmZsaWN0LWNoaWxkIiwKICAgICAgICAiZnJvbSI6ICJiMGVhOWIwMGVjMzU3MjZmODg1OTg0NDY2Y2M4YjlhNTg3Y2IxYjc4IgogICAgICB9CiAgICBdLAogICAgImNvbXBsZXRlZCI6IFtdLAogICAgInBlbmRpbmciOiBbCiAgICAgICJjb25mbGljdC1jaGlsZCIsCiAgICAgICJjb25mbGljdC1iYXNlIgogICAgXSwKICAgICJjb25mbGljdEJyYW5jaCI6ICJjb25mbGljdC1jaGlsZCIKICB9LAogICJjdXJyZW50QnJhbmNoT3ZlcnJpZGUiOiAiY29uZmxpY3QtYmFzZSIsCiAgInJlYmFzZWRCcmFuY2hCYXNlIjogImIwZWE5YjAwZWMzNTcyNmY4ODU5ODQ0NjZjYzhiOWE1ODdjYjFiNzgiLAogICJyZWJhc2VPd25lcnNoaXAiOiAiMGZkM2FlYjgtZjY5Yi00MjdhLWFhYjEtNDhjZTM5MDdjNjZiIgp9",
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": null
+    },
+    "operation": {
+      "rebase-merge": {
+        "author-script": "R0lUX0FVVEhPUl9OQU1FPSdSZW9yZGVyIGZpeHR1cmUnCkdJVF9BVVRIT1JfRU1BSUw9J3Jlb3JkZXJAZXhhbXBsZS50ZXN0JwpHSVRfQVVUSE9SX0RBVEU9J0AxNzkzMTM0MTk5ICswMTAwJwo=",
+        "charcoal-continuation": "MGZkM2FlYjgtZjY5Yi00MjdhLWFhYjEtNDhjZTM5MDdjNjZi",
+        "done": "cGljayBhYTJkNjExZTM3MWE5M2NkZWIwNWM1ODM4OWJhODk2ZDdjYjQyODZkICMgY2hpbGQgb3duCg==",
+        "drop_redundant_commits": "",
+        "end": "MQo=",
+        "git-rebase-todo": "",
+        "git-rebase-todo.backup": "cGljayBhYTJkNjExZTM3MWE5M2NkZWIwNWM1ODM4OWJhODk2ZDdjYjQyODZkICMgY2hpbGQgb3duCgojIFJlYmFzZSBlOTBmNTg5Li5hYTJkNjExIG9udG8gYjBlYTliMCAoMSBjb21tYW5kKQojCiMgQ29tbWFuZHM6CiMgcCwgcGljayA8Y29tbWl0PiA9IHVzZSBjb21taXQKIyByLCByZXdvcmQgPGNvbW1pdD4gPSB1c2UgY29tbWl0LCBidXQgZWRpdCB0aGUgY29tbWl0IG1lc3NhZ2UKIyBlLCBlZGl0IDxjb21taXQ+ID0gdXNlIGNvbW1pdCwgYnV0IHN0b3AgZm9yIGFtZW5kaW5nCiMgcywgc3F1YXNoIDxjb21taXQ+ID0gdXNlIGNvbW1pdCwgYnV0IG1lbGQgaW50byBwcmV2aW91cyBjb21taXQKIyBmLCBmaXh1cCBbLUMgfCAtY10gPGNvbW1pdD4gPSBsaWtlICJzcXVhc2giIGJ1dCBrZWVwIG9ubHkgdGhlIHByZXZpb3VzCiMgICAgICAgICAgICAgICAgICAgIGNvbW1pdCdzIGxvZyBtZXNzYWdlLCB1bmxlc3MgLUMgaXMgdXNlZCwgaW4gd2hpY2ggY2FzZQojICAgICAgICAgICAgICAgICAgICBrZWVwIG9ubHkgdGhpcyBjb21taXQncyBtZXNzYWdlOyAtYyBpcyBzYW1lIGFzIC1DIGJ1dAojICAgICAgICAgICAgICAgICAgICBvcGVucyB0aGUgZWRpdG9yCiMgeCwgZXhlYyA8Y29tbWFuZD4gPSBydW4gY29tbWFuZCAodGhlIHJlc3Qgb2YgdGhlIGxpbmUpIHVzaW5nIHNoZWxsCiMgYiwgYnJlYWsgPSBzdG9wIGhlcmUgKGNvbnRpbnVlIHJlYmFzZSBsYXRlciB3aXRoICdnaXQgcmViYXNlIC0tY29udGludWUnKQojIGQsIGRyb3AgPGNvbW1pdD4gPSByZW1vdmUgY29tbWl0CiMgbCwgbGFiZWwgPGxhYmVsPiA9IGxhYmVsIGN1cnJlbnQgSEVBRCB3aXRoIGEgbmFtZQojIHQsIHJlc2V0IDxsYWJlbD4gPSByZXNldCBIRUFEIHRvIGEgbGFiZWwKIyBtLCBtZXJnZSBbLUMgPGNvbW1pdD4gfCAtYyA8Y29tbWl0Pl0gPGxhYmVsPiBbIyA8b25lbGluZT5dCiMgICAgICAgICBjcmVhdGUgYSBtZXJnZSBjb21taXQgdXNpbmcgdGhlIG9yaWdpbmFsIG1lcmdlIGNvbW1pdCdzCiMgICAgICAgICBtZXNzYWdlIChvciB0aGUgb25lbGluZSwgaWYgbm8gb3JpZ2luYWwgbWVyZ2UgY29tbWl0IHdhcwojICAgICAgICAgc3BlY2lmaWVkKTsgdXNlIC1jIDxjb21taXQ+IHRvIHJld29yZCB0aGUgY29tbWl0IG1lc3NhZ2UKIyB1LCB1cGRhdGUtcmVmIDxyZWY+ID0gdHJhY2sgYSBwbGFjZWhvbGRlciBmb3IgdGhlIDxyZWY+IHRvIGJlIHVwZGF0ZWQKIyAgICAgICAgICAgICAgICAgICAgICAgdG8gdGhpcyBwb3NpdGlvbiBpbiB0aGUgbmV3IGNvbW1pdHMuIFRoZSA8cmVmPiBpcwojICAgICAgICAgICAgICAgICAgICAgICB1cGRhdGVkIGF0IHRoZSBlbmQgb2YgdGhlIHJlYmFzZQojCiMgVGhlc2UgbGluZXMgY2FuIGJlIHJlLW9yZGVyZWQ7IHRoZXkgYXJlIGV4ZWN1dGVkIGZyb20gdG9wIHRvIGJvdHRvbS4KIwojIElmIHlvdSByZW1vdmUgYSBsaW5lIGhlcmUgVEhBVCBDT01NSVQgV0lMTCBCRSBMT1NULgojCiMgSG93ZXZlciwgaWYgeW91IHJlbW92ZSBldmVyeXRoaW5nLCB0aGUgcmViYXNlIHdpbGwgYmUgYWJvcnRlZC4KIwo=",
+        "head-name": "cmVmcy9oZWFkcy9jb25mbGljdC1jaGlsZAo=",
+        "interactive": "",
+        "message": "Y2hpbGQgb3duCgojIENvbmZsaWN0czoKIwltYWluLnR4dAo=",
+        "msgnum": "MQo=",
+        "no-reschedule-failed-exec": "",
+        "onto": "YjBlYTliMDBlYzM1NzI2Zjg4NTk4NDQ2NmNjOGI5YTU4N2NiMWI3OAo=",
+        "orig-head": "YWEyZDYxMWUzNzFhOTNjZGViMDVjNTgzODliYTg5NmQ3Y2I0Mjg2ZAo=",
+        "patch": "ZGlmZiAtLWdpdCBhL21haW4udHh0IGIvbWFpbi50eHQKaW5kZXggOGMwNmFjMi4uY2RkOTBhZSAxMDA2NDQKLS0tIGEvbWFpbi50eHQKKysrIGIvbWFpbi50eHQKQEAgLTEgKzEgQEAKLWJhc2Ugb3duCitjaGlsZCBvd24K",
+        "stopped-sha": "YWEyZDYxMWUzNzFhOTNjZGViMDVjNTgzODliYTg5NmQ3Y2I0Mjg2ZAo="
+      },
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "foreign": "{\"pid\":51649,\"timestamp\":123}",
+  "controlStillRunning": true,
+  "messages": [
+    {
+      "jsonrpc": "2.0",
+      "id": 0,
+      "result": {
+        "protocolVersion": "2025-11-25",
+        "capabilities": {
+          "tools": {}
+        },
+        "serverInfo": {
+          "name": "anthracite",
+          "version": "0.1.1"
+        }
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "result": {
+        "tools": [
+          {
+            "name": "run_an_cmd",
+            "description": "Execute this Anthracite build with literal arguments in an explicit directory. May mutate repositories and external services. Follow user/repository instructions and publication approvals.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "args": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                },
+                "cwd": {
+                  "type": "string",
+                  "description": "Absolute existing directory."
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Nonempty explanation; never executed."
+                }
+              },
+              "required": [
+                "args",
+                "cwd",
+                "why"
+              ],
+              "additionalProperties": false
+            },
+            "annotations": {
+              "readOnlyHint": false,
+              "destructiveHint": true,
+              "idempotentHint": false,
+              "openWorldHint": true
+            }
+          },
+          {
+            "name": "learn_an",
+            "description": "Read Anthracite workflow guidance. User and repository instructions and publication approvals remain authoritative.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "sentMessages": [
+    {
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2025-11-25",
+        "capabilities": {},
+        "clientInfo": {
+          "name": "anthracite-eof-tests",
+          "version": "1.0.0"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 0
+    },
+    {
+      "method": "notifications/initialized",
+      "jsonrpc": "2.0"
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "switch",
+            "--detach",
+            "HEAD"
+          ],
+          "cwd": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-1eXayb/an-reorder-cTnIju/repo",
+          "why": "shutdown active"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 1
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "reset",
+            "--hard",
+            "main"
+          ],
+          "cwd": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-1eXayb/an-reorder-HjySDQ/repo",
+          "why": "discard on shutdown"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 2
+    },
+    {
+      "method": "tools/list",
+      "jsonrpc": "2.0",
+      "id": 3
+    }
+  ],
+  "stderr": "",
+  "exitCode": 0,
+  "signal": null
+}

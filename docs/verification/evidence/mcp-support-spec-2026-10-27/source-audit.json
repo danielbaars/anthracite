@@ -1,0 +1,75 @@
+{
+  "sourceCommit": "e201e0629c547f3c88845ab37a9bf64555f21c19",
+  "files": {
+    "apps/cli/src/index.ts": {
+      "bytes": 4428,
+      "sha256": "442544b227f34ffab91d25960d27ed06ee4f6487b2982e3261cda343b039e2ee",
+      "relevance": "Explicit root command registration; no MCP module; process-oriented CLI entry point."
+    },
+    "apps/cli/src/lib/pre-yargs/preprocess_command.ts": {
+      "bytes": 980,
+      "sha256": "bad646d8e52814cc91e06fc5bf95b6686da900a4b2cdc7b6d507d68754a4c132",
+      "relevance": "Argv/cwd preprocessing before CLI dispatch."
+    },
+    "apps/cli/src/lib/pre-yargs/select_working_directory.ts": {
+      "bytes": 4543,
+      "sha256": "fdb01f8a225874cc53ef28d3230635ee2686a76c582eae042131bfd68e0246e7",
+      "relevance": "Global CLI cwd handling and raw-Git/literal boundaries."
+    },
+    "apps/cli/src/lib/pre-yargs/passthrough.ts": {
+      "bytes": 1131,
+      "sha256": "328ad93a3feef6f5bf28a0dac1419ad65bf15476324c7ca5cd9aab4320f45de7",
+      "relevance": "Raw Git subprocess and process exit behavior."
+    },
+    "apps/cli/src/lib/interaction_policy.ts": {
+      "bytes": 707,
+      "sha256": "72e8895f8400a7b217e2ebae00dfda907d343e4bdec4de85df2ad57e1b88e4b9",
+      "relevance": "Shared prompt/pager/editor policy."
+    },
+    "apps/cli/src/lib/runner.ts": {
+      "bytes": 10205,
+      "sha256": "a6c87c33ac8f2f3487dba98af27f6612997228abc14c72265a22acd4710ce506",
+      "relevance": "CLI execution/context and SIGINT handler."
+    },
+    "apps/cli/src/lib/engine/cache_lock.ts": {
+      "bytes": 649,
+      "sha256": "f46184ff951ad20adc9fa8ff45d03593b4b8797b6b27d8d65bcb9536e739ed1b",
+      "relevance": "Existing lock acquire/release boundary."
+    },
+    "apps/cli/src/lib/spiffy/cache_lock_spf.ts": {
+      "bytes": 514,
+      "sha256": "0c87d94105b70aa058bceff34dfc287d7c81f1db0d1e1d4ea64d162f4adb7044",
+      "relevance": "Lock schema includes owner PID and timestamp."
+    },
+    "apps/cli/src/lib/utils/test_cli_command.ts": {
+      "bytes": 521,
+      "sha256": "70f4099459ff634401d9ce140b959995d7eda7bfddb88dd0c051f89d8d91d393",
+      "relevance": "Existing Node/native public process launcher."
+    },
+    "apps/cli/test/commands/interaction_recovery_cli.test.ts": {
+      "bytes": 16844,
+      "sha256": "33f6b2a7a3bd0033ea8f960af1b05978f227153e8019ae1e609bfc93e1c96ab4",
+      "relevance": "Actual recovery and independent direct-CLI controls."
+    },
+    "apps/cli/test/lib/fixtures/submit_cli.ts": {
+      "bytes": 4837,
+      "sha256": "dd7be11d1d6420e60f3670070a182d3cc109d26695f8d8e3e7c376a1d2baea7d",
+      "relevance": "Controlled GitHub adapter and local remote prior art."
+    },
+    "apps/cli/package.json": {
+      "bytes": 2695,
+      "sha256": "7ae3af8668bcbd0d4b36cd83f086d3b2082a9ced08b928abc61dad272b19273b",
+      "relevance": "Pinned runtime/build/dependency context."
+    },
+    "apps/cli/tsconfig.json": {
+      "bytes": 711,
+      "sha256": "10db5c8db44ee4a306bd62221076522c8874f479dcc7430df1798d300b2ffc8a",
+      "relevance": "CommonJS and current TypeScript compiler options."
+    }
+  },
+  "installedAnthracite": {
+    "path": "/Users/danielbaars/.local/share/anthracite/0.1.1-dev.20261027173714/an",
+    "version": "0.1.1-dev.20261027173714",
+    "sha256": "98be4b85350de038a406fa028b4f52fd39339b9546eee3542fc821f065e3ccb1"
+  }
+}

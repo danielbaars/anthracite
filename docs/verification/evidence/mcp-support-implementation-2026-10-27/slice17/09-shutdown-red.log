@@ -1,0 +1,22 @@
+
+
+  MCP cancellation and shutdown through stdio
+    1) scenario 15: EOF and server signals stop owned descendants, discard queued mutations and preserve genuine recovery for a fresh session
+
+
+  0 passing (23s)
+  1 failing
+
+  1) MCP cancellation and shutdown through stdio
+       scenario 15: EOF and server signals stop owned descendants, discard queued mutations and preserve genuine recovery for a fresh session:
+
+      AssertionError: EOF: server exits without client fallback signals: expected false to equal true
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (dist/test/commands/mcp_lifecycle_cli.test.js:281:137)
+
+
+

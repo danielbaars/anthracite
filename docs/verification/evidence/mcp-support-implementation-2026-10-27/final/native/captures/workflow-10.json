@@ -1,0 +1,164 @@
+{
+  "first": {
+    "status": "cli_error",
+    "stdout": "Departure branch: conflict-base. Parent graph: applied.\nConflict branch: conflict-child. Current checkout: detached HEAD.\nCompleted branches: none.\nRemaining branches: conflict-child, conflict-base.\nApplied parents: conflict-child -> main, conflict-base -> conflict-child.\nResolve the conflict, git add the resolution and run an continue. an rebase --abort only cancels the active rebase; parent changes and completed restacks remain.\nAfter abort, or after preserving blocking local work and resolving the Git error, retry each remaining branch in this order (resolve and an continue any new conflict before the next command):\nan restack --branch 'conflict-child' --only\nan restack --branch 'conflict-base' --only\nan checkout 'conflict-base'\n",
+    "stderr": "Hit conflict restacking conflict-child on main.\n\nUnmerged files:\nmain.txt\n\nYou are here (resolving conflict-child):\n◯  conflict-base\n◯  conflict-child\n◯  main\n\nTo fix and continue your previous Anthracite command:\n(1) resolve the listed merge conflicts\n(2) mark them as resolved with an add .\n(3) run an continue to continue executing your previous Anthracite command\nan rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.\nWARNING: Stack reorder is incomplete. Parent changes and completed restacks remain.\n",
+    "exitCode": 1,
+    "signal": null,
+    "truncated": false
+  },
+  "unresolved": {
+    "status": "cli_error",
+    "stdout": "Departure branch: conflict-base. Parent graph: applied.\nConflict branch: conflict-child. Current checkout: detached HEAD.\nCompleted branches: none.\nRemaining branches: conflict-child, conflict-base.\nApplied parents: conflict-child -> main, conflict-base -> conflict-child.\nResolve the conflict, git add the resolution and run an continue. an rebase --abort only cancels the active rebase; parent changes and completed restacks remain.\nAfter abort, or after preserving blocking local work and resolving the Git error, retry each remaining branch in this order (resolve and an continue any new conflict before the next command):\nan restack --branch 'conflict-child' --only\nan restack --branch 'conflict-base' --only\nan checkout 'conflict-base'\n",
+    "stderr": "WARNING: Stack reorder is incomplete. Parent changes and completed restacks remain.\nERROR: Cannot continue reorder with unstaged tracked changes. Stage the conflict resolution and preserve other unfinished work before retrying.\n",
+    "exitCode": 1,
+    "signal": null,
+    "truncated": false
+  },
+  "partial": {
+    "head": "fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46\n",
+    "branch": "",
+    "refs": "refs/branch-metadata/base f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/child 15a4fa244867cd7d4ef331adff8866c534801d67\nrefs/branch-metadata/conflict-base 57d96d80be830200f8870d3bff070ebdacd13c52\nrefs/branch-metadata/conflict-child 4d11e71283a915f3a50c84ad6243c801799601db\nrefs/branch-metadata/other f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/tip e20bdce00b43c6d2b55044574f7bb5acc42b286c\nrefs/heads/base 202d1d269474442f9937a36a35426a7271ddad64\nrefs/heads/child 6959b73acf05f58815eb34c63a3e9f7f22f9392a\nrefs/heads/conflict-base 38d68def574e82a2e435cc36ed6a545fd0547930\nrefs/heads/conflict-child e193ac370e73c45c4c55d65b5346b34f99fea374\nrefs/heads/main fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46\nrefs/heads/other 82e63623afd56854962ea1f34812dccb2924faa8\nrefs/heads/tip 1ff7db465a6c7dfa339ee5b00450138b28704d3c\n",
+    "index": "RElSQwAAAAIAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBpAAAAAAAAAAAAAAAADstJviyFyukFV7aUl2KJnE1zqLGEAhtYWluLnR4dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBpAAAAAAAAAAAAAAAAIjQULGQgFe1PTi0JwLrxlnj1/aWIAhtYWluLnR4dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBpAAAAAAAAAAAAAAAAAELCpLKdqVOfKrSeRiBL4TTd0N9MAhtYWluLnR4dAAAVFJFRQAAAAYALTEgMApqrLhuq3ASQpXHVjSBvizi5y6X3g==",
+    "indexLock": null,
+    "staging": ":100644 000000 88d050b 0000000 U\u0000main.txt\u0000",
+    "status": "UU main.txt\u0000",
+    "files": {
+      "main.txt": "PDw8PDw8PCBIRUFECm1haW4KPT09PT09PQp0YXJnZXQgY2hpbGQgdmVyc2lvbgo+Pj4+Pj4+IGUxOTNhYzMgKGNoaWxkIG93bikK"
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+      ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+      ".gtcontinue": "ewogICJicmFuY2hlc1RvU3luYyI6IFtdLAogICJicmFuY2hlc1RvUmVzdGFjayI6IFsKICAgICJjb25mbGljdC1iYXNlIgogIF0sCiAgInJlb3JkZXIiOiB7CiAgICAicmV0dXJuQnJhbmNoIjogImNvbmZsaWN0LWJhc2UiLAogICAgImdyYXBoQXBwbGllZCI6IHRydWUsCiAgICAicGxhbiI6IFsKICAgICAgewogICAgICAgICJuYW1lIjogImNvbmZsaWN0LWNoaWxkIiwKICAgICAgICAicGFyZW50IjogIm1haW4iLAogICAgICAgICJmcm9tIjogIjM4ZDY4ZGVmNTc0ZTgyYTJlNDM1Y2MzNmVkNmE1NDVmZDA1NDc5MzAiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJjb25mbGljdC1iYXNlIiwKICAgICAgICAicGFyZW50IjogImNvbmZsaWN0LWNoaWxkIiwKICAgICAgICAiZnJvbSI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgImNvbXBsZXRlZCI6IFtdLAogICAgInBlbmRpbmciOiBbCiAgICAgICJjb25mbGljdC1jaGlsZCIsCiAgICAgICJjb25mbGljdC1iYXNlIgogICAgXSwKICAgICJjb25mbGljdEJyYW5jaCI6ICJjb25mbGljdC1jaGlsZCIKICB9LAogICJjdXJyZW50QnJhbmNoT3ZlcnJpZGUiOiAiY29uZmxpY3QtYmFzZSIsCiAgInJlYmFzZWRCcmFuY2hCYXNlIjogImZhMmE0ZWY5ZDdhZTJhNDY4NzE5ODRlYzk4NjlhNGM1MjlmNmFjNDYiLAogICJyZWJhc2VPd25lcnNoaXAiOiAiMmU1ZjA0MDEtNWY1ZC00YWVhLWJiZWYtNjE1MjIwODI0MGY3Igp9",
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": null
+    },
+    "operation": {
+      "rebase-merge": {
+        "author-script": "R0lUX0FVVEhPUl9OQU1FPSdSZW9yZGVyIGZpeHR1cmUnCkdJVF9BVVRIT1JfRU1BSUw9J3Jlb3JkZXJAZXhhbXBsZS50ZXN0JwpHSVRfQVVUSE9SX0RBVEU9J0AxNTc3ODM2ODAwICswMDAwJwo=",
+        "charcoal-continuation": "MmU1ZjA0MDEtNWY1ZC00YWVhLWJiZWYtNjE1MjIwODI0MGY3",
+        "done": "cGljayBlMTkzYWMzNzBlNzNjNDVjNGM1NWQ2NWI1MzQ2YjM0Zjk5ZmVhMzc0ICMgY2hpbGQgb3duCg==",
+        "drop_redundant_commits": "",
+        "end": "MQo=",
+        "git-rebase-todo": "",
+        "git-rebase-todo.backup": "cGljayBlMTkzYWMzNzBlNzNjNDVjNGM1NWQ2NWI1MzQ2YjM0Zjk5ZmVhMzc0ICMgY2hpbGQgb3duCgojIFJlYmFzZSAzOGQ2OGRlLi5lMTkzYWMzIG9udG8gZmEyYTRlZiAoMSBjb21tYW5kKQojCiMgQ29tbWFuZHM6CiMgcCwgcGljayA8Y29tbWl0PiA9IHVzZSBjb21taXQKIyByLCByZXdvcmQgPGNvbW1pdD4gPSB1c2UgY29tbWl0LCBidXQgZWRpdCB0aGUgY29tbWl0IG1lc3NhZ2UKIyBlLCBlZGl0IDxjb21taXQ+ID0gdXNlIGNvbW1pdCwgYnV0IHN0b3AgZm9yIGFtZW5kaW5nCiMgcywgc3F1YXNoIDxjb21taXQ+ID0gdXNlIGNvbW1pdCwgYnV0IG1lbGQgaW50byBwcmV2aW91cyBjb21taXQKIyBmLCBmaXh1cCBbLUMgfCAtY10gPGNvbW1pdD4gPSBsaWtlICJzcXVhc2giIGJ1dCBrZWVwIG9ubHkgdGhlIHByZXZpb3VzCiMgICAgICAgICAgICAgICAgICAgIGNvbW1pdCdzIGxvZyBtZXNzYWdlLCB1bmxlc3MgLUMgaXMgdXNlZCwgaW4gd2hpY2ggY2FzZQojICAgICAgICAgICAgICAgICAgICBrZWVwIG9ubHkgdGhpcyBjb21taXQncyBtZXNzYWdlOyAtYyBpcyBzYW1lIGFzIC1DIGJ1dAojICAgICAgICAgICAgICAgICAgICBvcGVucyB0aGUgZWRpdG9yCiMgeCwgZXhlYyA8Y29tbWFuZD4gPSBydW4gY29tbWFuZCAodGhlIHJlc3Qgb2YgdGhlIGxpbmUpIHVzaW5nIHNoZWxsCiMgYiwgYnJlYWsgPSBzdG9wIGhlcmUgKGNvbnRpbnVlIHJlYmFzZSBsYXRlciB3aXRoICdnaXQgcmViYXNlIC0tY29udGludWUnKQojIGQsIGRyb3AgPGNvbW1pdD4gPSByZW1vdmUgY29tbWl0CiMgbCwgbGFiZWwgPGxhYmVsPiA9IGxhYmVsIGN1cnJlbnQgSEVBRCB3aXRoIGEgbmFtZQojIHQsIHJlc2V0IDxsYWJlbD4gPSByZXNldCBIRUFEIHRvIGEgbGFiZWwKIyBtLCBtZXJnZSBbLUMgPGNvbW1pdD4gfCAtYyA8Y29tbWl0Pl0gPGxhYmVsPiBbIyA8b25lbGluZT5dCiMgICAgICAgICBjcmVhdGUgYSBtZXJnZSBjb21taXQgdXNpbmcgdGhlIG9yaWdpbmFsIG1lcmdlIGNvbW1pdCdzCiMgICAgICAgICBtZXNzYWdlIChvciB0aGUgb25lbGluZSwgaWYgbm8gb3JpZ2luYWwgbWVyZ2UgY29tbWl0IHdhcwojICAgICAgICAgc3BlY2lmaWVkKTsgdXNlIC1jIDxjb21taXQ+IHRvIHJld29yZCB0aGUgY29tbWl0IG1lc3NhZ2UKIyB1LCB1cGRhdGUtcmVmIDxyZWY+ID0gdHJhY2sgYSBwbGFjZWhvbGRlciBmb3IgdGhlIDxyZWY+IHRvIGJlIHVwZGF0ZWQKIyAgICAgICAgICAgICAgICAgICAgICAgdG8gdGhpcyBwb3NpdGlvbiBpbiB0aGUgbmV3IGNvbW1pdHMuIFRoZSA8cmVmPiBpcwojICAgICAgICAgICAgICAgICAgICAgICB1cGRhdGVkIGF0IHRoZSBlbmQgb2YgdGhlIHJlYmFzZQojCiMgVGhlc2UgbGluZXMgY2FuIGJlIHJlLW9yZGVyZWQ7IHRoZXkgYXJlIGV4ZWN1dGVkIGZyb20gdG9wIHRvIGJvdHRvbS4KIwojIElmIHlvdSByZW1vdmUgYSBsaW5lIGhlcmUgVEhBVCBDT01NSVQgV0lMTCBCRSBMT1NULgojCiMgSG93ZXZlciwgaWYgeW91IHJlbW92ZSBldmVyeXRoaW5nLCB0aGUgcmViYXNlIHdpbGwgYmUgYWJvcnRlZC4KIwo=",
+        "head-name": "cmVmcy9oZWFkcy9jb25mbGljdC1jaGlsZAo=",
+        "interactive": "",
+        "message": "Y2hpbGQgb3duCgojIENvbmZsaWN0czoKIwltYWluLnR4dAo=",
+        "msgnum": "MQo=",
+        "no-reschedule-failed-exec": "",
+        "onto": "ZmEyYTRlZjlkN2FlMmE0Njg3MTk4NGVjOTg2OWE0YzUyOWY2YWM0Ngo=",
+        "orig-head": "ZTE5M2FjMzcwZTczYzQ1YzRjNTVkNjViNTM0NmIzNGY5OWZlYTM3NAo=",
+        "patch": "ZGlmZiAtLWdpdCBhL21haW4udHh0IGIvbWFpbi50eHQKaW5kZXggM2IyZDI2Zi4uMDEwYjBhOSAxMDA2NDQKLS0tIGEvbWFpbi50eHQKKysrIGIvbWFpbi50eHQKQEAgLTEgKzEgQEAKLXRhcmdldCBiYXNlIHZlcnNpb24KXCBObyBuZXdsaW5lIGF0IGVuZCBvZiBmaWxlCit0YXJnZXQgY2hpbGQgdmVyc2lvbgpcIE5vIG5ld2xpbmUgYXQgZW5kIG9mIGZpbGUK",
+        "stopped-sha": "ZTE5M2FjMzcwZTczYzQ1YzRjNTVkNjViNTM0NmIzNGY5OWZlYTM3NAo="
+      },
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "second": {
+    "status": "cli_error",
+    "stdout": "Resolved rebase conflict for conflict-child.\nDeparture branch: conflict-base. Parent graph: applied.\nConflict branch: conflict-base. Current checkout: detached HEAD.\nCompleted branches: conflict-child.\nRemaining branches: conflict-base.\nApplied parents: conflict-child -> main, conflict-base -> conflict-child.\nResolve the conflict, git add the resolution and run an continue. an rebase --abort only cancels the active rebase; parent changes and completed restacks remain.\nAfter abort, or after preserving blocking local work and resolving the Git error, retry each remaining branch in this order (resolve and an continue any new conflict before the next command):\nan restack --branch 'conflict-base' --only\nan checkout 'conflict-base'\n",
+    "stderr": "Hit conflict restacking conflict-base on conflict-child.\n\nUnmerged files:\nmain.txt\n\nYou are here (resolving conflict-base):\n◯  conflict-base\n◯  conflict-child\n\nTo fix and continue your previous Anthracite command:\n(1) resolve the listed merge conflicts\n(2) mark them as resolved with an add .\n(3) run an continue to continue executing your previous Anthracite command\nan rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.\nWARNING: Stack reorder is incomplete. Parent changes and completed restacks remain.\n",
+    "exitCode": 1,
+    "signal": null,
+    "truncated": false
+  },
+  "finished": {
+    "status": "success",
+    "stdout": "Resolved rebase conflict for conflict-base.\n",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "truncated": false
+  },
+  "actual": {
+    "branch": "conflict-base",
+    "commits": [
+      {
+        "commit": "e9bdb303a87804ca8038b9acfa4366d7c04c97e3",
+        "parents": "fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46",
+        "tree": "e39daaaf8369e93bacd233270eb223829e396501",
+        "message": "child own",
+        "files": "100644 blob 010b0a92ca76a54e7caad27918812f84d377437d\tmain.txt"
+      },
+      {
+        "commit": "e28ecac17cd3f9f5cc25832df8b4bb12a3b384ca",
+        "parents": "e9bdb303a87804ca8038b9acfa4366d7c04c97e3",
+        "tree": "78d3bb22e9ad906e3f6fe474f31f7c81e7201b82",
+        "message": "base own",
+        "files": "100644 blob 3b2d26f8b2172ba4155eda525d8a267135cea2c6\tmain.txt"
+      }
+    ],
+    "subjects": "child own\nbase own",
+    "contents": [
+      "target child version",
+      "target base version"
+    ],
+    "parent": "conflict-child\n",
+    "merges": "",
+    "status": "",
+    "operation": {
+      "rebase-merge": null,
+      "rebase-apply": null
+    },
+    "continuation": "{\n  \"branchesToSync\": [],\n  \"branchesToRestack\": []\n}"
+  },
+  "linkedBefore": {
+    "head": "82e63623afd56854962ea1f34812dccb2924faa8\n",
+    "branch": "other\n",
+    "refs": "refs/branch-metadata/base f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/child 15a4fa244867cd7d4ef331adff8866c534801d67\nrefs/branch-metadata/conflict-base f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/conflict-child 7ad3cbd2908a3311cc58128766f4ca63ae6acbd1\nrefs/branch-metadata/other f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/tip e20bdce00b43c6d2b55044574f7bb5acc42b286c\nrefs/heads/base 202d1d269474442f9937a36a35426a7271ddad64\nrefs/heads/child 6959b73acf05f58815eb34c63a3e9f7f22f9392a\nrefs/heads/conflict-base 38d68def574e82a2e435cc36ed6a545fd0547930\nrefs/heads/conflict-child e193ac370e73c45c4c55d65b5346b34f99fea374\nrefs/heads/main fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46\nrefs/heads/other 82e63623afd56854962ea1f34812dccb2924faa8\nrefs/heads/tip 1ff7db465a6c7dfa339ee5b00450138b28704d3c\n",
+    "index": "RElSQwAAAAIAAAACauEOlBYQY5hq4Q6UFhBjmAEAABALXK6aAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAauEOlBZDPBlq4Q6UFkM8GQEAABALXK6bAACBpAAAAfUAAAAUAAAADa0MZGPcCe+Wvyn4yZMvOe9M+kLkAAlvdGhlci50eHQAVFJFRQAAAAYALTEgMAo1U4rZDwaaD2rTrWYSsADQQy29pw==",
+    "indexLock": null,
+    "staging": ":100644 100644 27fa349 ad0c646 M\u0000other.txt\u0000",
+    "status": "MM other.txt\u0000?? untracked-link\u0000?? untracked.bin\u0000",
+    "files": {
+      "main.txt": "bWFpbg==",
+      "other.txt": "bGlua2VkIHN0YWdlZApsaW5rZWQgdW5zdGFnZWQ=",
+      "untracked-link": "link:untracked.bin",
+      "untracked.bin": "AP8="
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+      ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+      ".gtcontinue": null,
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": "ewogICJzaGEiOiAiZGRmOTEwNGFkOTZmYjg4Y2RmY2E1MThhNTc5NGNkNjljMWEzZDg1NSIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAiY29uZmxpY3QtY2hpbGQiLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIzOGQ2OGRlZjU3NGU4MmEyZTQzNWNjMzZlZDZhNTQ1ZmQwNTQ3OTMwIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjb25mbGljdC1iYXNlIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiMzhkNjhkZWY1NzRlODJhMmU0MzVjYzM2ZWQ2YTU0NWZkMDU0NzkzMCIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgIm1haW4iLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVFJVTksiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAib3RoZXIiLAogICAgICAgICAgImJhc2UiLAogICAgICAgICAgImNvbmZsaWN0LWJhc2UiCiAgICAgICAgXQogICAgICB9CiAgICBdLAogICAgWwogICAgICAib3RoZXIiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjgyZTYzNjIzYWZkNTY4NTQ5NjJlYTFmMzQ4MTJkY2NiMjkyNGZhYTgiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZmEyYTRlZjlkN2FlMmE0Njg3MTk4NGVjOTg2OWE0YzUyOWY2YWM0NiIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgImJhc2UiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjIwMmQxZDI2OTQ3NDQ0MmY5OTM3YTM2YTM1NDI2YTcyNzFkZGFkNjQiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJjaGlsZCIKICAgICAgICBdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZmEyYTRlZjlkN2FlMmE0Njg3MTk4NGVjOTg2OWE0YzUyOWY2YWM0NiIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgImNoaWxkIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogImJhc2UiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICI2OTU5YjczYWNmMDVmNTg4MTVlYjM0YzYzYTNlOWY3ZjIyZjkzOTJhIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAidGlwIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIyMDJkMWQyNjk0NzQ0NDJmOTkzN2EzNmEzNTQyNmE3MjcxZGRhZDY0IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY29uZmxpY3QtYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMzhkNjhkZWY1NzRlODJhMmU0MzVjYzM2ZWQ2YTU0NWZkMDU0NzkzMCIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNvbmZsaWN0LWNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAidGlwIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMWZmN2RiNDY1YTZjN2RmYTMzOWVlNWIwMDQ1MDEzOGIyODcwNGQzYyIsCiAgICAgICAgImNoaWxkcmVuIjogW10sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICI2OTU5YjczYWNmMDVmNTg4MTVlYjM0YzYzYTNlOWY3ZjIyZjkzOTJhIgogICAgICB9CiAgICBdCiAgXQp9"
+    },
+    "operation": {
+      "rebase-merge": null,
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "linkedAfter": {
+    "head": "82e63623afd56854962ea1f34812dccb2924faa8\n",
+    "branch": "other\n",
+    "refs": "refs/branch-metadata/base f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/child 15a4fa244867cd7d4ef331adff8866c534801d67\nrefs/branch-metadata/conflict-base 35530b8642f576e682c1ca9abf878d23c90136a9\nrefs/branch-metadata/conflict-child f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/other f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/tip e20bdce00b43c6d2b55044574f7bb5acc42b286c\nrefs/heads/base 202d1d269474442f9937a36a35426a7271ddad64\nrefs/heads/child 6959b73acf05f58815eb34c63a3e9f7f22f9392a\nrefs/heads/conflict-base e28ecac17cd3f9f5cc25832df8b4bb12a3b384ca\nrefs/heads/conflict-child e9bdb303a87804ca8038b9acfa4366d7c04c97e3\nrefs/heads/main fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46\nrefs/heads/other 82e63623afd56854962ea1f34812dccb2924faa8\nrefs/heads/tip 1ff7db465a6c7dfa339ee5b00450138b28704d3c\n",
+    "index": "RElSQwAAAAIAAAACauEOlBYQY5hq4Q6UFhBjmAEAABALXK6aAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAauEOlBZDPBlq4Q6UFkM8GQEAABALXK6bAACBpAAAAfUAAAAUAAAADa0MZGPcCe+Wvyn4yZMvOe9M+kLkAAlvdGhlci50eHQAVFJFRQAAAAYALTEgMAo1U4rZDwaaD2rTrWYSsADQQy29pw==",
+    "indexLock": null,
+    "staging": ":100644 100644 27fa349 ad0c646 M\u0000other.txt\u0000",
+    "status": "MM other.txt\u0000?? untracked-link\u0000?? untracked.bin\u0000",
+    "files": {
+      "main.txt": "bWFpbg==",
+      "other.txt": "bGlua2VkIHN0YWdlZApsaW5rZWQgdW5zdGFnZWQ=",
+      "untracked-link": "link:untracked.bin",
+      "untracked.bin": "AP8="
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+      ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+      ".gtcontinue": "ewogICJicmFuY2hlc1RvU3luYyI6IFtdLAogICJicmFuY2hlc1RvUmVzdGFjayI6IFtdCn0=",
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": "ewogICJzaGEiOiAiN2JmZjA1NjE3ZTcyMGZlYzcwZDE3MWY5YmJlMzRjNjZhOTllN2UzNSIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImZhMmE0ZWY5ZDdhZTJhNDY4NzE5ODRlYzk4NjlhNGM1MjlmNmFjNDYiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJvdGhlciIsCiAgICAgICAgICAiYmFzZSIsCiAgICAgICAgICAiY29uZmxpY3QtY2hpbGQiCiAgICAgICAgXQogICAgICB9CiAgICBdLAogICAgWwogICAgICAib3RoZXIiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjgyZTYzNjIzYWZkNTY4NTQ5NjJlYTFmMzQ4MTJkY2NiMjkyNGZhYTgiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZmEyYTRlZjlkN2FlMmE0Njg3MTk4NGVjOTg2OWE0YzUyOWY2YWM0NiIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgImJhc2UiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjIwMmQxZDI2OTQ3NDQ0MmY5OTM3YTM2YTM1NDI2YTcyNzFkZGFkNjQiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJjaGlsZCIKICAgICAgICBdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZmEyYTRlZjlkN2FlMmE0Njg3MTk4NGVjOTg2OWE0YzUyOWY2YWM0NiIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgImNoaWxkIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogImJhc2UiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICI2OTU5YjczYWNmMDVmNTg4MTVlYjM0YzYzYTNlOWY3ZjIyZjkzOTJhIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAidGlwIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIyMDJkMWQyNjk0NzQ0NDJmOTkzN2EzNmEzNTQyNmE3MjcxZGRhZDY0IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY29uZmxpY3QtY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImU5YmRiMzAzYTg3ODA0Y2E4MDM4YjlhY2ZhNDM2NmQ3YzA0Yzk3ZTMiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJjb25mbGljdC1iYXNlIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAidGlwIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMWZmN2RiNDY1YTZjN2RmYTMzOWVlNWIwMDQ1MDEzOGIyODcwNGQzYyIsCiAgICAgICAgImNoaWxkcmVuIjogW10sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICI2OTU5YjczYWNmMDVmNTg4MTVlYjM0YzYzYTNlOWY3ZjIyZjkzOTJhIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY29uZmxpY3QtYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjb25mbGljdC1jaGlsZCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImUyOGVjYWMxN2NkM2Y5ZjVjYzI1ODMyZGY4YjRiYjEyYTNiMzg0Y2EiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZTliZGIzMDNhODc4MDRjYTgwMzhiOWFjZmE0MzY2ZDdjMDRjOTdlMyIKICAgICAgfQogICAgXQogIF0KfQ=="
+    },
+    "operation": {
+      "rebase-merge": null,
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  }
+}

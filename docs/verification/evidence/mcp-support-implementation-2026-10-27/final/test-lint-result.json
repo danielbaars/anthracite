@@ -1,0 +1,12 @@
+{
+  "paths": [
+    "test/commands/mcp_bounds_cli.test.ts",
+    "test/commands/mcp_cli.test.ts",
+    "test/commands/mcp_execution_cli.test.ts",
+    "test/commands/mcp_lifecycle_cli.test.ts",
+    "test/commands/mcp_workflows_cli.test.ts",
+    "test/lib/mcp_client.ts",
+    "test/lib/mcp_pipe_client.ts"
+  ],
+  "exitCode": 0
+}

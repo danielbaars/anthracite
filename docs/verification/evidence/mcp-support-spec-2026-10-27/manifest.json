@@ -1,0 +1,37 @@
+{
+  "baselineSourceCommit": "e201e0629c547f3c88845ab37a9bf64555f21c19",
+  "files": {
+    "check_evidence.py": {
+      "bytes": 1926,
+      "sha256": "30c9246a4af4d4c999a25654131bdb16b572bcedc92456b43c37ac2553c4c987"
+    },
+    "initial-inventory-summary.json": {
+      "bytes": 3777,
+      "sha256": "9de2d110c6edeb2a2fb1640183a240d4994d76828569533fab19502796fa6df3"
+    },
+    "mcp-sdk-1.32.2-package.json": {
+      "bytes": 6524,
+      "sha256": "49e6b1f452d55977dbaf77f9a3e7282f4740449a27e64e7d3fca76fe67757d36"
+    },
+    "probe_mcp.py": {
+      "bytes": 5475,
+      "sha256": "ced1b31bf08da1e5d4004aa6fba36617d5ba189cd1c2895da41196af4d7fddaf"
+    },
+    "protocol-receipt.json": {
+      "bytes": 3018,
+      "sha256": "c48c2f0584bdc14663a45bb325a882b1613ec03941dce31f0d2692d126043908"
+    },
+    "rea-graphite-error.json": {
+      "bytes": 39924,
+      "sha256": "aa03cd5fc998f3fc12dd7e8c086768b0ceb605eaa1e50390667b34a0c16694fe"
+    },
+    "rea-stdio-probe-final.json": {
+      "bytes": 36610,
+      "sha256": "5b0d8fad9a34b26c4c983e9d8b308c4b8e915d14b6ad6514aa0941102cce88ed"
+    },
+    "source-audit.json": {
+      "bytes": 3303,
+      "sha256": "3e3d25950da15732c7dd0480e120e619aba8fd1ada272304d92884847989d50f"
+    }
+  }
+}

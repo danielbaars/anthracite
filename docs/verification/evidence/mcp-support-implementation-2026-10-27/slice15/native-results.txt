@@ -1,0 +1,78 @@
+
+
+  MCP command execution through stdio
+    1) scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels
+    2) scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments
+    3) scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers
+    4) scenario 8: forces no UI, closes stdin and keeps recursion, documentation, quiet/debug and raw-Git framing usable
+
+  MCP startup and learning through stdio
+    ✔ scenario 1: discovers a working learning tool outside Git without credentials (100ms)
+    ✔ scenario 2: learns a deliberate workflow with explicit cwd and no connection side effects (98ms)
+    ✔ scenario 1: negotiates SDK protocol behavior for 2024-11-05 (99ms)
+    ✔ scenario 1: negotiates SDK protocol behavior for 2999-01-01 (97ms)
+    ✔ scenario 1: exposes help and completion without starting a server (340ms)
+    ✔ scenario 1: starts through the installed an spelling (98ms)
+    ✔ scenario 1: starts through the installed anthracite spelling (100ms)
+
+
+  7 passing (15s)
+  4 failing
+
+  1) MCP command execution through stdio
+       scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels:
+
+      AssertionError: expected { status: 'cli_error', …(6) } to deeply equal { status: 'success', …(6) }
+      + expected - actual
+
+       {
+      -  "exitCode": 1
+      -  "isError": true
+      +  "exitCode": 0
+      +  "isError": false
+         "signal": [null]
+      -  "status": "cli_error"
+      -  "stderr": "Unknown arguments: /private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-15/apps/cli/dist/src/index.js, short\n"
+      -  "stdout": ""
+      +  "status": "success"
+      +  "stderr": ""
+      +  "stdout": "◯    tip\n◯    child\n◉    base\n│ ◯  other\n◯─┘  main\n"
+         "truncated": false
+       }
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_execution_cli.test.js:81:57)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+  2) MCP command execution through stdio
+       scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments:
+
+      AssertionError: Unknown arguments: m, /private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-15/apps/cli/dist/src/index.js, literal-feature
+: expected 'cli_error' to equal 'success'
+      + expected - actual
+
+      -cli_error
+      +success
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_execution_cli.test.js:104:61)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+  3) MCP command execution through stdio
+       scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers:
+
+      AssertionError: expected { status: 'cli_error', …(6) } to have property 'status' of 'success', but got 'cli_error'
+      + expected - actual
+
+      -cli_error
+      +success
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_execution_cli.test.js:164:65)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+  4) MCP command execution through stdio
+       scenario 8: forces no UI, closes stdin and keeps recursion, documentation, quiet/debug and raw-Git framing usable:
+     AssertionError: expected 'Unknown argument: /private/tmp/anthra…' to match /interactive|branch|editor/i
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_execution_cli.test.js:195:50)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+
+

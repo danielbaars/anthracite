@@ -7,9 +7,7 @@ import { spiffy } from './spiffy';
 const schema = t.shape({
   branchPrefix: t.optional(t.string),
   branchDate: t.optional(t.boolean),
-  branchReplacement: t.optional(
-    t.unionMany([t.literal('_'), t.literal('-'), t.literal('')])
-  ),
+  branchReplacement: t.optional(t.literals(['_', '-', ''] as const)),
   tips: t.optional(t.boolean),
   editor: t.optional(t.string),
   pager: t.optional(t.string),

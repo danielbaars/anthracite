@@ -1,0 +1,68 @@
+
+
+  MCP startup and learning through stdio
+    ✔ scenario 1: discovers a working learning tool outside Git without credentials (94ms)
+    ✔ scenario 2: learns a deliberate workflow with explicit cwd and no connection side effects (93ms)
+    ✔ scenario 1: negotiates SDK protocol behavior for 2024-11-05 (92ms)
+    ✔ scenario 1: negotiates SDK protocol behavior for 2999-01-01 (87ms)
+    ✔ scenario 1: exposes help and completion without starting a server (323ms)
+    ✔ scenario 1: starts through the installed an spelling (92ms)
+    ✔ scenario 1: starts through the installed anthracite spelling (87ms)
+
+  MCP command execution through stdio
+    ✔ scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels (1372ms)
+    ✔ scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments (986ms)
+    ✔ scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers (1242ms)
+    ✔ scenario 8: forces no UI, closes stdin and keeps recursion, documentation, quiet/debug and raw-Git framing usable (3187ms)
+
+  Anthracite release identity through the public CLI
+    ✔ reports the release version and Anthracite help outside Git without tools (159ms)
+    ✔ writes its own user preferences while preserving legacy preferences (96ms)
+
+  modern completion through the public CLI
+    ✔ offers all twenty standard aliases and preserved legacy root names outside Git without tools (80ms)
+    ✔ offers actual options for canonical and alias forms outside Git without tools (3196ms)
+    ✔ completes local branch arguments with cwd spaces and preserves inspection state under quiet (1343ms)
+    ✔ refuses invalid completion cwd and policy values before external tools (436ms)
+    ✔ generates bash and zsh scripts executable without shell startup and preserves fish route content (737ms)
+    ✔ prints truthful command help outside Git under quiet and cwd without tools or configuration changes (904ms)
+    ✔ keeps nested completion local to its registered group (149ms)
+
+  noninteractive route defaults through the public CLI
+    ✔ navigates a unique child but refuses ambiguous navigation and stack choices (2182ms)
+    ✔ refuses top after a deterministic prefix without printing a partial path or changing staged work (866ms)
+    ✔ tracks unique parents but requires an explicit parent for ambiguity (2693ms)
+    ✔ keeps ordinary enabled tips but rejects an unrelated explicit parent with empty stdout and stderr advice (1060ms)
+    ✔ rejects modify commit with only an untracked file and enabled tips before staging or hooks with empty stdout (1042ms)
+    ✔ tracks only new downstack ancestors and stops at the existing tracked branch (1999ms)
+    ✔ declines untracking children without force and keeps explicit force separate (1731ms)
+    ✔ refuses split before writes and initializes only with supported trunk input (2858ms)
+    ✔ automatically initializes an inferred trunk before showing setup success and ordinary log content (846ms)
+
+  noninteractive local remote decisions through the public CLI
+    ✔ gets a real fast-forward but preserves divergent local work without force (2723ms)
+    ✔ diagnoses quiet get overwrite refusal for a local branch with untracked (2449ms)
+    ✔ diagnoses quiet get overwrite refusal for a local branch with different parent (2687ms)
+    ✔ preserves local work when a terminal user declines get overwrite or selects abort (2902ms)
+    ✔ refuses a non-fast-forward trunk reset unless force was requested (917ms)
+
+  external and direct contexts through the public CLI
+    ✔ fails dependency checks without attempting auth or login (545ms)
+    ✔ reports a controlled interactive login failure as failure (413ms)
+    ✔ checks an already authenticated status quietly without login (306ms)
+    ✔ accepts a supported two-digit gh major version without login (321ms)
+    ✔ applies quiet to the direct cache context in the selected repository (2295ms)
+    ✔ refuses the intrinsically interactive demo before external actions (304ms)
+    ✔ completes controlled interactive login and checks the resulting status in a fresh process (597ms)
+    ✔ keeps login unavailable under explicit pipe interaction, quiet, no-interactive and legacy constraints (1440ms)
+    ✔ changes user configuration outside Git quietly and reads it through a fresh public process (451ms)
+    ✔ reports invalid user configuration arguments on stderr without changing settings (98ms)
+    ✔ preserves the direct cache clear lifecycle and normal presentation (2961ms)
+    ✔ keeps every forbidden demo mode guarded with actual external Git sentinels (1217ms)
+    ✔ keeps direct cache debug on stderr even when ordinary cache output is quiet (2347ms)
+    ✔ checks authentication in the cwd-selected repository and preserves its refs (2477ms)
+    ✔ refuses unauthenticated pipe auth before starting login (319ms)
+
+
+  49 passing (2m)
+

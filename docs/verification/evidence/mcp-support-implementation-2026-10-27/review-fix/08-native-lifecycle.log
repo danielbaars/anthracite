@@ -1,0 +1,10 @@
+
+
+  MCP cancellation and shutdown through stdio
+    ✔ scenario 14: cancels active and queued work, omits results and preserves unrelated state before serving another request (2882ms)
+    ✔ scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work (5200ms)
+    ✔ scenario 15: EOF and server signals stop owned descendants, discard queued mutations and preserve genuine recovery for a fresh session (18265ms)
+
+
+  3 passing (42s)
+

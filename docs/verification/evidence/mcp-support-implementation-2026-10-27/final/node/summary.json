@@ -1,0 +1,123 @@
+{
+  "runtime": "node",
+  "shard": 0,
+  "shards": 1,
+  "files": 7,
+  "passes": 31,
+  "pending": 0,
+  "failedFiles": 0,
+  "results": [
+    {
+      "file": "commands/anthracite_identity_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T20:49:12.896Z",
+        "end": "2026-10-27T20:49:19.246Z",
+        "duration": 6350
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/mcp_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 7,
+        "passes": 7,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T20:49:19.404Z",
+        "end": "2026-10-27T20:49:21.266Z",
+        "duration": 1862
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/mcp_execution_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T20:49:21.419Z",
+        "end": "2026-10-27T20:49:41.157Z",
+        "duration": 19738
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/mcp_bounds_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T20:49:12.979Z",
+        "end": "2026-10-27T20:49:50.780Z",
+        "duration": 37801
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/mcp_lifecycle_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 3,
+        "passes": 3,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T20:49:41.293Z",
+        "end": "2026-10-27T20:50:24.677Z",
+        "duration": 43384
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/modern_completion_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 7,
+        "passes": 7,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T20:50:24.775Z",
+        "end": "2026-10-27T20:50:54.225Z",
+        "duration": 29450
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/mcp_workflows_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T20:49:50.921Z",
+        "end": "2026-10-27T20:51:15.588Z",
+        "duration": 84667
+      },
+      "passed": true
+    }
+  ]
+}

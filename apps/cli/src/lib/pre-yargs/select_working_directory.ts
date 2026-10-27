@@ -10,7 +10,35 @@ import { GIT_COMMAND_ALLOWLIST } from './passthrough';
 export function selectWorkingDirectory(
   commands: readonly CommandModule[]
 ): string[] {
-  const args = process.argv.slice(2);
+  const {
+    args: retained,
+    directory,
+    isGitPassthrough,
+  } = scanWorkingDirectory(process.argv.slice(2));
+  if (
+    directory !== undefined &&
+    (isGitPassthrough ||
+      !inspectCommandArguments(retained, commands).isDocumentation)
+  ) {
+    try {
+      process.chdir(directory);
+    } catch (error) {
+      throw new CwdSelectionError(
+        `Cannot use --cwd directory ${JSON.stringify(directory)}: ${
+          error instanceof Error ? error.message : 'directory is inaccessible'
+        }`
+      );
+    }
+  }
+  return retained;
+}
+
+/** The CLI and MCP share the literal/raw-Git boundaries without changing server cwd. */
+export function scanWorkingDirectory(args: readonly string[]): {
+  readonly args: string[];
+  readonly directory: string | undefined;
+  readonly isGitPassthrough: boolean;
+} {
   const retained: string[] = [];
   let directory: string | undefined;
   let isGitPassthrough = false;
@@ -49,41 +77,25 @@ export function selectWorkingDirectory(
         throw new CwdSelectionError('--cwd requires a nonempty directory.');
     } else retained.push(argument);
   }
-  if (
-    directory !== undefined &&
-    (isGitPassthrough || !isDocumentationRequest(retained, commands))
-  ) {
-    try {
-      process.chdir(directory);
-    } catch (error) {
-      throw new CwdSelectionError(
-        `Cannot use --cwd directory ${JSON.stringify(directory)}: ${
-          error instanceof Error ? error.message : 'directory is inaccessible'
-        }`
-      );
-    }
-  }
-  return retained;
+  return { args: retained, directory, isGitPassthrough };
 }
 
 export class CwdSelectionError extends Error {}
 
-function isDocumentationRequest(
+export function inspectCommandArguments(
   args: readonly string[],
   commands: readonly CommandModule[]
-): boolean {
+): { readonly isDocumentation: boolean; readonly command: string | undefined } {
   const terminator = args.indexOf('--');
   const options = terminator === -1 ? args : args.slice(0, terminator);
   // Completion has its own early execution path, before ordinary middleware.
-  if (
-    options.some(
-      (arg) =>
-        /^--get-yargs-completions(?:\.|=|$)/.test(arg) ||
-        /^--no-get-yargs-completions(?:\.[^=]*)?$/.test(arg)
-    )
-  )
-    return false;
+  const hasCompletion = options.some(
+    (arg) =>
+      /^--get-yargs-completions(?:\.|=|$)/.test(arg) ||
+      /^--no-get-yargs-completions(?:\.[^=]*)?$/.test(arg)
+  );
   let requested = false;
+  let command: string | undefined;
   const executionBlocked = new Error(
     'Documentation preflight cannot execute commands.'
   );
@@ -101,6 +113,7 @@ function isDocumentationRequest(
       .showHelpOnFail(false)
       .parserConfiguration({ 'populate--': true })
       .middleware((argv) => {
+        command = typeof argv._[0] === 'string' ? argv._[0] : undefined;
         if (argv.help || argv.version) return;
         if (
           commands.some((module) => {
@@ -120,10 +133,15 @@ function isDocumentationRequest(
           throw executionBlocked;
       })
       .parseSync(args, {}, (error, argv, output) => {
-        requested = !error && argv._[0] !== 'completion' && output.length > 0;
+        command = typeof argv._[0] === 'string' ? argv._[0] : undefined;
+        requested =
+          !hasCompletion &&
+          !error &&
+          argv._[0] !== 'completion' &&
+          output.length > 0;
       });
   } catch (error) {
     if (error !== executionBlocked) throw error;
   }
-  return requested;
+  return { isDocumentation: requested, command };
 }
