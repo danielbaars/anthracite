@@ -27,6 +27,10 @@ these guards. After a conflict, inspect git status and the reported partial
 state, resolve files deliberately and stage resolutions with normal tooling,
 then use an continue. A disconnected or interrupted operation may need this
 inspection after reconnecting; interruption does not promise rollback.
+Cancellation and timeout stop owned work without rollback. Cancelling queued
+work prevents it from starting; disconnect discards the queue. Interruption does
+not erase Git recovery data or authorize an automatic retry. Inspect actual refs,
+staged changes and continuation before proceeding.
 
 Submit deliberately with an submit (or an submit --help to inspect selectors).
 Confirm intended branches, PR metadata and the owner's publication approval

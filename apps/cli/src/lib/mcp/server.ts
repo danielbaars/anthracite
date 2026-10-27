@@ -14,7 +14,7 @@ import { createCommandExecutor } from './execute';
 import { ExecutionOptions } from './execute_child';
 
 export async function serveMcp(options: ExecutionOptions): Promise<void> {
-  const executeCommand = createCommandExecutor(options);
+  const executor = createCommandExecutor(options);
   // The lower-level SDK server keeps the tool list static (no listChanged hint).
   const server = new Server(
     { name: 'anthracite', version },
@@ -71,9 +71,12 @@ export async function serveMcp(options: ExecutionOptions): Promise<void> {
       },
     ],
   }));
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
     if (request.params.name === 'run_an_cmd') {
-      const result = await executeCommand(request.params.arguments);
+      const result = await executor.execute(
+        request.params.arguments,
+        extra.signal
+      );
       return {
         isError: result.status !== 'success',
         content: [{ type: 'text', text: JSON.stringify(result) }],
@@ -93,5 +96,34 @@ export async function serveMcp(options: ExecutionOptions): Promise<void> {
       };
     return { content: [{ type: 'text', text: ANTHRACITE_GUIDANCE }] };
   });
+  let stopping = false;
+  const stop = (): void => {
+    void shutdown();
+  };
+  async function shutdown(): Promise<void> {
+    if (stopping) return;
+    stopping = true;
+    // Stop admission synchronously, before SDK close aborts in-flight handlers.
+    const drained = executor.shutdown();
+    try {
+      await server.close();
+    } finally {
+      await drained;
+      process.stdin.off('end', stop);
+      process.stdin.off('error', stop);
+      process.stdout.off('error', stop);
+      process.stdout.off('close', stop);
+      process.off('SIGINT', stop);
+      process.off('SIGTERM', stop);
+    }
+  }
+  server.onclose = stop;
+  process.stdin.once('end', stop);
+  process.stdin.on('error', stop);
+  // A vanished output pipe must not reach the CLI's immediate uncaught exit.
+  process.stdout.on('error', stop);
+  process.stdout.on('close', stop);
+  process.on('SIGINT', stop);
+  process.on('SIGTERM', stop);
   await server.connect(new StdioServerTransport());
 }

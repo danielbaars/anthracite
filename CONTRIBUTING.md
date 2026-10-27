@@ -6,6 +6,8 @@ Please open an issue before a substantial change. Use English for source comment
 
 Use Node.js 24.19.0 (`nvm use`), the checked-in Yarn 3.2.1 release and Bun 1.3.14 for native release builds. No global Yarn or Turbo installation is needed. The CLI pins TypeScript 5.5.4 and compatible Node.js declarations for the official MCP SDK 1.32.2; these declaration versions do not change the runtime requirements or CommonJS module format. TypeScript 4.7 cannot parse the SDK's Zod 4 declarations.
 
+The checked-in Yarn patch for SDK 1.32.2 fixes its cancellation guard rejecting a valid request ID of numeric zero (or an empty string). It changes only that guard in the SDK's CommonJS and ESM protocol implementations; SDK validation, cancellation controllers and response suppression remain authoritative. Remove the patch when upgrading to an SDK that accepts every schema-valid request ID, and retain the public numeric-zero cancellation regression on both runtimes.
+
 ```sh
 node .yarn/releases/yarn-3.2.1.cjs install --immutable
 node .yarn/releases/yarn-3.2.1.cjs turbo run build

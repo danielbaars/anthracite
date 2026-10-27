@@ -23,8 +23,10 @@ const prefix = isCompiled ? [] : [entryPoint];
 // eslint-disable-next-line max-lines-per-function
 export async function executeChild(
   input: { readonly args: readonly string[]; readonly cwd: string },
-  options: ExecutionOptions
+  options: ExecutionOptions,
+  requestSignal: AbortSignal
 ): Promise<ExecutionResult> {
+  requestSignal.throwIfAborted();
   const child = spawn(executable, [...prefix, ...input.args], {
     cwd: input.cwd,
     env: { ...process.env, GRAPHITE_INTERACTIVE: '1' },
@@ -96,6 +98,9 @@ export async function executeChild(
   child.once('close', () => {
     closed = true;
   });
+  const cancel = (): void => stop();
+  requestSignal.addEventListener('abort', cancel, { once: true });
+  if (requestSignal.aborted) cancel();
   try {
     while (
       !exited ||
@@ -140,6 +145,7 @@ export async function executeChild(
   } catch (error: unknown) {
     failCleanup(error);
   } finally {
+    requestSignal.removeEventListener('abort', cancel);
     clearTimeout(deadline);
     clearTimeout(escalation);
     clearTimeout(watchdog);

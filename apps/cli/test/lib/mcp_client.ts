@@ -16,6 +16,7 @@ export class McpCliClient {
   readonly transport: StdioClientTransport;
   readonly errors: string[] = [];
   readonly messages: JSONRPCMessage[] = [];
+  readonly sentMessages: JSONRPCMessage[] = [];
   stderr = '';
 
   constructor(
@@ -35,6 +36,11 @@ export class McpCliClient {
       stderr: 'pipe',
     };
     this.transport = new StdioClientTransport(parameters);
+    const send = this.transport.send.bind(this.transport);
+    this.transport.send = async (message: JSONRPCMessage) => {
+      this.sentMessages.push(message);
+      await send(message);
+    };
     const start = this.transport.start.bind(this.transport);
     this.transport.start = async () => {
       const receive = this.transport.onmessage;
@@ -72,6 +78,7 @@ export class McpCliClient {
         path.join(evidence, `mcp-${process.pid}-${Date.now()}.json`),
         JSON.stringify({
           messages: this.messages,
+          sentMessages: this.sentMessages,
           errors: this.errors,
           stderr: this.stderr,
         })

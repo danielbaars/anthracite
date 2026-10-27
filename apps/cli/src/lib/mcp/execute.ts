@@ -39,28 +39,73 @@ export type ExecutionResult = {
   readonly message?: string;
 };
 
-export function createCommandExecutor(
-  options: ExecutionOptions
-): (input: unknown) => Promise<ExecutionResult> {
-  let queue = Promise.resolve();
-  return async (input) => {
-    const previous = queue;
-    let release = (): void => undefined;
-    queue = new Promise<void>((resolve) => {
-      release = resolve;
-    });
-    await previous;
-    try {
-      return await executeCommand(input, options);
-    } finally {
-      release();
+export function createCommandExecutor(options: ExecutionOptions): {
+  readonly execute: (
+    input: unknown,
+    signal: AbortSignal
+  ) => Promise<ExecutionResult>;
+  readonly shutdown: () => Promise<void>;
+} {
+  type Entry = {
+    readonly input: unknown;
+    readonly signal: AbortSignal;
+    readonly resolve: (result: ExecutionResult) => void;
+    readonly reject: (error: unknown) => void;
+    readonly cancel: () => void;
+  };
+  const queue: Entry[] = [];
+  const closing = new AbortController();
+  let active: Promise<void> | undefined;
+  async function runQueue(): Promise<void> {
+    while (queue.length) {
+      const entry = queue.shift();
+      if (!entry) break;
+      entry.signal.removeEventListener('abort', entry.cancel);
+      try {
+        entry.signal.throwIfAborted();
+        entry.resolve(await executeCommand(entry.input, options, entry.signal));
+      } catch (error: unknown) {
+        entry.reject(error);
+      }
     }
+    active = undefined;
+  }
+  return {
+    execute: async (input, requestSignal) => {
+      const signal = AbortSignal.any([requestSignal, closing.signal]);
+      signal.throwIfAborted();
+      return await new Promise<ExecutionResult>((resolve, reject) => {
+        const entry: Entry = {
+          input,
+          signal,
+          resolve,
+          reject,
+          cancel: () => {
+            const index = queue.indexOf(entry);
+            if (index !== -1) queue.splice(index, 1);
+            reject(signal.reason);
+          },
+        };
+        signal.addEventListener('abort', entry.cancel, { once: true });
+        queue.push(entry);
+        if (!active) active = runQueue();
+      });
+    },
+    shutdown: async () => {
+      closing.abort(
+        new Error(
+          'MCP connection closed; inspect actual repository state before retrying.'
+        )
+      );
+      await active;
+    },
   };
 }
 
 export async function executeCommand(
   input: unknown,
-  options: ExecutionOptions
+  options: ExecutionOptions,
+  signal: AbortSignal
 ): Promise<ExecutionResult> {
   const parsed = executionInputSchema.safeParse(input);
   if (!parsed.success)
@@ -94,7 +139,7 @@ export async function executeCommand(
       }`
     );
   }
-  return await executeChild({ args, cwd }, options);
+  return await executeChild({ args, cwd }, options, signal);
 }
 
 function failure(
