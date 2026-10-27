@@ -417,6 +417,10 @@ Shared flags (on `an log` and `an log short`):
 | `-n`, `--steps` | Only show this many levels up/downstack. Implies `--stack`. |
 | `-u`, `--show-untracked` | Include untracked branches. |
 
+Omitting `--steps` keeps the existing unlimited scope: all tracked branches by default, or the current branch's stack with `--stack`. An explicit `--steps 0` selects only the current tracked branch, with no ancestor or descendant branch nodes. Full output retains its own commit details; short output remains compact. The same rule applies through `an l`, `an log s`, `an l short`, `an l s` and `an ls`, and with `--steps=0`, `-n 0` or `-n0`.
+
+Zero still implies current-branch selection with `--no-stack` or `--stack=false`; `--reverse` retains the same single node. An explicitly requested `--show-untracked`/`-u` section is separate from the tracked graph. A current trunk or empty tracked branch remains visible; detached HEAD and an untracked current branch fail with a meaningful error. Inspection preserves local work, stored branch state and saved recovery data.
+
 Classic is available through `an log --classic`, `an l --classic`, `an log short --classic`, and `an ls --classic`; only the short forms also have `-c`. Without classic (or with `--classic=false`), the normal full/short style remains selected. Global cwd, quiet and interaction rules still apply. A configured pager receives classic content only when both stdin and stdout are terminals and interaction is allowed; pipes receive it directly.
 
 ### `ls`
