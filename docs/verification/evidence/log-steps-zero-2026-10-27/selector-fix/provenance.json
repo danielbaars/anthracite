@@ -1,0 +1,231 @@
+{
+  "testFixCommit": "f1f24e50e75caa096437837a429ef3cb04b982ff",
+  "integrationBase": "f89ef82fcaa7e8ebb955ff331cc3519009ff7762",
+  "sourceTree": "546f0d121e48c5b21891290e52cfef2ff3941a00",
+  "changedFiles": [
+    "apps/cli/test/commands/move_selector_cli.test.ts"
+  ],
+  "productionChanges": false,
+  "sharedFixturePolicyChanges": false,
+  "sourceHashes": {
+    "apps/cli/test/commands/move_selector_cli.test.ts": "c9b679bd4a6161d3eed10e17a97e8e7ff9c5ff79c38593324082b63e0aee2a82"
+  },
+  "nodeVersion": "v24.19.0",
+  "bunVersion": "1.3.14",
+  "ownNativeCandidate": {
+    "path": "/private/tmp/anthracite-log-implementation/selector-fix-native",
+    "sha256": "517e41b274f74f9f30f8570c31dd83af07dcca6702951c9e894a3acbeae18a5d"
+  },
+  "baselineDiagnosticOnly": {
+    "sourceCommit": "2cf7bd6a8fc99dc8c73896038e0c8add8ef3539f",
+    "path": "/Users/danielbaars/.local/share/anthracite/0.1.1/an",
+    "sha256Verified": "6b81017ae0b7cb018c698fd5e25c074d15aed726bcbe2451cab2c6864999091e"
+  },
+  "rootCause": "The three successful move selector fixtures intend the name other but submit an ordinal Up key. A newer trunk and tied feature dates change that position; exact expected-other/actual-main failure reproduces on the pinned baseline too.",
+  "fix": "Type other and wait for completed filtered header plus selected-row glyph before Enter. Clear FORCE_COLOR only in those successful fixture interactions. Retain adversarial leaf setup and all original assertions.",
+  "probeRefinement": "The initial newer-trunk probe exposed selection of main through the existing own-history assertion. Public restacking of other onto the updated trunk isolates the original final navigation assertion without weakening it.",
+  "fullScenarioIds": {
+    "node": [
+      "move source-aware selection through a real PTY cancels from a different departure while prompting for the selected source without checkout",
+      "move source-aware selection through a real PTY selects an explicit source target while omitting that source and its descendants",
+      "move source-aware selection through a real PTY shows descendants as only candidates while omitting the selected source itself on cancellation",
+      "move source-aware selection through a real PTY selects a leaf-only target from a different departure in a real terminal",
+      "move source-aware selection through a real PTY uses the current source without an explicit source option during selection",
+      "move source-aware selection through a real PTY rejects interactive invalid input before a selector can open: [\"move\",\"main\",\"--onto\",\"other\",\"--source\",\"base\"]",
+      "move source-aware selection through a real PTY rejects interactive invalid input before a selector can open: [\"move\",\"--onto\",\"\",\"--source\",\"base\"]",
+      "move source-aware selection through a real PTY rejects interactive invalid input before a selector can open: [\"move\",\"--source\",\"base\",\"--source\",\"tip\"]",
+      "move source-aware selection through a real PTY rejects interactive invalid input before a selector can open: [\"move\",\"--source\",\"missing\"]"
+    ],
+    "native": [
+      "move source-aware selection through a real PTY cancels from a different departure while prompting for the selected source without checkout",
+      "move source-aware selection through a real PTY selects an explicit source target while omitting that source and its descendants",
+      "move source-aware selection through a real PTY shows descendants as only candidates while omitting the selected source itself on cancellation",
+      "move source-aware selection through a real PTY selects a leaf-only target from a different departure in a real terminal",
+      "move source-aware selection through a real PTY uses the current source without an explicit source option during selection",
+      "move source-aware selection through a real PTY rejects interactive invalid input before a selector can open: [\"move\",\"main\",\"--onto\",\"other\",\"--source\",\"base\"]",
+      "move source-aware selection through a real PTY rejects interactive invalid input before a selector can open: [\"move\",\"--onto\",\"\",\"--source\",\"base\"]",
+      "move source-aware selection through a real PTY rejects interactive invalid input before a selector can open: [\"move\",\"--source\",\"base\",\"--source\",\"tip\"]",
+      "move source-aware selection through a real PTY rejects interactive invalid input before a selector can open: [\"move\",\"--source\",\"missing\"]"
+    ]
+  },
+  "controlledScenarioIds": {
+    "node": [
+      "move source-aware selection through a real PTY selects an explicit source target while omitting that source and its descendants",
+      "move source-aware selection through a real PTY selects a leaf-only target from a different departure in a real terminal",
+      "move source-aware selection through a real PTY uses the current source without an explicit source option during selection"
+    ],
+    "native": [
+      "move source-aware selection through a real PTY selects an explicit source target while omitting that source and its descendants",
+      "move source-aware selection through a real PTY selects a leaf-only target from a different departure in a real terminal",
+      "move source-aware selection through a real PTY uses the current source without an explicit source option during selection"
+    ]
+  },
+  "matchingScenarioMultiplicity": true,
+  "results": {
+    "node": {
+      "wholeFile": {
+        "runtime": "node",
+        "shard": 0,
+        "shards": 1,
+        "files": 1,
+        "passes": 9,
+        "pending": 0,
+        "failedFiles": 0,
+        "results": [
+          {
+            "file": "commands/move_selector_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 9,
+              "passes": 9,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T09:49:35.256Z",
+              "end": "2026-10-27T09:50:17.515Z",
+              "duration": 42259
+            },
+            "passed": true
+          }
+        ]
+      },
+      "controlled": {
+        "suites": 1,
+        "tests": 3,
+        "passes": 3,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T09:50:17.630Z",
+        "end": "2026-10-27T09:50:43.007Z",
+        "duration": 25377
+      }
+    },
+    "native": {
+      "wholeFile": {
+        "runtime": "native",
+        "shard": 0,
+        "shards": 1,
+        "files": 1,
+        "passes": 9,
+        "pending": 0,
+        "failedFiles": 0,
+        "results": [
+          {
+            "file": "commands/move_selector_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 9,
+              "passes": 9,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T09:49:35.256Z",
+              "end": "2026-10-27T09:50:10.837Z",
+              "duration": 35581
+            },
+            "passed": true
+          }
+        ]
+      },
+      "controlled": {
+        "suites": 1,
+        "tests": 3,
+        "passes": 3,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T09:50:10.935Z",
+        "end": "2026-10-27T09:50:32.923Z",
+        "duration": 21988
+      }
+    }
+  },
+  "redAndCharacterizationRecords": {
+    "initial/native": {
+      "sha256": "c2eaf790370bd1692f3d6e62ca4692c07460c20a58975a5ab5e1eb66986ba130",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T09:43:17.694Z",
+        "end": "2026-10-27T09:43:22.694Z",
+        "duration": 5000
+      },
+      "failureMessages": []
+    },
+    "controlled-red": {
+      "sha256": "6edefd1a30ceeb708c77e691d1d8ed17c29e91b981b4601f93bf24e401828619",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-27T09:45:05.043Z",
+        "end": "2026-10-27T09:45:08.897Z",
+        "duration": 3854
+      },
+      "failureMessages": [
+        "expected 'tip\\nupdated trunk' to equal 'tip'"
+      ]
+    },
+    "controlled-red-aligned": {
+      "sha256": "e2576731b9f767403e0677acb7a813e7072cc52674d8fbdcb2c511294ec84f72",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-27T09:46:28.536Z",
+        "end": "2026-10-27T09:46:35.663Z",
+        "duration": 7127
+      },
+      "failureMessages": [
+        "expected 'main' to equal 'other'"
+      ]
+    },
+    "baseline-red": {
+      "sha256": "c707c256e926d82038805b5f7434bb63becba4b8d2c6fff6f8e34f4d70e2abdc",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-27T09:47:13.827Z",
+        "end": "2026-10-27T09:47:22.211Z",
+        "duration": 8384
+      },
+      "failureMessages": [
+        "expected 'main' to equal 'other'"
+      ]
+    },
+    "controlled-green": {
+      "sha256": "ff59749926026317ba39a315d0af2bef45b50bd190e0f84b53934a1b30e6a9fe",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T09:47:40.308Z",
+        "end": "2026-10-27T09:47:46.556Z",
+        "duration": 6248
+      },
+      "failureMessages": []
+    }
+  },
+  "checks": [
+    "workspace TypeScript4.7.4",
+    "targeted ESLint",
+    "Prettier",
+    "git diff --check",
+    "no merge commits",
+    "clean worktree"
+  ],
+  "limits": "No production, global fixture, timeout, sleep, installation, release or remote change. Parent manages integration and complete CI at the new PR head."
+}
