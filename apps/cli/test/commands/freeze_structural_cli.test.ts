@@ -216,7 +216,17 @@ describe('frozen structural participants through the public CLI', function () {
   });
 
   it('checks a later mandatory participant frozen by the continuation commit hook before publishing the active commit', () => {
+    // Keep new sibling tips tied above the original parent, independent of clock ticks.
+    fixture.env.GIT_COMMITTER_DATE = new Date(
+      Date.now() + 24 * 60 * 60 * 1000
+    ).toISOString();
     moveConflict(fixture);
+    delete fixture.env.GIT_COMMITTER_DATE;
+    const continuation = JSON.parse(
+      fs.readFileSync(path.join(fixture.repo, '.git', '.gtcontinue'), 'utf8')
+    );
+    expect(continuation.move.completed).not.to.include('z-sibling');
+    expect(continuation.move.mandatory).to.include('z-sibling');
     fixture.stage('main.txt', 'hook resolution');
     const head = fixture.git(['rev-parse', 'HEAD']);
     const child = fixture.git(['rev-parse', 'child']);
