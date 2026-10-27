@@ -86,6 +86,20 @@ process.stdout.write('PAGED_ONCE\\n');`
           ).to.have.length(1);
         expect(help.stdout).to.include('separate section');
         expect(help.stdout).not.to.include('interactive selection');
+        const completion = fixture.run(
+          ['--get-yargs-completions', 'an', ...route, '--'],
+          fixture.root
+        );
+        expect(completion.status, completion.stderr).to.equal(0);
+        for (const flag of [
+          'classic',
+          'reverse',
+          'stack',
+          'steps',
+          'show-untracked',
+        ])
+          expect(completion.stdout).to.include(`--${flag}`);
+        expect(completion.stdout).not.to.include('--all');
       }
       for (const route of [['log', 'long'], ['ll']]) {
         const help = fixture.run([...route, '--help'], fixture.root);

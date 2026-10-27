@@ -223,7 +223,7 @@ sys.exit(result.returncode)
         const result = fixture.run(args, fixture.root);
         expect(result.status, args.join(' ')).not.to.equal(0);
         expect(result.stdout).to.equal('');
-        expect(result.stderr).to.include('Unknown argument:');
+        expect(result.stderr).to.match(/Unknown arguments?:/);
       }
     } finally {
       restoreTools();
