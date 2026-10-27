@@ -39,6 +39,38 @@ function moveConflict(fixture: FreezeCliFixture): void {
   ).to.equal(true);
 }
 
+function prepareChildBeforeSibling(fixture: FreezeCliFixture): void {
+  fixture.branch('z-sibling', 'base');
+  const baseDate = Number(fixture.git(['show', '-s', '--format=%ct', 'base']));
+  const originalDate = fixture.env.GIT_COMMITTER_DATE;
+  try {
+    // Both siblings must sort before their parent to keep dependency deferral stable.
+    for (const [branch, offset] of [
+      ['z-sibling', 1],
+      ['child', 2],
+    ] as const) {
+      fixture.git(['switch', branch]);
+      fixture.env.GIT_COMMITTER_DATE = `${baseDate + offset} +0000`;
+      fixture.git(['commit', '--amend', '--no-edit']);
+    }
+  } finally {
+    if (originalDate === undefined) delete fixture.env.GIT_COMMITTER_DATE;
+    else fixture.env.GIT_COMMITTER_DATE = originalDate;
+  }
+  fixture.ok(['restack', '--upstack']);
+  fixture.git(['switch', 'base']);
+  expect(
+    fixture.git([
+      'for-each-ref',
+      '--sort=-committerdate',
+      '--format=%(refname:lstrip=2)',
+      'refs/heads/child',
+      'refs/heads/z-sibling',
+      'refs/heads/base',
+    ])
+  ).to.equal('child\nz-sibling\nbase');
+}
+
 // eslint-disable-next-line max-lines-per-function
 describe('frozen structural participants through the public CLI', function () {
   this.timeout(60000);
@@ -263,13 +295,7 @@ describe('frozen structural participants through the public CLI', function () {
   });
 
   it('rechecks the entire remaining move plan after a pre-rebase hook freezes a later sibling', () => {
-    fixture.branch('z-sibling', 'base');
-    fixture.git(['switch', 'child']);
-    fixture.env.GIT_COMMITTER_DATE = '2030-01-01T00:00:00Z';
-    fixture.git(['commit', '--amend', '--no-edit']);
-    delete fixture.env.GIT_COMMITTER_DATE;
-    fixture.ok(['restack', '--upstack']);
-    fixture.git(['switch', 'base']);
+    prepareChildBeforeSibling(fixture);
     const child = fixture.git(['rev-parse', 'child']);
     const base = fixture.git(['rev-parse', 'base']);
     const cli = getTestCliCommand(['freeze', 'z-sibling', '--no-interactive']);
@@ -563,13 +589,7 @@ cp .git/index '${savedIndex}'
   });
 
   it('protects a remaining DELETE survivor through the same real pre-rebase hook boundary', () => {
-    fixture.branch('z-sibling', 'base');
-    fixture.git(['switch', 'child']);
-    fixture.env.GIT_COMMITTER_DATE = '2030-01-01T00:00:00Z';
-    fixture.git(['commit', '--amend', '--no-edit']);
-    delete fixture.env.GIT_COMMITTER_DATE;
-    fixture.ok(['restack', '--upstack']);
-    fixture.git(['switch', 'base']);
+    prepareChildBeforeSibling(fixture);
     const child = fixture.git(['rev-parse', 'child']);
     const sibling = fixture.git(['rev-parse', 'z-sibling']);
     const cli = getTestCliCommand(['freeze', 'z-sibling', '--no-interactive']);
@@ -605,13 +625,7 @@ cp .git/index '${savedIndex}'
   });
 
   it('retains an actual completed move rewrite and blocks metadata publication after a post-rewrite hook freezes remaining work', () => {
-    fixture.branch('z-sibling', 'base');
-    fixture.git(['switch', 'child']);
-    fixture.env.GIT_COMMITTER_DATE = '2030-01-01T00:00:00Z';
-    fixture.git(['commit', '--amend', '--no-edit']);
-    delete fixture.env.GIT_COMMITTER_DATE;
-    fixture.ok(['restack', '--upstack']);
-    fixture.git(['switch', 'base']);
+    prepareChildBeforeSibling(fixture);
     const child = fixture.git(['rev-parse', 'child']);
     const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/child']);
     const cli = getTestCliCommand(['freeze', 'z-sibling', '--no-interactive']);
@@ -652,13 +666,7 @@ cp .git/index '${savedIndex}'
   });
 
   it('guards local DELETE parent metadata after a prepared hook freezes another survivor while still allowing a frozen target', () => {
-    fixture.branch('z-sibling', 'base');
-    fixture.git(['switch', 'child']);
-    fixture.env.GIT_COMMITTER_DATE = '2030-01-01T00:00:00Z';
-    fixture.git(['commit', '--amend', '--no-edit']);
-    delete fixture.env.GIT_COMMITTER_DATE;
-    fixture.ok(['restack', '--upstack']);
-    fixture.git(['switch', 'base']);
+    prepareChildBeforeSibling(fixture);
     fixture.ok(['freeze', 'base']);
     const refs = fixture.refs();
     const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/child']);
