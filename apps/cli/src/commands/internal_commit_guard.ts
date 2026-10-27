@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { spawnSync } from 'child_process';
+import { runGitHook } from '../lib/git/run_hook';
 import yargs from 'yargs';
 import { assertBranchEditable } from '../lib/engine/frozen_branch';
 
@@ -34,13 +34,9 @@ export const handler = (
     /* A missing or non-executable hook is not a Git hook. */
   }
   if (executable) {
-    const result = spawnSync(args.originalHook, [args.phase], {
-      input,
-      stdio: ['pipe', 'inherit', 'inherit'],
-    });
-    if (result.error) throw result.error;
-    if (result.status !== 0) {
-      process.exitCode = result.status ?? 1;
+    const status = runGitHook(args.originalHook, [args.phase], input);
+    if (status !== 0) {
+      process.exitCode = status;
       return;
     }
   }
