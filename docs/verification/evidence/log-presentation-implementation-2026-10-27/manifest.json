@@ -1,0 +1,14 @@
+{
+  "docs/verification/evidence/log-presentation-implementation-2026-10-27/acceptance.json": {
+    "bytes": 11208,
+    "sha256": "2d94a239f56d3d3a371496b68bc9e42663f1669747546f7281330879283c782d"
+  },
+  "docs/verification/evidence/log-presentation-implementation-2026-10-27/worktree-examples.json": {
+    "bytes": 20977,
+    "sha256": "b3402cfe3cb41545b9b01d7fa8a055aabd0ccb7416df27976ec405199e853608"
+  },
+  "docs/verification/log-presentation-parity-2026-10-27.md": {
+    "bytes": 4454,
+    "sha256": "604fe2d149af9703e4e0329dabccb77df3ce65f358ae780f32d6fe97fadd1af7"
+  }
+}

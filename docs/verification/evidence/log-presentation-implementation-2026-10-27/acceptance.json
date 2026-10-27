@@ -1,0 +1,374 @@
+{
+  "identity": {
+    "sourceCommit": "4cffdf27b2c0fcbb8567f6d469472611a615fef2",
+    "sourceTree": "751a9ac7f1e9a916452fed8c1c14d11c916b2e91",
+    "nodeVersion": "v24.19.0",
+    "bunVersion": "1.3.14",
+    "nativeBinarySha256": "37e4c944c21f39425c434093fe177407ad95e588c18d86ae34f411052c6d8777",
+    "nativeBinaryBytes": 64502882
+  },
+  "checks": {
+    "forcedWorkspaceBuild": "passed",
+    "uncachedSourceLint": "passed",
+    "workspaceTypecheck": "passed",
+    "changedTestLintAndFormatting": "passed",
+    "standardsReviewOpenFindings": 0,
+    "specReviewOpenFindings": 0
+  },
+  "results": {
+    "node": {
+      "totalPassingTests": 84,
+      "suite": {
+        "runtime": "node",
+        "shard": 0,
+        "shards": 1,
+        "files": 9,
+        "passes": 83,
+        "pending": 0,
+        "failedFiles": 0,
+        "results": [
+          {
+            "file": "commands/log/short.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:10:54.907Z",
+              "end": "2026-10-27T17:11:03.675Z",
+              "duration": 8768
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_long_presentation_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:11:03.784Z",
+              "end": "2026-10-27T17:11:39.051Z",
+              "duration": 35267
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_graph_presentation_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 6,
+              "passes": 6,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:10:54.862Z",
+              "end": "2026-10-27T17:12:13.406Z",
+              "duration": 78544
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_full_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 3,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:11:39.188Z",
+              "end": "2026-10-27T17:13:02.769Z",
+              "duration": 83581
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_options_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 10,
+              "passes": 10,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:12:13.514Z",
+              "end": "2026-10-27T17:14:20.031Z",
+              "duration": 126517
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_short_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 3,
+              "tests": 17,
+              "passes": 17,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:13:02.930Z",
+              "end": "2026-10-27T17:15:44.692Z",
+              "duration": 161762
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_worktree_presentation_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 3,
+              "passes": 3,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:15:44.803Z",
+              "end": "2026-10-27T17:16:22.818Z",
+              "duration": 38015
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_state_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:14:20.141Z",
+              "end": "2026-10-27T17:17:07.916Z",
+              "duration": 167775
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/modern_log_classic_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 17,
+              "passes": 17,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:16:22.926Z",
+              "end": "2026-10-27T17:17:44.445Z",
+              "duration": 81519
+            },
+            "passed": true
+          }
+        ]
+      },
+      "conflictRecoveryControl": {
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-10-27T17:11:15.587Z",
+          "end": "2026-10-27T17:12:01.723Z",
+          "duration": 46136
+        },
+        "testTitles": [
+          "relation inspection during a real own conflictrebase inspects departure instead of the replay branch and resumes both real conflicts in fresh processes"
+        ]
+      }
+    },
+    "native": {
+      "totalPassingTests": 84,
+      "suite": {
+        "runtime": "native",
+        "shard": 0,
+        "shards": 1,
+        "files": 9,
+        "passes": 83,
+        "pending": 0,
+        "failedFiles": 0,
+        "results": [
+          {
+            "file": "commands/log/short.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:10:54.387Z",
+              "end": "2026-10-27T17:11:02.534Z",
+              "duration": 8147
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_long_presentation_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:11:02.642Z",
+              "end": "2026-10-27T17:11:31.820Z",
+              "duration": 29178
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_graph_presentation_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 6,
+              "passes": 6,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:10:54.344Z",
+              "end": "2026-10-27T17:12:06.199Z",
+              "duration": 71855
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_full_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 3,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:11:32.037Z",
+              "end": "2026-10-27T17:12:49.126Z",
+              "duration": 77089
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_options_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 10,
+              "passes": 10,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:12:06.311Z",
+              "end": "2026-10-27T17:14:00.673Z",
+              "duration": 114362
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_short_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 3,
+              "tests": 17,
+              "passes": 17,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:12:49.234Z",
+              "end": "2026-10-27T17:15:14.146Z",
+              "duration": 144912
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_worktree_presentation_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 3,
+              "passes": 3,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:15:14.290Z",
+              "end": "2026-10-27T17:15:49.862Z",
+              "duration": 35572
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_state_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:14:00.783Z",
+              "end": "2026-10-27T17:16:32.746Z",
+              "duration": 151963
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/modern_log_classic_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 17,
+              "passes": 17,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-10-27T17:15:50.034Z",
+              "end": "2026-10-27T17:17:03.455Z",
+              "duration": 73421
+            },
+            "passed": true
+          }
+        ]
+      },
+      "conflictRecoveryControl": {
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-10-27T17:11:15.585Z",
+          "end": "2026-10-27T17:11:56.722Z",
+          "duration": 41137
+        },
+        "testTitles": [
+          "relation inspection during a real own conflictrebase inspects departure instead of the replay branch and resumes both real conflicts in fresh processes"
+        ]
+      }
+    }
+  },
+  "newScenarioCounts": {
+    "graph": 6,
+    "worktreeAndStyling": 3,
+    "longOptionsAndDelivery": 4
+  },
+  "cloudCI": "Only the existing cheap automatic PR workflow is allowed; no full matrix or release assets were started.",
+  "reference": "Graphite 1.8.6 retained specification captures",
+  "captureProvenance": "worktree-examples.json is copied unchanged from ticket9 verification before its clean rebase. The final integrated suite repeats all three worktree/style scenarios on both runtimes."
+}
