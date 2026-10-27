@@ -1,7 +1,16 @@
 import yargs from 'yargs';
 import { graphite } from '../../lib/runner';
+import { builder as logOptions } from './default';
 
-const args = {} as const;
+const ignored = 'Accepted for compatibility; ignored in long mode.';
+const args = {
+  classic: { ...logOptions.classic, describe: ignored },
+  reverse: { ...logOptions.reverse, describe: ignored },
+  stack: { ...logOptions.stack, describe: ignored },
+  steps: { ...logOptions.steps, describe: ignored },
+  'show-untracked': { ...logOptions['show-untracked'], describe: ignored },
+  all: { global: false, type: 'boolean', alias: 'a', describe: ignored },
+} as const;
 
 export const command = 'long';
 export const description =

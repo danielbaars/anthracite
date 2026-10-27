@@ -415,7 +415,7 @@ Shared flags (on `an log` and `an log short`):
 | `-r`, `--reverse` | Print the log upside down. |
 | `-s`, `--stack` | Only show ancestors and descendants of the current branch. |
 | `-n`, `--steps` | Only show this many levels up/downstack. Implies `--stack`. |
-| `-u`, `--show-untracked` | Include untracked branches. |
+| `-u`, `--show-untracked` | Show untracked branches in a separate section. |
 
 Omitting `--steps` keeps the existing unlimited scope: all tracked branches by default, or the current branch's stack with `--stack`. An explicit `--steps 0` selects only the current tracked branch, with no ancestor or descendant branch nodes. Full output retains its own commit details; short output remains compact. The same rule applies through `an l`, `an log s`, `an l short`, `an l s` and `an ls`, and with `--steps=0`, `-n 0` or `-n0`.
 
@@ -432,7 +432,7 @@ Top-level shortcut for `log short`: log all stacks tracked by Anthracite, arrang
 | `-r`, `--reverse` | Print the log upside down. |
 | `-s`, `--stack` | Only show ancestors and descendants of the current branch. |
 | `-n`, `--steps` | Only show this many levels up/downstack. Implies `--stack`. |
-| `-u`, `--show-untracked` | Include untracked branches. |
+| `-u`, `--show-untracked` | Show untracked branches in a separate section. |
 
 ```
 an ls
@@ -445,6 +445,16 @@ Top-level shortcut for `log long`: display a graph of the commit ancestry of all
 ```
 an ll
 ```
+
+Long routes (`log long`, `log l`, `l long`, `l l`, and `ll`) accept and ignore
+`--classic`, `--reverse`/`-r`, `--stack`/`-s`, `--steps`/`-n`,
+`--show-untracked`/`-u`, and `--all`/`-a`. They always show the same Git ancestry
+graph; these options do not filter it. For example, `an ll --steps 0 --reverse`
+still shows the complete graph. Unknown options remain errors, and `-c` remains
+short-only. Ordinary full/short logs do not support `--all`.
+
+Non-paged long output adds no final LF. Paging retains the existing `CH_PAGER`
+input and interaction policy; quiet suppresses output.
 
 ### `info` (alias `i`)
 Display information about the current or selected tracked local branch.

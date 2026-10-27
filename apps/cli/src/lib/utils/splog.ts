@@ -11,7 +11,10 @@ export type TSplog = {
   warn: (msg: string) => void;
   message: (msg: string) => void;
   tip: (msg: string) => void;
-  page: (msg: string) => void;
+  page: (
+    msg: string,
+    options?: { readonly trailingNewline?: boolean }
+  ) => void | Promise<void>;
 };
 
 export function composeSplog(
@@ -50,9 +53,15 @@ export function composeSplog(
             )
           )
         : () => void 0,
-    page: (s: string) => {
+    page: (s: string, options) => {
       if (opts.quiet) return;
       if (!opts.pager || !opts.canPage) {
+        if (options?.trailingNewline === false)
+          return new Promise<void>((resolve, reject) => {
+            process.stdout.write(s, (error) =>
+              error ? reject(error) : resolve()
+            );
+          });
         console.log(s);
         return;
       }
@@ -73,6 +82,7 @@ export function composeSplog(
           });
         }
       }
+      return;
     },
   };
 }
