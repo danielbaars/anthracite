@@ -1,0 +1,75 @@
+{
+  "runtime": "node",
+  "shard": 0,
+  "shards": 1,
+  "files": 4,
+  "passes": 49,
+  "pending": 0,
+  "failedFiles": 0,
+  "results": [
+    {
+      "file": "commands/log_steps_full_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 3,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T08:18:52.754Z",
+        "end": "2026-10-27T08:19:59.373Z",
+        "duration": 66619
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/log_steps_options_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T08:18:52.755Z",
+        "end": "2026-10-27T08:20:39.173Z",
+        "duration": 106418
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/log_steps_short_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 3,
+        "tests": 17,
+        "passes": 17,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T08:19:59.475Z",
+        "end": "2026-10-27T08:21:52.791Z",
+        "duration": 113316
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/log_steps_state_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T08:20:39.286Z",
+        "end": "2026-10-27T08:22:35.674Z",
+        "duration": 116388
+      },
+      "passed": true
+    }
+  ]
+}

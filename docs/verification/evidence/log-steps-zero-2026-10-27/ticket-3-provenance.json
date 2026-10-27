@@ -1,0 +1,225 @@
+{
+  "sourceCommit": "3cf65bc8ff9383f0acffc1271afa941da86d1ff1",
+  "sourceTree": "3b91bec501e548856f5670fe3f12c271d2010827",
+  "integrationBase": "3cf65bc8ff9383f0acffc1271afa941da86d1ff1",
+  "nodeVersion": "v24.19.0",
+  "bunVersion": "1.3.14",
+  "nativeBinary": "/private/tmp/anthracite-log-implementation/short-native",
+  "nativeSha256": "8f2b0141b71e82f9e3eadd67949c13d96deaaef88af951c3ee3b266c508df15a",
+  "nativeBuildCommand": [
+    "/private/tmp/anthracite-transition-0.1.1/bun",
+    "build",
+    "--compile",
+    "apps/cli/dist/src/index.js",
+    "--outfile",
+    "/private/tmp/anthracite-log-implementation/short-native"
+  ],
+  "files": {
+    "apps/cli/src/actions/log.ts": "a40b6d7be41288c7fd367d7ecc59cf6cddbfbe9550f5e547085fa8e77bf0b637",
+    "apps/cli/src/commands/log-commands/short.ts": "ef00283e38cb192ec06e2490b734a121544f7a9b88767ff9f897c3e9f597e93a",
+    "apps/cli/test/lib/fixtures/log_steps_cli.ts": "1dc013189ef36e3bdc80786f848da71baf685164219dedabd6e8884d8035c8e8",
+    "apps/cli/test/commands/log_steps_short_cli.test.ts": "ee6a93c2096eef7495ed92961d4b1af89ee5a7024f16f51cc95fccc3c21c4875",
+    "apps/cli/test/commands/log_steps_full_cli.test.ts": "37a300f5a7229158b4bc4bc0eabf6453435973ea7e87837c1e0e649cd425c717",
+    "apps/cli/dist/src/index.js": "395b93f5163403c4b93ca419f0664d998b0846c6149247db527cd79bf1870f04"
+  },
+  "checks": [
+    "workspace TypeScript4.7.4 compile passed",
+    "targeted ESLint passed",
+    "Prettier check passed",
+    "git diff --check passed"
+  ],
+  "runtimeResults": {
+    "node": {
+      "log_steps_short_cli": {
+        "stats": {
+          "suites": 3,
+          "tests": 17,
+          "passes": 17,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-10-27T07:56:41.242Z",
+          "end": "2026-10-27T07:58:28.342Z",
+          "duration": 107100
+        },
+        "cases": [
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through log short",
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through log s",
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through l short",
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through l s",
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through ls",
+          "short log zero depth through the public CLI minimal main-to-child stack accepts --steps=0 through canonical short log",
+          "short log zero depth through the public CLI minimal main-to-child stack accepts -n 0 through canonical short log",
+          "short log zero depth through the public CLI minimal main-to-child stack accepts -n0 through canonical short log",
+          "short log zero depth through the public CLI minimal main-to-child stack accepts attached short zero through the compact alias",
+          "short log zero depth through the public CLI recorded branching topology shows only search through log short with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows only search through log s with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows only search through l short with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows only search through l s with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows only search through ls with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows the current branch even when its hidden descendants fan out",
+          "short log zero depth through the public CLI recorded branching topology preserves short output with omitted depth and stack selection",
+          "short log zero depth through the public CLI recorded branching topology preserves short output with positive depths one and two"
+        ]
+      },
+      "log_steps_full_cli": {
+        "stats": {
+          "suites": 3,
+          "tests": 11,
+          "passes": 11,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-10-27T07:58:28.436Z",
+          "end": "2026-10-27T07:59:26.493Z",
+          "duration": 58057
+        },
+        "cases": [
+          "full log zero depth through the public CLI minimal main-to-child stack selects the current child rather than trunk at explicit zero",
+          "full log zero depth through the public CLI minimal main-to-child stack accepts equals zero through full log",
+          "full log zero depth through the public CLI minimal main-to-child stack accepts separated short zero through full log",
+          "full log zero depth through the public CLI minimal main-to-child stack accepts attached short zero through full log",
+          "full log zero depth through the public CLI minimal main-to-child stack selects the current child through the full alias",
+          "full log zero depth through the public CLI minimal main-to-child stack accepts attached short zero through the full alias",
+          "full log zero depth through the public CLI minimal main-to-child stack excludes downstack ancestors when zero is combined with stack",
+          "full log zero depth through the public CLI recorded branching topology shows only search through log with and without stack",
+          "full log zero depth through the public CLI recorded branching topology shows only search through l with and without stack",
+          "full log zero depth through the public CLI recorded branching topology preserves omitted depth with and without stack selection",
+          "full log zero depth through the public CLI recorded branching topology preserves positive depths one and two"
+        ]
+      }
+    },
+    "native": {
+      "log_steps_short_cli": {
+        "stats": {
+          "suites": 3,
+          "tests": 17,
+          "passes": 17,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-10-27T07:56:51.076Z",
+          "end": "2026-10-27T07:58:30.097Z",
+          "duration": 99021
+        },
+        "cases": [
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through log short",
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through log s",
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through l short",
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through l s",
+          "short log zero depth through the public CLI minimal main-to-child stack selects the current child through ls",
+          "short log zero depth through the public CLI minimal main-to-child stack accepts --steps=0 through canonical short log",
+          "short log zero depth through the public CLI minimal main-to-child stack accepts -n 0 through canonical short log",
+          "short log zero depth through the public CLI minimal main-to-child stack accepts -n0 through canonical short log",
+          "short log zero depth through the public CLI minimal main-to-child stack accepts attached short zero through the compact alias",
+          "short log zero depth through the public CLI recorded branching topology shows only search through log short with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows only search through log s with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows only search through l short with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows only search through l s with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows only search through ls with and without stack",
+          "short log zero depth through the public CLI recorded branching topology shows the current branch even when its hidden descendants fan out",
+          "short log zero depth through the public CLI recorded branching topology preserves short output with omitted depth and stack selection",
+          "short log zero depth through the public CLI recorded branching topology preserves short output with positive depths one and two"
+        ]
+      },
+      "log_steps_full_cli": {
+        "stats": {
+          "suites": 3,
+          "tests": 11,
+          "passes": 11,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-10-27T07:58:30.190Z",
+          "end": "2026-10-27T07:59:23.931Z",
+          "duration": 53741
+        },
+        "cases": [
+          "full log zero depth through the public CLI minimal main-to-child stack selects the current child rather than trunk at explicit zero",
+          "full log zero depth through the public CLI minimal main-to-child stack accepts equals zero through full log",
+          "full log zero depth through the public CLI minimal main-to-child stack accepts separated short zero through full log",
+          "full log zero depth through the public CLI minimal main-to-child stack accepts attached short zero through full log",
+          "full log zero depth through the public CLI minimal main-to-child stack selects the current child through the full alias",
+          "full log zero depth through the public CLI minimal main-to-child stack accepts attached short zero through the full alias",
+          "full log zero depth through the public CLI minimal main-to-child stack excludes downstack ancestors when zero is combined with stack",
+          "full log zero depth through the public CLI recorded branching topology shows only search through log with and without stack",
+          "full log zero depth through the public CLI recorded branching topology shows only search through l with and without stack",
+          "full log zero depth through the public CLI recorded branching topology preserves omitted depth with and without stack selection",
+          "full log zero depth through the public CLI recorded branching topology preserves positive depths one and two"
+        ]
+      }
+    }
+  },
+  "sameScenarioIdentities": true,
+  "red-routing": {
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-27T07:53:52.059Z",
+      "end": "2026-10-27T07:53:55.828Z",
+      "duration": 3769
+    },
+    "failures": [
+      "expected [ 'main' ] to deeply equal [ 'child' ]"
+    ],
+    "productionSource": "Integration base4510590a, before short-route presence correction."
+  },
+  "green-routing": {
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T07:54:10.697Z",
+      "end": "2026-10-27T07:54:14.577Z",
+      "duration": 3880
+    },
+    "failures": []
+  },
+  "red-fanout": {
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-27T07:54:44.564Z",
+      "end": "2026-10-27T07:54:54.499Z",
+      "duration": 9935
+    },
+    "failures": [
+      "ERROR: Invalid count value: -2\n: expected 1 to equal +0"
+    ],
+    "productionSource": "Integration base4510590a plus short-route presence correction, before zero-only child connector suppression."
+  },
+  "green-fanout": {
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T07:55:14.784Z",
+      "end": "2026-10-27T07:55:25.282Z",
+      "duration": 10498
+    },
+    "failures": []
+  },
+  "regressions": {
+    "stats": {
+      "suites": 2,
+      "tests": 21,
+      "passes": 21,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T07:57:44.868Z",
+      "end": "2026-10-27T07:59:00.980Z",
+      "duration": 76112
+    },
+    "suites": [
+      "modern_log_classic_cli",
+      "log/short"
+    ],
+    "failures": []
+  }
+}

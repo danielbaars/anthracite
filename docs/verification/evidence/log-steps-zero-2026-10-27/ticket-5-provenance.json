@@ -1,0 +1,83 @@
+{
+  "issue": 5,
+  "sourceCommit": "255b0928fd49be4c40363ca9bd949f51084c6fb4",
+  "sourceTree": "b02b7b205868526cb73ff3c7febadf2d2f8c31b8",
+  "nodeVersion": "v24.19.0",
+  "bunVersion": "1.3.14",
+  "nativeBinary": "/private/tmp/anthracite-log-implementation/options-native",
+  "nativeSha256": "fcbed1374e7aa9fbebd0753f227f0600d1c556291ff8baa0a04a58b6d525b732",
+  "sourceHashes": {
+    "apps/cli/src/actions/log.ts": "a40b6d7be41288c7fd367d7ecc59cf6cddbfbe9550f5e547085fa8e77bf0b637",
+    "apps/cli/src/commands/log-commands/default.ts": "d61fb34ccf70bdcfdff6d7e65491f693a4d1a8602f4d258c2a7bc53d887bfa97",
+    "apps/cli/src/commands/log-commands/short.ts": "ef00283e38cb192ec06e2490b734a121544f7a9b88767ff9f897c3e9f597e93a",
+    "apps/cli/src/lib/runner.ts": "8acdbc11bda4a8d8d0ce09f136a95f9d7687797a31cdd56927d0a9bbeaf2b0f6",
+    "apps/cli/test/commands/log_steps_options_cli.test.ts": "7df721a6e836647d7cc52101b69ac9540ac235626c9925bf9a883e3a595ab45b",
+    "apps/cli/test/lib/fixtures/log_steps_cli.ts": "1dc013189ef36e3bdc80786f848da71baf685164219dedabd6e8884d8035c8e8",
+    "DOCUMENTATION.md": "0914f9c3220b1f406c9b0f5f325a008c90ad04c9ce4d839e0274563b08b133ce"
+  },
+  "scenarioIds": {
+    "node": [
+      "zero-depth log options and transports through the public CLI keeps current-only selection with true and false stack options in either order",
+      "zero-depth log options and transports through the public CLI keeps exactly the same selected node when reversed",
+      "zero-depth log options and transports through the public CLI retains the explicitly requested untracked section separately from the graph",
+      "zero-depth log options and transports through the public CLI preserves omitted, positive and already accepted negative and fractional depths",
+      "zero-depth log options and transports through the public CLI preserves classic precedence and uses corrected selection when classic is false",
+      "zero-depth log options and transports through the public CLI preserves the long commit graph and rejects ordinary display selectors there",
+      "zero-depth log options and transports through the public CLI delivers actual current-only full and short content to the configured terminal pager",
+      "zero-depth log options and transports through the public CLI keeps pipe, quiet and non-interactive output from launching external tools",
+      "zero-depth log options and transports through the public CLI retains failure reporting for a zero-depth pager",
+      "zero-depth log options and transports through the public CLI retains early normal exit for a zero-depth pager"
+    ],
+    "native": [
+      "zero-depth log options and transports through the public CLI keeps current-only selection with true and false stack options in either order",
+      "zero-depth log options and transports through the public CLI keeps exactly the same selected node when reversed",
+      "zero-depth log options and transports through the public CLI retains the explicitly requested untracked section separately from the graph",
+      "zero-depth log options and transports through the public CLI preserves omitted, positive and already accepted negative and fractional depths",
+      "zero-depth log options and transports through the public CLI preserves classic precedence and uses corrected selection when classic is false",
+      "zero-depth log options and transports through the public CLI preserves the long commit graph and rejects ordinary display selectors there",
+      "zero-depth log options and transports through the public CLI delivers actual current-only full and short content to the configured terminal pager",
+      "zero-depth log options and transports through the public CLI keeps pipe, quiet and non-interactive output from launching external tools",
+      "zero-depth log options and transports through the public CLI retains failure reporting for a zero-depth pager",
+      "zero-depth log options and transports through the public CLI retains early normal exit for a zero-depth pager"
+    ]
+  },
+  "stats": {
+    "node": {
+      "suites": 1,
+      "tests": 10,
+      "passes": 10,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T08:09:11.035Z",
+      "end": "2026-10-27T08:10:50.354Z",
+      "duration": 99319
+    },
+    "native": {
+      "suites": 1,
+      "tests": 10,
+      "passes": 10,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T08:10:50.482Z",
+      "end": "2026-10-27T08:12:20.177Z",
+      "duration": 89695
+    }
+  },
+  "classification": "Characterization of already-correct behavior after #2/#3; no new production change. Retained original option characterizations and new classic/long/PTY/pager checks. Final integrated acceptance must include #4 preserving-context change.",
+  "fixtureConfiguration": {
+    "HOME": "isolated per fixture before setup",
+    "GitGlobalConfig": "/dev/null",
+    "GitSystemConfig": false,
+    "authorDate": "2026-10-01T12:00:00Z",
+    "committerDate": "2026-10-01T12:00:00Z",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1"
+  },
+  "checks": [
+    "workspace TypeScript4.7.4",
+    "targeted ESLint",
+    "Prettier",
+    "git diff --check"
+  ]
+}
