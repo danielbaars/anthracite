@@ -14,6 +14,18 @@ describe('move source-aware selection through a real PTY', function () {
   });
   afterEach(() => fixture?.cleanup());
 
+  function selectOther(args: readonly string[]) {
+    delete fixture.env.FORCE_COLOR;
+    return runCliInPty(getTestCliCommand(args), {
+      cwd: fixture.repo,
+      env: fixture.env,
+      responses: [
+        { prompt: 'Choose a new base', input: 'other' },
+        { prompt: '› other\r\n❯', input: '\r' },
+      ],
+    });
+  }
+
   it('cancels from a different departure while prompting for the selected source without checkout', () => {
     fixture.git(['switch', 'other']);
     const trace = path.join(fixture.root, 'checkout-trace');
@@ -42,14 +54,7 @@ describe('move source-aware selection through a real PTY', function () {
   });
   it('selects an explicit source target while omitting that source and its descendants', () => {
     fixture.git(['switch', 'main']);
-    const result = runCliInPty(
-      getTestCliCommand(['move', '--source', 'base']),
-      {
-        cwd: fixture.repo,
-        env: fixture.env,
-        responses: [{ prompt: 'Choose a new base', input: '\u001b[A\r' }],
-      }
-    );
+    const result = selectOther(['move', '--source', 'base']);
     expect(result.status, result.output).to.equal(0);
     expect(fixture.git(['branch', '--show-current'])).to.equal('main');
     expect(result.output).not.to.match(/◯\s+(child|tip)/);
@@ -86,17 +91,27 @@ describe('move source-aware selection through a real PTY', function () {
   });
 
   it('selects a leaf-only target from a different departure in a real terminal', () => {
+    const baseDate = Number(
+      fixture.git(['show', '-s', '--format=%ct', 'base'])
+    );
+    const originalDate = fixture.env.GIT_COMMITTER_DATE;
+    try {
+      // Date ties can place main, rather than other, before the selected source parent.
+      fixture.git(['switch', 'main']);
+      fixture.env.GIT_COMMITTER_DATE = `${baseDate + 1} +0000`;
+      fixture.git(['commit', '--allow-empty', '-m', 'updated trunk']);
+      fixture.git(['switch', 'other']);
+      fixture.env.GIT_COMMITTER_DATE = `${baseDate} +0000`;
+      fixture.git(['commit', '--amend', '--no-edit']);
+      fixture.ok(['restack', '--branch', 'other']);
+    } finally {
+      if (originalDate === undefined) delete fixture.env.GIT_COMMITTER_DATE;
+      else fixture.env.GIT_COMMITTER_DATE = originalDate;
+    }
     fixture.git(['switch', 'main']);
     const base = fixture.git(['rev-parse', 'base']);
     const child = fixture.git(['rev-parse', 'child']);
-    const result = runCliInPty(
-      getTestCliCommand(['move', '--source', 'tip', '--only']),
-      {
-        cwd: fixture.repo,
-        env: fixture.env,
-        responses: [{ prompt: 'Choose a new base', input: '\u001b[A\r' }],
-      }
-    );
+    const result = selectOther(['move', '--source', 'tip', '--only']);
     expect(result.status, result.output).to.equal(0);
     expect(fixture.git(['branch', '--show-current'])).to.equal('main');
     expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
@@ -109,11 +124,7 @@ describe('move source-aware selection through a real PTY', function () {
 
   it('uses the current source without an explicit source option during selection', () => {
     fixture.git(['switch', 'base']);
-    const result = runCliInPty(getTestCliCommand(['move']), {
-      cwd: fixture.repo,
-      env: fixture.env,
-      responses: [{ prompt: 'Choose a new base', input: '\u001b[A\r' }],
-    });
+    const result = selectOther(['move']);
     expect(result.status, result.output).to.equal(0);
     expect(fixture.git(['branch', '--show-current'])).to.equal('base');
     expect(fixture.git(['log', '--format=%s', 'other..base'])).to.equal('base');
