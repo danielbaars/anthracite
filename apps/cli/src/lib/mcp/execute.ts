@@ -1,8 +1,9 @@
-import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
 import { z } from 'zod';
+
+import { executeChild, ExecutionOptions } from './execute_child';
 
 import { commandModules } from '../../command_modules';
 import {
@@ -38,14 +39,29 @@ export type ExecutionResult = {
   readonly message?: string;
 };
 
-// Bun's compiled executable has no filesystem entry point; Node always uses this build.
-const executable = process.execPath;
-const entryPoint = path.resolve(__dirname, '../../index.js');
-const isCompiled =
-  !!process.versions.bun && !!process.argv[1]?.startsWith('/$bunfs/');
-const prefix = isCompiled ? [] : [entryPoint];
+export function createCommandExecutor(
+  options: ExecutionOptions
+): (input: unknown) => Promise<ExecutionResult> {
+  let queue = Promise.resolve();
+  return async (input) => {
+    const previous = queue;
+    let release = (): void => undefined;
+    queue = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await previous;
+    try {
+      return await executeCommand(input, options);
+    } finally {
+      release();
+    }
+  };
+}
 
-export async function executeCommand(input: unknown): Promise<ExecutionResult> {
+export async function executeCommand(
+  input: unknown,
+  options: ExecutionOptions
+): Promise<ExecutionResult> {
   const parsed = executionInputSchema.safeParse(input);
   if (!parsed.success)
     return failure(
@@ -78,33 +94,7 @@ export async function executeCommand(input: unknown): Promise<ExecutionResult> {
       }`
     );
   }
-  return await new Promise<ExecutionResult>((resolve) => {
-    const stdout: Buffer[] = [];
-    const stderr: Buffer[] = [];
-    const child = spawn(executable, [...prefix, ...args], {
-      cwd,
-      env: { ...process.env, GRAPHITE_INTERACTIVE: '1' },
-      stdio: ['ignore', 'pipe', 'pipe'],
-      shell: false,
-    });
-    child.stdout.on('data', (chunk: Buffer) => stdout.push(chunk));
-    child.stderr.on('data', (chunk: Buffer) => stderr.push(chunk));
-    child.once('error', (error) =>
-      resolve(
-        failure('spawn_error', `Cannot launch Anthracite: ${error.message}`)
-      )
-    );
-    child.once('close', (exitCode, signal) =>
-      resolve({
-        status: exitCode === 0 && signal === null ? 'success' : 'cli_error',
-        stdout: Buffer.concat(stdout).toString('utf8'),
-        stderr: Buffer.concat(stderr).toString('utf8'),
-        exitCode,
-        signal,
-        truncated: false,
-      })
-    );
-  });
+  return await executeChild({ args, cwd }, options);
 }
 
 function failure(

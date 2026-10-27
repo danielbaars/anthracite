@@ -10,9 +10,11 @@ import { z } from 'zod';
 
 import { version } from '../../../package.json';
 import { ANTHRACITE_GUIDANCE } from './learn';
-import { executeCommand } from './execute';
+import { createCommandExecutor } from './execute';
+import { ExecutionOptions } from './execute_child';
 
-export async function serveMcp(): Promise<void> {
+export async function serveMcp(options: ExecutionOptions): Promise<void> {
+  const executeCommand = createCommandExecutor(options);
   // The lower-level SDK server keeps the tool list static (no listChanged hint).
   const server = new Server(
     { name: 'anthracite', version },
