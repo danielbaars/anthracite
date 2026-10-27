@@ -78,3 +78,9 @@ export class LogStepsCliFixture extends CwdCliFixture {
 export function getFullLogNodes(output: string): readonly string[] {
   return [...output.matchAll(/^[│ ]*[◉◯] ([^\s]+)/gm)].map((match) => match[1]);
 }
+
+export function getShortLogNodes(output: string): readonly string[] {
+  return [...output.matchAll(/^[│ ]*[◉◯][─┬┴┐┘ ]+([^\s]+)/gm)].map(
+    (match) => match[1]
+  );
+}

@@ -158,7 +158,7 @@ function getStackLines(args: TPrintStackArgs, context: TContext): string[] {
   const overallIndent = { value: 0 };
   const outputDeep = [
     getUpstackExclusiveLines({ ...args, overallIndent }, context),
-    getBranchLines(args, context),
+    getBranchLines({ ...args, skipBranchingLine: args.steps === 0 }, context),
     getDownstackExclusiveLines(args, context),
   ];
 
