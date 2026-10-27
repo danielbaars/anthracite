@@ -112,6 +112,10 @@ async function graphiteInternal(
   canonicalName: string,
   handler: TGraphiteCommandHandler
 ): Promise<void> {
+  const isZeroDepthLog =
+    (canonicalName === 'log' || canonicalName === 'log short') &&
+    args.steps === 0 &&
+    args.classic !== true;
   const handlerMaybeWithCacheLock = handler.repo
     ? {
         ...handler,
@@ -128,6 +132,8 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
+    if (isZeroDepthLog && !git.getCurrentBranchName())
+      throw new DetachedError();
     // Known frozen targets must stop before ordinary context repair can write refs.
     if (
       ['modify', 'edit', 'squash', 'split', 'pop', 'fold', 'reorder'].includes(
@@ -159,6 +165,7 @@ async function graphiteInternal(
     const contextLite = initContextLite({
       ...args,
       userEmail: git.getUserEmail(),
+      inspection: isZeroDepthLog,
     });
     await tracer.span(
       {
@@ -187,6 +194,7 @@ async function graphiteInternal(
             .graphiteInitialized();
         const context = initContext(contextLite, git, {
           ...args,
+          inspection: isZeroDepthLog,
           preserveMetadata:
             preserveStructuralMetadata ||
             (canonicalName === 'reorder' && args.stack === true),
