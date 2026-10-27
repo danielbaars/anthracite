@@ -69,6 +69,7 @@ export function getBranchInfo(
     branchName: string;
     displayAsCurrent?: boolean;
     showCommitNames?: 'STANDARD' | 'REVERSE';
+    trimHeader?: boolean;
   },
   context: TContext
 ): string[] {
@@ -82,10 +83,12 @@ export function getBranchInfo(
       args.displayAsCurrent
         ? chalk.cyan(`${args.branchName} (current)`)
         : chalk.blueBright(args.branchName)
-    }${context.engine.isBranchFrozen(args.branchName) ? ' (frozen)' : ''} ${
+    }${context.engine.isBranchFrozen(args.branchName) ? ' (frozen)' : ''}${
       context.engine.isBranchFixed(args.branchName)
-        ? ''
-        : chalk.yellow(`(needs restack)`)
+        ? args.trimHeader
+          ? ''
+          : ' '
+        : ` ${chalk.yellow(`(needs restack)`)}`
     }`,
     `${chalk.dim(
       context.engine.getAllCommits(args.branchName, 'COMMITTER_DATE')[0] ?? ''
@@ -153,7 +156,7 @@ function getCommitLines(
 ) {
   const lines = context.engine
     .getAllCommits(branchName, 'READABLE')
-    .map((line) => chalk.gray(line));
+    .map((line) => chalk.dim(line));
 
   return reverse ? lines.reverse() : lines;
 }

@@ -63,7 +63,7 @@ export type TEngine = {
   getRebaseHead: () => string | undefined;
   getUnstagedChanges: () => string;
   getStatus: () => TStatusFile[];
-  logLong: () => void;
+  logLong: () => void | Promise<void>;
 
   showCommits: (
     branchName: string,
@@ -637,7 +637,7 @@ export function composeEngine({
     getRebaseHead: git.getRebaseHead,
     getUnstagedChanges: git.getUnstagedChanges,
     getStatus: git.getStatus,
-    logLong: () => splog.page(git.logLong()),
+    logLong: () => splog.page(git.logLong(), { trailingNewline: false }),
     showCommits: (
       branchName: string,
       patch: boolean,

@@ -242,7 +242,7 @@ describe('zero-depth log options and transports through the public CLI', functio
     expect(fixture.logSnapshot()).to.deep.equal(before);
   });
 
-  it('preserves the long commit graph and rejects ordinary display selectors there', () => {
+  it('preserves the long commit graph while ignoring accepted display selectors', () => {
     const before = fixture.logSnapshot();
     for (const route of [['log', 'long'], ['log', 'l'], ['ll']]) {
       const result = fixture.run([...route, '--no-interactive']);
@@ -265,15 +265,15 @@ describe('zero-depth log options and transports through the public CLI', functio
       }
       expect(result.stdout).not.to.include('↱ $');
       expect(result.stderr).to.equal('');
-      const refused = fixture.run([
+      const ignored = fixture.run([
         ...route,
         '--steps',
         '0',
         '--no-interactive',
       ]);
-      expect(refused.status).not.to.equal(0);
-      expect(refused.stdout).to.equal('');
-      expect(refused.stderr).to.include('Unknown argument:');
+      expect(ignored.status, ignored.stderr).to.equal(0);
+      expect(ignored.stdout).to.equal(result.stdout);
+      expect(ignored.stderr).to.equal('');
     }
     expect(fixture.logSnapshot()).to.deep.equal(before);
   });

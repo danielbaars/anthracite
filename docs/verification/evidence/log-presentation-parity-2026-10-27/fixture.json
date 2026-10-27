@@ -1,0 +1,63 @@
+{
+  "root": "/private/tmp/anthracite-log-followup-yyzqnlh4",
+  "repos": {
+    "gt": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "an": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo"
+  },
+  "parents": {
+    "base": "main",
+    "search": "base",
+    "ui": "search",
+    "empty-tip": "ui",
+    "api": "base",
+    "api-followup": "api",
+    "maintenance": "main",
+    "feature/caf\u00e9-long-branch-name-for-terminal-width": "search"
+  },
+  "untracked": [
+    "scratch"
+  ],
+  "current": "search",
+  "staleBranch": "api-followup",
+  "staleParent": "api",
+  "apiOld": "d6dd5bdf60288220aeff997f9fe842f39c5e8a0c",
+  "apiNew": "b9076a1d9bb4da9a9bcf2ae1356c9161812bbd11",
+  "identities": {
+    "gt": {
+      "path": "/opt/homebrew/bin/gt",
+      "realpath": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+      "sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "version": "1.8.6",
+      "refs": "refs/heads/api b9076a1d9bb4da9a9bcf2ae1356c9161812bbd11\nrefs/heads/api-followup 640afd228f30a8197e34a0f79b49b0d545aa96d0\nrefs/heads/base 3473aa29821bd7b72c5c5acb2e9ce5609375ac71\nrefs/heads/empty-tip f0a8527b96e6095293f62f74d665295c90a42138\nrefs/heads/feature/caf\u00e9-long-branch-name-for-terminal-width 0a67e62bed66464531247fb55b6a4b6f7cb540ed\nrefs/heads/main 5cb7719693b91c7e65509f8add4a3d79024a3278\nrefs/heads/maintenance fed83baa24455ea02c959a6ee4817534ee55e95d\nrefs/heads/scratch 056dbf6b836a6f604c2551a66e474bb08933455b\nrefs/heads/search 0f6c289ecd0c2a47e8ec94d4c941d54c20e974ec\nrefs/heads/ui f0a8527b96e6095293f62f74d665295c90a42138"
+    },
+    "an": {
+      "path": "/Users/danielbaars/.local/bin/an",
+      "realpath": "/Users/danielbaars/.local/share/anthracite/0.1.1-dev.20261027133955/an",
+      "sha256": "a6840a879155ad5e90dceb91315432ae578efc5a71b5ec71cb1e74ff0f4b7ece",
+      "version": "0.1.1-dev.20261027133955",
+      "refs": "refs/heads/api b9076a1d9bb4da9a9bcf2ae1356c9161812bbd11\nrefs/heads/api-followup 640afd228f30a8197e34a0f79b49b0d545aa96d0\nrefs/heads/base 3473aa29821bd7b72c5c5acb2e9ce5609375ac71\nrefs/heads/empty-tip f0a8527b96e6095293f62f74d665295c90a42138\nrefs/heads/feature/caf\u00e9-long-branch-name-for-terminal-width 0a67e62bed66464531247fb55b6a4b6f7cb540ed\nrefs/heads/main 5cb7719693b91c7e65509f8add4a3d79024a3278\nrefs/heads/maintenance fed83baa24455ea02c959a6ee4817534ee55e95d\nrefs/heads/scratch 056dbf6b836a6f604c2551a66e474bb08933455b\nrefs/heads/search 0f6c289ecd0c2a47e8ec94d4c941d54c20e974ec\nrefs/heads/ui f0a8527b96e6095293f62f74d665295c90a42138"
+    }
+  },
+  "environment": {
+    "HOME": "/private/tmp/anthracite-log-followup-yyzqnlh4/home",
+    "NO_COLOR": "1",
+    "PAGER": "cat",
+    "PATH": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin://Applications/Topaz Gigapixel.app/Contents/Resources/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/sbin:/Users/danielbaars/.codex/tmp/arg0-macos/codex-arg0TR5BEX:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/danielbaars/Library/pnpm/bin:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/opt/homebrew/opt/fzf/bin:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS",
+    "TERM": "dumb",
+    "XDG_CONFIG_HOME": "/private/tmp/anthracite-log-followup-yyzqnlh4/home/config",
+    "GH_CONFIG_DIR": "/private/tmp/anthracite-log-followup-yyzqnlh4/home/gh",
+    "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-log-followup-yyzqnlh4/user-config.json",
+    "GRAPHITE_PROFILE": "",
+    "GIT_CONFIG_GLOBAL": "/private/tmp/anthracite-log-followup-yyzqnlh4/gitconfig",
+    "GIT_CONFIG_NOSYSTEM": "1",
+    "GIT_TERMINAL_PROMPT": "0",
+    "GIT_EDITOR": "true",
+    "GIT_SEQUENCE_EDITOR": "true",
+    "GRAPHITE_DISABLE_TELEMETRY": "1",
+    "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+    "GRAPHITE_DISABLE_SURVEY": "1",
+    "CH_PAGER": "cat",
+    "GT_PAGER": "cat",
+    "TZ": "UTC"
+  }
+}

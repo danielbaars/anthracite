@@ -1,0 +1,32 @@
+[
+  {
+    "case": "baseline",
+    "stdout": "\u25ef      api-followup (needs restack)\n\u25ef      api (gt-linked-worktree)\n\u2502 \u25ef    feature/caf\u00e9-long-branch-name-for-terminal-width\n\u2502 \u2502 \u25ef  empty-tip\n\u2502 \u2502 \u25ef  ui\n\u2502 \u25c9\u2500\u2518  search\n\u25ef\u2500\u2518    base\n\u2502 \u25ef    maintenance\n\u25ef\u2500\u2518    main\n",
+    "stderr": "",
+    "current": "search"
+  },
+  {
+    "case": "maintenance-newest",
+    "stdout": "\u25ef      api-followup (needs restack)\n\u25ef      api (gt-linked-worktree)\n\u2502 \u25ef    feature/caf\u00e9-long-branch-name-for-terminal-width\n\u2502 \u2502 \u25ef  empty-tip\n\u2502 \u2502 \u25ef  ui\n\u2502 \u25c9\u2500\u2518  search\n\u25ef\u2500\u2518    base\n\u2502 \u25ef    maintenance\n\u25ef\u2500\u2518    main\n",
+    "stderr": "",
+    "current": "search"
+  },
+  {
+    "case": "deep-tip-newest",
+    "stdout": "\u25ef      api-followup (needs restack)\n\u25ef      api (gt-linked-worktree)\n\u2502 \u25ef    feature/caf\u00e9-long-branch-name-for-terminal-width\n\u2502 \u2502 \u25ef  empty-tip\n\u2502 \u2502 \u25ef  ui\n\u2502 \u25c9\u2500\u2518  search\n\u25ef\u2500\u2518    base\n\u2502 \u25ef    maintenance\n\u25ef\u2500\u2518    main\n",
+    "stderr": "",
+    "current": "search"
+  },
+  {
+    "case": "current-maintenance",
+    "stdout": "\u25ef      api-followup (needs restack)\n\u25ef      api (gt-linked-worktree)\n\u2502 \u25ef    feature/caf\u00e9-long-branch-name-for-terminal-width\n\u2502 \u2502 \u25ef  empty-tip\n\u2502 \u2502 \u25ef  ui\n\u2502 \u25ef\u2500\u2518  search\n\u25ef\u2500\u2518    base\n\u2502 \u25c9    maintenance\n\u25ef\u2500\u2518    main\n",
+    "stderr": "",
+    "current": "maintenance"
+  },
+  {
+    "case": "equal-subtree-tips",
+    "stdout": "\u25ef      api-followup (needs restack)\n\u25ef      api (gt-linked-worktree)\n\u2502 \u25ef    feature/caf\u00e9-long-branch-name-for-terminal-width\n\u2502 \u2502 \u25ef  empty-tip\n\u2502 \u2502 \u25ef  ui\n\u2502 \u25c9\u2500\u2518  search\n\u25ef\u2500\u2518    base\n\u2502 \u25ef    maintenance\n\u25ef\u2500\u2518    main\n",
+    "stderr": "",
+    "current": "search"
+  }
+]

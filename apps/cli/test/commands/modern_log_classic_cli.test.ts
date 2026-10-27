@@ -209,21 +209,21 @@ sys.exit(result.returncode)
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
-  it('keeps ordinary log display flags local rather than changing long grammar', () => {
+  it('rejects unknown long options before loading a repository', () => {
     const before = fixture.inspectionSnapshot();
     const restoreTools = fixture.refuseExternalTools();
     try {
       for (const args of [
-        ['log', 'long', '--classic'],
-        ['log', 'long', '--reverse'],
-        ['ll', '--classic'],
-        ['ll', '--stack'],
-        ['log', '--classic', 'long'],
+        ['log', 'long', '--classic-typo'],
+        ['log', 'long', '--reverse-typo'],
+        ['ll', '--invented-log-option'],
+        ['ll', '-c'],
+        ['log', '--unknown', 'long'],
       ]) {
         const result = fixture.run(args, fixture.root);
         expect(result.status, args.join(' ')).not.to.equal(0);
         expect(result.stdout).to.equal('');
-        expect(result.stderr).to.include('Unknown argument:');
+        expect(result.stderr).to.match(/Unknown arguments?:/);
       }
     } finally {
       restoreTools();

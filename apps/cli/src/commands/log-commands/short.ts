@@ -30,7 +30,7 @@ const args = {
     default: undefined,
   },
   'show-untracked': {
-    describe: `Include untracked branched in interactive selection`,
+    describe: `Show untracked branches in a separate section.`,
     demandOption: false,
     type: 'boolean',
     positional: false,

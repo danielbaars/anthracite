@@ -1,0 +1,579 @@
+{
+  "evidence_id": "ev_03f946a6512beb824a59fb3194c72d13e35a2732fb3945e53f2242db666d15d2",
+  "subject": null,
+  "provider": {
+    "id": "rea-process",
+    "name": "REA process capture",
+    "version": "3"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.process-capture",
+  "operation": "capture_process_scenario",
+  "parameters": {
+    "executable_name": "env",
+    "argument_count": 5,
+    "event_count": 0,
+    "filesystem_observation_path_count": 0,
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    }
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "manifest": {
+      "rea_version": "6.7.0",
+      "provider_version": "3",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "pty_backend": "node-pty",
+      "started_at": "2026-10-27T14:59:34.597Z",
+      "completed_at": "2026-10-27T14:59:35.246Z",
+      "scenario": {
+        "executable": "/usr/bin/env",
+        "arguments": [
+          "-u",
+          "NO_COLOR",
+          "/opt/homebrew/bin/gt",
+          "log",
+          "--no-interactive"
+        ],
+        "working_directory": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+        "environment": {
+          "HOME": "/private/tmp/anthracite-log-followup-yyzqnlh4/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-log-followup-yyzqnlh4/home/config",
+          "GH_CONFIG_DIR": "/private/tmp/anthracite-log-followup-yyzqnlh4/home/gh",
+          "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-log-followup-yyzqnlh4/user-config.json",
+          "GIT_CONFIG_GLOBAL": "/private/tmp/anthracite-log-followup-yyzqnlh4/gitconfig",
+          "GIT_CONFIG_NOSYSTEM": "1",
+          "GH_TOKEN": "",
+          "GITHUB_TOKEN": "",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GT_PAGER": "cat",
+          "CH_PAGER": "cat",
+          "PAGER": "cat",
+          "TERM": "xterm-256color",
+          "FORCE_COLOR": "1",
+          "TZ": "UTC"
+        },
+        "filesystem_observation_paths": [],
+        "terminal": {
+          "columns": 120,
+          "rows": 40,
+          "scrollback": 150
+        },
+        "events": [],
+        "timeout_ms": 15000,
+        "idle_timeout_ms": 7000,
+        "settle_ms": 150,
+        "limits": {
+          "output_bytes": 50000,
+          "files": 10000,
+          "file_bytes": 10000000,
+          "processes": 30,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "executable_sha256": "dd48d2912b68c69daf057c1ab13fec6001a072d58bad7d1f91e0687025b2b16a"
+      },
+      "comparison_contract": {
+        "working_directory": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+        "environment": {
+          "HOME": "/private/tmp/anthracite-log-followup-yyzqnlh4/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-log-followup-yyzqnlh4/home/config",
+          "GH_CONFIG_DIR": "/private/tmp/anthracite-log-followup-yyzqnlh4/home/gh",
+          "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-log-followup-yyzqnlh4/user-config.json",
+          "GIT_CONFIG_GLOBAL": "/private/tmp/anthracite-log-followup-yyzqnlh4/gitconfig",
+          "GIT_CONFIG_NOSYSTEM": "1",
+          "GH_TOKEN": "",
+          "GITHUB_TOKEN": "",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GT_PAGER": "cat",
+          "CH_PAGER": "cat",
+          "PAGER": "cat",
+          "TERM": "xterm-256color",
+          "FORCE_COLOR": "1",
+          "TZ": "UTC"
+        },
+        "ambient_environment": "unknown",
+        "filesystem_observation_paths": [],
+        "terminal": {
+          "columns": 120,
+          "rows": 40,
+          "scrollback": 150
+        },
+        "events": [],
+        "timeout_ms": 15000,
+        "idle_timeout_ms": 7000,
+        "settle_ms": 150,
+        "limits": {
+          "output_bytes": 50000,
+          "files": 10000,
+          "file_bytes": 10000000,
+          "processes": 30,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "port_normalization_version": "contextual-endpoints-v2",
+        "rendered_line_format": "trailing-spaces-trimmed-v1"
+      },
+      "full_scenario_sha256": "411895dce095bca0331483afeb434f5757a780dd3af6817cdf546b23e01cd4dd",
+      "comparison_contract_sha256": "763e91b248a22973a4d5bbca2b40580da71f38689ae397e0acae1cfd73026ec8",
+      "selected_executable_sha256": "dd48d2912b68c69daf057c1ab13fec6001a072d58bad7d1f91e0687025b2b16a",
+      "executable_sha256": "dd48d2912b68c69daf057c1ab13fec6001a072d58bad7d1f91e0687025b2b16a",
+      "executable_identity": {
+        "state": "path_metadata_unchanged",
+        "reason": null
+      },
+      "normalization_sha256": "5c58aa1aa890197f15f9c59ef755d01120e6e07f356fa1ef2f20787e63b6fa87"
+    },
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    },
+    "frames": [
+      {
+        "sequence": 0,
+        "at_ms": 430,
+        "data": "◯ \u001b[94mapi-followup\u001b[39m \u001b[33m(needs restack)\u001b[39m\r\n│ \u001b[2m2 days ago\u001b[22m\r\n│ \r\n│ \u001b[2m640afd2 - Follow up on the API\u001b[22m\r\n│\r\n◯ \u001b[94mapi\u001b[39m \u001b[2m(gt-linked-worktree)\u001b[22m\r\n│ \u001b[2m2 days ago\u001b[22m\r\n│ \r\n│ \u001b[2mb9076a1 - Advance the API after its child was created\u001b[22m\r\n│ \u001b[2md6dd5bd - Expose the search API\u001b[22m\r\n│\r\n│  ◯ \u001b[94mfeature/café-long-branch-name-for-terminal-width\u001b[39m\r\n│  │ \u001b[2m2 days ago\u001b[22m\r\n│  │ \r\n│  │ \u001b[2m0a67e62 - Check Unicode labels and a deliberately long branch identity\u001b[22m\r\n│  │\r\n│  │  ◯ \u001b[94mempty-tip\u001b[39m\r\n│  │  │ \r\n│  │  │ \r\n│  │  │\r\n│  │  ◯ \u001b[94mui\u001b[39m\r\n│  │  │ \u001b[2m2 days ago\u001b[22m\r\n│  │  │ \r\n│  │  │ \u001b[2mf0a8527 - Render search results\u001b[22m\r\n│  │  │\r\n│  ├──┘\r\n│  \u001b[36m◉\u001b[39m \u001b[36msearch (current)\u001b[39m\r\n│  │ \u001b[2m2 days ago\u001b[22m\r\n│  │ \r\n│  │ \u001b[2m0f6c289 - Handle café Unicode and long summaries without changing graph identity\u001b[22m\r\n│  │ \u001b[2m99d401c - Add deterministi"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 430,
+        "data": "c search indexing\u001b[22m\r\n│  │\r\n├──┘\r\n◯ \u001b[94mbase\u001b[39m\r\n│ \u001b[2m2 days ago\u001b[22m\r\n│ \r\n│ \u001b[2m3473aa2 - Keep fixture inputs deterministic\u001b[22m\r\n│ \u001b[2m589be30 - Add shared foundations\u001b[22m\r\n│\r\n│  ◯ \u001b[94mmaintenance\u001b[39m\r\n│  │ \u001b[2m2 days ago\u001b[22m\r\n│  │ \r\n│  │ \u001b[2mfed83ba - Maintain the independent stack\u001b[22m\r\n│  │\r\n├──┘\r\n◯ \u001b[94mmain\u001b[39m\r\n│ \u001b[2m2 days ago\u001b[22m\r\n│ \r\n│ \u001b[2m5cb7719 - Initialize the shared log fixture\u001b[22m\r\n│\r\n"
+      }
+    ],
+    "rendered_frames": [
+      {
+        "sequence": 0,
+        "at_ms": 430,
+        "columns": 120,
+        "rows": 40,
+        "cursor_x": 31,
+        "cursor_y": 30,
+        "active_buffer": "normal",
+        "lines": [
+          "◯ api-followup (needs restack)",
+          "│ 2 days ago",
+          "│",
+          "│ 640afd2 - Follow up on the API",
+          "│",
+          "◯ api (gt-linked-worktree)",
+          "│ 2 days ago",
+          "│",
+          "│ b9076a1 - Advance the API after its child was created",
+          "│ d6dd5bd - Expose the search API",
+          "│",
+          "│  ◯ feature/café-long-branch-name-for-terminal-width",
+          "│  │ 2 days ago",
+          "│  │",
+          "│  │ 0a67e62 - Check Unicode labels and a deliberately long branch identity",
+          "│  │",
+          "│  │  ◯ empty-tip",
+          "│  │  │",
+          "│  │  │",
+          "│  │  │",
+          "│  │  ◯ ui",
+          "│  │  │ 2 days ago",
+          "│  │  │",
+          "│  │  │ f0a8527 - Render search results",
+          "│  │  │",
+          "│  ├──┘",
+          "│  ◉ search (current)",
+          "│  │ 2 days ago",
+          "│  │",
+          "│  │ 0f6c289 - Handle café Unicode and long summaries without changing graph identity",
+          "│  │ 99d401c - Add deterministi",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "◯ \u001b[94mapi-followup\u001b[0m \u001b[33m(needs restack)\r\n\u001b[0m│ \u001b[2m2 days ago\r\n\u001b[0m│ \r\n│ \u001b[2m640afd2 - Follow up on the API\r\n\u001b[0m│\r\n◯ \u001b[94mapi\u001b[0m \u001b[2m(gt-linked-worktree)\r\n\u001b[0m│ \u001b[2m2 days ago\r\n\u001b[0m│ \r\n│ \u001b[2mb9076a1 - Advance the API after its child was created\r\n\u001b[0m│ \u001b[2md6dd5bd - Expose the search API\r\n\u001b[0m│\r\n│  ◯ \u001b[94mfeature/café-long-branch-name-for-terminal-width\r\n\u001b[0m│  │ \u001b[2m2 days ago\r\n\u001b[0m│  │ \r\n│  │ \u001b[2m0a67e62 - Check Unicode labels and a deliberately long branch identity\r\n\u001b[0m│  │\r\n│  │  ◯ \u001b[94mempty-tip\r\n\u001b[0m│  │  │ \r\n│  │  │ \r\n│  │  │\r\n│  │  ◯ \u001b[94mui\r\n\u001b[0m│  │  │ \u001b[2m2 days ago\r\n\u001b[0m│  │  │ \r\n│  │  │ \u001b[2mf0a8527 - Render search results\r\n\u001b[0m│  │  │\r\n│  ├──┘\r\n│  \u001b[36m◉\u001b[0m \u001b[36msearch (current)\r\n\u001b[0m│  │ \u001b[2m2 days ago\r\n\u001b[0m│  │ \r\n│  │ \u001b[2m0f6c289 - Handle café Unicode and long summaries without changing graph identity\r\n\u001b[0m│  │ \u001b[2m99d401c - Add deterministi"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 430,
+        "columns": 120,
+        "rows": 40,
+        "cursor_x": 0,
+        "cursor_y": 39,
+        "active_buffer": "normal",
+        "lines": [
+          "│  ◯ feature/café-long-branch-name-for-terminal-width",
+          "│  │ 2 days ago",
+          "│  │",
+          "│  │ 0a67e62 - Check Unicode labels and a deliberately long branch identity",
+          "│  │",
+          "│  │  ◯ empty-tip",
+          "│  │  │",
+          "│  │  │",
+          "│  │  │",
+          "│  │  ◯ ui",
+          "│  │  │ 2 days ago",
+          "│  │  │",
+          "│  │  │ f0a8527 - Render search results",
+          "│  │  │",
+          "│  ├──┘",
+          "│  ◉ search (current)",
+          "│  │ 2 days ago",
+          "│  │",
+          "│  │ 0f6c289 - Handle café Unicode and long summaries without changing graph identity",
+          "│  │ 99d401c - Add deterministic search indexing",
+          "│  │",
+          "├──┘",
+          "◯ base",
+          "│ 2 days ago",
+          "│",
+          "│ 3473aa2 - Keep fixture inputs deterministic",
+          "│ 589be30 - Add shared foundations",
+          "│",
+          "│  ◯ maintenance",
+          "│  │ 2 days ago",
+          "│  │",
+          "│  │ fed83ba - Maintain the independent stack",
+          "│  │",
+          "├──┘",
+          "◯ main",
+          "│ 2 days ago",
+          "│",
+          "│ 5cb7719 - Initialize the shared log fixture",
+          "│",
+          ""
+        ],
+        "serialized_state": "◯ \u001b[94mapi-followup\u001b[0m \u001b[33m(needs restack)\r\n\u001b[0m│ \u001b[2m2 days ago\r\n\u001b[0m│ \r\n│ \u001b[2m640afd2 - Follow up on the API\r\n\u001b[0m│\r\n◯ \u001b[94mapi\u001b[0m \u001b[2m(gt-linked-worktree)\r\n\u001b[0m│ \u001b[2m2 days ago\r\n\u001b[0m│ \r\n│ \u001b[2mb9076a1 - Advance the API after its child was created\r\n\u001b[0m│ \u001b[2md6dd5bd - Expose the search API\r\n\u001b[0m│\r\n│  ◯ \u001b[94mfeature/café-long-branch-name-for-terminal-width\r\n\u001b[0m│  │ \u001b[2m2 days ago\r\n\u001b[0m│  │ \r\n│  │ \u001b[2m0a67e62 - Check Unicode labels and a deliberately long branch identity\r\n\u001b[0m│  │\r\n│  │  ◯ \u001b[94mempty-tip\r\n\u001b[0m│  │  │ \r\n│  │  │ \r\n│  │  │\r\n│  │  ◯ \u001b[94mui\r\n\u001b[0m│  │  │ \u001b[2m2 days ago\r\n\u001b[0m│  │  │ \r\n│  │  │ \u001b[2mf0a8527 - Render search results\r\n\u001b[0m│  │  │\r\n│  ├──┘\r\n│  \u001b[36m◉\u001b[0m \u001b[36msearch (current)\r\n\u001b[0m│  │ \u001b[2m2 days ago\r\n\u001b[0m│  │ \r\n│  │ \u001b[2m0f6c289 - Handle café Unicode and long summaries without changing graph identity\r\n\u001b[0m│  │ \u001b[2m99d401c - Add deterministic search indexing\r\n\u001b[0m│  │\r\n├──┘\r\n◯ \u001b[94mbase\r\n\u001b[0m│ \u001b[2m2 days ago\r\n\u001b[0m│ \r\n│ \u001b[2m3473aa2 - Keep fixture inputs deterministic\r\n\u001b[0m│ \u001b[2m589be30 - Add shared foundations\r\n\u001b[0m│\r\n│  ◯ \u001b[94mmaintenance\r\n\u001b[0m│  │ \u001b[2m2 days ago\r\n\u001b[0m│  │ \r\n│  │ \u001b[2mfed83ba - Maintain the independent stack\r\n\u001b[0m│  │\r\n├──┘\r\n◯ \u001b[94mmain\r\n\u001b[0m│ \u001b[2m2 days ago\r\n\u001b[0m│ \r\n│ \u001b[2m5cb7719 - Initialize the shared log fixture\r\n\u001b[0m│\r\n"
+      }
+    ],
+    "interaction_events": [],
+    "exit": {
+      "code": 0,
+      "signal": 0,
+      "reason": "exited"
+    },
+    "settlement": {
+      "state": "quiesced",
+      "elapsed_ms": 175,
+      "cleanup_outcome": "not_required"
+    },
+    "process_samples": [
+      {
+        "at_ms": 210,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "/opt/homebrew/bin/gt log --no-interactive",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 210,
+        "pid": 3,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 210,
+        "pid": 4,
+        "parent_pid": 1,
+        "command": "(gt)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 410,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "(gt)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 410,
+        "pid": 5,
+        "parent_pid": 1,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt /snapshot/dist/graphite.js background cleanup-debug-logs",
+        "process_group_id": 5,
+        "session_id": null
+      },
+      {
+        "at_ms": 410,
+        "pid": 6,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 410,
+        "pid": 7,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 410,
+        "pid": 8,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 410,
+        "pid": 9,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      }
+    ],
+    "filesystem_checkpoints": [
+      {
+        "name": "before",
+        "at_ms": 0,
+        "files": [],
+        "effects": [],
+        "truncated": false
+      },
+      {
+        "name": "after_settlement",
+        "at_ms": 648,
+        "files": [],
+        "effects": [],
+        "truncated": false
+      }
+    ],
+    "event_journal": [
+      {
+        "capture_order": 0,
+        "collection": "filesystem_checkpoints",
+        "index": 0
+      },
+      {
+        "capture_order": 1,
+        "collection": "process_samples",
+        "index": 0
+      },
+      {
+        "capture_order": 2,
+        "collection": "process_samples",
+        "index": 1
+      },
+      {
+        "capture_order": 3,
+        "collection": "process_samples",
+        "index": 2
+      },
+      {
+        "capture_order": 4,
+        "collection": "frames",
+        "index": 0
+      },
+      {
+        "capture_order": 5,
+        "collection": "frames",
+        "index": 1
+      },
+      {
+        "capture_order": 6,
+        "collection": "rendered_frames",
+        "index": 0
+      },
+      {
+        "capture_order": 7,
+        "collection": "lifecycle",
+        "index": 0
+      },
+      {
+        "capture_order": 8,
+        "collection": "rendered_frames",
+        "index": 1
+      },
+      {
+        "capture_order": 9,
+        "collection": "process_samples",
+        "index": 3
+      },
+      {
+        "capture_order": 10,
+        "collection": "process_samples",
+        "index": 4
+      },
+      {
+        "capture_order": 11,
+        "collection": "process_samples",
+        "index": 5
+      },
+      {
+        "capture_order": 12,
+        "collection": "process_samples",
+        "index": 6
+      },
+      {
+        "capture_order": 13,
+        "collection": "process_samples",
+        "index": 7
+      },
+      {
+        "capture_order": 14,
+        "collection": "process_samples",
+        "index": 8
+      },
+      {
+        "capture_order": 15,
+        "collection": "lifecycle",
+        "index": 1
+      },
+      {
+        "capture_order": 16,
+        "collection": "filesystem_checkpoints",
+        "index": 1
+      }
+    ],
+    "files_before": [],
+    "files_after": [],
+    "filesystem_effects": [],
+    "truncated": false,
+    "truncation_details": {
+      "raw_terminal": {
+        "budget_bytes": 50000,
+        "observed_bytes": 1504,
+        "retained_bytes": 1504,
+        "observed_frames": 2,
+        "retained_frames": 2
+      },
+      "rendered_terminal": {
+        "budget_bytes": 50000,
+        "observed_bytes": 4120,
+        "retained_bytes": 4120,
+        "observed_frames": 2,
+        "retained_frames": 2
+      },
+      "normalized_terminal": {
+        "budget_bytes": 50000,
+        "retained_bytes": 1504,
+        "omitted_frames": 0
+      },
+      "filesystem_before": {
+        "files_limit": 10000,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 10000000,
+        "hashed_bytes": 0,
+        "hash_omissions": []
+      },
+      "filesystem_after": {
+        "files_limit": 10000,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 10000000,
+        "hashed_bytes": 0,
+        "hash_omissions": []
+      },
+      "process": {
+        "sample_limit": 30,
+        "sampling_partial": false,
+        "retained_samples": 9,
+        "sample_limit_reached": false,
+        "sampling_failures": 0,
+        "first_sampling_failure": null,
+        "coverage": "sampled"
+      }
+    },
+    "limitations": [
+      "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+      "Process trees are sampled and may omit short-lived descendants.",
+      "Filesystem observations are before/after snapshots, not syscall traces.",
+      "Inherited host environment variables are not recorded and may affect results.",
+      "No filesystem observation paths were selected; filesystem effects remain unknown."
+    ],
+    "residual_unknowns": [
+      {
+        "scope": "process",
+        "reason": "Process trees are sampled and may omit short-lived descendants."
+      },
+      {
+        "scope": "process",
+        "reason": "The executable digest is a prelaunch file sample; operating-system image binding is not atomically observed."
+      },
+      {
+        "scope": "environment",
+        "reason": "Inherited host environment variables are not recorded."
+      },
+      {
+        "scope": "network",
+        "reason": "Network activity is not observed by this capture."
+      },
+      {
+        "scope": "filesystem",
+        "reason": "No filesystem observation paths were selected; filesystem effects remain unknown."
+      },
+      {
+        "scope": "process",
+        "reason": "Ownership of unrelated process 13633 could not be verified; it was left untouched: platform_binary_environment_withheld"
+      }
+    ],
+    "cleanup": {
+      "owned_process_group": "verified",
+      "temporary_root": "removed",
+      "unverified_processes": [
+        {
+          "pid": 13633,
+          "reason": "platform_binary_environment_withheld"
+        }
+      ]
+    }
+  },
+  "confidence": "observed",
+  "authority": "controlled-replay",
+  "environment": {
+    "id": "darwin-arm64",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "isolation": "process"
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+    "Process trees are sampled and may omit short-lived descendants.",
+    "Filesystem observations are before/after snapshots, not syscall traces.",
+    "Inherited host environment variables are not recorded and may affect results.",
+    "No filesystem observation paths were selected; filesystem effects remain unknown."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

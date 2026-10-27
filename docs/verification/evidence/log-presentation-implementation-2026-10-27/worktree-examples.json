@@ -1,0 +1,208 @@
+[
+  {
+    "runtime": "node",
+    "args": [
+      "/private/tmp/anthracite-log-implementation-2026-10-27/ticket-9/apps/cli/dist/src/index.js",
+      "log",
+      "--no-interactive"
+    ],
+    "status": 0,
+    "stdout": "◯ api-followup (needs restack) (followup workspace)\n│ 2 days ago\n│ \n│ 31ad4ec - api-followup\n│\n◯ api (frozen) (API café workspace)\n│ 2 days ago\n│ \n│ e27ba2c - api-update\n│ f7d38d0 - api\n│\n│  ◯ feature/café-long-branch-name-for-terminal-width\n│  │ 2 days ago\n│  │ \n│  │ 7270127 - feature_caf_-long-branch-name-for-terminal-width\n│  │\n│  │  ◯ empty-tip\n│  │  │ \n│  │  │ \n│  │  │\n│  │  ◯ ui\n│  │  │ 2 days ago\n│  │  │ \n│  │  │ 5241fbb - ui\n│  │  │\n│  ├──┘\n│  ◉ search (current)\n│  │ 2 days ago\n│  │ \n│  │ 871b019 - search\n│  │\n├──┘\n◯ base (frozen)\n│ 2 days ago\n│ \n│ 7a1e991 - base\n│\n│  ◯ maintenance\n│  │ 2 days ago\n│  │ \n│  │ 3e4c58c - maintenance\n│  │\n├──┘\n◯ main\n│ 4 weeks ago\n│ \n│ 7942000 - main\n│\n",
+    "stdoutBase64": "4pevIGFwaS1mb2xsb3d1cCAobmVlZHMgcmVzdGFjaykgKGZvbGxvd3VwIHdvcmtzcGFjZSkK4pSCIDIgZGF5cyBhZ28K4pSCIArilIIgMzFhZDRlYyAtIGFwaS1mb2xsb3d1cArilIIK4pevIGFwaSAoZnJvemVuKSAoQVBJIGNhZsOpIHdvcmtzcGFjZSkK4pSCIDIgZGF5cyBhZ28K4pSCIArilIIgZTI3YmEyYyAtIGFwaS11cGRhdGUK4pSCIGY3ZDM4ZDAgLSBhcGkK4pSCCuKUgiAg4pevIGZlYXR1cmUvY2Fmw6ktbG9uZy1icmFuY2gtbmFtZS1mb3ItdGVybWluYWwtd2lkdGgK4pSCICDilIIgMiBkYXlzIGFnbwrilIIgIOKUgiAK4pSCICDilIIgNzI3MDEyNyAtIGZlYXR1cmVfY2FmXy1sb25nLWJyYW5jaC1uYW1lLWZvci10ZXJtaW5hbC13aWR0aArilIIgIOKUggrilIIgIOKUgiAg4pevIGVtcHR5LXRpcArilIIgIOKUgiAg4pSCIArilIIgIOKUgiAg4pSCIArilIIgIOKUgiAg4pSCCuKUgiAg4pSCICDil68gdWkK4pSCICDilIIgIOKUgiAyIGRheXMgYWdvCuKUgiAg4pSCICDilIIgCuKUgiAg4pSCICDilIIgNTI0MWZiYiAtIHVpCuKUgiAg4pSCICDilIIK4pSCICDilJzilIDilIDilJgK4pSCICDil4kgc2VhcmNoIChjdXJyZW50KQrilIIgIOKUgiAyIGRheXMgYWdvCuKUgiAg4pSCIArilIIgIOKUgiA4NzFiMDE5IC0gc2VhcmNoCuKUgiAg4pSCCuKUnOKUgOKUgOKUmAril68gYmFzZSAoZnJvemVuKQrilIIgMiBkYXlzIGFnbwrilIIgCuKUgiA3YTFlOTkxIC0gYmFzZQrilIIK4pSCICDil68gbWFpbnRlbmFuY2UK4pSCICDilIIgMiBkYXlzIGFnbwrilIIgIOKUgiAK4pSCICDilIIgM2U0YzU4YyAtIG1haW50ZW5hbmNlCuKUgiAg4pSCCuKUnOKUgOKUgOKUmAril68gbWFpbgrilIIgNCB3ZWVrcyBhZ28K4pSCIArilIIgNzk0MjAwMCAtIG1haW4K4pSCCg==",
+    "headerRows": [
+      "◯ api-followup (needs restack) (followup workspace)",
+      "◯ api (frozen) (API café workspace)",
+      "│  ◯ feature/café-long-branch-name-for-terminal-width",
+      "│  │  ◯ empty-tip",
+      "│  │  ◯ ui",
+      "│  ◉ search (current)",
+      "◯ base (frozen)",
+      "│  ◯ maintenance",
+      "◯ main"
+    ]
+  },
+  {
+    "runtime": "node",
+    "args": [
+      "/private/tmp/anthracite-log-implementation-2026-10-27/ticket-9/apps/cli/dist/src/index.js",
+      "ls",
+      "--no-interactive"
+    ],
+    "status": 0,
+    "stdout": "◯      api-followup (needs restack) (followup workspace)\n◯      api (frozen) (API café workspace)\n│ ◯    feature/café-long-branch-name-for-terminal-width\n│ │ ◯  empty-tip\n│ │ ◯  ui\n│ ◉─┘  search\n◯─┘    base (frozen)\n│ ◯    maintenance\n◯─┘    main\n",
+    "stdoutBase64": "4pevICAgICAgYXBpLWZvbGxvd3VwIChuZWVkcyByZXN0YWNrKSAoZm9sbG93dXAgd29ya3NwYWNlKQril68gICAgICBhcGkgKGZyb3plbikgKEFQSSBjYWbDqSB3b3Jrc3BhY2UpCuKUgiDil68gICAgZmVhdHVyZS9jYWbDqS1sb25nLWJyYW5jaC1uYW1lLWZvci10ZXJtaW5hbC13aWR0aArilIIg4pSCIOKXryAgZW1wdHktdGlwCuKUgiDilIIg4pevICB1aQrilIIg4peJ4pSA4pSYICBzZWFyY2gK4pev4pSA4pSYICAgIGJhc2UgKGZyb3plbikK4pSCIOKXryAgICBtYWludGVuYW5jZQril6/ilIDilJggICAgbWFpbgo=",
+    "headerRows": [
+      "◯      api-followup (needs restack) (followup workspace)",
+      "◯      api (frozen) (API café workspace)",
+      "│ ◯    feature/café-long-branch-name-for-terminal-width",
+      "│ │ ◯  empty-tip",
+      "│ │ ◯  ui",
+      "│ ◉─┘  search",
+      "◯─┘    base (frozen)",
+      "│ ◯    maintenance",
+      "◯─┘    main"
+    ]
+  },
+  {
+    "runtime": "node",
+    "args": [
+      "/private/tmp/anthracite-log-implementation-2026-10-27/ticket-9/apps/cli/dist/src/index.js",
+      "log",
+      "--no-interactive"
+    ],
+    "status": 0,
+    "stdout": "◯ api-followup (needs restack)\n│ 2 days ago\n│ \n│ 31ad4ec - api-followup\n│\n◉ api (current)\n│ 2 days ago\n│ \n│ e27ba2c - api-update\n│ f7d38d0 - api\n│\n│  ◯ feature/café-long-branch-name-for-terminal-width\n│  │ 2 days ago\n│  │ \n│  │ 7270127 - feature_caf_-long-branch-name-for-terminal-width\n│  │\n│  │  ◯ empty-tip\n│  │  │ \n│  │  │ \n│  │  │\n│  │  ◯ ui\n│  │  │ 2 days ago\n│  │  │ \n│  │  │ 5241fbb - ui\n│  │  │\n│  ├──┘\n│  ◯ search (repo)\n│  │ 2 days ago\n│  │ \n│  │ 871b019 - search\n│  │\n├──┘\n◯ base\n│ 2 days ago\n│ \n│ 7a1e991 - base\n│\n│  ◯ maintenance\n│  │ 2 days ago\n│  │ \n│  │ 3e4c58c - maintenance\n│  │\n├──┘\n◯ main\n│ 4 weeks ago\n│ \n│ 7942000 - main\n│\n",
+    "stdoutBase64": "4pevIGFwaS1mb2xsb3d1cCAobmVlZHMgcmVzdGFjaykK4pSCIDIgZGF5cyBhZ28K4pSCIArilIIgMzFhZDRlYyAtIGFwaS1mb2xsb3d1cArilIIK4peJIGFwaSAoY3VycmVudCkK4pSCIDIgZGF5cyBhZ28K4pSCIArilIIgZTI3YmEyYyAtIGFwaS11cGRhdGUK4pSCIGY3ZDM4ZDAgLSBhcGkK4pSCCuKUgiAg4pevIGZlYXR1cmUvY2Fmw6ktbG9uZy1icmFuY2gtbmFtZS1mb3ItdGVybWluYWwtd2lkdGgK4pSCICDilIIgMiBkYXlzIGFnbwrilIIgIOKUgiAK4pSCICDilIIgNzI3MDEyNyAtIGZlYXR1cmVfY2FmXy1sb25nLWJyYW5jaC1uYW1lLWZvci10ZXJtaW5hbC13aWR0aArilIIgIOKUggrilIIgIOKUgiAg4pevIGVtcHR5LXRpcArilIIgIOKUgiAg4pSCIArilIIgIOKUgiAg4pSCIArilIIgIOKUgiAg4pSCCuKUgiAg4pSCICDil68gdWkK4pSCICDilIIgIOKUgiAyIGRheXMgYWdvCuKUgiAg4pSCICDilIIgCuKUgiAg4pSCICDilIIgNTI0MWZiYiAtIHVpCuKUgiAg4pSCICDilIIK4pSCICDilJzilIDilIDilJgK4pSCICDil68gc2VhcmNoIChyZXBvKQrilIIgIOKUgiAyIGRheXMgYWdvCuKUgiAg4pSCIArilIIgIOKUgiA4NzFiMDE5IC0gc2VhcmNoCuKUgiAg4pSCCuKUnOKUgOKUgOKUmAril68gYmFzZQrilIIgMiBkYXlzIGFnbwrilIIgCuKUgiA3YTFlOTkxIC0gYmFzZQrilIIK4pSCICDil68gbWFpbnRlbmFuY2UK4pSCICDilIIgMiBkYXlzIGFnbwrilIIgIOKUgiAK4pSCICDilIIgM2U0YzU4YyAtIG1haW50ZW5hbmNlCuKUgiAg4pSCCuKUnOKUgOKUgOKUmAril68gbWFpbgrilIIgNCB3ZWVrcyBhZ28K4pSCIArilIIgNzk0MjAwMCAtIG1haW4K4pSCCg==",
+    "headerRows": [
+      "◯ api-followup (needs restack)",
+      "◉ api (current)",
+      "│  ◯ feature/café-long-branch-name-for-terminal-width",
+      "│  │  ◯ empty-tip",
+      "│  │  ◯ ui",
+      "│  ◯ search (repo)",
+      "◯ base",
+      "│  ◯ maintenance",
+      "◯ main"
+    ]
+  },
+  {
+    "runtime": "node",
+    "args": [
+      "/private/tmp/anthracite-log-implementation-2026-10-27/ticket-9/apps/cli/dist/src/index.js",
+      "ls",
+      "--no-interactive"
+    ],
+    "status": 0,
+    "stdout": "◯      api-followup (needs restack)\n◉      api\n│ ◯    feature/café-long-branch-name-for-terminal-width\n│ │ ◯  empty-tip\n│ │ ◯  ui\n│ ◯─┘  search (repo)\n◯─┘    base\n│ ◯    maintenance\n◯─┘    main\n",
+    "stdoutBase64": "4pevICAgICAgYXBpLWZvbGxvd3VwIChuZWVkcyByZXN0YWNrKQril4kgICAgICBhcGkK4pSCIOKXryAgICBmZWF0dXJlL2NhZsOpLWxvbmctYnJhbmNoLW5hbWUtZm9yLXRlcm1pbmFsLXdpZHRoCuKUgiDilIIg4pevICBlbXB0eS10aXAK4pSCIOKUgiDil68gIHVpCuKUgiDil6/ilIDilJggIHNlYXJjaCAocmVwbykK4pev4pSA4pSYICAgIGJhc2UK4pSCIOKXryAgICBtYWludGVuYW5jZQril6/ilIDilJggICAgbWFpbgo=",
+    "headerRows": [
+      "◯      api-followup (needs restack)",
+      "◉      api",
+      "│ ◯    feature/café-long-branch-name-for-terminal-width",
+      "│ │ ◯  empty-tip",
+      "│ │ ◯  ui",
+      "│ ◯─┘  search (repo)",
+      "◯─┘    base",
+      "│ ◯    maintenance",
+      "◯─┘    main"
+    ]
+  },
+  {
+    "runtime": "node",
+    "transport": "pty",
+    "status": 0,
+    "outputBase64": "4pevIBtbOTRtYXBpLWZvbGxvd3VwG1szOW0gG1szM20obmVlZHMgcmVzdGFjaykbWzM5bQ0K4pSCIBtbMm0yIGRheXMgYWdvG1syMm0NCuKUgiANCuKUgiAbWzJtMzFhZDRlYyAtIGFwaS1mb2xsb3d1cBtbMjJtDQrilIINCuKXryAbWzk0bWFwaRtbMzltDQrilIIgG1sybTIgZGF5cyBhZ28bWzIybQ0K4pSCIA0K4pSCIBtbMm1lMjdiYTJjIC0gYXBpLXVwZGF0ZRtbMjJtDQrilIIgG1sybWY3ZDM4ZDAgLSBhcGkbWzIybQ0K4pSCDQrilIIgIOKXryAbWzk0bWZlYXR1cmUvY2Fmw6ktbG9uZy1icmFuY2gtbmFtZS1mb3ItdGVybWluYWwtd2lkdGgbWzM5bQ0K4pSCICDilIIgG1sybTIgZGF5cyBhZ28bWzIybQ0K4pSCICDilIIgDQrilIIgIOKUgiAbWzJtNzI3MDEyNyAtIGZlYXR1cmVfY2FmXy1sb25nLWJyYW5jaC1uYW1lLWZvci10ZXJtaW5hbC13aWR0aBtbMjJtDQrilIIgIOKUgg0K4pSCICDilIIgIOKXryAbWzk0bWVtcHR5LXRpcBtbMzltDQrilIIgIOKUgiAg4pSCIA0K4pSCICDilIIgIOKUgiANCuKUgiAg4pSCICDilIINCuKUgiAg4pSCICDil68gG1s5NG11aRtbMzltDQrilIIgIOKUgiAg4pSCIBtbMm0yIGRheXMgYWdvG1syMm0NCuKUgiAg4pSCICDilIIgDQrilIIgIOKUgiAg4pSCIBtbMm01MjQxZmJiIC0gdWkbWzIybQ0K4pSCICDilIIgIOKUgg0K4pSCICDilJzilIDilIDilJgNCuKUgiAgG1szNm3il4kbWzM5bSAbWzM2bXNlYXJjaCAoY3VycmVudCkbWzM5bQ0K4pSCICDilIIgG1sybTIgZGF5cyBhZ28bWzIybQ0K4pSCICDilIIgDQrilIIgIOKUgiAbWzJtODcxYjAxOSAtIHNlYXJjaBtbMjJtDQrilIIgIOKUgg0K4pSc4pSA4pSA4pSYDQril68gG1s5NG1iYXNlG1szOW0NCuKUgiAbWzJtMiBkYXlzIGFnbxtbMjJtDQrilIIgDQrilIIgG1sybTdhMWU5OTEgLSBiYXNlG1syMm0NCuKUgg0K4pSCICDil68gG1s5NG1tYWludGVuYW5jZRtbMzltDQrilIIgIOKUgiAbWzJtMiBkYXlzIGFnbxtbMjJtDQrilIIgIOKUgiANCuKUgiAg4pSCIBtbMm0zZTRjNThjIC0gbWFpbnRlbmFuY2UbWzIybQ0K4pSCICDilIINCuKUnOKUgOKUgOKUmA0K4pevIBtbOTRtbWFpbhtbMzltDQrilIIgG1sybTQgd2Vla3MgYWdvG1syMm0NCuKUgiANCuKUgiAbWzJtNzk0MjAwMCAtIG1haW4bWzIybQ0K4pSCDQo=",
+    "dimCommitLines": [
+      "│ \u001b[2m31ad4ec - api-followup\u001b[22m",
+      "│ \u001b[2me27ba2c - api-update\u001b[22m",
+      "│ \u001b[2mf7d38d0 - api\u001b[22m",
+      "│  │ \u001b[2m7270127 - feature_caf_-long-branch-name-for-terminal-width\u001b[22m",
+      "│  │  │ \u001b[2m5241fbb - ui\u001b[22m",
+      "│  │ \u001b[2m871b019 - search\u001b[22m",
+      "│ \u001b[2m7a1e991 - base\u001b[22m",
+      "│  │ \u001b[2m3e4c58c - maintenance\u001b[22m",
+      "│ \u001b[2m7942000 - main\u001b[22m"
+    ]
+  },
+  {
+    "runtime": "native",
+    "args": [
+      "log",
+      "--no-interactive"
+    ],
+    "status": 0,
+    "stdout": "◯ api-followup (needs restack)\n│ 2 days ago\n│ \n│ 31ad4ec - api-followup\n│\n◉ api (current)\n│ 2 days ago\n│ \n│ e27ba2c - api-update\n│ f7d38d0 - api\n│\n│  ◯ feature/café-long-branch-name-for-terminal-width\n│  │ 2 days ago\n│  │ \n│  │ 7270127 - feature_caf_-long-branch-name-for-terminal-width\n│  │\n│  │  ◯ empty-tip\n│  │  │ \n│  │  │ \n│  │  │\n│  │  ◯ ui\n│  │  │ 2 days ago\n│  │  │ \n│  │  │ 5241fbb - ui\n│  │  │\n│  ├──┘\n│  ◯ search (repo)\n│  │ 2 days ago\n│  │ \n│  │ 871b019 - search\n│  │\n├──┘\n◯ base\n│ 2 days ago\n│ \n│ 7a1e991 - base\n│\n│  ◯ maintenance\n│  │ 2 days ago\n│  │ \n│  │ 3e4c58c - maintenance\n│  │\n├──┘\n◯ main\n│ 4 weeks ago\n│ \n│ 7942000 - main\n│\n",
+    "stdoutBase64": "4pevIGFwaS1mb2xsb3d1cCAobmVlZHMgcmVzdGFjaykK4pSCIDIgZGF5cyBhZ28K4pSCIArilIIgMzFhZDRlYyAtIGFwaS1mb2xsb3d1cArilIIK4peJIGFwaSAoY3VycmVudCkK4pSCIDIgZGF5cyBhZ28K4pSCIArilIIgZTI3YmEyYyAtIGFwaS11cGRhdGUK4pSCIGY3ZDM4ZDAgLSBhcGkK4pSCCuKUgiAg4pevIGZlYXR1cmUvY2Fmw6ktbG9uZy1icmFuY2gtbmFtZS1mb3ItdGVybWluYWwtd2lkdGgK4pSCICDilIIgMiBkYXlzIGFnbwrilIIgIOKUgiAK4pSCICDilIIgNzI3MDEyNyAtIGZlYXR1cmVfY2FmXy1sb25nLWJyYW5jaC1uYW1lLWZvci10ZXJtaW5hbC13aWR0aArilIIgIOKUggrilIIgIOKUgiAg4pevIGVtcHR5LXRpcArilIIgIOKUgiAg4pSCIArilIIgIOKUgiAg4pSCIArilIIgIOKUgiAg4pSCCuKUgiAg4pSCICDil68gdWkK4pSCICDilIIgIOKUgiAyIGRheXMgYWdvCuKUgiAg4pSCICDilIIgCuKUgiAg4pSCICDilIIgNTI0MWZiYiAtIHVpCuKUgiAg4pSCICDilIIK4pSCICDilJzilIDilIDilJgK4pSCICDil68gc2VhcmNoIChyZXBvKQrilIIgIOKUgiAyIGRheXMgYWdvCuKUgiAg4pSCIArilIIgIOKUgiA4NzFiMDE5IC0gc2VhcmNoCuKUgiAg4pSCCuKUnOKUgOKUgOKUmAril68gYmFzZQrilIIgMiBkYXlzIGFnbwrilIIgCuKUgiA3YTFlOTkxIC0gYmFzZQrilIIK4pSCICDil68gbWFpbnRlbmFuY2UK4pSCICDilIIgMiBkYXlzIGFnbwrilIIgIOKUgiAK4pSCICDilIIgM2U0YzU4YyAtIG1haW50ZW5hbmNlCuKUgiAg4pSCCuKUnOKUgOKUgOKUmAril68gbWFpbgrilIIgNCB3ZWVrcyBhZ28K4pSCIArilIIgNzk0MjAwMCAtIG1haW4K4pSCCg==",
+    "headerRows": [
+      "◯ api-followup (needs restack)",
+      "◉ api (current)",
+      "│  ◯ feature/café-long-branch-name-for-terminal-width",
+      "│  │  ◯ empty-tip",
+      "│  │  ◯ ui",
+      "│  ◯ search (repo)",
+      "◯ base",
+      "│  ◯ maintenance",
+      "◯ main"
+    ]
+  },
+  {
+    "runtime": "native",
+    "args": [
+      "ls",
+      "--no-interactive"
+    ],
+    "status": 0,
+    "stdout": "◯      api-followup (needs restack)\n◉      api\n│ ◯    feature/café-long-branch-name-for-terminal-width\n│ │ ◯  empty-tip\n│ │ ◯  ui\n│ ◯─┘  search (repo)\n◯─┘    base\n│ ◯    maintenance\n◯─┘    main\n",
+    "stdoutBase64": "4pevICAgICAgYXBpLWZvbGxvd3VwIChuZWVkcyByZXN0YWNrKQril4kgICAgICBhcGkK4pSCIOKXryAgICBmZWF0dXJlL2NhZsOpLWxvbmctYnJhbmNoLW5hbWUtZm9yLXRlcm1pbmFsLXdpZHRoCuKUgiDilIIg4pevICBlbXB0eS10aXAK4pSCIOKUgiDil68gIHVpCuKUgiDil6/ilIDilJggIHNlYXJjaCAocmVwbykK4pev4pSA4pSYICAgIGJhc2UK4pSCIOKXryAgICBtYWludGVuYW5jZQril6/ilIDilJggICAgbWFpbgo=",
+    "headerRows": [
+      "◯      api-followup (needs restack)",
+      "◉      api",
+      "│ ◯    feature/café-long-branch-name-for-terminal-width",
+      "│ │ ◯  empty-tip",
+      "│ │ ◯  ui",
+      "│ ◯─┘  search (repo)",
+      "◯─┘    base",
+      "│ ◯    maintenance",
+      "◯─┘    main"
+    ]
+  },
+  {
+    "runtime": "native",
+    "args": [
+      "log",
+      "--no-interactive"
+    ],
+    "status": 0,
+    "stdout": "◯ api-followup (needs restack) (followup workspace)\n│ 2 days ago\n│ \n│ 31ad4ec - api-followup\n│\n◯ api (frozen) (API café workspace)\n│ 2 days ago\n│ \n│ e27ba2c - api-update\n│ f7d38d0 - api\n│\n│  ◯ feature/café-long-branch-name-for-terminal-width\n│  │ 2 days ago\n│  │ \n│  │ 7270127 - feature_caf_-long-branch-name-for-terminal-width\n│  │\n│  │  ◯ empty-tip\n│  │  │ \n│  │  │ \n│  │  │\n│  │  ◯ ui\n│  │  │ 2 days ago\n│  │  │ \n│  │  │ 5241fbb - ui\n│  │  │\n│  ├──┘\n│  ◉ search (current)\n│  │ 2 days ago\n│  │ \n│  │ 871b019 - search\n│  │\n├──┘\n◯ base (frozen)\n│ 2 days ago\n│ \n│ 7a1e991 - base\n│\n│  ◯ maintenance\n│  │ 2 days ago\n│  │ \n│  │ 3e4c58c - maintenance\n│  │\n├──┘\n◯ main\n│ 4 weeks ago\n│ \n│ 7942000 - main\n│\n",
+    "stdoutBase64": "4pevIGFwaS1mb2xsb3d1cCAobmVlZHMgcmVzdGFjaykgKGZvbGxvd3VwIHdvcmtzcGFjZSkK4pSCIDIgZGF5cyBhZ28K4pSCIArilIIgMzFhZDRlYyAtIGFwaS1mb2xsb3d1cArilIIK4pevIGFwaSAoZnJvemVuKSAoQVBJIGNhZsOpIHdvcmtzcGFjZSkK4pSCIDIgZGF5cyBhZ28K4pSCIArilIIgZTI3YmEyYyAtIGFwaS11cGRhdGUK4pSCIGY3ZDM4ZDAgLSBhcGkK4pSCCuKUgiAg4pevIGZlYXR1cmUvY2Fmw6ktbG9uZy1icmFuY2gtbmFtZS1mb3ItdGVybWluYWwtd2lkdGgK4pSCICDilIIgMiBkYXlzIGFnbwrilIIgIOKUgiAK4pSCICDilIIgNzI3MDEyNyAtIGZlYXR1cmVfY2FmXy1sb25nLWJyYW5jaC1uYW1lLWZvci10ZXJtaW5hbC13aWR0aArilIIgIOKUggrilIIgIOKUgiAg4pevIGVtcHR5LXRpcArilIIgIOKUgiAg4pSCIArilIIgIOKUgiAg4pSCIArilIIgIOKUgiAg4pSCCuKUgiAg4pSCICDil68gdWkK4pSCICDilIIgIOKUgiAyIGRheXMgYWdvCuKUgiAg4pSCICDilIIgCuKUgiAg4pSCICDilIIgNTI0MWZiYiAtIHVpCuKUgiAg4pSCICDilIIK4pSCICDilJzilIDilIDilJgK4pSCICDil4kgc2VhcmNoIChjdXJyZW50KQrilIIgIOKUgiAyIGRheXMgYWdvCuKUgiAg4pSCIArilIIgIOKUgiA4NzFiMDE5IC0gc2VhcmNoCuKUgiAg4pSCCuKUnOKUgOKUgOKUmAril68gYmFzZSAoZnJvemVuKQrilIIgMiBkYXlzIGFnbwrilIIgCuKUgiA3YTFlOTkxIC0gYmFzZQrilIIK4pSCICDil68gbWFpbnRlbmFuY2UK4pSCICDilIIgMiBkYXlzIGFnbwrilIIgIOKUgiAK4pSCICDilIIgM2U0YzU4YyAtIG1haW50ZW5hbmNlCuKUgiAg4pSCCuKUnOKUgOKUgOKUmAril68gbWFpbgrilIIgNCB3ZWVrcyBhZ28K4pSCIArilIIgNzk0MjAwMCAtIG1haW4K4pSCCg==",
+    "headerRows": [
+      "◯ api-followup (needs restack) (followup workspace)",
+      "◯ api (frozen) (API café workspace)",
+      "│  ◯ feature/café-long-branch-name-for-terminal-width",
+      "│  │  ◯ empty-tip",
+      "│  │  ◯ ui",
+      "│  ◉ search (current)",
+      "◯ base (frozen)",
+      "│  ◯ maintenance",
+      "◯ main"
+    ]
+  },
+  {
+    "runtime": "native",
+    "args": [
+      "ls",
+      "--no-interactive"
+    ],
+    "status": 0,
+    "stdout": "◯      api-followup (needs restack) (followup workspace)\n◯      api (frozen) (API café workspace)\n│ ◯    feature/café-long-branch-name-for-terminal-width\n│ │ ◯  empty-tip\n│ │ ◯  ui\n│ ◉─┘  search\n◯─┘    base (frozen)\n│ ◯    maintenance\n◯─┘    main\n",
+    "stdoutBase64": "4pevICAgICAgYXBpLWZvbGxvd3VwIChuZWVkcyByZXN0YWNrKSAoZm9sbG93dXAgd29ya3NwYWNlKQril68gICAgICBhcGkgKGZyb3plbikgKEFQSSBjYWbDqSB3b3Jrc3BhY2UpCuKUgiDil68gICAgZmVhdHVyZS9jYWbDqS1sb25nLWJyYW5jaC1uYW1lLWZvci10ZXJtaW5hbC13aWR0aArilIIg4pSCIOKXryAgZW1wdHktdGlwCuKUgiDilIIg4pevICB1aQrilIIg4peJ4pSA4pSYICBzZWFyY2gK4pev4pSA4pSYICAgIGJhc2UgKGZyb3plbikK4pSCIOKXryAgICBtYWludGVuYW5jZQril6/ilIDilJggICAgbWFpbgo=",
+    "headerRows": [
+      "◯      api-followup (needs restack) (followup workspace)",
+      "◯      api (frozen) (API café workspace)",
+      "│ ◯    feature/café-long-branch-name-for-terminal-width",
+      "│ │ ◯  empty-tip",
+      "│ │ ◯  ui",
+      "│ ◉─┘  search",
+      "◯─┘    base (frozen)",
+      "│ ◯    maintenance",
+      "◯─┘    main"
+    ]
+  },
+  {
+    "runtime": "native",
+    "transport": "pty",
+    "status": 0,
+    "outputBase64": "G1swbRtbMzNtV2FybmluZxtbMG0bWzJtOhtbMG0gG1sxbVRoZSAnTk9fQ09MT1InIGVudiBpcyBpZ25vcmVkIGR1ZSB0byB0aGUgJ0ZPUkNFX0NPTE9SJyBlbnYgYmVpbmcgc2V0LhtbMG0NChtbMG0gICAgICAbWzJtYXQgG1swbRtbMG0bWzFtG1szbXdhcm5PbkRlYWN0aXZhdGVkQ29sb3JzG1swbRtbMm0gKBtbMG0bWzBtG1szNm1pbnRlcm5hbDp0dHkbWzBtG1sybTobWzBtG1szM20zMxtbMG0bWzJtOhtbMzNtMjQbWzBtG1sybSkbWzBtDQobWzBtICAgICAgG1sybWF0IBtbMG0bWzBtG1sxbRtbM21nZXRDb2xvckRlcHRoG1swbRtbMm0gKBtbMG0bWzBtG1szNm1pbnRlcm5hbDp0dHkbWzBtG1sybTobWzBtG1szM200MhtbMG0bWzJtOhtbMzNtMzkbWzBtG1sybSkbWzBtDQobWzBtICAgICAgG1sybWF0IBtbMG0bWzBtG1sxbRtbM21zaG91bGRDb2xvcml6ZRtbMG0bWzJtICgbWzBtG1swbRtbMzZtaW50ZXJuYWw6dXRpbC9jb2xvcnMbWzBtG1sybTobWzBtG1szM20xNBtbMG0bWzJtOhtbMzNtMTA5G1swbRtbMm0pG1swbQ0KG1swbSAgICAgIBtbMm1hdCAbWzBtG1swbRtbMW0bWzNtcmVmcmVzaBtbMG0bWzJtICgbWzBtG1swbRtbMzZtaW50ZXJuYWw6dXRpbC9jb2xvcnMbWzBtG1sybTobWzBtG1szM20xOBtbMG0bWzJtOhtbMzNtMzEbWzBtG1sybSkbWzBtDQobWzBtICAgICAgG1sybWF0IBtbMG0bWzBtG1sxbRtbM21pbnRlcm5hbDp1dGlsL2NvbG9ycxtbMG0bWzJtICgbWzBtG1swbRtbMzZtaW50ZXJuYWw6dXRpbC9jb2xvcnMbWzBtG1sybTobWzBtG1szM20yNBtbMG0bWzJtOhtbMzNtMTYbWzBtG1sybSkbWzBtDQobWzBtICAgICAgG1sybWF0IBtbMG0bWzBtG1sxbRtbM21pbnRlcm5hbDphc3NlcnQvYXNzZXJ0aW9uX2Vycm9yG1swbRtbMm0gKBtbMG0bWzBtG1szNm1pbnRlcm5hbDphc3NlcnQvYXNzZXJ0aW9uX2Vycm9yG1swbRtbMm06G1swbRtbMzNtMhtbMG0bWzJtOhtbMzNtMTg3G1swbRtbMm0pG1swbQ0KG1swbSAgICAgIBtbMm1hdCAbWzBtG1swbRtbMW0bWzNtbG9hZEFzc2VydGlvbkVycm9yG1swbRtbMm0gKBtbMG0bWzBtG1szNm1ub2RlOmFzc2VydBtbMG0bWzJtOhtbMG0bWzMzbTI4G1swbRtbMm06G1szM205NhtbMG0bWzJtKRtbMG0NCg0K4pevIBtbOTRtYXBpLWZvbGxvd3VwG1szOW0gG1szM20obmVlZHMgcmVzdGFjaykbWzM5bQ0K4pSCIBtbMm0yIGRheXMgYWdvG1syMm0NCuKUgiANCuKUgiAbWzJtMzFhZDRlYyAtIGFwaS1mb2xsb3d1cBtbMjJtDQrilIINCuKXryAbWzk0bWFwaRtbMzltDQrilIIgG1sybTIgZGF5cyBhZ28bWzIybQ0K4pSCIA0K4pSCIBtbMm1lMjdiYTJjIC0gYXBpLXVwZGF0ZRtbMjJtDQrilIIgG1sybWY3ZDM4ZDAgLSBhcGkbWzIybQ0K4pSCDQrilIIgIOKXryAbWzk0bWZlYXR1cmUvY2Fmw6ktbG9uZy1icmFuY2gtbmFtZS1mb3ItdGVybWluYWwtd2lkdGgbWzM5bQ0K4pSCICDilIIgG1sybTIgZGF5cyBhZ28bWzIybQ0K4pSCICDilIIgDQrilIIgIOKUgiAbWzJtNzI3MDEyNyAtIGZlYXR1cmVfY2FmXy1sb25nLWJyYW5jaC1uYW1lLWZvci10ZXJtaW5hbC13aWR0aBtbMjJtDQrilIIgIOKUgg0K4pSCICDilIIgIOKXryAbWzk0bWVtcHR5LXRpcBtbMzltDQrilIIgIOKUgiAg4pSCIA0K4pSCICDilIIgIOKUgiANCuKUgiAg4pSCICDilIINCuKUgiAg4pSCICDil68gG1s5NG11aRtbMzltDQrilIIgIOKUgiAg4pSCIBtbMm0yIGRheXMgYWdvG1syMm0NCuKUgiAg4pSCICDilIIgDQrilIIgIOKUgiAg4pSCIBtbMm01MjQxZmJiIC0gdWkbWzIybQ0K4pSCICDilIIgIOKUgg0K4pSCICDilJzilIDilIDilJgNCuKUgiAgG1szNm3il4kbWzM5bSAbWzM2bXNlYXJjaCAoY3VycmVudCkbWzM5bQ0K4pSCICDilIIgG1sybTIgZGF5cyBhZ28bWzIybQ0K4pSCICDilIIgDQrilIIgIOKUgiAbWzJtODcxYjAxOSAtIHNlYXJjaBtbMjJtDQrilIIgIOKUgg0K4pSc4pSA4pSA4pSYDQril68gG1s5NG1iYXNlG1szOW0NCuKUgiAbWzJtMiBkYXlzIGFnbxtbMjJtDQrilIIgDQrilIIgG1sybTdhMWU5OTEgLSBiYXNlG1syMm0NCuKUgg0K4pSCICDil68gG1s5NG1tYWludGVuYW5jZRtbMzltDQrilIIgIOKUgiAbWzJtMiBkYXlzIGFnbxtbMjJtDQrilIIgIOKUgiANCuKUgiAg4pSCIBtbMm0zZTRjNThjIC0gbWFpbnRlbmFuY2UbWzIybQ0K4pSCICDilIINCuKUnOKUgOKUgOKUmA0K4pevIBtbOTRtbWFpbhtbMzltDQrilIIgG1sybTQgd2Vla3MgYWdvG1syMm0NCuKUgiANCuKUgiAbWzJtNzk0MjAwMCAtIG1haW4bWzIybQ0K4pSCDQo=",
+    "dimCommitLines": [
+      "│ \u001b[2m31ad4ec - api-followup\u001b[22m",
+      "│ \u001b[2me27ba2c - api-update\u001b[22m",
+      "│ \u001b[2mf7d38d0 - api\u001b[22m",
+      "│  │ \u001b[2m7270127 - feature_caf_-long-branch-name-for-terminal-width\u001b[22m",
+      "│  │  │ \u001b[2m5241fbb - ui\u001b[22m",
+      "│  │ \u001b[2m871b019 - search\u001b[22m",
+      "│ \u001b[2m7a1e991 - base\u001b[22m",
+      "│  │ \u001b[2m3e4c58c - maintenance\u001b[22m",
+      "│ \u001b[2m7942000 - main\u001b[22m"
+    ]
+  }
+]
