@@ -30,6 +30,7 @@ export function logAction(
       branchName: opts.branchName,
       indentLevel: 0,
       steps: opts.steps,
+      sortForDisplay: true,
     },
     context
   )
@@ -146,6 +147,7 @@ type TPrintStackArgs = {
   omitCurrentBranch?: boolean;
   noStyleBranchName?: boolean; // Currently only implemented for short = true
   steps?: number;
+  sortForDisplay?: boolean;
 };
 
 function getLogShortColor(toColor: string, index: number): string {
@@ -240,6 +242,9 @@ function getUpstackExclusiveLines(
         child !== context.engine.currentBranchPrecondition
     );
   const numChildren = children.length;
+  // Ordinary log presentation has a stable order independent of tip dates.
+  // Shared selectors and conflict output retain the engine's traversal order.
+  if (args.sortForDisplay) children.sort();
   return children.flatMap((child, i) =>
     getUpstackInclusiveLines(
       {
