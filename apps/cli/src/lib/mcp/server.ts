@@ -97,8 +97,14 @@ export async function serveMcp(options: ExecutionOptions): Promise<void> {
     return { content: [{ type: 'text', text: ANTHRACITE_GUIDANCE }] };
   });
   let stopping = false;
-  const stop = (): void => {
-    void shutdown();
+  const stop = async (): Promise<void> => {
+    try {
+      await shutdown();
+    } catch (error: unknown) {
+      process.stderr.write(`MCP shutdown failed: ${String(error)}\n`);
+      // eslint-disable-next-line no-restricted-syntax
+      process.exit(1);
+    }
   };
   async function shutdown(): Promise<void> {
     if (stopping) return;
