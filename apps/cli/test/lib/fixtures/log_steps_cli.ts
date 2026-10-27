@@ -68,9 +68,17 @@ export class LogStepsCliFixture extends CwdCliFixture {
   }
 
   /** Compare durable work state without treating transient caches as user data. */
-  logSnapshot(): Record<string, unknown> {
-    const snapshot = this.inspectionSnapshot();
-    delete snapshot.persistent;
+  logSnapshot(cwd = this.repo): Record<string, unknown> {
+    const snapshot = this.inspectionSnapshot(cwd);
+    delete snapshot.indexLock;
+    if (typeof snapshot.persistent === 'object' && snapshot.persistent !== null)
+      snapshot.persistent = Object.fromEntries(
+        Object.entries(snapshot.persistent).filter(
+          ([name]) =>
+            name !== '.graphite_cache_lock' &&
+            name !== '.graphite_cache_persist'
+        )
+      );
     return snapshot;
   }
 }
