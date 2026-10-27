@@ -1,0 +1,139 @@
+{
+  "runtime": "node",
+  "shard": 0,
+  "shards": 1,
+  "files": 8,
+  "passes": 71,
+  "pending": 0,
+  "failedFiles": 0,
+  "results": [
+    {
+      "file": "commands/branch/branch_checkout.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 2,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T11:25:43.723Z",
+        "end": "2026-10-27T11:25:47.150Z",
+        "duration": 3427
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/anthracite_identity_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T11:25:43.657Z",
+        "end": "2026-10-27T11:25:48.735Z",
+        "duration": 5078
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/log/short.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T11:25:48.908Z",
+        "end": "2026-10-27T11:25:57.260Z",
+        "duration": 8352
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/branch/branch_create.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 3,
+        "tests": 14,
+        "passes": 14,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T11:25:47.307Z",
+        "end": "2026-10-27T11:26:11.007Z",
+        "duration": 23700
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/log_steps_full_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 3,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T11:25:57.367Z",
+        "end": "2026-10-27T11:27:10.708Z",
+        "duration": 73341
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/log_steps_options_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T11:26:11.108Z",
+        "end": "2026-10-27T11:28:06.324Z",
+        "duration": 115216
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/log_steps_short_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 3,
+        "tests": 17,
+        "passes": 17,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T11:27:10.806Z",
+        "end": "2026-10-27T11:29:15.906Z",
+        "duration": 125100
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/log_steps_state_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-27T11:28:06.424Z",
+        "end": "2026-10-27T11:30:18.343Z",
+        "duration": 131919
+      },
+      "passed": true
+    }
+  ]
+}
