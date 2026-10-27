@@ -1,0 +1,14 @@
+{
+  "tracking_order": [
+    "maintenance",
+    "base",
+    "api",
+    "api-followup",
+    "search",
+    "feature/caf\u00e9-long-branch-name-for-terminal-width",
+    "ui",
+    "empty-tip"
+  ],
+  "short": "\u25ef      api-followup (needs restack)\n\u25ef      api (gt-linked-worktree)\n\u2502 \u25ef    feature/caf\u00e9-long-branch-name-for-terminal-width\n\u2502 \u2502 \u25ef  empty-tip\n\u2502 \u2502 \u25ef  ui\n\u2502 \u25c9\u2500\u2518  search\n\u25ef\u2500\u2518    base\n\u2502 \u25ef    maintenance\n\u25ef\u2500\u2518    main\n",
+  "classic": "  \u21b1 $ maintenance\n      \u21b1 $ api-followup (needs restack)\n    \u21b1 $ api\n      \u21b1 $ feature/caf\u00e9-long-branch-name-for-terminal-width\n        \u21b1 $ empty-tip\n      \u21b1 $ ui\n    \u21b1 $ search\n  \u21b1 $ base\n\u21b1 $ main\n"
+}

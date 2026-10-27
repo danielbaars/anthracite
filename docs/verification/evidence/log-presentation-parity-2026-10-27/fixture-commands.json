@@ -1,0 +1,970 @@
+[
+  {
+    "args": [
+      "git",
+      "init",
+      "--initial-branch=main"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "Initialized empty Git repository in /private/tmp/anthracite-log-followup-yyzqnlh4/seed/.git/\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "main.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Initialize the shared log fixture"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[main (root-commit) 5cb7719] Initialize the shared log fixture\n 1 file changed, 1 insertion(+)\n create mode 100644 main.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "5cb7719693b91c7e65509f8add4a3d79024a3278\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "-c",
+      "base",
+      "main"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to a new branch 'base'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "base.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Add shared foundations"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[base 589be30] Add shared foundations\n 1 file changed, 1 insertion(+)\n create mode 100644 base.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "589be30f30fa0c9904d36f41f746cb01c862fe54\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "base-more.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Keep fixture inputs deterministic"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[base 3473aa2] Keep fixture inputs deterministic\n 1 file changed, 1 insertion(+)\n create mode 100644 base-more.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "3473aa29821bd7b72c5c5acb2e9ce5609375ac71\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "-c",
+      "search",
+      "base"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to a new branch 'search'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "search.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Add deterministic search indexing"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[search 99d401c] Add deterministic search indexing\n 1 file changed, 1 insertion(+)\n create mode 100644 search.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "99d401ca9d322a2b5430fd611f87c3cd4a6b02a7\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "search-more.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Handle caf\u00e9 Unicode and long summaries without changing graph identity"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[search 0f6c289] Handle caf\u00e9 Unicode and long summaries without changing graph identity\n 1 file changed, 1 insertion(+)\n create mode 100644 search-more.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "0f6c289ecd0c2a47e8ec94d4c941d54c20e974ec\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "-c",
+      "ui",
+      "search"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to a new branch 'ui'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "ui.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Render search results"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[ui f0a8527] Render search results\n 1 file changed, 1 insertion(+)\n create mode 100644 ui.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "f0a8527b96e6095293f62f74d665295c90a42138\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "branch",
+      "empty-tip",
+      "ui"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "-c",
+      "api",
+      "base"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to a new branch 'api'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "api.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Expose the search API"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[api d6dd5bd] Expose the search API\n 1 file changed, 1 insertion(+)\n create mode 100644 api.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "d6dd5bdf60288220aeff997f9fe842f39c5e8a0c\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "api"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "d6dd5bdf60288220aeff997f9fe842f39c5e8a0c\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "-c",
+      "api-followup",
+      "api"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to a new branch 'api-followup'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "api-followup.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Follow up on the API"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[api-followup 640afd2] Follow up on the API\n 1 file changed, 1 insertion(+)\n create mode 100644 api-followup.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "640afd228f30a8197e34a0f79b49b0d545aa96d0\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "-c",
+      "maintenance",
+      "main"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to a new branch 'maintenance'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "maintenance.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Maintain the independent stack"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[maintenance fed83ba] Maintain the independent stack\n 1 file changed, 1 insertion(+)\n create mode 100644 maintenance.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "fed83baa24455ea02c959a6ee4817534ee55e95d\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "-c",
+      "scratch",
+      "main"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to a new branch 'scratch'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "scratch.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Keep this branch untracked"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[scratch 056dbf6] Keep this branch untracked\n 1 file changed, 1 insertion(+)\n create mode 100644 scratch.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "056dbf6b836a6f604c2551a66e474bb08933455b\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "-c",
+      "feature/caf\u00e9-long-branch-name-for-terminal-width",
+      "search"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to a new branch 'feature/caf\u00e9-long-branch-name-for-terminal-width'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "unicode.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Check Unicode labels and a deliberately long branch identity"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[feature/caf\u00e9-long-branch-name-for-terminal-width 0a67e62] Check Unicode labels and a deliberately long branch identity\n 1 file changed, 1 insertion(+)\n create mode 100644 unicode.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "0a67e62bed66464531247fb55b6a4b6f7cb540ed\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "api"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to branch 'api'\n"
+  },
+  {
+    "args": [
+      "git",
+      "add",
+      "api-new.txt"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "commit",
+      "-m",
+      "Advance the API after its child was created"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "[api b9076a1] Advance the API after its child was created\n 1 file changed, 1 insertion(+)\n create mode 100644 api-new.txt\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "b9076a1d9bb4da9a9bcf2ae1356c9161812bbd11\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "search"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Switched to branch 'search'\n"
+  },
+  {
+    "args": [
+      "git",
+      "update-ref",
+      "refs/heads/api",
+      "d6dd5bdf60288220aeff997f9fe842f39c5e8a0c"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/seed",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "init",
+      "--trunk",
+      "main",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Welcome to Graphite!\n\nTrunk set to main\n\n",
+    "stderr": "\ntip: If you have an existing branch or stack that you'd like to start working on with Graphite, you can begin tracking it now!\nTo add other non-Graphite branches to Graphite later, check out `gt track`.\nIf you only want to use Graphite for new branches, feel free to exit now and use `gt create`. [init.welcome \u25cf\u25cb\u25cb]\n\n\ntip: Feeling like an expert? Disable tips in gt config [tip.expert-message \u25cf]\n\n"
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "track",
+      "base",
+      "--parent",
+      "main",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Tracked branch base with parent main (includes 2 commits).\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "track",
+      "search",
+      "--parent",
+      "base",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Tracked branch search with parent base (includes 2 commits).\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "track",
+      "ui",
+      "--parent",
+      "search",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Tracked branch ui with parent search (includes 1 commit).\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "track",
+      "empty-tip",
+      "--parent",
+      "ui",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Tracked branch empty-tip with parent ui (includes 0 commits).\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "track",
+      "api",
+      "--parent",
+      "base",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Tracked branch api with parent base (includes 1 commit).\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "track",
+      "api-followup",
+      "--parent",
+      "api",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Tracked branch api-followup with parent api (includes 1 commit).\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "track",
+      "maintenance",
+      "--parent",
+      "main",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Tracked branch maintenance with parent main (includes 1 commit).\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "track",
+      "feature/caf\u00e9-long-branch-name-for-terminal-width",
+      "--parent",
+      "search",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "Tracked branch feature/caf\u00e9-long-branch-name-for-terminal-width with parent search (includes 1 commit).\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "update-ref",
+      "refs/heads/api",
+      "b9076a1d9bb4da9a9bcf2ae1356c9161812bbd11"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "worktree",
+      "add",
+      "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-linked-worktree",
+      "api"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "HEAD is now at b9076a1 Advance the API after its child was created\n",
+    "stderr": "Preparing worktree (checking out 'api')\n"
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "search"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Already on 'search'\n"
+  },
+  {
+    "args": [
+      "git",
+      "for-each-ref",
+      "--format=%(refname) %(objectname)",
+      "refs/heads"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "refs/heads/api b9076a1d9bb4da9a9bcf2ae1356c9161812bbd11\nrefs/heads/api-followup 640afd228f30a8197e34a0f79b49b0d545aa96d0\nrefs/heads/base 3473aa29821bd7b72c5c5acb2e9ce5609375ac71\nrefs/heads/empty-tip f0a8527b96e6095293f62f74d665295c90a42138\nrefs/heads/feature/caf\u00e9-long-branch-name-for-terminal-width 0a67e62bed66464531247fb55b6a4b6f7cb540ed\nrefs/heads/main 5cb7719693b91c7e65509f8add4a3d79024a3278\nrefs/heads/maintenance fed83baa24455ea02c959a6ee4817534ee55e95d\nrefs/heads/scratch 056dbf6b836a6f604c2551a66e474bb08933455b\nrefs/heads/search 0f6c289ecd0c2a47e8ec94d4c941d54c20e974ec\nrefs/heads/ui f0a8527b96e6095293f62f74d665295c90a42138\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/opt/homebrew/bin/gt",
+      "--version"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4",
+    "status": 0,
+    "stdout": "1.8.6\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "init",
+      "--trunk",
+      "main",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Welcome to Anthracite!\n\nTrunk set to main\n\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "track",
+      "base",
+      "--parent",
+      "main",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Tracked branch base with parent main.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "track",
+      "search",
+      "--parent",
+      "base",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Tracked branch search with parent base.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "track",
+      "ui",
+      "--parent",
+      "search",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Tracked branch ui with parent search.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "track",
+      "empty-tip",
+      "--parent",
+      "ui",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Tracked branch empty-tip with parent ui.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "track",
+      "api",
+      "--parent",
+      "base",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Tracked branch api with parent base.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "track",
+      "api-followup",
+      "--parent",
+      "api",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Tracked branch api-followup with parent api.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "track",
+      "maintenance",
+      "--parent",
+      "main",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Tracked branch maintenance with parent main.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "track",
+      "feature/caf\u00e9-long-branch-name-for-terminal-width",
+      "--parent",
+      "search",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "Tracked branch feature/caf\u00e9-long-branch-name-for-terminal-width with parent search.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "update-ref",
+      "refs/heads/api",
+      "b9076a1d9bb4da9a9bcf2ae1356c9161812bbd11"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "worktree",
+      "add",
+      "/private/tmp/anthracite-log-followup-yyzqnlh4/an-linked-worktree",
+      "api"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "HEAD is now at b9076a1 Advance the API after its child was created\n",
+    "stderr": "Preparing worktree (checking out 'api')\n"
+  },
+  {
+    "args": [
+      "git",
+      "switch",
+      "search"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Already on 'search'\n"
+  },
+  {
+    "args": [
+      "git",
+      "for-each-ref",
+      "--format=%(refname) %(objectname)",
+      "refs/heads"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "refs/heads/api b9076a1d9bb4da9a9bcf2ae1356c9161812bbd11\nrefs/heads/api-followup 640afd228f30a8197e34a0f79b49b0d545aa96d0\nrefs/heads/base 3473aa29821bd7b72c5c5acb2e9ce5609375ac71\nrefs/heads/empty-tip f0a8527b96e6095293f62f74d665295c90a42138\nrefs/heads/feature/caf\u00e9-long-branch-name-for-terminal-width 0a67e62bed66464531247fb55b6a4b6f7cb540ed\nrefs/heads/main 5cb7719693b91c7e65509f8add4a3d79024a3278\nrefs/heads/maintenance fed83baa24455ea02c959a6ee4817534ee55e95d\nrefs/heads/scratch 056dbf6b836a6f604c2551a66e474bb08933455b\nrefs/heads/search 0f6c289ecd0c2a47e8ec94d4c941d54c20e974ec\nrefs/heads/ui f0a8527b96e6095293f62f74d665295c90a42138\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "/Users/danielbaars/.local/bin/an",
+      "--version"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4",
+    "status": 0,
+    "stdout": "0.1.1-dev.20261027133955\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/gt-repo",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/private/tmp/anthracite-log-followup-yyzqnlh4/an-repo",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]
