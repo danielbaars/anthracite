@@ -9,6 +9,18 @@ export function assertBranchesAvailableInWorktrees(
   if (branchNames.length === 0) {
     return;
   }
+  for (const [branch, worktreePath] of getOtherWorktreeBranches()) {
+    if (branchNames.includes(branch)) {
+      throw new PreconditionsFailedError(
+        `Cannot restack ${branch}: it is checked out in worktree ${worktreePath}. Switch that worktree to another branch or detach its HEAD, then retry.`
+      );
+    }
+  }
+}
+
+/** Branches occupied outside the worktree selected by the effective cwd. */
+export function getOtherWorktreeBranches(): ReadonlyMap<string, string> {
+  const branches = new Map<string, string>();
   const currentPath = fs.realpathSync(
     runGitCommand({
       args: ['rev-parse', '--show-toplevel'],
@@ -33,13 +45,11 @@ export function assertBranchesAvailableInWorktrees(
     if (
       worktreePath &&
       branch &&
-      branchNames.includes(branch) &&
       (!fs.existsSync(worktreePath) ||
         fs.realpathSync(worktreePath) !== currentPath)
     ) {
-      throw new PreconditionsFailedError(
-        `Cannot restack ${branch}: it is checked out in worktree ${worktreePath}. Switch that worktree to another branch or detach its HEAD, then retry.`
-      );
+      branches.set(branch, worktreePath);
     }
   }
+  return branches;
 }
