@@ -67,6 +67,8 @@ Each row has its own positive execution alongside its canonical form. The quoted
 | Raw Git prefixes | Existing direct cwd selection retained; other unsupported prefix positions may fail. No automatic branch fallback and no new generic Git-prefix grammar. |
 | Runtime / service coverage | JS/native local workflows and available shell checks are bounded evidence. No overall Graphite-parity percentage, cross-platform certification or live-service claim follows. |
 
+The proposed [local MCP specification](./docs/specs/mcp-support.md) and [protocol research](./docs/research/mcp-support-2026-10-27.md) describe the next agent-facing feature. This is planned functionality: the current accepted CLI does not yet serve MCP. Log-parity tracker #12 remains deferred.
+
 ## Frozen branch compatibility
 
 This contract covers the flat commands registered in this candidate. Old test directory names such as branch, commit and upstack are regression locations; they do not register removed public namespaces. Freeze and unfreeze have one optional literal local tracked branch selector and no short aliases. Root i means info, while repo i remains init; root s means submit, while repo s remains sync. Log s/l remain short/long.
