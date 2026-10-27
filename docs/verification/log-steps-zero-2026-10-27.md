@@ -52,7 +52,7 @@ Each archive has a sibling `.manifest.json` with original member sizes and SHA-2
 
 The integrated build, lint and typecheck passed. Independent [standards](evidence/log-steps-zero-2026-10-27/review-standards.md) and [specification](evidence/log-steps-zero-2026-10-27/review-spec.md) reviews found no actionable issues.
 
-The repository's [normal CI](../../.github/workflows/ci.yml) runs the complete per-file Node suite and native command suite and preserves their JSON reports for the exact PR head. Full-project status and any platform-dependent skips are separate from the zero-skip focused results above. The external large-repository benchmark remains outside the regular suite.
+During this implementation, normal CI ran the complete per-file Node suite and native command suite and preserved their JSON reports for the exact PR head. Following the October 27 cost review, that complete gate is available through [manual full validation](../../.github/workflows/full-ci.yml); [automatic CI](../../.github/workflows/ci.yml) now runs bounded smoke checks. A smoke pass does not replace full-project acceptance. Full-project status and any platform-dependent skips are separate from the zero-skip focused results above. The external large-repository benchmark remains outside the regular suite.
 
 This is implementation verification, not a release or global installation. Graphite accounts, backend access and live GitHub PR fixtures are not required for these acceptance tests. General renderer parity, multi-trunk support and numeric policy changes remain outside #1.
 

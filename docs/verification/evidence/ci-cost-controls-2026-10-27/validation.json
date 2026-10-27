@@ -1,0 +1,25 @@
+{
+  "baseline_commit": "44739f46acf8718cc72577a3b4f163a4de08609f",
+  "platform": "Darwin",
+  "machine": "arm64",
+  "node": "24.19.0",
+  "actionlint": "1.7.12",
+  "actionlint_result": "passed",
+  "workflow_sha256": {
+    "full-ci.yml": "80d8dc5057e8ea9189e64d7740c2aafb212d95f29ef3b4e1e7918e95f0f15993",
+    "ci.yml": "9b86a6f4103aeef5a137f18d321e97046dbdd36cae5937c2870658ef1149d824"
+  },
+  "policy_checks": "passed: automatic one-job/ten-minute limit; documentation filters; manual-only full validation; release default false and depends on tests; full unfiltered two-runtime/four-shard matrix; fail-fast; same-ref cancellation; seven-day retention",
+  "preserved_execution_steps": "test and release non-upload steps match baseline workflow exactly",
+  "dependency_install": "yarn install --immutable passed, with the existing root ts-mocha peer warning",
+  "build_lint": "turbo run build --force passed; zero cache hits",
+  "typecheck": "workspace check passed",
+  "smoke_summary": "smoke-summary.json",
+  "github_actions_started": false,
+  "pushed": false,
+  "not_executed": [
+    "manual complete Node/native matrix",
+    "release-assets job",
+    "GitHub-hosted runner execution"
+  ]
+}
