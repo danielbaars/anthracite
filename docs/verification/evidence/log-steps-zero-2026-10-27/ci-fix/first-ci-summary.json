@@ -1,0 +1,286 @@
+{
+  "runUrl": "https://github.com/danielbaars/anthracite/actions/runs/40474091248",
+  "headCommit": "200c052567367ceac03eb5d93488f4662b9e715f",
+  "conclusion": "failure",
+  "runtimes": {
+    "native": {
+      "files": 151,
+      "passes": 2037,
+      "pending": 30,
+      "failedFiles": 1,
+      "failedCases": [
+        {
+          "file": "commands/freeze_structural_cli.test.js",
+          "title": "frozen structural participants through the public CLI retains an actual completed move rewrite and blocks metadata publication after a post-rewrite hook freezes remaining work",
+          "message": "expected +0 to equal 1"
+        },
+        {
+          "file": "commands/freeze_structural_cli.test.js",
+          "title": "frozen structural participants through the public CLI guards local DELETE parent metadata after a prepared hook freezes another survivor while still allowing a frozen target",
+          "message": "expected 'f0f173dc4e450c93690b4732940c1f58bc287\u2026' to equal '9e8af6ad27bb46ea599cd6524c9864bc7b2c1\u2026'"
+        }
+      ],
+      "pendingCases": [
+        {
+          "file": "commands/fold_stack_paths_cli.test.js",
+          "title": "stack fold checkout path protection through the public CLI (keep false) protects an existing decomposed Unicode alias when the host aliases it"
+        },
+        {
+          "file": "commands/fold_stack_paths_cli.test.js",
+          "title": "stack fold checkout path protection through the public CLI (keep true) protects an existing decomposed Unicode alias when the host aliases it"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late ignored unicode-file work with ignorecase true"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late ignored unicode-file work with ignorecase false"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late ignored unicode-directory work with ignorecase true"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late ignored unicode-directory work with ignorecase false"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI allows unrelated ignored work beside an indexed Unicode alias during ordinary upstack move"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late tracked Unicode work before the next replay with ignorecase true"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves unstaged tracked Unicode bytes and staged resolution on continue with ignorecase true"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late tracked Unicode work before the next replay with ignorecase false"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves unstaged tracked Unicode bytes and staged resolution on continue with ignorecase false"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI allows aligned no-op after a completed Unicode move with unrelated ignored work"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI allows only detach after a completed Unicode move with unrelated ignored work"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI allows fresh move after a completed Unicode move with unrelated ignored work"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI preserves ignored bytes at a Unicode case alias of the target file"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI preserves an ignored Unicode directory alias in a checkout ancestor"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI preserves an ignored Unicode file alias in a checkout ancestor"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI preserves an ignored Unicode symlink alias in a checkout ancestor"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI uses host aliases even when Git ignorecase is false"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI allows unrelated ignored work inside a Unicode directory alias"
+        },
+        {
+          "file": "commands/reorder_stack_fanout_paths_cli.test.js",
+          "title": "stack reorder protects every off-chain checkout and original replay range protects a host-supported subtree alias Alias.bin"
+        },
+        {
+          "file": "commands/reorder_stack_fanout_paths_cli.test.js",
+          "title": "stack reorder protects every off-chain checkout and original replay range protects a host-supported subtree alias caf\u00e9.bin"
+        },
+        {
+          "file": "commands/create_onto_unicode_paths_cli.test.js",
+          "title": "create --onto --insert Unicode path protection through the public CLI preserves ignored Unicode aliases before insertion effects with all false"
+        },
+        {
+          "file": "commands/create_onto_unicode_paths_cli.test.js",
+          "title": "create --onto --insert Unicode path protection through the public CLI preserves ignored Unicode aliases before insertion effects with all true"
+        },
+        {
+          "file": "commands/create_onto_insert_cli.test.js",
+          "title": "create --onto --insert through the public CLI protects a differently cased ignored descendant path on a case-insensitive worktree"
+        },
+        {
+          "file": "commands/create_onto_insert_cli.test.js",
+          "title": "create --onto --insert through the public CLI protects a nested descendant path obstructed by a local case-variant symlink"
+        },
+        {
+          "file": "commands/move_rotation_paths_cli.test.js",
+          "title": "move only descendant checkout and replay protection through the public CLI protects an ignored Unicode alias in the rotating target with ignorecase false"
+        },
+        {
+          "file": "commands/move_rotation_paths_cli.test.js",
+          "title": "move only descendant checkout and replay protection through the public CLI protects an ignored Unicode alias in the rotating target with ignorecase true"
+        },
+        {
+          "file": "commands/reorder_stack_paths_cli.test.js",
+          "title": "stack reorder literal paths and linked indexes through public CLI protects host-supported case/Unicode aliases for Alias.txt"
+        },
+        {
+          "file": "commands/reorder_stack_paths_cli.test.js",
+          "title": "stack reorder literal paths and linked indexes through public CLI protects host-supported case/Unicode aliases for caf\u00e9.txt"
+        }
+      ],
+      "focusedPasses": 49,
+      "focusedPending": 0
+    },
+    "node": {
+      "files": 155,
+      "passes": 2059,
+      "pending": 30,
+      "failedFiles": 1,
+      "failedCases": [
+        {
+          "file": "commands/move_rotation_cli.test.js",
+          "title": "move only descendant rotation through the public CLI selects an original descendant in a real terminal and returns to a different departure",
+          "message": "expected '5fa1a4a4e6d57eed564a94c490d282a997131\u2026' to equal '7856348c3e228f54384ec483e4e4b5048373b\u2026'"
+        }
+      ],
+      "pendingCases": [
+        {
+          "file": "commands/create_onto_unicode_paths_cli.test.js",
+          "title": "create --onto --insert Unicode path protection through the public CLI preserves ignored Unicode aliases before insertion effects with all false"
+        },
+        {
+          "file": "commands/create_onto_unicode_paths_cli.test.js",
+          "title": "create --onto --insert Unicode path protection through the public CLI preserves ignored Unicode aliases before insertion effects with all true"
+        },
+        {
+          "file": "commands/create_onto_insert_cli.test.js",
+          "title": "create --onto --insert through the public CLI protects a differently cased ignored descendant path on a case-insensitive worktree"
+        },
+        {
+          "file": "commands/create_onto_insert_cli.test.js",
+          "title": "create --onto --insert through the public CLI protects a nested descendant path obstructed by a local case-variant symlink"
+        },
+        {
+          "file": "commands/move_rotation_paths_cli.test.js",
+          "title": "move only descendant checkout and replay protection through the public CLI protects an ignored Unicode alias in the rotating target with ignorecase false"
+        },
+        {
+          "file": "commands/move_rotation_paths_cli.test.js",
+          "title": "move only descendant checkout and replay protection through the public CLI protects an ignored Unicode alias in the rotating target with ignorecase true"
+        },
+        {
+          "file": "commands/reorder_stack_paths_cli.test.js",
+          "title": "stack reorder literal paths and linked indexes through public CLI protects host-supported case/Unicode aliases for Alias.txt"
+        },
+        {
+          "file": "commands/reorder_stack_paths_cli.test.js",
+          "title": "stack reorder literal paths and linked indexes through public CLI protects host-supported case/Unicode aliases for caf\u00e9.txt"
+        },
+        {
+          "file": "commands/fold_stack_paths_cli.test.js",
+          "title": "stack fold checkout path protection through the public CLI (keep false) protects an existing decomposed Unicode alias when the host aliases it"
+        },
+        {
+          "file": "commands/fold_stack_paths_cli.test.js",
+          "title": "stack fold checkout path protection through the public CLI (keep true) protects an existing decomposed Unicode alias when the host aliases it"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late ignored unicode-file work with ignorecase true"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late ignored unicode-file work with ignorecase false"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late ignored unicode-directory work with ignorecase true"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late ignored unicode-directory work with ignorecase false"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI allows unrelated ignored work beside an indexed Unicode alias during ordinary upstack move"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late tracked Unicode work before the next replay with ignorecase true"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves unstaged tracked Unicode bytes and staged resolution on continue with ignorecase true"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves late tracked Unicode work before the next replay with ignorecase false"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI preserves unstaged tracked Unicode bytes and staged resolution on continue with ignorecase false"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI allows aligned no-op after a completed Unicode move with unrelated ignored work"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI allows only detach after a completed Unicode move with unrelated ignored work"
+        },
+        {
+          "file": "commands/move_recovery_paths_cli.test.js",
+          "title": "move hidden-return path preservation through the public CLI allows fresh move after a completed Unicode move with unrelated ignored work"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI preserves ignored bytes at a Unicode case alias of the target file"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI preserves an ignored Unicode directory alias in a checkout ancestor"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI preserves an ignored Unicode file alias in a checkout ancestor"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI preserves an ignored Unicode symlink alias in a checkout ancestor"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI uses host aliases even when Git ignorecase is false"
+        },
+        {
+          "file": "commands/move_unicode_paths_cli.test.js",
+          "title": "move Unicode filesystem path protection through the public CLI allows unrelated ignored work inside a Unicode directory alias"
+        },
+        {
+          "file": "commands/reorder_stack_fanout_paths_cli.test.js",
+          "title": "stack reorder protects every off-chain checkout and original replay range protects a host-supported subtree alias Alias.bin"
+        },
+        {
+          "file": "commands/reorder_stack_fanout_paths_cli.test.js",
+          "title": "stack reorder protects every off-chain checkout and original replay range protects a host-supported subtree alias caf\u00e9.bin"
+        }
+      ],
+      "focusedPasses": 49,
+      "focusedPending": 0
+    }
+  }
+}
