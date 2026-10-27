@@ -10,7 +10,8 @@ export class ReorderCliFixture {
   readonly repo = path.join(this.root, 'repo');
   readonly offered = path.join(this.root, 'offered');
   readonly env: NodeJS.ProcessEnv;
-  commandTimeoutMs = 20000;
+  // Real multi-branch replays can exceed 20 seconds on shared CI runners.
+  commandTimeoutMs = 60000;
   constructor(environment: NodeJS.ProcessEnv = process.env) {
     fs.mkdirSync(this.repo);
     const config = path.join(this.root, 'user-config');

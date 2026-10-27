@@ -37,6 +37,7 @@ describe('stack reorder selects a reachable tip through the public terminal and 
         {
           cwd: fixture.repo,
           env: fixture.env,
+          timeoutMs: 60000,
           responses: [
             { prompt: 'Choose a tip', input: chosen },
             { prompt: `› ${chosen}\r\n`, input: '\r' },
