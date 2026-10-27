@@ -1,0 +1,145 @@
+{
+  "gtExecutable": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+  "gtSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+  "transport": "stdio",
+  "requests": [
+    {
+      "id": 4,
+      "args": [
+        "--version"
+      ],
+      "response": {
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "1.8.6\n"
+            }
+          ]
+        },
+        "jsonrpc": "2.0",
+        "id": 4
+      }
+    },
+    {
+      "id": 5,
+      "args": [
+        "info",
+        "anthracite-mcp-nonexistent",
+        "--no-interactive"
+      ],
+      "response": {
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "ERROR: gt command exited with code 1.\n\nSTDOUT:\n\n\nSTDERR:\nERROR: You must run this command from within a git repository. \n"
+            }
+          ]
+        },
+        "jsonrpc": "2.0",
+        "id": 5
+      }
+    },
+    {
+      "id": 6,
+      "args": [
+        "--version"
+      ],
+      "response": {
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "1.8.6\n"
+            }
+          ]
+        },
+        "jsonrpc": "2.0",
+        "id": 6
+      }
+    }
+  ],
+  "initialize": {
+    "result": {
+      "protocolVersion": "2024-11-05",
+      "capabilities": {
+        "tools": {
+          "listChanged": true
+        }
+      },
+      "serverInfo": {
+        "name": "gt",
+        "version": "0.0.1"
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "tools": [
+    {
+      "name": "run_gt_cmd",
+      "required": [
+        "args",
+        "cwd",
+        "why"
+      ],
+      "properties": {
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cwd": {
+          "type": "string"
+        },
+        "why": {
+          "type": "string"
+        }
+      },
+      "descriptionDigest": {
+        "bytes": 3077,
+        "sha256": "cbfcbaf8f3f7054722a38b2bd53317a863e789992341cc20a671975da1e3b641"
+      }
+    },
+    {
+      "name": "learn_gt",
+      "required": [],
+      "properties": {},
+      "descriptionDigest": {
+        "bytes": 44,
+        "sha256": "9a01d5f4d02da406e81175e9924f55de7dd22f3dca8dfe2de12f856c9efbe2eb"
+      }
+    }
+  ],
+  "learn": {
+    "resultKeys": [
+      "content"
+    ],
+    "contents": [
+      {
+        "type": "text",
+        "bytes": 35304,
+        "sha256": "09892efe639b54b1a7bf8c6e5f6a0a107c80ef4c52c4f279af47fe0f5a7870b1"
+      }
+    ],
+    "error": null
+  },
+  "directFailure": {
+    "status": 1,
+    "stdout": "",
+    "stderr": "ERROR: You must run this command from within a git repository. \n"
+  },
+  "anthraciteBefore": {
+    "version": "0.1.1-dev.20261027173714",
+    "mcpStatus": 1,
+    "stdout": "",
+    "stderr": "Unknown argument: mcp\n"
+  },
+  "serverExit": 0,
+  "serverStderrDigest": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

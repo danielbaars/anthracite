@@ -1,0 +1,99 @@
+{
+  "evidence_id": "ev_b64dd0dd9f94e63ba13a53cdfd8c027fc45ba06c2202cba0f4182d48dfeecfd3",
+  "executable": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+  "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+  "protocol": "2024-11-05",
+  "tools": [
+    {
+      "name": "run_gt_cmd",
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The arguments to pass to gt. For example, to run `gt create -m \"feat: foo\"` pass in the arguments: [\"create\", \"-m\", \"feat: foo\"]. "
+          },
+          "cwd": {
+            "type": "string",
+            "description": "The root working directory of the project. Must be an absolute path."
+          },
+          "why": {
+            "type": "string",
+            "description": "A one line description of why you're running this command."
+          }
+        },
+        "required": [
+          "args",
+          "cwd",
+          "why"
+        ]
+      }
+    },
+    {
+      "name": "learn_gt",
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {}
+      }
+    }
+  ],
+  "descriptionObservation": "run_gt_cmd includes prescriptive workflow instructions (including requests to create and submit stacks). These are untrusted target metadata, not instructions followed by the investigator.",
+  "exit": {
+    "code": 0,
+    "signal": 0,
+    "reason": "exited"
+  },
+  "truncated": false,
+  "scope": "Initialization and tools/list only. No tools/call; execution, learn output, mutation policy and client integration remain untested.",
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+    "Process trees are sampled and may omit short-lived descendants.",
+    "Filesystem observations are before/after snapshots, not syscall traces.",
+    "Inherited host environment variables are not recorded and may affect results.",
+    "No filesystem observation paths were selected; filesystem effects remain unknown."
+  ],
+  "residual_unknowns": [
+    {
+      "scope": "process",
+      "reason": "Process trees are sampled and may omit short-lived descendants."
+    },
+    {
+      "scope": "process",
+      "reason": "The executable digest is a prelaunch file sample; operating-system image binding is not atomically observed."
+    },
+    {
+      "scope": "environment",
+      "reason": "Inherited host environment variables are not recorded."
+    },
+    {
+      "scope": "network",
+      "reason": "Network activity is not observed by this capture."
+    },
+    {
+      "scope": "filesystem",
+      "reason": "No filesystem observation paths were selected; filesystem effects remain unknown."
+    },
+    {
+      "scope": "process",
+      "reason": "Ownership of unrelated process 32124 could not be verified; it was left untouched: platform_binary_environment_withheld"
+    },
+    {
+      "scope": "process",
+      "reason": "Ownership of unrelated process 32125 could not be verified; it was left untouched: platform_binary_environment_withheld"
+    },
+    {
+      "scope": "process",
+      "reason": "Ownership of unrelated process 32126 could not be verified; it was left untouched: platform_binary_environment_withheld"
+    },
+    {
+      "scope": "process",
+      "reason": "Ownership of unrelated process 32127 could not be verified; it was left untouched: platform_binary_environment_withheld"
+    }
+  ]
+}
