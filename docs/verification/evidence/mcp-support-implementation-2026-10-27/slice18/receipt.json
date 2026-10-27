@@ -1,0 +1,69 @@
+{
+  "ticket": 18,
+  "base": "bd6da220203fb3881cab461ecef515cc60dab3b4",
+  "commit": "4f40f26065f4be33a4a6a4636d9554f790196cad",
+  "branch": "mcp-real-stack-workflows",
+  "worktree": "/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-18",
+  "changedPaths": [
+    "apps/cli/test/commands/mcp_workflows_cli.test.ts"
+  ],
+  "testSha256": "4cfb221225ec5d53eff97f1660eecd9753b8bac270df52abdef125afba201a91",
+  "native": {
+    "path": "/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket18-evidence/an",
+    "sha256": "2debdb1abfdbbfdcf8c86f76bfd214632f4a284aebfee5e722c1fd91b1b3ca70",
+    "bun": "1.3.14"
+  },
+  "node": "24.19.0",
+  "sdk": "1.32.2",
+  "typescript": "5.5.4",
+  "red": {
+    "baseline": "95b1c619d0bc904ebae606554100d404ec3bf4ba",
+    "binarySha256": "860ed42a5132744ae691047f5f1c734bfb2bb261815bf5d3a1382ca547d69c1c",
+    "scenario": 5,
+    "exitCode": 1,
+    "observed": "McpError -32602 Unknown Anthracite tool",
+    "receipt": "red5-native14.log"
+  },
+  "green": {
+    "node": {
+      "suites": 1,
+      "tests": 4,
+      "passes": 4,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T20:09:39.380Z",
+      "end": "2026-10-27T20:11:39.092Z",
+      "duration": 119712
+    },
+    "native": {
+      "suites": 1,
+      "tests": 4,
+      "passes": 4,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T20:09:39.381Z",
+      "end": "2026-10-27T20:11:18.602Z",
+      "duration": 99221
+    }
+  },
+  "checks": {
+    "forcedBuild": "node .yarn/releases/yarn-3.2.1.cjs turbo run build --force",
+    "typecheck": "node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite check",
+    "lint": "node ../../node_modules/eslint/bin/eslint.js src test/commands/mcp_workflows_cli.test.ts --quiet --ext .ts --no-cache",
+    "tests": "node ../../node_modules/mocha/bin/mocha.js dist/test/commands/mcp_workflows_cli.test.js --reporter json",
+    "nativeCompile": "/private/tmp/anthracite-local-install-59ce4bdc/compiler/bun-darwin-aarch64/bun build --compile ./apps/cli/dist/src/index.js --outfile /private/tmp/anthracite-mcp-implementation-2026-10-27/ticket18-evidence/an",
+    "exitCodes": {
+      "build": 0,
+      "typecheck": 0,
+      "lint": 0,
+      "nodeTests": 0,
+      "nativeTests": 0,
+      "diffCheck": 0
+    }
+  },
+  "productionChanges": false,
+  "helperChanges": false,
+  "worktreeClean": true,
+  "rebase": "git rebase mcp-support-spec: already up to date at bd6da220203fb3881cab461ecef515cc60dab3b4",
+  "boundaries": "No push/PR/Actions/release/global install/client registration/live GitHub PR/token used. Existing direct CLI controls run inside scenarios 5 and 10; no broad engine suite run."
+}

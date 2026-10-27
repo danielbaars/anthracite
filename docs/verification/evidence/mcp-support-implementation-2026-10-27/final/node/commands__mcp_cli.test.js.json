@@ -1,0 +1,144 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-27T20:49:19.404Z",
+    "end": "2026-10-27T20:49:21.266Z",
+    "duration": 1862
+  },
+  "tests": [
+    {
+      "title": "scenario 1: discovers a working learning tool outside Git without credentials",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: discovers a working learning tool outside Git without credentials",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 194,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 2: learns a deliberate workflow with explicit cwd and no connection side effects",
+      "fullTitle": "MCP startup and learning through stdio scenario 2: learns a deliberate workflow with explicit cwd and no connection side effects",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 198,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: negotiates SDK protocol behavior for 2024-11-05",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: negotiates SDK protocol behavior for 2024-11-05",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 205,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: negotiates SDK protocol behavior for 2999-01-01",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: negotiates SDK protocol behavior for 2999-01-01",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 164,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: exposes help and completion without starting a server",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: exposes help and completion without starting a server",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 580,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: starts through the installed an spelling",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: starts through the installed an spelling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 290,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: starts through the installed anthracite spelling",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: starts through the installed anthracite spelling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 184,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "scenario 1: discovers a working learning tool outside Git without credentials",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: discovers a working learning tool outside Git without credentials",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 194,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 2: learns a deliberate workflow with explicit cwd and no connection side effects",
+      "fullTitle": "MCP startup and learning through stdio scenario 2: learns a deliberate workflow with explicit cwd and no connection side effects",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 198,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: negotiates SDK protocol behavior for 2024-11-05",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: negotiates SDK protocol behavior for 2024-11-05",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 205,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: negotiates SDK protocol behavior for 2999-01-01",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: negotiates SDK protocol behavior for 2999-01-01",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 164,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: exposes help and completion without starting a server",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: exposes help and completion without starting a server",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 580,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: starts through the installed an spelling",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: starts through the installed an spelling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 290,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 1: starts through the installed anthracite spelling",
+      "fullTitle": "MCP startup and learning through stdio scenario 1: starts through the installed anthracite spelling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_cli.test.js",
+      "duration": 184,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

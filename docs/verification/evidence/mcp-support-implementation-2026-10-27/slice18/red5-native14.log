@@ -1,0 +1,26 @@
+
+
+  MCP protected stack workflows through stdio
+    1) scenario 5: modifies and restacks a real chain like the direct CLI while preserving another stack
+
+
+  0 passing (5s)
+  1 failing
+
+  1) MCP protected stack workflows through stdio
+       scenario 5: modifies and restacks a real chain like the direct CLI while preserving another stack:
+     McpError: MCP error -32602: MCP error -32602: Unknown Anthracite tool.
+      at McpError.fromError (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-18/node_modules/@modelcontextprotocol/sdk/dist/cjs/types.js:2086:16)
+      at Client._onresponse (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-18/node_modules/@modelcontextprotocol/sdk/dist/cjs/shared/protocol.js:522:47)
+      at _transport.onmessage (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-18/node_modules/@modelcontextprotocol/sdk/dist/cjs/shared/protocol.js:242:22)
+      at transport.onmessage (dist/test/lib/mcp_client.js:38:26)
+      at StdioClientTransport.processReadBuffer (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-18/node_modules/@modelcontextprotocol/sdk/dist/cjs/client/stdio.js:143:33)
+      at Socket.<anonymous> (/private/tmp/anthracite-mcp-implementation-2026-10-27/ticket-18/node_modules/@modelcontextprotocol/sdk/dist/cjs/client/stdio.js:100:26)
+      at Socket.emit (node:events:509:28)
+      at addChunk (node:internal/streams/readable:563:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:514:3)
+      at Readable.push (node:internal/streams/readable:394:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+
+
+

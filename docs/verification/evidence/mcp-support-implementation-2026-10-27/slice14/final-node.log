@@ -1,0 +1,27 @@
+
+
+  MCP startup and learning through stdio
+    ✔ scenario 1: discovers a working learning tool outside Git without credentials (194ms)
+    ✔ scenario 2: learns a deliberate workflow with explicit cwd and no connection side effects (196ms)
+    ✔ scenario 1: negotiates SDK protocol behavior for 2024-11-05 (206ms)
+    ✔ scenario 1: negotiates SDK protocol behavior for 2999-01-01 (223ms)
+    ✔ scenario 1: exposes help and completion without starting a server (828ms)
+    ✔ scenario 1: starts through the installed an spelling (209ms)
+    ✔ scenario 1: starts through the installed anthracite spelling (196ms)
+
+  Anthracite release identity through the public CLI
+    ✔ reports the release version and Anthracite help outside Git without tools (494ms)
+    ✔ writes its own user preferences while preserving legacy preferences (196ms)
+
+  modern completion through the public CLI
+    ✔ offers all twenty standard aliases and preserved legacy root names outside Git without tools (189ms)
+    ✔ offers actual options for canonical and alias forms outside Git without tools (6884ms)
+    ✔ completes local branch arguments with cwd spaces and preserves inspection state under quiet (2800ms)
+    ✔ refuses invalid completion cwd and policy values before external tools (558ms)
+    ✔ generates bash and zsh scripts executable without shell startup and preserves fish route content (1183ms)
+    ✔ prints truthful command help outside Git under quiet and cwd without tools or configuration changes (1641ms)
+    ✔ keeps nested completion local to its registered group (286ms)
+
+
+  16 passing (48s)
+

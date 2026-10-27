@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-27T20:49:19.120Z",
+    "end": "2026-10-27T20:49:36.567Z",
+    "duration": 17447
+  },
+  "tests": [
+    {
+      "title": "scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels",
+      "fullTitle": "MCP command execution through stdio scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_execution_cli.test.js",
+      "duration": 1620,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments",
+      "fullTitle": "MCP command execution through stdio scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_execution_cli.test.js",
+      "duration": 1093,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers",
+      "fullTitle": "MCP command execution through stdio scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_execution_cli.test.js",
+      "duration": 1278,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 8: forces no UI, closes stdin and keeps recursion, documentation, quiet/debug and raw-Git framing usable",
+      "fullTitle": "MCP command execution through stdio scenario 8: forces no UI, closes stdin and keeps recursion, documentation, quiet/debug and raw-Git framing usable",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_execution_cli.test.js",
+      "duration": 3722,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels",
+      "fullTitle": "MCP command execution through stdio scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_execution_cli.test.js",
+      "duration": 1620,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments",
+      "fullTitle": "MCP command execution through stdio scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_execution_cli.test.js",
+      "duration": 1093,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers",
+      "fullTitle": "MCP command execution through stdio scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_execution_cli.test.js",
+      "duration": 1278,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 8: forces no UI, closes stdin and keeps recursion, documentation, quiet/debug and raw-Git framing usable",
+      "fullTitle": "MCP command execution through stdio scenario 8: forces no UI, closes stdin and keeps recursion, documentation, quiet/debug and raw-Git framing usable",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_execution_cli.test.js",
+      "duration": 3722,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

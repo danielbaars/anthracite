@@ -1,0 +1,1 @@
+console.log(JSON.stringify({execPath:process.execPath,argv:process.argv,argv0:process.argv0,dirname:__dirname,filename:__filename,bun:typeof Bun,main:typeof Bun==='undefined'?null:Bun.main,versions:process.versions},null,2))

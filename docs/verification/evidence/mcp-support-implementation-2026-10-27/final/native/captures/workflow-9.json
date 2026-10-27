@@ -1,0 +1,133 @@
+{
+  "refused": {
+    "status": "cli_error",
+    "stdout": "",
+    "stderr": "ERROR: Cannot modify frozen branch child. Run an unfreeze child first.\n",
+    "exitCode": 1,
+    "signal": null,
+    "truncated": false
+  },
+  "before": {
+    "main": {
+      "head": "6959b73acf05f58815eb34c63a3e9f7f22f9392a\n",
+      "branch": "child\n",
+      "refs": "refs/branch-metadata/base 8c7e5a65276bb5f68789180747fd7256c8f8e2b4\nrefs/branch-metadata/child e8b19e3a858426ee7148fc06d9cd7cceef04898d\nrefs/branch-metadata/other f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/tip e20bdce00b43c6d2b55044574f7bb5acc42b286c\nrefs/heads/base 202d1d269474442f9937a36a35426a7271ddad64\nrefs/heads/child 6959b73acf05f58815eb34c63a3e9f7f22f9392a\nrefs/heads/main fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46\nrefs/heads/other 82e63623afd56854962ea1f34812dccb2924faa8\nrefs/heads/tip 1ff7db465a6c7dfa339ee5b00450138b28704d3c\n",
+      "index": "RElSQwAAAAIAAAADauEOhjiOYYlq4Q6GOI5hiQEAABALXKT6AACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAauEOhxEBcixq4Q6HEQFyLAEAABALXKUjAACBpAAAAfUAAAAUAAAAEnyja6qFw5jwIzi13qLlFRXEyyNaAAljaGlsZC50eHQAauEOhCb4Syhq4Q6EJvhLKAEAABALXKQCAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAAAYALTEgMArPIySYy//hHiaXO9GVEFfMYiI4HQ==",
+      "indexLock": null,
+      "staging": ":100644 100644 b0c6ee1 7ca36ba M\u0000child.txt\u0000",
+      "status": "MM child.txt\u0000",
+      "files": {
+        "base.txt": "YmFzZQ==",
+        "child.txt": "c3RhZ2VkIGZyb3plbiB3b3JrCnVuc3RhZ2VkIGZyb3plbiB3b3Jr",
+        "main.txt": "bWFpbg=="
+      },
+      "persistent": {
+        "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+        ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+        ".gtcontinue": null,
+        ".graphite_pr_info": null,
+        ".graphite_cache_lock": null,
+        ".graphite_cache_persist": "ewogICJzaGEiOiAiZDY3NDc2YmEzZmYyZTI5NDA5MTBhMDJmMDhhYmQxZjAzY2FlZjJkMiIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImZhMmE0ZWY5ZDdhZTJhNDY4NzE5ODRlYzk4NjlhNGM1MjlmNmFjNDYiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJiYXNlIiwKICAgICAgICAgICJvdGhlciIKICAgICAgICBdCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJvdGhlciIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjgyZTYzNjIzYWZkNTY4NTQ5NjJlYTFmMzQ4MTJkY2NiMjkyNGZhYTgiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMjAyZDFkMjY5NDc0NDQyZjk5MzdhMzZhMzU0MjZhNzI3MWRkYWQ2NCIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjY5NTliNzNhY2YwNWY1ODgxNWViMzRjNjNhM2U5ZjdmMjJmOTM5MmEiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJ0aXAiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogIjIwMmQxZDI2OTQ3NDQ0MmY5OTM3YTM2YTM1NDI2YTcyNzFkZGFkNjQiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJ0aXAiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIxZmY3ZGI0NjVhNmM3ZGZhMzM5ZWU1YjAwNDUwMTM4YjI4NzA0ZDNjIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogIjY5NTliNzNhY2YwNWY1ODgxNWViMzRjNjNhM2U5ZjdmMjJmOTM5MmEiCiAgICAgIH0KICAgIF0KICBdCn0="
+      },
+      "operation": {
+        "rebase-merge": null,
+        "rebase-apply": null
+      },
+      "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+    },
+    "linked": {
+      "head": "82e63623afd56854962ea1f34812dccb2924faa8\n",
+      "branch": "other\n",
+      "refs": "refs/branch-metadata/base 8c7e5a65276bb5f68789180747fd7256c8f8e2b4\nrefs/branch-metadata/child e8b19e3a858426ee7148fc06d9cd7cceef04898d\nrefs/branch-metadata/other f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/tip e20bdce00b43c6d2b55044574f7bb5acc42b286c\nrefs/heads/base 202d1d269474442f9937a36a35426a7271ddad64\nrefs/heads/child 6959b73acf05f58815eb34c63a3e9f7f22f9392a\nrefs/heads/main fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46\nrefs/heads/other 82e63623afd56854962ea1f34812dccb2924faa8\nrefs/heads/tip 1ff7db465a6c7dfa339ee5b00450138b28704d3c\n",
+      "index": "RElSQwAAAAIAAAACauEOhxOk+H1q4Q6HE6T4fQEAABALXKU7AACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAauEOhxPQhctq4Q6HE9CFywEAABALXKU8AACBpAAAAfUAAAAUAAAADa0MZGPcCe+Wvyn4yZMvOe9M+kLkAAlvdGhlci50eHQAVFJFRQAAAAYALTEgMAqRP0K57zOWAg/y8lvTySnpEQZ7CQ==",
+      "indexLock": null,
+      "staging": ":100644 100644 27fa349 ad0c646 M\u0000other.txt\u0000",
+      "status": "MM other.txt\u0000?? untracked-link\u0000?? untracked.bin\u0000",
+      "files": {
+        "main.txt": "bWFpbg==",
+        "other.txt": "bGlua2VkIHN0YWdlZApsaW5rZWQgdW5zdGFnZWQ=",
+        "untracked-link": "link:untracked.bin",
+        "untracked.bin": "AP8="
+      },
+      "persistent": {
+        "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+        ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+        ".gtcontinue": null,
+        ".graphite_pr_info": null,
+        ".graphite_cache_lock": null,
+        ".graphite_cache_persist": "ewogICJzaGEiOiAiZDY3NDc2YmEzZmYyZTI5NDA5MTBhMDJmMDhhYmQxZjAzY2FlZjJkMiIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImZhMmE0ZWY5ZDdhZTJhNDY4NzE5ODRlYzk4NjlhNGM1MjlmNmFjNDYiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJiYXNlIiwKICAgICAgICAgICJvdGhlciIKICAgICAgICBdCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJvdGhlciIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjgyZTYzNjIzYWZkNTY4NTQ5NjJlYTFmMzQ4MTJkY2NiMjkyNGZhYTgiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMjAyZDFkMjY5NDc0NDQyZjk5MzdhMzZhMzU0MjZhNzI3MWRkYWQ2NCIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjY5NTliNzNhY2YwNWY1ODgxNWViMzRjNjNhM2U5ZjdmMjJmOTM5MmEiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJ0aXAiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogIjIwMmQxZDI2OTQ3NDQ0MmY5OTM3YTM2YTM1NDI2YTcyNzFkZGFkNjQiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJ0aXAiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIxZmY3ZGI0NjVhNmM3ZGZhMzM5ZWU1YjAwNDUwMTM4YjI4NzA0ZDNjIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogIjY5NTliNzNhY2YwNWY1ODgxNWViMzRjNjNhM2U5ZjdmMjJmOTM5MmEiCiAgICAgIH0KICAgIF0KICBdCn0="
+      },
+      "operation": {
+        "rebase-merge": null,
+        "rebase-apply": null
+      },
+      "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+    }
+  },
+  "busyRefused": {
+    "status": "cli_error",
+    "stdout": "",
+    "stderr": "ERROR: Cannot restack tip: it is checked out in worktree /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-1eXayb/an-reorder-QQdjwj/linked. Switch that worktree to another branch or detach its HEAD, then retry.\n",
+    "exitCode": 1,
+    "signal": null,
+    "truncated": false
+  },
+  "occupiedBefore": {
+    "main": {
+      "head": "202d1d269474442f9937a36a35426a7271ddad64\n",
+      "branch": "base\n",
+      "refs": "refs/branch-metadata/base f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/child 15a4fa244867cd7d4ef331adff8866c534801d67\nrefs/branch-metadata/other f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/tip e20bdce00b43c6d2b55044574f7bb5acc42b286c\nrefs/heads/base 202d1d269474442f9937a36a35426a7271ddad64\nrefs/heads/child 6959b73acf05f58815eb34c63a3e9f7f22f9392a\nrefs/heads/main fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46\nrefs/heads/other 82e63623afd56854962ea1f34812dccb2924faa8\nrefs/heads/tip 1ff7db465a6c7dfa339ee5b00450138b28704d3c\n",
+      "index": "RElSQwAAAAIAAAACauEOixWFvh9q4Q6LFYW+HwEAABALXKfVAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAauEOiQmGulFq4Q6JCYa6UQEAABALXKYfAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMiAwCkivimC2jCgvuM98trfZsJaMboGh5Mdt5Nc/Hk8hKLoFrxcjguKOT+g=",
+      "indexLock": null,
+      "staging": "",
+      "status": "",
+      "files": {
+        "base.txt": "YmFzZQ==",
+        "main.txt": "bWFpbg=="
+      },
+      "persistent": {
+        "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+        ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+        ".gtcontinue": null,
+        ".graphite_pr_info": null,
+        ".graphite_cache_lock": null,
+        ".graphite_cache_persist": "ewogICJzaGEiOiAiZDY3NDc2YmEzZmYyZTI5NDA5MTBhMDJmMDhhYmQxZjAzY2FlZjJkMiIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImZhMmE0ZWY5ZDdhZTJhNDY4NzE5ODRlYzk4NjlhNGM1MjlmNmFjNDYiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJiYXNlIiwKICAgICAgICAgICJvdGhlciIKICAgICAgICBdCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJvdGhlciIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjgyZTYzNjIzYWZkNTY4NTQ5NjJlYTFmMzQ4MTJkY2NiMjkyNGZhYTgiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMjAyZDFkMjY5NDc0NDQyZjk5MzdhMzZhMzU0MjZhNzI3MWRkYWQ2NCIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjY5NTliNzNhY2YwNWY1ODgxNWViMzRjNjNhM2U5ZjdmMjJmOTM5MmEiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJ0aXAiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogIjIwMmQxZDI2OTQ3NDQ0MmY5OTM3YTM2YTM1NDI2YTcyNzFkZGFkNjQiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJ0aXAiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIxZmY3ZGI0NjVhNmM3ZGZhMzM5ZWU1YjAwNDUwMTM4YjI4NzA0ZDNjIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogIjY5NTliNzNhY2YwNWY1ODgxNWViMzRjNjNhM2U5ZjdmMjJmOTM5MmEiCiAgICAgIH0KICAgIF0KICBdCn0="
+      },
+      "operation": {
+        "rebase-merge": null,
+        "rebase-apply": null
+      },
+      "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+    },
+    "linked": {
+      "head": "1ff7db465a6c7dfa339ee5b00450138b28704d3c\n",
+      "branch": "tip\n",
+      "refs": "refs/branch-metadata/base f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/child 15a4fa244867cd7d4ef331adff8866c534801d67\nrefs/branch-metadata/other f5bfc04e5e98a95433d20533430242f9c9f3def9\nrefs/branch-metadata/tip e20bdce00b43c6d2b55044574f7bb5acc42b286c\nrefs/heads/base 202d1d269474442f9937a36a35426a7271ddad64\nrefs/heads/child 6959b73acf05f58815eb34c63a3e9f7f22f9392a\nrefs/heads/main fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46\nrefs/heads/other 82e63623afd56854962ea1f34812dccb2924faa8\nrefs/heads/tip 1ff7db465a6c7dfa339ee5b00450138b28704d3c\n",
+      "index": "RElSQwAAAAIAAAAEauEOixbarQ1q4Q6LFtqtDQEAABALXKfsAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAauEOixbdRuhq4Q6LFt1G6AEAABALXKftAACBpAAAAfUAAAAUAAAABbDG7h4A9KtSvXKpNNBHpjgOh3QhAAljaGlsZC50eHQAauEOixbfKiVq4Q6LFt8qJQEAABALXKfuAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAauEOixcKMidq4Q6LFwoyJwEAABALXKfvAACBpAAAAfUAAAAUAAAADa0MZGPcCe+Wvyn4yZMvOe9M+kLkAAd0aXAudHh0AAAAVFJFRQAAAAYALTEgMAqf5iWlWqWrZQuqe14eKkPvfLUJTw==",
+      "indexLock": null,
+      "staging": ":100644 100644 71c9f5d ad0c646 M\u0000tip.txt\u0000",
+      "status": "MM tip.txt\u0000?? untracked-link\u0000?? untracked.bin\u0000",
+      "files": {
+        "base.txt": "YmFzZQ==",
+        "child.txt": "Y2hpbGQ=",
+        "main.txt": "bWFpbg==",
+        "tip.txt": "bGlua2VkIHN0YWdlZApsaW5rZWQgdW5zdGFnZWQ=",
+        "untracked-link": "link:untracked.bin",
+        "untracked.bin": "AP8="
+      },
+      "persistent": {
+        "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQo=",
+        ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+        ".gtcontinue": null,
+        ".graphite_pr_info": null,
+        ".graphite_cache_lock": null,
+        ".graphite_cache_persist": "ewogICJzaGEiOiAiZDY3NDc2YmEzZmYyZTI5NDA5MTBhMDJmMDhhYmQxZjAzY2FlZjJkMiIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImZhMmE0ZWY5ZDdhZTJhNDY4NzE5ODRlYzk4NjlhNGM1MjlmNmFjNDYiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJiYXNlIiwKICAgICAgICAgICJvdGhlciIKICAgICAgICBdCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJvdGhlciIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjgyZTYzNjIzYWZkNTY4NTQ5NjJlYTFmMzQ4MTJkY2NiMjkyNGZhYTgiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMjAyZDFkMjY5NDc0NDQyZjk5MzdhMzZhMzU0MjZhNzI3MWRkYWQ2NCIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYTJhNGVmOWQ3YWUyYTQ2ODcxOTg0ZWM5ODY5YTRjNTI5ZjZhYzQ2IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjY5NTliNzNhY2YwNWY1ODgxNWViMzRjNjNhM2U5ZjdmMjJmOTM5MmEiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJ0aXAiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogIjIwMmQxZDI2OTQ3NDQ0MmY5OTM3YTM2YTM1NDI2YTcyNzFkZGFkNjQiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJ0aXAiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIxZmY3ZGI0NjVhNmM3ZGZhMzM5ZWU1YjAwNDUwMTM4YjI4NzA0ZDNjIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogIjY5NTliNzNhY2YwNWY1ODgxNWViMzRjNjNhM2U5ZjdmMjJmOTM5MmEiCiAgICAgIH0KICAgIF0KICBdCn0="
+      },
+      "operation": {
+        "rebase-merge": null,
+        "rebase-apply": null
+      },
+      "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+    }
+  }
+}

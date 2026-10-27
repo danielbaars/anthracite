@@ -1,0 +1,53 @@
+{
+  "identity": {
+    "sourceCommit": "aec33cac28fa9c6623fcb1096c322cdcfc1c0a97",
+    "sourceTree": "48384cd3a88a198ec6ff4f184e3c90fc96777346",
+    "cliSourceTree": "3504cadba8611243843e467fc486ed0601030871",
+    "nodeVersion": "v24.19.0",
+    "bunVersion": "1.3.14",
+    "host": "macOS ARM64",
+    "nativeBinarySha256": "6eaf5311ce9e82d7bd43e9e627bb64ffa45c9c44363ba9ecc8f29b92dcb29bcb",
+    "nativeBinaryBytes": 66121058,
+    "sdk": "1.32.2 with committed CJS/ESM request-ID-zero patch",
+    "typescript": "5.5.4"
+  },
+  "checks": {
+    "forcedBuild": "passed (0 cached tasks)",
+    "uncachedSourceLint": "passed",
+    "uncachedChangedTestLint": "passed",
+    "typecheck": "passed",
+    "specOpenFindings": 0,
+    "standardsOpenFindings": 0
+  },
+  "results": {
+    "node": {
+      "files": 7,
+      "passes": 31,
+      "pending": 0,
+      "failedFiles": 0
+    },
+    "native": {
+      "files": 7,
+      "passes": 31,
+      "pending": 0,
+      "failedFiles": 0
+    }
+  },
+  "scenarios": {
+    "1-2": "mcp_cli.test.ts (7 cases)",
+    "3-4,7-8": "mcp_execution_cli.test.ts (4 cases)",
+    "6,12-13": "mcp_bounds_cli.test.ts (4 cases)",
+    "5,9-11": "mcp_workflows_cli.test.ts (4 cases)",
+    "14-15": "mcp_lifecycle_cli.test.ts (3 cases)"
+  },
+  "boundaries": {
+    "actionsRunsStarted": 0,
+    "fullMatrix": "not started",
+    "liveGitHubFixturePRs": 0,
+    "globalInstall": "unchanged",
+    "clientRegistration": "unchanged",
+    "release": "none",
+    "linuxSpecificCleanup": "implemented but not exercised on this macOS host",
+    "nativeTerminationSignal": "Bun reports SIGINT where Node reports SIGKILL in forced-stop fixture; independent owned-process disappearance and lock/control checks pass"
+  }
+}

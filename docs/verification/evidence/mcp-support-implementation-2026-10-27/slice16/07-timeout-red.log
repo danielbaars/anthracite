@@ -1,0 +1,18 @@
+
+
+  MCP execution bounds through stdio
+    1) scenario 13: times out a real hook and grandchild, preserves foreign ownership and staged state, then serves queued work
+
+
+  0 passing (11s)
+  1 failing
+
+  1) MCP execution bounds through stdio
+       scenario 13: times out a real hook and grandchild, preserves foreign ownership and staged state, then serves queued work:
+     Error: ENOENT: no such file or directory, open '/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-kYv1Pi/repo/.git/.graphite_cache_lock'
+      at Object.readFileSync (node:fs:484:20)
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_bounds_cli.test.js:237:45)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+
+

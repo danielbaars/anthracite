@@ -1,0 +1,48 @@
+{
+  "modified": {
+    "status": "success",
+    "stdout": "[base aa79f7c] base\n Date: Wed Jan 1 00:00:00 2020 +0000\n 2 files changed, 2 insertions(+)\n create mode 100644 base.txt\n create mode 100644 change.txt\nRestacked child on base.\nRestacked tip on child.\n",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "truncated": false
+  },
+  "restacked": {
+    "status": "success",
+    "stdout": "Restacked base on main.\nRestacked child on base.\nRestacked tip on child.\n",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "truncated": false
+  },
+  "actual": [
+    {
+      "commit": "ed335ad1e7ce5ef366c665c7ca0249440a0dc399",
+      "parents": "670946f92ef327b6c0f09f4531482a7c5b30e561",
+      "tree": "a65e4fd52c49b9b1c6becb26a96bc64851f3821d",
+      "message": "base",
+      "files": "100644 blob 8681f8b8f32615a16703053bc1eaffb3e5e720a5\tbase.txt\n100644 blob 015961a38645c4f77b723ec17524110695b9d5b3\tchange.txt\n100644 blob 88d050b1908057b53d38b42702ebc659e3d7f696\tmain.txt\n100644 blob 0fbee53b844beb57666226fa7a6c3d1700ffcd80\ttrunk-new.txt"
+    },
+    {
+      "commit": "e56d20b103fe6b16b68331eec7451dcda6b56e6a",
+      "parents": "ed335ad1e7ce5ef366c665c7ca0249440a0dc399",
+      "tree": "b1a7d20544385f3720aaaf16f4c595bfa1e30fe6",
+      "message": "child",
+      "files": "100644 blob 8681f8b8f32615a16703053bc1eaffb3e5e720a5\tbase.txt\n100644 blob 015961a38645c4f77b723ec17524110695b9d5b3\tchange.txt\n100644 blob b0c6ee1e00f4ab52bd72a934d047a6380e877421\tchild.txt\n100644 blob 88d050b1908057b53d38b42702ebc659e3d7f696\tmain.txt\n100644 blob 0fbee53b844beb57666226fa7a6c3d1700ffcd80\ttrunk-new.txt"
+    },
+    {
+      "commit": "06faf428577a63551d2b72eb956aadaf8a30151a",
+      "parents": "e56d20b103fe6b16b68331eec7451dcda6b56e6a",
+      "tree": "1182eaa71764f60335e2bf8c1e863bba28161bd3",
+      "message": "tip",
+      "files": "100644 blob 8681f8b8f32615a16703053bc1eaffb3e5e720a5\tbase.txt\n100644 blob 015961a38645c4f77b723ec17524110695b9d5b3\tchange.txt\n100644 blob b0c6ee1e00f4ab52bd72a934d047a6380e877421\tchild.txt\n100644 blob 88d050b1908057b53d38b42702ebc659e3d7f696\tmain.txt\n100644 blob 71c9f5d5abb0a6d0e0ca6a5fc18fcdb7a1dddc50\ttip.txt\n100644 blob 0fbee53b844beb57666226fa7a6c3d1700ffcd80\ttrunk-new.txt"
+    }
+  ],
+  "other": {
+    "commit": "82e63623afd56854962ea1f34812dccb2924faa8",
+    "parents": "fa2a4ef9d7ae2a46871984ec9869a4c529f6ac46",
+    "tree": "ead6f46555b2a7a8d07d0731d1ac7657d4393add",
+    "message": "other",
+    "files": "100644 blob 88d050b1908057b53d38b42702ebc659e3d7f696\tmain.txt\n100644 blob 27fa34919ae70aa0d7eaccdfbf393cfc440e7d25\tother.txt"
+  }
+}

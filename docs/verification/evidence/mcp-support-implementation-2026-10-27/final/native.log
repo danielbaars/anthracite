@@ -1,0 +1,8 @@
+PASS native commands/anthracite_identity_cli.test.js (2 passed, 0 pending)
+PASS native commands/mcp_cli.test.js (7 passed, 0 pending)
+PASS native commands/mcp_execution_cli.test.js (4 passed, 0 pending)
+PASS native commands/mcp_bounds_cli.test.js (4 passed, 0 pending)
+PASS native commands/mcp_lifecycle_cli.test.js (3 passed, 0 pending)
+PASS native commands/modern_completion_cli.test.js (7 passed, 0 pending)
+PASS native commands/mcp_workflows_cli.test.js (4 passed, 0 pending)
+{"runtime":"native","shard":0,"shards":1,"files":7,"passes":31,"pending":0,"failedFiles":0}

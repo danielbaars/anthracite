@@ -1,0 +1,22 @@
+
+
+  MCP cancellation and shutdown through stdio
+    1) scenario 14: cancels active and queued work, omits results and preserves unrelated state before serving another request
+
+
+  0 passing (17s)
+  1 failing
+
+  1) MCP cancellation and shutdown through stdio
+       scenario 14: cancels active and queued work, omits results and preserves unrelated state before serving another request:
+
+      AssertionError: expected false to equal true
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (dist/test/commands/mcp_lifecycle_cli.test.js:106:116)
+
+
+

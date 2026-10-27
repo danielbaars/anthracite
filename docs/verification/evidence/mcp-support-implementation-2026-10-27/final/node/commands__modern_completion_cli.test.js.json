@@ -1,0 +1,144 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-27T20:50:24.775Z",
+    "end": "2026-10-27T20:50:54.225Z",
+    "duration": 29450
+  },
+  "tests": [
+    {
+      "title": "offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "fullTitle": "modern completion through the public CLI offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 141,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "offers actual options for canonical and alias forms outside Git without tools",
+      "fullTitle": "modern completion through the public CLI offers actual options for canonical and alias forms outside Git without tools",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 5568,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "fullTitle": "modern completion through the public CLI completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 2073,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses invalid completion cwd and policy values before external tools",
+      "fullTitle": "modern completion through the public CLI refuses invalid completion cwd and policy values before external tools",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 491,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "fullTitle": "modern completion through the public CLI generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 1049,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "fullTitle": "modern completion through the public CLI prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 1521,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps nested completion local to its registered group",
+      "fullTitle": "modern completion through the public CLI keeps nested completion local to its registered group",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 263,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "fullTitle": "modern completion through the public CLI offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 141,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "offers actual options for canonical and alias forms outside Git without tools",
+      "fullTitle": "modern completion through the public CLI offers actual options for canonical and alias forms outside Git without tools",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 5568,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "fullTitle": "modern completion through the public CLI completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 2073,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses invalid completion cwd and policy values before external tools",
+      "fullTitle": "modern completion through the public CLI refuses invalid completion cwd and policy values before external tools",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 491,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "fullTitle": "modern completion through the public CLI generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 1049,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "fullTitle": "modern completion through the public CLI prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 1521,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps nested completion local to its registered group",
+      "fullTitle": "modern completion through the public CLI keeps nested completion local to its registered group",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/modern_completion_cli.test.js",
+      "duration": 263,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

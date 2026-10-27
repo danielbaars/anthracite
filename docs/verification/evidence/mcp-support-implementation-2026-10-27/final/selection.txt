@@ -1,0 +1,4 @@
+Final integrated public selection:
+commands/(mcp.*_cli|anthracite_identity_cli|modern_completion_cli)\.test\.js$
+
+Expected 7 files,31 tests on each runtime: MCP startup/learning7,execution4,bounds4,workflows4,lifecycle3; identity2; completion7. All15 parent scenarios map to22 MCP cases. Each runtime executes complete approved boundary once after finalreviewfixintegration. Earlier39/49 affecteddirectcontrols remain slice evidence; no unrelatedsuite/fullmatrix/release/globalinstall/clientregistration.

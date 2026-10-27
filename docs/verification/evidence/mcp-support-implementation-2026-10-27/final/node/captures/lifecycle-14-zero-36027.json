@@ -1,0 +1,288 @@
+{
+  "first": {
+    "owned": {
+      "cli": 46366,
+      "hook": 46397,
+      "grandchild": 46517
+    },
+    "beforeProcesses": {
+      "status": 0,
+      "stdout": "46366 46134 46366 Ts  \n46397 46393 46366 S   \n46517 46397 46366 S   \n",
+      "stderr": ""
+    },
+    "afterProcesses": {
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "later": {
+    "owned": {
+      "cli": 48931,
+      "hook": 48957,
+      "grandchild": 48974
+    },
+    "afterProcesses": {
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "ownLockRemoved": true,
+  "messages": [
+    {
+      "jsonrpc": "2.0",
+      "id": 0,
+      "result": {
+        "protocolVersion": "2025-11-25",
+        "capabilities": {
+          "tools": {}
+        },
+        "serverInfo": {
+          "name": "anthracite",
+          "version": "0.1.1"
+        }
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"status\":\"success\",\"stdout\":\"base\",\"stderr\":\"Passing command through to git...\\nRunning: \\\"git show HEAD:base.txt\\\"\\n\\n\",\"exitCode\":0,\"signal\":null,\"truncated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "result": {
+        "tools": [
+          {
+            "name": "run_an_cmd",
+            "description": "Execute this Anthracite build with literal arguments in an explicit directory. May mutate repositories and external services. Follow user/repository instructions and publication approvals.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "args": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                },
+                "cwd": {
+                  "type": "string",
+                  "description": "Absolute existing directory."
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Nonempty explanation; never executed."
+                }
+              },
+              "required": [
+                "args",
+                "cwd",
+                "why"
+              ],
+              "additionalProperties": false
+            },
+            "annotations": {
+              "readOnlyHint": false,
+              "destructiveHint": true,
+              "idempotentHint": false,
+              "openWorldHint": true
+            }
+          },
+          {
+            "name": "learn_an",
+            "description": "Read Anthracite workflow guidance. User and repository instructions and publication approvals remain authoritative.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"status\":\"success\",\"stdout\":\"base\",\"stderr\":\"Passing command through to git...\\nRunning: \\\"git show HEAD:base.txt\\\"\\n\\n\",\"exitCode\":0,\"signal\":null,\"truncated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "sentMessages": [
+    {
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2025-11-25",
+        "capabilities": {},
+        "clientInfo": {
+          "name": "anthracite-tests",
+          "version": "1.0.0"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 0
+    },
+    {
+      "method": "notifications/initialized",
+      "jsonrpc": "2.0"
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 0,
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "switch",
+            "--detach",
+            "HEAD"
+          ],
+          "cwd": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-pjtO4o/an-reorder-uB9mSi/repo",
+          "why": "zero active"
+        }
+      }
+    },
+    {
+      "method": "notifications/cancelled",
+      "params": {
+        "requestId": 0
+      },
+      "jsonrpc": "2.0"
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "show",
+            "HEAD:base.txt"
+          ],
+          "cwd": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-pjtO4o/an-reorder-uB9mSi/repo",
+          "why": "completed"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 1
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "switch",
+            "--detach",
+            "HEAD"
+          ],
+          "cwd": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-pjtO4o/an-reorder-uB9mSi/repo",
+          "why": "later active"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 2
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 0,
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "create",
+            "zero-never-starts",
+            "-m",
+            "never"
+          ],
+          "cwd": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-pjtO4o/an-reorder-5pFgE4/repo",
+          "why": "zero queued"
+        }
+      }
+    },
+    {
+      "method": "notifications/cancelled",
+      "params": {
+        "requestId": 0
+      },
+      "jsonrpc": "2.0"
+    },
+    {
+      "method": "notifications/cancelled",
+      "params": {
+        "requestId": 1
+      },
+      "jsonrpc": "2.0"
+    },
+    {
+      "method": "notifications/cancelled",
+      "params": {
+        "requestId": "unknown"
+      },
+      "jsonrpc": "2.0"
+    },
+    {
+      "jsonrpc": "2.0",
+      "method": "notifications/cancelled",
+      "params": {
+        "requestId": {
+          "malformed": true
+        }
+      }
+    },
+    {
+      "method": "tools/list",
+      "jsonrpc": "2.0",
+      "id": 3
+    },
+    {
+      "jsonrpc": "2.0",
+      "method": "notifications/cancelled",
+      "params": {
+        "requestId": 2,
+        "reason": "AbortError: This operation was aborted"
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "show",
+            "HEAD:base.txt"
+          ],
+          "cwd": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-pjtO4o/an-reorder-uB9mSi/repo",
+          "why": "after zero"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 4
+    }
+  ],
+  "stderr": "MCP error: Uncaught error in notification handler: [\n  {\n    \"code\": \"invalid_union\",\n    \"errors\": [\n      [\n        {\n          \"expected\": \"string\",\n          \"code\": \"invalid_type\",\n          \"path\": [],\n          \"message\": \"Invalid input: expected string, received object\"\n        }\n      ],\n      [\n        {\n          \"expected\": \"number\",\n          \"code\": \"invalid_type\",\n          \"path\": [],\n          \"message\": \"Invalid input: expected number, received object\"\n        }\n      ]\n    ],\n    \"path\": [\n      \"params\",\n      \"requestId\"\n    ],\n    \"message\": \"Invalid input\"\n  }\n]\n"
+}

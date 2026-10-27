@@ -1,0 +1,22 @@
+
+
+  MCP cancellation and shutdown through stdio
+    1) scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work
+
+
+  0 passing (16s)
+  1 failing
+
+  1) MCP cancellation and shutdown through stdio
+       scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work:
+
+      numeric-zero active cancellation stops owned work
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (dist/test/commands/mcp_lifecycle_cli.test.js:164:169)
+
+
+

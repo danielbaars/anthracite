@@ -1,0 +1,202 @@
+../../node_modules/zod/v4/classic/schemas.d.cts(455,31): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,39): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,56): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,60): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,69): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,71): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,80): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,92): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,123): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(455,124): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,13): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,21): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,38): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,45): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,46): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,57): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,69): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,99): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(499,100): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,13): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,21): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,38): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,45): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,46): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,57): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,69): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,99): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(500,100): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(501,1): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,24): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,32): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,49): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,55): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,57): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,65): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,77): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,107): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(503,108): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(504,24): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(504,32): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(504,44): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(504,53): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(504,62): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(504,74): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(504,104): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(504,105): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(520,33): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(520,41): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(520,62): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(520,76): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(520,83): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(520,95): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(520,128): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(520,129): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(521,33): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(521,41): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(521,53): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(521,61): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(521,68): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(521,80): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(521,113): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(521,114): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,30): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,38): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,50): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,63): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,75): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,84): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,92): error TS1005: '>' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,110): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,155): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,163): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,207): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(583,208): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,41): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,53): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,65): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,89): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,91): error TS1005: ',' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,98): error TS1005: ')' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,114): error TS1109: Expression expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,155): error TS1005: ';' expected.
+../../node_modules/zod/v4/classic/schemas.d.cts(591,156): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/api.d.cts(205,32): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/api.d.cts(205,40): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(205,57): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(205,64): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(205,75): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(205,77): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(205,84): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/api.d.cts(205,130): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(205,142): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/api.d.cts(205,168): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(205,169): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/api.d.cts(226,31): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/api.d.cts(226,39): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(226,53): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(226,55): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(226,62): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/api.d.cts(226,106): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(226,118): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/api.d.cts(226,143): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(226,144): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/api.d.cts(237,34): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/api.d.cts(237,42): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(237,55): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(237,69): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/api.d.cts(237,76): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/api.d.cts(237,122): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(237,134): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/api.d.cts(237,162): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(237,163): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/api.d.cts(238,34): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/api.d.cts(238,42): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(238,54): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(238,62): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(238,69): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/api.d.cts(238,115): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(238,127): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/api.d.cts(238,155): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(238,156): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/api.d.cts(256,31): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/api.d.cts(256,39): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,54): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,67): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,82): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,91): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,99): error TS1005: '>' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,117): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/api.d.cts(256,167): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,208): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,216): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,263): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(256,264): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/api.d.cts(260,42): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/api.d.cts(260,54): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(260,69): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(260,93): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(260,95): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/api.d.cts(260,102): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/api.d.cts(260,156): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(260,172): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/api.d.cts(260,208): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/api.d.cts(260,209): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(26,11): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/function.d.cts(26,17): error TS1434: Unexpected keyword or identifier.
+../../node_modules/zod/v4/core/function.d.cts(26,23): error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+../../node_modules/zod/v4/core/function.d.cts(26,31): error TS1434: Unexpected keyword or identifier.
+../../node_modules/zod/v4/core/function.d.cts(26,35): error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+../../node_modules/zod/v4/core/function.d.cts(26,36): error TS1434: Unexpected keyword or identifier.
+../../node_modules/zod/v4/core/function.d.cts(26,46): error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+../../node_modules/zod/v4/core/function.d.cts(26,54): error TS1434: Unexpected keyword or identifier.
+../../node_modules/zod/v4/core/function.d.cts(26,59): error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+../../node_modules/zod/v4/core/function.d.cts(26,106): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/function.d.cts(26,108): error TS1434: Unexpected keyword or identifier.
+../../node_modules/zod/v4/core/function.d.cts(26,113): error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+../../node_modules/zod/v4/core/function.d.cts(26,126): error TS1442: Expected '=' for property initializer.
+../../node_modules/zod/v4/core/function.d.cts(26,127): error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+../../node_modules/zod/v4/core/function.d.cts(26,149): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(26,159): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(26,165): error TS1005: '>' expected.
+../../node_modules/zod/v4/core/function.d.cts(26,172): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/function.d.cts(26,182): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/function.d.cts(27,41): error TS1005: '?' expected.
+../../node_modules/zod/v4/core/function.d.cts(27,47): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(27,57): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/function.d.cts(28,47): error TS1005: '?' expected.
+../../node_modules/zod/v4/core/function.d.cts(28,55): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(28,68): error TS1005: ';' expected.
+../../node_modules/zod/v4/core/function.d.cts(29,1): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(35,28): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/function.d.cts(35,37): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(35,50): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(35,69): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/function.d.cts(35,102): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/function.d.cts(37,2): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(37,3): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(38,28): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/function.d.cts(38,37): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(38,50): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(38,69): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/function.d.cts(38,96): error TS1109: Expression expected.
+../../node_modules/zod/v4/core/function.d.cts(38,106): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(38,155): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/function.d.cts(39,14): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(41,1): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(41,2): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(41,3): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(42,28): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/function.d.cts(42,37): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(42,84): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/function.d.cts(43,14): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(44,1): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(44,2): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(44,3): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(45,28): error TS1139: Type parameter declaration expected.
+../../node_modules/zod/v4/core/function.d.cts(45,38): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(45,87): error TS1005: ')' expected.
+../../node_modules/zod/v4/core/function.d.cts(46,16): error TS1005: ',' expected.
+../../node_modules/zod/v4/core/function.d.cts(47,1): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(47,2): error TS1128: Declaration or statement expected.
+../../node_modules/zod/v4/core/function.d.cts(47,3): error TS1128: Declaration or statement expected.

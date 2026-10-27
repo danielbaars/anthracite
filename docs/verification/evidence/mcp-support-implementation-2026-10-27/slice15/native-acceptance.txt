@@ -1,0 +1,54 @@
+
+
+  MCP command execution through stdio
+    ✔ scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels (1675ms)
+    ✔ scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments (1056ms)
+    ✔ scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers (1542ms)
+    ✔ scenario 8: forces no UI, closes stdin and keeps recursion, documentation, quiet/debug and raw-Git framing usable (3975ms)
+
+  MCP startup and learning through stdio
+    ✔ scenario 1: discovers a working learning tool outside Git without credentials (105ms)
+    ✔ scenario 2: learns a deliberate workflow with explicit cwd and no connection side effects (116ms)
+    ✔ scenario 1: negotiates SDK protocol behavior for 2024-11-05 (111ms)
+    ✔ scenario 1: negotiates SDK protocol behavior for 2999-01-01 (116ms)
+    ✔ scenario 1: exposes help and completion without starting a server (380ms)
+    ✔ scenario 1: starts through the installed an spelling (102ms)
+    ✔ scenario 1: starts through the installed anthracite spelling (100ms)
+
+  cwd selection through the public CLI
+    ✔ selects the target repository instead of the same-named departure branch (1247ms)
+    ✔ rejects missing, empty, repeated and negated global declarations before external commands (1204ms)
+    ✔ rejects unusable targets on stderr without creating a directory or falling back (1065ms)
+    ✔ documents directory selection and serves own help and version without opening the target (1699ms)
+    ✔ resolves absolute, relative and literal directory names from the original departure (9518ms)
+    ✔ retains the chosen subdirectory as the base for existing relative configuration (458ms)
+    ✔ leaves repository requirements to the ordinary command after selecting a non-Git directory (216ms)
+    ✔ reports a genuinely inaccessible directory without falling back when permissions are enforced (90ms)
+
+  cwd documentation grammar through the public CLI
+    ✔ commits only staged B content and invokes only B hooks when help is explicitly false (1627ms)
+    ✔ selects B for disabled, negated and overridden documentation booleans (4078ms)
+    ✔ serves effective documentation forms without loading configuration or invoking external tools (2272ms)
+    ✔ rejects malformed cwd even alongside equals and positional documentation (1171ms)
+    ✔ preserves literal string values and help-looking payload after the terminator (4894ms)
+    ✔ applies cwd before special completion rather than treating its output as documentation (2006ms)
+
+  explicit editor policy through the public CLI
+    ✔ refuses forbidden editor before own writes: edit --no-interactive (602ms)
+    ✔ refuses forbidden editor before own writes: e --quiet (568ms)
+    ✔ refuses forbidden editor before own writes: dev meta base --edit --no-interactive (544ms)
+    ✔ refuses forbidden editor before own writes: reorder --no-interactive (747ms)
+    ✔ refuses forbidden editor before own writes: ro --stack --quiet (684ms)
+    ✔ uses supported preformatted input without an editor: reorder (12660ms)
+    ✔ applies a configured editor under explicit interactive pipes: reorder (11495ms)
+    ✔ uses supported preformatted input without an editor: reorder --stack (12945ms)
+    ✔ applies a configured editor under explicit interactive pipes: reorder --stack (12701ms)
+    ✔ retains repository state when a permitted reorder editor fails (1125ms)
+    ✔ applies a permitted Git sequence editor and restacks descendants under pipes (10501ms)
+    ✔ applies a configured dev-meta editor when explicitly permitted (1137ms)
+    ✔ lets quiet and the legacy disable override an explicit editor permission (1789ms)
+    ✔ preserves history when the user cancels an allowed reorder editor (1094ms)
+
+
+  39 passing (3m)
+

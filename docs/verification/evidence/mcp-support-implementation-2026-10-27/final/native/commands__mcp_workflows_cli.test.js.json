@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-27T20:49:47.100Z",
+    "end": "2026-10-27T20:50:58.384Z",
+    "duration": 71284
+  },
+  "tests": [
+    {
+      "title": "scenario 5: modifies and restacks a real chain like the direct CLI while preserving another stack",
+      "fullTitle": "MCP protected stack workflows through stdio scenario 5: modifies and restacks a real chain like the direct CLI while preserving another stack",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_workflows_cli.test.js",
+      "duration": 25293,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 9: refuses frozen writes and occupied branches without changing tracking or either dirty index",
+      "fullTitle": "MCP protected stack workflows through stdio scenario 9: refuses frozen writes and occupied branches without changing tracking or either dirty index",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_workflows_cli.test.js",
+      "duration": 9005,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 10: retains a completed conflict across idle shutdown and recovers through a fresh MCP session like direct CLI recovery",
+      "fullTitle": "MCP protected stack workflows through stdio scenario 10: retains a completed conflict across idle shutdown and recovers through a fresh MCP session like direct CLI recovery",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_workflows_cli.test.js",
+      "duration": 28037,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 11: explicitly submits the selected stack to a local bare remote while preserving approved metadata and unrelated work",
+      "fullTitle": "MCP protected stack workflows through stdio scenario 11: explicitly submits the selected stack to a local bare remote while preserving approved metadata and unrelated work",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_workflows_cli.test.js",
+      "duration": 8399,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "scenario 5: modifies and restacks a real chain like the direct CLI while preserving another stack",
+      "fullTitle": "MCP protected stack workflows through stdio scenario 5: modifies and restacks a real chain like the direct CLI while preserving another stack",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_workflows_cli.test.js",
+      "duration": 25293,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 9: refuses frozen writes and occupied branches without changing tracking or either dirty index",
+      "fullTitle": "MCP protected stack workflows through stdio scenario 9: refuses frozen writes and occupied branches without changing tracking or either dirty index",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_workflows_cli.test.js",
+      "duration": 9005,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 10: retains a completed conflict across idle shutdown and recovers through a fresh MCP session like direct CLI recovery",
+      "fullTitle": "MCP protected stack workflows through stdio scenario 10: retains a completed conflict across idle shutdown and recovers through a fresh MCP session like direct CLI recovery",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_workflows_cli.test.js",
+      "duration": 28037,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 11: explicitly submits the selected stack to a local bare remote while preserving approved metadata and unrelated work",
+      "fullTitle": "MCP protected stack workflows through stdio scenario 11: explicitly submits the selected stack to a local bare remote while preserving approved metadata and unrelated work",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/mcp_workflows_cli.test.js",
+      "duration": 8399,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

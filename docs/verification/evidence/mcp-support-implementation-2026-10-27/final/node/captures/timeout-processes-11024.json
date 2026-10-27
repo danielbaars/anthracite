@@ -1,0 +1,45 @@
+{
+  "server": 32198,
+  "pids": {
+    "cli": 32281,
+    "hook": 32633,
+    "grandchild": 32895,
+    "before": "32281 32198 32281 Ss   /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n32618 32281 32281 S    /Library/Developer/CommandLineTools/usr/bin/git\n32633 32618 32281 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n32895 32633 32281 R    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n"
+  },
+  "owned": {
+    "cli": 37527,
+    "hook": 37635,
+    "grandchild": 37752,
+    "before": "37527 32198 37527 Ss   /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n37628 37527 37527 S    /Library/Developer/CommandLineTools/usr/bin/git\n37635 37628 37527 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n37752 37635 37527 R    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n"
+  },
+  "stoppedState": "37527 32198 37527 Ts   /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n37635 37628 37527 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n37752 37635 37527 S    /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node\n",
+  "result": {
+    "status": "timeout",
+    "stdout": "",
+    "stderr": "",
+    "exitCode": 1,
+    "signal": null,
+    "truncated": false,
+    "message": "Command exceeded 5000ms; owned work stopped. Inspect repository state before retrying; interruption does not roll back changes.",
+    "isError": true
+  },
+  "forcedResult": {
+    "status": "timeout",
+    "stdout": "A\tpending.txt\n",
+    "stderr": "Passing command through to git...\nRunning: \"git switch --detach HEAD\"\n\nHEAD is now at 82e6362 other\nééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé",
+    "exitCode": null,
+    "signal": "SIGKILL",
+    "truncated": true,
+    "message": "Command exceeded 5000ms; owned work stopped. Inspect repository state before retrying; interruption does not roll back changes.",
+    "isError": true
+  },
+  "afterCleanup": {
+    "status": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "foreignLock": "{\"pid\":32175,\"timestamp\":123}",
+  "foreignControl": 32175,
+  "controlStillRunning": true,
+  "ownedLockRemoved": true
+}
