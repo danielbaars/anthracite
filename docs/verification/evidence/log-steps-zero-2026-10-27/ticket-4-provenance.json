@@ -1,0 +1,106 @@
+{
+  "issue": 4,
+  "spec": 1,
+  "initialBaseCommit": "3cf65bc8ff9383f0acffc1271afa941da86d1ff1",
+  "integrationParentCommit": "255b0928fd49be4c40363ca9bd949f51084c6fb4",
+  "commit": "9c14f9738b662391c78c412d410306993a0e6c69",
+  "tree": "fc66370f4fa3fcb2c08e043b41860822230dc509",
+  "nodeVersion": "v24.19.0",
+  "bunVersion": "1.3.14",
+  "nativeBinary": {
+    "path": "/private/tmp/anthracite-log-implementation/state-native",
+    "sha256": "9a44f8ef0121bea9831231c8fa241b2ea50ac6e7f5a07c5574edfb542cf9d55a"
+  },
+  "productionSourceUnchangedByRebase": true,
+  "sourceSha256": {
+    "apps/cli/src/lib/runner.ts": "a6c87c33ac8f2f3487dba98af27f6612997228abc14c72265a22acd4710ce506",
+    "apps/cli/src/commands/log-commands/default.ts": "d61fb34ccf70bdcfdff6d7e65491f693a4d1a8602f4d258c2a7bc53d887bfa97",
+    "apps/cli/src/commands/log-commands/short.ts": "ef00283e38cb192ec06e2490b734a121544f7a9b88767ff9f897c3e9f597e93a",
+    "apps/cli/src/actions/log.ts": "a40b6d7be41288c7fd367d7ecc59cf6cddbfbe9550f5e547085fa8e77bf0b637",
+    "apps/cli/test/commands/log_steps_state_cli.test.ts": "f6871b8386399f488328b8cf24c06d5fd96c07ba5370c9056ea63174ec271ff8",
+    "apps/cli/test/lib/fixtures/log_steps_cli.ts": "a168ca258815f7c6e3014b441c93e56acd759280d81121e984a104063d45e0e8"
+  },
+  "node": {
+    "stats": {
+      "suites": 1,
+      "tests": 11,
+      "passes": 11,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T08:13:04.251Z",
+      "end": "2026-10-27T08:14:56.486Z",
+      "duration": 112235
+    },
+    "scenarioIds": [
+      "zero-depth log state preservation through the public CLI shows only the checked-out trunk without changing the graph",
+      "zero-depth log state preservation through the public CLI keeps an empty branch identity even when it shares its parent commit",
+      "zero-depth log state preservation through the public CLI retains a long Unicode branch name and its own commits",
+      "zero-depth log state preservation through the public CLI shows a stale child without restacking it or changing its stored parent",
+      "zero-depth log state preservation through the public CLI shows frozen status without thawing the branch or its frozen ancestors",
+      "zero-depth log state preservation through the public CLI refuses an untracked current branch and retains diagnostics under quiet",
+      "zero-depth log state preservation through the public CLI refuses detached HEAD and retains diagnostics under quiet",
+      "zero-depth log state preservation through the public CLI preserves staged, unstaged, ignored and untracked local work",
+      "zero-depth log state preservation through the public CLI uses the cwd target and preserves dirty caller, target and linked worktree",
+      "zero-depth log state preservation through the public CLI preserves genuine conflict recovery data and leaves continue usable",
+      "zero-depth log state preservation through the public CLI preserves saved continuation bytes after Git abort restores an attached branch"
+    ],
+    "mochaSha256": "e7c648eddd43b44fce1d18c4e7f9273f611f1af71bca5c47c30698b512bd0566"
+  },
+  "native": {
+    "stats": {
+      "suites": 1,
+      "tests": 11,
+      "passes": 11,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-27T08:13:04.251Z",
+      "end": "2026-10-27T08:14:48.632Z",
+      "duration": 104381
+    },
+    "scenarioIds": [
+      "zero-depth log state preservation through the public CLI shows only the checked-out trunk without changing the graph",
+      "zero-depth log state preservation through the public CLI keeps an empty branch identity even when it shares its parent commit",
+      "zero-depth log state preservation through the public CLI retains a long Unicode branch name and its own commits",
+      "zero-depth log state preservation through the public CLI shows a stale child without restacking it or changing its stored parent",
+      "zero-depth log state preservation through the public CLI shows frozen status without thawing the branch or its frozen ancestors",
+      "zero-depth log state preservation through the public CLI refuses an untracked current branch and retains diagnostics under quiet",
+      "zero-depth log state preservation through the public CLI refuses detached HEAD and retains diagnostics under quiet",
+      "zero-depth log state preservation through the public CLI preserves staged, unstaged, ignored and untracked local work",
+      "zero-depth log state preservation through the public CLI uses the cwd target and preserves dirty caller, target and linked worktree",
+      "zero-depth log state preservation through the public CLI preserves genuine conflict recovery data and leaves continue usable",
+      "zero-depth log state preservation through the public CLI preserves saved continuation bytes after Git abort restores an attached branch"
+    ],
+    "mochaSha256": "095906aa610798143b0869c8c1907e428538b2482764b15ae17cf4735e8e038b"
+  },
+  "productRegressions": [
+    {
+      "directory": "recovery",
+      "sourceCommit": "3cf65bc8ff9383f0acffc1271afa941da86d1ff1",
+      "failure": "Zero-depth log succeeded during detached replay by substituting the saved branch override.",
+      "reportSha256": "01b5293ce42a4fc5db375c5bcb63d6d843fa9d1defedfabbd46cc5c7aa8523bd"
+    },
+    {
+      "directory": "red-saved-abort",
+      "source": "Baseline3cf65bc8 plus the new physical-checkout precondition, without inspection-preserving contexts. Exact changed runner source is retained beside the report.",
+      "failure": "Zero-depth log deleted actual saved CLI continuation after Git abort restored attached HEAD.",
+      "runnerSourceSha256": "e315f510f30c4aeae30582f5a65b6ebb1d22e1794427a0e56853076478e22e75",
+      "reportSha256": "bb668a8a60b5355a991cdd609f34f967ee6906c80c9755c651535f75a5d006d5"
+    }
+  ],
+  "authoringCorrection": {
+    "directory": "unicode",
+    "classification": "Test-authoring failure, not product red.",
+    "detail": "Initial assertion combined hash and subject without the renderer separator. Replaced it with independent hash and subject assertions from Git.",
+    "reportSha256": "07a9f697937f342733a7e4c3cdd418cffcdd98c6c8a68eaa44874559aefba82b"
+  },
+  "checks": [
+    "Workspace TypeScript4.7.4 compile and noEmit",
+    "Targeted ESLint",
+    "Prettier check",
+    "git diff --check"
+  ],
+  "limitations": [
+    "Parent integration gate still owns the combined focused rerun and complete project regression/build checks.",
+    "No installation, release, remote PR or live service workflow was exercised by this ticket."
+  ]
+}
