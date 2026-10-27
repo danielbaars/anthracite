@@ -193,7 +193,7 @@ function getDownstackExclusiveLines(
   args: TPrintStackArgs,
   context: TContext
 ): string[] {
-  if (context.engine.isTrunk(args.branchName)) {
+  if (args.steps === 0 || context.engine.isTrunk(args.branchName)) {
     return [];
   }
 

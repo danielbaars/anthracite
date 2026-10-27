@@ -7,8 +7,8 @@ import { RelationCliFixture } from './relation_cli';
 
 /** Select repositories independently of inherited Git overrides; preserve raw pipes. */
 export class CwdCliFixture extends RelationCliFixture {
-  constructor() {
-    const environment = { ...process.env };
+  constructor(inheritedEnvironment: NodeJS.ProcessEnv = process.env) {
+    const environment = { ...inheritedEnvironment };
     for (const key of [
       'GIT_DIR',
       'GIT_WORK_TREE',

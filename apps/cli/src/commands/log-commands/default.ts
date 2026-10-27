@@ -58,7 +58,7 @@ export const handler = async (argv: argsT): Promise<void> =>
             style: 'FULL',
             reverse: argv.reverse,
             branchName:
-              argv.steps || argv.stack
+              argv.steps !== undefined || argv.stack
                 ? context.engine.currentBranchPrecondition
                 : context.engine.trunk,
             steps: argv.steps,
