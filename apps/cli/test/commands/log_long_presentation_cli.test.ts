@@ -121,6 +121,7 @@ process.stdout.write('PAGED_ONCE\\n');`
     const before = fixture.logSnapshot();
     const result = fixture.run(['log', 'long', '--no-interactive']);
     expect(result.status, result.stderr).to.equal(0);
+    expect(result.stdout).to.include(largeSubject);
     expect(result.stdout).to.include(
       'Own change mentions main and maintenance'
     );

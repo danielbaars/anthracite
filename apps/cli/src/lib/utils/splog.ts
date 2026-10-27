@@ -11,10 +11,13 @@ export type TSplog = {
   warn: (msg: string) => void;
   message: (msg: string) => void;
   tip: (msg: string) => void;
-  page: (
-    msg: string,
-    options?: { readonly trailingNewline?: boolean }
-  ) => void | Promise<void>;
+  page: {
+    (msg: string): void;
+    (
+      msg: string,
+      options: { readonly trailingNewline: boolean }
+    ): void | Promise<void>;
+  };
 };
 
 export function composeSplog(
@@ -53,7 +56,7 @@ export function composeSplog(
             )
           )
         : () => void 0,
-    page: (s: string, options) => {
+    page: (s: string, options?: { readonly trailingNewline: boolean }) => {
       if (opts.quiet) return;
       if (!opts.pager || !opts.canPage) {
         if (options?.trailingNewline === false)
