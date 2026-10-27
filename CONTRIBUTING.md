@@ -4,7 +4,7 @@ Please open an issue before a substantial change. Use English for source comment
 
 ## Build
 
-Use Node.js 24.19.0 (`nvm use`), the checked-in Yarn 3.2.1 release and Bun 1.3.14 for native release builds. No global Yarn or Turbo installation is needed.
+Use Node.js 24.19.0 (`nvm use`), the checked-in Yarn 3.2.1 release and Bun 1.3.14 for native release builds. No global Yarn or Turbo installation is needed. The CLI pins TypeScript 5.5.4 and compatible Node.js declarations for the official MCP SDK 1.32.2; these declaration versions do not change the runtime requirements or CommonJS module format. TypeScript 4.7 cannot parse the SDK's Zod 4 declarations.
 
 ```sh
 node .yarn/releases/yarn-3.2.1.cjs install --immutable
