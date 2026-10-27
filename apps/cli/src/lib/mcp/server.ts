@@ -10,6 +10,7 @@ import { z } from 'zod';
 
 import { version } from '../../../package.json';
 import { ANTHRACITE_GUIDANCE } from './learn';
+import { executeCommand } from './execute';
 
 export async function serveMcp(): Promise<void> {
   // The lower-level SDK server keeps the tool list static (no listChanged hint).
@@ -22,6 +23,34 @@ export async function serveMcp(): Promise<void> {
   };
   server.setRequestHandler(ListToolsRequestSchema, () => ({
     tools: [
+      {
+        name: 'run_an_cmd',
+        description:
+          'Execute this Anthracite build with literal arguments in an explicit directory. May mutate repositories and external services. Follow user/repository instructions and publication approvals.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            args: { type: 'array', items: { type: 'string' }, minItems: 1 },
+            cwd: {
+              type: 'string',
+              description: 'Absolute existing directory.',
+            },
+            why: {
+              type: 'string',
+              minLength: 1,
+              description: 'Nonempty explanation; never executed.',
+            },
+          },
+          required: ['args', 'cwd', 'why'],
+          additionalProperties: false,
+        },
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: false,
+          openWorldHint: true,
+        },
+      },
       {
         name: 'learn_an',
         description:
@@ -40,7 +69,14 @@ export async function serveMcp(): Promise<void> {
       },
     ],
   }));
-  server.setRequestHandler(CallToolRequestSchema, (request) => {
+  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    if (request.params.name === 'run_an_cmd') {
+      const result = await executeCommand(request.params.arguments);
+      return {
+        isError: result.status !== 'success',
+        content: [{ type: 'text', text: JSON.stringify(result) }],
+      };
+    }
     if (request.params.name !== 'learn_an')
       throw new McpError(ErrorCode.InvalidParams, 'Unknown Anthracite tool.');
     if (

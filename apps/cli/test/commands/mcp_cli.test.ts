@@ -63,15 +63,36 @@ describe('MCP startup and learning through stdio', function () {
     });
     const inventory = await connection.client.listTools();
     expect(inventory.tools.map((tool) => tool.name)).to.deep.equal([
+      'run_an_cmd',
       'learn_an',
     ]);
     expect(inventory.tools[0].annotations).to.deep.equal({
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: true,
+    });
+    expect(inventory.tools[0].inputSchema).to.include({
+      type: 'object',
+      additionalProperties: false,
+    });
+    expect(inventory.tools[0].inputSchema.required).to.deep.equal([
+      'args',
+      'cwd',
+      'why',
+    ]);
+    expect(inventory.tools[0].inputSchema.properties).to.have.all.keys(
+      'args',
+      'cwd',
+      'why'
+    );
+    expect(inventory.tools[1].annotations).to.deep.equal({
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
       openWorldHint: false,
     });
-    expect(inventory.tools[0].inputSchema).to.deep.equal({
+    expect(inventory.tools[1].inputSchema).to.deep.equal({
       type: 'object',
       properties: {},
       additionalProperties: false,
@@ -143,7 +164,7 @@ describe('MCP startup and learning through stdio', function () {
       expect(handshake.data.protocolVersion).to.equal(
         protocolVersion === '2024-11-05' ? '2024-11-05' : '2025-11-25'
       );
-      expect((await connection.client.listTools()).tools[0].name).to.equal(
+      expect((await connection.client.listTools()).tools[1].name).to.equal(
         'learn_an'
       );
       await rejects(
@@ -157,7 +178,7 @@ describe('MCP startup and learning through stdio', function () {
         connection.client.callTool({ name: 'unknown_tool' }),
         (error: unknown) => error instanceof McpError && error.code === -32602
       );
-      expect((await connection.client.listTools()).tools[0].name).to.equal(
+      expect((await connection.client.listTools()).tools[1].name).to.equal(
         'learn_an'
       );
     });
@@ -207,7 +228,7 @@ describe('MCP startup and learning through stdio', function () {
       connection = new McpCliClient(root, env, [executable, 'mcp']);
       await connection.connect();
       expect(connection.client.getServerVersion()?.name).to.equal('anthracite');
-      expect((await connection.client.listTools()).tools[0].name).to.equal(
+      expect((await connection.client.listTools()).tools[1].name).to.equal(
         'learn_an'
       );
       expect(connection.stderr).to.equal('');
