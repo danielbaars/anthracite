@@ -1,0 +1,43 @@
+{
+  "status": "cancelled",
+  "reason": "Superseded by CI fixture corrections. Full final project verification runs in CI on the corrected PR head. No complete local full-suite result is claimed.",
+  "originalSourceCommit": "9c14f9738b662391c78c412d410306993a0e6c69",
+  "beforeTermination": {
+    "node": {
+      "completedFiles": 85,
+      "observedFailedFiles": 0,
+      "lastLines": [
+        "PASS node commands/log_steps_full_cli.test.js (11 passed, 0 pending)",
+        "PASS node commands/log_steps_options_cli.test.js (10 passed, 0 pending)"
+      ]
+    },
+    "native": {
+      "completedFiles": 90,
+      "observedFailedFiles": 0,
+      "lastLines": [
+        "PASS native commands/modern_legacy_routes_cli.test.js (11 passed, 0 pending)",
+        "PASS native commands/modern_log_classic_cli.test.js (17 passed, 0 pending)"
+      ]
+    }
+  },
+  "masterPid": 34764,
+  "taskProcessIds": [
+    34764,
+    2236,
+    16591,
+    27449,
+    41228,
+    41407,
+    41415,
+    90753,
+    93362,
+    1992,
+    36927,
+    41033,
+    41408,
+    36957,
+    36993,
+    39625,
+    41395
+  ]
+}
