@@ -23,12 +23,14 @@ function seedSingleMixedCommit(
   fs.writeFileSync(path.join(fixture.repo, 'remainder.txt'), 'remainder');
   fixture.git(['add', 'selected.txt', 'remainder.txt']);
   fixture.git(['commit', '--amend', '--no-edit']);
-  expect(fixture.git(['rev-list', '--count', 'main..base'])).to.equal('1');
+  expect(
+    fixture.git(['rev-list', '--count', 'refs/heads/main..refs/heads/base'])
+  ).to.equal('1');
   fixture.ok(['restack']);
   return Object.fromEntries(
     ['main', 'base', 'child', 'tip', 'other'].map((name) => [
       name,
-      fixture.git(['rev-parse', `${name}^{tree}`]),
+      fixture.git(['rev-parse', `refs/heads/${name}^{tree}`]),
     ])
   );
 }
@@ -38,20 +40,35 @@ function expectSplit(
   trees: Record<string, string>
 ): void {
   expect(fixture.git(['branch', '--show-current'])).to.equal('base');
-  expect(fixture.git(['ls-tree', '-r', '--name-only', 'base_split'])).to.equal(
-    'main.txt\nselected.txt'
+  expect(
+    fixture.git(['ls-tree', '-r', '--name-only', 'refs/heads/base_split'])
+  ).to.equal('main.txt\nselected.txt');
+  expect(fixture.git(['show', 'refs/heads/base_split:selected.txt'])).to.equal(
+    'selected'
   );
-  expect(fixture.git(['show', 'base_split:selected.txt'])).to.equal('selected');
-  expect(fixture.git(['diff', '--name-only', 'base_split', 'base'])).to.equal(
-    'base.txt\nremainder.txt'
-  );
+  expect(
+    fixture.git([
+      'diff',
+      '--name-only',
+      'refs/heads/base_split',
+      'refs/heads/base',
+    ])
+  ).to.equal('base.txt\nremainder.txt');
   for (const [name, tree] of Object.entries(trees))
-    expect(fixture.git(['rev-parse', `${name}^{tree}`]), name).to.equal(tree);
+    expect(
+      fixture.git(['rev-parse', `refs/heads/${name}^{tree}`]),
+      name
+    ).to.equal(tree);
   expect(fixture.parent('base')).to.equal('base_split');
   expect(fixture.parent('base_split')).to.equal('main');
-  expect(fixture.git(['merge-base', '--is-ancestor', 'base', 'tip'])).to.equal(
-    ''
-  );
+  expect(
+    fixture.git([
+      'merge-base',
+      '--is-ancestor',
+      'refs/heads/base',
+      'refs/heads/tip',
+    ])
+  ).to.equal('');
   expect(fixture.git(['status', '--porcelain'])).to.equal('');
   expect(fs.existsSync(path.join(fixture.root, 'unexpected-tool'))).to.equal(
     false
@@ -67,9 +84,12 @@ describe('file split public surface', function () {
   });
   afterEach(() => fixture?.cleanup());
 
-  it('completes one mixed commit with closed stdin and no-interactive, including mandatory replay', () => {
+  it('completes one mixed commit with closed stdin and a same-named tag, including mandatory replay', () => {
     const trees = seedSingleMixedCommit(fixture);
-    const unrelated = fixture.git(['rev-parse', 'other']);
+    const unrelated = fixture.git(['rev-parse', 'refs/heads/other']);
+    const originalSource = fixture.git(['rev-parse', 'refs/heads/base']);
+    fixture.git(['tag', 'base', unrelated]);
+    expect(unrelated).not.to.equal(originalSource);
     const result = fixture.run([
       'split',
       '--file',
@@ -83,7 +103,11 @@ describe('file split public surface', function () {
     expect(result.stdout).to.include('Restacked child');
     expect(result.stdout).to.include('Restacked tip');
     expectSplit(fixture, trees);
-    expect(fixture.git(['rev-parse', 'other'])).to.equal(unrelated);
+    expect(fixture.git(['rev-parse', 'refs/heads/other'])).to.equal(unrelated);
+    expect(fixture.git(['rev-parse', 'refs/tags/base'])).to.equal(unrelated);
+    expect(fixture.git(['rev-parse', 'refs/heads/base'])).not.to.equal(
+      originalSource
+    );
   });
 
   it('completes ordinary interactive file mode in a real terminal without any input', () => {

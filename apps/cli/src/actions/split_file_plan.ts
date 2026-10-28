@@ -60,7 +60,7 @@ export function planFileSplit(selectors: readonly string[]): FileSplitPlan {
     throw new PreconditionsFailedError(
       'Cannot split by file with existing continuation. Finish or inspect recovery first.'
     );
-  const source = readGit(['symbolic-ref', '--quiet', '--short', 'HEAD'], true);
+  const source = readGit(['branch', '--show-current'], true);
   if (!source)
     throw new PreconditionsFailedError('Cannot split a detached HEAD.');
   const config = repoConfigFactory.load(undefined, { preserveInvalid: true });
