@@ -79,13 +79,7 @@ try {
           /^(licen[cs]e|copying|notice)([.\-_]|$)/i.test(name) &&
           fs.statSync(path.join(directory, name)).isFile()
       );
-    if (licenses.length === 0) {
-      // Preserve missing upstream declarations rather than inventing a license.
-      assert.equal(info.license, "None", `Missing license text: ${info.name}`);
-      notices.push(
-        `Upstream ships no license text. Source: ${info.homepage}\n`
-      );
-    }
+    assert.ok(licenses.length > 0, `Missing license text: ${info.name}`);
     for (const name of licenses)
       notices.push(
         `### ${name}\n\n\`\`\`text\n${fs
