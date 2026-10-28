@@ -1,23 +1,24 @@
 {
-  "source_commit": "bda4324331e95efde839af8eb664e7bf4ce275d3",
+  "source_commit": "06095e426cf46dc926d46c5e2ade70258bc624a1",
   "base": "a5f2e88062160dd51033ac3715184cc495868d76",
   "node": "24.19.0",
   "bun": "1.3.14",
   "platform": "macOS ARM64",
   "package_version": "0.1.1 (test candidate; not published)",
-  "tarball_sha256": "47a60150e3f3fe6bd65ea169722a2685a68e662dc09b8b46ed801c5c7cadf814",
-  "tarball_bytes": 467052,
+  "tarball_sha256": "2a5712913a38a244b367c399f5e93ae6cf1b8bcbe763889fe32fa99ec325e405",
+  "tarball_bytes": 465186,
   "scenarios": {
-    "npm_installed": 4,
-    "node_source": 4,
-    "native_macos_arm64": 4
+    "npm_installed": 5,
+    "node_source": 5,
+    "native_macos_arm64": 5
   },
   "evidence_sha256": {
-    "build.log": "07118a550772940aef2c5f12c7db72010ff479c8fd5a25629eaf77ff21504fef",
+    "build.log": "2c19f201dd8d34bd66c8055da4aaa3fda081e8bbe0b0b8464259e26158b2bc91",
     "red-isolated.log": "07aea55ae28ced8f4ab79536e7b8d8539f795be0ff82b0a385a738a0eb948ac9",
-    "artifact-final.log": "d02a35eaed433b1dc373e2fb0e17e3c0df4232a43d16f2d5ae16816090ae747f",
-    "source-node.log": "c8aa05bec5955c23edd571264a6998379f612e14c253961aaf57895a159dee64",
-    "native.log": "76b5edd95f4b13e796ddf2dd821724631c28123d5503154dadb658b5bec23ebc"
+    "artifact-final.log": "5a30aa98ab749bfcbabd9c08b69569420ac682b4cdd5f412ad4229af77014e6f",
+    "source-node.log": "c08b54a9eee9f2b1a30ce7aff321f656bdc81f607cd7199e8347bfec0df9435f",
+    "native.log": "8182a028c8604efee96eea1aecfb86ffe97ecdd1881496d969eda605b97a0ea8",
+    "red-license.log": "628861ee5678a532e92d3eb6de1d97282d29a0418637ef978810607697c2b90a"
   },
   "full_ci_dispatched": false,
   "npm_published": false,

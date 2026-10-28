@@ -1,15 +1,16 @@
 
 
   MCP command execution through stdio
-    ✔ scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels (1485ms)
-    ✔ scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments (977ms)
+    ✔ scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels (1587ms)
+    ✔ scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments (999ms)
 
   MCP cancellation and shutdown through stdio
-    ✔ scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work (5182ms)
+    ✔ scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work (5176ms)
 
   frozen publication through the public CLI
-    ✔ rechecks after the original configured pre-push hook freezes the branch before any remote ref publication (2017ms)
+    ✔ publishes an editable child on an existing frozen base while preserving protected and outside-scope PRs (5903ms)
+    ✔ rechecks after the original configured pre-push hook freezes the branch before any remote ref publication (2057ms)
 
 
-  4 passing (19s)
+  5 passing (25s)
 
