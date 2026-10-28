@@ -2,6 +2,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { runGitCommand } from './runner';
+import { getSelfCliCommand } from '../utils/self_cli_command';
 
 const quote = (value: string): string => `'${value.replace(/'/g, `'"'"'`)}'`;
 
@@ -47,9 +48,7 @@ export function withFrozenPushGuard(
     }
     const prePush = path.join(proxy, 'pre-push');
     fs.rmSync(prePush, { force: true });
-    const self = process.versions.bun
-      ? [process.execPath]
-      : [process.execPath, path.resolve(__dirname, '../../index.js')];
+    const self = getSelfCliCommand();
     fs.writeFileSync(
       prePush,
       `${header}exec ${[
