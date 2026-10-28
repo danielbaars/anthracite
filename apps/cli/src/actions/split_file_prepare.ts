@@ -143,22 +143,8 @@ function constructionGit(
 function projectSelectedTree(plan: FileSplitPlan, index: string): string {
   const env = { ...process.env, GIT_INDEX_FILE: index };
   constructionGit(['read-tree', plan.parentRevision], { env });
-  const entries = new Map(
-    constructionGit(['ls-tree', '-rz', plan.sourceRevision])
-      .split('\0')
-      .filter(Boolean)
-      .map((record) => {
-        const tab = record.indexOf('\t');
-        return [record.slice(tab + 1), record.slice(0, tab).split(' ')];
-      })
-  );
-  const records = plan.selectedPaths
-    .map((file) => {
-      const entry = entries.get(file);
-      return entry
-        ? `${entry[0]} ${entry[2]}\t${file}\0`
-        : `0 ${'0'.repeat(40)}\t${file}\0`;
-    })
+  const records = plan.selectedEntries
+    .map(({ path, mode, oid }) => `${mode} ${oid}\t${path}\0`)
     .join('');
   constructionGit(['update-index', '-z', '--index-info'], {
     input: records,

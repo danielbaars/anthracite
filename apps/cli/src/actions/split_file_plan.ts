@@ -8,6 +8,12 @@ import { assertRestackFilesAvailable } from '../lib/git/restack_files';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { runGitCommand } from '../lib/git/runner';
 import { repoConfigFactory } from '../lib/spiffy/repo_config_spf';
+import { continueConfigFactory } from '../lib/spiffy/continuation_spf';
+import {
+  FileSplitEntry,
+  getFileSplitEntries,
+  readFileSplitPathRecords,
+} from './split_file_entries';
 
 export type FileSplitParticipant = {
   readonly name: string;
@@ -22,6 +28,7 @@ export type FileSplitPlan = {
   readonly generatedName: string;
   readonly selectedPaths: readonly string[];
   readonly changedPaths: readonly string[];
+  readonly selectedEntries: readonly FileSplitEntry[];
   readonly descendants: readonly FileSplitParticipant[];
 };
 
@@ -49,7 +56,7 @@ export function planFileSplit(selectors: readonly string[]): FileSplitPlan {
     readGit(['rev-parse', '--git-common-dir']),
     '.gtcontinue'
   );
-  if (fs.existsSync(continuation))
+  if (hasFileSplitRecovery(continuation))
     throw new PreconditionsFailedError(
       'Cannot split by file with existing continuation. Finish or inspect recovery first.'
     );
@@ -102,6 +109,12 @@ export function planFileSplit(selectors: readonly string[]): FileSplitPlan {
     throw new PreconditionsFailedError(
       'File split would leave no remainder. Choose a proper subset of changed files.'
     );
+  const selectedEntries = getFileSplitEntries({
+    parentRevision,
+    sourceRevision,
+    changedPaths,
+    selectedPaths,
+  });
   if (readGit(['status', '--porcelain=v1', '-z', '--untracked-files=no']))
     throw new PreconditionsFailedError(
       'There are tracked changes that have not been committed. Resolve them before splitting.'
@@ -126,9 +139,29 @@ export function planFileSplit(selectors: readonly string[]): FileSplitPlan {
     parentRevision,
     selectedPaths,
     changedPaths,
+    selectedEntries,
     descendants,
     generatedName: allocateName(source),
   };
+}
+
+/** Successful older operations can leave only their two empty legacy queues. */
+function hasFileSplitRecovery(file: string): boolean {
+  if (!fs.existsSync(file)) return false;
+  try {
+    const data = continueConfigFactory.load(file, {
+      preserveInvalid: true,
+    }).data;
+    return !(
+      data.branchesToSync.length === 0 &&
+      data.branchesToRestack.length === 0 &&
+      Object.keys(data).every((key) =>
+        ['branchesToSync', 'branchesToRestack'].includes(key)
+      )
+    );
+  } catch {
+    return true;
+  }
 }
 
 function planDescendants(source: string): FileSplitParticipant[] {
@@ -186,8 +219,12 @@ function changedEntries(
   to: string,
   selectors: readonly string[]
 ): string[] {
-  return readGit([
+  return readFileSplitPathRecords([
     'diff',
+    '--no-relative',
+    '--no-ext-diff',
+    '--no-textconv',
+    '--ignore-submodules=none',
     '--name-only',
     '--no-renames',
     '-z',
