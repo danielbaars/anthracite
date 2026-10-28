@@ -3,6 +3,7 @@ import path from 'path';
 
 import { expect } from 'chai';
 
+import { version as packageVersion } from '../../package.json';
 import { CwdCliFixture } from '../lib/fixtures/cwd_cli';
 
 describe('Anthracite release identity through the public CLI', function () {
@@ -18,7 +19,7 @@ describe('Anthracite release identity through the public CLI', function () {
     try {
       const version = fixture.run(['--version'], fixture.root);
       expect(version.status, version.stderr).to.equal(0);
-      expect(version.stdout).to.equal('0.1.1\n');
+      expect(version.stdout).to.equal(`${packageVersion}\n`);
       const help = fixture.run(['--help'], fixture.root);
       expect(help.status, help.stderr).to.equal(0);
       expect(help.stdout).to.include('Anthracite').and.include('an create');
