@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { getAssignees } from './assignees';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
 import { TScopeSpec } from '../../lib/engine/scope_spec';
@@ -25,6 +26,7 @@ export async function submitAction(
     dryRun: boolean;
     updateOnly: boolean;
     reviewers: string | undefined;
+    assignees?: string;
     rolesBranch?: string;
     confirm: boolean;
     forcePush: boolean;
@@ -49,8 +51,15 @@ export async function submitAction(
       'Provide a non-empty reviewer username with --reviewers in non-interactive mode.'
     );
   }
-  if (args.rolesBranch !== undefined && args.reviewers === undefined) {
-    throw new ExitFailedError('--roles-branch requires --reviewers.');
+  const assignees = getAssignees(args.assignees);
+  if (
+    args.rolesBranch !== undefined &&
+    args.reviewers === undefined &&
+    assignees === undefined
+  ) {
+    throw new ExitFailedError(
+      '--roles-branch requires --reviewers or --assignees.'
+    );
   }
   if (args.dryRun) {
     context.splog.info(
@@ -141,6 +150,7 @@ export async function submitAction(
       publish: args.publish,
       updateOnly: args.updateOnly,
       reviewers: args.reviewers,
+      assignees,
       rolesBranch: args.rolesBranch,
       dryRun: args.dryRun,
       select: args.select,

@@ -40,6 +40,7 @@ export async function getPRInfoForBranches(
     updateOnly: boolean;
     dryRun: boolean;
     reviewers: string | undefined;
+    assignees?: readonly string[];
     rolesBranch?: string;
     select: boolean;
     always: boolean;
@@ -53,6 +54,10 @@ export async function getPRInfoForBranches(
       args.rolesBranch !== undefined && args.rolesBranch !== branchName
         ? undefined
         : args.reviewers;
+    const assignees =
+      args.rolesBranch !== undefined && args.rolesBranch !== branchName
+        ? undefined
+        : args.assignees;
     const action = await getPRAction(
       {
         branchName,
@@ -64,6 +69,7 @@ export async function getPRInfoForBranches(
         editPRFieldsInline: args.editPRFieldsInline,
         always: args.always,
         reviewers,
+        assignees,
       },
       context
     );
@@ -103,6 +109,7 @@ export async function getPRInfoForBranches(
       headSha: context.engine.getRevision(action.branchName),
       base: parentBranchName,
       baseSha: context.engine.getRevision(parentBranchName),
+      ...(assignees !== undefined ? { assignees } : {}),
       ...(action.update
         ? {
             action: 'update' as const,
@@ -137,6 +144,7 @@ async function getPRAction(
     dryRun: boolean;
     always: boolean;
     reviewers: string | undefined;
+    assignees?: readonly string[];
     select: boolean;
     editPRFieldsInline: boolean | undefined;
   },
@@ -167,13 +175,17 @@ async function getPRAction(
       ? 'PUBLISH'
       : args.reviewers !== undefined
       ? 'REVIEWERS'
+      : args.assignees !== undefined
+      ? 'ASSIGNEES'
       : 'NOOP';
 
   const reviewAction = `Request review${
     args.reviewers ? `: ${args.reviewers}` : ' (interactive selection required)'
   }`;
+  const assigneeAction = `Assign: ${args.assignees?.join(', ')}`;
   context.splog.info(
     {
+      ASSIGNEES: `▸ ${chalk.cyan(args.branchName)} (${assigneeAction})`,
       REVIEWERS: `▸ ${chalk.cyan(args.branchName)} (${reviewAction})`,
       NOOP: `▸ ${chalk.gray(args.branchName)} (No-op)`,
       CREATE: `▸ ${chalk.cyan(args.branchName)} (Create)`,
@@ -193,6 +205,9 @@ async function getPRAction(
     }
     if (args.reviewers !== undefined && status !== 'REVIEWERS') {
       context.splog.info(`  ${reviewAction}`);
+    }
+    if (args.assignees !== undefined && status !== 'ASSIGNEES') {
+      context.splog.info(`  ${assigneeAction}`);
     }
   }
 

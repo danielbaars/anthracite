@@ -44,9 +44,14 @@ const args = {
     type: 'string',
     alias: 'r',
   },
+  assignees: {
+    describe:
+      'Add comma-separated GitHub users as assignees, including @me for the authenticated user. Applies to every selected PR unless --roles-branch is set.',
+    type: 'string',
+  },
   'roles-branch': {
     describe:
-      'Add reviewers only to this exact selected branch PR, without changing which branches are submitted.',
+      'Add reviewers and assignees only to this exact selected branch PR, without changing which branches are submitted.',
     type: 'string',
   },
   'dry-run': {
@@ -111,6 +116,7 @@ export const handler = async (argv: argsT): Promise<void> => {
         dryRun: argv['dry-run'],
         updateOnly: argv['update-only'],
         reviewers: argv.reviewers,
+        assignees: argv.assignees,
         rolesBranch: argv['roles-branch'],
         confirm: argv.confirm,
         forcePush: argv.force,

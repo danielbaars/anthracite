@@ -13,6 +13,7 @@ export type SubmitPr = {
   isDraft: boolean;
   reviewDecision: string;
   reviewRequests: { login: string }[];
+  assignees?: { login: string }[];
   reviews?: { id: string; author: { login: string } }[];
 };
 
@@ -54,7 +55,13 @@ function isSubmitPr(value: unknown): value is SubmitPr {
     value.reviewRequests.every(
       (request: unknown) =>
         isRecord(request) && typeof request.login === 'string'
-    )
+    ) &&
+    (value.assignees === undefined ||
+      (Array.isArray(value.assignees) &&
+        value.assignees.every(
+          (assignee: unknown) =>
+            isRecord(assignee) && typeof assignee.login === 'string'
+        )))
   );
 }
 
@@ -71,6 +78,22 @@ function main(): void {
     return;
   }
   if (args[0] === 'auth' && args[1] === 'status') return;
+  if (args[0] === 'api' && args[1] === 'user') {
+    if (process.env.ANTHRACITE_TEST_GH_ACCOUNT_MODE === 'reject') {
+      process.stderr.write('GitHub authentication required\n');
+      process.exitCode = 1;
+      return;
+    }
+    process.stdout.write(
+      JSON.stringify({
+        login:
+          process.env.ANTHRACITE_TEST_GH_ACCOUNT_MODE === 'invalid'
+            ? null
+            : 'fixture-user',
+      })
+    );
+    return;
+  }
   if (args[0] !== 'pr')
     throw new Error(`Unsupported gh command: ${args.join(' ')}`);
   const option = (flag: string): string | undefined => {
@@ -98,6 +121,7 @@ function main(): void {
     const response: Record<string, unknown> = {
       ...pr,
       reviews: pr.reviews ?? [],
+      assignees: pr.assignees ?? [],
       headRefOid,
     };
     if (
@@ -106,6 +130,12 @@ function main(): void {
       pr.reviewRequests.length
     )
       response.number = 999;
+    if (
+      process.env.ANTHRACITE_TEST_GH_ASSIGNEE_MODE === 'invalid' &&
+      option('--json')?.includes('assignees') &&
+      pr.assignees?.length
+    )
+      response.headRefName = 'wrong-head';
     const fields = option('--json')?.split(',');
     if (!fields) throw new Error('Fixture PR view requires --json');
     if (
@@ -194,6 +224,14 @@ function main(): void {
     if (option('--base')) pr.baseRefName = option('--base') ?? pr.baseRefName;
     if (option('--body') !== undefined) pr.body = option('--body') ?? '';
     const reviewMode = process.env.ANTHRACITE_TEST_GH_REVIEW_MODE;
+    const assigneeMode = process.env.ANTHRACITE_TEST_GH_ASSIGNEE_MODE;
+    if (args.includes('--add-assignee') && assigneeMode === 'reject') {
+      process.stderr.write(
+        'assignment rejected: unknown or unauthorized user\n'
+      );
+      process.exitCode = 1;
+      return;
+    }
     if (args.includes('--add-reviewer') && reviewMode === 'reject') {
       process.stderr.write(
         'review request rejected: unknown or unauthorized reviewer\n'
@@ -202,6 +240,13 @@ function main(): void {
       return;
     }
     for (const [index, arg] of args.entries()) {
+      if (
+        arg === '--add-assignee' &&
+        assigneeMode !== 'ignore' &&
+        (assigneeMode !== 'partial' || args[index + 1] === 'bob')
+      ) {
+        pr.assignees = [...(pr.assignees ?? []), { login: args[index + 1] }];
+      }
       if (arg === '--add-reviewer' && reviewMode === 'reviewed') {
         pr.reviews = [
           ...(pr.reviews ?? []),
@@ -221,7 +266,8 @@ function main(): void {
     if (
       !args.includes('--base') &&
       !args.includes('--body') &&
-      !args.includes('--add-reviewer')
+      !args.includes('--add-reviewer') &&
+      !args.includes('--add-assignee')
     )
       throw new Error('Unsupported PR edit');
     fs.writeFileSync(statePath, JSON.stringify(prs));
