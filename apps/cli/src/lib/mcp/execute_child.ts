@@ -6,18 +6,12 @@ import { StringDecoder } from 'string_decoder';
 import { z } from 'zod';
 
 import { ExecutionResult } from './execute';
+import { getSelfCliCommand } from '../utils/self_cli_command';
 
 export type ExecutionOptions = {
   readonly commandTimeoutMs: number;
   readonly maxOutputBytes: number;
 };
-
-// Bun's compiled executable has no filesystem entry point; Node uses this build.
-const executable = process.execPath;
-const entryPoint = path.resolve(__dirname, '../../index.js');
-const isCompiled =
-  !!process.versions.bun && !!process.argv[1]?.startsWith('/$bunfs/');
-const prefix = isCompiled ? [] : [entryPoint];
 
 /** Own one CLI process group until its child is reaped and captured pipes close. */
 // eslint-disable-next-line max-lines-per-function
@@ -27,7 +21,8 @@ export async function executeChild(
   requestSignal: AbortSignal
 ): Promise<ExecutionResult> {
   requestSignal.throwIfAborted();
-  const child = spawn(executable, [...prefix, ...input.args], {
+  const [executable, ...args] = getSelfCliCommand(input.args);
+  const child = spawn(executable, args, {
     cwd: input.cwd,
     env: { ...process.env, GRAPHITE_INTERACTIVE: '1' },
     stdio: ['ignore', 'pipe', 'pipe'],

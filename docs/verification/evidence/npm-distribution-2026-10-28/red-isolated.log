@@ -1,0 +1,106 @@
+PASS npm offline installation, both commands, completion and curated contents
+
+
+  MCP command execution through stdio
+    1) scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels
+    2) scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments
+
+  MCP cancellation and shutdown through stdio
+    3) scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work
+
+
+  0 passing (22s)
+  3 failing
+
+  1) MCP command execution through stdio
+       scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels:
+
+      AssertionError: expected { status: 'cli_error', …(6) } to deeply equal { status: 'success', …(6) }
+      + expected - actual
+
+       {
+      -  "exitCode": 1
+      -  "isError": true
+      +  "exitCode": 0
+      +  "isError": false
+         "signal": [null]
+      -  "status": "cli_error"
+      -  "stderr": "node:internal/modules/cjs/loader:1520\n  throw err;\n  ^\n\nError: Cannot find module '/Users/danielbaars/Dev/anthracite/release/npm/package-XPgaGe/source/src/index.js'\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)\n    at Module._load (node:internal/modules/cjs/loader:1294:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v24.19.0\n"
+      -  "stdout": ""
+      +  "status": "success"
+      +  "stderr": ""
+      +  "stdout": "◯    tip\n◯    child\n◉    base\n│ ◯  other\n◯─┘  main\n"
+         "truncated": false
+       }
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_execution_cli.test.js:81:57)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+  2) MCP command execution through stdio
+       scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments:
+
+      AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module '/Users/danielbaars/Dev/anthracite/release/npm/package-XPgaGe/source/src/index.js'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v24.19.0
+: expected 'cli_error' to equal 'success'
+      + expected - actual
+
+      -cli_error
+      +success
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_execution_cli.test.js:104:61)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+  3) MCP cancellation and shutdown through stdio
+       scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work:
+
+      AssertionError: expected false to equal true
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js:188:64)
+
+
+
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+3 !== 0
+
+    at Object.<anonymous> (/Users/danielbaars/Dev/anthracite/scripts/test-npm-package.cjs:65:10)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 3,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

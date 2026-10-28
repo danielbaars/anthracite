@@ -1,22 +1,21 @@
 # Anthracite
 
-A standalone CLI for stacked Git branches and GitHub pull requests. Use **`an`** or **`anthracite`**.
+A CLI for stacked Git branches and GitHub pull requests. Use **`an`** or **`anthracite`**.
 
 Anthracite builds on [Charcoal](https://github.com/danerwilliams/charcoal) and the formerly open-source Graphite CLI. See [credits and provenance](CREDITS.md). It supports local stacks and GitHub PRs through `gh`; it does not implement every current Graphite feature or require a Graphite subscription.
 
 ## Install
 
-Standalone binaries for macOS ARM64, macOS x64 and Linux x64 are available from [GitHub Releases](https://github.com/danielbaars/anthracite/releases). Node.js and Bun are not required to run a binary. Git is required; GitHub workflows also require an installed, authenticated [GitHub CLI](https://cli.github.com/).
-
-The repository is currently private. Authenticate with `gh auth login`, then clone it and run the installer:
+Install the npm package with Node.js 24 or newer:
 
 ```sh
-gh repo clone danielbaars/anthracite
-cd anthracite
-sh scripts/install.sh 0.1.1
+npm install --global @danielbaars/anthracite
+an --version
 ```
 
-The installer checks the release SHA-256 checksum and binary version, installs under `~/.local/share/anthracite/0.1.1`, and creates `~/.local/bin/an` and `~/.local/bin/anthracite`. It refuses to replace unrelated commands. It installs zsh completion for both names and preserves the previous shell configuration. Add `~/.local/bin` to your PATH if needed and open a new terminal.
+Git is required; GitHub workflows also require an installed, authenticated [GitHub CLI](https://cli.github.com/). npm installs both `an` and `anthracite`. It does not modify shell configuration. See [completion and migration from the standalone installer](docs/installation.md).
+
+Standalone binaries for macOS ARM64, macOS x64 and Linux x64 are also available from [GitHub Releases](https://github.com/danielbaars/anthracite/releases). They do not require Node.js or Bun. From a clone, run `sh scripts/install.sh 0.1.1` to install that standalone release with checksum verification and zsh completion.
 
 ```sh
 an --version
@@ -34,7 +33,7 @@ Use `an split --by-file 'path/**'` or `an sp -f path` to extract selected commit
 
 Use `an submit --reviewers alice --assignees @me --roles-branch my-change` to add roles only to one selected PR while retaining the usual submission scope. See [reviewers, assignees and submission scope](docs/submit.md).
 
-To uninstall the command links and completion block, use `sh scripts/uninstall.sh` from a clone. Version directories and preferences are retained for rollback. See [installation and upgrades](docs/installation.md), the [command reference](DOCUMENTATION.md), and [compatibility](COMPATIBILITY.md).
+To uninstall an npm installation, run `npm uninstall --global @danielbaars/anthracite`. For a standalone installation, remove the command links and managed completion block using `sh scripts/uninstall.sh` from a clone. Version directories and preferences are retained for rollback. See [installation and upgrades](docs/installation.md), the [command reference](DOCUMENTATION.md), and [compatibility](COMPATIBILITY.md).
 
 ## MCP
 
