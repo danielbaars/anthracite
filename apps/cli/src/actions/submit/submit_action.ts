@@ -45,6 +45,7 @@ export async function submitAction(
   if (
     !context.canPrompt &&
     args.reviewers !== undefined &&
+    !(args.dryRun && args.reviewers === '') &&
     args.reviewers.split(',').some((reviewer) => !reviewer.trim())
   ) {
     throw new ExitFailedError(

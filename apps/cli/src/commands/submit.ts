@@ -40,7 +40,7 @@ const args = {
   },
   reviewers: {
     describe:
-      'If set without an argument, prompt to manually set reviewers. Alternatively, accepts a comma separated string of reviewers',
+      'Add reviewers without removing existing requests, using comma-separated users or organization/team names. Applies to every selected PR unless --roles-branch is set. Without an argument, prompt per target PR.',
     type: 'string',
     alias: 'r',
   },

@@ -33,6 +33,13 @@ not erase Git recovery data or authorize an automatic retry. Inspect actual refs
 staged changes and continuation before proceeding.
 
 Submit deliberately with an submit (or an submit --help to inspect selectors).
+Reviewer and assignee lists apply to every selected PR by default. Use
+--roles-branch <exact-local-branch> to add both lists only to that selected PR;
+this does not narrow the branches submitted by --branch or --stack. Preview with
+--dry-run, then supply --reviewers and --assignees explicitly. Assignees accept
+@me for the authenticated GitHub user. Existing roles are retained; role options
+do not publish drafts. After a failure, inspect confirmed and unattempted work
+before repeating the command.
 Confirm intended branches, PR metadata and the owner's publication approval
 before pushing or changing PRs. Anthracite reuses GitHub CLI credentials; it
 requires no Graphite token or additional MCP account. Missing authentication is
