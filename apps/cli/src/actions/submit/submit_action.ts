@@ -25,6 +25,7 @@ export async function submitAction(
     dryRun: boolean;
     updateOnly: boolean;
     reviewers: string | undefined;
+    rolesBranch?: string;
     confirm: boolean;
     forcePush: boolean;
     select: boolean;
@@ -47,6 +48,9 @@ export async function submitAction(
     throw new ExitFailedError(
       'Provide a non-empty reviewer username with --reviewers in non-interactive mode.'
     );
+  }
+  if (args.rolesBranch !== undefined && args.reviewers === undefined) {
+    throw new ExitFailedError('--roles-branch requires --reviewers.');
   }
   if (args.dryRun) {
     context.splog.info(
@@ -92,6 +96,15 @@ export async function submitAction(
       )
     : allBranchNames;
 
+  if (
+    args.rolesBranch !== undefined &&
+    !branchNames.includes(args.rolesBranch)
+  ) {
+    throw new ExitFailedError(
+      `Role target "${args.rolesBranch}" is not a selected editable submission branch.`
+    );
+  }
+
   if (branchNames.length === 0) {
     context.splog.info('No editable branches to submit.');
     return;
@@ -105,6 +118,15 @@ export async function submitAction(
   context.splog.newline();
   await context.engine.populateRemoteShas();
   await validateBranchesToSubmit(branchNames, context);
+  if (
+    args.rolesBranch !== undefined &&
+    args.updateOnly &&
+    context.engine.getPrInfo(args.rolesBranch)?.number === undefined
+  ) {
+    throw new ExitFailedError(
+      `Role target "${args.rolesBranch}" is skipped by --update-only because it has no existing PR.`
+    );
+  }
 
   context.splog.info(
     chalk.blueBright(
@@ -119,6 +141,7 @@ export async function submitAction(
       publish: args.publish,
       updateOnly: args.updateOnly,
       reviewers: args.reviewers,
+      rolesBranch: args.rolesBranch,
       dryRun: args.dryRun,
       select: args.select,
       always: args.always,
@@ -133,6 +156,10 @@ export async function submitAction(
     )
   ) {
     return;
+  }
+
+  if (args.rolesBranch !== undefined) {
+    context.engine.assertBranchEditable(args.rolesBranch);
   }
 
   context.splog.info(

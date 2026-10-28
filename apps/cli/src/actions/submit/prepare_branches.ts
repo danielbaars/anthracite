@@ -40,6 +40,7 @@ export async function getPRInfoForBranches(
     updateOnly: boolean;
     dryRun: boolean;
     reviewers: string | undefined;
+    rolesBranch?: string;
     select: boolean;
     always: boolean;
   },
@@ -48,6 +49,10 @@ export async function getPRInfoForBranches(
   const submissionInfo: TPRSubmissionInfo = [];
   for await (const branchName of args.branchNames) {
     context.engine.assertBranchEditable(branchName);
+    const reviewers =
+      args.rolesBranch !== undefined && args.rolesBranch !== branchName
+        ? undefined
+        : args.reviewers;
     const action = await getPRAction(
       {
         branchName,
@@ -58,7 +63,7 @@ export async function getPRInfoForBranches(
         select: args.select,
         editPRFieldsInline: args.editPRFieldsInline,
         always: args.always,
-        reviewers: args.reviewers,
+        reviewers,
       },
       context
     );
@@ -81,7 +86,7 @@ export async function getPRInfoForBranches(
               editPRFieldsInline: args.editPRFieldsInline,
               draft: args.draft,
               publish: args.publish,
-              reviewers: args.reviewers,
+              reviewers,
             },
             context
           )
@@ -108,7 +113,7 @@ export async function getPRInfoForBranches(
                 editPRFieldsInline: args.editPRFieldsInline,
                 draft: args.draft,
                 publish: args.publish,
-                reviewers: args.reviewers,
+                reviewers,
               },
               context
             )),
@@ -164,9 +169,12 @@ async function getPRAction(
       ? 'REVIEWERS'
       : 'NOOP';
 
+  const reviewAction = `Request review${
+    args.reviewers ? `: ${args.reviewers}` : ' (interactive selection required)'
+  }`;
   context.splog.info(
     {
-      REVIEWERS: `▸ ${chalk.cyan(args.branchName)} (Request review)`,
+      REVIEWERS: `▸ ${chalk.cyan(args.branchName)} (${reviewAction})`,
       NOOP: `▸ ${chalk.gray(args.branchName)} (No-op)`,
       CREATE: `▸ ${chalk.cyan(args.branchName)} (Create)`,
       RESTACK: `▸ ${chalk.cyan(args.branchName)} (New parent)`,
@@ -184,9 +192,7 @@ async function getPRAction(
       context.splog.info('  Publish as ready for review');
     }
     if (args.reviewers !== undefined && status !== 'REVIEWERS') {
-      context.splog.info(
-        `  Request review${args.reviewers ? `: ${args.reviewers}` : ''}`
-      );
+      context.splog.info(`  ${reviewAction}`);
     }
   }
 

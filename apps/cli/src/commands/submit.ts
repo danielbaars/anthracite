@@ -44,6 +44,11 @@ const args = {
     type: 'string',
     alias: 'r',
   },
+  'roles-branch': {
+    describe:
+      'Add reviewers only to this exact selected branch PR, without changing which branches are submitted.',
+    type: 'string',
+  },
   'dry-run': {
     describe:
       'Reports the PRs that would be submitted and terminates. No branches are pushed and no PRs are opened or updated.',
@@ -106,6 +111,7 @@ export const handler = async (argv: argsT): Promise<void> => {
         dryRun: argv['dry-run'],
         updateOnly: argv['update-only'],
         reviewers: argv.reviewers,
+        rolesBranch: argv['roles-branch'],
         confirm: argv.confirm,
         forcePush: argv.force,
         select: argv.select,
