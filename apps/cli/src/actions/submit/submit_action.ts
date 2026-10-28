@@ -177,9 +177,13 @@ export async function submitAction(
     chalk.blueBright('📨 Pushing to remote and creating/updating PRs...')
   );
 
-  for (const submissionInfo of submissionInfos) {
-    context.engine.assertBranchEditable(submissionInfo.head);
+  for (const [index, submissionInfo] of submissionInfos.entries()) {
+    const remaining = submissionInfos.slice(index + 1).map((info) => info.head);
+    const notAttempted = `Not attempted: ${
+      remaining.length ? `submission of ${remaining.join(', ')}; ` : ''
+    }dependency footer updates.`;
     try {
+      context.engine.assertBranchEditable(submissionInfo.head);
       context.engine.pushBranch(submissionInfo.head, args.forcePush);
     } catch (err) {
       if (
@@ -193,10 +197,17 @@ export async function submitAction(
             )} failed due to external changes to the remote branch.`,
             'If you are collaborating on this stack, try `an get` to pull in changes.',
             'Alternatively, use the `--force` option of this command to bypass the stale info warning.',
+            notAttempted,
           ].join('\n')
         );
       }
-      throw err;
+      throw new ExitFailedError(
+        `${
+          err instanceof Error ? err.message : String(err)
+        }\nNot attempted: PR and role changes for ${
+          submissionInfo.head
+        }. ${notAttempted}`
+      );
     }
 
     try {
@@ -205,7 +216,7 @@ export async function submitAction(
       throw new ExitFailedError(
         `${error instanceof Error ? error.message : String(error)}\nCode for ${
           submissionInfo.head
-        } was already pushed; earlier confirmed PR changes remain applied.`
+        } was already pushed; earlier confirmed PR changes remain applied.\n${notAttempted}`
       );
     }
   }

@@ -12,7 +12,11 @@ export type SubmitPr = {
   state: string;
   isDraft: boolean;
   reviewDecision: string;
-  reviewRequests: { login: string }[];
+  reviewRequests: {
+    login?: string;
+    slug?: string;
+    organization?: { login: string };
+  }[];
   assignees?: { login: string }[];
   reviews?: { id: string; author: { login: string } }[];
 };
@@ -54,7 +58,12 @@ function isSubmitPr(value: unknown): value is SubmitPr {
     Array.isArray(value.reviewRequests) &&
     value.reviewRequests.every(
       (request: unknown) =>
-        isRecord(request) && typeof request.login === 'string'
+        isRecord(request) &&
+        (typeof request.login === 'string' ||
+          typeof request.slug === 'string') &&
+        (request.organization === undefined ||
+          (isRecord(request.organization) &&
+            typeof request.organization.login === 'string'))
     ) &&
     (value.assignees === undefined ||
       (Array.isArray(value.assignees) &&
@@ -243,7 +252,8 @@ function main(): void {
       if (
         arg === '--add-assignee' &&
         assigneeMode !== 'ignore' &&
-        (assigneeMode !== 'partial' || args[index + 1] === 'bob')
+        (!['partial', 'partial-reject'].includes(assigneeMode ?? '') ||
+          args[index + 1] === 'bob')
       ) {
         pr.assignees = [...(pr.assignees ?? []), { login: args[index + 1] }];
       }
@@ -257,10 +267,19 @@ function main(): void {
       if (
         arg === '--add-reviewer' &&
         reviewMode !== 'ignore' &&
-        (reviewMode !== 'partial' || args[index + 1] === 'alice') &&
+        (!['partial', 'partial-reject'].includes(reviewMode ?? '') ||
+          args[index + 1] === 'alice') &&
         !pr.reviewRequests.some((request) => request.login === args[index + 1])
       ) {
-        pr.reviewRequests.push({ login: args[index + 1] });
+        const name = args[index + 1];
+        pr.reviewRequests.push(
+          name.includes('/')
+            ? {
+                slug: name.split('/')[1],
+                organization: { login: name.split('/')[0] },
+              }
+            : { login: name }
+        );
       }
     }
     if (
@@ -271,6 +290,14 @@ function main(): void {
     )
       throw new Error('Unsupported PR edit');
     fs.writeFileSync(statePath, JSON.stringify(prs));
+    if (args.includes('--add-reviewer') && reviewMode === 'partial-reject') {
+      process.stderr.write('review request partially rejected\n');
+      process.exitCode = 1;
+    }
+    if (args.includes('--add-assignee') && assigneeMode === 'partial-reject') {
+      process.stderr.write('assignment partially rejected\n');
+      process.exitCode = 1;
+    }
     return;
   }
   throw new Error(`Unsupported gh command: ${args.join(' ')}`);

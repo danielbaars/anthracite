@@ -24,6 +24,21 @@ type ReviewTarget = {
   repo: string;
 };
 
+function hasReviewRequest(
+  state: ReviewState,
+  reviewer: string,
+  repo: string
+): boolean {
+  const name = reviewer.toLowerCase();
+  return state.reviewRequests.some(
+    (request) =>
+      request.login?.toLowerCase() === name ||
+      (name.includes('/') &&
+        name.split('/')[0] === repo.split('/')[0].toLowerCase() &&
+        request.slug?.toLowerCase() === name.split('/')[1])
+  );
+}
+
 function readReviewState(target: ReviewTarget): ReviewState {
   const value: unknown = JSON.parse(
     execFileSync('gh', [
@@ -54,26 +69,47 @@ export function requestReviewers(
 ): void {
   if (!reviewers.length) return;
   const before = readReviewState(target);
+  const names = [
+    ...new Map(reviewers.map((name) => [name.toLowerCase(), name])).values(),
+  ];
+  const additions = names.filter(
+    (name) => !hasReviewRequest(before, name, target.repo)
+  );
+  if (!additions.length) return;
   assertBranchEditable(target.head);
-  execFileSync('gh', [
-    'pr',
-    'edit',
-    String(target.number),
-    '--repo',
-    target.repo,
-    ...reviewers.flatMap((reviewer) => ['--add-reviewer', reviewer]),
-  ]);
-  const after = readReviewState(target);
-  const oldReviewIds = new Set(before.reviews.map((review) => review.id));
-  const missing = reviewers.filter((reviewer) => {
-    const name = reviewer.toLowerCase();
-    const requested = after.reviewRequests.some(
-      (request) =>
-        request.login?.toLowerCase() === name ||
-        (name.includes('/') &&
-          name.split('/')[0] === target.repo.split('/')[0].toLowerCase() &&
-          request.slug?.toLowerCase() === name.split('/')[1])
+  let failure: unknown;
+  try {
+    execFileSync('gh', [
+      'pr',
+      'edit',
+      String(target.number),
+      '--repo',
+      target.repo,
+      ...additions.flatMap((reviewer) => ['--add-reviewer', reviewer]),
+    ]);
+  } catch (error) {
+    failure = error;
+  }
+  let after: ReviewState;
+  try {
+    after = readReviewState(target);
+  } catch (error) {
+    throw new Error(
+      `${
+        error instanceof Error ? error.message : String(error)
+      }. Unverified reviewers: ${additions.join(
+        ', '
+      )}. Confirmed reviewers before update: ${
+        names
+          .filter((name) => hasReviewRequest(before, name, target.repo))
+          .join(', ') || 'none'
+      }`
     );
+  }
+  const oldReviewIds = new Set(before.reviews.map((review) => review.id));
+  const missing = names.filter((reviewer) => {
+    const name = reviewer.toLowerCase();
+    const requested = hasReviewRequest(after, reviewer, target.repo);
     const newlyReviewed = after.reviews.some(
       (review) =>
         review.author?.login.toLowerCase() === name &&
@@ -81,14 +117,18 @@ export function requestReviewers(
     );
     return !requested && !newlyReviewed;
   });
-  if (missing.length) {
-    const confirmed = reviewers.filter(
-      (reviewer) => !missing.includes(reviewer)
-    );
+  if (missing.length || failure !== undefined) {
+    const confirmed = names.filter((reviewer) => !missing.includes(reviewer));
     throw new Error(
-      `Review request not confirmed for ${missing.join(', ')} on ${
+      `Review request ${
+        failure !== undefined ? 'failed' : 'not confirmed'
+      } for ${missing.join(', ') || additions.join(', ')} on ${
         target.head
-      }. Confirmed reviewers: ${confirmed.join(', ') || 'none'}`
+      }. Confirmed reviewers: ${confirmed.join(', ') || 'none'}${
+        failure !== undefined
+          ? `. ${failure instanceof Error ? failure.message : String(failure)}`
+          : ''
+      }`
     );
   }
 }

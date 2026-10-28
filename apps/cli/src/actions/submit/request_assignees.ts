@@ -49,26 +49,52 @@ export function requestAssignees(
   );
   if (!additions.length) return;
   assertBranchEditable(target.head);
-  execFileSync('gh', [
-    'pr',
-    'edit',
-    String(target.number),
-    '--repo',
-    target.repo,
-    ...additions.flatMap((assignee) => ['--add-assignee', assignee]),
-  ]);
-  const after = readAssignees(target);
+  let failure: unknown;
+  try {
+    execFileSync('gh', [
+      'pr',
+      'edit',
+      String(target.number),
+      '--repo',
+      target.repo,
+      ...additions.flatMap((assignee) => ['--add-assignee', assignee]),
+    ]);
+  } catch (error) {
+    failure = error;
+  }
+  let after: string[];
+  try {
+    after = readAssignees(target);
+  } catch (error) {
+    throw new Error(
+      `${
+        error instanceof Error ? error.message : String(error)
+      }. Unverified assignees: ${additions.join(
+        ', '
+      )}. Confirmed assignees before update: ${
+        assignees
+          .filter((name) => before.includes(name.toLowerCase()))
+          .join(', ') || 'none'
+      }`
+    );
+  }
   const missing = assignees.filter(
     (assignee) => !after.includes(assignee.toLowerCase())
   );
-  if (missing.length) {
+  if (missing.length || failure !== undefined) {
     const confirmed = assignees.filter(
       (assignee) => !missing.includes(assignee)
     );
     throw new Error(
-      `Assignment not confirmed for ${missing.join(', ')} on ${
-        target.head
-      }. Confirmed assignees: ${confirmed.join(', ') || 'none'}`
+      `Assignment ${failure !== undefined ? 'failed' : 'not confirmed'} for ${
+        missing.join(', ') || additions.join(', ')
+      } on ${target.head}. Confirmed assignees: ${
+        confirmed.join(', ') || 'none'
+      }${
+        failure !== undefined
+          ? `. ${failure instanceof Error ? failure.message : String(failure)}`
+          : ''
+      }`
     );
   }
 }

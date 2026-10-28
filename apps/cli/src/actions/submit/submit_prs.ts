@@ -82,7 +82,9 @@ export async function submitPullRequest(
         pr.response.prURL
       }; review request failed for ${reviewers.join(', ')}: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }\nNot attempted: assignees ${
+        pr.request.assignees?.join(', ') || '(none requested)'
+      }.`
     );
   }
   try {
@@ -98,7 +100,7 @@ export async function submitPullRequest(
     throw new ExitFailedError(
       `PR ${pr.response.status} at ${pr.response.prURL}; assignment failed: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }\nConfirmed reviewers: ${reviewers.join(', ') || 'none requested'}.`
     );
   }
   context.splog.info(
