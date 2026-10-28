@@ -114,6 +114,18 @@ describe('file split extraction through the public CLI', function () {
     fixture.branch('side', 'base');
     fixture.branch('side-tip', 'side');
     fixture.git(['switch', 'base']);
+    const parents = {
+      child: 'base',
+      tip: 'child',
+      side: 'base',
+      'side-tip': 'side',
+    };
+    const messages = Object.fromEntries(
+      Object.entries(parents).map(([name, parent]) => [
+        name,
+        fixture.git(['log', '--reverse', '--format=%B', `${parent}..${name}`]),
+      ])
+    );
     const trees = Object.fromEntries(
       ['child', 'tip', 'side', 'side-tip'].map((name) => [
         name,
@@ -121,13 +133,16 @@ describe('file split extraction through the public CLI', function () {
       ])
     );
     fixture.ok(['split', '-f', 'selected.txt']);
-    for (const name of ['child', 'tip', 'side', 'side-tip']) {
+    for (const [name, parent] of Object.entries(parents)) {
       expect(fixture.git(['rev-parse', `${name}^{tree}`])).to.equal(
         trees[name]
       );
       expect(
         fixture.git(['merge-base', '--is-ancestor', 'base', name])
       ).to.equal('');
+      expect(
+        fixture.git(['log', '--reverse', '--format=%B', `${parent}..${name}`])
+      ).to.equal(messages[name]);
     }
     expect(fixture.parent('side-tip')).to.equal('side');
     expect(fixture.git(['branch', '--show-current'])).to.equal('base');
