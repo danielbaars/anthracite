@@ -5,16 +5,16 @@
     "passes": 9,
     "pending": 0,
     "failures": 0,
-    "start": "2026-10-28T07:57:17.714Z",
-    "end": "2026-10-28T08:00:11.714Z",
-    "duration": 174000
+    "start": "2026-10-28T08:26:49.173Z",
+    "end": "2026-10-28T08:29:35.265Z",
+    "duration": 166092
   },
   "tests": [
     {
       "title": "extracts a prerequisite and retains source and synchronized descendant trees",
       "fullTitle": "file split extraction through the public CLI extracts a prerequisite and retains source and synchronized descendant trees",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 14027,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 13100,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -22,8 +22,8 @@
     {
       "title": "flattens complete messages oldest first using the invoking identity",
       "fullTitle": "file split extraction through the public CLI flattens complete messages oldest first using the invoking identity",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 11276,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 11165,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -31,8 +31,8 @@
     {
       "title": "retains local PR identity and allocates around base_split",
       "fullTitle": "file split extraction through the public CLI retains local PR identity and allocates around base_split",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 10928,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 11061,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -40,8 +40,8 @@
     {
       "title": "retains local PR identity and allocates around base_split/occupied",
       "fullTitle": "file split extraction through the public CLI retains local PR identity and allocates around base_split/occupied",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 10949,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 11442,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -49,8 +49,8 @@
     {
       "title": "restacks nonconflicting fan-out parent-first and retains each final tree",
       "fullTitle": "file split extraction through the public CLI restacks nonconflicting fan-out parent-first and retains each final tree",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 21163,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 20589,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -58,8 +58,8 @@
     {
       "title": "allows a frozen occupied read-only parent and preserves unrelated local files",
       "fullTitle": "file split extraction through the public CLI allows a frozen occupied read-only parent and preserves unrelated local files",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 11476,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 10719,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -67,8 +67,8 @@
     {
       "title": "preserves local work at a source-deleted parent path that is never checked out",
       "fullTitle": "file split extraction through the public CLI preserves local work at a source-deleted parent path that is never checked out",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 3755,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 3883,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -76,8 +76,8 @@
     {
       "title": "runs real commit hooks for both prepared commits in detached owned work",
       "fullTitle": "file split extraction through the public CLI runs real commit hooks for both prepared commits in detached owned work",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 11197,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 10941,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -85,8 +85,8 @@
     {
       "title": "refuses an alternate caller index before touching either index or branch state",
       "fullTitle": "file split extraction through the public CLI refuses an alternate caller index before touching either index or branch state",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 418,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 385,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -98,8 +98,8 @@
     {
       "title": "extracts a prerequisite and retains source and synchronized descendant trees",
       "fullTitle": "file split extraction through the public CLI extracts a prerequisite and retains source and synchronized descendant trees",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 14027,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 13100,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -107,8 +107,8 @@
     {
       "title": "flattens complete messages oldest first using the invoking identity",
       "fullTitle": "file split extraction through the public CLI flattens complete messages oldest first using the invoking identity",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 11276,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 11165,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -116,8 +116,8 @@
     {
       "title": "retains local PR identity and allocates around base_split",
       "fullTitle": "file split extraction through the public CLI retains local PR identity and allocates around base_split",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 10928,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 11061,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -125,8 +125,8 @@
     {
       "title": "retains local PR identity and allocates around base_split/occupied",
       "fullTitle": "file split extraction through the public CLI retains local PR identity and allocates around base_split/occupied",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 10949,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 11442,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -134,8 +134,8 @@
     {
       "title": "restacks nonconflicting fan-out parent-first and retains each final tree",
       "fullTitle": "file split extraction through the public CLI restacks nonconflicting fan-out parent-first and retains each final tree",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 21163,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 20589,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -143,8 +143,8 @@
     {
       "title": "allows a frozen occupied read-only parent and preserves unrelated local files",
       "fullTitle": "file split extraction through the public CLI allows a frozen occupied read-only parent and preserves unrelated local files",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 11476,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 10719,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -152,8 +152,8 @@
     {
       "title": "preserves local work at a source-deleted parent path that is never checked out",
       "fullTitle": "file split extraction through the public CLI preserves local work at a source-deleted parent path that is never checked out",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 3755,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 3883,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -161,8 +161,8 @@
     {
       "title": "runs real commit hooks for both prepared commits in detached owned work",
       "fullTitle": "file split extraction through the public CLI runs real commit hooks for both prepared commits in detached owned work",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 11197,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 10941,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -170,8 +170,8 @@
     {
       "title": "refuses an alternate caller index before touching either index or branch state",
       "fullTitle": "file split extraction through the public CLI refuses an alternate caller index before touching either index or branch state",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
-      "duration": 418,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 385,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}

@@ -5,16 +5,16 @@
     "passes": 5,
     "pending": 0,
     "failures": 0,
-    "start": "2026-10-28T08:00:11.881Z",
-    "end": "2026-10-28T08:01:39.705Z",
-    "duration": 87824
+    "start": "2026-10-28T08:29:35.407Z",
+    "end": "2026-10-28T08:31:05.008Z",
+    "duration": 89601
   },
   "tests": [
     {
-      "title": "completes one mixed commit with closed stdin and no-interactive, including mandatory replay",
-      "fullTitle": "file split public surface completes one mixed commit with closed stdin and no-interactive, including mandatory replay",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 18905,
+      "title": "completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "fullTitle": "file split public surface completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 19818,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -22,8 +22,8 @@
     {
       "title": "completes ordinary interactive file mode in a real terminal without any input",
       "fullTitle": "file split public surface completes ordinary interactive file mode in a real terminal without any input",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 17630,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 17421,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -31,8 +31,8 @@
     {
       "title": "keeps quiet closed-stdin success silent and retains an actionable early refusal without effects",
       "fullTitle": "file split public surface keeps quiet closed-stdin success silent and retains an actionable early refusal without effects",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 18586,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 18983,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -40,8 +40,8 @@
     {
       "title": "uses the existing real stdio MCP tool for file splitting, refusal and a usable subsequent request",
       "fullTitle": "file split public surface uses the existing real stdio MCP tool for file splitting, refusal and a usable subsequent request",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 19065,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 19348,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -49,8 +49,8 @@
     {
       "title": "explains file mode and completes its equivalent selectors for split and sp outside Git",
       "fullTitle": "file split public surface explains file mode and completes its equivalent selectors for split and sp outside Git",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 765,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 809,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -60,10 +60,10 @@
   "failures": [],
   "passes": [
     {
-      "title": "completes one mixed commit with closed stdin and no-interactive, including mandatory replay",
-      "fullTitle": "file split public surface completes one mixed commit with closed stdin and no-interactive, including mandatory replay",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 18905,
+      "title": "completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "fullTitle": "file split public surface completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 19818,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -71,8 +71,8 @@
     {
       "title": "completes ordinary interactive file mode in a real terminal without any input",
       "fullTitle": "file split public surface completes ordinary interactive file mode in a real terminal without any input",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 17630,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 17421,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -80,8 +80,8 @@
     {
       "title": "keeps quiet closed-stdin success silent and retains an actionable early refusal without effects",
       "fullTitle": "file split public surface keeps quiet closed-stdin success silent and retains an actionable early refusal without effects",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 18586,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 18983,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -89,8 +89,8 @@
     {
       "title": "uses the existing real stdio MCP tool for file splitting, refusal and a usable subsequent request",
       "fullTitle": "file split public surface uses the existing real stdio MCP tool for file splitting, refusal and a usable subsequent request",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 19065,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 19348,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -98,8 +98,8 @@
     {
       "title": "explains file mode and completes its equivalent selectors for split and sp outside Git",
       "fullTitle": "file split public surface explains file mode and completes its equivalent selectors for split and sp outside Git",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
-      "duration": 765,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 809,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}

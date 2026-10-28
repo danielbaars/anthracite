@@ -5,16 +5,16 @@
     "passes": 13,
     "pending": 0,
     "failures": 0,
-    "start": "2026-10-28T07:57:17.714Z",
-    "end": "2026-10-28T07:58:33.350Z",
-    "duration": 75636
+    "start": "2026-10-28T08:26:49.173Z",
+    "end": "2026-10-28T08:28:00.522Z",
+    "duration": 71349
   },
   "tests": [
     {
       "title": "combines spellings, repeated overlapping selectors and literal wildcard names once",
       "fullTitle": "file split selectors and entries through the public CLI combines spellings, repeated overlapping selectors and literal wildcard names once",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 4024,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3515,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -22,8 +22,8 @@
     {
       "title": "uses effective subdirectory cwd together with top and exclusion magic",
       "fullTitle": "file split selectors and entries through the public CLI uses effective subdirectory cwd together with top and exclusion magic",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 3519,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3582,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -31,8 +31,8 @@
     {
       "title": "retains a leading Unicode byte-order character in a selected filename",
       "fullTitle": "file split selectors and entries through the public CLI retains a leading Unicode byte-order character in a selected filename",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 3867,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3821,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -40,8 +40,8 @@
     {
       "title": "projects additions, deletions, binary blobs, executable modes and symlinks losslessly",
       "fullTitle": "file split selectors and entries through the public CLI projects additions, deletions, binary blobs, executable modes and symlinks losslessly",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 4994,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3704,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -49,8 +49,8 @@
     {
       "title": "selects only the old endpoint of a cross-path rename",
       "fullTitle": "file split selectors and entries through the public CLI selects only the old endpoint of a cross-path rename",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 3889,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3742,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -58,8 +58,8 @@
     {
       "title": "selects only the new endpoint of a cross-path rename",
       "fullTitle": "file split selectors and entries through the public CLI selects only the new endpoint of a cross-path rename",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 4071,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 4121,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -67,8 +67,8 @@
     {
       "title": "refuses an impossible partial file-to-directory projection before hooks or construction",
       "fullTitle": "file split selectors and entries through the public CLI refuses an impossible partial file-to-directory projection before hooks or construction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 5465,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 4903,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -76,8 +76,8 @@
     {
       "title": "refuses changed gitlinks even when another path is selected, without effects",
       "fullTitle": "file split selectors and entries through the public CLI refuses changed gitlinks even when another path is selected, without effects",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 686,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 722,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -85,8 +85,8 @@
     {
       "title": "retains an unchanged gitlink while extracting ordinary files",
       "fullTitle": "file split selectors and entries through the public CLI retains an unchanged gitlink while extracting ordinary files",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 4519,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 4661,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -94,8 +94,8 @@
     {
       "title": "refuses committed non-UTF-8 path records without changing the index",
       "fullTitle": "file split selectors and entries through the public CLI refuses committed non-UTF-8 path records without changing the index",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 559,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 547,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -103,8 +103,8 @@
     {
       "title": "accepts empty legacy recovery queues without rewriting them on early refusal",
       "fullTitle": "file split selectors and entries through the public CLI accepts empty legacy recovery queues without rewriting them on early refusal",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 690,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 614,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -112,8 +112,8 @@
     {
       "title": "preserves unknown recovery fields instead of treating the file as empty",
       "fullTitle": "file split selectors and entries through the public CLI preserves unknown recovery fields instead of treating the file as empty",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 555,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 563,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -121,8 +121,8 @@
     {
       "title": "refuses an outside-repository selector without effects",
       "fullTitle": "file split selectors and entries through the public CLI refuses an outside-repository selector without effects",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 581,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 673,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -134,8 +134,8 @@
     {
       "title": "combines spellings, repeated overlapping selectors and literal wildcard names once",
       "fullTitle": "file split selectors and entries through the public CLI combines spellings, repeated overlapping selectors and literal wildcard names once",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 4024,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3515,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -143,8 +143,8 @@
     {
       "title": "uses effective subdirectory cwd together with top and exclusion magic",
       "fullTitle": "file split selectors and entries through the public CLI uses effective subdirectory cwd together with top and exclusion magic",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 3519,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3582,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -152,8 +152,8 @@
     {
       "title": "retains a leading Unicode byte-order character in a selected filename",
       "fullTitle": "file split selectors and entries through the public CLI retains a leading Unicode byte-order character in a selected filename",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 3867,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3821,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -161,8 +161,8 @@
     {
       "title": "projects additions, deletions, binary blobs, executable modes and symlinks losslessly",
       "fullTitle": "file split selectors and entries through the public CLI projects additions, deletions, binary blobs, executable modes and symlinks losslessly",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 4994,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3704,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -170,8 +170,8 @@
     {
       "title": "selects only the old endpoint of a cross-path rename",
       "fullTitle": "file split selectors and entries through the public CLI selects only the old endpoint of a cross-path rename",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 3889,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3742,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -179,8 +179,8 @@
     {
       "title": "selects only the new endpoint of a cross-path rename",
       "fullTitle": "file split selectors and entries through the public CLI selects only the new endpoint of a cross-path rename",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 4071,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 4121,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -188,8 +188,8 @@
     {
       "title": "refuses an impossible partial file-to-directory projection before hooks or construction",
       "fullTitle": "file split selectors and entries through the public CLI refuses an impossible partial file-to-directory projection before hooks or construction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 5465,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 4903,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -197,8 +197,8 @@
     {
       "title": "refuses changed gitlinks even when another path is selected, without effects",
       "fullTitle": "file split selectors and entries through the public CLI refuses changed gitlinks even when another path is selected, without effects",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 686,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 722,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -206,8 +206,8 @@
     {
       "title": "retains an unchanged gitlink while extracting ordinary files",
       "fullTitle": "file split selectors and entries through the public CLI retains an unchanged gitlink while extracting ordinary files",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 4519,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 4661,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -215,8 +215,8 @@
     {
       "title": "refuses committed non-UTF-8 path records without changing the index",
       "fullTitle": "file split selectors and entries through the public CLI refuses committed non-UTF-8 path records without changing the index",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 559,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 547,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -224,8 +224,8 @@
     {
       "title": "accepts empty legacy recovery queues without rewriting them on early refusal",
       "fullTitle": "file split selectors and entries through the public CLI accepts empty legacy recovery queues without rewriting them on early refusal",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 690,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 614,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -233,8 +233,8 @@
     {
       "title": "preserves unknown recovery fields instead of treating the file as empty",
       "fullTitle": "file split selectors and entries through the public CLI preserves unknown recovery fields instead of treating the file as empty",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 555,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 563,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -242,8 +242,8 @@
     {
       "title": "refuses an outside-repository selector without effects",
       "fullTitle": "file split selectors and entries through the public CLI refuses an outside-repository selector without effects",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
-      "duration": 581,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 673,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}

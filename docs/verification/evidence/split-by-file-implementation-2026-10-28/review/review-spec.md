@@ -1,0 +1,9 @@
+## Spec
+
+Reviewed `3923b1088b29f02ce9d9e2d8da9fb52339889915...5d49b4912eab40aaca8557ec2f8502e5878ec9ec` against the full specification and #20–#25 contracts. Fixed point resolves and diff is nonempty.
+
+- **[P2] Resolve the physical source without ambiguous ref shortening.** `/Users/danielbaars/Dev/anthracite/apps/cli/src/actions/split_file_plan.ts:63` uses `symbolic-ref --short HEAD`, then treats the result as the branch name at lines 73–82. The specification at `/Users/danielbaars/Dev/anthracite/docs/specs/split-by-file.md:92` requires the “physically checked-out, locally tracked, non-trunk source.” With checked-out tracked branch `base` and a local tag also named `base`, Git returns `heads/base`; planning consequently looks up the wrong metadata ref and refuses an otherwise eligible proper-subset split as untracked. A bounded synthetic public-CLI probe against the verified candidate returned exit 1 and `File split requires a valid tracked source`, while independent Git reported current branch `base` and shortened symbolic ref `heads/base`. Ref/index/work snapshots remained unchanged. Use existing `getCurrentBranchName()` or strip the exact `refs/heads/` prefix from the full symbolic ref, and add this collision to the public regression fixture.
+
+No other confirmed missing/partial requirements, unrequested scope, or incorrectly implemented requirements found. Inspected connected production paths and public fixtures for projection, metadata, participant preflight, hooks, genuine recovery, continuation guards, surface and legacy/MCP boundaries. This review did not rerun the acceptance suite.
+
+Probe record: `/private/tmp/anthracite-split-implementation-2026-10-28/review-spec-probe.json`. An initial attempt used stale canonical `dist` and rejected the option; it is excluded from candidate evidence. The corrected probe used the coordinator-verified candidate runtime and is the only candidate probe.

@@ -1,0 +1,12 @@
+{
+  "head": "de1662d3a6acb5809dc12820b36fc2c6d64a8571",
+  "branch": "base",
+  "refs": "refs/heads/base de1662d3a6acb5809dc12820b36fc2c6d64a8571\nrefs/heads/base_split 117698fbed1d4df94566da146fc5825720c73d18\nrefs/heads/child 36424c21874fd81dd173c729b25534184f306751\nrefs/heads/main 3a93ca57fcd6720c261ad610a6e0e6a2287e3edb\nrefs/heads/other 8b025f95a4becb024e3b7790373fe89804bf5d43\nrefs/heads/tip 94feb5a7e6b9fd0a9e37286552037be014998965",
+  "index": "RElSQwAAAAIAAAADauGriBpf7thq4auIGl/u2AEAABALY1EWAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAauGrngSTUeJq4aueBJNR4gEAABALY15uAACBpAAAAfUAAAAUAAAAB1oYzS+/ZelhsP0/bNawthYPLICOAAhtYWluLnR4dAAAauGriBtvGCJq4auIG28YIgEAABALY1ErAACBpAAAAfUAAAAUAAAACTP8QrloF1ziX8vyMpDGQVzFL3UaAAxzZWxlY3RlZC50eHQAAAAAAABUUkVFAAAAGQAzIDAK3p5IsDN7WXKQjpGid6we1M/40TK1pc3WXKykKzl7dUfKR5zrudt/FQ==",
+  "status": "",
+  "files": {
+    "base.txt": "YmFzZQ==",
+    "main.txt": "c291cmNlCg==",
+    "selected.txt": "c2VsZWN0ZWQK"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "status": "bounded local acceptance passed; PR publication and independent review remain coordinator-owned",
+  "status": "bounded local acceptance passed after independent review; PR publication remains coordinator-owned",
   "parentIssue": 20,
   "siblingIssues": [
     21,
@@ -9,11 +9,9 @@
     25
   ],
   "productBaseline": "3923b1088b29f02ce9d9e2d8da9fb52339889915",
-  "fullSelectionCommit": "a2c741fc8371945e961cb9befcbee3da57a89fdc",
-  "messageSupplementCommit": "95667f604c2875cc95a69a3c555bf0bc0f531a1e",
-  "cliSourceTree": "f02be4b890dbf1599b1b09d246067dd05f68be4a",
-  "fullSelectionTestTree": "e40811badfdf992a44407da19cf96fbcb01f1c5f",
-  "supplementTestTree": "0669b2146e8213c39159c5e5dfc2cb1b31364fa5",
+  "fullSelectionCommit": "4040d758c9c4ae7da3a10f3bc56f0570be4a1eb0",
+  "cliSourceTree": "727a76964ac4453f67b605564652dd41d9294d3b",
+  "fullSelectionTestTree": "b030ebbfa5a350dc3f38d44404a9928035511760",
   "sharedSourceTree": "eeacba9f2fe4927c055ea3ffa26384bafbdb74c4",
   "runtime": {
     "node": "v24.19.0",
@@ -22,7 +20,7 @@
     "typescript": "5.5.4"
   },
   "native": {
-    "sha256": "a4332d2fbecc5c1d7df88e748e63bb0ad4175f7c61683d3c7080f2c5a904840a",
+    "sha256": "1245b153c5339abeda12726ca10a556fa5164442a01b3d7d46ed95d0c8d4a868",
     "bytes": 66154082,
     "format": "Mach-O 64-bit executable arm64",
     "retained": false,
@@ -39,14 +37,30 @@
     "libs/gti-cli-shared-types/tsconfig.json": "c879d2469511820a5284ef112c037986c1c22a9b",
     "scripts/test-cli.cjs": "a28e8635f96eebd5d3153d9524372e0809267546"
   },
+  "review": {
+    "standardsFindings": 0,
+    "specFindings": 1,
+    "fixed": "P2: resolve physical source with branch --show-current when a same-named tag exists",
+    "fixCommit": "4040d758c9c4ae7da3a10f3bc56f0570be4a1eb0",
+    "regression": "existing one-mixed-commit closed-stdin case, same-named tag at a different commit; full refs prevent ambiguous test oracles",
+    "redGreen": "one expected red then one green on each runtime; green native freshly compiled from fix"
+  },
   "checks": {
-    "forcedBuild": "2 successful tasks, zero cache on full selection commit",
-    "typecheck": "passed, including after test-only supplement",
-    "uncachedLint": "complete source plus relevant feature/legacy tests passed; changed supplement test passed again",
-    "diffCheck": "passed",
+    "forcedBuild": "2 successful tasks, zero cache on pinned review fix",
+    "typecheck": "passed on pinned review fix",
+    "uncachedLint": "complete source and relevant feature/legacy tests passed on pinned review fix",
+    "diffCheck": "source/tests/prose pass with docs/verification/evidence/** excluded; raw capture logs intentionally retain original trailing whitespace, including pre-review/final/build.log and slice25/build-environment-first.log",
     "linearHistory": "no merge commits since product baseline",
     "creditsLicense": "unchanged since product baseline",
-    "runtimeCommandIdentity": "every retained final fixture CLI command checked against its intended Node/native launch"
+    "runtimeCommandIdentity": {
+      "checkedFixtureCommands": {
+        "node": 461,
+        "native": 461
+      },
+      "node": "explicit current worktree dist/src/index.js",
+      "native": "explicit freshly compiled review-fix binary; no silent fallback/skips",
+      "mcp": "unchanged McpCliClient uses getTestCliCommand with the same explicit runtime environment; execute_child reuses its process executable"
+    }
   },
   "results": {
     "node": {
@@ -54,22 +68,18 @@
       "legacyControls": 5,
       "uniqueSelectedTests": 67,
       "failures": 0,
-      "pending": 0,
-      "messageSupplementRerun": 1,
-      "supplementIsAdditionalUniqueTest": false
+      "pending": 0
     },
     "native": {
       "featureTests": 62,
       "legacyControls": 5,
       "uniqueSelectedTests": 67,
       "failures": 0,
-      "pending": 0,
-      "messageSupplementRerun": 1,
-      "supplementIsAdditionalUniqueTest": false
+      "pending": 0
     }
   },
   "contractCases": 15,
-  "reuseBoundary": "The message supplement changes only one test file. Product source, shared code, build/runtime inputs and native SHA-256 remain identical. Only the affected fan-out case is rerun on each runtime; its stronger assertion supplements the 62-case full reports.",
-  "historicalEvidence": "slice21-slice25 are unchanged earlier receipts, separate from final acceptance. Historical reds are TDD observations, not current failures. slice23 exploratory-empty-tree-expectation.json corrects a speculative expectation, not a product defect. slice25 build-environment-first.log records missing ignored workspace dependency links, corrected without dependency/toolchain changes.",
+  "reuseBoundary": "No prior test result is reused as current acceptance: full 62 feature tests and five controls reran on both runtimes after the product fix. Fan-out message assertions are included in that full selection, not an extra supplement count.",
+  "historicalEvidence": "slice21-slice25 and pre-review preserve earlier receipts unchanged. pre-review includes original final reports, acceptance/capture-selection/manifest and report text. Historical TDD reds and raw-log whitespace are not current product failures. The outer manifest defines retained files.",
   "deliveryScope": "One implementation PR for #20 and #21-#25 after metadata approval. No full suite/full CI matrix, Actions dispatch, live GitHub fixture, release/assets/tag, global install or client registration."
 }

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T08:27:00.354Z",
+    "end": "2026-10-28T08:27:18.060Z",
+    "duration": 17706
+  },
+  "tests": [
+    {
+      "title": "completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "fullTitle": "file split public surface completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 14696,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "fullTitle": "file split public surface completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 14696,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

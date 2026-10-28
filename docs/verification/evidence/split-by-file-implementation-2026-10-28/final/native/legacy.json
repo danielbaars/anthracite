@@ -5,16 +5,16 @@
     "passes": 5,
     "pending": 0,
     "failures": 0,
-    "start": "2026-10-28T07:58:56.682Z",
-    "end": "2026-10-28T07:59:37.251Z",
-    "duration": 40569
+    "start": "2026-10-28T08:27:21.562Z",
+    "end": "2026-10-28T08:28:02.984Z",
+    "duration": 41422
   },
   "tests": [
     {
       "title": "actually splits editable split commits through terminal prompts",
       "fullTitle": "frozen local writes through the public CLI actually splits editable split commits through terminal prompts",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
-      "duration": 2506,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
+      "duration": 2664,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -22,8 +22,8 @@
     {
       "title": "actually splits editable sp commits through terminal prompts",
       "fullTitle": "frozen local writes through the public CLI actually splits editable sp commits through terminal prompts",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
-      "duration": 2631,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
+      "duration": 2621,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -31,8 +31,8 @@
     {
       "title": "actually splits editable hunks into two real single-commit branches",
       "fullTitle": "frozen local writes through the public CLI actually splits editable hunks into two real single-commit branches",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
-      "duration": 3720,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
+      "duration": 3824,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -40,8 +40,8 @@
     {
       "title": "uses the default single-commit hunk split with a frozen anchor",
       "fullTitle": "frozen local writes through the public CLI uses the default single-commit hunk split with a frozen anchor",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
-      "duration": 3066,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
+      "duration": 3037,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -49,8 +49,8 @@
     {
       "title": "retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
       "fullTitle": "frozen structural recovery through fresh public CLI processes retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/freeze_structural_recovery_cli.test.js",
-      "duration": 15612,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/freeze_structural_recovery_cli.test.js",
+      "duration": 15832,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -62,8 +62,8 @@
     {
       "title": "actually splits editable split commits through terminal prompts",
       "fullTitle": "frozen local writes through the public CLI actually splits editable split commits through terminal prompts",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
-      "duration": 2506,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
+      "duration": 2664,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -71,8 +71,8 @@
     {
       "title": "actually splits editable sp commits through terminal prompts",
       "fullTitle": "frozen local writes through the public CLI actually splits editable sp commits through terminal prompts",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
-      "duration": 2631,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
+      "duration": 2621,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -80,8 +80,8 @@
     {
       "title": "actually splits editable hunks into two real single-commit branches",
       "fullTitle": "frozen local writes through the public CLI actually splits editable hunks into two real single-commit branches",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
-      "duration": 3720,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
+      "duration": 3824,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -89,8 +89,8 @@
     {
       "title": "uses the default single-commit hunk split with a frozen anchor",
       "fullTitle": "frozen local writes through the public CLI uses the default single-commit hunk split with a frozen anchor",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
-      "duration": 3066,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/frozen_local_writes_cli.test.js",
+      "duration": 3037,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -98,8 +98,8 @@
     {
       "title": "retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
       "fullTitle": "frozen structural recovery through fresh public CLI processes retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/freeze_structural_recovery_cli.test.js",
-      "duration": 15612,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/freeze_structural_recovery_cli.test.js",
+      "duration": 15832,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}

@@ -5,16 +5,16 @@
     "passes": 25,
     "pending": 0,
     "failures": 0,
-    "start": "2026-10-28T07:58:33.441Z",
-    "end": "2026-10-28T08:00:05.616Z",
-    "duration": 92175
+    "start": "2026-10-28T08:28:00.622Z",
+    "end": "2026-10-28T08:29:28.312Z",
+    "duration": 87690
   },
   "tests": [
     {
       "title": "refuses a complete selection before changing indexes, refs or metadata",
       "fullTitle": "file split preflight through the public CLI refuses a complete selection before changing indexes, refs or metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 603,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 596,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -22,8 +22,8 @@
     {
       "title": "refuses unmatched selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses unmatched selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 573,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 584,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -31,8 +31,8 @@
     {
       "title": "refuses unchanged selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses unchanged selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 615,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 652,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -40,8 +40,8 @@
     {
       "title": "refuses blank selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses blank selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 408,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 396,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -49,7 +49,7 @@
     {
       "title": "refuses missing selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses missing selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
       "duration": 386,
       "currentRetry": 0,
       "speed": "slow",
@@ -58,8 +58,8 @@
     {
       "title": "refuses malformed selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses malformed selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 588,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 616,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -67,8 +67,8 @@
     {
       "title": "refuses conflicting selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses conflicting selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 449,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 381,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -76,8 +76,8 @@
     {
       "title": "refuses unstaged tracked work without changing the index",
       "fullTitle": "file split preflight through the public CLI refuses unstaged tracked work without changing the index",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 662,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 653,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -85,8 +85,8 @@
     {
       "title": "refuses staged tracked work without changing the index",
       "fullTitle": "file split preflight through the public CLI refuses staged tracked work without changing the index",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 682,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 649,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -94,8 +94,8 @@
     {
       "title": "refuses frozen mandatory base before extraction",
       "fullTitle": "file split preflight through the public CLI refuses frozen mandatory base before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1368,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1229,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -103,8 +103,8 @@
     {
       "title": "refuses frozen mandatory child before extraction",
       "fullTitle": "file split preflight through the public CLI refuses frozen mandatory child before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1335,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1254,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -112,8 +112,8 @@
     {
       "title": "refuses frozen mandatory tip before extraction",
       "fullTitle": "file split preflight through the public CLI refuses frozen mandatory tip before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1387,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1323,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -121,8 +121,8 @@
     {
       "title": "preserves opaque continuation even when no rebase remains",
       "fullTitle": "file split preflight through the public CLI preserves opaque continuation even when no rebase remains",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 510,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 475,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -130,8 +130,8 @@
     {
       "title": "refuses a dirty occupied descendant and preserves both worktree indexes",
       "fullTitle": "file split preflight through the public CLI refuses a dirty occupied descendant and preserves both worktree indexes",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1159,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1056,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -139,8 +139,8 @@
     {
       "title": "refuses untracked child checkout collisions before extraction",
       "fullTitle": "file split preflight through the public CLI refuses untracked child checkout collisions before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1033,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 962,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -148,8 +148,8 @@
     {
       "title": "refuses ignored child checkout collisions before extraction",
       "fullTitle": "file split preflight through the public CLI refuses ignored child checkout collisions before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1067,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 966,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -157,8 +157,8 @@
     {
       "title": "protects a local path materialized only by an intermediate descendant commit",
       "fullTitle": "file split preflight through the public CLI protects a local path materialized only by an intermediate descendant commit",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1133,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1560,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -166,8 +166,8 @@
     {
       "title": "refuses a trunk source without tracking or repair",
       "fullTitle": "file split preflight through the public CLI refuses a trunk source without tracking or repair",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 549,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 531,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -175,8 +175,8 @@
     {
       "title": "refuses a detached source without tracking or repair",
       "fullTitle": "file split preflight through the public CLI refuses a detached source without tracking or repair",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 526,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 547,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -184,8 +184,8 @@
     {
       "title": "refuses a untracked source without tracking or repair",
       "fullTitle": "file split preflight through the public CLI refuses a untracked source without tracking or repair",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 547,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 519,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -193,8 +193,8 @@
     {
       "title": "refuses a stale source without tracking or repair",
       "fullTitle": "file split preflight through the public CLI refuses a stale source without tracking or repair",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 713,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 703,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -202,8 +202,8 @@
     {
       "title": "refuses a tracked source without net work",
       "fullTitle": "file split preflight through the public CLI refuses a tracked source without net work",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1134,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1128,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -211,8 +211,8 @@
     {
       "title": "refuses merge history in mandatory base",
       "fullTitle": "file split preflight through the public CLI refuses merge history in mandatory base",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 667,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 601,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -220,8 +220,8 @@
     {
       "title": "refuses merge history in mandatory child",
       "fullTitle": "file split preflight through the public CLI refuses merge history in mandatory child",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 849,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 805,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -229,8 +229,8 @@
     {
       "title": "preserves an active Git operation and foreign cache lock",
       "fullTitle": "file split preflight through the public CLI preserves an active Git operation and foreign cache lock",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 471,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 443,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -242,8 +242,8 @@
     {
       "title": "refuses a complete selection before changing indexes, refs or metadata",
       "fullTitle": "file split preflight through the public CLI refuses a complete selection before changing indexes, refs or metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 603,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 596,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -251,8 +251,8 @@
     {
       "title": "refuses unmatched selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses unmatched selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 573,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 584,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -260,8 +260,8 @@
     {
       "title": "refuses unchanged selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses unchanged selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 615,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 652,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -269,8 +269,8 @@
     {
       "title": "refuses blank selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses blank selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 408,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 396,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -278,7 +278,7 @@
     {
       "title": "refuses missing selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses missing selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
       "duration": 386,
       "currentRetry": 0,
       "speed": "slow",
@@ -287,8 +287,8 @@
     {
       "title": "refuses malformed selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses malformed selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 588,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 616,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -296,8 +296,8 @@
     {
       "title": "refuses conflicting selectors without repairing metadata",
       "fullTitle": "file split preflight through the public CLI refuses conflicting selectors without repairing metadata",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 449,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 381,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -305,8 +305,8 @@
     {
       "title": "refuses unstaged tracked work without changing the index",
       "fullTitle": "file split preflight through the public CLI refuses unstaged tracked work without changing the index",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 662,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 653,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -314,8 +314,8 @@
     {
       "title": "refuses staged tracked work without changing the index",
       "fullTitle": "file split preflight through the public CLI refuses staged tracked work without changing the index",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 682,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 649,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -323,8 +323,8 @@
     {
       "title": "refuses frozen mandatory base before extraction",
       "fullTitle": "file split preflight through the public CLI refuses frozen mandatory base before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1368,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1229,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -332,8 +332,8 @@
     {
       "title": "refuses frozen mandatory child before extraction",
       "fullTitle": "file split preflight through the public CLI refuses frozen mandatory child before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1335,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1254,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -341,8 +341,8 @@
     {
       "title": "refuses frozen mandatory tip before extraction",
       "fullTitle": "file split preflight through the public CLI refuses frozen mandatory tip before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1387,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1323,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -350,8 +350,8 @@
     {
       "title": "preserves opaque continuation even when no rebase remains",
       "fullTitle": "file split preflight through the public CLI preserves opaque continuation even when no rebase remains",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 510,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 475,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -359,8 +359,8 @@
     {
       "title": "refuses a dirty occupied descendant and preserves both worktree indexes",
       "fullTitle": "file split preflight through the public CLI refuses a dirty occupied descendant and preserves both worktree indexes",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1159,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1056,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -368,8 +368,8 @@
     {
       "title": "refuses untracked child checkout collisions before extraction",
       "fullTitle": "file split preflight through the public CLI refuses untracked child checkout collisions before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1033,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 962,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -377,8 +377,8 @@
     {
       "title": "refuses ignored child checkout collisions before extraction",
       "fullTitle": "file split preflight through the public CLI refuses ignored child checkout collisions before extraction",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1067,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 966,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -386,8 +386,8 @@
     {
       "title": "protects a local path materialized only by an intermediate descendant commit",
       "fullTitle": "file split preflight through the public CLI protects a local path materialized only by an intermediate descendant commit",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1133,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1560,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -395,8 +395,8 @@
     {
       "title": "refuses a trunk source without tracking or repair",
       "fullTitle": "file split preflight through the public CLI refuses a trunk source without tracking or repair",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 549,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 531,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -404,8 +404,8 @@
     {
       "title": "refuses a detached source without tracking or repair",
       "fullTitle": "file split preflight through the public CLI refuses a detached source without tracking or repair",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 526,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 547,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -413,8 +413,8 @@
     {
       "title": "refuses a untracked source without tracking or repair",
       "fullTitle": "file split preflight through the public CLI refuses a untracked source without tracking or repair",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 547,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 519,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -422,8 +422,8 @@
     {
       "title": "refuses a stale source without tracking or repair",
       "fullTitle": "file split preflight through the public CLI refuses a stale source without tracking or repair",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 713,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 703,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -431,8 +431,8 @@
     {
       "title": "refuses a tracked source without net work",
       "fullTitle": "file split preflight through the public CLI refuses a tracked source without net work",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 1134,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1128,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -440,8 +440,8 @@
     {
       "title": "refuses merge history in mandatory base",
       "fullTitle": "file split preflight through the public CLI refuses merge history in mandatory base",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 667,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 601,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -449,8 +449,8 @@
     {
       "title": "refuses merge history in mandatory child",
       "fullTitle": "file split preflight through the public CLI refuses merge history in mandatory child",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 849,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 805,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -458,8 +458,8 @@
     {
       "title": "preserves an active Git operation and foreign cache lock",
       "fullTitle": "file split preflight through the public CLI preserves an active Git operation and foreign cache lock",
-      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
-      "duration": 471,
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 443,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}

@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "4040d758c9c4ae7da3a10f3bc56f0570be4a1eb0",
+  "cliSourceTree": "727a76964ac4453f67b605564652dd41d9294d3b",
+  "testTree": "b030ebbfa5a350dc3f38d44404a9928035511760",
+  "sharedSourceTree": "eeacba9f2fe4927c055ea3ffa26384bafbdb74c4",
+  "native": {
+    "sha256": "1245b153c5339abeda12726ca10a556fa5164442a01b3d7d46ed95d0c8d4a868",
+    "bytes": 66154082,
+    "format": "Mach-O 64-bit executable arm64",
+    "retained": false,
+    "purpose": "local verification only; never installed or released"
+  },
+  "buildInputs": {
+    "package.json": "f9418719a7d9325706955f1039cfd942b73fee2b",
+    "yarn.lock": "9bdaacae21dd5c7e63e04461b7c1a98b35c72831",
+    ".yarnrc.yml": "4946e2cc377cd3aa9f1d1c75b10125974a284e63",
+    ".yarn/releases/yarn-3.2.1.cjs": "b3cadff6efb37a12712d12c2553ec703dbcaa4dd",
+    "apps/cli/package.json": "4312b4d11c4269b457dfa76125ba55261eb8b81a",
+    "apps/cli/tsconfig.json": "80c83bd7c1a825cdadd009648d9d497415e1dccb",
+    "libs/gti-cli-shared-types/package.json": "01d284dbe3410c92406df9cc88c7f7a0fea0485a",
+    "libs/gti-cli-shared-types/tsconfig.json": "c879d2469511820a5284ef112c037986c1c22a9b",
+    "scripts/test-cli.cjs": "a28e8635f96eebd5d3153d9524372e0809267546"
+  },
+  "commandCounts": {
+    "node": 461,
+    "native": 461
+  }
+}
