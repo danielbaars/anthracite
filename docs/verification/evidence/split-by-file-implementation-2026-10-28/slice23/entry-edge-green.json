@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:20:02.628Z",
+    "end": "2026-10-28T06:20:21.219Z",
+    "duration": 18591
+  },
+  "tests": [
+    {
+      "title": "retains a leading Unicode byte-order character in a selected filename",
+      "fullTitle": "file split selectors and entries through the public CLI retains a leading Unicode byte-order character in a selected filename",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 6118,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an unchanged gitlink while extracting ordinary files",
+      "fullTitle": "file split selectors and entries through the public CLI retains an unchanged gitlink while extracting ordinary files",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 7636,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "retains a leading Unicode byte-order character in a selected filename",
+      "fullTitle": "file split selectors and entries through the public CLI retains a leading Unicode byte-order character in a selected filename",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 6118,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an unchanged gitlink while extracting ordinary files",
+      "fullTitle": "file split selectors and entries through the public CLI retains an unchanged gitlink while extracting ordinary files",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 7636,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 9,
+    "passes": 9,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:24:57.370Z",
+    "end": "2026-10-28T06:27:25.265Z",
+    "duration": 147895
+  },
+  "tests": [
+    {
+      "title": "continues a genuine stale child conflict without extracting twice",
+      "fullTitle": "file split recovery through real public processes continues a genuine stale child conflict without extracting twice",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 37808,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an occupied pending worktree before continue --all changes a resolution",
+      "fullTitle": "file split recovery through real public processes refuses an occupied pending worktree before continue --all changes a resolution",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 18161,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses changed expected refs before staging or changing recovery",
+      "fullTitle": "file split recovery through real public processes refuses changed expected refs before staging or changing recovery",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 20681,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves staged resolution and recovery when an active participant is frozen",
+      "fullTitle": "file split recovery through real public processes preserves staged resolution and recovery when an active participant is frozen",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 21883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains ignored hook work after a construction failure and honors no-verify",
+      "fullTitle": "file split recovery through real public processes retains ignored hook work after a construction failure and honors no-verify",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 10572,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a hook-mutated prepared tree and retains its actual content",
+      "fullTitle": "file split recovery through real public processes refuses a hook-mutated prepared tree and retains its actual content",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 2480,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports explicit remaining retries when a replay hook fails without a rebase",
+      "fullTitle": "file split recovery through real public processes reports explicit remaining retries when a replay hook fails without a rebase",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 9179,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a foreign Git lock left by a successful hook before publication",
+      "fullTitle": "file split recovery through real public processes retains a foreign Git lock left by a successful hook before publication",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 3032,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports actual saved refs when extraction publication is rejected",
+      "fullTitle": "file split recovery through real public processes reports actual saved refs when extraction publication is rejected",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 4042,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "continues a genuine stale child conflict without extracting twice",
+      "fullTitle": "file split recovery through real public processes continues a genuine stale child conflict without extracting twice",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 37808,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an occupied pending worktree before continue --all changes a resolution",
+      "fullTitle": "file split recovery through real public processes refuses an occupied pending worktree before continue --all changes a resolution",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 18161,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses changed expected refs before staging or changing recovery",
+      "fullTitle": "file split recovery through real public processes refuses changed expected refs before staging or changing recovery",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 20681,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves staged resolution and recovery when an active participant is frozen",
+      "fullTitle": "file split recovery through real public processes preserves staged resolution and recovery when an active participant is frozen",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 21883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains ignored hook work after a construction failure and honors no-verify",
+      "fullTitle": "file split recovery through real public processes retains ignored hook work after a construction failure and honors no-verify",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 10572,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a hook-mutated prepared tree and retains its actual content",
+      "fullTitle": "file split recovery through real public processes refuses a hook-mutated prepared tree and retains its actual content",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 2480,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports explicit remaining retries when a replay hook fails without a rebase",
+      "fullTitle": "file split recovery through real public processes reports explicit remaining retries when a replay hook fails without a rebase",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 9179,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a foreign Git lock left by a successful hook before publication",
+      "fullTitle": "file split recovery through real public processes retains a foreign Git lock left by a successful hook before publication",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 3032,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports actual saved refs when extraction publication is rejected",
+      "fullTitle": "file split recovery through real public processes reports actual saved refs when extraction publication is rejected",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 4042,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

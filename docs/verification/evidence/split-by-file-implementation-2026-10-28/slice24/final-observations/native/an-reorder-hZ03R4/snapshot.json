@@ -1,0 +1,12 @@
+{
+  "head": "65278dd30faded86b7d955eac49ec6996ecf5186",
+  "branch": "base",
+  "refs": "refs/heads/base 65278dd30faded86b7d955eac49ec6996ecf5186\nrefs/heads/child 5a2c9f0783614b0e0c6c9de34ca45996781af9b9\nrefs/heads/main 9865fc2a4e77d85a9ebbba2c5ecf3f5a846735c6\nrefs/heads/other 9436777324b0ab7e9e088c268871f9540a43897f\nrefs/heads/tip cd37a0fc43c7151ff0b9f8f881abbcbc96ccb026",
+  "index": "RElSQwAAAAIAAAADauGYWiuIu0tq4ZhaK4i7SwEAABALYknNAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAauGYWCXXJNxq4ZhYJdck3AEAABALYkjiAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAauGYWiu8Fc5q4ZhaK7wVzgEAABALYknYAACBpAAAAfUAAAAUAAAACTP8QrloF1ziX8vyMpDGQVzFL3UaAAxzZWxlY3RlZC50eHQAAAAAAABUUkVFAAAAGQAzIDAK5eRKohmOheL8aX3z2PR2YN9kEhBi2FcdW4wYYnzIR9sONtX3sY5PvA==",
+  "status": "",
+  "files": {
+    "base.txt": "YmFzZQ==",
+    "main.txt": "bWFpbg==",
+    "selected.txt": "c2VsZWN0ZWQK"
+  }
+}

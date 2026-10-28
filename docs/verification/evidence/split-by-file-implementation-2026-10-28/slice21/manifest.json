@@ -1,0 +1,78 @@
+{
+  "ticket": 21,
+  "commit": "49128ffaf7911697784878a1b67fbb3710bd3d36",
+  "base": "5963a596b3e6a698d66586d53fe681ae2c0a822b",
+  "node": "24.19.0",
+  "bun": "1.3.14",
+  "reports": {
+    "node.json": {
+      "suites": 1,
+      "tests": 24,
+      "passes": 24,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T04:55:24.244Z",
+      "end": "2026-10-28T04:56:39.362Z",
+      "duration": 75118
+    },
+    "native.json": {
+      "suites": 1,
+      "tests": 24,
+      "passes": 24,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T04:55:31.238Z",
+      "end": "2026-10-28T04:56:39.555Z",
+      "duration": 68317
+    },
+    "node-intermediate.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T04:56:33.103Z",
+      "end": "2026-10-28T04:56:36.716Z",
+      "duration": 3613
+    },
+    "native-intermediate.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T04:57:05.786Z",
+      "end": "2026-10-28T04:57:08.778Z",
+      "duration": 2992
+    },
+    "node-legacy.json": {
+      "suites": 1,
+      "tests": 4,
+      "passes": 4,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T04:57:17.067Z",
+      "end": "2026-10-28T04:57:39.735Z",
+      "duration": 22668
+    },
+    "native-legacy.json": {
+      "suites": 1,
+      "tests": 4,
+      "passes": 4,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T04:57:17.067Z",
+      "end": "2026-10-28T04:57:36.351Z",
+      "duration": 19284
+    }
+  },
+  "sha256": {
+    "an-ticket21": "0e8b828e1f019ca9fd28a909c29e08de8512d6931b984702993c7a8a482585c0",
+    "native-legacy.json": "8b4c0e9d18482adfa6dbb0a634f1f0057298ae3498d54b4a88ecb05d4f1e66fb",
+    "native.json": "1be453873b4220700889c09bbc9ddd27755f749f8eb2b3f58342a6b2224d1185",
+    "native-intermediate.json": "7e1f0396ba7b71c4d3242be14992bb161f305edd967d68959ea65095592c4d00",
+    "node-legacy.json": "e1c3f800e7266ed281b06ac10976ce72ef0c556fa6f37c171e6ded147e563069",
+    "node.json": "d721c0c12b7446813186397a84ddc2963ab5dbfe00ba9460ea22079ac9a813d6",
+    "node-intermediate.json": "d7cba6a69c3b0981b30c24bbfe3ea68b121c2f6e7a9825db5a2412edb5146d35"
+  }
+}

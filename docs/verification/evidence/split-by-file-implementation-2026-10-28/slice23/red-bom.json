@@ -1,0 +1,40 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-28T06:19:35.550Z",
+    "end": "2026-10-28T06:19:39.209Z",
+    "duration": 3659
+  },
+  "tests": [
+    {
+      "title": "retains a leading Unicode byte-order character in a selected filename",
+      "fullTitle": "file split selectors and entries through the public CLI retains a leading Unicode byte-order character in a selected filename",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 1300,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: split -f ﻿selected.txt: \nERROR: File split construction failed before extraction. No split refs were published. Prepared files are retained at /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi. Inspect current refs and hook effects before retrying. Command failed with error exit code 1:\ngit -C /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi/worktree -c core.hooksPath=/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-commit-hooks-JV7rbr commit --quiet --cleanup=verbatim --file /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi/message\nNot currently on any branch.\nnothing to commit, working tree clean\n\n\n\n    at RelationCliFixture.ok (apps/cli/dist/test/lib/fixtures/reorder_cli.js:92:19)\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_entries_cli.test.js:63:17)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "split -f ﻿selected.txt: \nERROR: File split construction failed before extraction. No split refs were published. Prepared files are retained at /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi. Inspect current refs and hook effects before retrying. Command failed with error exit code 1:\ngit -C /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi/worktree -c core.hooksPath=/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-commit-hooks-JV7rbr commit --quiet --cleanup=verbatim --file /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi/message\nNot currently on any branch.\nnothing to commit, working tree clean\n\n\n"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "retains a leading Unicode byte-order character in a selected filename",
+      "fullTitle": "file split selectors and entries through the public CLI retains a leading Unicode byte-order character in a selected filename",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 1300,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: split -f ﻿selected.txt: \nERROR: File split construction failed before extraction. No split refs were published. Prepared files are retained at /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi. Inspect current refs and hook effects before retrying. Command failed with error exit code 1:\ngit -C /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi/worktree -c core.hooksPath=/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-commit-hooks-JV7rbr commit --quiet --cleanup=verbatim --file /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi/message\nNot currently on any branch.\nnothing to commit, working tree clean\n\n\n\n    at RelationCliFixture.ok (apps/cli/dist/test/lib/fixtures/reorder_cli.js:92:19)\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_entries_cli.test.js:63:17)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "split -f ﻿selected.txt: \nERROR: File split construction failed before extraction. No split refs were published. Prepared files are retained at /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi. Inspect current refs and hook effects before retrying. Command failed with error exit code 1:\ngit -C /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi/worktree -c core.hooksPath=/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-commit-hooks-JV7rbr commit --quiet --cleanup=verbatim --file /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-file-split-0l0tTi/message\nNot currently on any branch.\nnothing to commit, working tree clean\n\n\n"
+      }
+    }
+  ],
+  "passes": []
+}

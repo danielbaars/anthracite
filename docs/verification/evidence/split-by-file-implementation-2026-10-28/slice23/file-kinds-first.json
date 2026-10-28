@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:18:44.268Z",
+    "end": "2026-10-28T06:19:09.015Z",
+    "duration": 24747
+  },
+  "tests": [
+    {
+      "title": "projects additions, deletions, binary blobs, executable modes and symlinks losslessly",
+      "fullTitle": "file split selectors and entries through the public CLI projects additions, deletions, binary blobs, executable modes and symlinks losslessly",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3411,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "selects only the old endpoint of a cross-path rename",
+      "fullTitle": "file split selectors and entries through the public CLI selects only the old endpoint of a cross-path rename",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3927,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "selects only the new endpoint of a cross-path rename",
+      "fullTitle": "file split selectors and entries through the public CLI selects only the new endpoint of a cross-path rename",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3280,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an impossible partial file-to-directory projection before hooks or construction",
+      "fullTitle": "file split selectors and entries through the public CLI refuses an impossible partial file-to-directory projection before hooks or construction",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 4443,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "projects additions, deletions, binary blobs, executable modes and symlinks losslessly",
+      "fullTitle": "file split selectors and entries through the public CLI projects additions, deletions, binary blobs, executable modes and symlinks losslessly",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3411,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "selects only the old endpoint of a cross-path rename",
+      "fullTitle": "file split selectors and entries through the public CLI selects only the old endpoint of a cross-path rename",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3927,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "selects only the new endpoint of a cross-path rename",
+      "fullTitle": "file split selectors and entries through the public CLI selects only the new endpoint of a cross-path rename",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3280,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an impossible partial file-to-directory projection before hooks or construction",
+      "fullTitle": "file split selectors and entries through the public CLI refuses an impossible partial file-to-directory projection before hooks or construction",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 4443,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

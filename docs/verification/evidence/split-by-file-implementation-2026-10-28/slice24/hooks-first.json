@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:20:02.426Z",
+    "end": "2026-10-28T06:21:08.620Z",
+    "duration": 66194
+  },
+  "tests": [
+    {
+      "title": "preserves staged resolution and recovery when an active participant is frozen",
+      "fullTitle": "file split recovery through real public processes preserves staged resolution and recovery when an active participant is frozen",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 30048,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains ignored hook work after a construction failure and honors no-verify",
+      "fullTitle": "file split recovery through real public processes retains ignored hook work after a construction failure and honors no-verify",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 12663,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports explicit remaining retries when a replay hook fails without a rebase",
+      "fullTitle": "file split recovery through real public processes reports explicit remaining retries when a replay hook fails without a rebase",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 10666,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a foreign Git lock left by a successful hook before publication",
+      "fullTitle": "file split recovery through real public processes retains a foreign Git lock left by a successful hook before publication",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 3257,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves staged resolution and recovery when an active participant is frozen",
+      "fullTitle": "file split recovery through real public processes preserves staged resolution and recovery when an active participant is frozen",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 30048,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains ignored hook work after a construction failure and honors no-verify",
+      "fullTitle": "file split recovery through real public processes retains ignored hook work after a construction failure and honors no-verify",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 12663,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports explicit remaining retries when a replay hook fails without a rebase",
+      "fullTitle": "file split recovery through real public processes reports explicit remaining retries when a replay hook fails without a rebase",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 10666,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a foreign Git lock left by a successful hook before publication",
+      "fullTitle": "file split recovery through real public processes retains a foreign Git lock left by a successful hook before publication",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 3257,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

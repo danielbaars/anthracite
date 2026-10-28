@@ -1,0 +1,344 @@
+{
+  "ticket": 23,
+  "base": "32b5b551355e64a50df72d91bda57d24573308fc",
+  "commit": "3db8899c50162843f57e99e7e817eb54c8ad6836",
+  "node": "v24.19.0",
+  "bun": "1.3.14",
+  "acceptanceCasesPerRuntime": 13,
+  "affectedControlsPerRuntime": 2,
+  "reports": {
+    "entry-edge-green.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:20:02.628Z",
+        "end": "2026-10-28T06:20:21.219Z",
+        "duration": 18591
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "exploratory-empty-tree-expectation.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T06:25:30.637Z",
+        "end": "2026-10-28T06:25:40.353Z",
+        "duration": 9716
+      },
+      "classification": "exploration-not-acceptance"
+    },
+    "file-kinds-first.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:18:44.268Z",
+        "end": "2026-10-28T06:19:09.015Z",
+        "duration": 24747
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "green-empty-continuation.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:16:06.278Z",
+        "end": "2026-10-28T06:16:09.459Z",
+        "duration": 3181
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "green-encoding.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:14:54.021Z",
+        "end": "2026-10-28T06:14:57.672Z",
+        "duration": 3651
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "green-gitlink.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:12:12.483Z",
+        "end": "2026-10-28T06:12:16.425Z",
+        "duration": 3942
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "green-hidden-gitlink.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:24:55.039Z",
+        "end": "2026-10-28T06:24:58.132Z",
+        "duration": 3093
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "green-projection.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:11:00.844Z",
+        "end": "2026-10-28T06:11:03.714Z",
+        "duration": 2870
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "native-controls.json": {
+      "stats": {
+        "suites": 2,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:30:24.531Z",
+        "end": "2026-10-28T06:30:43.472Z",
+        "duration": 18941
+      },
+      "classification": "current-acceptance"
+    },
+    "native-prior.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:23:10.998Z",
+        "end": "2026-10-28T06:24:12.126Z",
+        "duration": 61128
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "native.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:28:11.354Z",
+        "end": "2026-10-28T06:29:12.144Z",
+        "duration": 60790
+      },
+      "classification": "current-acceptance"
+    },
+    "node-controls.json": {
+      "stats": {
+        "suites": 2,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:30:22.950Z",
+        "end": "2026-10-28T06:30:45.274Z",
+        "duration": 22324
+      },
+      "classification": "current-acceptance"
+    },
+    "node-prior.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:23:04.176Z",
+        "end": "2026-10-28T06:24:13.416Z",
+        "duration": 69240
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "node.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:27:45.431Z",
+        "end": "2026-10-28T06:28:48.339Z",
+        "duration": 62908
+      },
+      "classification": "current-acceptance"
+    },
+    "red-bom.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T06:19:35.550Z",
+        "end": "2026-10-28T06:19:39.209Z",
+        "duration": 3659
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "red-empty-continuation.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T06:15:32.599Z",
+        "end": "2026-10-28T06:15:35.417Z",
+        "duration": 2818
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "red-encoding.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T06:14:06.718Z",
+        "end": "2026-10-28T06:14:09.469Z",
+        "duration": 2751
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "red-gitlink.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T06:11:21.871Z",
+        "end": "2026-10-28T06:11:27.876Z",
+        "duration": 6005
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "red-hidden-gitlink.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T06:23:57.075Z",
+        "end": "2026-10-28T06:24:00.202Z",
+        "duration": 3127
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "red-projection.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T05:17:20.158Z",
+        "end": "2026-10-28T05:17:26.302Z",
+        "duration": 6144
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "red-relative-config.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T06:22:33.003Z",
+        "end": "2026-10-28T06:22:36.543Z",
+        "duration": 3540
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "selectors-cwd-green.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T06:17:58.098Z",
+        "end": "2026-10-28T06:18:04.206Z",
+        "duration": 6108
+      },
+      "classification": "prior-tracer-or-regression"
+    },
+    "selectors-first.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 1,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-28T06:17:29.803Z",
+        "end": "2026-10-28T06:17:39.780Z",
+        "duration": 9977
+      },
+      "classification": "prior-tracer-or-regression"
+    }
+  },
+  "sourceSha256": {
+    "apps/cli/src/actions/split_file_entries.ts": "87a4170f369758c9ab5c7657ca02aa91cd16fedc3baa8c5784661e8313f0eb73",
+    "apps/cli/src/actions/split_file_plan.ts": "edbf59524cf051948a6b1cf46d5887ab6d6b9fab3874f73724f14599cecc0b9f",
+    "apps/cli/src/actions/split_file_prepare.ts": "3fa4bab52f678228c8640fc8638b3f9ccc24aa08bdd8e72845ede41ed6e841be",
+    "apps/cli/test/commands/split_file_entries_cli.test.ts": "73328a0392577c1fe3f63cc42b1756ab706185e2f0375bd98ba0910a6d4686eb"
+  },
+  "sha256": {
+    "an-ticket23": "e49576a87b4852864df57440cd3a3d3dd0a41731195d794092aeca1684255fe3",
+    "an-ticket23-prior": "8f88d9bf00c55ab9f0712cd94e7f5e6a24041b48bddb5615dcc59c59685e506f",
+    "entry-edge-green.json": "1d5d353dbba772e31f60acb2142387191f88940e63f97647059ba1aa131c12f4",
+    "exploratory-empty-tree-expectation.json": "a7df066c2a5087a0f3be374252106d3363c1578f432ef7617568010af55aa0cb",
+    "file-kinds-first.json": "5aee15c6be9a3ffdcfac7e2dcd900dedff7db561185ca7f965a4d210a232a433",
+    "green-empty-continuation.json": "3671c8996c482c5a6aa6923f5e8cb20a0065db206567f361ab7d6876aa12f53b",
+    "green-encoding.json": "6d732f78a896796cabc834391d98e4dc393b70a9e9a24bbbfda8ce1f120d25d9",
+    "green-gitlink.json": "81614f6a4775b1a265505f597c09c1048037df4b7e1aabb7ffb2acd3eb993a19",
+    "green-hidden-gitlink.json": "ef7634c6a532411fb073f64bfeff28b8dfcd6aa7262d6fa279a2d2422af23d38",
+    "green-projection.json": "6c370a3535001bf079c1da6317574f74dded484e8596f8f3c2aa76a885814fc2",
+    "native-controls.json": "4564a4d7d6e981a809a672ad04c46d377df2135dbafff0e6af7cec8736d96d92",
+    "native-prior.json": "b27fb6d1d815703d4ff5c6519cd089f613fbdca9703b200fd24882b9d9185e7b",
+    "native.json": "6777c4dda8f15a35d1e24ed55883d386590078d7639653c4babb138c550f5eb7",
+    "node-controls.json": "8a8d9ed03c37aa20b3af28d05ae1d65ab64b5705642e56d90255336916e33596",
+    "node-prior.json": "0d6b70c0d89b337887a4b82827c08d605294d40dd7aedfeeb775440771790fce",
+    "node.json": "59c1705773a66039ca2cdc2139e7e2e4045c40f6f12a860e409183aef8f90803",
+    "red-bom.json": "91cf51900b639e8a1ff9dcadd68a5a657e86ffdd0bc83239f8bf3730f9ee9c7c",
+    "red-empty-continuation.json": "92683c6bcf67c0448c40b8edf15b0a45f8eca3c4a96414eb39e7ae7c36c1ab45",
+    "red-encoding.json": "fba1c5f951b265704b5c0009ad6cfbbc89923a888450b528ffaf0280741c8a00",
+    "red-gitlink.json": "dd008a8c0917bfbf2dfe523ac9ef835e9586fe7585498ea076f7ede9b54e9766",
+    "red-hidden-gitlink.json": "d00470859d26906ebb7a6b1a0bc106402cb8e5bc404a359a654f2c29df86408a",
+    "red-projection.json": "42fe769f446e79f374c13a6e1068da07b296314908c20e990e46f5ac620ce8d2",
+    "red-relative-config.json": "d792195e285acc3b6890ca8d27ca827c7867a40831d9190f23cb05c4a0fea57d",
+    "selectors-cwd-green.json": "ba29541d171cdc55e4da870fab7b2ecfdb4e5a3bed85f57d3a65070b99b557eb",
+    "selectors-first.json": "0e57a880e526cb7f177de33f1f7438822110a927082086e1e9025f369082c59f"
+  },
+  "limits": "Focused public CLI acceptance only. Historical red and exploratory expectations are not current product failures. Binaries remain outside repository."
+}

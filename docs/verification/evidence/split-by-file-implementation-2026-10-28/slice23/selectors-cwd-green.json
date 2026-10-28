@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:17:58.098Z",
+    "end": "2026-10-28T06:18:04.206Z",
+    "duration": 6108
+  },
+  "tests": [
+    {
+      "title": "uses effective subdirectory cwd together with top and exclusion magic",
+      "fullTitle": "file split selectors and entries through the public CLI uses effective subdirectory cwd together with top and exclusion magic",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3393,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "uses effective subdirectory cwd together with top and exclusion magic",
+      "fullTitle": "file split selectors and entries through the public CLI uses effective subdirectory cwd together with top and exclusion magic",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 3393,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

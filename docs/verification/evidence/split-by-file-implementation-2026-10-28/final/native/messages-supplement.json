@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T08:08:53.357Z",
+    "end": "2026-10-28T08:09:16.265Z",
+    "duration": 22908
+  },
+  "tests": [
+    {
+      "title": "restacks nonconflicting fan-out parent-first and retains each final tree",
+      "fullTitle": "file split extraction through the public CLI restacks nonconflicting fan-out parent-first and retains each final tree",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 16903,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "restacks nonconflicting fan-out parent-first and retains each final tree",
+      "fullTitle": "file split extraction through the public CLI restacks nonconflicting fan-out parent-first and retains each final tree",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 16903,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

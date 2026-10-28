@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:12:43.089Z",
+    "end": "2026-10-28T06:13:04.812Z",
+    "duration": 21723
+  },
+  "tests": [
+    {
+      "title": "continues a genuine stale child conflict without extracting twice",
+      "fullTitle": "file split recovery through real public processes continues a genuine stale child conflict without extracting twice",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 19264,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "continues a genuine stale child conflict without extracting twice",
+      "fullTitle": "file split recovery through real public processes continues a genuine stale child conflict without extracting twice",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 19264,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

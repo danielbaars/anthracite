@@ -1,0 +1,40 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-28T06:21:01.100Z",
+    "end": "2026-10-28T06:21:18.374Z",
+    "duration": 17274
+  },
+  "tests": [
+    {
+      "title": "accepts the valid empty continuation left by an ordinary legacy recovery",
+      "fullTitle": "file split recovery through real public processes accepts the valid empty continuation left by an ordinary legacy recovery",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 14839,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: split -f selected.txt: \nERROR: Cannot split by file with existing continuation. Finish or inspect recovery first.\n\n    at RelationCliFixture.ok (apps/cli/dist/test/lib/fixtures/reorder_cli.js:92:19)\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_recovery_cli.test.js:203:17)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "split -f selected.txt: \nERROR: Cannot split by file with existing continuation. Finish or inspect recovery first.\n"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "accepts the valid empty continuation left by an ordinary legacy recovery",
+      "fullTitle": "file split recovery through real public processes accepts the valid empty continuation left by an ordinary legacy recovery",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 14839,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: split -f selected.txt: \nERROR: Cannot split by file with existing continuation. Finish or inspect recovery first.\n\n    at RelationCliFixture.ok (apps/cli/dist/test/lib/fixtures/reorder_cli.js:92:19)\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_recovery_cli.test.js:203:17)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "split -f selected.txt: \nERROR: Cannot split by file with existing continuation. Finish or inspect recovery first.\n"
+      }
+    }
+  ],
+  "passes": []
+}

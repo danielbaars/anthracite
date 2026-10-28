@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-28T06:10:45.227Z",
+    "end": "2026-10-28T06:11:02.106Z",
+    "duration": 16879
+  },
+  "tests": [
+    {
+      "title": "continues a genuine stale child conflict without extracting twice",
+      "fullTitle": "file split recovery through real public processes continues a genuine stale child conflict without extracting twice",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 14601,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'Extracted selected files into base_sp…' to include 'File split is incomplete'",
+        "showDiff": false,
+        "actual": "Extracted selected files into base_split; retained base as the remainder.\nHit conflict restacking child on base.\n\nUnmerged files:\nmain.txt\n\nYou are here (resolving child):\n◯  tip\n◯  child\n◯  base\n\nTo fix and continue your previous Anthracite command:\n(1) resolve the listed merge conflicts\n(2) mark them as resolved with an add .\n(3) run an continue to continue executing your previous Anthracite command\nan rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'Extracted selected files into base_sp…' to include 'File split is incomplete'\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_recovery_cli.test.js:42:39)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "continues a genuine stale child conflict without extracting twice",
+      "fullTitle": "file split recovery through real public processes continues a genuine stale child conflict without extracting twice",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 14601,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'Extracted selected files into base_sp…' to include 'File split is incomplete'",
+        "showDiff": false,
+        "actual": "Extracted selected files into base_split; retained base as the remainder.\nHit conflict restacking child on base.\n\nUnmerged files:\nmain.txt\n\nYou are here (resolving child):\n◯  tip\n◯  child\n◯  base\n\nTo fix and continue your previous Anthracite command:\n(1) resolve the listed merge conflicts\n(2) mark them as resolved with an add .\n(3) run an continue to continue executing your previous Anthracite command\nan rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'Extracted selected files into base_sp…' to include 'File split is incomplete'\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_recovery_cli.test.js:42:39)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

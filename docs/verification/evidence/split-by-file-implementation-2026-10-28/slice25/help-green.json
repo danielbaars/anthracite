@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T07:50:17.342Z",
+    "end": "2026-10-28T07:50:20.333Z",
+    "duration": 2991
+  },
+  "tests": [
+    {
+      "title": "explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "fullTitle": "file split public surface explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 743,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "fullTitle": "file split public surface explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 743,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
