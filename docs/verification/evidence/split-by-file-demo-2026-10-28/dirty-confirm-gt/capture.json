@@ -1,0 +1,12 @@
+{
+  "driver": "direct subprocess with separate stdout/stderr and --no-interactive; fresh fixture after REA cleanup uncertainty",
+  "args": [
+    "split",
+    "--by-file",
+    "src/refactor/**",
+    "--no-interactive"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "ERROR: This command cannot be run with uncommitted changes. \n"
+}
