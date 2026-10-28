@@ -1,6 +1,6 @@
 # Per-PR reviewers and assignees
 
-Status: design and verification boundary agreed on 2026-10-28. Implementation specification not yet written.
+Status: design and verification boundary agreed on 2026-10-28. The resulting [implementation specification](../specs/submit-pr-roles.md) records this contract.
 
 ## Goal
 
@@ -74,4 +74,4 @@ All proposed behavior and the verification boundary have been approved. No produ
 
 ## Publication
 
-The design is recorded locally. No implementation or GitHub publication has been requested for this design.
+The owner subsequently invoked to-spec to publish the agreed specification to the Anthracite issue tracker. Specification publication does not authorize implementation or a release.
