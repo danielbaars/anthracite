@@ -38,6 +38,15 @@ const ContinueSchema = t.shape({
       parent: t.string,
       mandatory: t.array(t.string),
       completed: t.array(t.string),
+      expected: t.optional(
+        t.array(
+          t.shape({
+            name: t.string,
+            revision: t.string,
+            from: t.optional(t.string),
+          })
+        )
+      ),
     })
   ),
   insert: t.optional(

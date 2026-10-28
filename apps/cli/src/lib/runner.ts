@@ -11,6 +11,7 @@ import { assertDeleteRecoveryEditable } from '../actions/delete_recovery';
 import { continueConfigFactory } from './spiffy/continuation_spf';
 import { assertDeleteAllowed } from '../actions/delete_branch';
 import { planFileSplit } from '../actions/split_file_plan';
+import { assertFileSplitAvailable } from '../actions/split_file_recovery';
 import {
   initContext,
   initContextLite,
@@ -163,6 +164,7 @@ async function graphiteInternal(
       }).data;
       assertContinuationBranchesEditable(data, activeBranch);
       assertDeleteRecoveryEditable(data.delete);
+      assertFileSplitAvailable(data);
     }
     await preflightLifecycle(args, canonicalName, git);
     const contextLite = initContextLite({

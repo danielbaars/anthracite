@@ -26,6 +26,11 @@ import {
   reportReorderFailure,
 } from './reorder_recovery';
 import { assertMoveFilesAvailable, reportMoveFailure } from './move_recovery';
+import {
+  assertFileSplitAvailable,
+  finishFileSplit,
+  reportFileSplitFailure,
+} from './split_file_recovery';
 
 export async function continueAction(
   opts: { addAll: boolean },
@@ -41,6 +46,7 @@ export async function continueAction(
   if (activeBranch) context.engine.assertBranchEditable(activeBranch);
 
   assertDeleteRecoveryEditable(context.continueConfig.data.delete);
+  assertFileSplitAvailable(context.continueConfig.data);
   if (opts.addAll) {
     context.engine.addAll();
   }
@@ -94,6 +100,7 @@ export async function continueAction(
         ? 'replay metadata publication'
         : undefined
     );
+    reportFileSplitFailure(context);
     throw error;
   }
   if (cont.result === 'REBASE_CONFLICT') {
@@ -108,6 +115,7 @@ export async function continueAction(
       context
     );
     reportReorderFailure(context);
+    reportFileSplitFailure(context);
     throw new RebaseConflictError();
   }
 
@@ -128,8 +136,14 @@ export async function continueAction(
     );
   }
 
-  if (branchesToRestack) {
-    restackBranches(branchesToRestack, context);
+  try {
+    if (branchesToRestack) {
+      restackBranches(branchesToRestack, context);
+    }
+    finishFileSplit(context);
+  } catch (error) {
+    reportFileSplitFailure(context);
+    throw error;
   }
   finishReorder(context);
   clearContinuation(context);
