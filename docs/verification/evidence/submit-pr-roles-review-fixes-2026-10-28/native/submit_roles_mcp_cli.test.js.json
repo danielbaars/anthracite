@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T14:00:05.365Z",
+    "end": "2026-10-28T14:00:10.860Z",
+    "duration": 5495
+  },
+  "tests": [
+    {
+      "title": "submits the selected stack with both roles only on the target PR",
+      "fullTitle": "submit PR roles through the existing MCP execution tool submits the selected stack with both roles only on the target PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_mcp_cli.test.js",
+      "duration": 5495,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "submits the selected stack with both roles only on the target PR",
+      "fullTitle": "submit PR roles through the existing MCP execution tool submits the selected stack with both roles only on the target PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_mcp_cli.test.js",
+      "duration": 5495,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

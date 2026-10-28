@@ -1,0 +1,216 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 11,
+    "passes": 11,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T14:02:07.426Z",
+    "end": "2026-10-28T14:02:38.911Z",
+    "duration": 31485
+  },
+  "tests": [
+    {
+      "title": "preserves explicit reviewers on creation without prompting or requesting a current sibling",
+      "fullTitle": "explicit reviewers through the built CLI preserves explicit reviewers on creation without prompting or requesting a current sibling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 2561,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "adds reviewers to unchanged existing selected PRs without --always, retains others, and leaves requests alone without the option",
+      "fullTitle": "explicit reviewers through the built CLI adds reviewers to unchanged existing selected PRs without --always, retains others, and leaves requests alone without the option",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 5226,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects an explicitly empty non-interactive reviewer value before pushing or changing PRs",
+      "fullTitle": "explicit reviewers through the built CLI rejects an explicitly empty non-interactive reviewer value before pushing or changing PRs",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1479,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "fails honestly when gh exits zero without assigning a requested reviewer after creation",
+      "fullTitle": "explicit reviewers through the built CLI fails honestly when gh exits zero without assigning a requested reviewer after creation",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1808,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports rejected reviewer operations after code and PR progress without claiming success",
+      "fullTitle": "explicit reviewers through the built CLI reports rejected reviewer operations after code and PR progress without claiming success",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 2985,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "identifies confirmed and unconfirmed names when only part of a reviewer list is assigned",
+      "fullTitle": "explicit reviewers through the built CLI identifies confirmed and unconfirmed names when only part of a reviewer list is assigned",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1747,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not treat an old review as confirmation of an ignored new request, but accepts an already pending request",
+      "fullTitle": "explicit reviewers through the built CLI does not treat an old review as confirmation of an ignored new request, but accepts an already pending request",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 3986,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "recognizes a newly submitted review when the pending request has already been fulfilled",
+      "fullTitle": "explicit reviewers through the built CLI recognizes a newly submitted review when the pending request has already been fulfilled",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 2789,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "fails when reviewer readback names a different PR even though gh assigned the reviewer",
+      "fullTitle": "explicit reviewers through the built CLI fails when reviewer readback names a different PR even though gh assigned the reviewer",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1719,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "updates code and adds a single reviewer while preserving the PR identity and approved content",
+      "fullTitle": "explicit reviewers through the built CLI updates code and adds a single reviewer while preserving the PR identity and approved content",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 3228,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "accepts an answered terminal reviewer prompt and creates the requested draft PR",
+      "fullTitle": "explicit reviewers through the built CLI accepts an answered terminal reviewer prompt and creates the requested draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1843,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves explicit reviewers on creation without prompting or requesting a current sibling",
+      "fullTitle": "explicit reviewers through the built CLI preserves explicit reviewers on creation without prompting or requesting a current sibling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 2561,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "adds reviewers to unchanged existing selected PRs without --always, retains others, and leaves requests alone without the option",
+      "fullTitle": "explicit reviewers through the built CLI adds reviewers to unchanged existing selected PRs without --always, retains others, and leaves requests alone without the option",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 5226,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects an explicitly empty non-interactive reviewer value before pushing or changing PRs",
+      "fullTitle": "explicit reviewers through the built CLI rejects an explicitly empty non-interactive reviewer value before pushing or changing PRs",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1479,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "fails honestly when gh exits zero without assigning a requested reviewer after creation",
+      "fullTitle": "explicit reviewers through the built CLI fails honestly when gh exits zero without assigning a requested reviewer after creation",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1808,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports rejected reviewer operations after code and PR progress without claiming success",
+      "fullTitle": "explicit reviewers through the built CLI reports rejected reviewer operations after code and PR progress without claiming success",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 2985,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "identifies confirmed and unconfirmed names when only part of a reviewer list is assigned",
+      "fullTitle": "explicit reviewers through the built CLI identifies confirmed and unconfirmed names when only part of a reviewer list is assigned",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1747,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not treat an old review as confirmation of an ignored new request, but accepts an already pending request",
+      "fullTitle": "explicit reviewers through the built CLI does not treat an old review as confirmation of an ignored new request, but accepts an already pending request",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 3986,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "recognizes a newly submitted review when the pending request has already been fulfilled",
+      "fullTitle": "explicit reviewers through the built CLI recognizes a newly submitted review when the pending request has already been fulfilled",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 2789,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "fails when reviewer readback names a different PR even though gh assigned the reviewer",
+      "fullTitle": "explicit reviewers through the built CLI fails when reviewer readback names a different PR even though gh assigned the reviewer",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1719,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "updates code and adds a single reviewer while preserving the PR identity and approved content",
+      "fullTitle": "explicit reviewers through the built CLI updates code and adds a single reviewer while preserving the PR identity and approved content",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 3228,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "accepts an answered terminal reviewer prompt and creates the requested draft PR",
+      "fullTitle": "explicit reviewers through the built CLI accepts an answered terminal reviewer prompt and creates the requested draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_reviewers.test.js",
+      "duration": 1843,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

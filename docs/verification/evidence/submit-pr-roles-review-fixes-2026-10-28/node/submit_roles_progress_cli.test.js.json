@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T14:00:09.686Z",
+    "end": "2026-10-28T14:00:53.037Z",
+    "duration": 43351
+  },
+  "tests": [
+    {
+      "title": "preserves pending reviewers and existing assignees without redundant additions",
+      "fullTitle": "submit role progress through the public CLI preserves pending reviewers and existing assignees without redundant additions",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 3556,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports retained reviewer progress and unattempted later work after assignment failure, then safely retries",
+      "fullTitle": "submit role progress through the public CLI reports retained reviewer progress and unattempted later work after assignment failure, then safely retries",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 6707,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "confirms partial reviewer progress even when gh exits nonzero and leaves assignees unattempted",
+      "fullTitle": "submit role progress through the public CLI confirms partial reviewer progress even when gh exits nonzero and leaves assignees unattempted",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 1882,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "confirms partial assignee progress after a nonzero write instead of hiding reached assignments",
+      "fullTitle": "submit role progress through the public CLI confirms partial assignee progress after a nonzero write instead of hiding reached assignments",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2156,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a pending team request by slug without reissuing it",
+      "fullTitle": "submit role progress through the public CLI preserves a pending team request by slug without reissuing it",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 3157,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "labels a reached assignment as unverified when readback identifies a different PR head",
+      "fullTitle": "submit role progress through the public CLI labels a reached assignment as unverified when readback identifies a different PR head",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2063,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains reviewer progress and refuses assignment after external discovery freezes the target",
+      "fullTitle": "submit role progress through the public CLI retains reviewer progress and refuses assignment after external discovery freezes the target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 5537,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "captures gh reviewers readback diagnostics inside the formatted error",
+      "fullTitle": "submit role progress through the public CLI captures gh reviewers readback diagnostics inside the formatted error",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2217,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "captures gh assignees readback diagnostics inside the formatted error",
+      "fullTitle": "submit role progress through the public CLI captures gh assignees readback diagnostics inside the formatted error",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2140,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a signalled push abort silent and stops before PR changes",
+      "fullTitle": "submit role progress through the public CLI keeps a signalled push abort silent and stops before PR changes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 4628,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops a rejected push before PR roles and later submissions while preserving local work",
+      "fullTitle": "submit role progress through the public CLI stops a rejected push before PR roles and later submissions while preserving local work",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2309,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports unattempted work when an earlier PR discovery freezes a later branch",
+      "fullTitle": "submit role progress through the public CLI reports unattempted work when an earlier PR discovery freezes a later branch",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 4784,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves pending reviewers and existing assignees without redundant additions",
+      "fullTitle": "submit role progress through the public CLI preserves pending reviewers and existing assignees without redundant additions",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 3556,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports retained reviewer progress and unattempted later work after assignment failure, then safely retries",
+      "fullTitle": "submit role progress through the public CLI reports retained reviewer progress and unattempted later work after assignment failure, then safely retries",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 6707,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "confirms partial reviewer progress even when gh exits nonzero and leaves assignees unattempted",
+      "fullTitle": "submit role progress through the public CLI confirms partial reviewer progress even when gh exits nonzero and leaves assignees unattempted",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 1882,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "confirms partial assignee progress after a nonzero write instead of hiding reached assignments",
+      "fullTitle": "submit role progress through the public CLI confirms partial assignee progress after a nonzero write instead of hiding reached assignments",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2156,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a pending team request by slug without reissuing it",
+      "fullTitle": "submit role progress through the public CLI preserves a pending team request by slug without reissuing it",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 3157,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "labels a reached assignment as unverified when readback identifies a different PR head",
+      "fullTitle": "submit role progress through the public CLI labels a reached assignment as unverified when readback identifies a different PR head",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2063,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains reviewer progress and refuses assignment after external discovery freezes the target",
+      "fullTitle": "submit role progress through the public CLI retains reviewer progress and refuses assignment after external discovery freezes the target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 5537,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "captures gh reviewers readback diagnostics inside the formatted error",
+      "fullTitle": "submit role progress through the public CLI captures gh reviewers readback diagnostics inside the formatted error",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2217,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "captures gh assignees readback diagnostics inside the formatted error",
+      "fullTitle": "submit role progress through the public CLI captures gh assignees readback diagnostics inside the formatted error",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2140,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a signalled push abort silent and stops before PR changes",
+      "fullTitle": "submit role progress through the public CLI keeps a signalled push abort silent and stops before PR changes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 4628,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops a rejected push before PR roles and later submissions while preserving local work",
+      "fullTitle": "submit role progress through the public CLI stops a rejected push before PR roles and later submissions while preserving local work",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2309,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports unattempted work when an earlier PR discovery freezes a later branch",
+      "fullTitle": "submit role progress through the public CLI reports unattempted work when an earlier PR discovery freezes a later branch",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 4784,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

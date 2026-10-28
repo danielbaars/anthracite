@@ -1,5 +1,7 @@
 # Submit role implementation verification
 
+Follow-up: a subsequent external review led to [three review corrections and updated 73/73 results](submit-pr-roles-review-fixes-2026-10-28.md). The original candidate results below are retained as provenance.
+
 ## Candidate and result
 
 The integrated implementation of [#29](https://github.com/danielbaars/anthracite/issues/29) and sub-issues #30–#33 was checked at `5285c564c38d43a587432b4cdb6c777b3e9cac5e`, relative to main `ddcb6d6b1083b797820a41232f2830f470969c4f`. The integration history is linear. All four ticket workstreams were integrated into the single `submit-pr-roles` branch.

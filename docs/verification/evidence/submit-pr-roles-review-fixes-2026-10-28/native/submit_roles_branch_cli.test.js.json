@@ -1,0 +1,144 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T13:59:40.345Z",
+    "end": "2026-10-28T14:00:03.467Z",
+    "duration": 23122
+  },
+  "tests": [
+    {
+      "title": "submits the selected stack but adds reviewers only to its explicit role target",
+      "fullTitle": "submit reviewer role targets through the public CLI submits the selected stack but adds reviewers only to its explicit role target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 5606,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews reviewer names for an unchanged target without changing other PRs",
+      "fullTitle": "submit reviewer role targets through the public CLI previews reviewer names for an unchanged target without changing other PRs",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 3425,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains scope-wide defaults and adds reviewers to an unchanged ancestor target only",
+      "fullTitle": "submit reviewer role targets through the public CLI retains scope-wide defaults and adds reviewers to an unchanged ancestor target only",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 4684,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unknown, trunk, outside-scope and frozen explicit targets before any remote mutation",
+      "fullTitle": "submit reviewer role targets through the public CLI refuses unknown, trunk, outside-scope and frozen explicit targets before any remote mutation",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 2972,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an update-only-skipped role target before submitting its existing ancestor",
+      "fullTitle": "submit reviewer role targets through the public CLI refuses an update-only-skipped role target before submitting its existing ancestor",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 2563,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a role target deselected in a real terminal before pushing any selected branch",
+      "fullTitle": "submit reviewer role targets through the public CLI refuses a role target deselected in a real terminal before pushing any selected branch",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 1210,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a bare reviewer choice without asking for input or changing PRs",
+      "fullTitle": "submit reviewer role targets through the public CLI previews a bare reviewer choice without asking for input or changing PRs",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 1339,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "submits the selected stack but adds reviewers only to its explicit role target",
+      "fullTitle": "submit reviewer role targets through the public CLI submits the selected stack but adds reviewers only to its explicit role target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 5606,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews reviewer names for an unchanged target without changing other PRs",
+      "fullTitle": "submit reviewer role targets through the public CLI previews reviewer names for an unchanged target without changing other PRs",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 3425,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains scope-wide defaults and adds reviewers to an unchanged ancestor target only",
+      "fullTitle": "submit reviewer role targets through the public CLI retains scope-wide defaults and adds reviewers to an unchanged ancestor target only",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 4684,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unknown, trunk, outside-scope and frozen explicit targets before any remote mutation",
+      "fullTitle": "submit reviewer role targets through the public CLI refuses unknown, trunk, outside-scope and frozen explicit targets before any remote mutation",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 2972,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an update-only-skipped role target before submitting its existing ancestor",
+      "fullTitle": "submit reviewer role targets through the public CLI refuses an update-only-skipped role target before submitting its existing ancestor",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 2563,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a role target deselected in a real terminal before pushing any selected branch",
+      "fullTitle": "submit reviewer role targets through the public CLI refuses a role target deselected in a real terminal before pushing any selected branch",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 1210,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a bare reviewer choice without asking for input or changing PRs",
+      "fullTitle": "submit reviewer role targets through the public CLI previews a bare reviewer choice without asking for input or changing PRs",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 1339,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
