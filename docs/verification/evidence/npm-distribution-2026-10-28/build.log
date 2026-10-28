@@ -1,0 +1,10 @@
+• Packages in scope: @danerwilliams/gti-cli-shared-types, @danielbaars/anthracite
+• Running build in 2 packages
+• Remote caching disabled
+@danerwilliams/gti-cli-shared-types:build: cache hit, replaying logs 85b496cca9949c10
+@danielbaars/anthracite:build: cache miss, executing d7e7d3e6f3bee3c0
+
+ Tasks:    2 successful, 2 total
+Cached:    1 cached, 2 total
+  Time:    8.681s 
+

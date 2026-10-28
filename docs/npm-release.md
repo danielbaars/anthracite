@@ -20,6 +20,8 @@ The generated package has no runtime dependencies, lifecycle scripts or developm
 
 The installation test uses an empty npm cache, offline installation and a temporary prefix containing spaces. It checks both command names, version, help, completion and package contents. It then runs existing public Git/MCP scenarios through the installed executable: read-only inspection, a staged commit with literal arguments, active/queued cancellation with numeric request ID zero, and a real pre-push guard against a local bare remote. GitHub responses in that guard scenario are controlled fixtures. No active installation, shell configuration or MCP registration changes. No live GitHub changes are made.
 
+See [implementation verification](verification/npm-distribution-2026-10-28.md) for the retained artifact-level evidence and local validation limits.
+
 ## Release automation
 
 `release-please-config.json` tracks `apps/cli` and its version, starting from the last standalone release, `v0.1.1`. Conventional commits affecting the CLI or root tooling feed a release PR and English changelog. Tags remain `v<version>` rather than acquiring a component prefix. A release PR updates the CLI manifest and `.release-please-manifest.json`; the root workspace has no version.
