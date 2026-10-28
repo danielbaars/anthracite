@@ -1,0 +1,222 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 7,
+    "passes": 0,
+    "pending": 0,
+    "failures": 7,
+    "start": "2026-10-28T14:01:33.939Z",
+    "end": "2026-10-28T14:01:54.390Z",
+    "duration": 20451
+  },
+  "tests": [
+    {
+      "title": "confirms partial reviewer progress even when gh exits nonzero and leaves assignees unattempted",
+      "fullTitle": "submit role progress through the public CLI confirms partial reviewer progress even when gh exits nonzero and leaves assignees unattempted",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 1915,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 126 to be above 160",
+        "showDiff": true,
+        "actual": "126",
+        "expected": "160",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 126 to be above 160\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:81:94)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "confirms partial assignee progress after a nonzero write instead of hiding reached assignments",
+      "fullTitle": "submit role progress through the public CLI confirms partial assignee progress after a nonzero write instead of hiding reached assignments",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2909,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 126 to be above 156",
+        "showDiff": true,
+        "actual": "126",
+        "expected": "156",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 126 to be above 156\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:96:90)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "captures gh reviewers readback diagnostics inside the formatted error",
+      "fullTitle": "submit role progress through the public CLI captures gh reviewers readback diagnostics inside the formatted error",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 3551,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 126 to be above 150",
+        "showDiff": true,
+        "actual": "126",
+        "expected": "150",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 126 to be above 150\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:171:89)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "captures gh assignees readback diagnostics inside the formatted error",
+      "fullTitle": "submit role progress through the public CLI captures gh assignees readback diagnostics inside the formatted error",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 3683,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 126 to be above 150",
+        "showDiff": true,
+        "actual": "126",
+        "expected": "150",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 126 to be above 150\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:171:89)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "keeps a signalled push abort silent and stops before PR changes",
+      "fullTitle": "submit role progress through the public CLI keeps a signalled push abort silent and stops before PR changes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 4753,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Command killed with signal SIG…' to not include 'ERROR:'",
+        "showDiff": false,
+        "actual": "ERROR: Command killed with signal SIGKILL:\ngit -c core.hooksPath=/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-push-hooks-pg5x72 push -u origin --force-with-lease base\n\n\nNot attempted: PR and role changes for base. Not attempted: submission of child; dependency footer updates.\n",
+        "operator": "notStrictEqual",
+        "stack": "AssertionError: expected 'ERROR: Command killed with signal SIG…' to not include 'ERROR:'\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:203:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "rejects unverified authenticated identity before publishing instead of guessing @me",
+      "fullTitle": "submit assignees through the public CLI rejects unverified authenticated identity before publishing instead of guessing @me",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 809,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'GitHub authentication required\\nERROR…' to include 'ERROR: Could not verify the GitHub us…'",
+        "showDiff": false,
+        "actual": "GitHub authentication required\nERROR: Command failed: gh api user\nGitHub authentication required\n\n",
+        "operator": "notStrictEqual",
+        "stack": "AssertionError: expected 'GitHub authentication required\\nERROR…' to include 'ERROR: Could not verify the GitHub us…'\n    at Context.<anonymous> (dist/test/commands/submit_assignees_cli.test.js:125:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "explains how to install gh when resolving @me without the executable",
+      "fullTitle": "submit assignees through the public CLI explains how to install gh when resolving @me without the executable",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 680,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Executable not found in $PATH:…' to include 'The GitHub CLI (`gh`) is required but…'",
+        "showDiff": false,
+        "actual": "ERROR: Executable not found in $PATH: \"gh\"\n",
+        "operator": "notStrictEqual",
+        "stack": "AssertionError: expected 'ERROR: Executable not found in $PATH:…' to include 'The GitHub CLI (`gh`) is required but…'\n    at Context.<anonymous> (dist/test/commands/submit_assignees_cli.test.js:149:17)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "confirms partial reviewer progress even when gh exits nonzero and leaves assignees unattempted",
+      "fullTitle": "submit role progress through the public CLI confirms partial reviewer progress even when gh exits nonzero and leaves assignees unattempted",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 1915,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 126 to be above 160",
+        "showDiff": true,
+        "actual": "126",
+        "expected": "160",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 126 to be above 160\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:81:94)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "confirms partial assignee progress after a nonzero write instead of hiding reached assignments",
+      "fullTitle": "submit role progress through the public CLI confirms partial assignee progress after a nonzero write instead of hiding reached assignments",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 2909,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 126 to be above 156",
+        "showDiff": true,
+        "actual": "126",
+        "expected": "156",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 126 to be above 156\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:96:90)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "captures gh reviewers readback diagnostics inside the formatted error",
+      "fullTitle": "submit role progress through the public CLI captures gh reviewers readback diagnostics inside the formatted error",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 3551,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 126 to be above 150",
+        "showDiff": true,
+        "actual": "126",
+        "expected": "150",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 126 to be above 150\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:171:89)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "captures gh assignees readback diagnostics inside the formatted error",
+      "fullTitle": "submit role progress through the public CLI captures gh assignees readback diagnostics inside the formatted error",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 3683,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 126 to be above 150",
+        "showDiff": true,
+        "actual": "126",
+        "expected": "150",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 126 to be above 150\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:171:89)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "keeps a signalled push abort silent and stops before PR changes",
+      "fullTitle": "submit role progress through the public CLI keeps a signalled push abort silent and stops before PR changes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_progress_cli.test.js",
+      "duration": 4753,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Command killed with signal SIG…' to not include 'ERROR:'",
+        "showDiff": false,
+        "actual": "ERROR: Command killed with signal SIGKILL:\ngit -c core.hooksPath=/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-push-hooks-pg5x72 push -u origin --force-with-lease base\n\n\nNot attempted: PR and role changes for base. Not attempted: submission of child; dependency footer updates.\n",
+        "operator": "notStrictEqual",
+        "stack": "AssertionError: expected 'ERROR: Command killed with signal SIG…' to not include 'ERROR:'\n    at Context.<anonymous> (dist/test/commands/submit_roles_progress_cli.test.js:203:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "rejects unverified authenticated identity before publishing instead of guessing @me",
+      "fullTitle": "submit assignees through the public CLI rejects unverified authenticated identity before publishing instead of guessing @me",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 809,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'GitHub authentication required\\nERROR…' to include 'ERROR: Could not verify the GitHub us…'",
+        "showDiff": false,
+        "actual": "GitHub authentication required\nERROR: Command failed: gh api user\nGitHub authentication required\n\n",
+        "operator": "notStrictEqual",
+        "stack": "AssertionError: expected 'GitHub authentication required\\nERROR…' to include 'ERROR: Could not verify the GitHub us…'\n    at Context.<anonymous> (dist/test/commands/submit_assignees_cli.test.js:125:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "explains how to install gh when resolving @me without the executable",
+      "fullTitle": "submit assignees through the public CLI explains how to install gh when resolving @me without the executable",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 680,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Executable not found in $PATH:…' to include 'The GitHub CLI (`gh`) is required but…'",
+        "showDiff": false,
+        "actual": "ERROR: Executable not found in $PATH: \"gh\"\n",
+        "operator": "notStrictEqual",
+        "stack": "AssertionError: expected 'ERROR: Executable not found in $PATH:…' to include 'The GitHub CLI (`gh`) is required but…'\n    at Context.<anonymous> (dist/test/commands/submit_assignees_cli.test.js:149:17)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

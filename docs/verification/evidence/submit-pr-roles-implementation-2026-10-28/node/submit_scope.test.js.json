@@ -1,0 +1,126 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T12:45:44.721Z",
+    "end": "2026-10-28T12:46:16.924Z",
+    "duration": 32203
+  },
+  "tests": [
+    {
+      "title": "submits the explicit target and its ancestors while preserving an updated current sibling",
+      "fullTitle": "submit branch scope through the built CLI submits the explicit target and its ancestors while preserving an updated current sibling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 7274,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "expands --stack from the target instead of the checked out sibling",
+      "fullTitle": "submit branch scope through the built CLI expands --stack from the target instead of the checked out sibling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 6481,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects unknown and untracked explicit targets before PR or remote changes",
+      "fullTitle": "submit branch scope through the built CLI rejects unknown and untracked explicit targets before PR or remote changes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 1188,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses current branch by default and is a no-op after checking out an already submitted target",
+      "fullTitle": "submit branch scope through the built CLI uses current branch by default and is a no-op after checking out an already submitted target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 5067,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves force-with-lease protection for the selected target and requires explicit force to overwrite",
+      "fullTitle": "submit branch scope through the built CLI preserves force-with-lease protection for the selected target and requires explicit force to overwrite",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 4666,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews the selected update scope without pushing or changing PR fields",
+      "fullTitle": "submit branch scope through the built CLI previews the selected update scope without pushing or changing PR fields",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 6367,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "submits the explicit target and its ancestors while preserving an updated current sibling",
+      "fullTitle": "submit branch scope through the built CLI submits the explicit target and its ancestors while preserving an updated current sibling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 7274,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "expands --stack from the target instead of the checked out sibling",
+      "fullTitle": "submit branch scope through the built CLI expands --stack from the target instead of the checked out sibling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 6481,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects unknown and untracked explicit targets before PR or remote changes",
+      "fullTitle": "submit branch scope through the built CLI rejects unknown and untracked explicit targets before PR or remote changes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 1188,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses current branch by default and is a no-op after checking out an already submitted target",
+      "fullTitle": "submit branch scope through the built CLI uses current branch by default and is a no-op after checking out an already submitted target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 5067,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves force-with-lease protection for the selected target and requires explicit force to overwrite",
+      "fullTitle": "submit branch scope through the built CLI preserves force-with-lease protection for the selected target and requires explicit force to overwrite",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 4666,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews the selected update scope without pushing or changing PR fields",
+      "fullTitle": "submit branch scope through the built CLI previews the selected update scope without pushing or changing PR fields",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_scope.test.js",
+      "duration": 6367,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

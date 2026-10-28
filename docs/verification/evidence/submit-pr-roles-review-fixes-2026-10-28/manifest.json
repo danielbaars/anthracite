@@ -1,0 +1,51 @@
+{
+  "candidate_commit": "0fa3f144bf2cf13e34b3a4f4920f8977cdf2c1b4",
+  "review_url": "https://github.com/danielbaars/anthracite/pull/34#issuecomment-6470226186",
+  "baseline_commit": "6f0d2cd64286ed8baadf0fbdfd4656f98f5abb2e",
+  "totals": {
+    "node": {
+      "passes": 73,
+      "pending": 0,
+      "failed_files": 0
+    },
+    "native": {
+      "passes": 73,
+      "pending": 0,
+      "failed_files": 0
+    }
+  },
+  "native_sha256": "0bc78cf6ab6f1f97c47e33266705cc1ff5b616561e71d3cc73a8dbfb4ef4494d",
+  "code_trees": {
+    "apps/cli/src": "b711e136f187d34dbfb5230a397858271a8b5535",
+    "apps/cli/test": "eef619579a0b1efc536762d7ebf26593fcb512de"
+  },
+  "files": {
+    "summary.json": "e520b52dc337c159f88261a6647d8e5afd8506515f1654804f45b2344962d23e",
+    "typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lint-uncached.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "red-baseline-final.json": "b520136f791e31ce6752a3810e2913185b9adc88ed148d70e169f20b5bc89a88",
+    "review-comment.md": "00e164d8491acbf7419468360e6a80a65c67f202c4fbc622b19c24f932f64fb7",
+    "native-build.log": "0028344326d0eba33fe6f6cf9c52742d08590fa9080c53ec30f19b2ca249ff23",
+    "build.log": "bccd7f53d3b6b2910ba0449f6907f509486cdbf4388a059d1b0a3ae800a533ef",
+    "native/submit_roles_branch_cli.test.js.json": "ac9133775b1f38c17a7527132f5168e095f94f3ba63a57eb12597b4fe547f8f2",
+    "native/submit_scope.test.js.json": "28b6df0cc04e85ef44cc22ce73c5d9cfa983ba8f69e91577297917e7932b9f46",
+    "native/submit_assignees_cli.test.js.json": "a0163adeaac25e1f0a97c11b86380f898448908c484c6559bb8933f74f6a5d9b",
+    "native/submit_roles_surface_cli.test.js.json": "3bb3651ea859aeabb026936e7ba94d8ec3c962282605fd4f3f72371930ceab92",
+    "native/interaction_submit_cli.test.js.json": "3d1992e70e25ac87dcb0316cf626b7bb82a977ff6f5910fc444c013dfb69e8d0",
+    "native/submit_reviewers.test.js.json": "b4f9dca90046d0fbd511725ddd432498b5c3ae60b68e9c9a7991c8092e99a254",
+    "native/submit_preview_cli.test.js.json": "92070823feb9f6d8db756e5ff8d5425788d2886bcc031b0b1fa5a96e01b81f48",
+    "native/submit_roles_progress_cli.test.js.json": "41c775d8d56f541f8a811c8606a76f3b30126870a76543482c3731532b9d27f0",
+    "native/submit_roles_mcp_cli.test.js.json": "7caea2cf183cab8888f3d6dd785ea59986f11bcf76c9daa406fd1ce8f9304f33",
+    "native/frozen_submit_cli.test.js.json": "1196962be39514abebd59ee53549302bacd1a985c348e9bbed16125c935a89a7",
+    "node/submit_roles_branch_cli.test.js.json": "ca6f90f46f51067324557c73208502f6eb85acf51a57b764ba9ff00174b756b1",
+    "node/submit_scope.test.js.json": "57eb889e2bec6498df5dcec34da76b32c7f0e5e386fae7b69eb765d11a5f543f",
+    "node/submit_assignees_cli.test.js.json": "f5ca026b7752569e21a7dc4b419d9bebed6da9bab18fe71db02e746216879252",
+    "node/submit_roles_surface_cli.test.js.json": "1474c2c5831178adbf9863a9bd47a4d17c66ec1e738de584593202f5bc73a992",
+    "node/interaction_submit_cli.test.js.json": "6e4a222930e41585b2d24738f4483a66685d9b3b66a62f8090ec81ed0f30214d",
+    "node/submit_reviewers.test.js.json": "fb9f3bc0fb0a5e6dcacba1f9fdbac665945f5e11440151b4d78cdf298be70d5b",
+    "node/submit_preview_cli.test.js.json": "eaf5f72c1957c0ca13c560b3b9d1ff61ce1763e42af9e1780c109e57f003747d",
+    "node/submit_roles_progress_cli.test.js.json": "45c3b16990d3340e1f295b29338a4c20272e9bf90919bfeab27557352f4084e2",
+    "node/submit_roles_mcp_cli.test.js.json": "2c04261c888db2ddf61c61492ae415afabe6007c9493aaadd18d6104b8888078",
+    "node/frozen_submit_cli.test.js.json": "61abc95fdfcc2d91c46e619d4030efbd77634aea8cd93c4241ca6a7045f5207b"
+  }
+}

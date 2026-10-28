@@ -32,6 +32,8 @@ Stage changes with Git before `create` or `modify`, or choose the command's stag
 
 Use `an split --by-file 'path/**'` or `an sp -f path` to extract selected committed files into a prerequisite while retaining the original branch. See [file splitting, history and recovery](docs/split.md).
 
+Use `an submit --reviewers alice --assignees @me --roles-branch my-change` to add roles only to one selected PR while retaining the usual submission scope. See [reviewers, assignees and submission scope](docs/submit.md).
+
 To uninstall the command links and completion block, use `sh scripts/uninstall.sh` from a clone. Version directories and preferences are retained for rollback. See [installation and upgrades](docs/installation.md), the [command reference](DOCUMENTATION.md), and [compatibility](COMPATIBILITY.md).
 
 ## MCP

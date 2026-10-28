@@ -40,9 +40,19 @@ const args = {
   },
   reviewers: {
     describe:
-      'If set without an argument, prompt to manually set reviewers. Alternatively, accepts a comma separated string of reviewers',
+      'Add reviewers without removing existing requests, using comma-separated users or organization/team names. Applies to every selected PR unless --roles-branch is set. Without an argument, prompt per target PR.',
     type: 'string',
     alias: 'r',
+  },
+  assignees: {
+    describe:
+      'Add comma-separated GitHub users as assignees, including @me for the authenticated user. Applies to every selected PR unless --roles-branch is set.',
+    type: 'string',
+  },
+  'roles-branch': {
+    describe:
+      'Add reviewers and assignees only to this exact selected branch PR, without narrowing the submission scope.',
+    type: 'string',
   },
   'dry-run': {
     describe:
@@ -106,6 +116,8 @@ export const handler = async (argv: argsT): Promise<void> => {
         dryRun: argv['dry-run'],
         updateOnly: argv['update-only'],
         reviewers: argv.reviewers,
+        assignees: argv.assignees,
+        rolesBranch: argv['roles-branch'],
         confirm: argv.confirm,
         forcePush: argv.force,
         select: argv.select,

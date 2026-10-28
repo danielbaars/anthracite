@@ -1,0 +1,363 @@
+{
+  "commit": "0fa3f144bf2cf13e34b3a4f4920f8977cdf2c1b4",
+  "native_sha256": "0bc78cf6ab6f1f97c47e33266705cc1ff5b616561e71d3cc73a8dbfb4ef4494d",
+  "checks": {
+    "build": true,
+    "typecheck": true,
+    "lint_uncached": true
+  },
+  "results": [
+    {
+      "runtime": "node",
+      "file": "submit_roles_branch_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 7,
+        "passes": 7,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T13:59:40.345Z",
+        "end": "2026-10-28T14:00:05.213Z",
+        "duration": 24868
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "submit_roles_branch_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 7,
+        "passes": 7,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T13:59:40.345Z",
+        "end": "2026-10-28T14:00:03.467Z",
+        "duration": 23122
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "submit_roles_mcp_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:00:03.621Z",
+        "end": "2026-10-28T14:00:09.593Z",
+        "duration": 5972
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "submit_roles_mcp_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:00:05.365Z",
+        "end": "2026-10-28T14:00:10.860Z",
+        "duration": 5495
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "submit_roles_progress_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 12,
+        "passes": 12,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:00:09.686Z",
+        "end": "2026-10-28T14:00:53.037Z",
+        "duration": 43351
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "submit_roles_progress_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 12,
+        "passes": 12,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:00:10.950Z",
+        "end": "2026-10-28T14:00:51.032Z",
+        "duration": 40082
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "submit_roles_surface_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 9,
+        "passes": 9,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:00:51.121Z",
+        "end": "2026-10-28T14:01:25.950Z",
+        "duration": 34829
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "submit_roles_surface_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 9,
+        "passes": 9,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:00:53.142Z",
+        "end": "2026-10-28T14:01:24.985Z",
+        "duration": 31843
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "submit_assignees_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 12,
+        "passes": 12,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:01:25.088Z",
+        "end": "2026-10-28T14:02:07.333Z",
+        "duration": 42245
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "submit_assignees_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 12,
+        "passes": 12,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:01:26.054Z",
+        "end": "2026-10-28T14:02:04.552Z",
+        "duration": 38498
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "submit_reviewers.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:02:04.698Z",
+        "end": "2026-10-28T14:02:39.102Z",
+        "duration": 34404
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "submit_reviewers.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:02:07.426Z",
+        "end": "2026-10-28T14:02:38.911Z",
+        "duration": 31485
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "submit_preview_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 9,
+        "passes": 9,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:02:39.000Z",
+        "end": "2026-10-28T14:03:05.608Z",
+        "duration": 26608
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "submit_preview_cli.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 9,
+        "passes": 9,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:02:39.206Z",
+        "end": "2026-10-28T14:03:03.279Z",
+        "duration": 24073
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "submit_scope.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:03:03.387Z",
+        "end": "2026-10-28T14:03:36.898Z",
+        "duration": 33511
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "submit_scope.test.js",
+      "grep": null,
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:03:05.713Z",
+        "end": "2026-10-28T14:03:36.590Z",
+        "duration": 30877
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "interaction_submit_cli.test.js",
+      "grep": "rejects empty reviewer input on explicit-interactive pipes|keeps quiet dry-run data silent|ignores select and confirm without interaction|reports a real pre-push hook failure",
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:03:36.695Z",
+        "end": "2026-10-28T14:03:51.626Z",
+        "duration": 14931
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "interaction_submit_cli.test.js",
+      "grep": "rejects empty reviewer input on explicit-interactive pipes|keeps quiet dry-run data silent|ignores select and confirm without interaction|reports a real pre-push hook failure",
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:03:37.004Z",
+        "end": "2026-10-28T14:03:51.323Z",
+        "duration": 14319
+      },
+      "passed": true
+    },
+    {
+      "runtime": "node",
+      "file": "frozen_submit_cli.test.js",
+      "grep": "does not start a dangling remote discovery promise|rechecks status changed at confirmation before the first real push",
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:03:51.430Z",
+        "end": "2026-10-28T14:03:55.136Z",
+        "duration": 3706
+      },
+      "passed": true
+    },
+    {
+      "runtime": "native",
+      "file": "frozen_submit_cli.test.js",
+      "grep": "does not start a dangling remote discovery promise|rechecks status changed at confirmation before the first real push",
+      "status": 0,
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T14:03:51.731Z",
+        "end": "2026-10-28T14:03:55.075Z",
+        "duration": 3344
+      },
+      "passed": true
+    }
+  ],
+  "totals": {
+    "node": {
+      "passes": 73,
+      "pending": 0,
+      "failed_files": 0
+    },
+    "native": {
+      "passes": 73,
+      "pending": 0,
+      "failed_files": 0
+    }
+  }
+}

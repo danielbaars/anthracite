@@ -1,9 +1,10 @@
 import chalk from 'chalk';
+import { getAssignees } from './assignees';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
 import { TScopeSpec } from '../../lib/engine/scope_spec';
 import { ExitFailedError, KilledError } from '../../lib/errors';
-import { CommandFailedError } from '../../lib/git/runner';
+import { CommandFailedError, CommandKilledError } from '../../lib/git/runner';
 import { getPRInfoForBranches } from './prepare_branches';
 import { validateBranchesToSubmit } from './validate_branches';
 import { submitPullRequest } from './submit_prs';
@@ -25,6 +26,8 @@ export async function submitAction(
     dryRun: boolean;
     updateOnly: boolean;
     reviewers: string | undefined;
+    assignees?: string;
+    rolesBranch?: string;
     confirm: boolean;
     forcePush: boolean;
     select: boolean;
@@ -42,10 +45,21 @@ export async function submitAction(
   if (
     !context.canPrompt &&
     args.reviewers !== undefined &&
+    !(args.dryRun && args.reviewers === '') &&
     args.reviewers.split(',').some((reviewer) => !reviewer.trim())
   ) {
     throw new ExitFailedError(
       'Provide a non-empty reviewer username with --reviewers in non-interactive mode.'
+    );
+  }
+  const assignees = getAssignees(args.assignees);
+  if (
+    args.rolesBranch !== undefined &&
+    args.reviewers === undefined &&
+    assignees === undefined
+  ) {
+    throw new ExitFailedError(
+      '--roles-branch requires --reviewers or --assignees.'
     );
   }
   if (args.dryRun) {
@@ -92,6 +106,15 @@ export async function submitAction(
       )
     : allBranchNames;
 
+  if (
+    args.rolesBranch !== undefined &&
+    !branchNames.includes(args.rolesBranch)
+  ) {
+    throw new ExitFailedError(
+      `Role target "${args.rolesBranch}" is not a selected editable submission branch.`
+    );
+  }
+
   if (branchNames.length === 0) {
     context.splog.info('No editable branches to submit.');
     return;
@@ -105,6 +128,15 @@ export async function submitAction(
   context.splog.newline();
   await context.engine.populateRemoteShas();
   await validateBranchesToSubmit(branchNames, context);
+  if (
+    args.rolesBranch !== undefined &&
+    args.updateOnly &&
+    context.engine.getPrInfo(args.rolesBranch)?.number === undefined
+  ) {
+    throw new ExitFailedError(
+      `Role target "${args.rolesBranch}" is skipped by --update-only because it has no existing PR.`
+    );
+  }
 
   context.splog.info(
     chalk.blueBright(
@@ -119,6 +151,8 @@ export async function submitAction(
       publish: args.publish,
       updateOnly: args.updateOnly,
       reviewers: args.reviewers,
+      assignees,
+      rolesBranch: args.rolesBranch,
       dryRun: args.dryRun,
       select: args.select,
       always: args.always,
@@ -135,15 +169,24 @@ export async function submitAction(
     return;
   }
 
+  if (args.rolesBranch !== undefined) {
+    context.engine.assertBranchEditable(args.rolesBranch);
+  }
+
   context.splog.info(
     chalk.blueBright('📨 Pushing to remote and creating/updating PRs...')
   );
 
-  for (const submissionInfo of submissionInfos) {
-    context.engine.assertBranchEditable(submissionInfo.head);
+  for (const [index, submissionInfo] of submissionInfos.entries()) {
+    const remaining = submissionInfos.slice(index + 1).map((info) => info.head);
+    const notAttempted = `Not attempted: ${
+      remaining.length ? `submission of ${remaining.join(', ')}; ` : ''
+    }dependency footer updates.`;
     try {
+      context.engine.assertBranchEditable(submissionInfo.head);
       context.engine.pushBranch(submissionInfo.head, args.forcePush);
     } catch (err) {
+      if (err instanceof CommandKilledError) throw err;
       if (
         err instanceof CommandFailedError &&
         err.message.includes('stale info')
@@ -155,10 +198,17 @@ export async function submitAction(
             )} failed due to external changes to the remote branch.`,
             'If you are collaborating on this stack, try `an get` to pull in changes.',
             'Alternatively, use the `--force` option of this command to bypass the stale info warning.',
+            notAttempted,
           ].join('\n')
         );
       }
-      throw err;
+      throw new ExitFailedError(
+        `${
+          err instanceof Error ? err.message : String(err)
+        }\nNot attempted: PR and role changes for ${
+          submissionInfo.head
+        }. ${notAttempted}`
+      );
     }
 
     try {
@@ -167,7 +217,7 @@ export async function submitAction(
       throw new ExitFailedError(
         `${error instanceof Error ? error.message : String(error)}\nCode for ${
           submissionInfo.head
-        } was already pushed; earlier confirmed PR changes remain applied.`
+        } was already pushed; earlier confirmed PR changes remain applied.\n${notAttempted}`
       );
     }
   }

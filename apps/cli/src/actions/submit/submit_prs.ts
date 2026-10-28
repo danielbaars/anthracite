@@ -9,10 +9,11 @@ import { Unpacked } from '../../lib/utils/ts_helpers';
 import { execFileSync } from 'child_process';
 import { readPrDraftStatus } from './pr_status';
 import { requestReviewers } from './request_reviewers';
+import { requestAssignees } from './request_assignees';
 
-export type TPRSubmissionInfo = t.UnwrapSchemaMap<
-  typeof API_ROUTES.submitPullRequests.params
->['prs'];
+export type TPRSubmissionInfo = (Unpacked<
+  t.UnwrapSchemaMap<typeof API_ROUTES.submitPullRequests.params>['prs']
+> & { assignees?: readonly string[] })[];
 
 type TSubmittedPRRequest = Unpacked<TPRSubmissionInfo>;
 
@@ -81,7 +82,25 @@ export async function submitPullRequest(
         pr.response.prURL
       }; review request failed for ${reviewers.join(', ')}: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }\nNot attempted: assignees ${
+        pr.request.assignees?.join(', ') || '(none requested)'
+      }.`
+    );
+  }
+  try {
+    requestAssignees(
+      {
+        head: pr.response.head,
+        number: pr.response.prNumber,
+        repo: githubRepoSlug(context),
+      },
+      pr.request.assignees ?? []
+    );
+  } catch (error) {
+    throw new ExitFailedError(
+      `PR ${pr.response.status} at ${pr.response.prURL}; assignment failed: ${
+        error instanceof Error ? error.message : String(error)
+      }\nConfirmed reviewers: ${reviewers.join(', ') || 'none requested'}.`
     );
   }
   context.splog.info(

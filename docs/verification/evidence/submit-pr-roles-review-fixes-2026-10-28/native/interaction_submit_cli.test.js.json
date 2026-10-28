@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T14:03:37.004Z",
+    "end": "2026-10-28T14:03:51.323Z",
+    "duration": 14319
+  },
+  "tests": [
+    {
+      "title": "ignores select and confirm without interaction and submits the explicit downstack rather than a current sibling",
+      "fullTitle": "submit under the shared interaction policy ignores select and confirm without interaction and submits the explicit downstack rather than a current sibling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/interaction_submit_cli.test.js",
+      "duration": 6448,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a real pre-push hook failure while retaining committed work and remote PR state",
+      "fullTitle": "submit under the shared interaction policy reports a real pre-push hook failure while retaining committed work and remote PR state",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/interaction_submit_cli.test.js",
+      "duration": 4905,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects empty reviewer input on explicit-interactive pipes before partial field writes, push or PR mutations",
+      "fullTitle": "submit under the shared interaction policy rejects empty reviewer input on explicit-interactive pipes before partial field writes, push or PR mutations",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/interaction_submit_cli.test.js",
+      "duration": 1028,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps quiet dry-run data silent without editor, push or PR mutations",
+      "fullTitle": "submit under the shared interaction policy keeps quiet dry-run data silent without editor, push or PR mutations",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/interaction_submit_cli.test.js",
+      "duration": 1159,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "ignores select and confirm without interaction and submits the explicit downstack rather than a current sibling",
+      "fullTitle": "submit under the shared interaction policy ignores select and confirm without interaction and submits the explicit downstack rather than a current sibling",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/interaction_submit_cli.test.js",
+      "duration": 6448,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a real pre-push hook failure while retaining committed work and remote PR state",
+      "fullTitle": "submit under the shared interaction policy reports a real pre-push hook failure while retaining committed work and remote PR state",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/interaction_submit_cli.test.js",
+      "duration": 4905,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects empty reviewer input on explicit-interactive pipes before partial field writes, push or PR mutations",
+      "fullTitle": "submit under the shared interaction policy rejects empty reviewer input on explicit-interactive pipes before partial field writes, push or PR mutations",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/interaction_submit_cli.test.js",
+      "duration": 1028,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps quiet dry-run data silent without editor, push or PR mutations",
+      "fullTitle": "submit under the shared interaction policy keeps quiet dry-run data silent without editor, push or PR mutations",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/interaction_submit_cli.test.js",
+      "duration": 1159,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

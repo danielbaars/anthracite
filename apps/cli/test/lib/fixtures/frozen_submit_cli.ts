@@ -114,7 +114,11 @@ export class FrozenSubmitCliFixture extends SubmitCliFixture {
     };
   }
 
-  freezeAfterGhView(fields: string, branch: string): void {
+  freezeAfterGhView(
+    fields: string,
+    branch: string,
+    afterAssignment = false
+  ): void {
     const shim = path.join(this.root, 'bin', 'gh');
     const original = shim + '-original';
     fs.renameSync(shim, original);
@@ -131,7 +135,7 @@ process.stdout.write(result.stdout);
 process.stderr.write(result.stderr);
 if (args[0] === 'pr' && args[1] === 'view' && args[args.indexOf('--json') + 1] === ${JSON.stringify(
         fields
-      )}) {
+      )} && (!${afterAssignment} || JSON.parse(result.stdout).assignees?.length)) {
   const frozen = cp.spawnSync(${JSON.stringify(freeze[0])}, ${JSON.stringify(
         freeze.slice(1)
       )}, {encoding: 'utf8'});

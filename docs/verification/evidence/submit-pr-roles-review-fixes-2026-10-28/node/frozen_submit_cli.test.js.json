@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T14:03:51.430Z",
+    "end": "2026-10-28T14:03:55.136Z",
+    "duration": 3706
+  },
+  "tests": [
+    {
+      "title": "rechecks status changed at confirmation before the first real push",
+      "fullTitle": "frozen publication through the public CLI rechecks status changed at confirmation before the first real push",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/frozen_submit_cli.test.js",
+      "duration": 1740,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not start a dangling remote discovery promise when every selected branch is frozen",
+      "fullTitle": "frozen publication through the public CLI does not start a dangling remote discovery promise when every selected branch is frozen",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/frozen_submit_cli.test.js",
+      "duration": 1578,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "rechecks status changed at confirmation before the first real push",
+      "fullTitle": "frozen publication through the public CLI rechecks status changed at confirmation before the first real push",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/frozen_submit_cli.test.js",
+      "duration": 1740,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not start a dangling remote discovery promise when every selected branch is frozen",
+      "fullTitle": "frozen publication through the public CLI does not start a dangling remote discovery promise when every selected branch is frozen",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/frozen_submit_cli.test.js",
+      "duration": 1578,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

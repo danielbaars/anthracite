@@ -1,0 +1,54 @@
+{
+  "candidate_commit": "5285c564c38d43a587432b4cdb6c777b3e9cac5e",
+  "base_commit": "ddcb6d6b1083b797820a41232f2830f470969c4f",
+  "code_trees": {
+    "apps/cli/src": "a9d4770c8f7ea54c2c2bea1119f79d3425db063b",
+    "apps/cli/test": "1c7f14948ab942bdcd2a498eaef04a29ce3429bc"
+  },
+  "native_sha256": "0e1ed913aded7f83189636c019cc320de2bd6263facbc82a179122841060d73a",
+  "totals": {
+    "node": {
+      "passes": 69,
+      "pending": 0,
+      "failed_files": 0
+    },
+    "native": {
+      "passes": 69,
+      "pending": 0,
+      "failed_files": 0
+    }
+  },
+  "reviews": {
+    "standards": 0,
+    "spec": 0
+  },
+  "files": {
+    "summary.json": "a034a9875a4de684a3bdd48f902b2a9114d1591f7b96b5732f7053c9c104a34e",
+    "review-spec.md": "8393fcb2fcdbea87d89ca336bcd92ef16702d5eb05bf453e79089f71c19a926e",
+    "typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lint-uncached.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review-standards.md": "b9d2c0efcd2dc38c3c5b370fa2193b78cda05ba4e1dbfe0b6f484fe16f1095c2",
+    "native-build.log": "8b04cc87e5993440f1baf172548f41476305e6e30bf390c3256d14f78ef4327b",
+    "build.log": "8b497d5068880b4d7c142690a66ef1231840ecf6e23b86437fc637f9a656d1a5",
+    "native/submit_roles_branch_cli.test.js.json": "729b28f2a63e3aacaa7230d9edd24311474637f07a3882ea369350164cd0ab84",
+    "native/submit_scope.test.js.json": "c586816ac203344648829c51e5c86ae4ad925d30a7cf6b599b621bc2f8c3f46e",
+    "native/submit_assignees_cli.test.js.json": "5d54efb75e275484754f012844aa1c9465db7166919238eddb9c0f5dbeec4a3c",
+    "native/submit_roles_surface_cli.test.js.json": "2aaeb7b1a7224e3ce3fb23149562ab956f303aa20cc4466ecea04f2d4f914b96",
+    "native/interaction_submit_cli.test.js.json": "de7b1e0e1e46b9d9d1520f0850aa428e6f70285505f4800ceef3f44b154e8feb",
+    "native/submit_reviewers.test.js.json": "d863012ba6988c0e7b3c71842cc62838cd14b86a7a9b340eaa724364baa66599",
+    "native/submit_preview_cli.test.js.json": "80000c90a677b1431bc0624aa2564077d9565d200644d90e31c0fdefca940ef6",
+    "native/submit_roles_progress_cli.test.js.json": "1eaab7fb23e31cf92e454175a6f138585fe4fc721175f386cc6f3a17a6887290",
+    "native/submit_roles_mcp_cli.test.js.json": "10acaa6e991029825f4912f77c72b2a1f03b162707115b3b7323f3fd061d2679",
+    "native/frozen_submit_cli.test.js.json": "b461033181f98c5ac00ffe5938a52798a27f64e8b74131ef84cf33183a23b180",
+    "node/submit_roles_branch_cli.test.js.json": "03803c1dfe3deb5dcdcef83a957626831e95b09d7838da06328ae1016e2fad9d",
+    "node/submit_scope.test.js.json": "f8135f15708c5f1d96186897bdee542e5ac9e44036af8f0bf6cf510a50853418",
+    "node/submit_assignees_cli.test.js.json": "980e0a60fe06bed4b6b8c7cd7b88dff320b39ee4494152dc0a70f5b16622ab63",
+    "node/submit_roles_surface_cli.test.js.json": "47bef24e8724741996818faaa2fbde7c5e63e3d21105f0e9b3e5ac2fd41fd439",
+    "node/interaction_submit_cli.test.js.json": "652b5bbaa9c31c30a93dc1ba56730b328c04fddc47a93fa57b629ca8d5f7ebc9",
+    "node/submit_reviewers.test.js.json": "ccbab64215512a57d254fdb67ee7e6f1fc1708f62d111e6b3a0b5420ad61873a",
+    "node/submit_preview_cli.test.js.json": "852a8ef9a39e59f467a6a65119cf1982cd939d8d29cb1c5f7638a9703a55329e",
+    "node/submit_roles_progress_cli.test.js.json": "b2a3bd8498e64e56113decc624143a3bcf91c5f73ad73588377481089a1c3d15",
+    "node/submit_roles_mcp_cli.test.js.json": "32c77c55f03012949226cdaf5580406685fd9fb406b2c5f85b2cbf291ea4fd81",
+    "node/frozen_submit_cli.test.js.json": "3ddf56e31af4f0f057367508d9b8ac2f1b28577797f860de0079ab8f93c8e44f"
+  }
+}

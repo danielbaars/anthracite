@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T14:01:26.054Z",
+    "end": "2026-10-28T14:02:04.552Z",
+    "duration": 38498
+  },
+  "tests": [
+    {
+      "title": "submits a stack with reviewers and assignees only on the explicit role target",
+      "fullTitle": "submit assignees through the public CLI submits a stack with reviewers and assignees only on the explicit role target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 5013,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "adds authenticated and explicit assignees to an unchanged target without replacing existing roles",
+      "fullTitle": "submit assignees through the public CLI adds authenticated and explicit assignees to an unchanged target without replacing existing roles",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 3488,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses scope-wide assignees without a role target and leaves roles unchanged without the option",
+      "fullTitle": "submit assignees through the public CLI uses scope-wide assignees without a role target and leaves roles unchanged without the option",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 7262,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews both role lists on an unchanged target without remote mutations",
+      "fullTitle": "submit assignees through the public CLI previews both role lists on an unchanged target without remote mutations",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 5535,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects missing or malformed assignee input before push or PR writes without prompting",
+      "fullTitle": "submit assignees through the public CLI rejects missing or malformed assignee input before push or PR writes without prompting",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 2163,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects unverified authenticated identity before publishing instead of guessing @me",
+      "fullTitle": "submit assignees through the public CLI rejects unverified authenticated identity before publishing instead of guessing @me",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1440,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains how to install gh when resolving @me without the executable",
+      "fullTitle": "submit assignees through the public CLI explains how to install gh when resolving @me without the executable",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 687,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports ignore assignment results honestly after creating a draft PR",
+      "fullTitle": "submit assignees through the public CLI reports ignore assignment results honestly after creating a draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1987,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports reject assignment results honestly after creating a draft PR",
+      "fullTitle": "submit assignees through the public CLI reports reject assignment results honestly after creating a draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1924,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports invalid assignment results honestly after creating a draft PR",
+      "fullTitle": "submit assignees through the public CLI reports invalid assignment results honestly after creating a draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1814,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports partial assignment results honestly after creating a draft PR",
+      "fullTitle": "submit assignees through the public CLI reports partial assignment results honestly after creating a draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1765,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors explicit publication and draft requests independently of assignees",
+      "fullTitle": "submit assignees through the public CLI honors explicit publication and draft requests independently of assignees",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 3117,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "submits a stack with reviewers and assignees only on the explicit role target",
+      "fullTitle": "submit assignees through the public CLI submits a stack with reviewers and assignees only on the explicit role target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 5013,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "adds authenticated and explicit assignees to an unchanged target without replacing existing roles",
+      "fullTitle": "submit assignees through the public CLI adds authenticated and explicit assignees to an unchanged target without replacing existing roles",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 3488,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses scope-wide assignees without a role target and leaves roles unchanged without the option",
+      "fullTitle": "submit assignees through the public CLI uses scope-wide assignees without a role target and leaves roles unchanged without the option",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 7262,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews both role lists on an unchanged target without remote mutations",
+      "fullTitle": "submit assignees through the public CLI previews both role lists on an unchanged target without remote mutations",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 5535,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects missing or malformed assignee input before push or PR writes without prompting",
+      "fullTitle": "submit assignees through the public CLI rejects missing or malformed assignee input before push or PR writes without prompting",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 2163,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects unverified authenticated identity before publishing instead of guessing @me",
+      "fullTitle": "submit assignees through the public CLI rejects unverified authenticated identity before publishing instead of guessing @me",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1440,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains how to install gh when resolving @me without the executable",
+      "fullTitle": "submit assignees through the public CLI explains how to install gh when resolving @me without the executable",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 687,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports ignore assignment results honestly after creating a draft PR",
+      "fullTitle": "submit assignees through the public CLI reports ignore assignment results honestly after creating a draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1987,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports reject assignment results honestly after creating a draft PR",
+      "fullTitle": "submit assignees through the public CLI reports reject assignment results honestly after creating a draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1924,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports invalid assignment results honestly after creating a draft PR",
+      "fullTitle": "submit assignees through the public CLI reports invalid assignment results honestly after creating a draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1814,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports partial assignment results honestly after creating a draft PR",
+      "fullTitle": "submit assignees through the public CLI reports partial assignment results honestly after creating a draft PR",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 1765,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors explicit publication and draft requests independently of assignees",
+      "fullTitle": "submit assignees through the public CLI honors explicit publication and draft requests independently of assignees",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_assignees_cli.test.js",
+      "duration": 3117,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

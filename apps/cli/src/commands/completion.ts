@@ -85,12 +85,12 @@ const BRANCH_COMPLETING_COMMANDS = [
 ];
 
 function shouldCompleteBranch(current: string, argv: Arguments): boolean {
-  // this handles both with and without --branch because it's the only string arg
+  // Submit has two independent branch-valued selectors.
   return (
     argv['_'].length <= 3 &&
     (BRANCH_COMPLETING_COMMANDS.includes('' + argv['_'][1]) ||
       (['submit', 's', 'ss'].includes('' + argv['_'][1]) &&
-        argv.branch === current)) &&
+        (argv.branch === current || argv['roles-branch'] === current))) &&
     typeof current === 'string' &&
     !current.startsWith('-')
   );
