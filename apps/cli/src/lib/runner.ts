@@ -10,6 +10,8 @@ import { TGit } from './git/git';
 import { assertDeleteRecoveryEditable } from '../actions/delete_recovery';
 import { continueConfigFactory } from './spiffy/continuation_spf';
 import { assertDeleteAllowed } from '../actions/delete_branch';
+import { planFileSplit } from '../actions/split_file_plan';
+import { assertFileSplitAvailable } from '../actions/split_file_recovery';
 import {
   initContext,
   initContextLite,
@@ -132,6 +134,8 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
+    if (canonicalName === 'split' && args['by-file'] !== undefined)
+      preflightFileSplit(args);
     if (isZeroDepthLog && !git.getCurrentBranchName())
       throw new DetachedError();
     // Known frozen targets must stop before ordinary context repair can write refs.
@@ -160,6 +164,7 @@ async function graphiteInternal(
       }).data;
       assertContinuationBranchesEditable(data, activeBranch);
       assertDeleteRecoveryEditable(data.delete);
+      assertFileSplitAvailable(data);
     }
     await preflightLifecycle(args, canonicalName, git);
     const contextLite = initContextLite({
@@ -186,6 +191,7 @@ async function graphiteInternal(
 
         const structural =
           ['move', 'fold', 'reorder'].includes(canonicalName) ||
+          (canonicalName === 'split' && args['by-file'] !== undefined) ||
           (canonicalName === 'create' && args.insert === true);
         const preserveStructuralMetadata =
           structural &&
@@ -213,6 +219,20 @@ async function graphiteInternal(
     }
     process.exitCode = 1;
   }
+}
+
+function preflightFileSplit(args: yargs.Arguments & TGlobalArguments): void {
+  if (args['by-commit'] === true || args['by-hunk'] === true)
+    throw new PreconditionsFailedError(
+      'File, commit and hunk split modes are mutually exclusive.'
+    );
+  const selectors = args['by-file'];
+  if (
+    !Array.isArray(selectors) ||
+    !selectors.every((value): value is string => typeof value === 'string')
+  )
+    throw new PreconditionsFailedError('File split requires pathspec strings.');
+  planFileSplit(selectors);
 }
 
 /** Resolve protected lifecycle participants without incidental context repair. */

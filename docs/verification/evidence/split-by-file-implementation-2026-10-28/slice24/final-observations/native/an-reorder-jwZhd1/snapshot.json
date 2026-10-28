@@ -1,0 +1,12 @@
+{
+  "head": "465e8bb465d367534af3aad08b330293ae38e725",
+  "branch": "base",
+  "refs": "refs/heads/base 465e8bb465d367534af3aad08b330293ae38e725\nrefs/heads/base_split 37aaee2309382094eb2c4c339fcb8bcaedea0ae8\nrefs/heads/child 95952a1f804343502aa909cea4e192430d3b1caf\nrefs/heads/main 55a7255a50e33ec0b52dfb0436ce6dfcbbe88e64\nrefs/heads/other c1f5c3817b47eb9449d34e58587a8e36eb9d7250\nrefs/heads/tip b2e69c0cce561dcad3e2e2c0f343a0e0e8f4a62b",
+  "index": "RElSQwAAAAIAAAADauGXzRfZKX1q4ZfNF9kpfQEAABALYhpSAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAauGX3gpLue9q4ZfeCku57wEAABALYh8XAACBpAAAAfUAAAAUAAAAB1oYzS+/ZelhsP0/bNawthYPLICOAAhtYWluLnR4dAAAauGXzRjnhThq4ZfNGOeFOAEAABALYhpjAACBpAAAAfUAAAAUAAAACTP8QrloF1ziX8vyMpDGQVzFL3UaAAxzZWxlY3RlZC50eHQAAAAAAABUUkVFAAAAGQAzIDAK3p5IsDN7WXKQjpGid6we1M/40TIlr500RLF9gqXCrhdogMzkvVm0EA==",
+  "status": "",
+  "files": {
+    "base.txt": "YmFzZQ==",
+    "main.txt": "c291cmNlCg==",
+    "selected.txt": "c2VsZWN0ZWQK"
+  }
+}

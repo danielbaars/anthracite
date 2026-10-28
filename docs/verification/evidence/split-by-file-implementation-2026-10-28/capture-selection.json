@@ -1,0 +1,20 @@
+{
+  "node": {
+    "mcp": "final/node/captures/mcp",
+    "no-input-pty": "final/node/captures/no-input-pty",
+    "occupied-continue-refusal": "final/node/captures/occupied-continue-refusal",
+    "quiet-conflict-continue": "final/node/captures/quiet-conflict-continue",
+    "fan-out-messages": "final/node/captures/fan-out-messages",
+    "quiet-success-refusal": "final/node/captures/quiet-success-refusal",
+    "same-named-tag": "final/node/captures/same-named-tag"
+  },
+  "native": {
+    "mcp": "final/native/captures/mcp",
+    "no-input-pty": "final/native/captures/no-input-pty",
+    "quiet-conflict-continue": "final/native/captures/quiet-conflict-continue",
+    "quiet-success-refusal": "final/native/captures/quiet-success-refusal",
+    "occupied-continue-refusal": "final/native/captures/occupied-continue-refusal",
+    "same-named-tag": "final/native/captures/same-named-tag",
+    "fan-out-messages": "final/native/captures/fan-out-messages"
+  }
+}

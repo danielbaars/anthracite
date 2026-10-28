@@ -1,0 +1,13 @@
+{
+  "head": "93a4682ba628e152f0982e9be01dae6be7778db1",
+  "branch": "base",
+  "refs": "refs/heads/base 93a4682ba628e152f0982e9be01dae6be7778db1\nrefs/heads/base_split 1379b39bdad52715ce1c0699dd4abc278a7e6772\nrefs/heads/child 890515860b4abe8d0bedb3d8020c7ab817e6e60d\nrefs/heads/main ccc513296d79ad678addb674a1fa107a84db7ece\nrefs/heads/other 4e4e6d402801c3c8404b01616dc938d435b7666e\nrefs/heads/tip 497a003998b85dd7c595f6a04994eee3e85f53ec",
+  "index": "RElSQwAAAAIAAAADauGX9TgiS6Jq4Zf1OCJLogEAABALYidGAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAauGYByvD8BRq4ZgHK8PwFAEAABALYizZAACBpAAAAfUAAAAUAAAAB1oYzS+/ZelhsP0/bNawthYPLICOAAhtYWluLnR4dAAAauGX9Tk1Jepq4Zf1OTUl6gEAABALYidXAACBpAAAAfUAAAAUAAAACTP8QrloF1ziX8vyMpDGQVzFL3UaAAxzZWxlY3RlZC50eHQAAAAAAABUUkVFAAAAGQAzIDAK3p5IsDN7WXKQjpGid6we1M/40TJ7VCPDaOGRvaZaBvlr32VuSe1jJA==",
+  "status": "?? portable.txt\u0000",
+  "files": {
+    "portable.txt": "dW50cmFja2VkIHdvcmsK",
+    "base.txt": "YmFzZQ==",
+    "main.txt": "c291cmNlCg==",
+    "selected.txt": "c2VsZWN0ZWQK"
+  }
+}

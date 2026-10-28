@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-28T07:49:03.107Z",
+    "end": "2026-10-28T07:49:05.660Z",
+    "duration": 2553
+  },
+  "tests": [
+    {
+      "title": "explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "fullTitle": "file split public surface explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 229,
+      "currentRetry": 0,
+      "err": {
+        "message": "split: expected 'an split Split the current branch int…' to include 'Repeat selectors'",
+        "showDiff": false,
+        "actual": "an split Split the current branch into multiple single-commit branches. Frozen sources require an unfreeze first. Options: --help Show help [boolean] --version Show version number [boolean] --cwd Working directory. Use a direct --cwd prefix before the Git command for passthroughs; before or after the command for Anthracite commands. [string] --interactive Enable interactive features. Defaults to terminal input and output. Disable with --no-interactive; quiet also disables interaction. [boolean] -q, --quiet Minimize output to the terminal. [boolean] [default: false] --verify Run git hooks. Disable with --no-verify. [boolean] [default: true] --debug Display debug output. [boolean] [default: false] -f, --by-file, --file Extract selected committed paths into a new parent without prompting. [array] -c, --by-commit, --commit Split by commit - slice up the history of this branch. [boolean] [default: false] -h, --by-hunk, --hunk Split by hunk - split into new single-commit branches. [boolean] [default: false] ",
+        "operator": "strictEqual",
+        "stack": "AssertionError: split: expected 'an split Split the current branch int…' to include 'Repeat selectors'\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_surface_cli.test.js:40:54)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "fullTitle": "file split public surface explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 229,
+      "currentRetry": 0,
+      "err": {
+        "message": "split: expected 'an split Split the current branch int…' to include 'Repeat selectors'",
+        "showDiff": false,
+        "actual": "an split Split the current branch into multiple single-commit branches. Frozen sources require an unfreeze first. Options: --help Show help [boolean] --version Show version number [boolean] --cwd Working directory. Use a direct --cwd prefix before the Git command for passthroughs; before or after the command for Anthracite commands. [string] --interactive Enable interactive features. Defaults to terminal input and output. Disable with --no-interactive; quiet also disables interaction. [boolean] -q, --quiet Minimize output to the terminal. [boolean] [default: false] --verify Run git hooks. Disable with --no-verify. [boolean] [default: true] --debug Display debug output. [boolean] [default: false] -f, --by-file, --file Extract selected committed paths into a new parent without prompting. [array] -c, --by-commit, --commit Split by commit - slice up the history of this branch. [boolean] [default: false] -h, --by-hunk, --hunk Split by hunk - split into new single-commit branches. [boolean] [default: false] ",
+        "operator": "strictEqual",
+        "stack": "AssertionError: split: expected 'an split Split the current branch int…' to include 'Repeat selectors'\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_surface_cli.test.js:40:54)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

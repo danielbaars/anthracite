@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T05:03:22.978Z",
+    "end": "2026-10-28T05:03:39.185Z",
+    "duration": 16207
+  },
+  "tests": [
+    {
+      "title": "flattens complete messages oldest first using the invoking identity",
+      "fullTitle": "file split extraction through the public CLI flattens complete messages oldest first using the invoking identity",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-22/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 9151,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "flattens complete messages oldest first using the invoking identity",
+      "fullTitle": "file split extraction through the public CLI flattens complete messages oldest first using the invoking identity",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-22/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 9151,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "ticket": 22,
+  "commit": "32b5b551355e64a50df72d91bda57d24573308fc",
+  "base": "49128ffaf7911697784878a1b67fbb3710bd3d36",
+  "node": "24.19.0",
+  "bun": "1.3.14",
+  "currentAcceptance": {
+    "node-current.json": 9,
+    "native-current.json": 9
+  },
+  "priorRegression": "node-final.json/native-final.json: 33 each (8 extraction +25 preflight), before final constructor cleanup/alternate-index control. Final nine extraction cases rerun on current source/binary.",
+  "reports": {
+    "first-green.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T05:02:08.107Z",
+      "end": "2026-10-28T05:02:28.125Z",
+      "duration": 20018
+    },
+    "history.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T05:03:22.978Z",
+      "end": "2026-10-28T05:03:39.185Z",
+      "duration": 16207
+    },
+    "native-current.json": {
+      "suites": 1,
+      "tests": 9,
+      "passes": 9,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T05:11:31.823Z",
+      "end": "2026-10-28T05:13:32.922Z",
+      "duration": 121099
+    },
+    "native-final.json": {
+      "suites": 2,
+      "tests": 33,
+      "passes": 33,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T05:07:32.497Z",
+      "end": "2026-10-28T05:10:33.546Z",
+      "duration": 181049
+    },
+    "native.json": {
+      "suites": 1,
+      "tests": 7,
+      "passes": 6,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-28T05:04:26.093Z",
+      "end": "2026-10-28T05:06:01.036Z",
+      "duration": 94943
+    },
+    "node-current.json": {
+      "suites": 1,
+      "tests": 9,
+      "passes": 9,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T05:11:32.756Z",
+      "end": "2026-10-28T05:13:59.614Z",
+      "duration": 146858
+    },
+    "node-final.json": {
+      "suites": 2,
+      "tests": 33,
+      "passes": 33,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T05:07:34.012Z",
+      "end": "2026-10-28T05:11:06.268Z",
+      "duration": 212256
+    },
+    "node-hooks.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T05:04:59.310Z",
+      "end": "2026-10-28T05:05:17.212Z",
+      "duration": 17902
+    },
+    "node.json": {
+      "suites": 1,
+      "tests": 7,
+      "passes": 6,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-28T05:04:00.953Z",
+      "end": "2026-10-28T05:05:55.644Z",
+      "duration": 114691
+    },
+    "red.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-28T05:00:25.448Z",
+      "end": "2026-10-28T05:00:34.184Z",
+      "duration": 8736
+    }
+  },
+  "sha256": {
+    "first-green.json": "7fd44f0bad962a719850bb38599d1738063c4492d26b4f5328de37e7d4dec704",
+    "native-current.json": "22cd7dfcc3f02aace47253f548cea6749b5b39c6ac10b563380bfe19592bbffe",
+    "red.json": "5004bc528ecda099bb16b82477618c9560144c2fe7d50b44bcc7799e8a923771",
+    "history.json": "e3c6585a2cc25cc5eb992497da27d2587a1fa990aeccd4c8d41af64fa8063ca2",
+    "native.json": "6b87f64728b7cea78a5c0806c5df594efc2f97c1099886a9401b57a7f1edb2fd",
+    "an-ticket22": "1f7f5169511e27d522b2393769a8b70933c5c6c5d3444713d8d0ab74c53549df",
+    "node-hooks.json": "1da59ce8bb78ced9072f566a110f3dfb4bbb0927ecb37420d21e7522db750e3e",
+    "native-final.json": "369e4ca0ade882e81d4eb82d3b52d5426f9a453ebc53e928c9d68193e43e6af2",
+    "node-current.json": "03e7b44cfb03150741d49a1a0c56e270a4baf214b3b96c48d08b89afebb900b3",
+    "node.json": "452afab07218444a12974919e64e72765ece909abe1ac010722ee98509b70772",
+    "an-ticket22-current": "f71ac9bb46d3611b9bccd2212a40e974b7d76e49c4b91827776c528a9baf576b",
+    "node-final.json": "898220e2e645ed4b2e6ad47b0b8fa3317e970e64393979105dede70d6456f543"
+  }
+}

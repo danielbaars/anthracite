@@ -1,0 +1,9 @@
+{
+  "candidate": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/src/index.js",
+  "branch": "base",
+  "symbolicShort": "heads/base",
+  "status": 1,
+  "stdout": "",
+  "stderr": "ERROR: File split requires a valid tracked source. Track it explicitly first.\n",
+  "preserved": true
+}

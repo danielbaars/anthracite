@@ -1,0 +1,77 @@
+{
+  "multi": {
+    "current": "feature",
+    "created": [
+      "feature_split"
+    ],
+    "removed": [],
+    "featureTreePreserved": true,
+    "childTipUnchanged": false,
+    "childTreePreserved": true,
+    "mainUnchanged": true,
+    "otherUnchanged": true
+  },
+  "all": {
+    "current": "feature_split",
+    "created": [
+      "feature_split"
+    ],
+    "removed": [
+      "feature"
+    ],
+    "featureTreePreserved": false,
+    "childTipUnchanged": true,
+    "childTreePreserved": true,
+    "mainUnchanged": true,
+    "otherUnchanged": true
+  },
+  "collision": {
+    "current": "feature",
+    "created": [
+      "feature_split_split"
+    ],
+    "removed": [],
+    "featureTreePreserved": true,
+    "childTipUnchanged": false,
+    "childTreePreserved": true,
+    "mainUnchanged": true,
+    "otherUnchanged": true
+  },
+  "patterns": {
+    "current": "feature",
+    "created": [
+      "feature_split"
+    ],
+    "removed": [],
+    "featureTreePreserved": true,
+    "childTipUnchanged": false,
+    "childTreePreserved": true,
+    "mainUnchanged": true,
+    "otherUnchanged": true
+  },
+  "file-types": {
+    "current": "feature",
+    "created": [
+      "feature_split"
+    ],
+    "removed": [],
+    "featureTreePreserved": true,
+    "childTipUnchanged": false,
+    "childTreePreserved": true,
+    "mainUnchanged": true,
+    "otherUnchanged": true
+  },
+  "occupied-child": {
+    "current": "feature",
+    "created": [
+      "feature_split"
+    ],
+    "removed": [],
+    "featureTreePreserved": true,
+    "childTipUnchanged": true,
+    "childTreePreserved": true,
+    "mainUnchanged": true,
+    "otherUnchanged": true,
+    "dirtyLinkedContentPreserved": true
+  }
+}

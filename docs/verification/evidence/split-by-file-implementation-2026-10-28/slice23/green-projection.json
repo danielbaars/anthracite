@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:11:00.844Z",
+    "end": "2026-10-28T06:11:03.714Z",
+    "duration": 2870
+  },
+  "tests": [
+    {
+      "title": "refuses an impossible partial file-to-directory projection before hooks or construction",
+      "fullTitle": "file split selectors and entries through the public CLI refuses an impossible partial file-to-directory projection before hooks or construction",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 573,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses an impossible partial file-to-directory projection before hooks or construction",
+      "fullTitle": "file split selectors and entries through the public CLI refuses an impossible partial file-to-directory projection before hooks or construction",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 573,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T05:02:08.107Z",
+    "end": "2026-10-28T05:02:28.125Z",
+    "duration": 20018
+  },
+  "tests": [
+    {
+      "title": "extracts a prerequisite and retains source and synchronized descendant trees",
+      "fullTitle": "file split extraction through the public CLI extracts a prerequisite and retains source and synchronized descendant trees",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-22/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 11937,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "extracts a prerequisite and retains source and synchronized descendant trees",
+      "fullTitle": "file split extraction through the public CLI extracts a prerequisite and retains source and synchronized descendant trees",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-22/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 11937,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

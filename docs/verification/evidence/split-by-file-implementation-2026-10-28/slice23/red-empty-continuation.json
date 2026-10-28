@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-28T06:15:32.599Z",
+    "end": "2026-10-28T06:15:35.417Z",
+    "duration": 2818
+  },
+  "tests": [
+    {
+      "title": "accepts empty legacy recovery queues without rewriting them on early refusal",
+      "fullTitle": "file split selectors and entries through the public CLI accepts empty legacy recovery queues without rewriting them on early refusal",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 319,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Cannot split by file with exis…' to include 'no remainder'",
+        "showDiff": false,
+        "actual": "ERROR: Cannot split by file with existing continuation. Finish or inspect recovery first.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Cannot split by file with exis…' to include 'no remainder'\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_entries_cli.test.js:80:46)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "accepts empty legacy recovery queues without rewriting them on early refusal",
+      "fullTitle": "file split selectors and entries through the public CLI accepts empty legacy recovery queues without rewriting them on early refusal",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 319,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Cannot split by file with exis…' to include 'no remainder'",
+        "showDiff": false,
+        "actual": "ERROR: Cannot split by file with existing continuation. Finish or inspect recovery first.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Cannot split by file with exis…' to include 'no remainder'\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_entries_cli.test.js:80:46)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

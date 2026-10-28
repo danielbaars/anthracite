@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:14:54.021Z",
+    "end": "2026-10-28T06:14:57.672Z",
+    "duration": 3651
+  },
+  "tests": [
+    {
+      "title": "refuses committed non-UTF-8 path records without changing the index",
+      "fullTitle": "file split selectors and entries through the public CLI refuses committed non-UTF-8 path records without changing the index",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 505,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses committed non-UTF-8 path records without changing the index",
+      "fullTitle": "file split selectors and entries through the public CLI refuses committed non-UTF-8 path records without changing the index",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-23/apps/cli/dist/test/commands/split_file_entries_cli.test.js",
+      "duration": 505,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

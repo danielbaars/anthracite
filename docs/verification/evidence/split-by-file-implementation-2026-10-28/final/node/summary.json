@@ -1,0 +1,91 @@
+{
+  "runtime": "node",
+  "shard": 0,
+  "shards": 1,
+  "files": 5,
+  "passes": 62,
+  "pending": 0,
+  "failedFiles": 0,
+  "results": [
+    {
+      "file": "commands/split_file_entries_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T08:26:49.173Z",
+        "end": "2026-10-28T08:28:00.522Z",
+        "duration": 71349
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/split_file_preflight_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 25,
+        "passes": 25,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T08:28:00.622Z",
+        "end": "2026-10-28T08:29:28.312Z",
+        "duration": 87690
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/split_file_extract_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 9,
+        "passes": 9,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T08:26:49.173Z",
+        "end": "2026-10-28T08:29:35.265Z",
+        "duration": 166092
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/split_file_surface_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 5,
+        "passes": 5,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T08:29:35.407Z",
+        "end": "2026-10-28T08:31:05.008Z",
+        "duration": 89601
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/split_file_recovery_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-28T08:29:28.404Z",
+        "end": "2026-10-28T08:32:24.886Z",
+        "duration": 176482
+      },
+      "passed": true
+    }
+  ]
+}

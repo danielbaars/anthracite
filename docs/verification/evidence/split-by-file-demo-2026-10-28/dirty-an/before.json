@@ -1,0 +1,81 @@
+{
+  "branch": "feature",
+  "head": "737d46d9e3bbd2c143fe17119b982eab6c462596",
+  "branches": {
+    "child": {
+      "oid": "f5c771d18d40e4371a678872515a8d4e50bb6cdd",
+      "tree": "f2a333525b99dffccafe441c3a49c5f023d9c131",
+      "parents": [
+        "737d46d9e3bbd2c143fe17119b982eab6c462596"
+      ],
+      "subject": "Document feature",
+      "files": {
+        "README.md": "RGVtbyBiYXNlbGluZQo=",
+        "docs/follow-up.md": "Rm9sbG93LXVwIHJlbWFpbnMgYWJvdmUgZmVhdHVyZQo=",
+        "src/api/service.ts": "ZXhwb3J0IGNvbnN0IHNlcnZpY2UgPSAiZmVhdHVyZSI7Cg==",
+        "src/refactor/new-helper.ts": "ZXhwb3J0IGNvbnN0IGV4dHJhID0gdHJ1ZTsK",
+        "src/refactor/utils.ts": "ZXhwb3J0IGNvbnN0IGhlbHBlciA9IDI7Cg==",
+        "tests/api.test.ts": "Ly8gZmVhdHVyZSB0ZXN0Cg=="
+      }
+    },
+    "feature": {
+      "oid": "737d46d9e3bbd2c143fe17119b982eab6c462596",
+      "tree": "be0c041eba87a94c8019bb645e3efa36023f546b",
+      "parents": [
+        "36c95121c89983067a69527b7d799df2d163971a"
+      ],
+      "subject": "Add endpoint and refactor helper",
+      "files": {
+        "README.md": "RGVtbyBiYXNlbGluZQo=",
+        "src/api/service.ts": "ZXhwb3J0IGNvbnN0IHNlcnZpY2UgPSAiZmVhdHVyZSI7Cg==",
+        "src/refactor/new-helper.ts": "ZXhwb3J0IGNvbnN0IGV4dHJhID0gdHJ1ZTsK",
+        "src/refactor/utils.ts": "ZXhwb3J0IGNvbnN0IGhlbHBlciA9IDI7Cg==",
+        "tests/api.test.ts": "Ly8gZmVhdHVyZSB0ZXN0Cg=="
+      }
+    },
+    "main": {
+      "oid": "36c95121c89983067a69527b7d799df2d163971a",
+      "tree": "233c8469d6edb79657f56b7788ac9b2e275bf709",
+      "parents": [],
+      "subject": "Baseline",
+      "files": {
+        "README.md": "RGVtbyBiYXNlbGluZQo=",
+        "src/api/service.ts": "ZXhwb3J0IGNvbnN0IHNlcnZpY2UgPSAiYmFzZWxpbmUiOwo=",
+        "src/refactor/utils.ts": "ZXhwb3J0IGNvbnN0IGhlbHBlciA9IDE7Cg==",
+        "tests/api.test.ts": "Ly8gYmFzZWxpbmUgdGVzdAo="
+      }
+    },
+    "other": {
+      "oid": "14db1a80e09d86d99a4e06bbb2d505247398c866",
+      "tree": "5662270de635e6034161abc691bd58e96250c90f",
+      "parents": [
+        "36c95121c89983067a69527b7d799df2d163971a"
+      ],
+      "subject": "Unrelated work",
+      "files": {
+        "README.md": "RGVtbyBiYXNlbGluZQo=",
+        "src/api/service.ts": "ZXhwb3J0IGNvbnN0IHNlcnZpY2UgPSAiYmFzZWxpbmUiOwo=",
+        "src/refactor/utils.ts": "ZXhwb3J0IGNvbnN0IGhlbHBlciA9IDE7Cg==",
+        "tests/api.test.ts": "Ly8gYmFzZWxpbmUgdGVzdAo=",
+        "unrelated.txt": "VW5yZWxhdGVkIHN0YWNrCg=="
+      }
+    }
+  },
+  "status": " M src/api/service.ts\n?? local-note.txt\n",
+  "staged": "",
+  "unstaged": "diff --git a/src/api/service.ts b/src/api/service.ts\nindex 53af2c9..59bcedb 100644\n--- a/src/api/service.ts\n+++ b/src/api/service.ts\n@@ -1 +1,2 @@\n export const service = \"feature\";\n+// local unstaged work\n",
+  "indexSha256": "abdbf922c2000c8a668953bf92790c2f47131d5d2774472749aea74f3c8aac39",
+  "worktreeFiles": {
+    "README.md": "6b9c0defafcc0b5dde5d39c0c4e4ea73e21cc8da6e39e501f466de51f9927fe5",
+    "local-note.txt": "f93a212f913132d4b202fbb69bcf5406bc8ee6599ec120c1b4dafc94635885ca",
+    "tests/api.test.ts": "5d04ccc772f6689e4770eeb5a8a29331253e0ed070eb269a26000ba93bea6a7c",
+    "src/api/service.ts": "7b4eb21415a0b9389542fbff7bbbf258541f69afee330a24cfcf074ccd60a149",
+    "src/refactor/new-helper.ts": "7735a7af722361bf5d0b5517ab0a2b869b0a613c1ef8b1e07add03971db12391",
+    "src/refactor/utils.ts": "979613b99cf4a596c5481e22bace9d140ef67e2e6b9fe1e7d989ca0f456837a1"
+  },
+  "metadata": {
+    ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+    ".graphite_cache_persist": "ewogICJzaGEiOiAiMzY2OGViNDNmMjViODkxYmZiNTQzNzliMWE4ZDRlYTg2MjMwYWMzYiIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjM2Yzk1MTIxYzg5OTgzMDY3YTY5NTI3YjdkNzk5ZGYyZDE2Mzk3MWEiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJmZWF0dXJlIiwKICAgICAgICAgICJvdGhlciIKICAgICAgICBdCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJvdGhlciIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjE0ZGIxYTgwZTA5ZDg2ZDk5YTRlMDZiYmIyZDUwNTI0NzM5OGM4NjYiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIzNmM5NTEyMWM4OTk4MzA2N2E2OTUyN2I3ZDc5OWRmMmQxNjM5NzFhIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiZmVhdHVyZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiNzM3ZDQ2ZDllM2JiZDJjMTQzZmUxNzExOWI5ODJlYWI2YzQ2MjU5NiIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIzNmM5NTEyMWM4OTk4MzA2N2E2OTUyN2I3ZDc5OWRmMmQxNjM5NzFhIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiZmVhdHVyZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImY1Yzc3MWQxOGQ0MGU0MzcxYTY3ODg3MjUxNWE4ZDRlNTBiYjZjZGQiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiNzM3ZDQ2ZDllM2JiZDJjMTQzZmUxNzExOWI5ODJlYWI2YzQ2MjU5NiIKICAgICAgfQogICAgXQogIF0KfQ=="
+  },
+  "unexpectedTools": ""
+}

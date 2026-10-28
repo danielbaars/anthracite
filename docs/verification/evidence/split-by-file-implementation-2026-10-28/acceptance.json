@@ -1,0 +1,85 @@
+{
+  "status": "bounded local acceptance passed after independent review; PR publication remains coordinator-owned",
+  "parentIssue": 20,
+  "siblingIssues": [
+    21,
+    22,
+    23,
+    24,
+    25
+  ],
+  "productBaseline": "3923b1088b29f02ce9d9e2d8da9fb52339889915",
+  "fullSelectionCommit": "4040d758c9c4ae7da3a10f3bc56f0570be4a1eb0",
+  "cliSourceTree": "727a76964ac4453f67b605564652dd41d9294d3b",
+  "fullSelectionTestTree": "b030ebbfa5a350dc3f38d44404a9928035511760",
+  "sharedSourceTree": "eeacba9f2fe4927c055ea3ffa26384bafbdb74c4",
+  "runtime": {
+    "node": "v24.19.0",
+    "bunCompiler": "1.3.14",
+    "platform": "macOS ARM64",
+    "typescript": "5.5.4"
+  },
+  "native": {
+    "sha256": "1245b153c5339abeda12726ca10a556fa5164442a01b3d7d46ed95d0c8d4a868",
+    "bytes": 66154082,
+    "format": "Mach-O 64-bit executable arm64",
+    "retained": false,
+    "purpose": "local verification only; never installed or released"
+  },
+  "buildInputs": {
+    "package.json": "f9418719a7d9325706955f1039cfd942b73fee2b",
+    "yarn.lock": "9bdaacae21dd5c7e63e04461b7c1a98b35c72831",
+    ".yarnrc.yml": "4946e2cc377cd3aa9f1d1c75b10125974a284e63",
+    ".yarn/releases/yarn-3.2.1.cjs": "b3cadff6efb37a12712d12c2553ec703dbcaa4dd",
+    "apps/cli/package.json": "4312b4d11c4269b457dfa76125ba55261eb8b81a",
+    "apps/cli/tsconfig.json": "80c83bd7c1a825cdadd009648d9d497415e1dccb",
+    "libs/gti-cli-shared-types/package.json": "01d284dbe3410c92406df9cc88c7f7a0fea0485a",
+    "libs/gti-cli-shared-types/tsconfig.json": "c879d2469511820a5284ef112c037986c1c22a9b",
+    "scripts/test-cli.cjs": "a28e8635f96eebd5d3153d9524372e0809267546"
+  },
+  "review": {
+    "standardsFindings": 0,
+    "specFindings": 1,
+    "fixed": "P2: resolve physical source with branch --show-current when a same-named tag exists",
+    "fixCommit": "4040d758c9c4ae7da3a10f3bc56f0570be4a1eb0",
+    "regression": "existing one-mixed-commit closed-stdin case, same-named tag at a different commit; full refs prevent ambiguous test oracles",
+    "redGreen": "one expected red then one green on each runtime; green native freshly compiled from fix"
+  },
+  "checks": {
+    "forcedBuild": "2 successful tasks, zero cache on pinned review fix",
+    "typecheck": "passed on pinned review fix",
+    "uncachedLint": "complete source and relevant feature/legacy tests passed on pinned review fix",
+    "diffCheck": "source/tests/prose pass with docs/verification/evidence/** excluded; raw capture logs intentionally retain original trailing whitespace, including pre-review/final/build.log and slice25/build-environment-first.log",
+    "linearHistory": "no merge commits since product baseline",
+    "creditsLicense": "unchanged since product baseline",
+    "runtimeCommandIdentity": {
+      "checkedFixtureCommands": {
+        "node": 461,
+        "native": 461
+      },
+      "node": "explicit current worktree dist/src/index.js",
+      "native": "explicit freshly compiled review-fix binary; no silent fallback/skips",
+      "mcp": "unchanged McpCliClient uses getTestCliCommand with the same explicit runtime environment; execute_child reuses its process executable"
+    }
+  },
+  "results": {
+    "node": {
+      "featureTests": 62,
+      "legacyControls": 5,
+      "uniqueSelectedTests": 67,
+      "failures": 0,
+      "pending": 0
+    },
+    "native": {
+      "featureTests": 62,
+      "legacyControls": 5,
+      "uniqueSelectedTests": 67,
+      "failures": 0,
+      "pending": 0
+    }
+  },
+  "contractCases": 15,
+  "reuseBoundary": "No prior test result is reused as current acceptance: full 62 feature tests and five controls reran on both runtimes after the product fix. Fan-out message assertions are included in that full selection, not an extra supplement count.",
+  "historicalEvidence": "slice21-slice25 and pre-review preserve earlier receipts unchanged. pre-review includes original final reports, acceptance/capture-selection/manifest and report text. Historical TDD reds and raw-log whitespace are not current product failures. The outer manifest defines retained files.",
+  "deliveryScope": "One implementation PR for #20 and #21-#25 after metadata approval. No full suite/full CI matrix, Actions dispatch, live GitHub fixture, release/assets/tag, global install or client registration."
+}

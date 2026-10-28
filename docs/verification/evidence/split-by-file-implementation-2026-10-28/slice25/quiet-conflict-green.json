@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T07:53:54.353Z",
+    "end": "2026-10-28T07:54:18.262Z",
+    "duration": 23909
+  },
+  "tests": [
+    {
+      "title": "retains actionable quiet conflict guidance and continues without extracting twice",
+      "fullTitle": "file split recovery through real public processes retains actionable quiet conflict guidance and continues without extracting twice",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 21435,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "retains actionable quiet conflict guidance and continues without extracting twice",
+      "fullTitle": "file split recovery through real public processes retains actionable quiet conflict guidance and continues without extracting twice",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 21435,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

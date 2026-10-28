@@ -1,0 +1,5 @@
+{
+  "path": "src/api/service.ts",
+  "content": "export const service = \"resolved source plus child\";\n",
+  "staged": "diff --git a/docs/follow-up.md b/docs/follow-up.md\nnew file mode 100644\nindex 0000000..76fac20\n--- /dev/null\n+++ b/docs/follow-up.md\n@@ -0,0 +1 @@\n+Follow-up remains above feature\ndiff --git a/src/api/service.ts b/src/api/service.ts\nindex 35b6bdc..f502ce9 100644\n--- a/src/api/service.ts\n+++ b/src/api/service.ts\n@@ -1 +1 @@\n-export const service = \"source-advanced\";\n+export const service = \"resolved source plus child\";\n"
+}

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T06:22:48.762Z",
+    "end": "2026-10-28T06:22:55.774Z",
+    "duration": 7012
+  },
+  "tests": [
+    {
+      "title": "reports actual saved refs when extraction publication is rejected",
+      "fullTitle": "file split recovery through real public processes reports actual saved refs when extraction publication is rejected",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 4715,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "reports actual saved refs when extraction publication is rejected",
+      "fullTitle": "file split recovery through real public processes reports actual saved refs when extraction publication is rejected",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 4715,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

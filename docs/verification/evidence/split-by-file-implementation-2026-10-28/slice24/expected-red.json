@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-28T06:17:00.633Z",
+    "end": "2026-10-28T06:17:20.520Z",
+    "duration": 19887
+  },
+  "tests": [
+    {
+      "title": "refuses changed expected refs before staging or changing recovery",
+      "fullTitle": "file split recovery through real public processes refuses changed expected refs before staging or changing recovery",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 17359,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'WARNING: File split is incomplete (de…' to include 'Expected file-split ref base changed'",
+        "showDiff": false,
+        "actual": "WARNING: File split is incomplete (descendant replay). Extraction into base_split is complete; base is retained. Completed work remains.\nCompleted branches: none.\nRemaining branches: child, tip.\nCurrent checkout: child. Active replay: none.\nAfter abort, or after preserving blocking work and resolving the Git/hook error, retry remaining branches in this order (resolve and an continue any new conflict before the next command):\nan restack --branch 'child' --only\nan restack --branch 'tip' --only\nan checkout 'base'\nERROR: Cannot perform this operation on untracked branch child.\nYou can track it by specifying its parent with an track.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'WARNING: File split is incomplete (de…' to include 'Expected file-split ref base changed'\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_recovery_cli.test.js:98:47)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "refuses changed expected refs before staging or changing recovery",
+      "fullTitle": "file split recovery through real public processes refuses changed expected refs before staging or changing recovery",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 17359,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'WARNING: File split is incomplete (de…' to include 'Expected file-split ref base changed'",
+        "showDiff": false,
+        "actual": "WARNING: File split is incomplete (descendant replay). Extraction into base_split is complete; base is retained. Completed work remains.\nCompleted branches: none.\nRemaining branches: child, tip.\nCurrent checkout: child. Active replay: none.\nAfter abort, or after preserving blocking work and resolving the Git/hook error, retry remaining branches in this order (resolve and an continue any new conflict before the next command):\nan restack --branch 'child' --only\nan restack --branch 'tip' --only\nan checkout 'base'\nERROR: Cannot perform this operation on untracked branch child.\nYou can track it by specifying its parent with an track.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'WARNING: File split is incomplete (de…' to include 'Expected file-split ref base changed'\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_recovery_cli.test.js:98:47)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

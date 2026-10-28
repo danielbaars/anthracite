@@ -1,0 +1,26 @@
+{
+  "child": {
+    "message": "Document feature\n\n",
+    "author": "Split demo <split-demo@example.test>",
+    "committer": "Split demo <split-demo@example.test>",
+    "countAboveParent": 1
+  },
+  "feature_split": {
+    "message": "Add endpoint and refactor helper\n\n",
+    "author": "Split demo <split-demo@example.test>",
+    "committer": "Split demo <split-demo@example.test>",
+    "countAboveParent": 1
+  },
+  "main": {
+    "message": "Baseline\n\n",
+    "author": "Split demo <split-demo@example.test>",
+    "committer": "Split demo <split-demo@example.test>",
+    "countAboveParent": 1
+  },
+  "other": {
+    "message": "Unrelated work\n\n",
+    "author": "Split demo <split-demo@example.test>",
+    "committer": "Split demo <split-demo@example.test>",
+    "countAboveParent": 1
+  }
+}

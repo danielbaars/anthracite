@@ -1,0 +1,324 @@
+{
+  "ticket": 24,
+  "status": "ready for linear integration",
+  "commit": "eeb3f04332bc2a3ef1e2a50cb52f41c2f8149b3d",
+  "base": "3db8899c50162843f57e99e7e817eb54c8ad6836",
+  "provisionalCommit": "1b15fdf5810b71c7d32bdac7437849f96085da4e",
+  "node": "24.19.0",
+  "bun": "1.3.14",
+  "currentAcceptance": {
+    "node-final.json": 10,
+    "native-final.json": 10
+  },
+  "priorEvidence": "Preintegration reports9 each and legacy insert control1 each precede #23 rebase; red reports are historical TDD observations, not current failures.",
+  "checks": {
+    "typecheck": "passed after rebase",
+    "uncachedRelevantLint": "passed after rebase",
+    "diffCheck": "passed after rebase"
+  },
+  "reports": {
+    "expected-green.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:18:00.441Z",
+      "end": "2026-10-28T06:18:24.337Z",
+      "duration": 23896
+    },
+    "expected-red.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-28T06:17:00.633Z",
+      "end": "2026-10-28T06:17:20.520Z",
+      "duration": 19887
+    },
+    "first-green.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:12:43.089Z",
+      "end": "2026-10-28T06:13:04.812Z",
+      "duration": 21723
+    },
+    "hooks-first.json": {
+      "suites": 1,
+      "tests": 4,
+      "passes": 4,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:20:02.426Z",
+      "end": "2026-10-28T06:21:08.620Z",
+      "duration": 66194
+    },
+    "legacy-green.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:34:25.794Z",
+      "end": "2026-10-28T06:35:01.264Z",
+      "duration": 35470
+    },
+    "legacy-red.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-28T06:21:01.100Z",
+      "end": "2026-10-28T06:21:18.374Z",
+      "duration": 17274
+    },
+    "native-final.json": {
+      "suites": 1,
+      "tests": 10,
+      "passes": 10,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:35:54.319Z",
+      "end": "2026-10-28T06:38:23.033Z",
+      "duration": 148714
+    },
+    "native-legacy-insert.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:25:13.883Z",
+      "end": "2026-10-28T06:25:41.526Z",
+      "duration": 27643
+    },
+    "native-preintegration.json": {
+      "suites": 1,
+      "tests": 9,
+      "passes": 9,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:24:57.370Z",
+      "end": "2026-10-28T06:27:25.265Z",
+      "duration": 147895
+    },
+    "node-final.json": {
+      "suites": 1,
+      "tests": 10,
+      "passes": 10,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:35:52.605Z",
+      "end": "2026-10-28T06:38:51.338Z",
+      "duration": 178733
+    },
+    "node-legacy-insert.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:25:12.179Z",
+      "end": "2026-10-28T06:25:41.512Z",
+      "duration": 29333
+    },
+    "node-preintegration.json": {
+      "suites": 1,
+      "tests": 9,
+      "passes": 9,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:24:55.740Z",
+      "end": "2026-10-28T06:27:39.211Z",
+      "duration": 163471
+    },
+    "occupied-green.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:16:16.957Z",
+      "end": "2026-10-28T06:16:40.439Z",
+      "duration": 23482
+    },
+    "occupied-red.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-28T06:14:32.450Z",
+      "end": "2026-10-28T06:14:52.262Z",
+      "duration": 19812
+    },
+    "publication-green.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T06:22:48.762Z",
+      "end": "2026-10-28T06:22:55.774Z",
+      "duration": 7012
+    },
+    "publication-red.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-28T06:21:24.290Z",
+      "end": "2026-10-28T06:21:30.984Z",
+      "duration": 6694
+    },
+    "red.json": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-28T06:10:45.227Z",
+      "end": "2026-10-28T06:11:02.106Z",
+      "duration": 16879
+    }
+  },
+  "runtimeCommandPrefixes": {
+    "node": [
+      [
+        "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-24/apps/cli/dist/src/index.js"
+      ]
+    ],
+    "native": [
+      [
+        "/private/tmp/anthracite-split-implementation-2026-10-28/evidence-24/an-ticket24-final",
+        "checkout"
+      ],
+      [
+        "/private/tmp/anthracite-split-implementation-2026-10-28/evidence-24/an-ticket24-final",
+        "continue"
+      ],
+      [
+        "/private/tmp/anthracite-split-implementation-2026-10-28/evidence-24/an-ticket24-final",
+        "freeze"
+      ],
+      [
+        "/private/tmp/anthracite-split-implementation-2026-10-28/evidence-24/an-ticket24-final",
+        "init"
+      ],
+      [
+        "/private/tmp/anthracite-split-implementation-2026-10-28/evidence-24/an-ticket24-final",
+        "restack"
+      ],
+      [
+        "/private/tmp/anthracite-split-implementation-2026-10-28/evidence-24/an-ticket24-final",
+        "split"
+      ],
+      [
+        "/private/tmp/anthracite-split-implementation-2026-10-28/evidence-24/an-ticket24-final",
+        "track"
+      ],
+      [
+        "/private/tmp/anthracite-split-implementation-2026-10-28/evidence-24/an-ticket24-final",
+        "unfreeze"
+      ]
+    ]
+  },
+  "nativeBinaries": {
+    "an-ticket24": "2e5dfbdc2b80c0a081024b4d96092eadc6c026747bf5958818bac49cffdc41f3",
+    "an-ticket24-final": "34f0c4676bae8aabd734979fd636e05de79460713f3a1f76dd6036922e0520fc"
+  },
+  "sha256": {
+    "expected-green.json": "eba92acfa69c37e966eb8494fb9f09012f03294ea9c530b88b32ecbb79893321",
+    "expected-red.json": "83cc66e49bd13775416df6ed2798fd9c1c58b7c2f873907870084a85613b073c",
+    "final-observations/native/an-reorder-35Rx9Q/cli.jsonl": "83adc8b4e660a720025c4e3f83802f53faee39b9d7f41a515899b2b7c17b794b",
+    "final-observations/native/an-reorder-35Rx9Q/git.jsonl": "fcc3ced36102dfbca67b498617bce1fe84e6ddb178acc813be1d8d7791dbf09c",
+    "final-observations/native/an-reorder-35Rx9Q/snapshot.json": "7f4f6667c76ac8931751f1b3613c3961f28101e5c8f3636357600a80bd5ab351",
+    "final-observations/native/an-reorder-35Rx9Q-snapshots.jsonl": "f63d185bac6873f38933ec5e10d59e87b2203991b3b4da9c3b83fc5c75da4877",
+    "final-observations/native/an-reorder-K5Z39G/cli.jsonl": "f40b74153d2f90a720898d150ddf3319194c792cd80dc1254a8ad10eb76e329a",
+    "final-observations/native/an-reorder-K5Z39G/git.jsonl": "f570b81c3df686ab63736f870b5ace6ac5561a5c1cb4007afd991a9ddc01b6f2",
+    "final-observations/native/an-reorder-K5Z39G/snapshot.json": "2276d17de31416294e1b53d677948e08e89dd0ea309cbb895cd15146a01f64a6",
+    "final-observations/native/an-reorder-OTl9uX/cli.jsonl": "be945e988f093028918fc4590830cb86e4986e53031cb60b383cfdfb1247c2ec",
+    "final-observations/native/an-reorder-OTl9uX/git.jsonl": "b4a53615231878bde8417b74a5503bce0f562296aa64423272c2b81d4b48249c",
+    "final-observations/native/an-reorder-OTl9uX/snapshot.json": "831d3d1c680f010bed50537fd7f875bf5652d47ea2a5a7a727e01e265e08df7d",
+    "final-observations/native/an-reorder-VHVaYY/cli.jsonl": "d51acd82e9e69f031339ffe5bb0d983b3536ea9c3975e94c3c00b96b5c61caa3",
+    "final-observations/native/an-reorder-VHVaYY/git.jsonl": "e213e613a2c03c9f49100e4bae9ee685645737c453d85ab915013b4db5b990ca",
+    "final-observations/native/an-reorder-VHVaYY/snapshot.json": "71cda728b734c5c3e9c569d696cfa34cb28b06aa4775c9e5163dcde602dcd184",
+    "final-observations/native/an-reorder-VHVaYY-snapshots.jsonl": "2e6d256394023c9d6e14c8949cff77a6e5681744de441652f7f7645755a69b49",
+    "final-observations/native/an-reorder-XDz7sX/cli.jsonl": "721178371a9ec134c9c12b5fd5abd2b1ba5a9b022df40d0158776b6ffe9ec527",
+    "final-observations/native/an-reorder-XDz7sX/git.jsonl": "2635cfb10552cb324c4a5973b056ef46a050b86f3c71b2e308888e2d215f8d1e",
+    "final-observations/native/an-reorder-XDz7sX/snapshot.json": "8f221f2472c797146e9049bf8f11a9352c1a9a451914c9a5543e50f820e46bff",
+    "final-observations/native/an-reorder-frXfdw/cli.jsonl": "2f35e176f626af91f91d304c72bb3dfab07191f9acc85b48c55703ac7f491342",
+    "final-observations/native/an-reorder-frXfdw/git.jsonl": "4870b30e8053cc21d7f1e49a2703443ea9794bd4449d4d545546b4b77336a8fa",
+    "final-observations/native/an-reorder-frXfdw/snapshot.json": "2958165d3bccb2f3933a4f5069a2d9e7820193a223717787865b9b85c7d74214",
+    "final-observations/native/an-reorder-gcMP6I/cli.jsonl": "d2e85460d2acf88060448f4d3d9d2170cd8d82196f2257998f48ebed833033ac",
+    "final-observations/native/an-reorder-gcMP6I/git.jsonl": "401eb80e9ec28775f6bd03dd0a7ba03a2acfc02ebb70580619077161c7dbe366",
+    "final-observations/native/an-reorder-gcMP6I/snapshot.json": "e4901de4370637d8384e90b1f96571c0e75c52dae94292e00482fffaadcb8d43",
+    "final-observations/native/an-reorder-gifmSk/cli.jsonl": "4996bdb20b0a190137c9a3af7ec93554f9f5dac2b4878e1a9a9bc3811aba3ead",
+    "final-observations/native/an-reorder-gifmSk/git.jsonl": "570434f821a757d7f3ed3b5e657eded50ebac6cd9d880b9c1489947d36787260",
+    "final-observations/native/an-reorder-gifmSk/snapshot.json": "79e6d2a30b02e1de7e478ebf9bcbaa0f4c956c5937a326a03598df77bda8e303",
+    "final-observations/native/an-reorder-gifmSk-snapshots.jsonl": "161d1ad844791c05e5486b2435efc93521cd7b145ee29c6b24e5ee1c370a6a85",
+    "final-observations/native/an-reorder-hZ03R4/cli.jsonl": "b6463d55438abf4883f629c9cc83c3535f0c1e537220c1e3bd77ab43b9fef301",
+    "final-observations/native/an-reorder-hZ03R4/git.jsonl": "9511080b181875e01c6eba14c76751009ef8138beaa5c04e77f78eeecf507f96",
+    "final-observations/native/an-reorder-hZ03R4/snapshot.json": "8958a21d2379814bbac7763bd15f1cbda430ff5f302236174c24b4d2b5eb8337",
+    "final-observations/native/an-reorder-jwZhd1/cli.jsonl": "241c4c6f199ef4f6bd6df6bfa27981388975f3ae859fc6d3559b4346c726855d",
+    "final-observations/native/an-reorder-jwZhd1/git.jsonl": "8bf91b863e7eb1da65e4f5a5d65885203f6ae0b2f7ec64748328aaf81dd3f4aa",
+    "final-observations/native/an-reorder-jwZhd1/snapshot.json": "00098d54e42156fb9a2bdc8c67e9230f3d3d807c465aa9726bbe0485349ebe6a",
+    "final-observations/node/an-reorder-3i3Mqn/cli.jsonl": "394159508d18d1f2be8ead14ebe01ced67a5eea688b5a9d3a0a463d7be0cb6b3",
+    "final-observations/node/an-reorder-3i3Mqn/git.jsonl": "dfcfcf7a9ad5e4afa2a1cb77abba6f35707c916addd42149c7a6d7fc5f318958",
+    "final-observations/node/an-reorder-3i3Mqn/snapshot.json": "87aa60b366bb55f0d49a3145a4cfaf8599232ba994e16fa61ae8fcfc35d9319e",
+    "final-observations/node/an-reorder-7vrLRs/cli.jsonl": "33b053f8fbd8b246258b1d030c7622dccf2b35a23f1a587b8fe8f401a3c079fe",
+    "final-observations/node/an-reorder-7vrLRs/git.jsonl": "cfdea4c8f4f432f99f4ce96a7b81a2d7915363e8e130e974d6bc2256ac2aa41b",
+    "final-observations/node/an-reorder-7vrLRs/snapshot.json": "0b8b801c09736062aa463008d9e2fc3fb05bc4f37b91b096d6c7eefb04734718",
+    "final-observations/node/an-reorder-7vrLRs-snapshots.jsonl": "d721a8d6b56c5de6e404f9ed6f90e90b29f8ba9df443812c46357768443396c6",
+    "final-observations/node/an-reorder-8JUl1B/cli.jsonl": "3d38421a37395b409a33d2bb7329d90d553849a362a27cb8352f95f0f9c4138c",
+    "final-observations/node/an-reorder-8JUl1B/git.jsonl": "c0fbd7e555774b0623a8a6397a23ee2bc754e450fabb3e3b3e0fd6382e12afe1",
+    "final-observations/node/an-reorder-8JUl1B/snapshot.json": "eb36334159c21d8fb2feba7732c852d267fa130aa14c99864baf57d7898c07fc",
+    "final-observations/node/an-reorder-C25Md0/cli.jsonl": "a5e9d12bc3ed0537a2b2a787ecb84025da9e10dec4e2bc404e28a2bbeae5f902",
+    "final-observations/node/an-reorder-C25Md0/git.jsonl": "69f0527b8ac41e214e15b4a9aa28d8078c5f733ef0a845d26fe3f9bbc06e82a4",
+    "final-observations/node/an-reorder-C25Md0/snapshot.json": "866b86e48332946e2f7cb60004608f6c2447d3e1c8babb06740d9179b671876d",
+    "final-observations/node/an-reorder-L1mTjY/cli.jsonl": "b2ca12e8823ffb07bd9aa6dd479be53700f5aa33ac00f022b818db5590d9a7e7",
+    "final-observations/node/an-reorder-L1mTjY/git.jsonl": "aeb8abff2bac0275a759f8a8b7571a3ed829bcd453eedf21e36032756945203a",
+    "final-observations/node/an-reorder-L1mTjY/snapshot.json": "b7243b21a1464de3081199b3b6dd001e3e5a2dae2c90cac33483f258b4f6385c",
+    "final-observations/node/an-reorder-L1mTjY-snapshots.jsonl": "fbae83692228ee072b570248e92f734420c00d5459a33f2f10d95b50c9e9e91f",
+    "final-observations/node/an-reorder-UkyJsG/cli.jsonl": "f1d8cfc1ebe870bc69df11f1cdddf41cae1687088dc625976b1e93928f51dbe6",
+    "final-observations/node/an-reorder-UkyJsG/git.jsonl": "1b8b6404e8350dd05296d5e36ed87aad22d0c1ce1f4613059826c3a47a972b13",
+    "final-observations/node/an-reorder-UkyJsG/snapshot.json": "e4acc5bf4d90ce35578b8bb33cf822d250b033d844418107559eeb2d105c02db",
+    "final-observations/node/an-reorder-UkyJsG-snapshots.jsonl": "79234f0c3493c9d274f1c669128c6eb97f59f9cf374ba02e71383ec7cb5c96b0",
+    "final-observations/node/an-reorder-VwD7xI/cli.jsonl": "871dce3b596c827844ac45966941522d803e273562e62f138796df8e652d8d11",
+    "final-observations/node/an-reorder-VwD7xI/git.jsonl": "e297fb68699acfbd28bf9a532435e8b95bd5857a2887fec31719db2f2adbd7c5",
+    "final-observations/node/an-reorder-VwD7xI/snapshot.json": "36b00c1bf0570d5a313c2cea56c64bf87b65e34a72ae16417e5179cd66bc286e",
+    "final-observations/node/an-reorder-WMsFTM/cli.jsonl": "db4c19671e103998799105c182bfb03dadce82bfbe301f64fd6f337b88d6c8e1",
+    "final-observations/node/an-reorder-WMsFTM/git.jsonl": "6d975ee9a20c212f33d4e145deaeb08f9324ffc4f6c7897969f06f64f82d1d0d",
+    "final-observations/node/an-reorder-WMsFTM/snapshot.json": "3d5f5a172678c186e7a7f8d1f3dfb3f8d0bbe89108c3abc2b34bdbbd21b80f4d",
+    "final-observations/node/an-reorder-fTr1cH/cli.jsonl": "cf90efa2745e778c7e9e1e7f0ddb2a2744bccaa9f3e2be78283e7be979e81682",
+    "final-observations/node/an-reorder-fTr1cH/git.jsonl": "f42ab85d4a9980457303e9c5aba6277ebc0f4a5544f9b670e5576399f96194bb",
+    "final-observations/node/an-reorder-fTr1cH/snapshot.json": "d61eca908c1f20af95364e674e889ab48e21d04295d1b279a76854ac384db788",
+    "final-observations/node/an-reorder-r2QDBS/cli.jsonl": "17da8542370d59221ffd9eb558d28c45a34a2464087ff20143421c64e66e4d4c",
+    "final-observations/node/an-reorder-r2QDBS/git.jsonl": "21d6a21e5eac2be8133ea1bc669d55ea425308edef4bd21569e4e404f2eff148",
+    "final-observations/node/an-reorder-r2QDBS/snapshot.json": "29380227419dbd6042a0320c31cbed520940bb3551d0d733a8dc5057fdf1d092",
+    "first-green.json": "8d901913200dc667527f93ebcee06db85043148ab673daa1526bb3f74b3078d5",
+    "hooks-first.json": "e96297cd4a4f16a61078d7d057edde0ec1e1a9af40e9783c0a4a79e138dc1753",
+    "legacy-green.json": "5b5463ee59e79b1ddfe1bb098ec98105232ca8775d8126e10864005c1ddba1c6",
+    "legacy-red.json": "18009003cd49eb96ef9ebf3cbe2abfe99b1e2a43bab0bb0b17538d492b162a96",
+    "native-build.log": "432f964f1f9ea99b47783ba88abb043e8c212ea97b372459a5d9570fd47c2e0a",
+    "native-final-build.log": "9caa6590399b1309ef9c825a21ae87fb253b746f818a738453d37096b8d880b9",
+    "native-final.json": "8b1dfb8fe18f0c38991c791f9f247f6a4a8fc585eefd982dda982ff8c3494469",
+    "native-legacy-insert.json": "3a80d3d9866b8425199188791ce61c96099c0150846c7aba4a641fe62c4f718b",
+    "native-preintegration.json": "1f64e5bcac83b955696c7909d2133b6c0919fc496bcca6c55bc74b68587628f1",
+    "node-final.json": "038a8f926b42789f29034c2dc8fb5da8d4a16f37ad778b6d75459ee6c50926c2",
+    "node-legacy-insert.json": "8f3234233c0ae219f06b1d28d4e2fedb1cc54022cfef3f97e1e87610605c4ed8",
+    "node-preintegration.json": "41f136755038111063f8ce3a086faa2b458b9fc86bf2c094e003275384a586e8",
+    "occupied-green.json": "1f380d1b195b067e0e924d661f30d31eb6808bd620cc1de2d96e3bcaf2290717",
+    "occupied-red.json": "758a8aa0365b0ffe39d46a7288f05cfd1e0e270e15cdae39a95ce21f2e4f80a1",
+    "publication-green.json": "4be277b796aeac0501039524f7f0c16517fd5c1982214fa30be20bbddaca4b1d",
+    "publication-red.json": "a080bfcb53d0fbae58c7a620dbc669d38bfb2dcd5366855eeae2123d286a70bd",
+    "red.json": "505deba8b42bef4ee2f1570632953692f53e07f54d9b56bed5c66c00a605b6a1"
+  }
+}

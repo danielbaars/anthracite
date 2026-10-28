@@ -15,7 +15,7 @@ export function assertContinuationBranchesEditable(
   data: TContinueConfig['data'],
   active?: string
 ): void {
-  const role = data.move ?? data.fold ?? data.insert ?? data.reorder;
+  const role = getStructuralRole(data);
   if (!role) return;
   const remaining = [
     ...new Set([...(active ? [active] : []), ...getMandatoryBranches(data)]),
@@ -33,13 +33,20 @@ export function assertContinuationBranchesEditable(
 
 export function getMandatoryBranches(data: TContinueConfig['data']): string[] {
   if (data.delete) return [...data.delete.mandatory];
-  const role = data.move ?? data.fold ?? data.insert ?? data.reorder;
+  const role = getStructuralRole(data);
   if (!role) return [];
   const names =
+    data.split?.mandatory ??
     data.reorder?.pending ??
     data.insert?.mandatory ??
     data.move?.mandatory ??
     data.fold?.mandatory ??
     data.branchesToRestack;
   return names.filter((name) => !role.completed.includes(name));
+}
+
+export function getStructuralRole(
+  data: TContinueConfig['data']
+): { readonly completed: readonly string[] } | undefined {
+  return data.move ?? data.fold ?? data.insert ?? data.reorder ?? data.split;
 }

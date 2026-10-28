@@ -1,0 +1,16 @@
+{
+  "node": {
+    "mcp": "final/node/captures/mcp",
+    "no-input-pty": "final/node/captures/no-input-pty",
+    "occupied-continue-refusal": "final/node/captures/occupied-continue-refusal",
+    "quiet-success-refusal": "final/node/captures/quiet-success-refusal",
+    "quiet-conflict-continue": "final/node/captures/quiet-conflict-continue"
+  },
+  "native": {
+    "mcp": "final/native/captures/mcp",
+    "no-input-pty": "final/native/captures/no-input-pty",
+    "occupied-continue-refusal": "final/native/captures/occupied-continue-refusal",
+    "quiet-success-refusal": "final/native/captures/quiet-success-refusal",
+    "quiet-conflict-continue": "final/native/captures/quiet-conflict-continue"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-28T05:00:25.448Z",
+    "end": "2026-10-28T05:00:34.184Z",
+    "duration": 8736
+  },
+  "tests": [
+    {
+      "title": "extracts a prerequisite and retains source and synchronized descendant trees",
+      "fullTitle": "file split extraction through the public CLI extracts a prerequisite and retains source and synchronized descendant trees",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-22/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 1300,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: split --by-file selected.txt: \nERROR: File split extraction is not available yet.\n\n    at RelationCliFixture.ok (apps/cli/dist/test/lib/fixtures/reorder_cli.js:92:19)\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_extract_cli.test.js:28:17)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "split --by-file selected.txt: \nERROR: File split extraction is not available yet.\n"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "extracts a prerequisite and retains source and synchronized descendant trees",
+      "fullTitle": "file split extraction through the public CLI extracts a prerequisite and retains source and synchronized descendant trees",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-22/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 1300,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: split --by-file selected.txt: \nERROR: File split extraction is not available yet.\n\n    at RelationCliFixture.ok (apps/cli/dist/test/lib/fixtures/reorder_cli.js:92:19)\n    at Context.<anonymous> (apps/cli/dist/test/commands/split_file_extract_cli.test.js:28:17)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "split --by-file selected.txt: \nERROR: File split extraction is not available yet.\n"
+      }
+    }
+  ],
+  "passes": []
+}

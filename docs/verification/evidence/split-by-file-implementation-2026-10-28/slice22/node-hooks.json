@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T05:04:59.310Z",
+    "end": "2026-10-28T05:05:17.212Z",
+    "duration": 17902
+  },
+  "tests": [
+    {
+      "title": "runs real commit hooks for both prepared commits in detached owned work",
+      "fullTitle": "file split extraction through the public CLI runs real commit hooks for both prepared commits in detached owned work",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-22/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 10308,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "runs real commit hooks for both prepared commits in detached owned work",
+      "fullTitle": "file split extraction through the public CLI runs real commit hooks for both prepared commits in detached owned work",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-22/apps/cli/dist/test/commands/split_file_extract_cli.test.js",
+      "duration": 10308,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

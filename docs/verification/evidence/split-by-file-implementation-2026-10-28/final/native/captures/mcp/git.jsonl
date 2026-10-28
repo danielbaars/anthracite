@@ -1,0 +1,47 @@
+{"args":["init","--initial-branch=main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"Initialized empty Git repository in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo/.git/"}
+{"args":["config","user.name","Reorder fixture"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["config","user.email","reorder@example.test"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["config","commit.gpgsign","false"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["commit","-m","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"[main (root-commit) 17ef64a] main\n 1 file changed, 1 insertion(+)\n create mode 100644 main.txt"}
+{"args":["switch","-c","base","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["add","base.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["commit","-m","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"[base d4abb66] base\n 1 file changed, 1 insertion(+)\n create mode 100644 base.txt"}
+{"args":["switch","-c","child","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["add","child.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["commit","-m","child"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"[child ca5ff2b] child\n 1 file changed, 1 insertion(+)\n create mode 100644 child.txt"}
+{"args":["switch","-c","tip","child"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["add","tip.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["commit","-m","tip"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"[tip 23e42fd] tip\n 1 file changed, 1 insertion(+)\n create mode 100644 tip.txt"}
+{"args":["switch","-c","other","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["add","other.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["commit","-m","other"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"[other 8468611] other\n 1 file changed, 1 insertion(+)\n create mode 100644 other.txt"}
+{"args":["switch","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["add","selected.txt","remainder.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["commit","--amend","--no-edit"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"[base 72fd147] base\n Date: Wed Oct 28 09:30:18 2026 +0100\n 3 files changed, 3 insertions(+)\n create mode 100644 base.txt\n create mode 100644 remainder.txt\n create mode 100644 selected.txt"}
+{"args":["rev-list","--count","refs/heads/main..refs/heads/base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"1"}
+{"args":["rev-parse","refs/heads/main^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"95eff859c9e9635db428f84f53c6e54aeaf47c7a"}
+{"args":["rev-parse","refs/heads/base^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"72637a225e99ea80be07cac02db49e9ca6ce6ebb"}
+{"args":["rev-parse","refs/heads/child^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"7ef0ae7dfc04a881549c6b74cee9beca1fb2ab2f"}
+{"args":["rev-parse","refs/heads/tip^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"ebe8e7efd24e06abc5576edab06290c6fe807613"}
+{"args":["rev-parse","refs/heads/other^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"ead6f46555b2a7a8d07d0731d1ac7657d4393add"}
+{"args":["rev-parse","other"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"846861161389762b31a92c555645368778e6525b"}
+{"args":["branch","--show-current"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"base"}
+{"args":["ls-tree","-r","--name-only","refs/heads/base_split"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"main.txt\nselected.txt"}
+{"args":["show","refs/heads/base_split:selected.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"selected"}
+{"args":["diff","--name-only","refs/heads/base_split","refs/heads/base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"base.txt\nremainder.txt"}
+{"args":["rev-parse","refs/heads/main^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"95eff859c9e9635db428f84f53c6e54aeaf47c7a"}
+{"args":["rev-parse","refs/heads/base^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"72637a225e99ea80be07cac02db49e9ca6ce6ebb"}
+{"args":["rev-parse","refs/heads/child^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"7ef0ae7dfc04a881549c6b74cee9beca1fb2ab2f"}
+{"args":["rev-parse","refs/heads/tip^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"ebe8e7efd24e06abc5576edab06290c6fe807613"}
+{"args":["rev-parse","refs/heads/other^{tree}"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"ead6f46555b2a7a8d07d0731d1ac7657d4393add"}
+{"args":["branch","--show-current"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"base"}
+{"args":["branch","--show-current"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"base"}
+{"args":["merge-base","--is-ancestor","refs/heads/base","refs/heads/tip"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["status","--porcelain"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}
+{"args":["rev-parse","other"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"846861161389762b31a92c555645368778e6525b"}
+{"args":["rev-parse","HEAD"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"aae9053bdb5cce0fa695c3a335807ae5bf3b3565"}
+{"args":["branch","--show-current"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"base"}
+{"args":["for-each-ref","--format=%(refname) %(objectname)","refs/heads","refs/remotes","refs/tags"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":"refs/heads/base aae9053bdb5cce0fa695c3a335807ae5bf3b3565\nrefs/heads/base_split 7fc3da6401e79cbaf0a4d3f2508508a93b700412\nrefs/heads/child 7a0fa6adbfc748425efb1fd4da7478e6758c795a\nrefs/heads/main 17ef64a82a9c7052f8bbcd90d4e366fec36ffe13\nrefs/heads/other 846861161389762b31a92c555645368778e6525b\nrefs/heads/tip 307e943dddac11f402baebcf063b048d6a29d1e6"}
+{"args":["rev-parse","--git-path","index"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":".git/index"}
+{"args":["status","--porcelain=v1","-z"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-jrh6wq/an-reorder-0BP3Sx/repo","output":""}

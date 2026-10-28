@@ -1,0 +1,48 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-28T08:25:01.376Z",
+    "end": "2026-10-28T08:25:07.933Z",
+    "duration": 6557
+  },
+  "tests": [
+    {
+      "title": "completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "fullTitle": "file split public surface completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 4267,
+      "currentRetry": 0,
+      "err": {
+        "message": "ERROR: File split requires a valid tracked source. Track it explicitly first.\n: expected 1 to equal +0",
+        "showDiff": true,
+        "actual": "1",
+        "expected": "0",
+        "operator": "strictEqual",
+        "stack": "AssertionError: ERROR: File split requires a valid tracked source. Track it explicitly first.\n: expected 1 to equal +0\n    at Context.<anonymous> (dist/test/commands/split_file_surface_cli.test.js:77:77)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "fullTitle": "file split public surface completes one mixed commit with closed stdin and a same-named tag, including mandatory replay",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/review-fixes/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 4267,
+      "currentRetry": 0,
+      "err": {
+        "message": "ERROR: File split requires a valid tracked source. Track it explicitly first.\n: expected 1 to equal +0",
+        "showDiff": true,
+        "actual": "1",
+        "expected": "0",
+        "operator": "strictEqual",
+        "stack": "AssertionError: ERROR: File split requires a valid tracked source. Track it explicitly first.\n: expected 1 to equal +0\n    at Context.<anonymous> (dist/test/commands/split_file_surface_cli.test.js:77:77)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

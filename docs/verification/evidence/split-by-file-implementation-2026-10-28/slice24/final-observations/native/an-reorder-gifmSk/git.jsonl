@@ -1,0 +1,38 @@
+{"args":["init","--initial-branch=main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"Initialized empty Git repository in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo/.git/"}
+{"args":["config","user.name","Reorder fixture"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["config","user.email","reorder@example.test"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["config","commit.gpgsign","false"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["commit","-m","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"[main (root-commit) ccc5132] main\n 1 file changed, 1 insertion(+)\n create mode 100644 main.txt"}
+{"args":["switch","-c","base","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["add","base.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["commit","-m","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"[base 87bf3ee] base\n 1 file changed, 1 insertion(+)\n create mode 100644 base.txt"}
+{"args":["switch","-c","child","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["add","child.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["commit","-m","child"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"[child e3fed9a] child\n 1 file changed, 1 insertion(+)\n create mode 100644 child.txt"}
+{"args":["switch","-c","tip","child"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["add","tip.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["commit","-m","tip"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"[tip a6b6314] tip\n 1 file changed, 1 insertion(+)\n create mode 100644 tip.txt"}
+{"args":["switch","-c","other","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["add","other.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["commit","-m","other"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"[other 4e4e6d4] other\n 1 file changed, 1 insertion(+)\n create mode 100644 other.txt"}
+{"args":["switch","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["switch","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["add","selected.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["commit","-m","Select prerequisite"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"[base b6f5d33] Select prerequisite\n 1 file changed, 1 insertion(+)\n create mode 100644 selected.txt"}
+{"args":["switch","child"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["commit","-m","Child overlaps future source"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"[child 822e31f] Child overlaps future source\n 1 file changed, 1 insertion(+), 1 deletion(-)"}
+{"args":["switch","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["commit","-m","Advance source without restacking"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"[base 5f4dd41] Advance source without restacking\n 1 file changed, 1 insertion(+), 1 deletion(-)"}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["rev-parse","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"93a4682ba628e152f0982e9be01dae6be7778db1"}
+{"args":["update-ref","refs/heads/base","other"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["update-ref","refs/heads/base","93a4682ba628e152f0982e9be01dae6be7778db1"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":""}
+{"args":["show","tip:main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"staged resolution"}
+{"args":["rev-parse","HEAD"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"93a4682ba628e152f0982e9be01dae6be7778db1"}
+{"args":["branch","--show-current"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"base"}
+{"args":["for-each-ref","--format=%(refname) %(objectname)","refs/heads","refs/remotes","refs/tags"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"refs/heads/base 93a4682ba628e152f0982e9be01dae6be7778db1\nrefs/heads/base_split 1379b39bdad52715ce1c0699dd4abc278a7e6772\nrefs/heads/child 890515860b4abe8d0bedb3d8020c7ab817e6e60d\nrefs/heads/main ccc513296d79ad678addb674a1fa107a84db7ece\nrefs/heads/other 4e4e6d402801c3c8404b01616dc938d435b7666e\nrefs/heads/tip 497a003998b85dd7c595f6a04994eee3e85f53ec"}
+{"args":["rev-parse","--git-path","index"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":".git/index"}
+{"args":["status","--porcelain=v1","-z"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-gifmSk/repo","output":"?? portable.txt\u0000"}

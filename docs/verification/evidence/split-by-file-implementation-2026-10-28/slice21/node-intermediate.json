@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T04:56:33.103Z",
+    "end": "2026-10-28T04:56:36.716Z",
+    "duration": 3613
+  },
+  "tests": [
+    {
+      "title": "protects a local path materialized only by an intermediate descendant commit",
+      "fullTitle": "file split preflight through the public CLI protects a local path materialized only by an intermediate descendant commit",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-21/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1144,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "protects a local path materialized only by an intermediate descendant commit",
+      "fullTitle": "file split preflight through the public CLI protects a local path materialized only by an intermediate descendant commit",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-21/apps/cli/dist/test/commands/split_file_preflight_cli.test.js",
+      "duration": 1144,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

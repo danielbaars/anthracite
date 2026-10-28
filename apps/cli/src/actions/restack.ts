@@ -3,6 +3,7 @@ import { TContext } from '../lib/context';
 import {
   assertContinuationBranchesEditable,
   getMandatoryBranches,
+  getStructuralRole,
 } from '../lib/engine/frozen_branch';
 import {
   RebaseCheckoutError,
@@ -28,6 +29,10 @@ import {
   recordReorderCompletion,
   reportReorderFailure,
 } from './reorder_recovery';
+import {
+  assertFileSplitAvailable,
+  recordFileSplitCompletion,
+} from './split_file_recovery';
 
 /** Keep mandatory plans unfiltered; generic callers explicitly skip frozen anchors. */
 export function getBranchesToRestack(
@@ -66,9 +71,10 @@ export function restackBranches(
   context: TContext
 ): void {
   const data = context.continueConfig.data;
-  const skipFrozen = !(data.move || data.fold || data.insert || data.reorder);
+  const skipFrozen = !getStructuralRole(data);
   assertDeleteRecoveryEditable(data.delete);
   assertContinuationBranchesEditable(data);
+  assertFileSplitAvailable(data);
   try {
     assertBranchesAvailableInWorktrees(
       getBranchesToRestack(branchNames, context, { skipFrozen })
@@ -77,13 +83,13 @@ export function restackBranches(
     reportReorderFailure(context);
     throw error;
   }
-
   context.splog.debug(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')
   );
   while (branchNames.length > 0) {
     assertDeleteRecoveryEditable(context.continueConfig.data.delete);
     assertContinuationBranchesEditable(context.continueConfig.data);
+    assertFileSplitAvailable(context.continueConfig.data);
     const branchName = branchNames.shift();
     if (!branchName) continue;
 
@@ -185,6 +191,7 @@ export function recordRestackCompletion(
   branch: string,
   context: TContext
 ): void {
+  recordFileSplitCompletion(branch, context);
   recordDeleteCompletion(branch, context);
   recordMoveCompletion(branch, context);
   recordReorderCompletion(branch, context);

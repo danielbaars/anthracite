@@ -1,0 +1,55 @@
+{"args":["init","--initial-branch=main"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"Initialized empty Git repository in /private/tmp/an-reorder-2LGTex/repo/.git/"}
+{"args":["config","user.name","Reorder fixture"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["config","user.email","reorder@example.test"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["config","commit.gpgsign","false"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["add","main.txt"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["commit","-m","main"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"[main (root-commit) a5b327d] main\n 1 file changed, 1 insertion(+)\n create mode 100644 main.txt"}
+{"args":["switch","-c","base","main"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["add","base.txt"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["commit","-m","base"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"[base 5f8961e] base\n 1 file changed, 1 insertion(+)\n create mode 100644 base.txt"}
+{"args":["switch","-c","child","base"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["add","child.txt"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["commit","-m","child"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"[child 17a33aa] child\n 1 file changed, 1 insertion(+)\n create mode 100644 child.txt"}
+{"args":["switch","-c","tip","child"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["add","tip.txt"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["commit","-m","tip"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"[tip 7e775cb] tip\n 1 file changed, 1 insertion(+)\n create mode 100644 tip.txt"}
+{"args":["switch","-c","other","main"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["add","other.txt"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["commit","-m","other"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"[other 9e1073e] other\n 1 file changed, 1 insertion(+)\n create mode 100644 other.txt"}
+{"args":["switch","base"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["add","selected.txt","remainder.txt"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["commit","-m","Mixed source"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"[base 32c577d] Mixed source\n 2 files changed, 2 insertions(+)\n create mode 100644 remainder.txt\n create mode 100644 selected.txt"}
+{"args":["switch","-c","side","base"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["add","side.txt"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["commit","-m","side"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"[side 03d4ffc] side\n 1 file changed, 1 insertion(+)\n create mode 100644 side.txt"}
+{"args":["switch","-c","side-tip","side"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["add","side-tip.txt"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["commit","-m","side-tip"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"[side-tip be36736] side-tip\n 1 file changed, 1 insertion(+)\n create mode 100644 side-tip.txt"}
+{"args":["switch","base"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["log","--reverse","--format=%B","base..child"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"child"}
+{"args":["log","--reverse","--format=%B","child..tip"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"tip"}
+{"args":["log","--reverse","--format=%B","base..side"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"side"}
+{"args":["log","--reverse","--format=%B","side..side-tip"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"side-tip"}
+{"args":["rev-parse","child^{tree}"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"7ef0ae7dfc04a881549c6b74cee9beca1fb2ab2f"}
+{"args":["rev-parse","tip^{tree}"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"ebe8e7efd24e06abc5576edab06290c6fe807613"}
+{"args":["rev-parse","side^{tree}"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"3064d5020f15cd3997e9f084e3fb9494af070557"}
+{"args":["rev-parse","side-tip^{tree}"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"aa9ef8cbd491cb7ef15591341ed12d8b0a52416b"}
+{"args":["rev-parse","child^{tree}"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"7ef0ae7dfc04a881549c6b74cee9beca1fb2ab2f"}
+{"args":["merge-base","--is-ancestor","base","child"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["log","--reverse","--format=%B","base..child"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"child"}
+{"args":["rev-parse","tip^{tree}"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"ebe8e7efd24e06abc5576edab06290c6fe807613"}
+{"args":["merge-base","--is-ancestor","base","tip"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["log","--reverse","--format=%B","child..tip"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"tip"}
+{"args":["rev-parse","side^{tree}"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"3064d5020f15cd3997e9f084e3fb9494af070557"}
+{"args":["merge-base","--is-ancestor","base","side"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["log","--reverse","--format=%B","base..side"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"side"}
+{"args":["rev-parse","side-tip^{tree}"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"aa9ef8cbd491cb7ef15591341ed12d8b0a52416b"}
+{"args":["merge-base","--is-ancestor","base","side-tip"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}
+{"args":["log","--reverse","--format=%B","side..side-tip"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"side-tip"}
+{"args":["branch","--show-current"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"base"}
+{"args":["branch","--show-current"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"base"}
+{"args":["rev-parse","HEAD"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"b2c9ee9b7531c550f7d2cab064159a82973249ce"}
+{"args":["branch","--show-current"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"base"}
+{"args":["for-each-ref","--format=%(refname) %(objectname)","refs/heads","refs/remotes","refs/tags"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":"refs/heads/base b2c9ee9b7531c550f7d2cab064159a82973249ce\nrefs/heads/base_split 42065f0c10a2a63d141fb34a7d04168f0e87f18a\nrefs/heads/child a09353d847f07fbfc6460086c9d78bcfb3f5f113\nrefs/heads/main a5b327dbf7ba1ff47d0fd9830fe1f4db1dc78a46\nrefs/heads/other 9e1073eb75183e1c19a95939e16e2d3cc5ac3fb7\nrefs/heads/side 51bda02dfd360c1fa16ebcc22941e62519a5fc2a\nrefs/heads/side-tip 1306f55bfecbd5d7266c8c91fb632e5eb3f1811d\nrefs/heads/tip 29d123bdb06437fbb268db92abbc6bba1276261f"}
+{"args":["rev-parse","--git-path","index"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":".git/index"}
+{"args":["status","--porcelain=v1","-z"],"cwd":"/private/tmp/an-reorder-2LGTex/repo","output":""}

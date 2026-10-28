@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"status\":\"cli_error\",\"stdout\":\"\",\"stderr\":\"Unknown arguments: by-file, byFile\\n\",\"exitCode\":1,\"signal\":null,\"truncated\":false}"
+    }
+  ],
+  "isError": true
+}

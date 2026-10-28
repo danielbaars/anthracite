@@ -1,0 +1,21 @@
+{
+  "unmerged": "100644 53af2c9dfe1a74000c67f1dbd0af84eb53b006cd 1\tsrc/api/service.ts\n100644 35b6bdcb3d980323e044217ee3008e765bf45750 2\tsrc/api/service.ts\n100644 d6fae36c908517f9f9e18afa95a7b9f7052bf70a 3\tsrc/api/service.ts\n",
+  "headName": "refs/heads/child\n",
+  "rebaseFiles": [
+    "author-script",
+    "done",
+    "drop_redundant_commits",
+    "end",
+    "git-rebase-todo",
+    "git-rebase-todo.backup",
+    "head-name",
+    "interactive",
+    "message",
+    "msgnum",
+    "no-reschedule-failed-exec",
+    "onto",
+    "orig-head",
+    "patch",
+    "stopped-sha"
+  ]
+}

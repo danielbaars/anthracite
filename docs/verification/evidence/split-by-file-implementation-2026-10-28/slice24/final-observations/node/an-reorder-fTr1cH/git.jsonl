@@ -1,0 +1,36 @@
+{"args":["init","--initial-branch=main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"Initialized empty Git repository in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo/.git/"}
+{"args":["config","user.name","Reorder fixture"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["config","user.email","reorder@example.test"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["config","commit.gpgsign","false"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["commit","-m","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"[main (root-commit) 1ad1974] main\n 1 file changed, 1 insertion(+)\n create mode 100644 main.txt"}
+{"args":["switch","-c","base","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["add","base.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["commit","-m","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"[base 337ff90] base\n 1 file changed, 1 insertion(+)\n create mode 100644 base.txt"}
+{"args":["switch","-c","child","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["add","child.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["commit","-m","child"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"[child e838aa5] child\n 1 file changed, 1 insertion(+)\n create mode 100644 child.txt"}
+{"args":["switch","-c","tip","child"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["add","tip.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["commit","-m","tip"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"[tip 32af3a1] tip\n 1 file changed, 1 insertion(+)\n create mode 100644 tip.txt"}
+{"args":["switch","-c","other","main"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["add","other.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["commit","-m","other"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"[other b8d5a26] other\n 1 file changed, 1 insertion(+)\n create mode 100644 other.txt"}
+{"args":["switch","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["switch","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["add","selected.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["commit","-m","Select prerequisite"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"[base 63c3339] Select prerequisite\n 1 file changed, 1 insertion(+)\n create mode 100644 selected.txt"}
+{"args":["switch","child"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["commit","-m","Child overlaps future source"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"[child 2164435] Child overlaps future source\n 1 file changed, 1 insertion(+), 1 deletion(-)"}
+{"args":["switch","base"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["commit","-m","Advance source without restacking"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"[base e39d245] Advance source without restacking\n 1 file changed, 1 insertion(+), 1 deletion(-)"}
+{"args":["add","main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}
+{"args":["branch","--show-current"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"base"}
+{"args":["show","tip:main.txt"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"ordinary resolution"}
+{"args":["rev-parse","HEAD"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"0df000ce18a85f1042d60963aa2e5b3d401e4b6b"}
+{"args":["branch","--show-current"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"base"}
+{"args":["for-each-ref","--format=%(refname) %(objectname)","refs/heads","refs/remotes","refs/tags"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":"refs/heads/base 0df000ce18a85f1042d60963aa2e5b3d401e4b6b\nrefs/heads/base_split 3c63b53defaf23398631a24486e4755b334a0eb8\nrefs/heads/child 6549e5f8984758b32c2612dcb0bcd058bc9a3f7c\nrefs/heads/main 1ad197414f7e9f45097d0307c03e66928c50e015\nrefs/heads/other b8d5a2698cbabfe697dee1ab0d757fb03c433024\nrefs/heads/tip 3649b7d236743fbc6e6264aed9acdfef3e0f5705"}
+{"args":["rev-parse","--git-path","index"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":".git/index"}
+{"args":["status","--porcelain=v1","-z"],"cwd":"/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-fTr1cH/repo","output":""}

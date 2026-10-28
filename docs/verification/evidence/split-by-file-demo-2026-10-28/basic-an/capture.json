@@ -1,0 +1,1 @@
+{"transport":"Anthracite MCP run_an_cmd","arguments":["split","--by-file","src/refactor/**","--no-interactive"],"result":{"status":"cli_error","stdout":"","stderr":"Unknown arguments: by-file, byFile\n","exitCode":1,"signal":null,"truncated":false},"isError":true}

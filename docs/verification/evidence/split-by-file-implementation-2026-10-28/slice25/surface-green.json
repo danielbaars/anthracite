@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T07:52:36.684Z",
+    "end": "2026-10-28T07:53:40.242Z",
+    "duration": 63558
+  },
+  "tests": [
+    {
+      "title": "completes one mixed commit with closed stdin and no-interactive, including mandatory replay",
+      "fullTitle": "file split public surface completes one mixed commit with closed stdin and no-interactive, including mandatory replay",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 16667,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "completes ordinary interactive file mode in a real terminal without any input",
+      "fullTitle": "file split public surface completes ordinary interactive file mode in a real terminal without any input",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 17705,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps quiet closed-stdin success silent and retains an actionable early refusal without effects",
+      "fullTitle": "file split public surface keeps quiet closed-stdin success silent and retains an actionable early refusal without effects",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 19114,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "fullTitle": "file split public surface explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 804,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "completes one mixed commit with closed stdin and no-interactive, including mandatory replay",
+      "fullTitle": "file split public surface completes one mixed commit with closed stdin and no-interactive, including mandatory replay",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 16667,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "completes ordinary interactive file mode in a real terminal without any input",
+      "fullTitle": "file split public surface completes ordinary interactive file mode in a real terminal without any input",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 17705,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps quiet closed-stdin success silent and retains an actionable early refusal without effects",
+      "fullTitle": "file split public surface keeps quiet closed-stdin success silent and retains an actionable early refusal without effects",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 19114,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "fullTitle": "file split public surface explains file mode and completes its equivalent selectors for split and sp outside Git",
+      "file": "/private/tmp/anthracite-split-implementation-2026-10-28/ticket-25/apps/cli/dist/test/commands/split_file_surface_cli.test.js",
+      "duration": 804,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

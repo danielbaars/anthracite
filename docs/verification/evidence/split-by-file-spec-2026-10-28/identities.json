@@ -1,0 +1,13 @@
+{
+  "gt": {
+    "path": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+    "sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+    "version": "1.8.6"
+  },
+  "an": {
+    "path": "/Users/danielbaars/.local/bin/an",
+    "sha256": "3042f6c7dfee0f4c4a26ed9056a6405dc6e00dd844488d04dfe883f91bd580d9",
+    "version": "0.1.1-dev.20261027211215"
+  },
+  "anthraciteSourceCommit": "3923b1088b29f02ce9d9e2d8da9fb52339889915"
+}
