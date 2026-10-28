@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/danielbaars/anthracite/compare/v0.2.0...v0.2.1) (2026-10-28)
+
+
+### Miscellaneous Chores
+
+* release 0.2.1 for OIDC validation ([da0c99d](https://github.com/danielbaars/anthracite/commit/da0c99d0b5fafdfe7c2679d0f366a3da7a328df4))
+
 ## [0.2.0](https://github.com/danielbaars/anthracite/compare/v0.1.1...v0.2.0) (2026-10-28)
 
 
