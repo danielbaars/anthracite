@@ -32,6 +32,14 @@ const ContinueSchema = t.shape({
   delete: t.optional(
     t.shape({ branch: t.string, mandatory: t.array(t.string) })
   ),
+  split: t.optional(
+    t.shape({
+      source: t.string,
+      parent: t.string,
+      mandatory: t.array(t.string),
+      completed: t.array(t.string),
+    })
+  ),
   insert: t.optional(
     t.shape({
       branch: t.string,

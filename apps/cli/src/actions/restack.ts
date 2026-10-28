@@ -3,6 +3,7 @@ import { TContext } from '../lib/context';
 import {
   assertContinuationBranchesEditable,
   getMandatoryBranches,
+  getStructuralRole,
 } from '../lib/engine/frozen_branch';
 import {
   RebaseCheckoutError,
@@ -66,7 +67,7 @@ export function restackBranches(
   context: TContext
 ): void {
   const data = context.continueConfig.data;
-  const skipFrozen = !(data.move || data.fold || data.insert || data.reorder);
+  const skipFrozen = !getStructuralRole(data);
   assertDeleteRecoveryEditable(data.delete);
   assertContinuationBranchesEditable(data);
   try {
@@ -185,6 +186,11 @@ export function recordRestackCompletion(
   branch: string,
   context: TContext
 ): void {
+  if (context.continueConfig.data.split)
+    context.continueConfig.update((data) => {
+      if (data.split && !data.split.completed.includes(branch))
+        data.split.completed.push(branch);
+    });
   recordDeleteCompletion(branch, context);
   recordMoveCompletion(branch, context);
   recordReorderCompletion(branch, context);

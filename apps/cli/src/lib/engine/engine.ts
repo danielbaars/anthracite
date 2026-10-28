@@ -31,6 +31,7 @@ import {
 import { validateOrFixParentBranchRevision } from './parse_branches_and_meta';
 import { TScopeSpec } from './scope_spec';
 import { publishFoldStackRefs } from '../git/fold_stack';
+import { FileSplitPublication, publishFileSplitRefs } from '../git/file_split';
 import { assertBranchEditable } from './frozen_branch';
 
 export type TEngine = {
@@ -134,6 +135,7 @@ export type TEngine = {
     branchNames: string[];
     branchPoints: number[];
   }) => void;
+  applyFileSplit: (plan: FileSplitPublication) => void;
   forceCheckoutBranch: (branchToSplit: string) => void;
 
   restackBranch: (
@@ -1142,6 +1144,35 @@ export function composeEngine({
       }
       cache.currentBranch = lastBranch.name;
       git.switchBranch(lastBranch.name);
+    },
+    applyFileSplit: (plan) => {
+      const source = assertBranchIsValidAndNotTrunkAndGetMeta(plan.source);
+      try {
+        publishFileSplitRefs(plan);
+        removeChild(plan.parent, plan.source);
+        cache.branches[plan.parent].children.push(plan.generatedName);
+        cache.branches[plan.generatedName] = {
+          validationResult: 'VALID',
+          branchRevision: plan.selectedRevision,
+          parentBranchName: plan.parent,
+          parentBranchRevision: plan.parentRevision,
+          children: [plan.source],
+        };
+        cache.branches[plan.source] = {
+          ...source,
+          ...readMetadataRef(plan.source),
+          branchRevision: plan.remainderRevision,
+          parentBranchName: plan.generatedName,
+          parentBranchRevision: plan.selectedRevision,
+        };
+      } catch (error) {
+        canPersistCache = false;
+        throw new PreconditionsFailedError(
+          `File split extraction publication failed. Inspect actual branch refs and tracking before further changes. ${
+            error instanceof Error ? error.message : String(error)
+          }`
+        );
+      }
     },
     forceCheckoutBranch: (branchToSplit: string) => {
       git.switchBranch(branchToSplit, { force: true });

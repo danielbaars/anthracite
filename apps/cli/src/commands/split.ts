@@ -1,7 +1,7 @@
 import yargs from 'yargs';
 import { splitCurrentBranch } from '../actions/split';
 import { graphite } from '../lib/runner';
-import { PreconditionsFailedError } from '../lib/errors';
+import { splitByFile } from '../actions/split_file';
 
 const args = {
   ['by-file']: {
@@ -38,9 +38,7 @@ export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(argv, canonical, async (context) => {
     if (argv['by-file'] !== undefined)
-      throw new PreconditionsFailedError(
-        'File split extraction is not available yet.'
-      );
+      return splitByFile(argv['by-file'], argv.verify === false, context);
     return splitCurrentBranch(
       {
         style: argv['by-hunk']

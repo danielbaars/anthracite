@@ -27,6 +27,16 @@ export type FileSplitPlan = {
 
 /** Read-only discovery must precede normal engine repair and recovery cleanup. */
 export function planFileSplit(selectors: readonly string[]): FileSplitPlan {
+  const override = [
+    'GIT_INDEX_FILE',
+    'GIT_DIR',
+    'GIT_WORK_TREE',
+    'GIT_COMMON_DIR',
+  ].find((name) => process.env[name] !== undefined);
+  if (override)
+    throw new PreconditionsFailedError(
+      `Cannot split by file with ${override} set. Clear the repository/index override and retry explicitly.`
+    );
   if (
     selectors.length === 0 ||
     selectors.some((value) => !value.trim() || value.includes('\0'))
@@ -103,7 +113,6 @@ export function planFileSplit(selectors: readonly string[]): FileSplitPlan {
   assertRestackFilesAvailable({
     branches: descendants,
     checkoutRevisions: [
-      parentRevision,
       sourceRevision,
       ...descendants.map(({ revision }) => revision),
     ],
@@ -130,16 +139,17 @@ function planDescendants(source: string): FileSplitParticipant[] {
   ])
     .split('\n')
     .filter(Boolean);
+  const metadata = new Map(heads.map((name) => [name, readMetadataRef(name)]));
   const queue: FileSplitParticipant[] = [];
   const visited = new Set([source]);
   const visit = (parent: string): void => {
     for (const name of heads
-      .filter((head) => readMetadataRef(head).parentBranchName === parent)
+      .filter((head) => metadata.get(head)?.parentBranchName === parent)
       .sort()) {
       if (visited.has(name))
         throw new PreconditionsFailedError('Invalid cyclic split descendants.');
       visited.add(name);
-      const from = readMetadataRef(name).parentBranchRevision;
+      const from = metadata.get(name)?.parentBranchRevision;
       if (!from)
         throw new PreconditionsFailedError(
           `Invalid tracked descendant ${name}.`

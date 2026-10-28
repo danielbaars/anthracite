@@ -52,5 +52,6 @@ export function clearContinuation(context: TContext): void {
     data.fold = undefined;
     data.insert = undefined;
     data.reorder = undefined;
+    data.split = undefined;
   });
 }
