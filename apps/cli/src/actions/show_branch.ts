@@ -30,10 +30,10 @@ export async function showBranchInfo(
   }
 
   const children = context.engine.getChildren(branchName);
-  if (children.length) {
-    output.push(`${chalk.cyan('Children')}:`);
-    output.concat(children.map((c) => `▸ ${c}`));
-  }
+  children.sort((left, right) =>
+    Buffer.compare(Buffer.from(left, 'utf8'), Buffer.from(right, 'utf8'))
+  );
+  output.push(`${chalk.cyan('Children')}:`, ...children.map((c) => `▸ ${c}`));
 
   const body = opts.body && context.engine.getPrInfo(branchName)?.body;
   if (body) {
