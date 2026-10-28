@@ -1,0 +1,15 @@
+{
+  "approvedGroups": 6,
+  "stories": 72,
+  "implementationDecisions": 14,
+  "acceptanceCases": 15,
+  "draftClarifications": {
+    "unrepresentableTree": "refuse before construction without enlarging selection",
+    "ordinaryNamingCollision": "allocate first valid repeated-suffix candidate when available"
+  },
+  "deliberateDifferences": {
+    "completeSelection": "refuse, preserve original branch identity",
+    "occupiedOrFrozenMandatoryParticipant": "refuse before extraction, do not skip after splitting"
+  },
+  "implementationStatus": "not implemented; recorded runtime checks concern pinned Graphite only"
+}

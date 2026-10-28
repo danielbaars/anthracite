@@ -1,0 +1,198 @@
+{
+  "multi": {
+    "folder": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt",
+    "repo": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/repo",
+    "arguments": [
+      "split",
+      "--by-file",
+      "src/refactor/**",
+      "--no-interactive"
+    ],
+    "environment": {
+      "HOME": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/home",
+      "NO_COLOR": "1",
+      "PATH": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin://Applications/Topaz Gigapixel.app/Contents/Resources/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/sbin:/Users/danielbaars/.codex/tmp/arg0-macos/codex-arg05aaEI3:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/danielbaars/Library/pnpm/bin:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/opt/homebrew/opt/fzf/bin:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS",
+      "TERM": "dumb",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GH_TOKEN": "",
+      "GITHUB_TOKEN": "",
+      "GRAPHITE_AUTH_TOKEN": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/multi-gt/bin/pager"
+    }
+  },
+  "all": {
+    "folder": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt",
+    "repo": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/repo",
+    "arguments": [
+      "split",
+      "--by-file",
+      ".",
+      "--no-interactive"
+    ],
+    "environment": {
+      "HOME": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/home",
+      "NO_COLOR": "1",
+      "PATH": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin://Applications/Topaz Gigapixel.app/Contents/Resources/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/sbin:/Users/danielbaars/.codex/tmp/arg0-macos/codex-arg05aaEI3:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/danielbaars/Library/pnpm/bin:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/opt/homebrew/opt/fzf/bin:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS",
+      "TERM": "dumb",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GH_TOKEN": "",
+      "GITHUB_TOKEN": "",
+      "GRAPHITE_AUTH_TOKEN": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/all-gt/bin/pager"
+    }
+  },
+  "collision": {
+    "folder": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt",
+    "repo": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/repo",
+    "arguments": [
+      "split",
+      "--by-file",
+      "src/refactor/**",
+      "--no-interactive"
+    ],
+    "environment": {
+      "HOME": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/home",
+      "NO_COLOR": "1",
+      "PATH": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin://Applications/Topaz Gigapixel.app/Contents/Resources/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/sbin:/Users/danielbaars/.codex/tmp/arg0-macos/codex-arg05aaEI3:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/danielbaars/Library/pnpm/bin:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/opt/homebrew/opt/fzf/bin:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS",
+      "TERM": "dumb",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GH_TOKEN": "",
+      "GITHUB_TOKEN": "",
+      "GRAPHITE_AUTH_TOKEN": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/collision-gt/bin/pager"
+    }
+  },
+  "patterns": {
+    "folder": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt",
+    "repo": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/repo",
+    "arguments": [
+      "sp",
+      "-f",
+      "src/refactor/**",
+      "--file",
+      "src/refactor/utils.ts",
+      "--by-file",
+      "tests/*.ts",
+      "--no-interactive"
+    ],
+    "environment": {
+      "HOME": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/home",
+      "NO_COLOR": "1",
+      "PATH": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin://Applications/Topaz Gigapixel.app/Contents/Resources/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/sbin:/Users/danielbaars/.codex/tmp/arg0-macos/codex-arg05aaEI3:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/danielbaars/Library/pnpm/bin:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/opt/homebrew/opt/fzf/bin:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS",
+      "TERM": "dumb",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GH_TOKEN": "",
+      "GITHUB_TOKEN": "",
+      "GRAPHITE_AUTH_TOKEN": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/patterns-gt/bin/pager"
+    }
+  },
+  "file-types": {
+    "folder": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt",
+    "repo": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/repo",
+    "arguments": [
+      "split",
+      "--by-file",
+      "assets/**",
+      "--no-interactive"
+    ],
+    "environment": {
+      "HOME": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/home",
+      "NO_COLOR": "1",
+      "PATH": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin://Applications/Topaz Gigapixel.app/Contents/Resources/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/sbin:/Users/danielbaars/.codex/tmp/arg0-macos/codex-arg05aaEI3:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/danielbaars/Library/pnpm/bin:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/opt/homebrew/opt/fzf/bin:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS",
+      "TERM": "dumb",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GH_TOKEN": "",
+      "GITHUB_TOKEN": "",
+      "GRAPHITE_AUTH_TOKEN": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/file-types-gt/bin/pager"
+    }
+  },
+  "occupied-child": {
+    "folder": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt",
+    "repo": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/repo",
+    "arguments": [
+      "split",
+      "--by-file",
+      "src/refactor/**",
+      "--no-interactive"
+    ],
+    "environment": {
+      "HOME": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/home",
+      "NO_COLOR": "1",
+      "PATH": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin://Applications/Topaz Gigapixel.app/Contents/Resources/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/sbin:/Users/danielbaars/.codex/tmp/arg0-macos/codex-arg05aaEI3:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/danielbaars/Library/pnpm/bin:/Users/danielbaars/.bun/bin:/Users/danielbaars/.local/bin:/Users/danielbaars/.antigravity/antigravity/bin:/opt/homebrew/opt/fzf/bin:/Users/danielbaars/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS",
+      "TERM": "dumb",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GH_TOKEN": "",
+      "GITHUB_TOKEN": "",
+      "GRAPHITE_AUTH_TOKEN": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-split-spec-2026-10-28/occupied-child-gt/bin/pager"
+    }
+  }
+}
