@@ -58,7 +58,7 @@ describe('file split recovery through real public processes', function () {
     fixture?.cleanup();
   });
 
-  it('continues a genuine stale child conflict without extracting twice', () => {
+  it('retains actionable quiet conflict guidance and continues without extracting twice', () => {
     setupConflict(fixture);
     const oldChild = fixture.git(['rev-parse', 'child']);
     const unrelated = fixture.git(['rev-parse', 'other']);
@@ -68,12 +68,16 @@ describe('file split recovery through real public processes', function () {
       '-f',
       'selected.txt',
       '--no-interactive',
+      '--quiet',
     ]);
     const output = result.stdout + result.stderr;
     expect(result.status, output).to.equal(1);
     expect(output).to.include('File split is incomplete');
     expect(output).to.include('descendant replay');
     expect(output).to.include('run an continue');
+    expect(result.stdout).not.to.include('Extracted selected files');
+    expect(result.stdout).not.to.include('Restacked');
+    expect(result.stderr).to.include('File split is incomplete');
     expect(fixture.git(['ls-files', '--unmerged'])).not.to.equal('');
     expect(fixture.git(['rev-parse', 'child'])).to.equal(oldChild);
     const parent = fixture.git(['rev-parse', 'base_split']);

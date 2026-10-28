@@ -113,16 +113,20 @@ an edit
 ```
 
 ### `split` (alias `sp`)
-Split the current branch into multiple single-commit branches.
+Split the current branch by commit, hunk or selected committed files.
 
 | Flag | Description |
 | --- | --- |
 | `-c`, `--by-commit`, `--commit` | Split by commit — slice up the branch's history. |
 | `-h`, `--by-hunk`, `--hunk` | Split by hunk into new single-commit branches. |
+| `-f`, `--by-file`, `--file` | Repeatable Git pathspecs resolved from the effective cwd; extract a proper subset into a generated parent without prompting. |
 
 ```
 an split --by-commit
+an sp --by-file 'src/shared/**' --file docs/shared.md
 ```
+
+File mode flattens source history into selected/remainder commits with complete messages oldest first and invoking Git identity. It retains the original branch, tip tree and local PR identity, refuses complete/empty selections, and replays mandatory descendants. Real conflicts and hooks can require continuation or manual recovery; there is no universal rollback. See [file splitting and recovery](docs/split.md).
 
 ### `fold`
 Fold a branch's changes into its parent, update descendants' dependencies, and restack.
