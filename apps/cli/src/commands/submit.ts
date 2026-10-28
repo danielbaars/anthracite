@@ -51,7 +51,7 @@ const args = {
   },
   'roles-branch': {
     describe:
-      'Add reviewers and assignees only to this exact selected branch PR, without changing which branches are submitted.',
+      'Add reviewers and assignees only to this exact selected branch PR, without narrowing the submission scope.',
     type: 'string',
   },
   'dry-run': {

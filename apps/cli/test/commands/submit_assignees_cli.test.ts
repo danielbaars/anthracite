@@ -1,4 +1,7 @@
 import { expect } from 'chai';
+import { execFileSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 import { SubmitCliFixture } from '../lib/fixtures/submit_cli';
 
 describe('submit assignees through the public CLI', function () {
@@ -160,17 +163,47 @@ describe('submit assignees through the public CLI', function () {
   it('rejects unverified authenticated identity before publishing instead of guessing @me', () => {
     fixture.branch('target', 'main');
     const refs = fixture.git('ls-remote', '--heads', 'origin');
-    for (const mode of ['invalid', 'reject']) {
+    for (const mode of ['reject', 'invalid', 'malformed']) {
       fixture.env.ANTHRACITE_TEST_GH_ACCOUNT_MODE = mode;
       const result = fixture.cli('submit', '--assignees', '@me');
       expect(result.status).not.to.equal(0);
-      expect(result.stdout + result.stderr).to.match(/GitHub|authentication/);
+      expect(result.stderr).to.include(
+        'ERROR: Could not verify the GitHub user for @me. Run `an auth` and retry.'
+      );
+      expect(result.stderr).not.to.include('GitHub authentication required');
+      expect(result.stderr).not.to.include('Command failed:');
       expect(fixture.prs()).to.deep.equal([]);
       expect(fixture.git('ls-remote', '--heads', 'origin')).to.equal(refs);
       expect(
         fixture.calls().some((call) => ['create', 'edit'].includes(call[1]))
       ).to.equal(false);
     }
+  });
+
+  it('explains how to install gh when resolving @me without the executable', () => {
+    fixture.branch('target', 'main');
+    const refs = fixture.git('ls-remote', '--heads', 'origin');
+    const bin = path.join(fixture.root, 'without-gh');
+    fs.mkdirSync(bin);
+    for (const command of ['git', 'which']) {
+      const executable = execFileSync('which', [command], {
+        env: fixture.env,
+        encoding: 'utf8',
+      }).trim();
+      fs.symlinkSync(executable, path.join(bin, command));
+    }
+    fixture.env.PATH = bin;
+    const result = fixture.cli('submit', '--assignees', '@me');
+    expect(result.status).not.to.equal(0);
+    expect(result.stderr)
+      .to.include(
+        'The GitHub CLI (`gh`) is required but was not found on your PATH.'
+      )
+      .and.include('https://cli.github.com')
+      .and.include('`an auth`');
+    expect(result.stderr).not.to.include('ENOENT');
+    expect(fixture.prs()).to.deep.equal([]);
+    expect(fixture.git('ls-remote', '--heads', 'origin')).to.equal(refs);
   });
 
   for (const mode of ['ignore', 'reject', 'invalid', 'partial']) {

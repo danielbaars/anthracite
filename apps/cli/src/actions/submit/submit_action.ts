@@ -4,7 +4,7 @@ import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
 import { TScopeSpec } from '../../lib/engine/scope_spec';
 import { ExitFailedError, KilledError } from '../../lib/errors';
-import { CommandFailedError } from '../../lib/git/runner';
+import { CommandFailedError, CommandKilledError } from '../../lib/git/runner';
 import { getPRInfoForBranches } from './prepare_branches';
 import { validateBranchesToSubmit } from './validate_branches';
 import { submitPullRequest } from './submit_prs';
@@ -186,6 +186,7 @@ export async function submitAction(
       context.engine.assertBranchEditable(submissionInfo.head);
       context.engine.pushBranch(submissionInfo.head, args.forcePush);
     } catch (err) {
+      if (err instanceof CommandKilledError) throw err;
       if (
         err instanceof CommandFailedError &&
         err.message.includes('stale info')

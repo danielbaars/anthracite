@@ -18,14 +18,31 @@ export function getAssignees(value: string | undefined): string[] | undefined {
   }
   let account: string | undefined;
   if (names.includes('@me')) {
-    const identity: unknown = JSON.parse(
-      execFileSync('gh', ['api', 'user']).toString()
-    );
-    const identitySchema = t.shape({ login: t.string });
-    if (!identitySchema(identity) || !isLogin(identity.login)) {
-      throw new ExitFailedError('Could not verify the GitHub user for @me.');
+    try {
+      const identity: unknown = JSON.parse(
+        execFileSync('gh', ['api', 'user'], {
+          stdio: ['ignore', 'pipe', 'pipe'],
+        }).toString()
+      );
+      const identitySchema = t.shape({ login: t.string });
+      if (!identitySchema(identity) || !isLogin(identity.login)) {
+        throw new Error('Invalid GitHub identity response.');
+      }
+      account = identity.login;
+    } catch (error: unknown) {
+      if (
+        error instanceof Error &&
+        'code' in error &&
+        error.code === 'ENOENT'
+      ) {
+        throw new ExitFailedError(
+          'The GitHub CLI (`gh`) is required but was not found on your PATH. Install it from https://cli.github.com and run `an auth`.'
+        );
+      }
+      throw new ExitFailedError(
+        'Could not verify the GitHub user for @me. Run `an auth` and retry.'
+      );
     }
-    account = identity.login;
   }
   return [
     ...new Set(

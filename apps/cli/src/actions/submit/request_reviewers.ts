@@ -41,15 +41,19 @@ function hasReviewRequest(
 
 function readReviewState(target: ReviewTarget): ReviewState {
   const value: unknown = JSON.parse(
-    execFileSync('gh', [
-      'pr',
-      'view',
-      String(target.number),
-      '--repo',
-      target.repo,
-      '--json',
-      'headRefName,number,reviewRequests,reviews',
-    ]).toString()
+    execFileSync(
+      'gh',
+      [
+        'pr',
+        'view',
+        String(target.number),
+        '--repo',
+        target.repo,
+        '--json',
+        'headRefName,number,reviewRequests,reviews',
+      ],
+      { stdio: ['ignore', 'pipe', 'pipe'] }
+    ).toString()
   );
   if (
     !reviewStateSchema(value) ||
@@ -79,14 +83,18 @@ export function requestReviewers(
   assertBranchEditable(target.head);
   let failure: unknown;
   try {
-    execFileSync('gh', [
-      'pr',
-      'edit',
-      String(target.number),
-      '--repo',
-      target.repo,
-      ...additions.flatMap((reviewer) => ['--add-reviewer', reviewer]),
-    ]);
+    execFileSync(
+      'gh',
+      [
+        'pr',
+        'edit',
+        String(target.number),
+        '--repo',
+        target.repo,
+        ...additions.flatMap((reviewer) => ['--add-reviewer', reviewer]),
+      ],
+      { stdio: ['ignore', 'pipe', 'pipe'] }
+    );
   } catch (error) {
     failure = error;
   }

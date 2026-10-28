@@ -35,8 +35,8 @@ staged changes and continuation before proceeding.
 Submit deliberately with an submit (or an submit --help to inspect selectors).
 Reviewer and assignee lists apply to every selected PR by default. Use
 --roles-branch <exact-local-branch> to add both lists only to that selected PR;
-this does not narrow the branches submitted by --branch or --stack. Preview with
---dry-run, then supply --reviewers and --assignees explicitly. Assignees accept
+this does not narrow the submission scope selected by --branch or --stack. Preview
+with --dry-run, then supply --reviewers and --assignees explicitly. Assignees accept
 @me for the authenticated GitHub user. Existing roles are retained; role options
 do not publish drafts. After a failure, inspect confirmed and unattempted work
 before repeating the command.

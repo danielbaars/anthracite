@@ -57,7 +57,7 @@ describe('submit role options through public routes', function () {
         .and.include('Add reviewers without removing existing requests')
         .and.include('every selected PR unless --roles-branch is set')
         .and.include('exact selected branch PR')
-        .and.include('without changing which branches are submitted');
+        .and.include('without narrowing the submission scope');
       const options = complete(fixture, [command, '--']);
       expect(options.status, options.stderr).to.equal(0);
       expect(options.stdout)

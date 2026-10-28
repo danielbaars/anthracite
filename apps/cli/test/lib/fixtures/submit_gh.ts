@@ -93,6 +93,10 @@ function main(): void {
       process.exitCode = 1;
       return;
     }
+    if (process.env.ANTHRACITE_TEST_GH_ACCOUNT_MODE === 'malformed') {
+      process.stdout.write('{invalid JSON');
+      return;
+    }
     process.stdout.write(
       JSON.stringify({
         login:

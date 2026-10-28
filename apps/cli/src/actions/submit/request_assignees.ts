@@ -16,15 +16,19 @@ const assigneeStateSchema = t.shape({
 
 function readAssignees(target: AssigneeTarget): string[] {
   const value: unknown = JSON.parse(
-    execFileSync('gh', [
-      'pr',
-      'view',
-      String(target.number),
-      '--repo',
-      target.repo,
-      '--json',
-      'headRefName,number,assignees',
-    ]).toString()
+    execFileSync(
+      'gh',
+      [
+        'pr',
+        'view',
+        String(target.number),
+        '--repo',
+        target.repo,
+        '--json',
+        'headRefName,number,assignees',
+      ],
+      { stdio: ['ignore', 'pipe', 'pipe'] }
+    ).toString()
   );
   if (
     !assigneeStateSchema(value) ||
@@ -51,14 +55,18 @@ export function requestAssignees(
   assertBranchEditable(target.head);
   let failure: unknown;
   try {
-    execFileSync('gh', [
-      'pr',
-      'edit',
-      String(target.number),
-      '--repo',
-      target.repo,
-      ...additions.flatMap((assignee) => ['--add-assignee', assignee]),
-    ]);
+    execFileSync(
+      'gh',
+      [
+        'pr',
+        'edit',
+        String(target.number),
+        '--repo',
+        target.repo,
+        ...additions.flatMap((assignee) => ['--add-assignee', assignee]),
+      ],
+      { stdio: ['ignore', 'pipe', 'pipe'] }
+    );
   } catch (error) {
     failure = error;
   }
