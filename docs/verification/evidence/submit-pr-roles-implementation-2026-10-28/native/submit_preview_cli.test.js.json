@@ -1,0 +1,180 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 9,
+    "passes": 9,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T12:45:21.191Z",
+    "end": "2026-10-28T12:45:44.552Z",
+    "duration": 23361
+  },
+  "tests": [
+    {
+      "title": "previews draft and reviewer actions alongside a selected code update without remote mutations",
+      "fullTitle": "submit action previews through the built CLI previews draft and reviewer actions alongside a selected code update without remote mutations",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2600,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "omits a ready transition when an updated PR is already ready",
+      "fullTitle": "submit action previews through the built CLI omits a ready transition when an updated PR is already ready",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2242,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews draft and reviewers alongside Create only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews draft and reviewers alongside Create only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 1233,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews draft and reviewers alongside Update only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews draft and reviewers alongside Update only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2606,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews draft and reviewers alongside New parent only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews draft and reviewers alongside New parent only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2550,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews publish and reviewers alongside Create only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews publish and reviewers alongside Create only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 1203,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews publish and reviewers alongside Update only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews publish and reviewers alongside Update only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2612,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews publish and reviewers alongside New parent only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews publish and reviewers alongside New parent only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2646,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews an unchanged status as a no-op and skips explicit actions for new update-only branches",
+      "fullTitle": "submit action previews through the built CLI previews an unchanged status as a no-op and skips explicit actions for new update-only branches",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 3950,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "previews draft and reviewer actions alongside a selected code update without remote mutations",
+      "fullTitle": "submit action previews through the built CLI previews draft and reviewer actions alongside a selected code update without remote mutations",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2600,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "omits a ready transition when an updated PR is already ready",
+      "fullTitle": "submit action previews through the built CLI omits a ready transition when an updated PR is already ready",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2242,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews draft and reviewers alongside Create only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews draft and reviewers alongside Create only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 1233,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews draft and reviewers alongside Update only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews draft and reviewers alongside Update only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2606,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews draft and reviewers alongside New parent only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews draft and reviewers alongside New parent only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2550,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews publish and reviewers alongside Create only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews publish and reviewers alongside Create only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 1203,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews publish and reviewers alongside Update only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews publish and reviewers alongside Update only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2612,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews publish and reviewers alongside New parent only for the selected target",
+      "fullTitle": "submit action previews through the built CLI previews publish and reviewers alongside New parent only for the selected target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 2646,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews an unchanged status as a no-op and skips explicit actions for new update-only branches",
+      "fullTitle": "submit action previews through the built CLI previews an unchanged status as a no-op and skips explicit actions for new update-only branches",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_preview_cli.test.js",
+      "duration": 3950,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

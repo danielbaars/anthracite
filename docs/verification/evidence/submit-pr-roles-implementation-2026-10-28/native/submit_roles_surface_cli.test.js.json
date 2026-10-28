@@ -1,0 +1,180 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 9,
+    "passes": 9,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-28T12:43:40.140Z",
+    "end": "2026-10-28T12:44:13.031Z",
+    "duration": 32891
+  },
+  "tests": [
+    {
+      "title": "completes role-target branches for every submit route without remote writes",
+      "fullTitle": "submit role options through public routes completes role-target branches for every submit route without remote writes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 1166,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains additive scope-wide roles and the independent exact branch selector in route help",
+      "fullTitle": "submit role options through public routes explains additive scope-wide roles and the independent exact branch selector in route help",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 462,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "answers one terminal reviewer prompt for the target while submitting the full stack",
+      "fullTitle": "submit role options through public routes answers one terminal reviewer prompt for the target while submitting the full stack",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 5743,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps separate terminal reviewer choices per PR without an explicit role target",
+      "fullTitle": "submit role options through public routes keeps separate terminal reviewer choices per PR without an explicit role target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 4813,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "forwards roles and an alias-named target through submit with its existing scope",
+      "fullTitle": "submit role options through public routes forwards roles and an alias-named target through submit with its existing scope",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 4357,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "forwards roles and an alias-named target through s with its existing scope",
+      "fullTitle": "submit role options through public routes forwards roles and an alias-named target through s with its existing scope",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 4546,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "forwards roles and an alias-named target through ss with its existing scope",
+      "fullTitle": "submit role options through public routes forwards roles and an alias-named target through ss with its existing scope",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 5325,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a pending reviewer choice and explicit assignees without input or writes",
+      "fullTitle": "submit role options through public routes previews a pending reviewer choice and explicit assignees without input or writes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 1743,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects missing noninteractive reviewers and keeps quiet role submission silent",
+      "fullTitle": "submit role options through public routes rejects missing noninteractive reviewers and keeps quiet role submission silent",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 2899,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "completes role-target branches for every submit route without remote writes",
+      "fullTitle": "submit role options through public routes completes role-target branches for every submit route without remote writes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 1166,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains additive scope-wide roles and the independent exact branch selector in route help",
+      "fullTitle": "submit role options through public routes explains additive scope-wide roles and the independent exact branch selector in route help",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 462,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "answers one terminal reviewer prompt for the target while submitting the full stack",
+      "fullTitle": "submit role options through public routes answers one terminal reviewer prompt for the target while submitting the full stack",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 5743,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps separate terminal reviewer choices per PR without an explicit role target",
+      "fullTitle": "submit role options through public routes keeps separate terminal reviewer choices per PR without an explicit role target",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 4813,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "forwards roles and an alias-named target through submit with its existing scope",
+      "fullTitle": "submit role options through public routes forwards roles and an alias-named target through submit with its existing scope",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 4357,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "forwards roles and an alias-named target through s with its existing scope",
+      "fullTitle": "submit role options through public routes forwards roles and an alias-named target through s with its existing scope",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 4546,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "forwards roles and an alias-named target through ss with its existing scope",
+      "fullTitle": "submit role options through public routes forwards roles and an alias-named target through ss with its existing scope",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 5325,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a pending reviewer choice and explicit assignees without input or writes",
+      "fullTitle": "submit role options through public routes previews a pending reviewer choice and explicit assignees without input or writes",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 1743,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects missing noninteractive reviewers and keeps quiet role submission silent",
+      "fullTitle": "submit role options through public routes rejects missing noninteractive reviewers and keeps quiet role submission silent",
+      "file": "/Users/danielbaars/Dev/anthracite/apps/cli/dist/test/commands/submit_roles_surface_cli.test.js",
+      "duration": 2899,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
