@@ -157,16 +157,17 @@ export function assertAbsorbApplicationAvailable(
   if (!plan.targets.length) return;
   assertAbsorbInputSupported([
     ...new Set(
-      plan.replay.flatMap((name) =>
-        git([
+      plan.replay.flatMap((name) => [
+        context.engine.getBaseRevision(name),
+        ...git([
           'rev-list',
           `${context.engine.getBaseRevision(
             name
           )}..${context.engine.getRevision(name)}`,
         ])
           .split('\n')
-          .filter(Boolean)
-      )
+          .filter(Boolean),
+      ])
     ),
   ]);
   const existingLock = cacheLockConfigFactory.load(undefined, {
@@ -283,7 +284,14 @@ function executeAbsorb(
           });
           checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
           if (!isolated) assertAbsorbInputUnchanged(input);
-          else git(['diff-index', '--quiet', 'HEAD', '--']);
+          else
+            git([
+              'diff-index',
+              '--ignore-submodules=dirty',
+              '--quiet',
+              'HEAD',
+              '--',
+            ]);
           const checkoutTree = isolated ? git(['write-tree']) : undefined;
           active = `publishing ${name}`;
           const publicationGuard = readAbsorbGuard(guardFile);
@@ -322,7 +330,12 @@ function executeAbsorb(
           if (!isolated) assertAbsorbInputUnchanged(input);
           else if (
             git(['write-tree']) !== checkoutTree ||
-            git(['diff-files', '--name-only', '-z'])
+            git([
+              'diff-files',
+              '--ignore-submodules=dirty',
+              '--name-only',
+              '-z',
+            ])
           )
             throw new PreconditionsFailedError(
               'Absorb source work changed during publication. Retained input is available; inspect hook effects.'

@@ -10,7 +10,7 @@ import { PreconditionsFailedError } from '../lib/errors';
 
 type SavedFile = {
   readonly file: string;
-  readonly kind: 'file' | 'link' | 'absent';
+  readonly kind: 'file' | 'link' | 'absent' | 'gitlink';
   readonly data: string;
   readonly mode: number;
 };
@@ -33,12 +33,58 @@ export function assertAbsorbInputSupported(revisions: readonly string[]): void {
     throw new PreconditionsFailedError(
       'Absorb does not yet support working-tree conversions.'
     );
-  const indexed = readAbsorbGit(['ls-files', '-s', '-z']);
-  if (indexed.split('\0').some((entry) => entry.startsWith('160000 ')))
-    throw new PreconditionsFailedError(
-      'Absorb does not yet support submodule working trees.'
-    );
+  const links = indexedGitlinks();
+  for (const revision of ['HEAD', ...revisions]) {
+    const entries = readAbsorbGit(['ls-tree', '-r', '-z', revision])
+      .split('\0')
+      .filter((entry) => entry.startsWith('160000 '))
+      .map((entry) => [
+        entry.slice(entry.indexOf('\t') + 1),
+        entry.split(' ')[2].split('\t')[0],
+      ]);
+    if (JSON.stringify([...links].sort()) !== JSON.stringify(entries.sort()))
+      throw new PreconditionsFailedError(
+        'Absorb requires unchanged gitlink paths and pointers throughout construction and replay history. Save submodule transitions separately.'
+      );
+  }
+  for (const file of links.keys()) {
+    assertOrdinaryParents(getAbsorbRoot(), file);
+    const stat = fs.lstatSync(path.join(getAbsorbRoot(), file), {
+      throwIfNoEntry: false,
+    });
+    if (stat && !stat.isDirectory())
+      throw new PreconditionsFailedError(
+        'Absorb requires an absent or directory gitlink path: ' + file
+      );
+    if (
+      stat &&
+      readAbsorbGit([
+        'diff-files',
+        '--raw',
+        '-z',
+        '--ignore-submodules=dirty',
+        '--',
+        file,
+      ])
+    )
+      throw new PreconditionsFailedError(
+        'Absorb requires an unchanged submodule checkout pointer: ' + file
+      );
+  }
   const paths = readAbsorbGit(['ls-files', '-z']);
+  for (const file of new Set(
+    [
+      ...paths.split('\0'),
+      ...readAbsorbGit(['ls-tree', '-r', '--name-only', '-z', 'HEAD']).split(
+        '\0'
+      ),
+    ].filter(Boolean)
+  )) {
+    assertOrdinaryParents(getAbsorbRoot(), file);
+    const location = path.join(getAbsorbRoot(), file);
+    if (fs.lstatSync(location, { throwIfNoEntry: false })?.isSymbolicLink())
+      readAbsorbLink(location);
+  }
   const attributes = readAbsorbGit(
     [
       'check-attr',
@@ -82,6 +128,29 @@ export function assertAbsorbInputSupported(revisions: readonly string[]): void {
   }
 }
 
+/** The retained string format supports exact UTF-8 links only. */
+function readAbsorbLink(location: string): string {
+  const bytes = fs.readlinkSync(location, { encoding: 'buffer' });
+  const value = bytes.toString('utf8');
+  if (!Buffer.from(value).equals(bytes))
+    throw new PreconditionsFailedError(
+      'Absorb requires valid UTF-8 symlink targets. Preserve this link separately before retrying.'
+    );
+  return value;
+}
+
+function indexedGitlinks(): ReadonlyMap<string, string> {
+  return new Map(
+    readAbsorbGit(['ls-files', '-s', '-z'])
+      .split('\0')
+      .filter((entry) => entry.startsWith('160000 '))
+      .map((entry) => [
+        entry.slice(entry.indexOf('\t') + 1),
+        entry.split(' ')[1],
+      ])
+  );
+}
+
 /** Owned copies survive Git abort and legacy continuation cleanup. */
 export function retainAbsorbInput(source: string): AbsorbInput {
   const root = getAbsorbRoot();
@@ -103,16 +172,20 @@ export function retainAbsorbInput(source: string): AbsorbInput {
       ].filter(Boolean)
     ),
   ];
+  const links = indexedGitlinks();
   const files = paths.map((file): SavedFile => {
     assertOrdinaryParents(root, file);
     const location = path.join(root, file);
     const stat = fs.lstatSync(location, { throwIfNoEntry: false });
+    const gitlink = links.get(file);
+    if (gitlink)
+      return { file, kind: 'gitlink', data: gitlink, mode: stat?.mode ?? 0 };
     if (!stat) return { file, kind: 'absent', data: '', mode: 0 };
     if (stat.isSymbolicLink())
       return {
         file,
         kind: 'link',
-        data: fs.readlinkSync(location),
+        data: readAbsorbLink(location),
         mode: stat.mode,
       };
     if (!stat.isFile())
@@ -132,6 +205,7 @@ export function retainAbsorbInput(source: string): AbsorbInput {
   try {
     git(['read-tree', tree], { env });
     for (const saved of files) {
+      if (saved.kind === 'gitlink') continue;
       if (saved.kind === 'absent')
         git(['update-index', '--force-remove', '--', saved.file], { env });
       else {
@@ -197,10 +271,17 @@ export function assertAbsorbInputUnchanged(input: AbsorbInput): void {
     const location = path.join(root, saved.file);
     const stat = fs.lstatSync(location, { throwIfNoEntry: false });
     const same =
-      saved.kind === 'absent'
+      saved.kind === 'gitlink'
+        ? saved.mode === 0
+          ? !stat
+          : stat?.isDirectory() && stat.mode === saved.mode
+        : saved.kind === 'absent'
         ? !stat
         : saved.kind === 'link'
-        ? stat?.isSymbolicLink() && fs.readlinkSync(location) === saved.data
+        ? stat?.isSymbolicLink() &&
+          fs
+            .readlinkSync(location, { encoding: 'buffer' })
+            .equals(Buffer.from(saved.data))
         : stat?.isFile() &&
           fs.readFileSync(location).toString('base64') === saved.data &&
           (stat.mode & 0o111) === (saved.mode & 0o111);
@@ -232,7 +313,7 @@ export function restoreAbsorbInput(input: AbsorbInput): void {
 
 const restoreScript = `const fs=require('fs'),path=require('path'),cp=require('child_process');
 const dir=__dirname, input=JSON.parse(fs.readFileSync(path.join(dir,'input.json'),'utf8'));
-const git=(args,options={})=>cp.execFileSync('git',['--no-optional-locks','--literal-pathspecs','-C',input.root,...args],options);
+const git=(args,options={})=>cp.execFileSync('git',['--no-optional-locks','--literal-pathspecs','-c','submodule.recurse=false','-C',input.root,...args],options);
 const safePath=file=>{ const parts=file.split('/'); if(path.isAbsolute(file)||parts.includes('..')) throw Error('Invalid retained path.'); let parent=input.root; for(const part of parts.slice(0,-1)) {parent=path.join(parent,part); const stat=fs.lstatSync(parent,{throwIfNoEntry:false}); if(stat&&(stat.isSymbolicLink()||!stat.isDirectory())) throw Error('Restoration parent collision at '+file); } return path.join(input.root,file); };
 try {
  if(git(['branch','--show-current']).toString().trim()!==input.source) throw Error('Switch to original source '+input.source+' before restoration.');
@@ -248,7 +329,7 @@ try {
  if(!matchesTree(input.tree)&&!matchesTree(expectedHead)) throw Error('New staged work exists; save it separately before restoration.');
  const reachedTree=git(['rev-parse','HEAD^{tree}']).toString().trim();
  if(input.nominalTree && reachedTree!==input.nominalTree && reachedTree!==input.originalTree) {
-  if(!matchesTree(expectedHead)||git(['diff-files','--name-only','-z']).length) throw Error('New source work exists; save it separately before restoration.');
+  if(!matchesTree(expectedHead)||git(['diff-files','--ignore-submodules=dirty','--name-only','-z']).length) throw Error('New source work exists; save it separately before restoration.');
   const scratch=path.join(dir,'remainder-index'), env={...process.env,GIT_INDEX_FILE:scratch};
   const scratchGit=(args,options={})=>git(args,{...options,env});
   const applyDelta=(from,to)=>{
@@ -266,7 +347,7 @@ try {
     if(!indexed&&fs.lstatSync(safePath(file),{throwIfNoEntry:false})) throw Error('Restoration collision at '+file);
    }
    // All merge checks happened in an owned index; only a clean reached checkout is published.
-   if(!matchesTree(expectedHead)||git(['diff-files','--name-only','-z']).length) throw Error('Source changed during restoration.');
+   if(!matchesTree(expectedHead)||git(['diff-files','--ignore-submodules=dirty','--name-only','-z']).length) throw Error('Source changed during restoration.');
    git(['read-tree','--reset','-u',working]);
    git(['read-tree',staged]);
   } finally { fs.rmSync(scratch,{force:true}); }
@@ -277,20 +358,31 @@ try {
  if(current.some(file=>!wanted.has(file))) throw Error('New indexed work exists; save it separately before restoration.');
  for(const f of input.files) {
   const location=safePath(f.file), stat=fs.lstatSync(location,{throwIfNoEntry:false});
-  const original=f.kind==='absent'?!stat:f.kind==='file'?stat?.isFile()&&fs.readFileSync(location).toString('base64')===f.data&&(stat.mode&73)===(f.mode&73):stat?.isSymbolicLink()&&fs.readlinkSync(location)===f.data;
+  if(f.kind==='gitlink') {
+   const entry=git(['ls-tree','HEAD','--',f.file]).toString();
+   if(!entry.startsWith('160000 commit '+f.data+'\\t') || (f.mode===0?stat&&(!stat.isDirectory()||fs.readdirSync(location).length):!stat?.isDirectory()||stat.mode!==f.mode)) throw Error('Gitlink changed at '+f.file);
+   continue;
+  }
+  const original=f.kind==='absent'?!stat:f.kind==='file'?stat?.isFile()&&fs.readFileSync(location).toString('base64')===f.data&&(stat.mode&73)===(f.mode&73):stat?.isSymbolicLink()&&fs.readlinkSync(location,{encoding:'buffer'}).equals(Buffer.from(f.data));
   if(original) continue;
   const entry=git(['ls-tree','HEAD','--',f.file]).toString();
   if(!entry) { if(!stat) continue; throw Error('Restoration collision at '+f.file); }
   if(!stat) throw Error('New deletion at '+f.file+'; save it separately before restoration.');
   const expected=git(['show','HEAD:'+f.file]);
-  const same=entry.startsWith('120000')?stat.isSymbolicLink()&&fs.readlinkSync(location)===expected.toString():stat.isFile()&&fs.readFileSync(location).equals(expected)&&!!(stat.mode&73)===entry.startsWith('100755');
+  const same=entry.startsWith('120000')?stat.isSymbolicLink()&&fs.readlinkSync(location,{encoding:'buffer'}).equals(expected):stat.isFile()&&fs.readFileSync(location).equals(expected)&&!!(stat.mode&73)===entry.startsWith('100755');
   if(!same) throw Error('New work at '+f.file+'; save it separately before restoration.');
  }
 
  const index=path.resolve(input.root,git(['rev-parse','--git-path','index']).toString().trim());
  const lock=index+'.lock'; fs.writeFileSync(lock,fs.readFileSync(path.join(dir,'index')),{flag:'wx'});
  try {
+  // Nonrecursive checkout may create an empty stub for an originally absent module.
+  for(const f of input.files.filter(f=>f.kind==='gitlink'&&f.mode===0)) {
+   const location=safePath(f.file);
+   if(fs.lstatSync(location,{throwIfNoEntry:false})) fs.rmdirSync(location);
+  }
   for(const f of input.files) {
+   if(f.kind==='gitlink') continue;
    const location=safePath(f.file);
    if(fs.existsSync(location)||fs.lstatSync(location,{throwIfNoEntry:false})) fs.unlinkSync(location);
    if(f.kind!=='absent') fs.mkdirSync(path.dirname(location),{recursive:true});
@@ -309,7 +401,7 @@ export function readRetainedAbsorbInput(directory: string): AbsorbInput {
       files: z.array(
         z.object({
           file: z.string(),
-          kind: z.enum(['file', 'link', 'absent']),
+          kind: z.enum(['file', 'link', 'absent', 'gitlink']),
           data: z.string(),
           mode: z.number(),
         })

@@ -130,6 +130,112 @@ describe('MCP command execution through stdio', function () {
     expect(fixture.git(['status', '--porcelain'])).to.equal('');
     expect(fs.existsSync(sentinel)).to.equal(false);
   });
+  it('scenario 16: previews and forces multi-target absorb with retained local work in one usable same-installation session', async () => {
+    fixture.git(['switch', 'tip']);
+    const originals = Object.fromEntries(
+      ['base', 'child'].map((name) => [
+        name,
+        {
+          oid: fixture.git(['rev-parse', name]),
+          identity: fixture.git([
+            'show',
+            '-s',
+            '--format=%an%n%ae%n%aI%n%B',
+            name,
+          ]),
+        },
+      ])
+    );
+    const untouched = fixture.git(['rev-parse', 'main', 'other']);
+    for (const [file, text] of [
+      ['base.txt', 'corrected base\n'],
+      ['child.txt', 'corrected child\n'],
+      ['leftover.txt', 'retained new entry\n'],
+    ]) {
+      fs.writeFileSync(path.join(fixture.repo, file), text);
+      fixture.git(['add', '--', file]);
+    }
+    const prospective = fixture.git(['write-tree']);
+    fs.writeFileSync(path.join(fixture.repo, 'tip.txt'), 'unstaged sentinel\n');
+    const bin = path.join(fixture.root, 'absorb-identity-bin');
+    const marker = path.join(fixture.root, 'wrong-absorb-build');
+    fs.mkdirSync(bin);
+    for (const name of ['an', 'anthracite', 'ch', 'gt'])
+      fs.writeFileSync(
+        path.join(bin, name),
+        `#!${process.execPath}\nrequire('fs').writeFileSync(${JSON.stringify(
+          marker
+        )}, 'called');process.exit(91);`,
+        { mode: 0o755 }
+      );
+    fixture.env.PATH = `${bin}${path.delimiter}${fixture.env.PATH ?? ''}`;
+    await connect();
+    const tools = await connection.client.listTools();
+    expect(tools.tools.map((tool) => tool.name).sort()).to.deep.equal([
+      'learn_an',
+      'run_an_cmd',
+    ]);
+    const learning = await connection.client.callTool({
+      name: 'learn_an',
+      arguments: {},
+    });
+    expect(JSON.stringify(learning.content))
+      .to.include('absorb')
+      .and.include('--force');
+    const before = fixture.inspectionSnapshot();
+    const preview = await run(['ab', '-d']);
+    expect(preview.status, preview.stderr).to.equal('success');
+    expect(preview.stdout)
+      .to.include('base, commit ' + originals.base.oid)
+      .and.include('child, commit ' + originals.child.oid)
+      .and.include('Retained leftover.txt')
+      .and.include('Required replay: base, child, tip');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    const interaction = await run(['absorb']);
+    expect(interaction).to.include({
+      status: 'cli_error',
+      isError: true,
+      exitCode: 1,
+    });
+    expect(interaction.stderr).to.include('--force');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect((await run(['info'])).status).to.equal('success');
+    const result = await run(['ab', '-f']);
+    expect(result.status, result.stderr).to.equal('success');
+    expect(result.isError).to.equal(false);
+    expect(fixture.git(['show', 'base:base.txt'])).to.equal('corrected base');
+    expect(fixture.git(['show', 'child:child.txt'])).to.equal(
+      'corrected child'
+    );
+    expect(fixture.git(['show', 'tip:base.txt'])).to.equal('corrected base');
+    for (const name of ['base', 'child']) {
+      expect(fixture.git(['rev-parse', name])).not.to.equal(
+        originals[name].oid
+      );
+      expect(
+        fixture.git(['show', '-s', '--format=%an%n%ae%n%aI%n%B', name])
+      ).to.equal(originals[name].identity);
+    }
+    expect(fixture.git(['rev-parse', 'child^'])).to.equal(
+      fixture.git(['rev-parse', 'base'])
+    );
+    expect(fixture.git(['rev-parse', 'tip^'])).to.equal(
+      fixture.git(['rev-parse', 'child'])
+    );
+    expect(fixture.git(['rev-parse', 'main', 'other'])).to.equal(untouched);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('tip');
+    expect(fixture.git(['write-tree'])).to.equal(prospective);
+    expect(fixture.git(['diff', '--cached', '--name-only'])).to.equal(
+      'leftover.txt'
+    );
+    expect(
+      fs.readFileSync(path.join(fixture.repo, 'tip.txt'), 'utf8')
+    ).to.equal('unstaged sentinel\n');
+    expect((await run(['info'])).status).to.equal('success');
+    expect(fs.existsSync(marker)).to.equal(false);
+    expect(connection.errors).to.deep.equal([]);
+    expect(connection.stderr).to.equal('');
+  });
   it('scenario 7: refuses malformed inputs and cwd overrides before effects, separates protocol failures and recovers', async () => {
     const before = fixture.snapshot();
     await connect();

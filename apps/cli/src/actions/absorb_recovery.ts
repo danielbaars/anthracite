@@ -1,3 +1,4 @@
+import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
@@ -8,7 +9,12 @@ import { assertBranchEditable } from '../lib/engine/frozen_branch';
 import { ownsRebase } from '../lib/git/rebase_ownership';
 import { TContinueConfig } from '../lib/spiffy/continuation_spf';
 import { cacheLockConfigFactory } from '../lib/spiffy/cache_lock_spf';
-import { getAbsorbRoot, readAbsorbGit } from './absorb_git';
+import {
+  getAbsorbRoot,
+  readAbsorbGit,
+  absorbEnvironmentOverrides,
+  assertAbsorbEnvironment,
+} from './absorb_git';
 
 const oid = z.string().regex(/^[a-f0-9]{40,64}$/);
 const hunk = z.object({
@@ -63,12 +69,48 @@ export function readAbsorbExecution(
   );
 }
 
+/** Find only the physical source's saved role; legacy continue retains its environment policy. */
+export function assertAbsorbContinuationEnvironment(): void {
+  if (
+    !absorbEnvironmentOverrides.some((name) => process.env[name] !== undefined)
+  )
+    return;
+  const env = { ...process.env };
+  for (const name of absorbEnvironmentOverrides) delete env[name];
+  let root: string;
+  try {
+    root = execFileSync(
+      'git',
+      ['rev-parse', '--path-format=absolute', '--git-common-dir'],
+      {
+        env,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+      }
+    ).replace(/\r?\n$/, '');
+  } catch {
+    return;
+  }
+  const file = path.join(root, '.gtcontinue');
+  if (!fs.existsSync(file)) return;
+  let data: unknown;
+  try {
+    data = JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch {
+    return;
+  }
+  const saved = z.object({ absorb: z.unknown().optional() }).safeParse(data);
+  if (saved.success && saved.data.absorb !== undefined)
+    assertAbsorbEnvironment();
+}
+
 /** Runs before ordinary context repair and before --all can stage resolutions. */
 export function assertAbsorbContinuationAvailable(
   data: TContinueConfig['data']
 ): void {
   const role = data.absorb;
   if (!role) return;
+  assertAbsorbEnvironment();
   const file = path.join(role.directory, 'guard.json');
   const guard = readAbsorbGuard(file);
   if (fs.realpathSync(guard.root) !== fs.realpathSync(getAbsorbRoot()))

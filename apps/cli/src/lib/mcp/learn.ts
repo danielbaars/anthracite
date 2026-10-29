@@ -21,6 +21,22 @@ before editing: follow the repository's workflow and inspect current state.
 Use an <command> --help for supported selectors and options; supply required
 choices explicitly because MCP execution is non-interactive.
 
+For review corrections, an absorb (alias ab) assigns staged ordinary text hunks
+to their exact original commits in the current downstack and replays mandatory
+descendants. Preview with an absorb --dry-run (ab -d), then explicitly apply with
+an absorb --force (ab -f): MCP has no terminal confirmation. --all/-a includes
+tracked updates/deletions and existing staged entries, never untracked files;
+--patch/-p requires a real terminal and cannot run through MCP. Unsupported entry
+changes and unmatched hunks remain staged and are reported. Absorb does not fetch,
+push or change PRs. Frozen targets are excluded; a frozen or occupied mandatory
+participant refuses before staging or rewriting, even with --force.
+After an owned absorb replay conflict, resolve and stage only the resolution,
+then use an continue in the original worktree. Retained staged/unstaged input is
+kept separately until checked restoration. Ref/protection/worktree and Git
+environment checks also apply on continue before --all. Other failures report
+reached work and an executable guarded manual restoration path. Earlier amendments
+survive raw Git abort; do not promise rollback or retry a noncontinuable failure.
+
 Frozen branches and branches occupied in another worktree retain their existing
 protections. Inspect the refusal and choose an allowed operation; do not bypass
 these guards. After a conflict, inspect git status and the reported partial

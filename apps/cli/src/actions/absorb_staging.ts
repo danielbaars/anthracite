@@ -164,7 +164,13 @@ function snapshotSource(): string {
       return !stat
         ? [file, 'absent']
         : stat.isSymbolicLink()
-        ? [file, 'link', fs.readlinkSync(location)]
+        ? [
+            file,
+            'link',
+            fs
+              .readlinkSync(location, { encoding: 'buffer' })
+              .toString('base64'),
+          ]
         : stat.isFile()
         ? [file, stat.mode, fs.readFileSync(location).toString('base64')]
         : [file, 'other', stat.mode];

@@ -117,7 +117,9 @@ exec ${[
         .join(' ')} "$@"\n`,
       { mode: 0o700 }
     );
-    commit(['-c', `core.hooksPath=${proxy}`], env);
+    const gitOptions = ['-c', `core.hooksPath=${proxy}`];
+    if (absorbGuard) gitOptions.push('-c', 'submodule.recurse=false');
+    commit(gitOptions, env);
   } finally {
     fs.rmSync(proxy, { recursive: true, force: true });
   }
