@@ -18,6 +18,7 @@ type TCreateBranchOptions = {
   message?: string;
   all?: boolean;
   insert?: boolean;
+  readonly insertChildren?: readonly string[];
   patch?: boolean;
 };
 
@@ -25,7 +26,13 @@ export async function createBranchAction(
   opts: TCreateBranchOptions,
   context: TContext
 ): Promise<void> {
-  let insertPlan = opts.insert ? getInsertChildren(opts, context) : undefined;
+  if (opts.insertChildren !== undefined && !opts.insert) {
+    throw new ExitFailedError('--insert-child requires an active --insert.');
+  }
+  const selection = opts.insert ? getInsertChildren(opts, context) : undefined;
+  let insertPlan = selection
+    ? getInsertPlan({ ...opts, ...selection }, context)
+    : undefined;
 
   ensurePatchInputPrecondition(Boolean(opts.patch && !opts.all), context);
 
@@ -107,7 +114,9 @@ function insertBranch(
   context.splog.info(
     `Created branch ${branchName} at ${context.engine
       .getRevision(branchName)
-      .slice(0, 7)}; inserting beneath the chosen parent's existing children.`
+      .slice(0, 7)}; inserting between ${context.engine.getParentPrecondition(
+      branchName
+    )} and chosen children: ${children.join(', ')}.`
   );
   try {
     const branches = children.flatMap((child) =>
@@ -168,19 +177,46 @@ function insertBranch(
 function getInsertChildren(
   opts: TCreateBranchOptions,
   context: TContext
-): { parent: string; children: string[]; mandatory: string[] } {
+): { readonly parent: string; readonly children: readonly string[] } {
   const parent = opts.onto ?? context.engine.currentBranchPrecondition;
   const scope = context.engine.getRelativeStack(parent, SCOPE.UPSTACK);
   const children = scope.filter(
     (branch) => context.engine.getParent(branch) === parent
   );
-  return getInsertPlan({ ...opts, parent, children }, context);
+  if (opts.insertChildren === undefined) return { parent, children };
+  const requested = opts.insertChildren;
+  if (
+    requested.some((child) => typeof child !== 'string' || child.length === 0)
+  ) {
+    throw new ExitFailedError(
+      '--insert-child requires a nonempty branch name.'
+    );
+  }
+  const invalid = requested.filter((child) => !children.includes(child));
+  if (invalid.length > 0) {
+    throw new ExitFailedError(
+      `Not tracked direct children of ${parent}: ${[...new Set(invalid)].join(
+        ', '
+      )}.`
+    );
+  }
+  return {
+    parent,
+    children: children.filter((child) => requested.includes(child)),
+  };
 }
 
 function getInsertPlan(
-  opts: TCreateBranchOptions & { parent: string; children: string[] },
+  opts: TCreateBranchOptions & {
+    readonly parent: string;
+    readonly children: readonly string[];
+  },
   context: TContext
-): { parent: string; children: string[]; mandatory: string[] } {
+): {
+  readonly parent: string;
+  readonly children: readonly string[];
+  readonly mandatory: readonly string[];
+} {
   const { parent, children } = opts;
   const createsCommit =
     hasCreateChanges(parent, opts.all ?? false) ||

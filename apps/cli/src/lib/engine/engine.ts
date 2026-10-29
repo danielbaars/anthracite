@@ -428,6 +428,7 @@ export function composeEngine({
     }
 
     const metadata = {
+      ...readMetadataRef(branchName),
       parentBranchName: newCachedMeta.parentBranchName,
       parentBranchRevision: newCachedMeta.parentBranchRevision,
       prInfo: newCachedMeta.prInfo,
