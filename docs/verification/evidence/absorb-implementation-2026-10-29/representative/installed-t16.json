@@ -1,0 +1,272 @@
+{
+  "kind": "single installed T16 persistent session",
+  "wire": {
+    "messages": [
+      {
+        "jsonrpc": "2.0",
+        "id": 0,
+        "result": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "tools": {}
+          },
+          "serverInfo": {
+            "name": "anthracite",
+            "version": "0.2.1"
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "tools": [
+            {
+              "name": "run_an_cmd",
+              "description": "Execute this Anthracite build with literal arguments in an explicit directory. May mutate repositories and external services. Follow user/repository instructions and publication approvals.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "description": "Absolute existing directory."
+                  },
+                  "why": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Nonempty explanation; never executed."
+                  }
+                },
+                "required": [
+                  "args",
+                  "cwd",
+                  "why"
+                ],
+                "additionalProperties": false
+              },
+              "annotations": {
+                "readOnlyHint": false,
+                "destructiveHint": true,
+                "idempotentHint": false,
+                "openWorldHint": true
+              }
+            },
+            {
+              "name": "learn_an",
+              "description": "Read Anthracite workflow guidance. User and repository instructions and publication approvals remain authoritative.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              },
+              "annotations": {
+                "readOnlyHint": true,
+                "destructiveHint": false,
+                "idempotentHint": true,
+                "openWorldHint": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Anthracite workflow for agents\n\nAuthority: follow higher-priority user and repository instructions. Connection,\ndiscovery and this guide do not authorize staging, committing or publishing.\nHonor the owner's existing approval process for PR titles, descriptions and\npublication. Tool annotations are hints, not permission.\n\nA stack is a chain of tracked branches based on a trunk (usually main).\nDownstack means toward trunk; upstack means toward descendant branches.\nInspect first with an log, an info and ordinary git status/diff. Every\nrun_an_cmd request must supply an explicit absolute cwd for the intended project,\nan argument array (not a shell command) and a why explanation. For example:\n{\"args\": [\"log\"], \"cwd\": \"/absolute/project\", \"why\": \"Inspect the stack\"}\n\nUse the user's normal tooling to stage only intended changes (for example,\ngit add path/to/file). With staged work, an create feature -m \"Describe change\"\ncreates a branch and commit. On an existing branch, an modify -m \"Describe change\"\nupdates its commit and restacks affected descendants; an restack replays a stack\nonto its recorded parents. There is no universal requirement to create a branch\nbefore editing: follow the repository's workflow and inspect current state.\nUse an <command> --help for supported selectors and options; supply required\nchoices explicitly because MCP execution is non-interactive.\n\nFor review corrections, an absorb (alias ab) assigns staged ordinary text hunks\nto their exact original commits in the current downstack and replays mandatory\ndescendants. Preview with an absorb --dry-run (ab -d), then explicitly apply with\nan absorb --force (ab -f): MCP has no terminal confirmation. --all/-a includes\ntracked updates/deletions and existing staged entries, never untracked files;\n--patch/-p requires a real terminal and cannot run through MCP. Unsupported entry\nchanges and unmatched hunks remain staged and are reported. Absorb does not fetch,\npush or change PRs. Frozen targets are excluded; a frozen or occupied mandatory\nparticipant refuses before staging or rewriting, even with --force.\nAfter an owned absorb replay conflict, resolve and stage only the resolution,\nthen use an continue in the original worktree. Retained staged/unstaged input is\nkept separately until checked restoration. Ref/protection/worktree and Git\nenvironment checks also apply on continue before --all. Other failures report\nreached work and an executable guarded manual restoration path. Earlier amendments\nsurvive raw Git abort; do not promise rollback or retry a noncontinuable failure.\n\nFrozen branches and branches occupied in another worktree retain their existing\nprotections. Inspect the refusal and choose an allowed operation; do not bypass\nthese guards. After a conflict, inspect git status and the reported partial\nstate, resolve files deliberately and stage resolutions with normal tooling,\nthen use an continue. A disconnected or interrupted operation may need this\ninspection after reconnecting; interruption does not promise rollback.\nCancellation and timeout stop owned work without rollback. Cancelling queued\nwork prevents it from starting; disconnect discards the queue. Interruption does\nnot erase Git recovery data or authorize an automatic retry. Inspect actual refs,\nstaged changes and continuation before proceeding.\n\nSubmit deliberately with an submit (or an submit --help to inspect selectors).\nReviewer and assignee lists apply to every selected PR by default. Use\n--roles-branch <exact-local-branch> to add both lists only to that selected PR;\nthis does not narrow the submission scope selected by --branch or --stack. Preview\nwith --dry-run, then supply --reviewers and --assignees explicitly. Assignees accept\n@me for the authenticated GitHub user. Existing roles are retained; role options\ndo not publish drafts. After a failure, inspect confirmed and unattempted work\nbefore repeating the command.\nConfirm intended branches, PR metadata and the owner's publication approval\nbefore pushing or changing PRs. Anthracite reuses GitHub CLI credentials; it\nrequires no Graphite token or additional MCP account. Missing authentication is\nhandled by the normal CLI; learning and discovery do not log in or initialize a\nrepository automatically.\n"
+            }
+          ]
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 3,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"status\":\"success\",\"stdout\":\"base.txt: absorb into base, commit 202d1d269474442f9937a36a35426a7271ddad64 (source line 1)\\nchild.txt: absorb into child, commit 6959b73acf05f58815eb34c63a3e9f7f22f9392a (source line 1)\\nRetained leftover.txt: Unsupported added, deleted, renamed, mode or type entry change.\\nAbsorbable hunks: 2. Retained hunks: 0. Retained entries: 1.\\nRequired replay: base, child, tip.\\nDry run complete; no changes applied.\\n\",\"stderr\":\"\",\"exitCode\":0,\"signal\":null,\"truncated\":false}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 4,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"status\":\"cli_error\",\"stdout\":\"\",\"stderr\":\"ERROR: Absorb application requires --force without supported terminal confirmation. Use --dry-run to preview.\\n\",\"exitCode\":1,\"signal\":null,\"truncated\":false}"
+            }
+          ],
+          "isError": true
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 5,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"status\":\"success\",\"stdout\":\"tip \\n7 years ago\\n\\nParent: child\\nChildren:\\n\\n\\u001b[33mcommit 1ff7db465a6c7dfa339ee5b00450138b28704d3c\\u001b[m\\nAuthor: Reorder fixture <reorder@example.test>\\nDate:   Wed Jan 1 00:00:00 2020 +0000\\n\\n    tip\\n\",\"stderr\":\"\",\"exitCode\":0,\"signal\":null,\"truncated\":false}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 6,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"status\":\"success\",\"stdout\":\"Retained leftover.txt: Unsupported added, deleted, renamed, mode or type entry change.\\nAbsorbed 2 hunk(s) into base, child. Completed replay: base, child, tip. Retained input restored.\\n\",\"stderr\":\"\",\"exitCode\":0,\"signal\":null,\"truncated\":false}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 7,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"status\":\"success\",\"stdout\":\"tip \\n7 years ago\\n\\nParent: child\\nChildren:\\n\\n\\u001b[33mcommit e0b337cfa58a1236c86dc2f2bc1907412a404cb8\\u001b[m\\nAuthor: Reorder fixture <reorder@example.test>\\nDate:   Wed Jan 1 00:00:00 2020 +0000\\n\\n    tip\\n\",\"stderr\":\"\",\"exitCode\":0,\"signal\":null,\"truncated\":false}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ],
+    "sentMessages": [
+      {
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "anthracite-tests",
+            "version": "1.0.0"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 0
+      },
+      {
+        "method": "notifications/initialized",
+        "jsonrpc": "2.0"
+      },
+      {
+        "method": "tools/list",
+        "jsonrpc": "2.0",
+        "id": 1
+      },
+      {
+        "method": "tools/call",
+        "params": {
+          "name": "learn_an",
+          "arguments": {}
+        },
+        "jsonrpc": "2.0",
+        "id": 2
+      },
+      {
+        "method": "tools/call",
+        "params": {
+          "name": "run_an_cmd",
+          "arguments": {
+            "args": [
+              "ab",
+              "-d"
+            ],
+            "cwd": "$FIXTURE/repo",
+            "why": "Observe the fixture"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 3
+      },
+      {
+        "method": "tools/call",
+        "params": {
+          "name": "run_an_cmd",
+          "arguments": {
+            "args": [
+              "absorb"
+            ],
+            "cwd": "$FIXTURE/repo",
+            "why": "Observe the fixture"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 4
+      },
+      {
+        "method": "tools/call",
+        "params": {
+          "name": "run_an_cmd",
+          "arguments": {
+            "args": [
+              "info"
+            ],
+            "cwd": "$FIXTURE/repo",
+            "why": "Observe the fixture"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 5
+      },
+      {
+        "method": "tools/call",
+        "params": {
+          "name": "run_an_cmd",
+          "arguments": {
+            "args": [
+              "ab",
+              "-f"
+            ],
+            "cwd": "$FIXTURE/repo",
+            "why": "Observe the fixture"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 6
+      },
+      {
+        "method": "tools/call",
+        "params": {
+          "name": "run_an_cmd",
+          "arguments": {
+            "args": [
+              "info"
+            ],
+            "cwd": "$FIXTURE/repo",
+            "why": "Observe the fixture"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 7
+      }
+    ],
+    "errors": [],
+    "stderr": ""
+  },
+  "rawSha256": "2f94fc55b2685bd4a59fb41bbf9a5df957c3049a4d82ce0a16b770a7c28f1b7a",
+  "sameInstallationProof": "All an/anthracite/ch/gt PATH sentinels remain uncalled; fixture setup and MCP server use the isolated installed binary override, child self-execution uses that installation."
+}

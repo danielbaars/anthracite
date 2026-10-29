@@ -1,0 +1,75 @@
+{
+  "kind": "sandbox failure of existing numeric-zero fixture before cancellation; not a product red",
+  "wire": {
+    "messages": [
+      {
+        "jsonrpc": "2.0",
+        "id": 0,
+        "result": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {
+            "tools": {}
+          },
+          "serverInfo": {
+            "name": "anthracite",
+            "version": "0.2.1"
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 0,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"status\":\"cli_error\",\"stdout\":\"\",\"stderr\":\"Passing command through to git...\\nRunning: \\\"git switch --detach HEAD\\\"\\n\\nHEAD is now at 27bf5bc base\\nnode:child_process:981\\n    throw err;\\n    ^\\n\\n<ref *1> Error: spawnSync ps EPERM\\n    at Object.spawnSync (node:internal/child_process:1160:20)\\n    at spawnSync (node:child_process:928:24)\\n    at Object.execFileSync (node:child_process:971:15)\\n    at Object.<anonymous> ($FIXTURE/repo/.git/hooks/post-checkout:2:106)\\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {\\n  errno: -1,\\n  code: 'EPERM',\\n  syscall: 'spawnSync ps',\\n  path: 'ps',\\n  spawnargs: [ '-o', 'pgid=', '-p', '76963' ],\\n  error: [Circular *1],\\n  status: null,\\n  signal: null,\\n  output: null,\\n  pid: 0,\\n  stdout: undefined,\\n  stderr: undefined\\n}\\n\\nNode.js v24.19.0\\n\",\"exitCode\":1,\"signal\":null,\"truncated\":false}"
+            }
+          ],
+          "isError": true
+        }
+      }
+    ],
+    "sentMessages": [
+      {
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "anthracite-tests",
+            "version": "1.0.0"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 0
+      },
+      {
+        "method": "notifications/initialized",
+        "jsonrpc": "2.0"
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 0,
+        "method": "tools/call",
+        "params": {
+          "name": "run_an_cmd",
+          "arguments": {
+            "args": [
+              "switch",
+              "--detach",
+              "HEAD"
+            ],
+            "cwd": "$FIXTURE/repo",
+            "why": "zero active"
+          }
+        }
+      }
+    ],
+    "errors": [
+      "Received a response for an unknown message ID: {\"jsonrpc\":\"2.0\",\"id\":0,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"status\\\":\\\"cli_error\\\",\\\"stdout\\\":\\\"\\\",\\\"stderr\\\":\\\"Passing command through to git...\\\\nRunning: \\\\\\\"git switch --detach HEAD\\\\\\\"\\\\n\\\\nHEAD is now at 27bf5bc base\\\\nnode:child_process:981\\\\n    throw err;\\\\n    ^\\\\n\\\\n<ref *1> Error: spawnSync ps EPERM\\\\n    at Object.spawnSync (node:internal/child_process:1160:20)\\\\n    at spawnSync (node:child_process:928:24)\\\\n    at Object.execFileSync (node:child_process:971:15)\\\\n    at Object.<anonymous> ($FIXTURE/repo/.git/hooks/post-checkout:2:106)\\\\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\\\\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\\\\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\\\\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\\\\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\\\\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {\\\\n  errno: -1,\\\\n  code: 'EPERM',\\\\n  syscall: 'spawnSync ps',\\\\n  path: 'ps',\\\\n  spawnargs: [ '-o', 'pgid=', '-p', '76963' ],\\\\n  error: [Circular *1],\\\\n  status: null,\\\\n  signal: null,\\\\n  output: null,\\\\n  pid: 0,\\\\n  stdout: undefined,\\\\n  stderr: undefined\\\\n}\\\\n\\\\nNode.js v24.19.0\\\\n\\\",\\\"exitCode\\\":1,\\\"signal\\\":null,\\\"truncated\\\":false}\"}],\"isError\":true}}"
+    ],
+    "stderr": ""
+  },
+  "rawSha256": "883ace10a9bfdebe4c4ddfff1adee2a15e6d60848cdd2f7ab6061e02a8121876"
+}

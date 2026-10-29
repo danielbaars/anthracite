@@ -1,0 +1,57 @@
+PASS npm offline installation, both commands, completion and curated contents
+
+
+  MCP command execution through stdio
+    ✔ scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels (2171ms)
+    ✔ scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments (1352ms)
+    ✔ scenario 16: previews and forces multi-target absorb with retained local work in one usable same-installation session (29580ms)
+
+  MCP cancellation and shutdown through stdio
+    1) scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work
+
+  frozen publication through the public CLI
+    ✔ publishes an editable child on an existing frozen base while preserving protected and outside-scope PRs (7803ms)
+    ✔ rechecks after the original configured pre-push hook freezes the branch before any remote ref publication (2631ms)
+
+
+  5 passing (1m)
+  1 failing
+
+  1) MCP cancellation and shutdown through stdio
+       scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work:
+
+      AssertionError: expected false to equal true
+      + expected - actual
+
+      -false
+      +true
+
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js:188:64)
+
+
+
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+1 !== 0
+
+    at Object.<anonymous> ($WORKSPACE/scripts/test-npm-package.cjs:135:10)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

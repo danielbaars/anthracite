@@ -1,0 +1,146 @@
+{
+  "kind": "bounded observations from a passing public CLI fixture",
+  "cli": [
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "absorb",
+        "--force",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb stopped. Completed: base. Active: replaying child. Pending: child, tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-Q080XB. Command failed with error exit code 1:\ngit -c core.hooksPath=$HOOKS -c submodule.recurse=false rebase --reapply-cherry-picks --empty=keep --onto 0ce274a23fc66cc6c2025f500a5d472c55b176a7 3598387a424f886dd0b6eec3bb0d17597ccba21a child\n\nerror: The pre-rebase hook refused to rebase.\n\nNo automatic continuation is available for this Git state. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to tip and restore retained input FIRST by running: '$NODE' '$FIXTURE/repo/.git/an-absorb-Q080XB/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n"
+    },
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "continue",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: No Anthracite operation to continue.\n"
+    }
+  ],
+  "gitObservations": [
+    {
+      "args": [
+        "stash",
+        "push",
+        "-m",
+        "original user stash"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "Saved working directory and index state On tip: original user stash"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "refs/stash"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "c4e0c645fc1b01e6e0efa751009b940c4ffe4e08"
+    },
+    {
+      "args": [
+        "write-tree"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "f69743a6c64681bced4e87922e75ac1a6bb4dea1"
+    },
+    {
+      "args": [
+        "show",
+        "base:base.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "corrected base"
+    },
+    {
+      "args": [
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ""
+    },
+    {
+      "args": [
+        "reflog",
+        "expire",
+        "--expire=now",
+        "--all"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ""
+    },
+    {
+      "args": [
+        "gc",
+        "--prune=now"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ""
+    },
+    {
+      "args": [
+        "show",
+        ":leftover.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "staged durable content"
+    },
+    {
+      "args": [
+        "write-tree"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "f69743a6c64681bced4e87922e75ac1a6bb4dea1"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "refs/stash"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "c4e0c645fc1b01e6e0efa751009b940c4ffe4e08"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "3939e79a7e41abd5aa08b439e157a9cc23256c87"
+    },
+    {
+      "args": [
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "tip"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "--git-path",
+        "index"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ".git/index"
+    }
+  ],
+  "captureSha256": "e89c456049a49e532570cb1d2b8b956073c2494e32c84e46eee9004883a5b7d8",
+  "gitCaptureSha256": "1fccd60f2287d4eb305cece6216ab1902ffb70150660d4d398fd4da7cab811b6"
+}

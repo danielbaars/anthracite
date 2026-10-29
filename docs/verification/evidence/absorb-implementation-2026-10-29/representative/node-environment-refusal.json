@@ -1,0 +1,126 @@
+{
+  "kind": "bounded observations from a passing public CLI fixture",
+  "cli": [
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "absorb",
+        "--force",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb stopped. Completed: base, child. Active: replaying tip. Pending: tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-b8ikae. Content conflict during mandatory replay.\nResolve the active Git replay, stage only its resolutions, then run an continue in this worktree. Original leftovers and unstaged input remain isolated. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: '$NODE' '$FIXTURE/repo/.git/an-absorb-b8ikae/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n"
+    },
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "continue",
+        "--all",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb does not support Git environment redirection. Unset repository/index overrides before retrying.\n"
+    },
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "continue",
+        "--all",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb does not support Git environment redirection. Unset repository/index overrides before retrying.\n"
+    },
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "continue",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 0,
+      "signal": null,
+      "stdout": "Retained main.txt: No eligible feature commit owns this correction.\nAbsorbed 1 hunk(s) into base. Completed replay: base, child, tip. Retained input restored.\n",
+      "stderr": ""
+    }
+  ],
+  "gitObservations": [
+    {
+      "args": [
+        "show",
+        "base:base.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "corrected ancestor"
+    },
+    {
+      "args": [
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "base.txt"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "base"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "53d31caa9db2886d5b1b35069af6a4d01b00bd68"
+    },
+    {
+      "args": [
+        "show",
+        "tip:base.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "deliberate child resolution"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "576d2013697c59eed63e881a094b6ff2f88d0483"
+    },
+    {
+      "args": [
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "child"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "--git-path",
+        "index"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ".git/index"
+    }
+  ],
+  "captureSha256": "82f6e0e1d0af595de4d39be8104b69bb95bf844bf0a047e42d7b1dc55ade37b6",
+  "gitCaptureSha256": "a1b61bc8bf67c24b808058fbc658c9acdb542f30d7f8dd8172545738de81f448"
+}

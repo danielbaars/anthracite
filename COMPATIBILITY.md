@@ -62,7 +62,7 @@ Each row has its own positive execution alongside its canonical form. The quoted
 | Multitrunk | Deferred; no success stubs introduced. |
 | `get`/`g` new-import defaults | Per-branch PR-author/current-gh-login matching; other or unknown authors are frozen. `--unfrozen`/`-U` overrides only new imports; saved decisions survive real get conflicts. Existing status survives remote updates. [Controlled CLI scenarios](./apps/cli/test/commands/get_import_defaults_cli.test.ts) use external gh fixtures and bare remotes; no live Graphite backend claim. |
 | Extra staging/selection/restack modes, split-by-file, extra get/submit/sync/delete/checkout modes | Deferred unless explicitly documented in the command reference. A similar existing option does not imply all modern Graphite modes. |
-| AI, update/verbose/into/reset-author, MCP and Graphite browser/service integrations | Outside this compatibility round. Unregistered internal source modules are not supported public commands. |
+| AI, update/verbose/into/reset-author and Graphite browser/service integrations | Outside this compatibility round. Unregistered internal source modules are not supported public commands. |
 | Quiet interactive-rebase behavior | Deliberate Anthracite choice: quiet blocks the editor before mutation. The investigated Graphite invocation opened an editor. |
 | `ss` boolean overrides | Explicit fixed contract: later stack booleans replace its true default. Graphite backend scope with these combinations was not live measured. |
 | Raw Git prefixes | Existing direct cwd selection retained; other unsupported prefix positions may fail. No automatic branch fallback and no new generic Git-prefix grammar. |

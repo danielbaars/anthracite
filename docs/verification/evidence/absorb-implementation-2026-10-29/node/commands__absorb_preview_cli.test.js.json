@@ -1,0 +1,360 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 19,
+    "passes": 19,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-29T10:41:11.346Z",
+    "end": "2026-10-29T10:42:40.674Z",
+    "duration": 89328
+  },
+  "tests": [
+    {
+      "title": "identifies the original downstack commit and replay chain without effects",
+      "fullTitle": "absorb previews through the public CLI identifies the original downstack commit and replay chain without effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 3093,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses saved recovery from a linked worktree without cleaning either index",
+      "fullTitle": "absorb previews through the public CLI refuses saved recovery from a linked worktree without cleaning either index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 880,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "fullTitle": "absorb previews through the public CLI reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 2979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "fullTitle": "absorb previews through the public CLI refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 2683,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a frozen mandatory descendant instead of silently skipping it",
+      "fullTitle": "absorb previews through the public CLI refuses a frozen mandatory descendant instead of silently skipping it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 2211,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a frozen target and a trunk-owned correction as retained input",
+      "fullTitle": "absorb previews through the public CLI reports a frozen target and a trunk-owned correction as retained input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 4731,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains a no-input preview, requires force for application and previews wider input",
+      "fullTitle": "absorb previews through the public CLI explains a no-input preview, requires force for application and previews wider input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 5835,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lets an empty tracked caller inspect an eligible ancestor",
+      "fullTitle": "absorb previews through the public CLI lets an empty tracked caller inspect an eligible ancestor",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 3997,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "fullTitle": "absorb previews through the public CLI retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 2035,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an unhandled content filter without invoking configured text conversion",
+      "fullTitle": "absorb previews through the public CLI refuses an unhandled content filter without invoking configured text conversion",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 1780,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses trunk source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses trunk source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 969,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses detached source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses detached source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses untracked source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses untracked source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 938,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses stale source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses stale source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 1165,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses merge source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses merge source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 1208,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unmerged source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses unmerged source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 880,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses active source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses active source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 622,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses uninitialized source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses uninitialized source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 441,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses outside source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses outside source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 437,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "identifies the original downstack commit and replay chain without effects",
+      "fullTitle": "absorb previews through the public CLI identifies the original downstack commit and replay chain without effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 3093,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses saved recovery from a linked worktree without cleaning either index",
+      "fullTitle": "absorb previews through the public CLI refuses saved recovery from a linked worktree without cleaning either index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 880,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "fullTitle": "absorb previews through the public CLI reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 2979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "fullTitle": "absorb previews through the public CLI refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 2683,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a frozen mandatory descendant instead of silently skipping it",
+      "fullTitle": "absorb previews through the public CLI refuses a frozen mandatory descendant instead of silently skipping it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 2211,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a frozen target and a trunk-owned correction as retained input",
+      "fullTitle": "absorb previews through the public CLI reports a frozen target and a trunk-owned correction as retained input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 4731,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains a no-input preview, requires force for application and previews wider input",
+      "fullTitle": "absorb previews through the public CLI explains a no-input preview, requires force for application and previews wider input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 5835,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lets an empty tracked caller inspect an eligible ancestor",
+      "fullTitle": "absorb previews through the public CLI lets an empty tracked caller inspect an eligible ancestor",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 3997,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "fullTitle": "absorb previews through the public CLI retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 2035,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an unhandled content filter without invoking configured text conversion",
+      "fullTitle": "absorb previews through the public CLI refuses an unhandled content filter without invoking configured text conversion",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 1780,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses trunk source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses trunk source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 969,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses detached source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses detached source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses untracked source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses untracked source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 938,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses stale source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses stale source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 1165,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses merge source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses merge source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 1208,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unmerged source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses unmerged source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 880,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses active source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses active source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 622,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses uninitialized source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses uninitialized source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 441,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses outside source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses outside source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "duration": 437,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

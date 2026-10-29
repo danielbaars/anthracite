@@ -1,0 +1,144 @@
+{
+  "kind": "bounded observations from a passing public CLI fixture",
+  "cli": [
+    {
+      "executable": "$NATIVE",
+      "args": [
+        "absorb",
+        "--force",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb stopped. Completed: base. Active: replaying child. Pending: child, tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-Pc4hTD. Command failed with error exit code 1:\ngit -c core.hooksPath=$HOOKS -c submodule.recurse=false rebase --reapply-cherry-picks --empty=keep --onto e14500a863fd6e0dd9c3210db9b297437ea79a04 182ce0fe22456efa4c9dbf55d971f3bf75f7153c child\n\nerror: The pre-rebase hook refused to rebase.\n\nNo automatic continuation is available for this Git state. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to tip and restore retained input FIRST by running: BUN_BE_BUN=1 '$NATIVE' '$FIXTURE/repo/.git/an-absorb-Pc4hTD/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n"
+    },
+    {
+      "executable": "$NATIVE",
+      "args": [
+        "continue",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: No Anthracite operation to continue.\n"
+    }
+  ],
+  "gitObservations": [
+    {
+      "args": [
+        "stash",
+        "push",
+        "-m",
+        "original user stash"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "Saved working directory and index state On tip: original user stash"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "refs/stash"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "6c503ccaf8016d7323f5af30d458cca6c4fd08f2"
+    },
+    {
+      "args": [
+        "write-tree"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "f69743a6c64681bced4e87922e75ac1a6bb4dea1"
+    },
+    {
+      "args": [
+        "show",
+        "base:base.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "corrected base"
+    },
+    {
+      "args": [
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ""
+    },
+    {
+      "args": [
+        "reflog",
+        "expire",
+        "--expire=now",
+        "--all"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ""
+    },
+    {
+      "args": [
+        "gc",
+        "--prune=now"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ""
+    },
+    {
+      "args": [
+        "show",
+        ":leftover.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "staged durable content"
+    },
+    {
+      "args": [
+        "write-tree"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "f69743a6c64681bced4e87922e75ac1a6bb4dea1"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "refs/stash"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "6c503ccaf8016d7323f5af30d458cca6c4fd08f2"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "c3d9ab26b13428d32a13dfeb1dc80add2225cc1b"
+    },
+    {
+      "args": [
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "tip"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "--git-path",
+        "index"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ".git/index"
+    }
+  ],
+  "captureSha256": "a6e6345b43ec4ea1417cf5b3133f4b537ef3b67b8c21b6cf124749007c9d705f",
+  "gitCaptureSha256": "951dedb55953854d6bd95d904befcc25685da26c6f6afa374f92a43e3ac5d3e7"
+}

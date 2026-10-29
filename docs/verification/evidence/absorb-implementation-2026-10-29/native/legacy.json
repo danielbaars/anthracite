@@ -1,0 +1,306 @@
+{
+  "stats": {
+    "suites": 10,
+    "tests": 16,
+    "passes": 16,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-29T10:34:57.191Z",
+    "end": "2026-10-29T10:36:39.299Z",
+    "duration": 102108
+  },
+  "tests": [
+    {
+      "title": "modify commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "fullTitle": "modify patch selection through the public CLI modify commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/modify_patch_cli.test.js",
+      "duration": 2736,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "m commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "fullTitle": "modify patch selection through the public CLI m commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/modify_patch_cli.test.js",
+      "duration": 2446,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required patch input before writes: create patched --patch --message patch --no-interactive",
+      "fullTitle": "commit and editor interaction through the public CLI refuses required patch input before writes: create patched --patch --message patch --no-interactive",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 548,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required patch input before writes: create patched --onto other --patch --message patch --interactive",
+      "fullTitle": "commit and editor interaction through the public CLI refuses required patch input before writes: create patched --onto other --patch --message patch --interactive",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 576,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required patch input before writes: modify --commit --patch --message patch --quiet",
+      "fullTitle": "commit and editor interaction through the public CLI refuses required patch input before writes: modify --commit --patch --message patch --quiet",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 619,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required patch input before writes: modify --patch --no-interactive",
+      "fullTitle": "commit and editor interaction through the public CLI refuses required patch input before writes: modify --patch --no-interactive",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 770,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps all precedence over an unnecessary patch UI: create all-patch --all --patch --message all work --quiet",
+      "fullTitle": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: create all-patch --all --patch --message all work --quiet",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 932,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps all precedence over an unnecessary patch UI: modify --commit --all --patch --message all work --quiet",
+      "fullTitle": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: modify --commit --all --patch --message all work --quiet",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 4465,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps all precedence over an unnecessary patch UI: modify --all --patch --quiet",
+      "fullTitle": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: modify --all --patch --quiet",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 4539,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "performs deterministic move and fold at quiet without altering unrelated branches",
+      "fullTitle": "commit and editor interaction through the public CLI performs deterministic move and fold at quiet without altering unrelated branches",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 5584,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Will error",
+      "fullTitle": "(${scene}): continue While not during a rebase Will error",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/continue/continue.test.js",
+      "duration": 420,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Will error",
+      "fullTitle": "(${scene}): continue While not during a rebase Will error",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/continue/continue.test.js",
+      "duration": 434,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains actionable quiet conflict guidance and continues without extracting twice",
+      "fullTitle": "file split recovery through real public processes retains actionable quiet conflict guidance and continues without extracting twice",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 19108,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resolves a real interactive conflict in fresh cont processes",
+      "fullTitle": "modern interactive branch rebase through the public CLI resolves a real interactive conflict in fresh cont processes",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/modern_interactive_rebase_cli.test.js",
+      "duration": 14220,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(BasicScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/stack/restack_continue.test.js",
+      "duration": 4723,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(TrailingProdScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/stack/restack_continue.test.js",
+      "duration": 5036,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "modify commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "fullTitle": "modify patch selection through the public CLI modify commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/modify_patch_cli.test.js",
+      "duration": 2736,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "m commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "fullTitle": "modify patch selection through the public CLI m commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/modify_patch_cli.test.js",
+      "duration": 2446,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required patch input before writes: create patched --patch --message patch --no-interactive",
+      "fullTitle": "commit and editor interaction through the public CLI refuses required patch input before writes: create patched --patch --message patch --no-interactive",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 548,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required patch input before writes: create patched --onto other --patch --message patch --interactive",
+      "fullTitle": "commit and editor interaction through the public CLI refuses required patch input before writes: create patched --onto other --patch --message patch --interactive",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 576,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required patch input before writes: modify --commit --patch --message patch --quiet",
+      "fullTitle": "commit and editor interaction through the public CLI refuses required patch input before writes: modify --commit --patch --message patch --quiet",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 619,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required patch input before writes: modify --patch --no-interactive",
+      "fullTitle": "commit and editor interaction through the public CLI refuses required patch input before writes: modify --patch --no-interactive",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 770,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps all precedence over an unnecessary patch UI: create all-patch --all --patch --message all work --quiet",
+      "fullTitle": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: create all-patch --all --patch --message all work --quiet",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 932,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps all precedence over an unnecessary patch UI: modify --commit --all --patch --message all work --quiet",
+      "fullTitle": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: modify --commit --all --patch --message all work --quiet",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 4465,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps all precedence over an unnecessary patch UI: modify --all --patch --quiet",
+      "fullTitle": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: modify --all --patch --quiet",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 4539,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "performs deterministic move and fold at quiet without altering unrelated branches",
+      "fullTitle": "commit and editor interaction through the public CLI performs deterministic move and fold at quiet without altering unrelated branches",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/interaction_commit_editor_cli.test.js",
+      "duration": 5584,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Will error",
+      "fullTitle": "(${scene}): continue While not during a rebase Will error",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/continue/continue.test.js",
+      "duration": 420,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Will error",
+      "fullTitle": "(${scene}): continue While not during a rebase Will error",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/continue/continue.test.js",
+      "duration": 434,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains actionable quiet conflict guidance and continues without extracting twice",
+      "fullTitle": "file split recovery through real public processes retains actionable quiet conflict guidance and continues without extracting twice",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/split_file_recovery_cli.test.js",
+      "duration": 19108,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resolves a real interactive conflict in fresh cont processes",
+      "fullTitle": "modern interactive branch rebase through the public CLI resolves a real interactive conflict in fresh cont processes",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/modern_interactive_rebase_cli.test.js",
+      "duration": 14220,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(BasicScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/stack/restack_continue.test.js",
+      "duration": 4723,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(TrailingProdScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/stack/restack_continue.test.js",
+      "duration": 5036,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
