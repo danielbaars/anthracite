@@ -4,32 +4,49 @@ import { ExitFailedError } from '../errors';
 import { runGitCommand } from './runner';
 
 /** Protect only paths a planned restack may check out, including ignored work. */
+// eslint-disable-next-line max-lines-per-function
 export function assertRestackFilesAvailable({
   branches,
   checkoutRevisions = [],
   all = false,
   skipTrackedPaths = false,
   operation,
+  cwd: sourceRoot,
 }: {
   branches: readonly { name: string; from: string }[];
   checkoutRevisions?: readonly string[];
   all?: boolean;
   skipTrackedPaths?: boolean;
+  cwd?: string;
   operation: 'insert' | 'move' | 'fold' | 'reorder' | 'split' | 'absorb';
 }): void {
   if (branches.length === 0 && checkoutRevisions.length === 0) return;
-  const cwd = runGitCommand({
-    args: ['rev-parse', '--show-toplevel'],
-    onError: 'throw',
-    resource: 'restackRoot',
-  });
+  const env = { ...process.env };
+  if (sourceRoot)
+    for (const key of [
+      'GIT_DIR',
+      'GIT_WORK_TREE',
+      'GIT_INDEX_FILE',
+      'GIT_COMMON_DIR',
+      'GIT_OBJECT_DIRECTORY',
+      'GIT_ALTERNATE_OBJECT_DIRECTORIES',
+      'GIT_PREFIX',
+    ])
+      delete env[key];
+  const cwd =
+    sourceRoot ??
+    runGitCommand({
+      args: ['rev-parse', '--show-toplevel'],
+      onError: 'throw',
+      resource: 'restackRoot',
+    });
   const plannedPaths = [
     ...new Set([
       ...branches.flatMap(({ name, from }) =>
         [
           runGitCommand({
             args: ['ls-tree', '-r', '--name-only', '-z', `refs/heads/${name}`],
-            options: { cwd, noTrim: true },
+            options: { cwd, noTrim: true, env },
             onError: 'throw',
             resource: 'restackPaths',
           }),
@@ -44,7 +61,7 @@ export function assertRestackFilesAvailable({
               `${from}..refs/heads/${name}`,
               '--',
             ],
-            options: { cwd, noTrim: true },
+            options: { cwd, noTrim: true, env },
             onError: 'throw',
             resource: 'restackReplayPaths',
           }),
@@ -56,7 +73,7 @@ export function assertRestackFilesAvailable({
         .map((revision) =>
           runGitCommand({
             args: ['ls-tree', '-r', '--name-only', '-z', revision],
-            options: { cwd, noTrim: true },
+            options: { cwd, noTrim: true, env },
             onError: 'throw',
             resource: 'restackCheckoutPaths',
           })
@@ -68,7 +85,10 @@ export function assertRestackFilesAvailable({
   const paths = [
     ...new Set(
       (skipTrackedPaths
-        ? getPathsOutsideIndex(plannedPaths, cwd, operation === 'absorb')
+        ? getPathsOutsideIndex(plannedPaths, cwd, {
+            env,
+            isInspection: operation === 'absorb',
+          })
         : plannedPaths
       ).flatMap((file) => getCheckoutPaths(file, cwd))
     ),
@@ -84,7 +104,7 @@ export function assertRestackFilesAvailable({
         '--get',
         'core.ignorecase',
       ],
-      options: { cwd },
+      options: { cwd, env },
       onError: 'throw',
       resource: 'restackPathCase',
     }) === 'true';
@@ -104,7 +124,7 @@ export function assertRestackFilesAvailable({
           (file) => `:(literal${ignoreCase ? ',icase' : ''})${file}`
         ),
       ],
-      options: { cwd, noTrim: true },
+      options: { cwd, noTrim: true, env },
       onError: 'throw',
       resource: 'restackFileCollisions',
     }).split('\0')[0];
@@ -153,7 +173,10 @@ function getCheckoutPaths(file: string, cwd: string): string[] {
 function getPathsOutsideIndex(
   files: readonly string[],
   cwd: string,
-  isInspection: boolean
+  {
+    env,
+    isInspection,
+  }: { readonly env: NodeJS.ProcessEnv; readonly isInspection: boolean }
 ): string[] {
   // Git can list a clean indexed Unicode alias as ignored under its stored
   // spelling. Later phases let Git protect indexed work and check the rest here.
@@ -169,7 +192,7 @@ function getPathsOutsideIndex(
         '--',
         ...files.map((file) => `:(literal)${file}`),
       ],
-      options: { cwd, noTrim: true },
+      options: { cwd, noTrim: true, env },
       onError: 'throw',
       resource: 'restackIndexedPaths',
     })

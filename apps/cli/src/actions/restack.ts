@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { recordAbsorbCompletion } from './absorb_recovery';
 import { TContext } from '../lib/context';
 import {
   assertContinuationBranchesEditable,
@@ -191,6 +192,7 @@ export function recordRestackCompletion(
   branch: string,
   context: TContext
 ): void {
+  recordAbsorbCompletion(branch, context);
   recordFileSplitCompletion(branch, context);
   recordDeleteCompletion(branch, context);
   recordMoveCompletion(branch, context);

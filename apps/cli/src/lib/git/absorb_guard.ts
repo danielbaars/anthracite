@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
+import { assertRestackFilesAvailable } from './restack_files';
 import { PreconditionsFailedError } from '../errors';
 import { runGitCommand } from './runner';
 import { assertBranchesAvailableInWorktrees } from './worktrees';
@@ -80,13 +81,16 @@ export function readAbsorbGuard(file: string): AbsorbGuard {
 }
 
 /** A committed hook records only our active participant's actual completed writes. */
+// eslint-disable-next-line max-params
 export function checkAbsorbGuard(
   file: string,
   phase: string,
-  input: Buffer
+  input: Buffer,
+  revalidate = false
 ): void {
   const record = readAbsorbGuard(file);
-  if (record.failure) throw new PreconditionsFailedError(record.failure);
+  if (record.failure && !revalidate)
+    throw new PreconditionsFailedError(record.failure);
   const updates = input
     .toString('utf8')
     .split('\n')
@@ -128,9 +132,40 @@ export function checkAbsorbGuard(
           `Absorb expected ref changed: ${entry.ref}. External changes are retained.`
         );
     }
+    if (phase === 'before-mutation') {
+      const saved = z
+        .object({
+          plan: z.object({ source: z.string() }),
+          ranges: z.array(z.object({ name: z.string(), base: oid })),
+        })
+        .parse(
+          JSON.parse(
+            fs.readFileSync(path.join(path.dirname(file), 'plan.json'), 'utf8')
+          )
+        );
+      const progressFile = path.join(path.dirname(file), 'progress.json');
+      const completed = fs.existsSync(progressFile)
+        ? z
+            .object({ completed: z.array(z.string()) })
+            .parse(JSON.parse(fs.readFileSync(progressFile, 'utf8'))).completed
+        : [];
+      const pending = saved.ranges.filter(
+        (range) => !completed.includes(range.name)
+      );
+      assertRestackFilesAvailable({
+        branches: pending.map((range) => ({
+          name: range.name,
+          from: range.base,
+        })),
+        checkoutRevisions: [saved.plan.source],
+        skipTrackedPaths: true,
+        operation: 'absorb',
+        cwd: record.root,
+      });
+    }
   } catch (error: unknown) {
     record.failure = error instanceof Error ? error.message : String(error);
-    fs.writeFileSync(file, JSON.stringify(record));
+    if (!revalidate) fs.writeFileSync(file, JSON.stringify(record));
     throw error;
   }
   if (phase === 'committed') fs.writeFileSync(file, JSON.stringify(record));

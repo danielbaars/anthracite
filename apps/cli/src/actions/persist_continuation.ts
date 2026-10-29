@@ -40,7 +40,9 @@ export function persistContinuation(
 }
 
 export function clearContinuation(context: TContext): void {
-  const finishedFileSplit = context.continueConfig.data.split !== undefined;
+  const finishedOwnedOperation =
+    context.continueConfig.data.split !== undefined ||
+    context.continueConfig.data.absorb !== undefined;
   context.continueConfig.update((data) => {
     data.getImportDecisions = undefined;
     data.branchesToSync = [];
@@ -54,6 +56,7 @@ export function clearContinuation(context: TContext): void {
     data.insert = undefined;
     data.reorder = undefined;
     data.split = undefined;
+    data.absorb = undefined;
   });
-  if (finishedFileSplit) context.continueConfig.delete();
+  if (finishedOwnedOperation) context.continueConfig.delete();
 }

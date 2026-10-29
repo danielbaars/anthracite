@@ -1,4 +1,9 @@
 import fs from 'fs';
+import { persistContinuation, clearContinuation } from './persist_continuation';
+import {
+  assertAbsorbContinuationAvailable,
+  readAbsorbExecution,
+} from './absorb_recovery';
 import path from 'path';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { TContext } from '../lib/context';
@@ -30,6 +35,9 @@ import {
   assertAbsorbInputUnchanged,
   retainAbsorbInput,
   restoreAbsorbInput,
+  readRetainedAbsorbInput,
+  retainAbsorbRestorationBase,
+  AbsorbInput,
 } from './absorb_input';
 
 function shellQuote(value: string): string {
@@ -194,7 +202,7 @@ type AbsorbExecution = {
   readonly ranges: readonly {
     readonly name: string;
     readonly parent: string;
-    readonly metadata: ReturnType<typeof readMetadataRef>;
+    readonly metadata: Readonly<Record<string, unknown>>;
     readonly base: string;
     readonly originalTip: string;
     readonly commits: readonly string[];
@@ -202,21 +210,51 @@ type AbsorbExecution = {
   readonly amendedTrees: ReadonlyMap<string, string>;
 };
 // eslint-disable-next-line max-lines-per-function
-function executeAbsorb(execution: AbsorbExecution): void {
+function executeAbsorb(
+  execution: AbsorbExecution,
+  resumed?: {
+    readonly input: AbsorbInput;
+    readonly completed: readonly string[];
+  }
+): void {
   const { plan, context, noVerify, expected, ranges, amendedTrees } = execution;
-  const input = retainAbsorbInput(plan.source);
-  const completed: string[] = [];
+  const input = resumed?.input ?? retainAbsorbInput(plan.source);
+  const completed: string[] = [...(resumed?.completed ?? [])];
+  if (!resumed) {
+    const originalHead = git(['rev-parse', 'HEAD']);
+    const nominalTree = prepareAbsorbTree(
+      plan.targets.map((target) => ({
+        ...target,
+        commit: originalHead,
+        blob: git(['rev-parse', originalHead + ':' + target.path]),
+        hunk: target.sourceHunk,
+      }))
+    );
+    retainAbsorbRestorationBase(
+      input,
+      nominalTree,
+      ranges.map((range) => range.originalTip),
+      ranges[0].base
+    );
+  }
+
   let active = 'preparing replay';
-  fs.writeFileSync(
-    path.join(input.directory, 'plan.json'),
-    JSON.stringify({ plan, expected, ranges })
-  );
+  if (!resumed)
+    fs.writeFileSync(
+      path.join(input.directory, 'plan.json'),
+      JSON.stringify({ plan, expected, ranges, noVerify })
+    );
   const worktree = path.join(input.directory, 'construction');
   try {
-    const guardFile = createGuard(input.directory, expected, plan);
+    const guardFile = resumed
+      ? path.join(input.directory, 'guard.json')
+      : createGuard(input.directory, expected, plan);
+    // eslint-disable-next-line max-lines-per-function
     withAbsorbGuard(guardFile, () => {
-      let isolated = false;
-      for (const range of ranges) {
+      let isolated = Boolean(resumed);
+      for (const range of ranges.filter(
+        (item) => !completed.includes(item.name)
+      )) {
         const name = range.name;
         const remaining = plan.replay.filter(
           (value) => !completed.includes(value)
@@ -272,6 +310,7 @@ function executeAbsorb(execution: AbsorbExecution): void {
             participants: plan.replay,
           });
           completed.push(name);
+          saveAbsorbProgress(input.directory, completed, context);
           checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
           context.engine.rebuild();
           // Isolate the caller's retained input exactly once, before real replay.
@@ -290,18 +329,36 @@ function executeAbsorb(execution: AbsorbExecution): void {
         }
         active = `replaying ${name}`;
         const result = context.engine.restackBranch(name, remaining);
-        if (result.result === 'REBASE_CONFLICT')
+        if (result.result === 'REBASE_CONFLICT') {
+          context.continueConfig.update((data) => {
+            data.absorb = {
+              directory: input.directory,
+              source: plan.source,
+              mandatory: [...plan.replay],
+              completed: [...completed],
+            };
+          });
+          persistContinuation(
+            {
+              rebasedBranchBase: result.rebasedBranchBase,
+              branchesToRestack: remaining.filter((value) => value !== name),
+            },
+            context
+          );
           throw new PreconditionsFailedError(
             readAbsorbGit(['ls-files', '--unmerged']).trim()
               ? 'Content conflict during mandatory replay.'
               : 'Replay stopped; inspect Git state and hooks.'
           );
+        }
         completed.push(name);
+        saveAbsorbProgress(input.directory, completed, context);
         checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
       }
       checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
       active = 'restoring retained input';
       git(['switch', '--quiet', plan.source]);
+      checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
       restoreAbsorbInput(input);
       if (!context.quiet) {
         for (const item of plan.leftovers)
@@ -314,6 +371,7 @@ function executeAbsorb(execution: AbsorbExecution): void {
           )}. Retained input restored.\n`
         );
       }
+      if (context.continueConfig.data.absorb) clearContinuation(context);
       fs.rmSync(input.directory, { recursive: true });
     });
   } catch (error: unknown) {
@@ -335,7 +393,11 @@ function executeAbsorb(execution: AbsorbExecution): void {
         pending.join(', ') || 'none'
       }. Retained input and construction: ${input.directory}. ${
         error instanceof Error ? error.message : String(error)
-      }\nAutomatic absorb continuation is not available yet. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to ${
+      }\n${
+        context.engine.rebaseInProgress() && context.continueConfig.data.absorb
+          ? 'Resolve the active Git replay, stage only its resolutions, then run an continue in this worktree. Original leftovers and unstaged input remain isolated. '
+          : 'No automatic continuation is available for this Git state. '
+      }Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to ${
         plan.source
       } and restore retained input FIRST by running: ${
         process.versions.bun ? 'BUN_BE_BUN=1 ' : ''
@@ -431,5 +493,108 @@ function recordReachedWrites(input: {
     }
   } catch {
     // An unreadable owned record must not hide the retained input location.
+  }
+}
+
+function saveAbsorbProgress(
+  directory: string,
+  completed: readonly string[],
+  context: TContext
+): void {
+  fs.writeFileSync(
+    path.join(directory, 'progress.json'),
+    JSON.stringify({ completed })
+  );
+  if (context.continueConfig.data.absorb)
+    context.continueConfig.update((data) => {
+      if (data.absorb) data.absorb.completed = [...completed];
+    });
+}
+
+/** Resume original immutable ranges; completed target adoption is never repeated. */
+export function continueAbsorb(
+  opts: { addAll: boolean },
+  context: TContext
+): void {
+  assertAbsorbContinuationAvailable(context.continueConfig.data);
+  const role = context.continueConfig.data.absorb;
+  const base = context.continueConfig.data.rebasedBranchBase;
+  if (!role || !base)
+    throw new PreconditionsFailedError('Missing owned absorb continuation.');
+  const saved = readAbsorbExecution(role.directory);
+  const guardFile = path.join(role.directory, 'guard.json');
+  const active = context.engine.getRebaseHead();
+  if (!active || role.completed.includes(active))
+    throw new PreconditionsFailedError('Invalid active absorb replay.');
+  const guard = readAbsorbGuard(guardFile);
+  if (guard.active !== active)
+    throw new PreconditionsFailedError(
+      'Active Git replay differs from saved absorb replay.'
+    );
+  const lock = getCacheLock();
+  lock.lock();
+  try {
+    if (guard.failure) {
+      delete guard.failure;
+      fs.writeFileSync(guardFile, JSON.stringify(guard));
+    }
+    withAbsorbGuard(guardFile, () => {
+      if (opts.addAll) context.engine.addAll();
+      const result = context.engine.continueRebase(base, role.mandatory);
+      if (result.result === 'REBASE_CONFLICT')
+        throw new PreconditionsFailedError(
+          `Absorb replay remains stopped. Resolve and stage the active replay, then run an continue. Retained input: ${role.directory}.`
+        );
+      const completed = [...role.completed, result.branchName];
+      saveAbsorbProgress(role.directory, completed, context);
+      const amendedTrees = new Map(
+        [
+          ...new Set(
+            saved.plan.targets
+              .filter((target) => !completed.includes(target.branch))
+              .map((target) => target.commit)
+          ),
+        ].map((commit) => [
+          commit,
+          prepareAbsorbTree(
+            saved.plan.targets.filter((target) => target.commit === commit)
+          ),
+        ])
+      );
+      executeAbsorb(
+        { ...saved, context, amendedTrees },
+        { input: readRetainedAbsorbInput(role.directory), completed }
+      );
+    });
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message.startsWith('Absorb stopped.'))
+      throw error;
+    const completed = [
+      ...(context.continueConfig.data.absorb?.completed ?? role.completed),
+    ];
+    recordReachedWrites({
+      directory: role.directory,
+      plan: saved.plan,
+      expected: saved.expected,
+      completed,
+    });
+    saveAbsorbProgress(role.directory, completed, context);
+    throw new PreconditionsFailedError(
+      `Absorb stopped during continuation. Completed: ${
+        completed.join(', ') || 'none'
+      }. ${error instanceof Error ? error.message : String(error)}\n${
+        context.engine.rebaseInProgress()
+          ? 'Inspect the active replay; resolve/stage then run an continue.'
+          : 'No active rebase remains; inspect reached refs and tracking before further changes.'
+      } Retained input: ${role.directory}. Return to ${
+        role.source
+      } after finishing or aborting any active Git operation. Restore retained input FIRST by running: ${
+        process.versions.bun ? 'BUN_BE_BUN=1 ' : ''
+      }${shellQuote(process.execPath)} ${shellQuote(
+        path.join(role.directory, 'restore.cjs')
+      )}. Collision checks preserve newer work. Earlier amendments remain after abort.`
+    );
+  } finally {
+    lock.release();
   }
 }
