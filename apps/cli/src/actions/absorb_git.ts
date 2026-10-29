@@ -38,16 +38,33 @@ export function getAbsorbRoot(): string {
   return value.replace(/\r?\n$/, '');
 }
 
-function readGitBytes(args: readonly string[]): Buffer {
+let ownedIndex: string | undefined;
+
+/** Restrict a synchronous inspection to a caller-owned prospective index. */
+export function withAbsorbIndex<T>(index: string, inspect: () => T): T {
+  const previous = ownedIndex;
+  ownedIndex = index;
+  try {
+    return inspect();
+  } finally {
+    ownedIndex = previous;
+  }
+}
+
+function readGitBytes(args: readonly string[], input?: string): Buffer {
   return execFileSync('git', [...readOptions, '-C', getAbsorbRoot(), ...args], {
-    stdio: ['ignore', 'pipe', 'pipe'],
+    stdio: [input === undefined ? 'ignore' : 'pipe', 'pipe', 'pipe'],
     maxBuffer: 1024 * 1024 * 1024,
+    input,
+    env: ownedIndex
+      ? { ...process.env, GIT_INDEX_FILE: ownedIndex }
+      : process.env,
   });
 }
 
 /** Decode structural records strictly; never select a replacement-decoded path. */
-export function readAbsorbGit(args: readonly string[]): string {
-  const result = decodeGitText(readGitBytes(args));
+export function readAbsorbGit(args: readonly string[], input?: string): string {
+  const result = decodeGitText(readGitBytes(args, input));
   if (result === null)
     throw new PreconditionsFailedError(
       'Absorb requires valid UTF-8 Git records.'

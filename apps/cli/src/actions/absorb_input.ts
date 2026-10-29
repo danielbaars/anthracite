@@ -37,8 +37,8 @@ export function assertAbsorbInputSupported(revisions: readonly string[]): void {
       'Absorb does not yet support submodule working trees.'
     );
   const paths = readAbsorbGit(['ls-files', '-z']);
-  const attributes = runGitCommand({
-    args: [
+  const attributes = readAbsorbGit(
+    [
       'check-attr',
       '--cached',
       '-z',
@@ -49,10 +49,8 @@ export function assertAbsorbInputSupported(revisions: readonly string[]): void {
       'working-tree-encoding',
       'ident',
     ],
-    options: { cwd: getAbsorbRoot(), input: paths, noTrim: true },
-    onError: 'throw',
-    resource: 'absorbAttributes',
-  }).split('\0');
+    paths
+  ).split('\0');
   for (let i = 2; i < attributes.length; i += 3)
     if (attributes[i] !== 'unspecified' && attributes[i] !== 'unset')
       throw new PreconditionsFailedError(

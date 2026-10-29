@@ -110,7 +110,10 @@ function corridorCommits(
   return candidates;
 }
 
-export function planAbsorb(context: TContext): AbsorbPlan {
+export function inspectAbsorbSource(context: TContext): {
+  readonly source: string;
+  readonly candidates: readonly AbsorbCandidate[];
+} {
   assertNoActiveOperation(context);
   const source = readAbsorbGit(['branch', '--show-current']).trim();
   if (!source)
@@ -123,7 +126,11 @@ export function planAbsorb(context: TContext): AbsorbPlan {
     throw new PreconditionsFailedError(
       'Absorb requires a tracked source branch.'
     );
-  const candidates = corridorCommits(context, source);
+  return { source, candidates: corridorCommits(context, source) };
+}
+
+export function planAbsorb(context: TContext): AbsorbPlan {
+  const { source, candidates } = inspectAbsorbSource(context);
   const files = readAbsorbGit([
     'diff',
     '--cached',
@@ -197,7 +204,7 @@ function orderReplay(
   return ordered;
 }
 
-export function printAbsorbPlan(plan: AbsorbPlan): void {
+export function printAbsorbPlan(plan: AbsorbPlan, preview = true): void {
   if (!plan.targets.length && !plan.leftovers.length) {
     process.stdout.write('No staged changes to absorb.\n');
     return;
@@ -222,9 +229,9 @@ export function printAbsorbPlan(plan: AbsorbPlan): void {
     }.\n`
   );
   process.stdout.write(
-    `Required replay: ${
-      plan.replay.join(', ') || 'none'
-    }.\nDry run complete; no changes applied.\n`
+    `Required replay: ${plan.replay.join(', ') || 'none'}.\n${
+      preview ? 'Dry run complete; no changes applied.\n' : ''
+    }`
   );
 }
 
