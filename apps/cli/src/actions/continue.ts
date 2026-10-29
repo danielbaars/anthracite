@@ -27,6 +27,7 @@ import {
   reportReorderFailure,
 } from './reorder_recovery';
 import { assertMoveFilesAvailable, reportMoveFailure } from './move_recovery';
+import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import {
   assertFileSplitAvailable,
   finishFileSplit,
@@ -37,7 +38,8 @@ export async function continueAction(
   opts: { addAll: boolean },
   context: TContext
 ): Promise<void> {
-  if (context.continueConfig.data.absorb) {
+  const data = context.continueConfig.data;
+  if (data.absorb) {
     continueAbsorb(opts, context);
     return;
   }
@@ -47,17 +49,19 @@ export async function continueAction(
   }
 
   const activeBranch = context.engine.getRebaseHead();
-  assertContinuationBranchesEditable(context.continueConfig.data, activeBranch);
+  assertContinuationBranchesEditable(data, activeBranch);
   if (activeBranch) context.engine.assertBranchEditable(activeBranch);
 
-  assertDeleteRecoveryEditable(context.continueConfig.data.delete);
-  assertFileSplitAvailable(context.continueConfig.data);
+  assertDeleteRecoveryEditable(data.delete);
+  assertFileSplitAvailable(data);
+  if (data.insert)
+    assertBranchesAvailableInWorktrees(getMandatoryBranches(data));
   if (opts.addAll) {
     context.engine.addAll();
   }
-  const rebasedBranchBase = context.continueConfig.data.rebasedBranchBase;
-  const branchesToSync = context.continueConfig.data?.branchesToSync;
-  const branchesToRestack = context.continueConfig.data?.branchesToRestack;
+  const rebasedBranchBase = data.rebasedBranchBase;
+  const branchesToSync = data.branchesToSync;
+  const branchesToRestack = data.branchesToRestack;
 
   if (!rebasedBranchBase) {
     clearContinuation(context);
@@ -68,10 +72,7 @@ export async function continueAction(
   try {
     assertReorderContinuationClean(context);
     assertReorderFilesAvailable(context);
-    if (
-      activeBranch &&
-      (context.continueConfig.data.move || context.continueConfig.data.fold)
-    ) {
+    if (activeBranch && (data.move || data.fold)) {
       assertMoveFilesAvailable(
         getBranchesToRestack(
           [activeBranch, ...(branchesToRestack ?? [])],
@@ -82,7 +83,7 @@ export async function continueAction(
     }
     cont = context.engine.continueRebase(
       rebasedBranchBase,
-      getMandatoryBranches(context.continueConfig.data)
+      getMandatoryBranches(data)
     );
   } catch (error) {
     if (
@@ -133,7 +134,7 @@ export async function continueAction(
     await getBranchesFromRemote(
       {
         downstack: branchesToSync,
-        importDecisions: context.continueConfig.data.getImportDecisions,
+        importDecisions: data.getImportDecisions,
         base: context.engine.currentBranchPrecondition,
         force: false,
       },
