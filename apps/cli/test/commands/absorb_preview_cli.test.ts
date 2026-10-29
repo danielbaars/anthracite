@@ -124,6 +124,7 @@ describe('absorb previews through the public CLI', function () {
   });
 
   it('refuses a frozen mandatory descendant instead of silently skipping it', () => {
+    fixture.git(['switch', 'child']);
     stageCorrection();
     const metadata: unknown = JSON.parse(
       fixture.git(['cat-file', '-p', 'refs/branch-metadata/tip'])
@@ -163,7 +164,7 @@ describe('absorb previews through the public CLI', function () {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
-  it('explains a no-input preview and refuses application and wider input explicitly', () => {
+  it('explains a no-input preview, refuses unavailable application and previews wider input', () => {
     let before = fixture.inspectionSnapshot();
     let result = fixture.run(['absorb', '--dry-run', '--no-interactive']);
     expect(result.status, result.stdout + result.stderr).to.equal(0);
@@ -181,8 +182,10 @@ describe('absorb previews through the public CLI', function () {
     fixture.git(['add', 'child.txt']);
     before = fixture.inspectionSnapshot();
     result = fixture.run(['absorb', '--dry-run', '--no-interactive']);
-    expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('Wider selection is not available');
+    expect(result.status, result.stdout + result.stderr).to.equal(0);
+    expect(result.stdout)
+      .to.include('base.txt: absorb into base')
+      .and.include('child.txt: absorb into child');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
@@ -198,10 +201,14 @@ describe('absorb previews through the public CLI', function () {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
-  it('refuses an unsupported staged mode change instead of advertising a text-only amendment', () => {
+  it('retains an unsupported staged mode change instead of advertising a text-only amendment', () => {
     stageCorrection();
     fixture.git(['update-index', '--chmod=+x', 'base.txt']);
-    refuses(/regular text entry|unsupported/i);
+    const before = fixture.inspectionSnapshot();
+    const result = fixture.run(['absorb', '--dry-run', '--no-interactive']);
+    expect(result.status, result.stdout + result.stderr).to.equal(0);
+    expect(result.stdout).to.include('Retained base.txt:').and.include('mode');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
   it('refuses an unhandled content filter without invoking configured text conversion', () => {
