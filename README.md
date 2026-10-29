@@ -27,6 +27,8 @@ an log short --stack
 an submit --stack --draft
 ```
 
+For a shared prerequisite below selected branches, see [targeted insertion](docs/targeted-insertion.md).
+
 Stage changes with Git before `create` or `modify`, or choose the command's staging options deliberately. Use `an <command> --help` for details.
 
 Use `an split --by-file 'path/**'` or `an sp -f path` to extract selected committed files into a prerequisite while retaining the original branch. See [file splitting, history and recovery](docs/split.md).

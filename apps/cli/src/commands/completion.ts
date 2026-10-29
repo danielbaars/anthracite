@@ -85,12 +85,16 @@ const BRANCH_COMPLETING_COMMANDS = [
 ];
 
 function shouldCompleteBranch(current: string, argv: Arguments): boolean {
-  // Submit has two independent branch-valued selectors.
+  // Create and submit have branch-valued selectors; names remain literal.
   return (
     argv['_'].length <= 3 &&
     (BRANCH_COMPLETING_COMMANDS.includes('' + argv['_'][1]) ||
       (['submit', 's', 'ss'].includes('' + argv['_'][1]) &&
-        (argv.branch === current || argv['roles-branch'] === current))) &&
+        (argv.branch === current || argv['roles-branch'] === current)) ||
+      (['create', 'c'].includes('' + argv['_'][1]) &&
+        (argv.onto === current ||
+          (Array.isArray(argv['insert-child']) &&
+            argv['insert-child'].includes(current))))) &&
     typeof current === 'string' &&
     !current.startsWith('-')
   );

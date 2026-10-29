@@ -1,0 +1,226 @@
+{
+  "candidate": {
+    "base": "4eb9e8cee14d2a062cc4abf86f26899ab437e6f1",
+    "branch": "insert-ticket-53",
+    "frozenAtUTC": "2026-10-29T20:51:11.165455+00:00",
+    "sourceManifestSha256": "cc69801a6e7cb39827c0c056bb89fa2f484b6483c6417ccde4c51a880f4bbc0c",
+    "emittedManifestSha256": "c56b6abad31e19b8c8c9dcbfb9748ca52f30e624e5fb4966421a110dad21391f",
+    "nativeSha256": "c3ad360c51298d076e65f4d85b7f715874ee5b9335235a0043c465bf7d1325b5"
+  },
+  "artifacts": {
+    "source-manifest.json": {
+      "sha256": "cc69801a6e7cb39827c0c056bb89fa2f484b6483c6417ccde4c51a880f4bbc0c",
+      "retainedPath": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/source-manifest.json"
+    },
+    "emitted-manifest.json": {
+      "sha256": "c56b6abad31e19b8c8c9dcbfb9748ca52f30e624e5fb4966421a110dad21391f",
+      "retainedPath": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/emitted-manifest.json"
+    },
+    "source-candidate.tar.gz": {
+      "sha256": "7703759ea52cc93fc70a56b0ebe633b96ce9d9bacb658f8c6f146bcbb4968b60",
+      "retainedPath": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/source-candidate.tar.gz"
+    },
+    "node-compiled-candidate.tar.gz": {
+      "sha256": "634475092b95dd05cebfc570780c6ad3e4e1a2f810e8b2d0eb0313f1ae40b8c9",
+      "retainedPath": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/node-compiled-candidate.tar.gz"
+    },
+    "an-ticket-53": {
+      "sha256": "c3ad360c51298d076e65f4d85b7f715874ee5b9335235a0043c465bf7d1325b5",
+      "retainedPath": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/an-ticket-53"
+    },
+    "danielbaars-anthracite.tgz": {
+      "sha256": "fffd7e25a4d4015298714af2215fc70ee5176f0d24082a7f5e1326e9827aa1d8",
+      "retainedPath": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/danielbaars-anthracite.tgz"
+    },
+    "npm-candidate/package/cli.cjs": {
+      "sha256": "fd30dac5a89c736b2bd9f6651f014aaf274d894821ae230ad4eb78afe02c12e8",
+      "retainedPath": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/npm-candidate/package/cli.cjs"
+    }
+  },
+  "runtimes": {
+    "node": "24.19.0",
+    "bunCompiler": "1.3.14",
+    "hostNative": "Darwin 27.2.0 arm64"
+  },
+  "acceptance": {
+    "node": {
+      "passes": 193,
+      "pending": 0,
+      "failures": 0,
+      "files": [
+        {
+          "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+          "passes": 34,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+          "passes": 6,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+          "passes": 36,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+          "passes": 4,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+          "passes": 62,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+          "passes": 23,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+          "passes": 9,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+          "passes": 9,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+          "passes": 7,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+          "passes": 3,
+          "pending": 0,
+          "failures": 0
+        }
+      ]
+    },
+    "native": {
+      "passes": 193,
+      "pending": 0,
+      "failures": 0,
+      "files": [
+        {
+          "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+          "passes": 34,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+          "passes": 6,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+          "passes": 36,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+          "passes": 4,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+          "passes": 62,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+          "passes": 23,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+          "passes": 9,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+          "passes": 9,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+          "passes": 7,
+          "pending": 0,
+          "failures": 0
+        },
+        {
+          "file": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+          "passes": 3,
+          "pending": 0,
+          "failures": 0
+        }
+      ]
+    }
+  },
+  "installed": {
+    "passes": 7,
+    "failures": 0,
+    "pending": 0,
+    "newT14Sessions": 1,
+    "existingControls": 6,
+    "logSha256": "28dc4265386ebab5ff7f896f4083cb31581baee53e0632cc749b80fe6869dca2",
+    "wireSha256": "ef3cd89814e94542359dd7b52c696fae5d136d39762538db66866b4cfdc366e7"
+  },
+  "rawReportSha256": {
+    "node": {
+      "final/node/reports/commands__create_insert_child_cli.test.js.json": "ad08cb14aba0ed2406ab673dc3f88cfcfd0f0cb25bff7d8151dc464d0dc8511f",
+      "final/node/reports/commands__create_insert_child_recovery_cli.test.js.json": "307de07710e9e7a25fe3d6f2adc48575f35f05d84dfdce26ee45affe9f825636",
+      "final/node/reports/commands__create_insert_interactive_cli.test.js.json": "888d83fd6bf0690cab7cd0cb548ac5b56265f63fa0115b848f71314734fe9d12",
+      "final/node/reports/commands__create_insert_routes_cli.test.js.json": "10306db9ef95477e76e58a03486a1d641b8372cf487745dcd9b06f9fb99a3a6e",
+      "final/node/reports/commands__create_onto_cli.test.js.json": "76315e21d781ca3b29ce6dc31079fc3e3fc68ce777b7b547a87797bf32ba32b7",
+      "final/node/reports/commands__create_onto_insert_cli.test.js.json": "b6d3e659139682e5d7102cb8ab6f771a5bfcd8c8fb691230919b754ba99ebf68",
+      "final/node/reports/commands__create_onto_recovery_cli.test.js.json": "6046ab6f4c3d8a0908c8e3ef6820fdfbb15672e6b39b02a8713cfc1d5af2579e",
+      "final/node/reports/commands__freeze_structural_recovery_cli.test.js.json": "cc2373f5910a95d27e1b5b1b49f17bfd249e4e8db3030f1ea2b572b9b5b1ab14",
+      "final/node/reports/commands__modern_completion_cli.test.js.json": "96893325a6120654c44a757cc729f622d140acdd376df6614dcf42c319660d6e",
+      "final/node/shared-controls.json": "330b2c257c0d86affb06a7ed2837eae6dcb54f6dee49321d46e33484d7ca5010"
+    },
+    "native": {
+      "final/native/reports/commands__create_insert_child_cli.test.js.json": "3720c9c29c78955d58b56cc29c8a362f5072169a70c10c2c7d2f19c2aac779e6",
+      "final/native/reports/commands__create_insert_child_recovery_cli.test.js.json": "79112449ff4cd8cc7f905731b6e46d4e5179e7fb2ac0bccbfe04c3cb01fd17ad",
+      "final/native/reports/commands__create_insert_interactive_cli.test.js.json": "09a13030771977cf67883dca6217b0d4be143df61a5270a047371bf36f721168",
+      "final/native/reports/commands__create_insert_routes_cli.test.js.json": "285801d0d7d0f0010e8aad1ae89c106f98f29c38123cfb76eb987767e11dcee3",
+      "final/native/reports/commands__create_onto_cli.test.js.json": "c6cecef7f5bc18b7f40d1d950cf29514dc08e7774302718b2dd96edf299b7759",
+      "final/native/reports/commands__create_onto_insert_cli.test.js.json": "4e1bfe7a3324bdc16fed4f1acc4c6e5afb718e0d371dd42a7340f75bde271e50",
+      "final/native/reports/commands__create_onto_recovery_cli.test.js.json": "137d1a3b514a4c6d273c11e672722e1257a19fc4dc03461afe6c2c6d8da6d9f2",
+      "final/native/reports/commands__freeze_structural_recovery_cli.test.js.json": "86c20b709d035cb9c55d78c8f30eac75b7add3f0e15ba2fe1b1944b2c7725800",
+      "final/native/reports/commands__modern_completion_cli.test.js.json": "3195bac338aa318d6b528da64643b4d2d20f66d4d558f03830f4160464ae18da",
+      "final/native/shared-controls.json": "30d49fae1cd2813a58e527652234caaca3eef4a562e31f4757d9d875ba451e00"
+    }
+  },
+  "checks": {
+    "build": "passed",
+    "freshNoEmit": "passed",
+    "uncachedFullCliSourceAndFiveFeatureSdkTestLint": "passed",
+    "nativeBuild": "passed",
+    "npmBuild": "passed",
+    "diffCheck": "passed",
+    "postExecutionSourceAndEmittedManifestVerification": "matched"
+  },
+  "scope": "Focused acceptance only. No complete repository suite, full CI/native asset matrix, live GitHub mutations, release/publication or user installation/configuration change."
+}

@@ -21,6 +21,22 @@ before editing: follow the repository's workflow and inspect current state.
 Use an <command> --help for supported selectors and options; supply required
 choices explicitly because MCP execution is non-interactive.
 
+To insert a prerequisite below selected direct children, use an create shared
+--insert --onto parent --insert-child left --insert-child right -m "Prerequisite".
+The c alias and -i also work. Each --insert-child consumes one exact literal
+branch name, including commas or numeric-looking names, and requires active
+--insert. Children belong to --onto, otherwise the current branch or trunk.
+Explicit choices suppress the child menu; without them MCP and other
+noninteractive calls still move all children. In a terminal, multiple children
+open a menu with all initially selected and at least one required. Selection
+precedes staging and creation. Only chosen children and necessary descendants
+are mandatory for frozen/worktree checks; independent unselected arms stay put.
+A real replay conflict returns failure with retained work: resolve deliberately
+and use an continue in a fresh call. Saved selected scope is retained and pending
+mandatory participants are rechecked before --all stages or advances. Raw Git
+abort does not roll back inserted commits, parent changes or completed replays.
+Insertion does not push or change PRs; existing publication approval still applies.
+
 For review corrections, an absorb (alias ab) assigns staged ordinary text hunks
 to their exact original commits in the current downstack and replays mandatory
 descendants. Preview with an absorb --dry-run (ab -d), then explicitly apply with

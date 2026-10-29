@@ -1,0 +1,195 @@
+{
+  "messages": [
+    {
+      "jsonrpc": "2.0",
+      "id": 0,
+      "result": {
+        "protocolVersion": "2025-11-25",
+        "capabilities": {
+          "tools": {}
+        },
+        "serverInfo": {
+          "name": "anthracite",
+          "version": "0.3.0"
+        }
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "tools": [
+          {
+            "name": "run_an_cmd",
+            "description": "Execute this Anthracite build with literal arguments in an explicit directory. May mutate repositories and external services. Follow user/repository instructions and publication approvals.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "args": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                },
+                "cwd": {
+                  "type": "string",
+                  "description": "Absolute existing directory."
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Nonempty explanation; never executed."
+                }
+              },
+              "required": [
+                "args",
+                "cwd",
+                "why"
+              ],
+              "additionalProperties": false
+            },
+            "annotations": {
+              "readOnlyHint": false,
+              "destructiveHint": true,
+              "idempotentHint": false,
+              "openWorldHint": true
+            }
+          },
+          {
+            "name": "learn_an",
+            "description": "Read Anthracite workflow guidance. User and repository instructions and publication approvals remain authoritative.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+            },
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Anthracite workflow for agents\n\nAuthority: follow higher-priority user and repository instructions. Connection,\ndiscovery and this guide do not authorize staging, committing or publishing.\nHonor the owner's existing approval process for PR titles, descriptions and\npublication. Tool annotations are hints, not permission.\n\nA stack is a chain of tracked branches based on a trunk (usually main).\nDownstack means toward trunk; upstack means toward descendant branches.\nInspect first with an log, an info and ordinary git status/diff. Every\nrun_an_cmd request must supply an explicit absolute cwd for the intended project,\nan argument array (not a shell command) and a why explanation. For example:\n{\"args\": [\"log\"], \"cwd\": \"/absolute/project\", \"why\": \"Inspect the stack\"}\n\nUse the user's normal tooling to stage only intended changes (for example,\ngit add path/to/file). With staged work, an create feature -m \"Describe change\"\ncreates a branch and commit. On an existing branch, an modify -m \"Describe change\"\nupdates its commit and restacks affected descendants; an restack replays a stack\nonto its recorded parents. There is no universal requirement to create a branch\nbefore editing: follow the repository's workflow and inspect current state.\nUse an <command> --help for supported selectors and options; supply required\nchoices explicitly because MCP execution is non-interactive.\n\nTo insert a prerequisite below selected direct children, use an create shared\n--insert --onto parent --insert-child left --insert-child right -m \"Prerequisite\".\nThe c alias and -i also work. Each --insert-child consumes one exact literal\nbranch name, including commas or numeric-looking names, and requires active\n--insert. Children belong to --onto, otherwise the current branch or trunk.\nExplicit choices suppress the child menu; without them MCP and other\nnoninteractive calls still move all children. In a terminal, multiple children\nopen a menu with all initially selected and at least one required. Selection\nprecedes staging and creation. Only chosen children and necessary descendants\nare mandatory for frozen/worktree checks; independent unselected arms stay put.\nA real replay conflict returns failure with retained work: resolve deliberately\nand use an continue in a fresh call. Saved selected scope is retained and pending\nmandatory participants are rechecked before --all stages or advances. Raw Git\nabort does not roll back inserted commits, parent changes or completed replays.\nInsertion does not push or change PRs; existing publication approval still applies.\n\nFor review corrections, an absorb (alias ab) assigns staged ordinary text hunks\nto their exact original commits in the current downstack and replays mandatory\ndescendants. Preview with an absorb --dry-run (ab -d), then explicitly apply with\nan absorb --force (ab -f): MCP has no terminal confirmation. --all/-a includes\ntracked updates/deletions and existing staged entries, never untracked files;\n--patch/-p requires a real terminal and cannot run through MCP. Unsupported entry\nchanges and unmatched hunks remain staged and are reported. Absorb does not fetch,\npush or change PRs. Frozen targets are excluded; a frozen or occupied mandatory\nparticipant refuses before staging or rewriting, even with --force.\nAfter an owned absorb replay conflict, resolve and stage only the resolution,\nthen use an continue in the original worktree. Retained staged/unstaged input is\nkept separately until checked restoration. Ref/protection/worktree and Git\nenvironment checks also apply on continue before --all. Other failures report\nreached work and an executable guarded manual restoration path. Earlier amendments\nsurvive raw Git abort; do not promise rollback or retry a noncontinuable failure.\n\nFrozen branches and branches occupied in another worktree retain their existing\nprotections. Inspect the refusal and choose an allowed operation; do not bypass\nthese guards. After a conflict, inspect git status and the reported partial\nstate, resolve files deliberately and stage resolutions with normal tooling,\nthen use an continue. A disconnected or interrupted operation may need this\ninspection after reconnecting; interruption does not promise rollback.\nCancellation and timeout stop owned work without rollback. Cancelling queued\nwork prevents it from starting; disconnect discards the queue. Interruption does\nnot erase Git recovery data or authorize an automatic retry. Inspect actual refs,\nstaged changes and continuation before proceeding.\n\nSubmit deliberately with an submit (or an submit --help to inspect selectors).\nReviewer and assignee lists apply to every selected PR by default. Use\n--roles-branch <exact-local-branch> to add both lists only to that selected PR;\nthis does not narrow the submission scope selected by --branch or --stack. Preview\nwith --dry-run, then supply --reviewers and --assignees explicitly. Assignees accept\n@me for the authenticated GitHub user. Existing roles are retained; role options\ndo not publish drafts. After a failure, inspect confirmed and unattempted work\nbefore repeating the command.\nConfirm intended branches, PR metadata and the owner's publication approval\nbefore pushing or changing PRs. Anthracite reuses GitHub CLI credentials; it\nrequires no Graphite token or additional MCP account. Missing authentication is\nhandled by the normal CLI; learning and discovery do not log in or initialize a\nrepository automatically.\n"
+          }
+        ]
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"status\":\"success\",\"stdout\":\"[installed-insert a15e616] installed prerequisite\\n 1 file changed, 1 insertion(+)\\n create mode 100644 prerequisite.txt\\nCreated branch installed-insert at a15e616; inserting between base and chosen children: comma,\u7a7a\u9593.\\nRestacked comma,\u7a7a\u9593 on installed-insert.\\n\",\"stderr\":\"\",\"exitCode\":0,\"signal\":null,\"truncated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"status\":\"cli_error\",\"stdout\":\"\",\"stderr\":\"ERROR: Not tracked direct children of base: missing.\\n\",\"exitCode\":1,\"signal\":null,\"truncated\":false}"
+          }
+        ],
+        "isError": true
+      }
+    }
+  ],
+  "sentMessages": [
+    {
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2025-11-25",
+        "capabilities": {},
+        "clientInfo": {
+          "name": "anthracite-tests",
+          "version": "1.0.0"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 0
+    },
+    {
+      "method": "notifications/initialized",
+      "jsonrpc": "2.0"
+    },
+    {
+      "method": "tools/list",
+      "jsonrpc": "2.0",
+      "id": 1
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "learn_an",
+        "arguments": {}
+      },
+      "jsonrpc": "2.0",
+      "id": 2
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "c",
+            "installed-insert",
+            "-i",
+            "--onto",
+            "base",
+            "--insert-child",
+            "comma,\u7a7a\u9593",
+            "-m",
+            "installed prerequisite"
+          ],
+          "cwd": "/private/tmp/an-reorder-3cohki/repo",
+          "why": "Observe the fixture"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 3
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "run_an_cmd",
+        "arguments": {
+          "args": [
+            "create",
+            "invalid-insert",
+            "--onto",
+            "base",
+            "--insert",
+            "--insert-child",
+            "missing"
+          ],
+          "cwd": "/private/tmp/an-reorder-3cohki/repo",
+          "why": "Observe the fixture"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 4
+    }
+  ],
+  "errors": [],
+  "stderr": ""
+}

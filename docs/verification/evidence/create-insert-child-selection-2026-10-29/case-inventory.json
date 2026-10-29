@@ -1,0 +1,1987 @@
+{
+  "node": [
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI allows frozen read-only parents and aligned descendants for empty selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI inserts beneath one chosen arm and preserves an independent sibling",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI keeps repeated numeric, false, Unicode and comma names literal through c -i",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI preserves a frozen unselected arm while replaying the chosen arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI preserves a occupied unselected arm while replaying the chosen arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI preserves own author, full message, order and opaque selected metadata",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child ch* before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child chi before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child child --insert-child missing before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child child,tip before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child missing before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child other before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child tip before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child untracked before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child= before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --no-insert-child before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert-child child before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --no-insert --insert-child child before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a frozen chosen child even for an empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a frozen selected child before staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a frozen selected tip before staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a occupied chosen child even for an empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a occupied selected child before staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a occupied selected tip before staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a selector without insert before ordinary metadata repair",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI rejects explicit children on a childless chosen parent",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI resolves onto children from other without rewriting the departure arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI resolves onto children from sibling without rewriting the departure arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains all-over-patch input precedence for only the chosen arms",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains the collision input guard on a selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains the dirty input guard on a selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains the message input guard on a selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains the patch input guard on a selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes continues a legacy saved queue without an insert role or ownership field",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes continues a noninteractive selection in a terminal without a new menu and retains completed work, own history and local PR identity",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes excludes frozen occupied unselected and completed branches from pending recovery",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes refuses an occupied pending descendant before all stages or advances the active resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes retains independently changed unselected metadata while continuing the saved selection",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes retains staged and unstaged resolutions when a pending selected descendant becomes frozen",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal accepts every child by default without rewriting aligned tips for an empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal cancels before --all --patch input effects and preserves staged modes, unstaged, untracked and ignored bytes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal cancels before --all input effects and preserves staged modes, unstaged, untracked and ignored bytes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal cancels before --patch input effects and preserves staged modes, unstaged, untracked and ignored bytes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal cancels before editor input effects and preserves staged modes, unstaged, untracked and ignored bytes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal checks fresh necessary descendants rather than retaining the old replay closure",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal creates without a child menu above child with zero or one candidate",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal creates without a child menu above other with zero or one candidate",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal does not treat an independent unselected-arm ref change as a stale choice",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal honors the existing GRAPHITE_INTERACTIVE prompt-disabling policy",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal keeps --all precedence over --patch after choosing one child",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal keeps explicit child choices authoritative in a terminal",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal keeps zero choices in the menu with an actionable minimum and permits safe cancellation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal lets a frozen occupied sibling be deselected while preserving its dirty checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal permits choosing multiple children while leaving another independent arm untouched",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks Git operation created during selection before mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks ignored obstruction created during selection before mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks newly frozen mandatory child before all staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks newly frozen mandatory tip before all staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks tracked dirt created during selection before mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed checkout after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed chosen base after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed chosen parent after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed parent relationship after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed parent tip after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed source parent after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed source tip after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a chosen child tip changed during the menu, preserving the external tip and prepared input",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses newly occupied mandatory child before staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses newly occupied mandatory tip before staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal reparents the selected child and replays its descendants, preserving the unselected arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal retains all children when forced interaction has no usable terminal",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal retains all children without a menu with --no-interactive",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal retains all children without a menu with --quiet",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal suppresses only child selection when explicit choices still need a commit editor",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal uses --onto candidates from an unselected departure arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+      "fullTitle": "targeted insert public routes explains terminal and literal defaults in create/c help and offers child selectors in completion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+      "fullTitle": "targeted insert public routes keeps explicit scope quiet and retains an actionable invalid-child refusal",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+      "fullTitle": "targeted insert public routes selects a child through c -i from a subdirectory with global cwd false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+      "fullTitle": "targeted insert public routes selects a child through c -i from a subdirectory with global cwd true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI allows a normal untracked source without tracking or changing it",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI commits a staged sentinel plus only the chosen patch hunk in a real PTY",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI commits only staged work and preserves separate unfinished files",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI commits staged work above the selected local tip and persists navigation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI commits the staged version and retains the additional same-file edit",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from base at the base tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from base at the child tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from base at the main tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from base at the tip tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from child at the base tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates directly above a parent active in another worktree without touching that work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates from a linked current worktree while preserving the main checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI describes the onto option in public help",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI finishes an explicit interactive command in a real PTY without keyboard input",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI generates names from the message using existing user settings",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI gives all precedence over patch without requesting input",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI honors existing commit hook verification with no-verify false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI honors existing commit hook verification with no-verify true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI patches unstaged work without needing a staged sentinel",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI permits noninteractive patch with no selectable tracked changes and staged work false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI permits noninteractive patch with no selectable tracked changes and staged work true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves a dangling untracked symlink while committing selected work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves a hook edit to loose.txt without silently restoring its earlier contents",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves a hook edit to main.txt without silently restoring its earlier contents",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves all work when a staged edit blocks checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves all work when a unstaged edit blocks checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves all work when a untracked edit blocks checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves an active --apply rebase and its staged resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves an active --merge rebase and its staged resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves an ignored file that would be overwritten by the selected parent",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves an opaque untracked nested repository while committing selected work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves hook-created staging and reports the retained checkout after rejection",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves ordinary create name normalization with explicit parent false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves ordinary create name normalization with explicit parent true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves ordinary create patch behavior when nothing was staged",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses an unfinished merge even after its conflicts have been staged",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses detached HEAD without creating a branch or changing work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses missing noninteractive all input before changing preparation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses missing noninteractive commit input before changing the checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses noninteractive patch selection before any checkout or staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects a second create with the same name while preserving the first result",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects invalid or colliding new name . without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects invalid or colliding new name ..bad without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects invalid or colliding new name base without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects invalid or colliding new name other without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target (empty) without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target missing without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target origin/main without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target sha without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target tag-target without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target untracked without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI requires an onto value without silently falling back to the current parent",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI requires either a name or a message before any noninteractive mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores partial staging with all false on a rejecting hook in linked worktree false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores partial staging with all false on a rejecting hook in linked worktree true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores partial staging with all true on a rejecting hook in linked worktree false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores partial staging with all true on a rejecting hook in linked worktree true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores the original source on a rejecting hook with parent elsewhere false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores the original source on a rejecting hook with parent elsewhere true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI retains ignored hook output when returning to the source would overwrite it",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI stages all tracked and untracked work above the chosen parent",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI uses the local branch tip even when a tag has the same name",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI allows a read-only parent worktree without disturbing either prepared index",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI does not block an aligned deep worktree during an empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI inserts an empty branch without rewriting aligned children or losing dirty work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI inserts beneath both original children and restacks their descendants",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI inserts without children while retaining unfinished work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI permits an unchanged deep worktree when selected work already matches the parent with all false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI permits an unchanged deep worktree when selected work already matches the parent with all true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a descendant-only path collision before insertion with ignored false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a descendant-only path collision before insertion with ignored true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a differently cased ignored descendant path on a case-insensitive worktree",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a nested descendant path obstructed by a local case-variant symlink",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a nested descendant path obstructed by a local file",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a nested descendant path obstructed by a local symlink",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI refuses a child worktree before all staging, commit, or reparenting",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI refuses a child worktree even when inserting without a new commit",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI refuses a descendant worktree before creating its new ancestor",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI refuses remaining unstaged tracked work before committing an insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI restacks a departure child within the selected scope",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI restacks a departure tip within the selected scope",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI retains noncolliding untracked work during a necessary restack",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI retains the new commit and prior child commits on an actual insert conflict",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI stages all remaining work before safely restacking, with all taking patch precedence",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI still blocks a deep worktree that already needs restacking during empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI aborts only the active rebase and can retry the retained insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI continues the remaining branches after inspection and returns to the new branch",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI preserves remaining staged hook work after all was already selected",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI preserves remaining unstaged hook work after all was already selected",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI reports the created commit, completed restacks and retained progress at a real conflict",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI retains late hook ignored work with all false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI retains late hook ignored work with all true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI retains late hook untracked work with all true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI survives two successive conflict continuations with inspection and no duplicated commits",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+      "fullTitle": "frozen structural participants through the public CLI guards a mandatory parent-name change even when every selected tip is identical",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+      "fullTitle": "frozen structural participants through the public CLI rechecks insertion children after the commit hook and retains the created commit without changing their parents",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+      "fullTitle": "frozen structural participants through the public CLI rechecks move participants after a metadata transaction hook before installing the first parent change",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes keeps bounded abort available after freezing a structural conflict and retains completed parent changes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes ordinary fold keep=false preserves an active frozen resolution and really resumes after unfreeze",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes ordinary fold keep=true preserves an active frozen resolution and really resumes after unfreeze",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes reorder stack=false retains its plan through frozen active refusal and repeated real conflicts",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes reorder stack=true retains its plan through frozen active refusal and repeated real conflicts",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes retains the selected collapse and refuses a later newly frozen stack-fold replay before staging the active resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes stack fold keep=false preserves an active frozen resolution and really resumes after unfreeze",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes stack fold keep=true preserves an active frozen resolution and really resumes after unfreeze",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI keeps nested completion local to its registered group",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI offers actual options for canonical and alias forms outside Git without tools",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI refuses invalid completion cwd and policy values before external tools",
+      "status": "passed"
+    }
+  ],
+  "native": [
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI allows frozen read-only parents and aligned descendants for empty selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI inserts beneath one chosen arm and preserves an independent sibling",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI keeps repeated numeric, false, Unicode and comma names literal through c -i",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI preserves a frozen unselected arm while replaying the chosen arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI preserves a occupied unselected arm while replaying the chosen arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI preserves own author, full message, order and opaque selected metadata",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child ch* before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child chi before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child child --insert-child missing before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child child,tip before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child missing before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child other before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child tip before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child untracked before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --insert-child= before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert --no-insert-child before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --insert-child child before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses --no-insert --insert-child child before all staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a frozen chosen child even for an empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a frozen selected child before staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a frozen selected tip before staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a occupied chosen child even for an empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a occupied selected child before staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a occupied selected tip before staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI refuses a selector without insert before ordinary metadata repair",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI rejects explicit children on a childless chosen parent",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI resolves onto children from other without rewriting the departure arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI resolves onto children from sibling without rewriting the departure arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains all-over-patch input precedence for only the chosen arms",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains the collision input guard on a selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains the dirty input guard on a selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains the message input guard on a selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_cli.test.ts",
+      "fullTitle": "create --insert-child through the public CLI retains the patch input guard on a selected insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes continues a legacy saved queue without an insert role or ownership field",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes continues a noninteractive selection in a terminal without a new menu and retains completed work, own history and local PR identity",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes excludes frozen occupied unselected and completed branches from pending recovery",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes refuses an occupied pending descendant before all stages or advances the active resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes retains independently changed unselected metadata while continuing the saved selection",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_child_recovery_cli.test.ts",
+      "fullTitle": "selected insert recovery through fresh public CLI processes retains staged and unstaged resolutions when a pending selected descendant becomes frozen",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal accepts every child by default without rewriting aligned tips for an empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal cancels before --all --patch input effects and preserves staged modes, unstaged, untracked and ignored bytes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal cancels before --all input effects and preserves staged modes, unstaged, untracked and ignored bytes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal cancels before --patch input effects and preserves staged modes, unstaged, untracked and ignored bytes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal cancels before editor input effects and preserves staged modes, unstaged, untracked and ignored bytes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal checks fresh necessary descendants rather than retaining the old replay closure",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal creates without a child menu above child with zero or one candidate",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal creates without a child menu above other with zero or one candidate",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal does not treat an independent unselected-arm ref change as a stale choice",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal honors the existing GRAPHITE_INTERACTIVE prompt-disabling policy",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal keeps --all precedence over --patch after choosing one child",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal keeps explicit child choices authoritative in a terminal",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal keeps zero choices in the menu with an actionable minimum and permits safe cancellation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal lets a frozen occupied sibling be deselected while preserving its dirty checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal permits choosing multiple children while leaving another independent arm untouched",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks Git operation created during selection before mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks ignored obstruction created during selection before mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks newly frozen mandatory child before all staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks newly frozen mandatory tip before all staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal rechecks tracked dirt created during selection before mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed checkout after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed chosen base after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed chosen parent after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed parent relationship after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed parent tip after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed source parent after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a changed source tip after the menu without overwriting external work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses a chosen child tip changed during the menu, preserving the external tip and prepared input",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses newly occupied mandatory child before staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal refuses newly occupied mandatory tip before staging or creation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal reparents the selected child and replays its descendants, preserving the unselected arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal retains all children when forced interaction has no usable terminal",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal retains all children without a menu with --no-interactive",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal retains all children without a menu with --quiet",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal suppresses only child selection when explicit choices still need a commit editor",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_interactive_cli.test.ts",
+      "fullTitle": "create --insert child selection through a real terminal uses --onto candidates from an unselected departure arm",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+      "fullTitle": "targeted insert public routes explains terminal and literal defaults in create/c help and offers child selectors in completion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+      "fullTitle": "targeted insert public routes keeps explicit scope quiet and retains an actionable invalid-child refusal",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+      "fullTitle": "targeted insert public routes selects a child through c -i from a subdirectory with global cwd false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_insert_routes_cli.test.ts",
+      "fullTitle": "targeted insert public routes selects a child through c -i from a subdirectory with global cwd true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI allows a normal untracked source without tracking or changing it",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI commits a staged sentinel plus only the chosen patch hunk in a real PTY",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI commits only staged work and preserves separate unfinished files",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI commits staged work above the selected local tip and persists navigation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI commits the staged version and retains the additional same-file edit",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from base at the base tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from base at the child tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from base at the main tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from base at the tip tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates an empty tracked branch from child at the base tip",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates directly above a parent active in another worktree without touching that work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI creates from a linked current worktree while preserving the main checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI describes the onto option in public help",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI finishes an explicit interactive command in a real PTY without keyboard input",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI generates names from the message using existing user settings",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI gives all precedence over patch without requesting input",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI honors existing commit hook verification with no-verify false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI honors existing commit hook verification with no-verify true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI patches unstaged work without needing a staged sentinel",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI permits noninteractive patch with no selectable tracked changes and staged work false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI permits noninteractive patch with no selectable tracked changes and staged work true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves a dangling untracked symlink while committing selected work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves a hook edit to loose.txt without silently restoring its earlier contents",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves a hook edit to main.txt without silently restoring its earlier contents",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves all work when a staged edit blocks checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves all work when a unstaged edit blocks checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves all work when a untracked edit blocks checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves an active --apply rebase and its staged resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves an active --merge rebase and its staged resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves an ignored file that would be overwritten by the selected parent",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves an opaque untracked nested repository while committing selected work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves hook-created staging and reports the retained checkout after rejection",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves ordinary create name normalization with explicit parent false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves ordinary create name normalization with explicit parent true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI preserves ordinary create patch behavior when nothing was staged",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses an unfinished merge even after its conflicts have been staged",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses detached HEAD without creating a branch or changing work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses missing noninteractive all input before changing preparation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses missing noninteractive commit input before changing the checkout",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI refuses noninteractive patch selection before any checkout or staging",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects a second create with the same name while preserving the first result",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects invalid or colliding new name . without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects invalid or colliding new name ..bad without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects invalid or colliding new name base without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects invalid or colliding new name other without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target (empty) without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target missing without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target origin/main without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target sha without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target tag-target without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI rejects non-parent target untracked without mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI requires an onto value without silently falling back to the current parent",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI requires either a name or a message before any noninteractive mutation",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores partial staging with all false on a rejecting hook in linked worktree false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores partial staging with all false on a rejecting hook in linked worktree true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores partial staging with all true on a rejecting hook in linked worktree false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores partial staging with all true on a rejecting hook in linked worktree true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores the original source on a rejecting hook with parent elsewhere false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI restores the original source on a rejecting hook with parent elsewhere true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI retains ignored hook output when returning to the source would overwrite it",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI stages all tracked and untracked work above the chosen parent",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_cli.test.ts",
+      "fullTitle": "create --onto through the public CLI uses the local branch tip even when a tag has the same name",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI allows a read-only parent worktree without disturbing either prepared index",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI does not block an aligned deep worktree during an empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI inserts an empty branch without rewriting aligned children or losing dirty work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI inserts beneath both original children and restacks their descendants",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI inserts without children while retaining unfinished work",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI permits an unchanged deep worktree when selected work already matches the parent with all false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI permits an unchanged deep worktree when selected work already matches the parent with all true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a descendant-only path collision before insertion with ignored false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a descendant-only path collision before insertion with ignored true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a differently cased ignored descendant path on a case-insensitive worktree",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a nested descendant path obstructed by a local case-variant symlink",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a nested descendant path obstructed by a local file",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI protects a nested descendant path obstructed by a local symlink",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI refuses a child worktree before all staging, commit, or reparenting",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI refuses a child worktree even when inserting without a new commit",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI refuses a descendant worktree before creating its new ancestor",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI refuses remaining unstaged tracked work before committing an insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI restacks a departure child within the selected scope",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI restacks a departure tip within the selected scope",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI retains noncolliding untracked work during a necessary restack",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI retains the new commit and prior child commits on an actual insert conflict",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI stages all remaining work before safely restacking, with all taking patch precedence",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+      "fullTitle": "create --onto --insert through the public CLI still blocks a deep worktree that already needs restacking during empty insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI aborts only the active rebase and can retry the retained insertion",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI continues the remaining branches after inspection and returns to the new branch",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI preserves remaining staged hook work after all was already selected",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI preserves remaining unstaged hook work after all was already selected",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI reports the created commit, completed restacks and retained progress at a real conflict",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI retains late hook ignored work with all false",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI retains late hook ignored work with all true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI retains late hook untracked work with all true",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/create_onto_recovery_cli.test.ts",
+      "fullTitle": "create --onto insert recovery through the public CLI survives two successive conflict continuations with inspection and no duplicated commits",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+      "fullTitle": "frozen structural participants through the public CLI guards a mandatory parent-name change even when every selected tip is identical",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+      "fullTitle": "frozen structural participants through the public CLI rechecks insertion children after the commit hook and retains the created commit without changing their parents",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+      "fullTitle": "frozen structural participants through the public CLI rechecks move participants after a metadata transaction hook before installing the first parent change",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes keeps bounded abort available after freezing a structural conflict and retains completed parent changes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes ordinary fold keep=false preserves an active frozen resolution and really resumes after unfreeze",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes ordinary fold keep=true preserves an active frozen resolution and really resumes after unfreeze",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes reorder stack=false retains its plan through frozen active refusal and repeated real conflicts",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes reorder stack=true retains its plan through frozen active refusal and repeated real conflicts",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes retains the selected collapse and refuses a later newly frozen stack-fold replay before staging the active resolution",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes stack fold keep=false preserves an active frozen resolution and really resumes after unfreeze",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes stack fold keep=true preserves an active frozen resolution and really resumes after unfreeze",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI keeps nested completion local to its registered group",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI offers actual options for canonical and alias forms outside Git without tools",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "status": "passed"
+    },
+    {
+      "file": "apps/cli/test/commands/modern_completion_cli.test.ts",
+      "fullTitle": "modern completion through the public CLI refuses invalid completion cwd and policy values before external tools",
+      "status": "passed"
+    }
+  ],
+  "installed-npm": [
+    {
+      "file": "apps/cli/test/commands/mcp_execution_cli.test.ts",
+      "fullTitle": "MCP command execution through stdio scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels",
+      "status": "passed",
+      "durationMs": 1889,
+      "role": "existing installed control"
+    },
+    {
+      "file": "apps/cli/test/commands/mcp_execution_cli.test.ts",
+      "fullTitle": "MCP command execution through stdio scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments",
+      "status": "passed",
+      "durationMs": 1333,
+      "role": "existing installed control"
+    },
+    {
+      "file": "apps/cli/test/commands/mcp_execution_cli.test.ts",
+      "fullTitle": "MCP command execution through stdio scenario 17: discovers targeted insertion, preserves the unselected arm and refuses invalid children in one installed session",
+      "status": "passed",
+      "durationMs": 6003,
+      "role": "T14"
+    },
+    {
+      "file": "apps/cli/test/commands/mcp_execution_cli.test.ts",
+      "fullTitle": "MCP command execution through stdio scenario 16: previews and continues a multi-target construction conflict with retained local work in one usable same-installation session",
+      "status": "passed",
+      "durationMs": 43301,
+      "role": "existing installed control"
+    },
+    {
+      "file": "apps/cli/test/commands/mcp_lifecycle_cli.test.ts",
+      "fullTitle": "MCP cancellation and shutdown through stdio scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "status": "passed",
+      "durationMs": 5341,
+      "role": "existing installed control"
+    },
+    {
+      "file": "apps/cli/test/commands/frozen_submit_cli.test.ts",
+      "fullTitle": "frozen publication through the public CLI publishes an editable child on an existing frozen base while preserving protected and outside-scope PRs",
+      "status": "passed",
+      "durationMs": 7236,
+      "role": "existing installed control"
+    },
+    {
+      "file": "apps/cli/test/commands/frozen_submit_cli.test.ts",
+      "fullTitle": "frozen publication through the public CLI rechecks after the original configured pre-push hook freezes the branch before any remote ref publication",
+      "status": "passed",
+      "durationMs": 2632,
+      "role": "existing installed control"
+    }
+  ]
+}
