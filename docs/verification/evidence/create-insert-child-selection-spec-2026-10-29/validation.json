@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "scope": "Document and existing-evidence validation only; no new selector implementation or acceptance test was executed.",
+  "checks": {
+    "requiredTemplateSections": 7,
+    "sequentialUserStories": 54,
+    "plannedAcceptanceCases": 14,
+    "existingResearchManifestVerified": true,
+    "sourceReleaseAndResearchCommitPinned": true,
+    "localLinksExist": true,
+    "implementationDecisionsContainNoSpecificSourcePathsOrCodeSnippets": true,
+    "measuredAndAuthoredContractsDistinguished": true,
+    "approvedTestBoundaryRecorded": true,
+    "fullCIStarted": false
+  },
+  "newDocumentPaths": [
+    "docs/specs/create-insert-child-selection.md",
+    "docs/research/create-insert-child-selection-spec-2026-10-29.md"
+  ]
+}

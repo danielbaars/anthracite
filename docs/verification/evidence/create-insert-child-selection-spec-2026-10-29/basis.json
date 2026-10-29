@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-29",
+  "baseline": {
+    "researchCommit": "62dda56149dea36f47bd47aa34f3886ea1a1962e",
+    "sourceReleaseCommit": "9fa53077d9c7a52bc2b903799ab9b7a74da2d8ba",
+    "runtimeArtifacts": {
+      "Graphite1.8.6": {
+        "sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+        "path": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt"
+      },
+      "Charcoal1.0.1": {
+        "sha256": "387c7be6bba3a50405ceae1997876ce13b9894855f73c6f3f394d7ec489fc33a",
+        "path": "/opt/homebrew/Cellar/charcoal/1.0.1/bin/ch"
+      },
+      "Anthracite0.3.0": {
+        "sha256": "3953a3b7c1085c8258284146451808c3511a18b9caeb441e22e0ba652915d839",
+        "path": "$NODE_PREFIX/lib/node_modules/@danielbaars/anthracite/cli.cjs"
+      }
+    },
+    "acceptedScenarioRecords": 30,
+    "additionalGraphiteRestackCalls": 1,
+    "additionalFreshContinueCalls": 2,
+    "referenceHashes": {
+      "observations.json": "f491004237b91a5f8d1be6f2aeeadfededafb51ad561da325cf83eadbb726355",
+      "source-comparison.json": "3ea8002d577d2dafe99916611fd186b93129f7e58da28bc732017cf06314aa5f",
+      "manifest.json": "e1bd7ba098e6da5a084333dc680374ba7bc8611cc87ea03c65ff077a1037d369",
+      "validation.json": "66ddce86a4e85a0d997cfd27659b321abdb79fdca935efba507a3b96a006fe69"
+    }
+  },
+  "approval": {
+    "status": "approved",
+    "source": "Owner message in this chat approving the proposed test boundary and requesting a full English specification and GitHub issue.",
+    "primarySeam": "Built public CLI, real local Git, independent Git expectations; real PTY for child selection.",
+    "behaviorGroups": [
+      "Interactive selection and cancellation before staging or creation.",
+      "Exact explicit child choices and early invalid-request refusal.",
+      "Chosen-parent/current-parent and onto scope with selected descendants and unselected branch preservation.",
+      "Existing mandatory protection, independent protected siblings and changed-state rechecks.",
+      "Real selected conflict and fresh-process continuation without scope expansion.",
+      "Existing defaults, aliases, staging options and normal interaction/cwd policy."
+    ],
+    "runtimes": [
+      "Node",
+      "host-native"
+    ],
+    "deliverySmoke": "One isolated installed npm/MCP session.",
+    "fullCI": false
+  },
+  "authoredContract": {
+    "option": "--insert-child",
+    "value": "one exact nonempty local direct-child branch name per occurrence",
+    "repeatable": true,
+    "requiresActiveInsert": true,
+    "exactDuplicates": "deduplicate",
+    "withoutExplicitChoices": "terminal multiple-child menu; otherwise existing automatic/all-child rules",
+    "selectionTiming": "before staging, checkout, branch/commit creation or insertion parent changes",
+    "status": "specified; not implemented or accepted by current baseline CLI"
+  },
+  "unchangedPolicies": [
+    "Mandatory frozen/worktree/path/source protection.",
+    "Current all-over-patch precedence and existing patch/dirty-work refusals.",
+    "Current immediate nonzero conflict outcome and bounded continuation/abort semantics.",
+    "Existing MCP tools, envelope and publication authority.",
+    "Legacy saved-state compatibility; no metadata migration."
+  ],
+  "acceptanceCaseIds": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T6",
+    "T7",
+    "T8",
+    "T9",
+    "T10",
+    "T11",
+    "T12",
+    "T13",
+    "T14"
+  ],
+  "publicationScope": "Specification, supporting note and evidence only; no implementation, PR, tests or CI."
+}
