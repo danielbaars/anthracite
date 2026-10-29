@@ -138,10 +138,11 @@ async function graphiteInternal(
   const git = composeGit();
   try {
     if (canonicalName === 'continue') assertAbsorbContinuationEnvironment();
-    const absorbContinuation =
-      canonicalName === 'continue' &&
-      continueConfigFactory.load(undefined, { preserveInvalid: true }).data
-        .absorb !== undefined;
+    const continueData =
+      canonicalName === 'continue'
+        ? continueConfigFactory.load(undefined, { preserveInvalid: true }).data
+        : undefined;
+    const absorbContinuation = continueData?.absorb !== undefined;
     if (canonicalName === 'split' && args['by-file'] !== undefined)
       preflightFileSplit(args);
     if (isZeroDepthLog && !git.getCurrentBranchName())
@@ -164,20 +165,13 @@ async function graphiteInternal(
           : undefined;
       if (source) assertBranchEditable(source);
     }
-    if (canonicalName === 'continue') {
-      assertAbsorbContinuationAvailable(
-        continueConfigFactory.load(undefined, { preserveInvalid: true }).data
-      );
-    }
-    if (canonicalName === 'continue' && git.rebaseInProgress()) {
+    if (continueData) assertAbsorbContinuationAvailable(continueData);
+    if (continueData && git.rebaseInProgress()) {
       const activeBranch = git.getRebaseHead();
       if (activeBranch) assertBranchEditable(activeBranch);
-      const data = continueConfigFactory.load(undefined, {
-        preserveInvalid: true,
-      }).data;
-      assertContinuationBranchesEditable(data, activeBranch);
-      assertDeleteRecoveryEditable(data.delete);
-      assertFileSplitAvailable(data);
+      assertContinuationBranchesEditable(continueData, activeBranch);
+      assertDeleteRecoveryEditable(continueData.delete);
+      assertFileSplitAvailable(continueData);
     }
     await preflightLifecycle(args, canonicalName, git);
     const contextLite = initContextLite({
@@ -205,7 +199,8 @@ async function graphiteInternal(
         const structural =
           ['move', 'fold', 'reorder'].includes(canonicalName) ||
           (canonicalName === 'split' && args['by-file'] !== undefined) ||
-          (canonicalName === 'create' && args.insert === true);
+          (canonicalName === 'create' && args.insert === true) ||
+          (continueData?.insert !== undefined && git.rebaseInProgress());
         const preserveStructuralMetadata =
           structural &&
           repoConfigFactory
