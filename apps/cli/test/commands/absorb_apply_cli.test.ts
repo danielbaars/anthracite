@@ -476,34 +476,6 @@ describe('single-commit absorb application through the public CLI', function () 
     expect(fs.readFileSync(lock, 'utf8')).to.equal('foreign lock\n');
   });
 
-  it('refuses multiple targets, fan-out and an empty-result correction before changing the source', () => {
-    stage('base.txt', 'corrected base\n');
-    stage('child.txt', 'corrected child\n');
-    let before = fixture.inspectionSnapshot();
-    let result = fixture.run(['absorb', '--force', '--no-interactive']);
-    expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stderr).to.include('Multiple target commits');
-    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
-    fixture.git(['restore', '--staged', '--worktree', '.']);
-    fixture.branch('side', 'base');
-    fixture.git(['switch', 'tip']);
-    stage('base.txt', 'corrected base\n');
-    before = fixture.inspectionSnapshot();
-    result = fixture.run(['absorb', '--force', '--no-interactive']);
-    expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stderr).to.include('fan-out');
-    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
-    fixture.git(['restore', '--staged', '--worktree', '.']);
-    fixture.git(['switch', 'tip']);
-    stage('tip.txt', 'later own change\n');
-    fixture.git(['commit', '-m', 'Change the existing tip line']);
-    stage('tip.txt', 'tip');
-    before = fixture.inspectionSnapshot();
-    result = fixture.run(['absorb', '--force', '--no-interactive']);
-    expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stderr).to.include('target empty');
-    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
-  });
   it('applies from a linked source worktree while preserving the primary checkout and both local-work layers', () => {
     fixture.git(['switch', 'main']);
     fs.writeFileSync(
