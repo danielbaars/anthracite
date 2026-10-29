@@ -1,0 +1,82 @@
+{
+  "branch": "tests",
+  "head": "fdea457e66dcbda28e958a055db46ed15d7a2acb",
+  "branches": {
+    "api": {
+      "oid": "fbdc541df50fd0906a0e605f832e047571a66151",
+      "tree": "7b2148875e1a1c16850db946876fdc20852c9d98",
+      "parents": [
+        "f933db65736b2fb27e12954a340c346c0ef0ba32"
+      ],
+      "subject": "Introduce API",
+      "files": {
+        "README.md": "QmFzZWxpbmUgZG9jdW1lbnRhdGlvbgo=",
+        "src/api.txt": "YXBpLW1vZGU9aW5pdGlhbAphcGktY29udGV4dC0wCmFwaS1jb250ZXh0LTEKYXBpLWNvbnRleHQtMgphcGktY29udGV4dC0zCmFwaS1jb250ZXh0LTQKYXBpLWNvbnRleHQtNQphcGktY29udGV4dC02CmFwaS1jb250ZXh0LTcKYXBpLWNvbnRleHQtOAphcGktY29udGV4dC05CmFwaS1jb250ZXh0LTEwCmFwaS1jb250ZXh0LTExCmFwaS1jb250ZXh0LTEyCmFwaS1jb250ZXh0LTEzCmFwaS1jb250ZXh0LTE0CmFwaS1jb250ZXh0LTE1CmFwaS1jb250ZXh0LTE2CmFwaS1jb250ZXh0LTE3CmFwaS1jb250ZXh0LTE4CmFwaS1jb250ZXh0LTE5Cg==",
+        "src/refactor.txt": "aGVscGVyLW1vZGU9aW5pdGlhbApoZWxwZXItY29udGV4dC0wCmhlbHBlci1jb250ZXh0LTEKaGVscGVyLWNvbnRleHQtMgpoZWxwZXItY29udGV4dC0zCmhlbHBlci1jb250ZXh0LTQKaGVscGVyLWNvbnRleHQtNQpoZWxwZXItY29udGV4dC02CmhlbHBlci1jb250ZXh0LTcKaGVscGVyLWNvbnRleHQtOApoZWxwZXItY29udGV4dC05CmhlbHBlci1jb250ZXh0LTEwCmhlbHBlci1jb250ZXh0LTExCmhlbHBlci1jb250ZXh0LTEyCmhlbHBlci1jb250ZXh0LTEzCmhlbHBlci1jb250ZXh0LTE0CmhlbHBlci1jb250ZXh0LTE1CmhlbHBlci1jb250ZXh0LTE2CmhlbHBlci1jb250ZXh0LTE3CmhlbHBlci1jb250ZXh0LTE4CmhlbHBlci1jb250ZXh0LTE5Cg=="
+      }
+    },
+    "main": {
+      "oid": "eb7efeeaf5b100a786e19ccaf4fb8824fadabd3c",
+      "tree": "c3f3ea4953522da9f4288c3da801905126ac45d3",
+      "parents": [],
+      "subject": "Baseline",
+      "files": {
+        "README.md": "QmFzZWxpbmUgZG9jdW1lbnRhdGlvbgo="
+      }
+    },
+    "other": {
+      "oid": "ed70140c5165e16e0f22d0b51a5118451cf474af",
+      "tree": "5f0b827b8fab9b0ac33452c7d782edfbe9475e60",
+      "parents": [
+        "eb7efeeaf5b100a786e19ccaf4fb8824fadabd3c"
+      ],
+      "subject": "Unrelated work",
+      "files": {
+        "README.md": "QmFzZWxpbmUgZG9jdW1lbnRhdGlvbgo=",
+        "other.txt": "VW5yZWxhdGVkIHN0YWNrCg=="
+      }
+    },
+    "refactor": {
+      "oid": "f933db65736b2fb27e12954a340c346c0ef0ba32",
+      "tree": "2f29dfe017f719ed04bc50556122bfec722502a6",
+      "parents": [
+        "eb7efeeaf5b100a786e19ccaf4fb8824fadabd3c"
+      ],
+      "subject": "Introduce helper",
+      "files": {
+        "README.md": "QmFzZWxpbmUgZG9jdW1lbnRhdGlvbgo=",
+        "src/refactor.txt": "aGVscGVyLW1vZGU9aW5pdGlhbApoZWxwZXItY29udGV4dC0wCmhlbHBlci1jb250ZXh0LTEKaGVscGVyLWNvbnRleHQtMgpoZWxwZXItY29udGV4dC0zCmhlbHBlci1jb250ZXh0LTQKaGVscGVyLWNvbnRleHQtNQpoZWxwZXItY29udGV4dC02CmhlbHBlci1jb250ZXh0LTcKaGVscGVyLWNvbnRleHQtOApoZWxwZXItY29udGV4dC05CmhlbHBlci1jb250ZXh0LTEwCmhlbHBlci1jb250ZXh0LTExCmhlbHBlci1jb250ZXh0LTEyCmhlbHBlci1jb250ZXh0LTEzCmhlbHBlci1jb250ZXh0LTE0CmhlbHBlci1jb250ZXh0LTE1CmhlbHBlci1jb250ZXh0LTE2CmhlbHBlci1jb250ZXh0LTE3CmhlbHBlci1jb250ZXh0LTE4CmhlbHBlci1jb250ZXh0LTE5Cg=="
+      }
+    },
+    "tests": {
+      "oid": "fdea457e66dcbda28e958a055db46ed15d7a2acb",
+      "tree": "95325ee5ec23ea2156a770e42f3831621f40a36a",
+      "parents": [
+        "fbdc541df50fd0906a0e605f832e047571a66151"
+      ],
+      "subject": "Add tests",
+      "files": {
+        "README.md": "QmFzZWxpbmUgZG9jdW1lbnRhdGlvbgo=",
+        "src/api.txt": "YXBpLW1vZGU9aW5pdGlhbAphcGktY29udGV4dC0wCmFwaS1jb250ZXh0LTEKYXBpLWNvbnRleHQtMgphcGktY29udGV4dC0zCmFwaS1jb250ZXh0LTQKYXBpLWNvbnRleHQtNQphcGktY29udGV4dC02CmFwaS1jb250ZXh0LTcKYXBpLWNvbnRleHQtOAphcGktY29udGV4dC05CmFwaS1jb250ZXh0LTEwCmFwaS1jb250ZXh0LTExCmFwaS1jb250ZXh0LTEyCmFwaS1jb250ZXh0LTEzCmFwaS1jb250ZXh0LTE0CmFwaS1jb250ZXh0LTE1CmFwaS1jb250ZXh0LTE2CmFwaS1jb250ZXh0LTE3CmFwaS1jb250ZXh0LTE4CmFwaS1jb250ZXh0LTE5Cg==",
+        "src/refactor.txt": "aGVscGVyLW1vZGU9aW5pdGlhbApoZWxwZXItY29udGV4dC0wCmhlbHBlci1jb250ZXh0LTEKaGVscGVyLWNvbnRleHQtMgpoZWxwZXItY29udGV4dC0zCmhlbHBlci1jb250ZXh0LTQKaGVscGVyLWNvbnRleHQtNQpoZWxwZXItY29udGV4dC02CmhlbHBlci1jb250ZXh0LTcKaGVscGVyLWNvbnRleHQtOApoZWxwZXItY29udGV4dC05CmhlbHBlci1jb250ZXh0LTEwCmhlbHBlci1jb250ZXh0LTExCmhlbHBlci1jb250ZXh0LTEyCmhlbHBlci1jb250ZXh0LTEzCmhlbHBlci1jb250ZXh0LTE0CmhlbHBlci1jb250ZXh0LTE1CmhlbHBlci1jb250ZXh0LTE2CmhlbHBlci1jb250ZXh0LTE3CmhlbHBlci1jb250ZXh0LTE4CmhlbHBlci1jb250ZXh0LTE5Cg==",
+        "tests.txt": "VGVzdCBjb3ZlcmFnZQo="
+      }
+    }
+  },
+  "status": "M  src/api.txt\nM  src/refactor.txt\n",
+  "staged": "diff --git a/src/api.txt b/src/api.txt\nindex 1b21114..4e9eab4 100644\n--- a/src/api.txt\n+++ b/src/api.txt\n@@ -1,4 +1,4 @@\n-api-mode=initial\n+api-mode=reviewed\n api-context-0\n api-context-1\n api-context-2\ndiff --git a/src/refactor.txt b/src/refactor.txt\nindex 0e3eb4f..0ae36fd 100644\n--- a/src/refactor.txt\n+++ b/src/refactor.txt\n@@ -1,4 +1,4 @@\n-helper-mode=initial\n+helper-mode=reviewed\n helper-context-0\n helper-context-1\n helper-context-2\n",
+  "unstaged": "",
+  "indexSha256": "17853ba996f66b56c391d10323bc3dcaaef1874e2847a1187975faf0f5738897",
+  "worktreeFiles": {
+    "tests.txt": "8a718456fb44ebce0b91052dcfd589735e92dec3c8776a59798038d8e56cd486",
+    "README.md": "7139ab46160869d6536fb594723cfa2fa9217c89a5897d9b8a217d1366b759d7",
+    "src/refactor.txt": "ab5f1ab0e3606db8ce14d5f310b6404aa727978e6aa53ed7c966144e5d07855e",
+    "src/api.txt": "fb7cd57e0c30f6c8301611019319f52dbdeb3cd031c76549e1bb71ceb7de91f9"
+  },
+  "metadata": {
+    ".graphite_repo_config": "ewogICJ0cnVuayI6ICJtYWluIgp9",
+    ".graphite_cache_persist": "ewogICJzaGEiOiAiOGQ3NDg4NjY1N2FiYmJmZjAzYWFiMTg0N2QxOTJjNjdlYmEwMDllZiIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImViN2VmZWVhZjViMTAwYTc4NmUxOWNjYWY0ZmI4ODI0ZmFkYWJkM2MiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJyZWZhY3RvciIsCiAgICAgICAgICAib3RoZXIiCiAgICAgICAgXQogICAgICB9CiAgICBdLAogICAgWwogICAgICAib3RoZXIiLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICJlZDcwMTQwYzUxNjVlMTZlMGYyMmQwYjUxYTUxMTg0NTFjZjQ3NGFmIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZWI3ZWZlZWFmNWIxMDBhNzg2ZTE5Y2NhZjRmYjg4MjRmYWRhYmQzYyIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgInJlZmFjdG9yIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICJmOTMzZGI2NTczNmIyZmIyN2UxMjk1NGEzNDBjMzQ2YzBlZjBiYTMyIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAiYXBpIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJlYjdlZmVlYWY1YjEwMGE3ODZlMTljY2FmNGZiODgyNGZhZGFiZDNjIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYXBpIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInJlZmFjdG9yIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiZmJkYzU0MWRmNTBmZDA5MDZhMGU2MDVmODMyZTA0NzU3MWE2NjE1MSIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgInRlc3RzIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmOTMzZGI2NTczNmIyZmIyN2UxMjk1NGEzNDBjMzQ2YzBlZjBiYTMyIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAidGVzdHMiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYXBpIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiZmRlYTQ1N2U2NmRjYmRhMjhlOTU4YTA1NWRiNDZlZDE1ZDdhMmFjYiIsCiAgICAgICAgImNoaWxkcmVuIjogW10sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICJmYmRjNTQxZGY1MGZkMDkwNmEwZTYwNWY4MzJlMDQ3NTcxYTY2MTUxIgogICAgICB9CiAgICBdCiAgXQp9"
+  },
+  "worktree": {},
+  "unexpectedTools": ""
+}
