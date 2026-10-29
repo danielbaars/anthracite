@@ -1,7 +1,14 @@
 import yargs from 'yargs';
 
-import { applyAbsorb } from '../actions/absorb_apply';
-import { planAbsorb, printAbsorbPlan } from '../actions/absorb_plan';
+import {
+  applyAbsorb,
+  assertAbsorbApplicationAvailable,
+} from '../actions/absorb_apply';
+import {
+  inspectAbsorbSource,
+  planAbsorb,
+  printAbsorbPlan,
+} from '../actions/absorb_plan';
 import {
   checkAbsorbSource,
   prepareAbsorbStaging,
@@ -85,13 +92,15 @@ export const handler = async (
       throw new PreconditionsFailedError(
         'Absorb --patch requires supported terminal interaction, even with --force.'
       );
+    if (!argv.all && !argv.patch) inspectAbsorbSource(context);
     const staging =
       argv.all || argv.patch
         ? prepareAbsorbStaging(context, argv.patch)
         : undefined;
     try {
-      const plan = staging?.plan ?? planAbsorb(context);
       const checkSource = checkAbsorbSource();
+      const plan = staging?.plan ?? planAbsorb(context);
+      if (!staging) assertAbsorbApplicationAvailable(plan, context);
       if (argv['dry-run']) {
         if (!argv.quiet) printAbsorbPlan(plan);
         return;

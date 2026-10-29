@@ -82,7 +82,7 @@ describe('absorb previews through the public CLI', function () {
     ]).to.deep.equal(before);
   });
 
-  it('preserves opaque caches, foreign locks, ignored work and dirty index stat data', () => {
+  it('reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data', () => {
     stageCorrection();
     const common = path.join(fixture.repo, '.git');
     for (const name of [
@@ -101,7 +101,8 @@ describe('absorb previews through the public CLI', function () {
     fs.utimesSync(file, stat.atime, new Date(stat.mtimeMs + 50000));
     const before = fixture.inspectionSnapshot();
     const result = fixture.run(['absorb', '--dry-run', '--no-interactive']);
-    expect(result.status, result.stdout + result.stderr).to.equal(0);
+    expect(result.status, result.stdout + result.stderr).to.equal(1);
+    expect(result.stderr).to.include('lock');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 

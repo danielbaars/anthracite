@@ -12,6 +12,7 @@ import {
   withAbsorbIndex,
 } from './absorb_git';
 import { assertAbsorbInputSupported } from './absorb_input';
+import { assertAbsorbApplicationAvailable } from './absorb_apply';
 import { planAbsorb, AbsorbPlan, inspectAbsorbSource } from './absorb_plan';
 
 export function prepareAbsorbStaging(
@@ -24,7 +25,6 @@ export function prepareAbsorbStaging(
 } {
   // Check source policy and conversions before a private add can invoke filters.
   inspectAbsorbSource(context);
-  assertStagingSupported();
   const root = getAbsorbRoot();
   const indexPath = path.resolve(
     root,
@@ -32,6 +32,7 @@ export function prepareAbsorbStaging(
   );
   assertStagingLocksAvailable(indexPath);
   const checkSource = checkAbsorbSource();
+  assertStagingSupported();
   const directory = fs.mkdtempSync(
     path.resolve(
       root,
@@ -47,9 +48,13 @@ export function prepareAbsorbStaging(
     if (patch) process.on('SIGINT', interrupted);
     try {
       runAbsorbGit(
-        patch
-          ? ['-c', 'interactive.diffFilter=', 'add', '--patch']
-          : ['add', '--update', '--', '.'],
+        [
+          '-c',
+          'core.fsmonitor=false',
+          ...(patch
+            ? ['-c', 'interactive.diffFilter=', 'add', '--patch']
+            : ['add', '--update', '--', '.']),
+        ],
         {
           env: { ...process.env, GIT_INDEX_FILE: index },
           ...(patch ? { stdio: 'inherit' as const } : {}),
@@ -58,7 +63,11 @@ export function prepareAbsorbStaging(
     } finally {
       if (patch) process.removeListener('SIGINT', interrupted);
     }
-    const plan = withAbsorbIndex(index, () => planAbsorb(context));
+    const plan = withAbsorbIndex(index, () => {
+      const selected = planAbsorb(context);
+      assertAbsorbApplicationAvailable(selected, context);
+      return selected;
+    });
     return {
       plan,
       cleanup,
@@ -146,6 +155,7 @@ function snapshotSource(): string {
     refs: readAbsorbGit(['for-each-ref', '--format=%(refname) %(objectname)']),
     head: readAbsorbGit(['symbolic-ref', 'HEAD']),
     files: paths.map((file) => {
+      assertOrdinaryParents(root, file);
       const location = path.join(root, file);
       const stat = fs.lstatSync(location, { throwIfNoEntry: false });
       return !stat
@@ -157,4 +167,21 @@ function snapshotSource(): string {
         : [file, 'other', stat.mode];
     }),
   });
+}
+
+function assertOrdinaryParents(root: string, file: string): void {
+  let parent = root;
+  for (const part of file.split('/').slice(0, -1)) {
+    parent = path.join(parent, part);
+    const stat = fs.lstatSync(parent, { throwIfNoEntry: false });
+    if (!stat) break;
+    if (stat.isSymbolicLink())
+      throw new PreconditionsFailedError(
+        `Absorb cannot follow a parent-directory symlink for ${file}.`
+      );
+    if (!stat.isDirectory())
+      throw new PreconditionsFailedError(
+        `Absorb requires ordinary parent directories for ${file}.`
+      );
+  }
 }
