@@ -1,0 +1,49 @@
+{
+  "kind": "bounded observations from a passing public CLI fixture",
+  "cli": [
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "absorb",
+        "--dry-run",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 0,
+      "signal": null,
+      "stdout": "a-child.txt: absorb into child, commit 82c20210847d88590a75a8a983c50317fa32b22b (source line 1)\nz-base.txt: absorb into base, commit dcfd05cc86464d2c2a8e5337de92416c5cd460d1 (source line 1)\nAbsorbable hunks: 2. Retained hunks: 0. Retained entries: 0.\nRequired replay: base, child, tip.\nDry run complete; no changes applied.\n",
+      "stderr": ""
+    }
+  ],
+  "gitObservations": [
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "61a6912f659c79f12734fd5b751b373ed9b667b6"
+    },
+    {
+      "args": [
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "tip"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "--git-path",
+        "index"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ".git/index"
+    }
+  ],
+  "captureSha256": "5f82feb55e4b7d92bdd508ea07bb154e3b79065f222b9df7a064f59f035f7dbb",
+  "gitCaptureSha256": "c946c326cfb0ccf7bb10d5c6439b1ba7893d41aff79ae15a787ffdda686ce068"
+}

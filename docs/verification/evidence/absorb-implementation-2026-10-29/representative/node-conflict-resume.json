@@ -1,0 +1,143 @@
+{
+  "kind": "bounded observations from a passing public CLI fixture",
+  "cli": [
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "absorb",
+        "--force",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb stopped. Completed: base, child. Active: replaying tip. Pending: tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-EndNgP. Content conflict during mandatory replay.\nResolve the active Git replay, stage only its resolutions, then run an continue in this worktree. Original leftovers and unstaged input remain isolated. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: '$NODE' '$FIXTURE/repo/.git/an-absorb-EndNgP/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n"
+    },
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "continue",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 0,
+      "signal": null,
+      "stdout": "Retained main.txt: No eligible feature commit owns this correction.\nAbsorbed 1 hunk(s) into base. Completed replay: base, child, tip. Retained input restored.\n",
+      "stderr": ""
+    },
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "continue",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: No Anthracite operation to continue.\n"
+    }
+  ],
+  "gitObservations": [
+    {
+      "args": [
+        "show",
+        "base:base.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "corrected ancestor"
+    },
+    {
+      "args": [
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "base.txt"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "base"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "3c978f386e11cb5f525985ef3a9c55c526700871"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "base"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "3c978f386e11cb5f525985ef3a9c55c526700871"
+    },
+    {
+      "args": [
+        "show",
+        "tip:base.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "deliberate child resolution"
+    },
+    {
+      "args": [
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "child"
+    },
+    {
+      "args": [
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "main.txt"
+    },
+    {
+      "args": [
+        "show",
+        ":main.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "retained baseline"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "65323d5a390dde43d9e6a6ef655dc51309aca6fd"
+    },
+    {
+      "args": [
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "child"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "--git-path",
+        "index"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ".git/index"
+    }
+  ],
+  "captureSha256": "9efc1b0ef9fdd432a109e08979f5cb8a192b6c5be32f0b80fd8133abe74b6312",
+  "gitCaptureSha256": "8f2194471e32342393554ecbb36975c58a39cf84e361f936e1d11fe893767a83"
+}

@@ -1,0 +1,198 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 10,
+    "passes": 10,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-29T10:39:45.696Z",
+    "end": "2026-10-29T10:42:50.799Z",
+    "duration": 185103
+  },
+  "tests": [
+    {
+      "title": "applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "fullTitle": "multi-target absorb through the public CLI applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 16534,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "fullTitle": "multi-target absorb through the public CLI keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 27852,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "fullTitle": "multi-target absorb through the public CLI replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 32499,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "fullTitle": "multi-target absorb through the public CLI retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 9336,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an intermediate side-arm collision before staging or publishing any target",
+      "fullTitle": "multi-target absorb through the public CLI refuses an intermediate side-arm collision before staging or publishing any target",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 3960,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "fullTitle": "multi-target absorb through the public CLI keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 12537,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "fullTitle": "multi-target absorb through the public CLI retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 13407,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "fullTitle": "multi-target absorb through the public CLI retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 24706,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preflights frozen and occupied side-arm participants before any target or input publication",
+      "fullTitle": "multi-target absorb through the public CLI preflights frozen and occupied side-arm participants before any target or input publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 6714,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves source work written by a later selected branch publication hook",
+      "fullTitle": "multi-target absorb through the public CLI preserves source work written by a later selected branch publication hook",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 13346,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "fullTitle": "multi-target absorb through the public CLI applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 16534,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "fullTitle": "multi-target absorb through the public CLI keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 27852,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "fullTitle": "multi-target absorb through the public CLI replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 32499,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "fullTitle": "multi-target absorb through the public CLI retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 9336,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an intermediate side-arm collision before staging or publishing any target",
+      "fullTitle": "multi-target absorb through the public CLI refuses an intermediate side-arm collision before staging or publishing any target",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 3960,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "fullTitle": "multi-target absorb through the public CLI keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 12537,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "fullTitle": "multi-target absorb through the public CLI retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 13407,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "fullTitle": "multi-target absorb through the public CLI retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 24706,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preflights frozen and occupied side-arm participants before any target or input publication",
+      "fullTitle": "multi-target absorb through the public CLI preflights frozen and occupied side-arm participants before any target or input publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 6714,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves source work written by a later selected branch publication hook",
+      "fullTitle": "multi-target absorb through the public CLI preserves source work written by a later selected branch publication hook",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "duration": 13346,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

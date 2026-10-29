@@ -1,0 +1,299 @@
+{
+  "candidateCommit": "6014d46d13413fec2d60b436af3fd6cfe51e1e13",
+  "sourceManifestSha256": "3d66d251f05639fe438f6072cf905d9af9b38b856b9c02dc9e7bf295d8e75fd1",
+  "emittedManifestSha256": "84da90c1fabbd1b4e9341628e8fcfd28fa5a31be5ece4d7d1fdcc0de0f43211d",
+  "nativeSha256": "0dd13805d0f27fdd3648809d1b8260f040bfdfe8276c22061cb2efc2b5c98930",
+  "runtimeCounts": {
+    "node": {
+      "featureExecutions": 119,
+      "legacyExecutions": 16,
+      "successfulExecutions": 135,
+      "uniqueFileFullTitles": 134,
+      "failures": 0,
+      "pending": 0
+    },
+    "native": {
+      "featureExecutions": 119,
+      "legacyExecutions": 16,
+      "successfulExecutions": 135,
+      "uniqueFileFullTitles": 134,
+      "failures": 0,
+      "pending": 0
+    }
+  },
+  "exactCounterParity": true,
+  "collectedCoreCounterMatches": true,
+  "reports": [
+    {
+      "runtime": "node",
+      "report": "node/commands__absorb_apply_cli.test.js.json",
+      "rawSha256": "a6bdb4941883b1483fdcc414b14868b013eacc55cb7bed7a06ebab25a7f2dbe6",
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 15,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:34:07.314Z",
+        "end": "2026-10-29T10:38:45.202Z",
+        "duration": 277888
+      }
+    },
+    {
+      "runtime": "node",
+      "report": "node/commands__absorb_continue_cli.test.js.json",
+      "rawSha256": "1b03824e4a9750c6abfddce1c2f25db654a96981726c1637c2b2361caf031676",
+      "stats": {
+        "suites": 1,
+        "tests": 12,
+        "passes": 12,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:34:07.314Z",
+        "end": "2026-10-29T10:40:35.649Z",
+        "duration": 388335
+      }
+    },
+    {
+      "runtime": "node",
+      "report": "node/commands__absorb_input_cli.test.js.json",
+      "rawSha256": "6eaa532973d50156196792b7a8a516e248193ed13272b7cb93f5bac7f64578d6",
+      "stats": {
+        "suites": 1,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:38:45.298Z",
+        "end": "2026-10-29T10:41:11.215Z",
+        "duration": 145917
+      }
+    },
+    {
+      "runtime": "node",
+      "report": "node/commands__absorb_multi_cli.test.js.json",
+      "rawSha256": "13edd90f2084744e2141957e8ea20dcd520e6f76b78c13d4cd45000d648ef8e7",
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:40:35.745Z",
+        "end": "2026-10-29T10:44:01.480Z",
+        "duration": 205735
+      }
+    },
+    {
+      "runtime": "node",
+      "report": "node/commands__absorb_preview_cli.test.js.json",
+      "rawSha256": "9e2e30125eee3d11f445a2e0a5dde5a1cd2a49be963b8545d675920045bc907a",
+      "stats": {
+        "suites": 1,
+        "tests": 19,
+        "passes": 19,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:41:11.346Z",
+        "end": "2026-10-29T10:42:40.674Z",
+        "duration": 89328
+      }
+    },
+    {
+      "runtime": "node",
+      "report": "node/commands__absorb_selection_cli.test.js.json",
+      "rawSha256": "d27c32c41f2f731029b0c15d65e830454abf9ae3f178811413bee7f0961b35ee",
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:42:40.808Z",
+        "end": "2026-10-29T10:45:01.897Z",
+        "duration": 141089
+      }
+    },
+    {
+      "runtime": "node",
+      "report": "node/commands__absorb_staging_cli.test.js.json",
+      "rawSha256": "9853a5d33fde6a1c88935b1c5fb04b64522db1eb64a75699b7995eb76dd4268b",
+      "stats": {
+        "suites": 1,
+        "tests": 44,
+        "passes": 44,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:44:01.608Z",
+        "end": "2026-10-29T10:47:56.808Z",
+        "duration": 235200
+      }
+    },
+    {
+      "runtime": "node",
+      "report": "node/legacy.json",
+      "rawSha256": "8500a7ef3d095a39cb92fe3cdd827251eac8b4fc81dcacfd8383dbaf6d273630",
+      "stats": {
+        "suites": 10,
+        "tests": 16,
+        "passes": 16,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:34:55.610Z",
+        "end": "2026-10-29T10:37:02.327Z",
+        "duration": 126717
+      }
+    },
+    {
+      "runtime": "native",
+      "report": "native/commands__absorb_apply_cli.test.js.json",
+      "rawSha256": "99d5ec947d416de6c83f42e3f51e2bf8c67d44bc7c1e444d860214b25478567e",
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 15,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:34:08.968Z",
+        "end": "2026-10-29T10:38:16.929Z",
+        "duration": 247961
+      }
+    },
+    {
+      "runtime": "native",
+      "report": "native/commands__absorb_continue_cli.test.js.json",
+      "rawSha256": "ef95c98b4495811b4f4bf99c486226b24dac823a3ca86d3a3b2cf870b13b504e",
+      "stats": {
+        "suites": 1,
+        "tests": 12,
+        "passes": 12,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:34:08.968Z",
+        "end": "2026-10-29T10:39:45.564Z",
+        "duration": 336596
+      }
+    },
+    {
+      "runtime": "native",
+      "report": "native/commands__absorb_input_cli.test.js.json",
+      "rawSha256": "542161e06d22138590c72bd7ad1da0884deea35a42ae0f3c02b9f4874b735031",
+      "stats": {
+        "suites": 1,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:38:17.062Z",
+        "end": "2026-10-29T10:40:21.070Z",
+        "duration": 124008
+      }
+    },
+    {
+      "runtime": "native",
+      "report": "native/commands__absorb_multi_cli.test.js.json",
+      "rawSha256": "b49573056d6ada89d19ce7dfefb0dd2f0571890ced320c72e56cfd8535f212e5",
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:39:45.696Z",
+        "end": "2026-10-29T10:42:50.799Z",
+        "duration": 185103
+      }
+    },
+    {
+      "runtime": "native",
+      "report": "native/commands__absorb_preview_cli.test.js.json",
+      "rawSha256": "4239bee10f108898af9b7927f1151005456eaa3838cde8d89c85f6e9aad594f3",
+      "stats": {
+        "suites": 1,
+        "tests": 19,
+        "passes": 19,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:40:21.200Z",
+        "end": "2026-10-29T10:41:42.608Z",
+        "duration": 81408
+      }
+    },
+    {
+      "runtime": "native",
+      "report": "native/commands__absorb_selection_cli.test.js.json",
+      "rawSha256": "dcb7edfb87eba7bf4aa9bfcf197df7a5ef458f0b95ba2741f11380cb632830bd",
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:41:42.701Z",
+        "end": "2026-10-29T10:43:46.069Z",
+        "duration": 123368
+      }
+    },
+    {
+      "runtime": "native",
+      "report": "native/commands__absorb_staging_cli.test.js.json",
+      "rawSha256": "fb180230f7914fc059e1f7826d3daa1a7d224bdf0884b5a6e50256f273e7c3da",
+      "stats": {
+        "suites": 1,
+        "tests": 44,
+        "passes": 44,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:42:50.931Z",
+        "end": "2026-10-29T10:46:28.636Z",
+        "duration": 217705
+      }
+    },
+    {
+      "runtime": "native",
+      "report": "native/legacy.json",
+      "rawSha256": "38f28a59ce003d42cd4e5b5dbe46b8fb1b6f2e774020fe9476edea2d7be18522",
+      "stats": {
+        "suites": 10,
+        "tests": 16,
+        "passes": 16,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T10:34:57.191Z",
+        "end": "2026-10-29T10:36:39.299Z",
+        "duration": 102108
+      }
+    }
+  ],
+  "installed": {
+    "T16Executions": 1,
+    "T16Passed": true,
+    "originalPackageSelection": {
+      "passed": 5,
+      "failed": 1,
+      "failure": "Existing numeric-zero hook could not spawn ps under sandbox (EPERM), before cancellation."
+    },
+    "numericZeroRetry": {
+      "passed": 1,
+      "failed": 0,
+      "sameTarball": true,
+      "outsideSandbox": true
+    },
+    "qualification": "No second T16 execution and no all-six green rerun are claimed."
+  },
+  "checks": {
+    "build": "passed",
+    "noEmit": "passed",
+    "uncachedRelevantSourceAndTestLint": "passed",
+    "diffCheck": "passed",
+    "creditsAndLicenseUnchanged": "passed",
+    "historySinceProductBaseline": "linear"
+  },
+  "scope": {
+    "fullRepositorySuite": false,
+    "fullCI": false,
+    "liveGitHub": false,
+    "releasePublication": false,
+    "globalInstallOrClientChanges": false
+  }
+}

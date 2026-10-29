@@ -1,0 +1,42 @@
+[
+  {
+    "runtime": "node",
+    "category": "preview",
+    "originalCaptureName": "an-reorder-07tmVE"
+  },
+  {
+    "runtime": "node",
+    "category": "conflict-resume",
+    "originalCaptureName": "an-reorder-3keKzV"
+  },
+  {
+    "runtime": "node",
+    "category": "environment-refusal",
+    "originalCaptureName": "an-reorder-X5WEQr"
+  },
+  {
+    "runtime": "node",
+    "category": "manual-restoration",
+    "originalCaptureName": "an-reorder-vfgVkB"
+  },
+  {
+    "runtime": "native",
+    "category": "preview",
+    "originalCaptureName": "an-reorder-3UNvO1"
+  },
+  {
+    "runtime": "native",
+    "category": "conflict-resume",
+    "originalCaptureName": "an-reorder-44iUrB"
+  },
+  {
+    "runtime": "native",
+    "category": "manual-restoration",
+    "originalCaptureName": "an-reorder-F6Acz7"
+  },
+  {
+    "runtime": "native",
+    "category": "environment-refusal",
+    "originalCaptureName": "an-reorder-ofaqHU"
+  }
+]

@@ -1,0 +1,1905 @@
+{
+  "node": [
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "durationMs": 24071,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "durationMs": 33273,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses redirected indexes before planning or writing any source state",
+      "durationMs": 658,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses working-tree conversions before constructing commits or cleaning input",
+      "durationMs": 3227,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "durationMs": 10560,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "durationMs": 13496,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "durationMs": 27342,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "durationMs": 12428,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "durationMs": 10572,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "durationMs": 9177,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI applies a root-relative correction from a nested directory with a literal Unicode path",
+      "durationMs": 28946,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses frozen or occupied mandatory participants before input or refs change",
+      "durationMs": 4773,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses an opaque existing cache lock without deleting it or changing input",
+      "durationMs": 3049,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "durationMs": 29614,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "durationMs": 22888,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "durationMs": 30889,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "durationMs": 32290,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI preserves a deliberate intermediate resolution inherited by the original checkout",
+      "durationMs": 46577,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "durationMs": 33549,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "durationMs": 24327,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "durationMs": 33422,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "durationMs": 35592,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI refuses occupied and foreign-worktree continuation before staging a resolution",
+      "durationMs": 30148,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI retains both committed conflict work and original staged input when final remainders collide",
+      "durationMs": 38327,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "durationMs": 11702,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "durationMs": 30497,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI guards the actual trunk parent against an external hook move before first-feature publication",
+      "durationMs": 7921,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "durationMs": 29234,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI refuses non-UTF8 physical symlink targets before private staging or publication",
+      "durationMs": 11213,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI retains an absent unchanged gitlink without reading its commit object as a blob",
+      "durationMs": 29779,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI refuses a changed submodule checkout or staged pointer before real or private staging",
+      "durationMs": 15697,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "durationMs": 15359,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "durationMs": 28790,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "durationMs": 17674,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "durationMs": 32503,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "durationMs": 36934,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "durationMs": 10405,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI refuses an intermediate side-arm collision before staging or publishing any target",
+      "durationMs": 4208,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "durationMs": 14295,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "durationMs": 14452,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "durationMs": 28232,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI preflights frozen and occupied side-arm participants before any target or input publication",
+      "durationMs": 6631,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI preserves source work written by a later selected branch publication hook",
+      "durationMs": 13539,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI identifies the original downstack commit and replay chain without effects",
+      "durationMs": 3093,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses saved recovery from a linked worktree without cleaning either index",
+      "durationMs": 880,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "durationMs": 2979,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "durationMs": 2683,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses a frozen mandatory descendant instead of silently skipping it",
+      "durationMs": 2211,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI reports a frozen target and a trunk-owned correction as retained input",
+      "durationMs": 4731,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI explains a no-input preview, requires force for application and previews wider input",
+      "durationMs": 5835,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI lets an empty tracked caller inspect an eligible ancestor",
+      "durationMs": 3997,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "durationMs": 2035,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses an unhandled content filter without invoking configured text conversion",
+      "durationMs": 1780,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses trunk source before repair or cleanup",
+      "durationMs": 969,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses detached source before repair or cleanup",
+      "durationMs": 979,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses untracked source before repair or cleanup",
+      "durationMs": 938,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses stale source before repair or cleanup",
+      "durationMs": 1165,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses merge source before repair or cleanup",
+      "durationMs": 1208,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses unmerged source before repair or cleanup",
+      "durationMs": 880,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses active source before repair or cleanup",
+      "durationMs": 622,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses uninitialized source before repair or cleanup",
+      "durationMs": 441,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses outside source before repair or cleanup",
+      "durationMs": 437,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI selects exact original commits for two files in different branches",
+      "durationMs": 3553,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI assigns separated hunks in one file to distinct original commits",
+      "durationMs": 11588,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI reports every retained unsupported entry alongside an eligible hunk",
+      "durationMs": 3806,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI keeps distinct interior and current commit destinations within one branch",
+      "durationMs": 8322,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI selects the most recent commit that changed an area instead of file introduction",
+      "durationMs": 5967,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI translates independent line insertions and deletions through a newer prefix insertion",
+      "durationMs": 11713,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI retains a correction whose historical duplicate placement is ambiguous",
+      "durationMs": 9986,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI does not assign a canonical inserted copy when either repeated copy could be original",
+      "durationMs": 9867,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI commutes repeated lines when history still forces their unique order",
+      "durationMs": 11119,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "durationMs": 8660,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI stops ownership at an empty frozen anchor while permitting editable work above it",
+      "durationMs": 4008,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI plans mandatory replay parent-first regardless of selected path ordering",
+      "durationMs": 11430,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI includes descendants above a middle caller and refuses an occupied side arm",
+      "durationMs": 7026,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI previews tracked-only all through ab -a -d without changing the raw index or work",
+      "durationMs": 3656,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI applies tracked-only all and retains staged new entries and untracked bytes",
+      "durationMs": 23392,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI shows the complete plan once and preserves the original index on declined confirmation",
+      "durationMs": 2952,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI uses real Git patch selection and absorbs only the accepted hunk while retaining prior staged work",
+      "durationMs": 9929,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI preserves original state when terminal selection is canceled",
+      "durationMs": 1404,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI preserves original state when terminal confirmation is canceled",
+      "durationMs": 3045,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses active all and patch before staging or effects",
+      "durationMs": 371,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses dry-run and patch before staging or effects",
+      "durationMs": 365,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses closed stdin without force before staging or effects",
+      "durationMs": 557,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses quiet without force before staging or effects",
+      "durationMs": 538,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses explicit noninteractive without force before staging or effects",
+      "durationMs": 556,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses forced patch without a terminal before staging or effects",
+      "durationMs": 535,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an unknown option before staging or effects",
+      "durationMs": 353,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an operand before staging or effects",
+      "durationMs": 389,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not activate false staging options or false force during a safe explicit preview",
+      "durationMs": 1831,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI publishes tracked deletion as staging-only and never claims an amendment",
+      "durationMs": 3490,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI applies staged input after one terminal confirmation and returns the caller checkout",
+      "durationMs": 6829,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses a source edit made during confirmation without overwriting that external edit or the original index",
+      "durationMs": 2621,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses unstaged content filters before all preview can run them",
+      "durationMs": 1314,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses unstaged content filters before patch selection can run them",
+      "durationMs": 1131,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all before publishing its index with a frozen descendant",
+      "durationMs": 2228,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all before publishing its index with a occupied descendant",
+      "durationMs": 2406,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all before publishing its index with a foreign cache lock",
+      "durationMs": 1079,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all before publishing its index with a foreign index lock",
+      "durationMs": 1062,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an intermediate untracked file collision before all publishes its index",
+      "durationMs": 3202,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an intermediate untracked file collision before all previews an unsafe plan",
+      "durationMs": 3346,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI describes absorb/ab and its options through help and completion outside Git without external tools",
+      "durationMs": 888,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI projects root-relative spaces and Unicode paths from the effective subdirectory cwd",
+      "durationMs": 3312,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI suppresses routine no-input and staging-only progress in quiet mode",
+      "durationMs": 6967,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with saved recovery before private staging",
+      "durationMs": 391,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with split index before private staging",
+      "durationMs": 932,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with intent-to-add before private staging",
+      "durationMs": 912,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with skip-worktree before private staging",
+      "durationMs": 912,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with assume-unchanged before private staging",
+      "durationMs": 919,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an all preview blocked by foreign .graphite_cache_lock while preserving its bytes",
+      "durationMs": 1245,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an all preview blocked by foreign index.lock while preserving its bytes",
+      "durationMs": 1179,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI keeps the original raw index when all patch hunks are declined",
+      "durationMs": 3047,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not execute configured external diff, textconv or patch diff filters during private selection",
+      "durationMs": 2899,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI checks mandatory participants from the prospective all input rather than replaced staged hunks",
+      "durationMs": 2040,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses a tracked parent-directory symlink before staging or following it for source fingerprints",
+      "durationMs": 1311,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not publish accepted private patch hunks when final confirmation is declined",
+      "durationMs": 2833,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI publishes all from a linked source worktree without staging or checking out its primary sibling",
+      "durationMs": 9043,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not execute an fsmonitor hook during private all preview",
+      "durationMs": 2555,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not execute an fsmonitor hook during private patch selection",
+      "durationMs": 2560,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/modify_patch_cli.test.ts",
+      "title": "modify patch selection through the public CLI modify commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "durationMs": 3272,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/modify_patch_cli.test.ts",
+      "title": "modify patch selection through the public CLI m commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "durationMs": 2915,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI refuses required patch input before writes: create patched --patch --message patch --no-interactive",
+      "durationMs": 593,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI refuses required patch input before writes: create patched --onto other --patch --message patch --interactive",
+      "durationMs": 620,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI refuses required patch input before writes: modify --commit --patch --message patch --quiet",
+      "durationMs": 854,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI refuses required patch input before writes: modify --patch --no-interactive",
+      "durationMs": 1012,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: create all-patch --all --patch --message all work --quiet",
+      "durationMs": 1140,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: modify --commit --all --patch --message all work --quiet",
+      "durationMs": 6943,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: modify --all --patch --quiet",
+      "durationMs": 6446,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI performs deterministic move and fold at quiet without altering unrelated branches",
+      "durationMs": 7252,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/continue/continue.test.ts",
+      "title": "(${scene}): continue While not during a rebase Will error",
+      "durationMs": 523,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/continue/continue.test.ts",
+      "title": "(${scene}): continue While not during a rebase Will error",
+      "durationMs": 583,
+      "status": "passed",
+      "occurrence": 2
+    },
+    {
+      "file": "apps/cli/test/commands/split_file_recovery_cli.test.ts",
+      "title": "file split recovery through real public processes retains actionable quiet conflict guidance and continues without extracting twice",
+      "durationMs": 23968,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/modern_interactive_rebase_cli.test.ts",
+      "title": "modern interactive branch rebase through the public CLI resolves a real interactive conflict in fresh cont processes",
+      "durationMs": 18254,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/stack/restack_continue.test.ts",
+      "title": "(BasicScene): restack continue Can continue a stack restack with single merge conflict",
+      "durationMs": 5848,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/stack/restack_continue.test.ts",
+      "title": "(TrailingProdScene): restack continue Can continue a stack restack with single merge conflict",
+      "durationMs": 6077,
+      "status": "passed",
+      "occurrence": 1
+    }
+  ],
+  "native": [
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "durationMs": 20907,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "durationMs": 27914,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses redirected indexes before planning or writing any source state",
+      "durationMs": 601,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses working-tree conversions before constructing commits or cleaning input",
+      "durationMs": 2690,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "durationMs": 9705,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "durationMs": 13001,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "durationMs": 23401,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "durationMs": 11153,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "durationMs": 10905,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "durationMs": 9046,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI applies a root-relative correction from a nested directory with a literal Unicode path",
+      "durationMs": 24672,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses frozen or occupied mandatory participants before input or refs change",
+      "durationMs": 4440,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI refuses an opaque existing cache lock without deleting it or changing input",
+      "durationMs": 2888,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "durationMs": 26556,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_apply_cli.test.ts",
+      "title": "single-commit absorb application through the public CLI applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "durationMs": 20172,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "durationMs": 26557,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "durationMs": 27580,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI preserves a deliberate intermediate resolution inherited by the original checkout",
+      "durationMs": 37375,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "durationMs": 29425,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "durationMs": 22494,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "durationMs": 28654,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "durationMs": 31037,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI refuses occupied and foreign-worktree continuation before staging a resolution",
+      "durationMs": 26133,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI retains both committed conflict work and original staged input when final remainders collide",
+      "durationMs": 32275,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "durationMs": 11210,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "durationMs": 26366,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_continue_cli.test.ts",
+      "title": "absorb continuation through the public CLI guards the actual trunk parent against an external hook move before first-feature publication",
+      "durationMs": 7373,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "durationMs": 24882,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI refuses non-UTF8 physical symlink targets before private staging or publication",
+      "durationMs": 9898,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI retains an absent unchanged gitlink without reading its commit object as a blob",
+      "durationMs": 25260,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI refuses a changed submodule checkout or staged pointer before real or private staging",
+      "durationMs": 13603,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "durationMs": 12053,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_input_cli.test.ts",
+      "title": "absorb input compatibility through the public CLI preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "durationMs": 24116,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "durationMs": 16534,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "durationMs": 27852,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "durationMs": 32499,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "durationMs": 9336,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI refuses an intermediate side-arm collision before staging or publishing any target",
+      "durationMs": 3960,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "durationMs": 12537,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "durationMs": 13407,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "durationMs": 24706,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI preflights frozen and occupied side-arm participants before any target or input publication",
+      "durationMs": 6714,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_multi_cli.test.ts",
+      "title": "multi-target absorb through the public CLI preserves source work written by a later selected branch publication hook",
+      "durationMs": 13346,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI identifies the original downstack commit and replay chain without effects",
+      "durationMs": 3134,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses saved recovery from a linked worktree without cleaning either index",
+      "durationMs": 807,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "durationMs": 2939,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "durationMs": 2565,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses a frozen mandatory descendant instead of silently skipping it",
+      "durationMs": 2411,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI reports a frozen target and a trunk-owned correction as retained input",
+      "durationMs": 4528,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI explains a no-input preview, requires force for application and previews wider input",
+      "durationMs": 5617,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI lets an empty tracked caller inspect an eligible ancestor",
+      "durationMs": 4006,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "durationMs": 1954,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses an unhandled content filter without invoking configured text conversion",
+      "durationMs": 1755,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses trunk source before repair or cleanup",
+      "durationMs": 900,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses detached source before repair or cleanup",
+      "durationMs": 906,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses untracked source before repair or cleanup",
+      "durationMs": 976,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses stale source before repair or cleanup",
+      "durationMs": 1024,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses merge source before repair or cleanup",
+      "durationMs": 944,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses unmerged source before repair or cleanup",
+      "durationMs": 852,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses active source before repair or cleanup",
+      "durationMs": 536,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses uninitialized source before repair or cleanup",
+      "durationMs": 338,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_preview_cli.test.ts",
+      "title": "absorb previews through the public CLI refuses outside source before repair or cleanup",
+      "durationMs": 336,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI selects exact original commits for two files in different branches",
+      "durationMs": 3459,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI assigns separated hunks in one file to distinct original commits",
+      "durationMs": 9597,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI reports every retained unsupported entry alongside an eligible hunk",
+      "durationMs": 3740,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI keeps distinct interior and current commit destinations within one branch",
+      "durationMs": 6900,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI selects the most recent commit that changed an area instead of file introduction",
+      "durationMs": 5473,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI translates independent line insertions and deletions through a newer prefix insertion",
+      "durationMs": 9961,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI retains a correction whose historical duplicate placement is ambiguous",
+      "durationMs": 8353,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI does not assign a canonical inserted copy when either repeated copy could be original",
+      "durationMs": 8151,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI commutes repeated lines when history still forces their unique order",
+      "durationMs": 9292,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "durationMs": 7054,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI stops ownership at an empty frozen anchor while permitting editable work above it",
+      "durationMs": 3944,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI plans mandatory replay parent-first regardless of selected path ordering",
+      "durationMs": 9609,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_selection_cli.test.ts",
+      "title": "absorb hunk selection through the public CLI includes descendants above a middle caller and refuses an occupied side arm",
+      "durationMs": 6649,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI previews tracked-only all through ab -a -d without changing the raw index or work",
+      "durationMs": 3673,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI applies tracked-only all and retains staged new entries and untracked bytes",
+      "durationMs": 20329,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI shows the complete plan once and preserves the original index on declined confirmation",
+      "durationMs": 2946,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI uses real Git patch selection and absorbs only the accepted hunk while retaining prior staged work",
+      "durationMs": 9086,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI preserves original state when terminal selection is canceled",
+      "durationMs": 1347,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI preserves original state when terminal confirmation is canceled",
+      "durationMs": 2739,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses active all and patch before staging or effects",
+      "durationMs": 347,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses dry-run and patch before staging or effects",
+      "durationMs": 323,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses closed stdin without force before staging or effects",
+      "durationMs": 491,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses quiet without force before staging or effects",
+      "durationMs": 517,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses explicit noninteractive without force before staging or effects",
+      "durationMs": 527,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses forced patch without a terminal before staging or effects",
+      "durationMs": 526,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an unknown option before staging or effects",
+      "durationMs": 333,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an operand before staging or effects",
+      "durationMs": 316,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not activate false staging options or false force during a safe explicit preview",
+      "durationMs": 1941,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI publishes tracked deletion as staging-only and never claims an amendment",
+      "durationMs": 3477,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI applies staged input after one terminal confirmation and returns the caller checkout",
+      "durationMs": 6868,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses a source edit made during confirmation without overwriting that external edit or the original index",
+      "durationMs": 3039,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses unstaged content filters before all preview can run them",
+      "durationMs": 1322,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses unstaged content filters before patch selection can run them",
+      "durationMs": 1131,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all before publishing its index with a frozen descendant",
+      "durationMs": 2203,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all before publishing its index with a occupied descendant",
+      "durationMs": 2529,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all before publishing its index with a foreign cache lock",
+      "durationMs": 986,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all before publishing its index with a foreign index lock",
+      "durationMs": 980,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an intermediate untracked file collision before all publishes its index",
+      "durationMs": 3302,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an intermediate untracked file collision before all previews an unsafe plan",
+      "durationMs": 3170,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI describes absorb/ab and its options through help and completion outside Git without external tools",
+      "durationMs": 675,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI projects root-relative spaces and Unicode paths from the effective subdirectory cwd",
+      "durationMs": 3144,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI suppresses routine no-input and staging-only progress in quiet mode",
+      "durationMs": 6516,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with saved recovery before private staging",
+      "durationMs": 359,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with split index before private staging",
+      "durationMs": 742,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with intent-to-add before private staging",
+      "durationMs": 1166,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with skip-worktree before private staging",
+      "durationMs": 889,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses all with assume-unchanged before private staging",
+      "durationMs": 881,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an all preview blocked by foreign .graphite_cache_lock while preserving its bytes",
+      "durationMs": 1054,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses an all preview blocked by foreign index.lock while preserving its bytes",
+      "durationMs": 1076,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI keeps the original raw index when all patch hunks are declined",
+      "durationMs": 2694,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not execute configured external diff, textconv or patch diff filters during private selection",
+      "durationMs": 2700,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI checks mandatory participants from the prospective all input rather than replaced staged hunks",
+      "durationMs": 2001,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI refuses a tracked parent-directory symlink before staging or following it for source fingerprints",
+      "durationMs": 1251,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not publish accepted private patch hunks when final confirmation is declined",
+      "durationMs": 2715,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI publishes all from a linked source worktree without staging or checking out its primary sibling",
+      "durationMs": 8862,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not execute an fsmonitor hook during private all preview",
+      "durationMs": 2662,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/absorb_staging_cli.test.ts",
+      "title": "absorb staging and interaction through the public CLI does not execute an fsmonitor hook during private patch selection",
+      "durationMs": 2566,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/modify_patch_cli.test.ts",
+      "title": "modify patch selection through the public CLI modify commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "durationMs": 2736,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/modify_patch_cli.test.ts",
+      "title": "modify patch selection through the public CLI m commits the selected patch hunk above a frozen anchor and preserves unselected work",
+      "durationMs": 2446,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI refuses required patch input before writes: create patched --patch --message patch --no-interactive",
+      "durationMs": 548,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI refuses required patch input before writes: create patched --onto other --patch --message patch --interactive",
+      "durationMs": 576,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI refuses required patch input before writes: modify --commit --patch --message patch --quiet",
+      "durationMs": 619,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI refuses required patch input before writes: modify --patch --no-interactive",
+      "durationMs": 770,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: create all-patch --all --patch --message all work --quiet",
+      "durationMs": 932,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: modify --commit --all --patch --message all work --quiet",
+      "durationMs": 4465,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI keeps all precedence over an unnecessary patch UI: modify --all --patch --quiet",
+      "durationMs": 4539,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/interaction_commit_editor_cli.test.ts",
+      "title": "commit and editor interaction through the public CLI performs deterministic move and fold at quiet without altering unrelated branches",
+      "durationMs": 5584,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/continue/continue.test.ts",
+      "title": "(${scene}): continue While not during a rebase Will error",
+      "durationMs": 420,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/continue/continue.test.ts",
+      "title": "(${scene}): continue While not during a rebase Will error",
+      "durationMs": 434,
+      "status": "passed",
+      "occurrence": 2
+    },
+    {
+      "file": "apps/cli/test/commands/split_file_recovery_cli.test.ts",
+      "title": "file split recovery through real public processes retains actionable quiet conflict guidance and continues without extracting twice",
+      "durationMs": 19108,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/modern_interactive_rebase_cli.test.ts",
+      "title": "modern interactive branch rebase through the public CLI resolves a real interactive conflict in fresh cont processes",
+      "durationMs": 14220,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/stack/restack_continue.test.ts",
+      "title": "(BasicScene): restack continue Can continue a stack restack with single merge conflict",
+      "durationMs": 4723,
+      "status": "passed",
+      "occurrence": 1
+    },
+    {
+      "file": "apps/cli/test/commands/stack/restack_continue.test.ts",
+      "title": "(TrailingProdScene): restack continue Can continue a stack restack with single merge conflict",
+      "durationMs": 5036,
+      "status": "passed",
+      "occurrence": 1
+    }
+  ],
+  "installed": [
+    {
+      "file": "apps/cli/test/commands/mcp_execution_cli.test.ts",
+      "title": "MCP command execution through stdio scenario 16: previews and forces multi-target absorb with retained local work in one usable same-installation session",
+      "occurrence": 1,
+      "status": "passed",
+      "executions": 1
+    }
+  ]
+}

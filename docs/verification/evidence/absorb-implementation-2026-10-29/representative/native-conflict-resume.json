@@ -1,0 +1,147 @@
+{
+  "kind": "bounded observations from a passing public CLI fixture",
+  "cli": [
+    {
+      "executable": "$NATIVE",
+      "args": [
+        "absorb",
+        "--force",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb stopped. Completed: base, child. Active: replaying tip. Pending: tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-7DEwp0. Content conflict during mandatory replay.\nResolve the active Git replay, stage only its resolutions, then run an continue in this worktree. Original leftovers and unstaged input remain isolated. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: BUN_BE_BUN=1 '$NATIVE' '$FIXTURE/repo/.git/an-absorb-7DEwp0/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n"
+    },
+    {
+      "executable": "$NATIVE",
+      "args": [
+        "continue",
+        "--all",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb expected ref changed: refs/branch-metadata/tip. External changes are retained.\n"
+    },
+    {
+      "executable": "$NATIVE",
+      "args": [
+        "continue",
+        "--all",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "ERROR: Absorb expected ref changed: refs/heads/base. External changes are retained.\n"
+    },
+    {
+      "executable": "$NATIVE",
+      "args": [
+        "continue",
+        "--all",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "timeoutMs": 60000,
+      "status": 0,
+      "signal": null,
+      "stdout": "Retained main.txt: No eligible feature commit owns this correction.\nAbsorbed 1 hunk(s) into base. Completed replay: base, child, tip. Retained input restored.\n",
+      "stderr": ""
+    }
+  ],
+  "gitObservations": [
+    {
+      "args": [
+        "show",
+        "base:base.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "corrected ancestor"
+    },
+    {
+      "args": [
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "base.txt"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "base"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "632983da49f0f6b6e6a8de0f36dd0973bc9a3d04"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "refs/branch-metadata/tip"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "afc25ee248cb059b5c55d5023f20c8ea2198f179"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "base"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "632983da49f0f6b6e6a8de0f36dd0973bc9a3d04"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "main"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "28c5c724a4b4447b638bc3d5cfa66fd77e500f7c"
+    },
+    {
+      "args": [
+        "show",
+        "tip:base.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "unstaged resolution"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "19f8c2166355773784e3f00dfd0305dba71d4c6c"
+    },
+    {
+      "args": [
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "child"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "--git-path",
+        "index"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ".git/index"
+    }
+  ],
+  "captureSha256": "0348bffc7a94c36c38d84efc62cad9acc689af258fab1b938fa806509a5040fd",
+  "gitCaptureSha256": "046eb64dd24adcf55fa4f26e2a81cb5ffa0c593e8a9f1d04c93c517f4eeaf0c3"
+}

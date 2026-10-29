@@ -1,0 +1,29 @@
+{
+  "tarballSha256": "1147a599afc99a9cd766c2fb04b7d316fc87f6e363fcfc9fb730c3b977bc2d01",
+  "files": {
+    "package/LICENSE": {
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+      "size": 34523
+    },
+    "package/cli.cjs": {
+      "sha256": "29a75573f3adba2486d3e2966e1316d5230912af2b4123806726c4208da4434e",
+      "size": 2743706
+    },
+    "package/package.json": {
+      "sha256": "9d30c2d917b77fded7ae77284288b301d457ddaa13ef5fbdff32a937e8d73063",
+      "size": 690
+    },
+    "package/CREDITS.md": {
+      "sha256": "7874b424bc9e7f3205452e7713a68ce9fe6a8a3117c4c6792c061569f68e7a80",
+      "size": 1155
+    },
+    "package/README.md": {
+      "sha256": "3c9ba9d0ec07d8b21631ceaf9ea22d0d7831cf92010f6664ef9aa35a7eecfa4d",
+      "size": 3519
+    },
+    "package/THIRD_PARTY_NOTICES.md": {
+      "sha256": "cde2cb34b14a813c4e6ed86cc58bd025182326893b7f0afbe6cc58cca96e6a02",
+      "size": 53720
+    }
+  }
+}

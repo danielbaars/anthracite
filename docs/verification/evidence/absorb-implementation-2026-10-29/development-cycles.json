@@ -1,0 +1,294 @@
+[
+  {
+    "receipt": "red01.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "product regression",
+    "qualification": "Foreign-index continue succeeded before the shared guard.",
+    "rawSha256": "fd25dcc62ad72c913dc527d51244412035314880ba59b9249be53d0bc90444af",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-29T10:15:54.895Z",
+      "end": "2026-10-29T10:16:26.005Z",
+      "duration": 31110
+    },
+    "failures": [
+      {
+        "title": "absorb continuation through the public CLI refuses a redirected index before continue --all changes resolved source or owned recovery",
+        "message": "Retained main.txt: No eligible feature commit owns this correction.\nAbsorbed 1 hunk(s) into base. Completed replay: base, child, tip. Retained input restored.\n: expected +0 to equal 1"
+      }
+    ]
+  },
+  {
+    "receipt": "green01.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "development green",
+    "qualification": "Scoped redirected-index continuation passed; not counted again.",
+    "rawSha256": "51e8ad486507f44daecfd8571bd20f97c3d97c99ae6c95e53495c4ad8340b8af",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-29T10:16:48.899Z",
+      "end": "2026-10-29T10:17:19.678Z",
+      "duration": 30779
+    },
+    "failures": []
+  },
+  {
+    "receipt": "red02.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "fixture correction",
+    "qualification": "restack --stack is not a supported spelling; corrected to ordinary restack.",
+    "rawSha256": "d9f3c86c9ae419985b20d3920c6dc74f317a96092df297d5c06a0f0b08ce6d27",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-29T10:17:39.014Z",
+      "end": "2026-10-29T10:17:42.113Z",
+      "duration": 3099
+    },
+    "failures": [
+      {
+        "title": "absorb input compatibility through the public CLI preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+        "message": "restack --stack: \nUnknown argument: stack\n"
+      }
+    ]
+  },
+  {
+    "receipt": "red02b.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "product regression",
+    "qualification": "Blanket gitlink refusal rejected unchanged dirty module history.",
+    "rawSha256": "ea3a32343931b9cc282cba3f40b3576587b5f326a64e4c1491ad437c0544f215",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-29T10:18:04.853Z",
+      "end": "2026-10-29T10:18:18.002Z",
+      "duration": 13149
+    },
+    "failures": [
+      {
+        "title": "absorb input compatibility through the public CLI preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+        "message": "ERROR: Absorb does not yet support submodule working trees.\n: expected 1 to equal +0"
+      }
+    ]
+  },
+  {
+    "receipt": "green02.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "development green",
+    "qualification": "Initial unchanged initialized gitlink control passed.",
+    "rawSha256": "991ff6cbce7402a12b7fca2b5b638b5e37858e3a8676f89125171cd247970767",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-29T10:19:17.394Z",
+      "end": "2026-10-29T10:19:51.019Z",
+      "duration": 33625
+    },
+    "failures": []
+  },
+  {
+    "receipt": "red03.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "diagnostic regression",
+    "qualification": "First invalid-link path already refused generically after private projection; no executed corruption red is claimed.",
+    "rawSha256": "a61b99b2f54c4f8550ca6476b9fd71818afa43000ee9ed46b9e2dd54e622f768",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-29T10:19:43.900Z",
+      "end": "2026-10-29T10:19:54.678Z",
+      "duration": 10778
+    },
+    "failures": [
+      {
+        "title": "absorb input compatibility through the public CLI refuses non-UTF8 physical symlink targets before private staging or publication",
+        "message": "expected 'ERROR: Absorb requires valid UTF-8 Gi…' to include 'UTF-8 symlink targets'"
+      }
+    ]
+  },
+  {
+    "receipt": "green03.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "development green",
+    "qualification": "Strict physical UTF-8 link checks and byte fingerprints passed.",
+    "rawSha256": "26015439c024e8ae9f6626e2386d435ee6a097f8a87da9c8533934a959f0b254",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-29T10:20:13.766Z",
+      "end": "2026-10-29T10:20:26.974Z",
+      "duration": 13208
+    },
+    "failures": []
+  },
+  {
+    "receipt": "controls04.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "boundary control",
+    "qualification": "Six controls passed; absent module preflight refusal required a bounded fix.",
+    "rawSha256": "8121712ccdf0c2798c786d64a7dcad197e5ef82786cd4f6cda014bc384daa192",
+    "stats": {
+      "suites": 2,
+      "tests": 7,
+      "passes": 6,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-29T10:21:23.762Z",
+      "end": "2026-10-29T10:24:04.724Z",
+      "duration": 160962
+    },
+    "failures": [
+      {
+        "title": "absorb input compatibility through the public CLI retains an absent unchanged gitlink without reading its commit object as a blob",
+        "message": "ERROR: Absorb requires an unchanged submodule checkout pointer: nested\n: expected 1 to equal +0"
+      }
+    ]
+  },
+  {
+    "receipt": "green05.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "boundary control",
+    "qualification": "Absent module reached restoration but a Git-created empty stub required checked nonrecursive cleanup.",
+    "rawSha256": "bd723f4bcd2e026cc6ef5747d197e8d71953201a6f85375ec6d1e31ed2e09c3c",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-29T10:24:40.452Z",
+      "end": "2026-10-29T10:25:12.007Z",
+      "duration": 31555
+    },
+    "failures": [
+      {
+        "title": "absorb input compatibility through the public CLI retains an absent unchanged gitlink without reading its commit object as a blob",
+        "message": "ERROR: Absorb stopped. Completed: base, child, tip. Active: restoring retained input. Pending: none. Retained input and construction: $FIXTURE/repo/.git/an-absorb-MTmAwA. Gitlink changed at nested\n\nNo automatic continuation is available for this Git state. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to tip and restore retained input FIRST by running: '$NODE' '$FIXTURE/repo/.git/an-absorb-MTmAwA/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n: expected 1 to equal +0"
+      }
+    ]
+  },
+  {
+    "receipt": "green06.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "development green",
+    "qualification": "Initialized dirty and absent gitlink controls both passed.",
+    "rawSha256": "7009efdfe5ff8509e7c0d536756c092be2ec48411fb0f338eb75a7bb4b140444",
+    "stats": {
+      "suites": 1,
+      "tests": 2,
+      "passes": 2,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-29T10:26:36.013Z",
+      "end": "2026-10-29T10:27:37.812Z",
+      "duration": 61799
+    },
+    "failures": []
+  },
+  {
+    "receipt": "mcp-development.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "expectation correction",
+    "qualification": "Freezing a corridor owner formed a boundary and correctly produced a no-target success; removed the incorrect protection expectation, retaining the interaction refusal.",
+    "rawSha256": "6538cdfed01d054d0c35f11260a09268c1efbf0e224159b500076770eb286395",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-29T10:23:02.320Z",
+      "end": "2026-10-29T10:23:14.375Z",
+      "duration": 12055
+    },
+    "failures": [
+      {
+        "title": "MCP command execution through stdio scenario 16: previews and forces multi-target absorb with retained local work in one usable same-installation session",
+        "message": "expected { status: 'success', …(6) } to have property 'status' of 'cli_error', but got 'success'"
+      }
+    ]
+  },
+  {
+    "receipt": "mcp-development02.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "development green",
+    "qualification": "Persistent development MCP workflow passed before the single final installed run.",
+    "rawSha256": "d8f414955730b2c06d82817e0bc9b1c6daf961646bd75a28f277a043d1763bce",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-29T10:24:15.550Z",
+      "end": "2026-10-29T10:24:43.995Z",
+      "duration": 28445
+    },
+    "failures": []
+  },
+  {
+    "receipt": "red07-manual-env.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "product regression",
+    "qualification": "Printed standalone restoration accepted a redirected index before the shared environment guard.",
+    "rawSha256": "5d15d78c1b46b49e4332c62b61501a0609221aef9f8d28551911863ecdef0fae",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-29T10:31:48.775Z",
+      "end": "2026-10-29T10:32:01.220Z",
+      "duration": 12445
+    },
+    "failures": [
+      {
+        "title": "single-commit absorb application through the public CLI keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+        "message": "expected +0 to equal 1"
+      }
+    ]
+  },
+  {
+    "receipt": "green07-manual-env.json",
+    "phase": "development; separate from final immutable candidate acceptance",
+    "classification": "development green",
+    "qualification": "Redirected manual refusal preserves source/foreign index/input, then normal manual restoration succeeds.",
+    "rawSha256": "b84e990fa4c6bd58fb96b739164604b083636a23f78c30d378644b46400ba6bf",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-29T10:32:45.597Z",
+      "end": "2026-10-29T10:32:58.381Z",
+      "duration": 12784
+    },
+    "failures": []
+  }
+]

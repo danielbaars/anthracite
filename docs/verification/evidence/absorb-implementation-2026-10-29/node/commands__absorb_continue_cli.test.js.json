@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-29T10:34:07.314Z",
+    "end": "2026-10-29T10:40:35.649Z",
+    "duration": 388335
+  },
+  "tests": [
+    {
+      "title": "continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "fullTitle": "absorb continuation through the public CLI continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 30889,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "fullTitle": "absorb continuation through the public CLI refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 32290,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a deliberate intermediate resolution inherited by the original checkout",
+      "fullTitle": "absorb continuation through the public CLI preserves a deliberate intermediate resolution inherited by the original checkout",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 46577,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "fullTitle": "absorb continuation through the public CLI refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 33549,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "fullTitle": "absorb continuation through the public CLI keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 24327,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "fullTitle": "absorb continuation through the public CLI preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 33422,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "fullTitle": "absorb continuation through the public CLI resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 35592,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses occupied and foreign-worktree continuation before staging a resolution",
+      "fullTitle": "absorb continuation through the public CLI refuses occupied and foreign-worktree continuation before staging a resolution",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 30148,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains both committed conflict work and original staged input when final remainders collide",
+      "fullTitle": "absorb continuation through the public CLI retains both committed conflict work and original staged input when final remainders collide",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 38327,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "fullTitle": "absorb continuation through the public CLI refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 11702,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "fullTitle": "absorb continuation through the public CLI distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 30497,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "guards the actual trunk parent against an external hook move before first-feature publication",
+      "fullTitle": "absorb continuation through the public CLI guards the actual trunk parent against an external hook move before first-feature publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 7921,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "fullTitle": "absorb continuation through the public CLI continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 30889,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "fullTitle": "absorb continuation through the public CLI refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 32290,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a deliberate intermediate resolution inherited by the original checkout",
+      "fullTitle": "absorb continuation through the public CLI preserves a deliberate intermediate resolution inherited by the original checkout",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 46577,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "fullTitle": "absorb continuation through the public CLI refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 33549,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "fullTitle": "absorb continuation through the public CLI keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 24327,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "fullTitle": "absorb continuation through the public CLI preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 33422,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "fullTitle": "absorb continuation through the public CLI resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 35592,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses occupied and foreign-worktree continuation before staging a resolution",
+      "fullTitle": "absorb continuation through the public CLI refuses occupied and foreign-worktree continuation before staging a resolution",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 30148,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains both committed conflict work and original staged input when final remainders collide",
+      "fullTitle": "absorb continuation through the public CLI retains both committed conflict work and original staged input when final remainders collide",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 38327,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "fullTitle": "absorb continuation through the public CLI refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 11702,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "fullTitle": "absorb continuation through the public CLI distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 30497,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "guards the actual trunk parent against an external hook move before first-feature publication",
+      "fullTitle": "absorb continuation through the public CLI guards the actual trunk parent against an external hook move before first-feature publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 7921,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
