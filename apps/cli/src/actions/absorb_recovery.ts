@@ -41,7 +41,7 @@ const savedSchema = z.object({
     ),
   }),
   expected: z.array(
-    z.object({ name: z.string(), revision: oid, metadata: oid })
+    z.object({ name: z.string(), revision: oid, metadata: oid.optional() })
   ),
   ranges: z.array(
     z.object({

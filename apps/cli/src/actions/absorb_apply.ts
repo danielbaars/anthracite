@@ -47,7 +47,7 @@ function shellQuote(value: string): string {
 type Expected = {
   readonly name: string;
   readonly revision: string;
-  readonly metadata: string;
+  readonly metadata?: string;
 };
 function assertExpected(
   expected: readonly Expected[],
@@ -83,9 +83,14 @@ export function applyAbsorb(
     }
     return;
   }
+  const corridor = context.engine.getRelativeStack(
+    plan.source,
+    SCOPE.DOWNSTACK
+  );
   const names = [
     ...new Set([
-      ...context.engine.getRelativeStack(plan.source, SCOPE.DOWNSTACK),
+      ...corridor,
+      ...corridor.map((name) => context.engine.getParentPrecondition(name)),
       ...plan.replay,
     ]),
   ];
