@@ -1,5 +1,6 @@
 import { CommandModule } from 'yargs';
 
+import * as absorb from './commands/absorb';
 import * as auth from './commands/auth';
 import * as bottom from './commands/bottom';
 import * as checkout from './commands/checkout';
@@ -48,6 +49,7 @@ import * as user from './commands/user';
 // Registered explicitly (not via `.commandDir()`) so the command modules are
 // bundled into the single-file binary built with `bun build --compile`.
 export const commandModules = [
+  absorb,
   auth,
   bottom,
   checkout,
