@@ -2,6 +2,7 @@ import { SpawnSyncOptions } from 'child_process';
 import { runGitCommand } from './runner';
 import { withFrozenCommitGuard } from './frozen_commit';
 
+import { getAbsorbGuard } from './absorb_guard';
 import { rebaseInProgress } from './rebase_in_progress';
 
 type TRebaseResult = 'REBASE_CONFLICT' | 'REBASE_DONE';
@@ -20,6 +21,9 @@ export function rebase(args: {
         args: [
           ...(args.restackCommitterDateIsAuthorDate
             ? [`--committer-date-is-author-date`]
+            : []),
+          ...(getAbsorbGuard()
+            ? ['--reapply-cherry-picks', '--empty=keep']
             : []),
           `--onto`,
           args.onto,

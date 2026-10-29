@@ -29,6 +29,14 @@ const ContinueSchema = t.shape({
   currentBranchOverride: t.optional(t.string),
   rebasedBranchBase: t.optional(t.string),
   rebaseOwnership: t.optional(t.string),
+  absorb: t.optional(
+    t.shape({
+      directory: t.string,
+      source: t.string,
+      mandatory: t.array(t.string),
+      completed: t.array(t.string),
+    })
+  ),
   delete: t.optional(
     t.shape({ branch: t.string, mandatory: t.array(t.string) })
   ),

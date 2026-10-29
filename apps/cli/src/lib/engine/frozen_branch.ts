@@ -36,6 +36,7 @@ export function getMandatoryBranches(data: TContinueConfig['data']): string[] {
   const role = getStructuralRole(data);
   if (!role) return [];
   const names =
+    data.absorb?.mandatory ??
     data.split?.mandatory ??
     data.reorder?.pending ??
     data.insert?.mandatory ??
@@ -48,5 +49,12 @@ export function getMandatoryBranches(data: TContinueConfig['data']): string[] {
 export function getStructuralRole(
   data: TContinueConfig['data']
 ): { readonly completed: readonly string[] } | undefined {
-  return data.move ?? data.fold ?? data.insert ?? data.reorder ?? data.split;
+  return (
+    data.absorb ??
+    data.move ??
+    data.fold ??
+    data.insert ??
+    data.reorder ??
+    data.split
+  );
 }

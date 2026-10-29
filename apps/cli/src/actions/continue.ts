@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { continueAbsorb } from './absorb_apply';
 import { TContext } from '../lib/context';
 import {
   assertContinuationBranchesEditable,
@@ -36,6 +37,10 @@ export async function continueAction(
   opts: { addAll: boolean },
   context: TContext
 ): Promise<void> {
+  if (context.continueConfig.data.absorb) {
+    continueAbsorb(opts, context);
+    return;
+  }
   if (!context.engine.rebaseInProgress()) {
     clearContinuation(context);
     throw new NoGraphiteContinue();

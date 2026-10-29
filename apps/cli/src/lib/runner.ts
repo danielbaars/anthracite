@@ -11,6 +11,7 @@ import { assertDeleteRecoveryEditable } from '../actions/delete_recovery';
 import { continueConfigFactory } from './spiffy/continuation_spf';
 import { assertDeleteAllowed } from '../actions/delete_branch';
 import { planFileSplit } from '../actions/split_file_plan';
+import { assertAbsorbContinuationAvailable } from '../actions/absorb_recovery';
 import { assertFileSplitAvailable } from '../actions/split_file_recovery';
 import {
   initContext,
@@ -134,6 +135,10 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
+    const absorbContinuation =
+      canonicalName === 'continue' &&
+      continueConfigFactory.load(undefined, { preserveInvalid: true }).data
+        .absorb !== undefined;
     if (canonicalName === 'split' && args['by-file'] !== undefined)
       preflightFileSplit(args);
     if (isZeroDepthLog && !git.getCurrentBranchName())
@@ -155,6 +160,11 @@ async function graphiteInternal(
           ? git.getCurrentBranchName()
           : undefined;
       if (source) assertBranchEditable(source);
+    }
+    if (canonicalName === 'continue') {
+      assertAbsorbContinuationAvailable(
+        continueConfigFactory.load(undefined, { preserveInvalid: true }).data
+      );
     }
     if (canonicalName === 'continue' && git.rebaseInProgress()) {
       const activeBranch = git.getRebaseHead();
@@ -200,7 +210,7 @@ async function graphiteInternal(
             .graphiteInitialized();
         const context = initContext(contextLite, git, {
           ...args,
-          inspection: isZeroDepthLog,
+          inspection: isZeroDepthLog || absorbContinuation,
           preserveMetadata:
             preserveStructuralMetadata ||
             (canonicalName === 'reorder' && args.stack === true),
