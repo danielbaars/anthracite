@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
+
+import { gitEnvironmentOverrides } from './environment_overrides';
 import { assertRestackFilesAvailable } from './restack_files';
 import { PreconditionsFailedError } from '../errors';
 import { runGitCommand } from './runner';
@@ -36,16 +38,7 @@ export function getAbsorbGuard(): string | undefined {
 export function readAbsorbGuard(file: string): AbsorbGuard {
   const value = recordSchema.parse(JSON.parse(fs.readFileSync(file, 'utf8')));
   const sourceEnv = { ...process.env };
-  for (const key of [
-    'GIT_DIR',
-    'GIT_WORK_TREE',
-    'GIT_INDEX_FILE',
-    'GIT_COMMON_DIR',
-    'GIT_OBJECT_DIRECTORY',
-    'GIT_ALTERNATE_OBJECT_DIRECTORIES',
-    'GIT_PREFIX',
-  ])
-    delete sourceEnv[key];
+  for (const key of gitEnvironmentOverrides) delete sourceEnv[key];
   const common = runGitCommand({
     args: [
       '-C',

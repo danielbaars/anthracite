@@ -1,13 +1,12 @@
 import { spawnSync } from 'child_process';
 import fs from 'fs';
-import { z } from 'zod';
 import path from 'path';
+
+import { z } from 'zod';
+
+import { gitEnvironmentOverrides } from '../lib/git/environment_overrides';
 import { runAbsorbGit as git } from './absorb_git';
-import {
-  getAbsorbRoot,
-  readAbsorbGit,
-  absorbEnvironmentOverrides,
-} from './absorb_git';
+import { getAbsorbRoot, readAbsorbGit } from './absorb_git';
 import { runGitCommand } from '../lib/git/runner';
 import { readIndex } from '../lib/git/index_state';
 import { PreconditionsFailedError } from '../lib/errors';
@@ -329,7 +328,7 @@ const git=(args,options={})=>cp.execFileSync('git',['--no-optional-locks','--lit
 const safePath=file=>{ const parts=file.split('/'); if(path.isAbsolute(file)||parts.includes('..')) throw Error('Invalid retained path.'); let parent=input.root; for(const part of parts.slice(0,-1)) {parent=path.join(parent,part); const stat=fs.lstatSync(parent,{throwIfNoEntry:false}); if(stat&&(stat.isSymbolicLink()||!stat.isDirectory())) throw Error('Restoration parent collision at '+file); } return path.join(input.root,file); };
 try {
  if(${JSON.stringify(
-   absorbEnvironmentOverrides
+   gitEnvironmentOverrides
  )}.some(name=>process.env[name]!==undefined)) throw Error('Absorb does not support Git environment redirection. Unset repository/index overrides before restoration.');
  if(git(['branch','--show-current']).toString().trim()!==input.source) throw Error('Switch to original source '+input.source+' before restoration.');
  for(const name of ['rebase-merge','rebase-apply','MERGE_HEAD','CHERRY_PICK_HEAD']) {

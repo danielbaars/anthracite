@@ -93,6 +93,297 @@ describe('absorb continuation through the public CLI', function () {
     ])
       expect(after[key]).to.deep.equal(before[key]);
   });
+  function selectedConstruction(beforePublication: boolean): {
+    identities: string;
+    count: string;
+    originalBase: string;
+  } {
+    fixture.git(['switch', 'base']);
+    stage('shared.txt', 'one\ntwo\nthree\n');
+    fixture.git(['commit', '-m', 'Introduce shared\n\nOriginal full message.']);
+    fixture.ok(['restack', '--upstack']);
+    fixture.git(['switch', beforePublication ? 'base' : 'child']);
+    stage('shared.txt', 'one\nchild two\nthree\n');
+    fixture.git(['commit', '-m', 'Neighbor\n\nPreserve this body.']);
+    fixture.ok(['restack', '--upstack']);
+    fixture.git(['switch', 'child']);
+    const identities = fixture.git([
+      'log',
+      '--reverse',
+      '--format=%an%n%ae%n%aI%n%B',
+      'main..child',
+    ]);
+    const count = fixture.git(['rev-list', '--count', 'main..child']);
+    const originalBase = fixture.git(['rev-parse', 'base']);
+    stage('shared.txt', 'corrected one\nchild two\nthree\n');
+    stage('child.txt', 'corrected child\n');
+    stage('main.txt', 'retained baseline\n');
+    fs.writeFileSync(
+      path.join(fixture.repo, 'child.txt'),
+      'unstaged sentinel\n'
+    );
+    return { identities, count, originalBase };
+  }
+  function refuseConstructionRedirection(
+    construction: string,
+    prefix: string
+  ): void {
+    const foreign = path.join(fixture.root, 'foreign-construction');
+    fixture.git(['worktree', 'add', '--detach', foreign, prefix]);
+    fs.writeFileSync(
+      path.join(foreign, 'foreign.txt'),
+      'unstaged foreign bytes\n'
+    );
+    const source = fixture.inspectionSnapshot();
+    const outside = fixture.inspectionSnapshot(foreign);
+    const retained = construction + '-retained';
+    fs.renameSync(construction, retained);
+    fs.symlinkSync(foreign, construction);
+    const refused = fixture.run(['continue', '--all', '--no-interactive']);
+    expect(refused.status, refused.stdout + refused.stderr).to.equal(1);
+    expect(refused.stderr).to.include('must not be a symlink');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(source);
+    expect(fixture.inspectionSnapshot(foreign)).to.deep.equal(outside);
+    fs.unlinkSync(construction);
+    fs.renameSync(retained, construction);
+    fixture.git(['worktree', 'remove', '--force', foreign]);
+  }
+  for (const beforePublication of [true, false]) {
+    it(`continues selected-range construction ${
+      beforePublication ? 'before' : 'after'
+    } first publication without repeating prefixes or staging caller input`, () => {
+      const { identities, count, originalBase } =
+        selectedConstruction(beforePublication);
+      const stopped = fixture.run(['absorb', '--force', '--no-interactive']);
+      expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
+      expect(stopped.stderr).to.include('construction checkout');
+      const directory = fs
+        .readdirSync(path.join(fixture.repo, '.git'))
+        .find((name) => name.startsWith('an-absorb-'));
+      if (!directory) throw new Error('No retained construction checkout');
+      const construction = path.join(
+        fixture.repo,
+        '.git',
+        directory,
+        'construction'
+      );
+      expect(
+        fixture.git(['-C', construction, 'ls-files', '--unmerged'])
+      ).to.include('shared.txt');
+      const publishedBase = fixture.git(['rev-parse', 'base']);
+      expect(publishedBase === originalBase).to.equal(beforePublication);
+      const prefix = fixture.git(['-C', construction, 'rev-parse', 'HEAD']);
+      fs.writeFileSync(
+        path.join(construction, 'shared.txt'),
+        'corrected one\nchild two\ndeliberate three\n'
+      );
+      if (beforePublication)
+        refuseConstructionRedirection(construction, prefix);
+      const sourceBefore = fixture.inspectionSnapshot();
+      const metadata = fixture.git(['rev-parse', 'refs/branch-metadata/tip']);
+      const original: unknown = JSON.parse(
+        fixture.git(['cat-file', '-p', metadata])
+      );
+      if (!original || typeof original !== 'object' || Array.isArray(original))
+        throw new Error('Invalid fixture metadata');
+      const file = path.join(fixture.root, 'frozen.json');
+      fs.writeFileSync(file, JSON.stringify({ ...original, frozen: true }));
+      fixture.git([
+        'update-ref',
+        'refs/branch-metadata/tip',
+        fixture.git(['hash-object', '-w', file]),
+      ]);
+      const administration = fixture.git([
+        '-C',
+        construction,
+        'rev-parse',
+        '--absolute-git-dir',
+      ]);
+      const ownedIndex = fs.readFileSync(path.join(administration, 'index'));
+      const blocked = fixture.run(['continue', '--all', '--no-interactive']);
+      expect(blocked.status, blocked.stdout + blocked.stderr).to.equal(1);
+      expect(blocked.stderr).to.match(/frozen|expected ref changed/);
+      expect(fs.readFileSync(path.join(administration, 'index'))).to.deep.equal(
+        ownedIndex
+      );
+      fixture.git(['update-ref', 'refs/branch-metadata/tip', metadata]);
+      const unstaged = fixture.run(['continue', '--no-interactive']);
+      expect(unstaged.status, unstaged.stdout + unstaged.stderr).to.equal(1);
+      expect(fixture.git(['-C', construction, 'rev-parse', 'HEAD'])).to.equal(
+        prefix
+      );
+      expect(fixture.inspectionSnapshot()).to.deep.equal(sourceBefore);
+      if (!beforePublication)
+        fixture.git(['-C', construction, 'add', 'shared.txt']);
+      const resumed = fixture.run([
+        'continue',
+        ...(beforePublication ? ['--all'] : []),
+        '--no-interactive',
+      ]);
+      expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(0);
+      if (!beforePublication)
+        expect(fixture.git(['rev-parse', 'base'])).to.equal(publishedBase);
+      expect(fixture.git(['show', 'child:shared.txt'])).to.equal(
+        'corrected one\nchild two\ndeliberate three'
+      );
+      expect(fixture.git(['show', 'child:child.txt'])).to.equal(
+        'corrected child'
+      );
+      expect(fixture.git(['show', 'tip:shared.txt'])).to.equal(
+        'corrected one\nchild two\ndeliberate three'
+      );
+      expect(fixture.git(['rev-list', '--count', 'main..child'])).to.equal(
+        count
+      );
+      expect(
+        fixture.git([
+          'log',
+          '--reverse',
+          '--format=%an%n%ae%n%aI%n%B',
+          'main..child',
+        ])
+      ).to.equal(identities);
+      expect(fixture.git(['diff', '--cached', '--name-only'])).to.equal(
+        'main.txt'
+      );
+      expect(fixture.git(['show', ':main.txt'])).to.equal('retained baseline');
+      expect(
+        fs.readFileSync(path.join(fixture.repo, 'child.txt'), 'utf8')
+      ).to.equal('unstaged sentinel\n');
+      const final = fixture.inspectionSnapshot();
+      expect(
+        fixture.run(['continue', '--all', '--no-interactive']).status
+      ).to.equal(1);
+      const after = fixture.inspectionSnapshot();
+      for (const key of [
+        'head',
+        'branch',
+        'refs',
+        'index',
+        'staging',
+        'status',
+        'files',
+      ])
+        expect(after[key]).to.deep.equal(final[key]);
+    });
+  }
+  it('resumes a selected correction that itself conflicts after a deliberate construction resolution', () => {
+    fixture.git(['switch', 'base']);
+    stage('shared.txt', 'one\ntwo\nthree\n');
+    fixture.git(['commit', '-m', 'Introduce shared']);
+    fixture.ok(['restack', '--upstack']);
+    fixture.git(['switch', 'child']);
+    stage('shared.txt', 'one\nchild two\nthree\n');
+    stage('neighbor.txt', 'original neighbor\n');
+    fixture.git(['commit', '-m', 'Neighbor\n\nKeep full message.']);
+    fixture.ok(['restack', '--upstack']);
+    const identity = fixture.git([
+      'show',
+      '-s',
+      '--format=%an%n%ae%n%aI%n%B',
+      'child',
+    ]);
+    const count = fixture.git(['rev-list', '--count', 'main..child']);
+    stage('shared.txt', 'corrected one\nchild two\nthree\n');
+    stage('neighbor.txt', 'corrected neighbor\n');
+    const stopped = fixture.run(['absorb', '--force', '--no-interactive']);
+    expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
+    const directory = fs
+      .readdirSync(path.join(fixture.repo, '.git'))
+      .find((name) => name.startsWith('an-absorb-'));
+    if (!directory) throw new Error('No owned construction checkout');
+    const construction = path.join(
+      fixture.repo,
+      '.git',
+      directory,
+      'construction'
+    );
+    const base = fixture.git(['rev-parse', 'base']);
+    fs.writeFileSync(
+      path.join(construction, 'shared.txt'),
+      'corrected one\nchild two\ndeliberate three\n'
+    );
+    fs.writeFileSync(
+      path.join(construction, 'neighbor.txt'),
+      'deliberate neighbor\n'
+    );
+    const correction = fixture.run(['continue', '--all', '--no-interactive']);
+    expect(correction.status, correction.stdout + correction.stderr).to.equal(
+      1
+    );
+    expect(
+      fixture.git(['-C', construction, 'ls-files', '--unmerged'])
+    ).to.include('neighbor.txt');
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
+    fs.writeFileSync(
+      path.join(construction, 'neighbor.txt'),
+      'resolved corrected neighbor\n'
+    );
+    const resumed = fixture.run(['continue', '--all', '--no-interactive']);
+    expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(0);
+    expect(fixture.git(['show', 'child:neighbor.txt'])).to.equal(
+      'resolved corrected neighbor'
+    );
+    expect(fixture.git(['show', 'tip:shared.txt'])).to.equal(
+      'corrected one\nchild two\ndeliberate three'
+    );
+    expect(fixture.git(['rev-list', '--count', 'main..child'])).to.equal(count);
+    expect(
+      fixture.git(['show', '-s', '--format=%an%n%ae%n%aI%n%B', 'child'])
+    ).to.equal(identity);
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
+    expect(fixture.git(['status', '--porcelain'])).to.equal('');
+  });
+  it('refuses construction continuation after raw Git abort without losing an earlier publication or retained input', () => {
+    selectedConstruction(false);
+    const stopped = fixture.run(['absorb', '--force', '--no-interactive']);
+    expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
+    const directory = fs
+      .readdirSync(path.join(fixture.repo, '.git'))
+      .find((name) => name.startsWith('an-absorb-'));
+    if (!directory) throw new Error('No owned construction checkout');
+    const retained = path.join(fixture.repo, '.git', directory);
+    const base = fixture.git(['rev-parse', 'base']);
+    fixture.git([
+      '-C',
+      path.join(retained, 'construction'),
+      'cherry-pick',
+      '--abort',
+    ]);
+    const before = fixture.inspectionSnapshot();
+    const input = fs.readFileSync(path.join(retained, 'input.json'));
+    const refused = fixture.run(['continue', '--all', '--no-interactive']);
+    expect(refused.status, refused.stdout + refused.stderr).to.equal(1);
+    expect(refused.stderr)
+      .to.include('No owned active absorb construction replay')
+      .and.include('restore.cjs');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(fs.readFileSync(path.join(retained, 'input.json'))).to.deep.equal(
+      input
+    );
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
+    const command = /running: (?:BUN_BE_BUN=1 )?'([^'\n]+)' '([^'\n]+)'/.exec(
+      stopped.stderr
+    );
+    if (!command) throw new Error('No executable recovery command printed');
+    const restored = spawnSync(command[1], [command[2]], {
+      cwd: fixture.repo,
+      env: {
+        ...fixture.env,
+        ...(stopped.stderr.includes('running: BUN_BE_BUN=1 ')
+          ? { BUN_BE_BUN: '1' }
+          : {}),
+      },
+      encoding: 'utf8',
+    });
+    expect(restored.status, restored.stdout + restored.stderr).to.equal(0);
+    expect(fixture.git(['show', ':main.txt'])).to.equal('retained baseline');
+    expect(fixture.git(['show', ':child.txt'])).to.equal('corrected child');
+    expect(
+      fs.readFileSync(path.join(fixture.repo, 'child.txt'), 'utf8')
+    ).to.equal('unstaged sentinel\n');
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
+  });
   it('refuses a redirected index before continue --all changes resolved source or owned recovery', () => {
     conflict();
     stage('base.txt', 'deliberate child resolution\n');

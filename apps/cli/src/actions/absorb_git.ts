@@ -1,23 +1,13 @@
 import { execFileSync } from 'child_process';
 import { TextDecoder } from 'util';
 
+import { gitEnvironmentOverrides } from '../lib/git/environment_overrides';
+
 import { runGitCommand, TRunGitCommandParameters } from '../lib/git/runner';
 import { PreconditionsFailedError } from '../lib/errors';
 
-export const absorbEnvironmentOverrides: readonly string[] = [
-  'GIT_DIR',
-  'GIT_WORK_TREE',
-  'GIT_INDEX_FILE',
-  'GIT_COMMON_DIR',
-  'GIT_OBJECT_DIRECTORY',
-  'GIT_ALTERNATE_OBJECT_DIRECTORIES',
-  'GIT_PREFIX',
-];
-
 export function assertAbsorbEnvironment(): void {
-  if (
-    absorbEnvironmentOverrides.some((name) => process.env[name] !== undefined)
-  )
+  if (gitEnvironmentOverrides.some((name) => process.env[name] !== undefined))
     throw new PreconditionsFailedError(
       'Absorb does not support Git environment redirection. Unset repository/index overrides before retrying.'
     );

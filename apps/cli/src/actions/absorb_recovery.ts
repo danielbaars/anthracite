@@ -2,6 +2,9 @@ import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
+
+import { gitEnvironmentOverrides } from '../lib/git/environment_overrides';
+import { readAbsorbConstruction } from './absorb_prepare';
 import { TContext } from '../lib/context';
 import { PreconditionsFailedError } from '../lib/errors';
 import { readAbsorbGuard, checkAbsorbGuard } from '../lib/git/absorb_guard';
@@ -12,7 +15,6 @@ import { cacheLockConfigFactory } from '../lib/spiffy/cache_lock_spf';
 import {
   getAbsorbRoot,
   readAbsorbGit,
-  absorbEnvironmentOverrides,
   assertAbsorbEnvironment,
 } from './absorb_git';
 
@@ -71,12 +73,10 @@ export function readAbsorbExecution(
 
 /** Find only the physical source's saved role; legacy continue retains its environment policy. */
 export function assertAbsorbContinuationEnvironment(): void {
-  if (
-    !absorbEnvironmentOverrides.some((name) => process.env[name] !== undefined)
-  )
+  if (!gitEnvironmentOverrides.some((name) => process.env[name] !== undefined))
     return;
   const env = { ...process.env };
-  for (const name of absorbEnvironmentOverrides) delete env[name];
+  for (const name of gitEnvironmentOverrides) delete env[name];
   let root: string;
   try {
     root = execFileSync(
@@ -118,12 +118,28 @@ export function assertAbsorbContinuationAvailable(
       'Continue absorb in its original source worktree. Retained input: ' +
         role.directory
     );
-  if (!ownsRebase(data.rebaseOwnership))
+  if (!role.construction && !ownsRebase(data.rebaseOwnership))
     throw new PreconditionsFailedError(
       'No owned active absorb rebase. Inspect reached work; earlier amendments remain after abort. Retained input and manual restoration: ' +
         path.join(role.directory, 'restore.cjs')
     );
+  const construction = role.construction
+    ? readAbsorbConstruction(role.directory)
+    : undefined;
   for (const lock of [
+    ...(role.construction
+      ? [
+          path.join(
+            readAbsorbGit([
+              '-C',
+              path.join(role.directory, 'construction'),
+              'rev-parse',
+              '--absolute-git-dir',
+            ]).trim(),
+            'index.lock'
+          ),
+        ]
+      : []),
     cacheLockConfigFactory.load(undefined, { preserveInvalid: true }).path,
     path.resolve(
       getAbsorbRoot(),
@@ -143,6 +159,16 @@ export function assertAbsorbContinuationAvailable(
     throw new PreconditionsFailedError(
       'Absorb continuation does not match its owned plan.'
     );
+  if (construction) {
+    if (
+      construction.branch !== guard.active ||
+      role.completed.includes(construction.branch) ||
+      saved.ranges.find((range) => range.name === construction.branch)?.commits[
+        construction.index
+      ] !== construction.commit
+    )
+      throw new PreconditionsFailedError('Invalid active absorb construction.');
+  }
   // Validate transient blockers without touching saved artifacts on refusal.
   checkAbsorbGuard(file, 'before-mutation', Buffer.alloc(0), true);
   for (const branch of role.mandatory) assertBranchEditable(branch);

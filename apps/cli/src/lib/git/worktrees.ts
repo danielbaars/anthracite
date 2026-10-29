@@ -1,4 +1,6 @@
 import fs from 'fs-extra';
+
+import { gitEnvironmentOverrides } from './environment_overrides';
 import { PreconditionsFailedError } from '../errors';
 import { runGitCommand } from './runner';
 
@@ -27,16 +29,7 @@ export function getOtherWorktreeBranches(
   const env = { ...process.env };
   if (cwd) {
     // Hooks set worktree-local Git overrides; an explicit source cwd owns its lookup.
-    for (const key of [
-      'GIT_DIR',
-      'GIT_WORK_TREE',
-      'GIT_INDEX_FILE',
-      'GIT_COMMON_DIR',
-      'GIT_OBJECT_DIRECTORY',
-      'GIT_ALTERNATE_OBJECT_DIRECTORIES',
-      'GIT_PREFIX',
-    ])
-      delete env[key];
+    for (const key of gitEnvironmentOverrides) delete env[key];
   }
   const currentPath = fs.realpathSync(
     runGitCommand({

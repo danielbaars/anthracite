@@ -221,6 +221,8 @@ function executeAbsorb(
   resumed?: {
     readonly input: AbsorbInput;
     readonly completed: readonly string[];
+    readonly construction?: boolean;
+    readonly addAll?: boolean;
   }
 ): void {
   const { plan, context, noVerify, expected, ranges, amendedTrees } = execution;
@@ -257,7 +259,8 @@ function executeAbsorb(
       : createGuard(input.directory, expected, plan);
     // eslint-disable-next-line max-lines-per-function
     withAbsorbGuard(guardFile, () => {
-      let isolated = Boolean(resumed);
+      let isolated = completed.length > 0;
+      let construction = resumed?.construction;
       for (const range of ranges.filter(
         (item) => !completed.includes(item.name)
       )) {
@@ -281,7 +284,14 @@ function executeAbsorb(
             worktree,
             noVerify,
             participants: plan.replay,
+            resume: construction,
+            addAll: construction && resumed?.addAll,
           });
+          construction = false;
+          if (context.continueConfig.data.absorb?.construction)
+            context.continueConfig.update((data) => {
+              if (data.absorb) data.absorb.construction = undefined;
+            });
           checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
           if (!isolated) assertAbsorbInputUnchanged(input);
           else
@@ -343,6 +353,9 @@ function executeAbsorb(
           git(['read-tree', '--reset', '-u', 'HEAD']);
           isolated = true;
           git(['worktree', 'remove', worktree]);
+          fs.rmSync(path.join(input.directory, 'construction.json'), {
+            force: true,
+          });
           continue;
         }
         active = `replaying ${name}`;
@@ -393,6 +406,24 @@ function executeAbsorb(
       fs.rmSync(input.directory, { recursive: true });
     });
   } catch (error: unknown) {
+    if (
+      active.startsWith('constructing ') &&
+      fs.existsSync(path.join(input.directory, 'construction.json')) &&
+      git(['ls-files', '--unmerged'], { cwd: worktree })
+    ) {
+      context.continueConfig.update((data) => {
+        data.branchesToSync = [];
+        data.branchesToRestack = [];
+        data.currentBranchOverride = plan.source;
+        data.absorb = {
+          directory: input.directory,
+          source: plan.source,
+          mandatory: [...plan.replay],
+          completed: [...completed],
+          construction: true,
+        };
+      });
+    }
     recordReachedWrites({
       directory: input.directory,
       plan,
@@ -412,7 +443,12 @@ function executeAbsorb(
       }. Retained input and construction: ${input.directory}. ${
         error instanceof Error ? error.message : String(error)
       }\n${
-        context.engine.rebaseInProgress() && context.continueConfig.data.absorb
+        context.continueConfig.data.absorb?.construction
+          ? `Resolve the conflict in the owned construction checkout ${worktree}. Stage only its resolutions with git -C ${shellQuote(
+              worktree
+            )} add <paths>, then run an continue from ${getAbsorbRoot()} (or an continue --all to stage that construction checkout). Original source staged/unstaged input remains separate. `
+          : context.engine.rebaseInProgress() &&
+            context.continueConfig.data.absorb
           ? 'Resolve the active Git replay, stage only its resolutions, then run an continue in this worktree. Original leftovers and unstaged input remain isolated. '
           : 'No automatic continuation is available for this Git state. '
       }Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to ${
@@ -537,11 +573,13 @@ export function continueAbsorb(
   assertAbsorbContinuationAvailable(context.continueConfig.data);
   const role = context.continueConfig.data.absorb;
   const base = context.continueConfig.data.rebasedBranchBase;
-  if (!role || !base)
+  if (!role || (!base && !role.construction))
     throw new PreconditionsFailedError('Missing owned absorb continuation.');
   const saved = readAbsorbExecution(role.directory);
   const guardFile = path.join(role.directory, 'guard.json');
-  const active = context.engine.getRebaseHead();
+  const active = role.construction
+    ? readAbsorbGuard(guardFile).active
+    : context.engine.getRebaseHead();
   if (!active || role.completed.includes(active))
     throw new PreconditionsFailedError('Invalid active absorb replay.');
   const guard = readAbsorbGuard(guardFile);
@@ -557,14 +595,19 @@ export function continueAbsorb(
       fs.writeFileSync(guardFile, JSON.stringify(guard));
     }
     withAbsorbGuard(guardFile, () => {
-      if (opts.addAll) context.engine.addAll();
-      const result = context.engine.continueRebase(base, role.mandatory);
-      if (result.result === 'REBASE_CONFLICT')
-        throw new PreconditionsFailedError(
-          `Absorb replay remains stopped. Resolve and stage the active replay, then run an continue. Retained input: ${role.directory}.`
-        );
-      const completed = [...role.completed, result.branchName];
-      saveAbsorbProgress(role.directory, completed, context);
+      const completed = [...role.completed];
+      if (!role.construction) {
+        if (!base)
+          throw new PreconditionsFailedError('Missing absorb replay base.');
+        if (opts.addAll) context.engine.addAll();
+        const result = context.engine.continueRebase(base, role.mandatory);
+        if (result.result === 'REBASE_CONFLICT')
+          throw new PreconditionsFailedError(
+            `Absorb replay remains stopped. Resolve and stage the active replay, then run an continue. Retained input: ${role.directory}.`
+          );
+        completed.push(result.branchName);
+        saveAbsorbProgress(role.directory, completed, context);
+      }
       const amendedTrees = new Map(
         [
           ...new Set(
@@ -581,7 +624,12 @@ export function continueAbsorb(
       );
       executeAbsorb(
         { ...saved, context, amendedTrees },
-        { input: readRetainedAbsorbInput(role.directory), completed }
+        {
+          input: readRetainedAbsorbInput(role.directory),
+          completed,
+          construction: role.construction,
+          addAll: opts.addAll,
+        }
       );
     });
   } catch (error: unknown) {
