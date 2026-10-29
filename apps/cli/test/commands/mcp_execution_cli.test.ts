@@ -130,7 +130,23 @@ describe('MCP command execution through stdio', function () {
     expect(fixture.git(['status', '--porcelain'])).to.equal('');
     expect(fs.existsSync(sentinel)).to.equal(false);
   });
-  it('scenario 16: previews and forces multi-target absorb with retained local work in one usable same-installation session', async () => {
+  it('scenario 16: previews and continues a multi-target construction conflict with retained local work in one usable same-installation session', async () => {
+    fixture.git(['switch', 'base']);
+    fs.writeFileSync(
+      path.join(fixture.repo, 'shared.txt'),
+      'one\ntwo\nthree\n'
+    );
+    fixture.git(['add', 'shared.txt']);
+    fixture.git(['commit', '--amend', '--no-edit']);
+    fixture.ok(['restack', '--upstack']);
+    fixture.git(['switch', 'child']);
+    fs.writeFileSync(
+      path.join(fixture.repo, 'shared.txt'),
+      'one\nchild two\nthree\n'
+    );
+    fixture.git(['add', 'shared.txt']);
+    fixture.git(['commit', '--amend', '--no-edit']);
+    fixture.ok(['restack', '--upstack']);
     fixture.git(['switch', 'tip']);
     const originals = Object.fromEntries(
       ['base', 'child'].map((name) => [
@@ -148,6 +164,7 @@ describe('MCP command execution through stdio', function () {
     );
     const untouched = fixture.git(['rev-parse', 'main', 'other']);
     for (const [file, text] of [
+      ['shared.txt', 'corrected one\nchild two\nthree\n'],
       ['base.txt', 'corrected base\n'],
       ['child.txt', 'corrected child\n'],
       ['leftover.txt', 'retained new entry\n'],
@@ -155,7 +172,6 @@ describe('MCP command execution through stdio', function () {
       fs.writeFileSync(path.join(fixture.repo, file), text);
       fixture.git(['add', '--', file]);
     }
-    const prospective = fixture.git(['write-tree']);
     fs.writeFileSync(path.join(fixture.repo, 'tip.txt'), 'unstaged sentinel\n');
     const bin = path.join(fixture.root, 'absorb-identity-bin');
     const marker = path.join(fixture.root, 'wrong-absorb-build');
@@ -201,8 +217,33 @@ describe('MCP command execution through stdio', function () {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect((await run(['info'])).status).to.equal('success');
     const result = await run(['ab', '-f']);
-    expect(result.status, result.stderr).to.equal('success');
-    expect(result.isError).to.equal(false);
+    expect(result.status, result.stderr).to.equal('cli_error');
+    expect(result.stderr).to.include('construction checkout');
+    const amendedBase = fixture.git(['rev-parse', 'base']);
+    const directory = fs
+      .readdirSync(path.join(fixture.repo, '.git'))
+      .find((name) => name.startsWith('an-absorb-'));
+    if (!directory) throw new Error('Missing owned construction checkout');
+    const construction = path.join(
+      fixture.repo,
+      '.git',
+      directory,
+      'construction'
+    );
+    expect(
+      fixture.git(['-C', construction, 'ls-files', '--unmerged'])
+    ).to.include('shared.txt');
+    fs.writeFileSync(
+      path.join(construction, 'shared.txt'),
+      'corrected one\nchild two\ndeliberate three\n'
+    );
+    const resumed = await run(['continue', '--all']);
+    expect(resumed.status, resumed.stderr).to.equal('success');
+    expect(resumed.isError).to.equal(false);
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(amendedBase);
+    expect(fixture.git(['show', 'tip:shared.txt'])).to.equal(
+      'corrected one\nchild two\ndeliberate three'
+    );
     expect(fixture.git(['show', 'base:base.txt'])).to.equal('corrected base');
     expect(fixture.git(['show', 'child:child.txt'])).to.equal(
       'corrected child'
@@ -224,7 +265,9 @@ describe('MCP command execution through stdio', function () {
     );
     expect(fixture.git(['rev-parse', 'main', 'other'])).to.equal(untouched);
     expect(fixture.git(['branch', '--show-current'])).to.equal('tip');
-    expect(fixture.git(['write-tree'])).to.equal(prospective);
+    expect(fixture.git(['show', ':leftover.txt'])).to.equal(
+      'retained new entry'
+    );
     expect(fixture.git(['diff', '--cached', '--name-only'])).to.equal(
       'leftover.txt'
     );

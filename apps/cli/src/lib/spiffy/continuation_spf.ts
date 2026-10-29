@@ -32,6 +32,7 @@ const ContinueSchema = t.shape({
   absorb: t.optional(
     t.shape({
       directory: t.string,
+      construction: t.optional(t.boolean),
       source: t.string,
       mandatory: t.array(t.string),
       completed: t.array(t.string),

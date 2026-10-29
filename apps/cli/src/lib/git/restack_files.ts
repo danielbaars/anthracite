@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+
+import { gitEnvironmentOverrides } from './environment_overrides';
 import { ExitFailedError } from '../errors';
 import { runGitCommand } from './runner';
 
@@ -22,17 +24,7 @@ export function assertRestackFilesAvailable({
 }): void {
   if (branches.length === 0 && checkoutRevisions.length === 0) return;
   const env = { ...process.env };
-  if (sourceRoot)
-    for (const key of [
-      'GIT_DIR',
-      'GIT_WORK_TREE',
-      'GIT_INDEX_FILE',
-      'GIT_COMMON_DIR',
-      'GIT_OBJECT_DIRECTORY',
-      'GIT_ALTERNATE_OBJECT_DIRECTORIES',
-      'GIT_PREFIX',
-    ])
-      delete env[key];
+  if (sourceRoot) for (const key of gitEnvironmentOverrides) delete env[key];
   const cwd =
     sourceRoot ??
     runGitCommand({
