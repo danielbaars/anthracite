@@ -1,0 +1,251 @@
+{
+  "multi-commit": {
+    "folder": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt",
+    "repo": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/repo",
+    "environment": {
+      "PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/home",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_TERMINAL_PROMPT": "0",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "SHELL": "/bin/zsh",
+      "EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/multi-commit-gt/bin/pager"
+    },
+    "args": [
+      "absorb",
+      "--force",
+      "--no-interactive"
+    ]
+  },
+  "same-line": {
+    "folder": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt",
+    "repo": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/repo",
+    "environment": {
+      "PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/home",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_TERMINAL_PROMPT": "0",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "SHELL": "/bin/zsh",
+      "EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-line-gt/bin/pager"
+    },
+    "args": [
+      "absorb",
+      "--force",
+      "--no-interactive"
+    ]
+  },
+  "same-file-hunks": {
+    "folder": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt",
+    "repo": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/repo",
+    "environment": {
+      "PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/home",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_TERMINAL_PROMPT": "0",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "SHELL": "/bin/zsh",
+      "EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/same-file-hunks-gt/bin/pager"
+    },
+    "args": [
+      "absorb",
+      "--force",
+      "--no-interactive"
+    ]
+  },
+  "mixed-work": {
+    "folder": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt",
+    "repo": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/repo",
+    "environment": {
+      "PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/home",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_TERMINAL_PROMPT": "0",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "SHELL": "/bin/zsh",
+      "EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/mixed-work-gt/bin/pager"
+    },
+    "args": [
+      "absorb",
+      "--force",
+      "--no-interactive"
+    ]
+  },
+  "all-dry": {
+    "folder": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt",
+    "repo": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/repo",
+    "environment": {
+      "PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/home",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_TERMINAL_PROMPT": "0",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "SHELL": "/bin/zsh",
+      "EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-dry-gt/bin/pager"
+    },
+    "args": [
+      "absorb",
+      "--all",
+      "--dry-run",
+      "--no-interactive"
+    ]
+  },
+  "all-apply": {
+    "folder": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt",
+    "repo": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/repo",
+    "environment": {
+      "PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/home",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_TERMINAL_PROMPT": "0",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "SHELL": "/bin/zsh",
+      "EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/all-apply-gt/bin/pager"
+    },
+    "args": [
+      "absorb",
+      "--all",
+      "--force",
+      "--no-interactive"
+    ]
+  },
+  "no-force": {
+    "folder": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt",
+    "repo": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/repo",
+    "environment": {
+      "PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/home",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_TERMINAL_PROMPT": "0",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "SHELL": "/bin/zsh",
+      "EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/no-force-gt/bin/pager"
+    },
+    "args": [
+      "absorb",
+      "--no-interactive"
+    ]
+  },
+  "conflict": {
+    "folder": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt",
+    "repo": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/repo",
+    "environment": {
+      "PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/home",
+      "XDG_CONFIG_HOME": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/home",
+      "GH_CONFIG_DIR": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/home/gh",
+      "GRAPHITE_USER_CONFIG_PATH": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/user-config",
+      "GRAPHITE_PROFILE": "",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_TERMINAL_PROMPT": "0",
+      "GIT_AUTHOR_DATE": "2020-01-01T00:00:00Z",
+      "GIT_COMMITTER_DATE": "2020-01-01T00:00:00Z",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "SHELL": "/bin/zsh",
+      "EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/bin/editor",
+      "VISUAL": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/bin/editor",
+      "GIT_EDITOR": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/bin/editor",
+      "CH_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/bin/pager",
+      "GT_PAGER": "/private/tmp/anthracite-absorb-spec-2026-10-29/conflict-gt/bin/pager"
+    },
+    "args": [
+      "absorb",
+      "--force",
+      "--no-interactive"
+    ]
+  }
+}

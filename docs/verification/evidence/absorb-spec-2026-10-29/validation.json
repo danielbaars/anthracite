@@ -1,0 +1,204 @@
+{
+  "status": "passed",
+  "predicateCount": 49,
+  "cases": {
+    "multi-commit": {
+      "evidenceId": "ev_2e022fee55335d5d7a7d0fc8c49a74d1ff106b81bd0449dff03b864ea4df452a",
+      "exitCode": 0,
+      "changedRefs": [
+        "api",
+        "refactor",
+        "tests"
+      ],
+      "status": "",
+      "changedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "indexSha256",
+        "metadata",
+        "allRefs",
+        "commitDetails"
+      ]
+    },
+    "same-line": {
+      "evidenceId": "ev_a929503ff0b1addddcc57f44510131de3ff446bca5b5be84bc6fb614d1365c85",
+      "exitCode": 0,
+      "changedRefs": [
+        "api",
+        "tests"
+      ],
+      "status": "",
+      "changedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "indexSha256",
+        "metadata",
+        "allRefs",
+        "commitDetails"
+      ]
+    },
+    "same-file-hunks": {
+      "evidenceId": "ev_9d9c065371af9e8d9dec72c76abc9cb531a7323abad96f666d3622dbb68f198b",
+      "exitCode": 0,
+      "changedRefs": [
+        "api",
+        "refactor",
+        "tests"
+      ],
+      "status": "",
+      "changedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "indexSha256",
+        "metadata",
+        "allRefs",
+        "commitDetails"
+      ]
+    },
+    "mixed-work": {
+      "evidenceId": "ev_47b72e5c9fe43cdac2e21713095dac49a4a0c7418cb0d47e8dfbe5255182dce7",
+      "exitCode": 0,
+      "changedRefs": [
+        "api",
+        "refactor",
+        "tests"
+      ],
+      "status": " M src/refactor.txt\n",
+      "changedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "indexSha256",
+        "metadata",
+        "allRefs",
+        "commitDetails"
+      ]
+    },
+    "all-dry": {
+      "evidenceId": "ev_2fdc33922e18be0c4f8b72dedd2606116cca9355eceddd6851f8df39466f73b3",
+      "exitCode": 0,
+      "changedRefs": [],
+      "status": "M  src/refactor.txt\n?? untracked.txt\n",
+      "changedFields": [
+        "status",
+        "staged",
+        "unstaged",
+        "indexSha256",
+        "metadata",
+        "indexEntries"
+      ]
+    },
+    "all-apply": {
+      "evidenceId": "ev_ab7946cec940d0feba1f45954aebabc162c6e3905c8edb2651592226623a6723",
+      "exitCode": 0,
+      "changedRefs": [
+        "api",
+        "refactor",
+        "tests"
+      ],
+      "status": "?? untracked.txt\n",
+      "changedFields": [
+        "head",
+        "branches",
+        "status",
+        "unstaged",
+        "indexSha256",
+        "metadata",
+        "allRefs",
+        "commitDetails",
+        "indexEntries"
+      ]
+    },
+    "no-force": {
+      "evidenceId": "ev_91383413746e6926139aaaaaf8844c7ee382433a3a1ef439c83e6bbac2868ff0",
+      "exitCode": 0,
+      "changedRefs": [],
+      "status": "M  src/refactor.txt\n",
+      "changedFields": [
+        "indexSha256",
+        "metadata"
+      ]
+    },
+    "conflict": {
+      "evidenceId": "ev_f609f0e8b73d808f0766eabf1853bbefd34bce68ed345dc8da6f56e1e68c3d3d",
+      "exitCode": 0,
+      "changedRefs": [
+        "api",
+        "refactor"
+      ],
+      "status": "M  README.md\n",
+      "changedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "indexSha256",
+        "metadata",
+        "allRefs",
+        "commitDetails"
+      ]
+    }
+  },
+  "checks": [
+    "multi-commit: process exits normally with complete terminal evidence",
+    "multi-commit: working-file bytes retained",
+    "multi-commit: main and unrelated branch retained",
+    "multi-commit: no editor/gh/pager called",
+    "multi-commit: two commits retain full authors/dates/messages and order",
+    "multi-commit: preview assigns distinct target commit identities",
+    "multi-commit: both changes incorporated and staging clean",
+    "same-line: process exits normally with complete terminal evidence",
+    "same-line: working-file bytes retained",
+    "same-line: main and unrelated branch retained",
+    "same-line: no editor/gh/pager called",
+    "same-line: refactor unchanged; most recent touching API commit amended",
+    "same-file-hunks: process exits normally with complete terminal evidence",
+    "same-file-hunks: working-file bytes retained",
+    "same-file-hunks: main and unrelated branch retained",
+    "same-file-hunks: no editor/gh/pager called",
+    "same-file-hunks: each hunk reaches its separate commit",
+    "mixed-work: process exits normally with complete terminal evidence",
+    "mixed-work: working-file bytes retained",
+    "mixed-work: main and unrelated branch retained",
+    "mixed-work: no editor/gh/pager called",
+    "mixed-work: unstaged delta preserved and absorbed hunk no longer staged",
+    "all-dry: process exits normally with complete terminal evidence",
+    "all-dry: working-file bytes retained",
+    "all-dry: main and unrelated branch retained",
+    "all-dry: no editor/gh/pager called",
+    "all-dry: no refs changed",
+    "all-dry: tracked edit really staged despite dry-run",
+    "all-dry: new untracked file excluded",
+    "all-apply: process exits normally with complete terminal evidence",
+    "all-apply: working-file bytes retained",
+    "all-apply: main and unrelated branch retained",
+    "all-apply: no editor/gh/pager called",
+    "all-apply: tracked edit absorbed and untracked file remains untracked",
+    "no-force: process exits normally with complete terminal evidence",
+    "no-force: working-file bytes retained",
+    "no-force: main and unrelated branch retained",
+    "no-force: no editor/gh/pager called",
+    "no-force: noninteractive invocation previews without applying",
+    "conflict: process exits normally with complete terminal evidence",
+    "conflict: working-file bytes retained",
+    "conflict: main and unrelated branch retained",
+    "conflict: no editor/gh/pager called",
+    "middle-branch: source api amended",
+    "middle-branch: upstack tests ref unchanged and stale",
+    "middle-branch: staged leftover retained",
+    "multi-commit: first amended tree contains only its own selected correction",
+    "multi-commit: second amended tree contains its separate correction",
+    "observed runs left no active rebase, including the middle-branch probe"
+  ],
+  "limits": [
+    "Eight Graphite scenarios, not a product acceptance suite.",
+    "The scenario named conflict did not produce an absorb conflict: Graphite left the upstack branch stale. No absorb continuation was tested."
+  ]
+}

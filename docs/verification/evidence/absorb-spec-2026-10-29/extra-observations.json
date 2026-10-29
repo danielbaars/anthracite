@@ -1,0 +1,20 @@
+{
+  "rewrittenFirst": "cd66d35eef17ca8a4db2565086fd04a5e37b3236",
+  "rewrittenSecond": "0e74dfed2c8349fb9868741d94478d38c95919a5",
+  "firstFiles": [
+    "README.md",
+    "src/refactor.txt"
+  ],
+  "firstHelper": "helper-mode=reviewed\nhelper-context-0\nhelper-context-1\nhelper-context-2\nhelper-context-3\nhelper-context-4\nhelper-context-5\nhelper-context-6\nhelper-context-7\nhelper-context-8\nhelper-context-9\nhelper-context-10\nhelper-context-11\nhelper-context-12\nhelper-context-13\nhelper-context-14\nhelper-context-15\nhelper-context-16\nhelper-context-17\nhelper-context-18\nhelper-context-19\n",
+  "secondHelper": "second-mode=reviewed\n",
+  "noActiveRebases": {
+    "multi-commit": true,
+    "same-line": true,
+    "same-file-hunks": true,
+    "mixed-work": true,
+    "all-dry": true,
+    "all-apply": true,
+    "no-force": true,
+    "conflict": true
+  }
+}
