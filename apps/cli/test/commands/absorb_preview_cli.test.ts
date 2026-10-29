@@ -164,7 +164,7 @@ describe('absorb previews through the public CLI', function () {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
-  it('explains a no-input preview, refuses unavailable application and previews wider input', () => {
+  it('explains a no-input preview, requires force for application and previews wider input', () => {
     let before = fixture.inspectionSnapshot();
     let result = fixture.run(['absorb', '--dry-run', '--no-interactive']);
     expect(result.status, result.stdout + result.stderr).to.equal(0);
@@ -172,7 +172,7 @@ describe('absorb previews through the public CLI', function () {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     result = fixture.run(['absorb', '--no-interactive']);
     expect(result.status).to.equal(1);
-    expect(result.stderr).to.include('application is not available');
+    expect(result.stderr).to.include('application requires --force');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     stageCorrection();
     fs.writeFileSync(

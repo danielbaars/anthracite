@@ -1,4 +1,5 @@
 import * as t from '@withgraphite/retype';
+import { getAbsorbGuard, readAbsorbGuard } from '../git/absorb_guard';
 import { cuteString } from '../utils/cute_string';
 import { runGitCommand, runGitCommandAndSplitLines } from '../git/runner';
 
@@ -41,6 +42,12 @@ export function writeMetadataRef(
 ): void {
   const cwd = typeof location === 'string' ? location : undefined;
   const prefix = typeof location === 'object' ? location.prefix : [];
+  const guardFile = getAbsorbGuard();
+  const expected = guardFile
+    ? readAbsorbGuard(guardFile).expected.find(
+        (entry) => entry.ref === `refs/branch-metadata/${branchName}`
+      )?.oid
+    : undefined;
   const metaSha = runGitCommand({
     args: [`hash-object`, `-w`, `--stdin`],
     options: {
@@ -56,6 +63,7 @@ export function writeMetadataRef(
       `update-ref`,
       `refs/branch-metadata/${branchName}`,
       metaSha,
+      ...(expected ? [expected] : []),
     ],
     options: {
       stdio: 'pipe',
