@@ -39,14 +39,14 @@ const args = {
   },
   'insert-child': {
     describe:
-      'Insert beneath this exact direct child of the selected parent; repeat for multiple children. Requires --insert; omitted choices select all children.',
+      'Insert beneath this exact direct child of the selected parent; repeat for multiple children. Requires --insert; choices are literal names, not patterns or comma-separated lists.',
     type: 'string',
     array: true,
     nargs: 1,
     requiresArg: true,
   },
   insert: {
-    describe: `Make chosen direct children of --onto (otherwise current branch) children of the new branch. Defaults to all children; use --insert-child to narrow the set. Refuses frozen parent-change or mandatory replay participants before creation.`,
+    describe: `Make chosen direct children of --onto (otherwise current branch) children of the new branch. With multiple children, a terminal menu has all initially selected and requires at least one; noninteractive defaults to all. Use --insert-child for explicit choices. Refuses frozen parent-change or mandatory replay participants before creation.`,
     demandOption: false,
     default: false,
     type: 'boolean',

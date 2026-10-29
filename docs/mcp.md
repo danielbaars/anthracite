@@ -25,6 +25,8 @@ Startup, initialization, discovery and learning work outside Git and without aut
 
 The server exposes exactly two tools:
 
+For exact child arguments, all-children defaults and selected-scope recovery, see [targeted insertion](targeted-insertion.md).
+
 - `learn_an`: accepts absent arguments or `{}` and returns maintained English guidance about stacks, inspection, staging, create/modify/restack, protected branches, conflict recovery and deliberate submission.
 - `run_an_cmd`: executes this same Anthracite build with a literal argument array in an explicitly selected directory. It can modify repositories and contact external services, just like the direct CLI.
 

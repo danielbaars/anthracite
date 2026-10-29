@@ -1,0 +1,32 @@
+{
+  "worktree": "/private/tmp/anthracite-insert-implementation-20261029/ticket-53",
+  "node": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+  "nodeVersion": "24.19.0",
+  "bun": "/private/tmp/anthracite-local-install-59ce4bdc/compiler/bun-darwin-aarch64/bun",
+  "bunVersion": "1.3.14",
+  "build": ["node", "node_modules/typescript/bin/tsc", "-p", "apps/cli"],
+  "typecheck": ["node", "node_modules/typescript/bin/tsc", "-p", "apps/cli", "--noEmit"],
+  "lintCwd": "apps/cli",
+  "lint": ["node", "../../node_modules/eslint/bin/eslint.js", "--no-cache", "src", "--quiet", "--ext", ".ts", "test/commands/create_insert_child_cli.test.ts", "test/commands/create_insert_interactive_cli.test.ts", "test/commands/create_insert_child_recovery_cli.test.ts", "test/commands/create_insert_routes_cli.test.ts", "test/commands/mcp_execution_cli.test.ts"],
+  "nativeBuild": ["bun", "build", "--compile", "apps/cli/dist/src/index.js", "--outfile=/private/tmp/anthracite-insert-implementation-20261029/evidence-53/an-ticket-53"],
+  "acceptance": ["node", "scripts/test-cli.cjs", "node|native"],
+  "testFilter": "commands/(create_insert_(child|interactive|child_recovery|routes)_cli|create_onto_cli|create_onto_insert_cli|create_onto_recovery_cli|freeze_structural_recovery_cli|modern_completion_cli)\\.test\\.js$",
+  "testEnvironment": {
+    "PATHPrefix": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin",
+    "ANTHRACITE_TEST_BINARY_nativeOnly": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/an-ticket-53",
+    "ANTHRACITE_TEST_EVIDENCE_DIR": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/final/{node,native}/fixtures",
+    "runner": "Fresh process per file, two file workers per runtime; runner creates its own existing temporary TMPDIR"
+  },
+  "sharedControls": ["node", "node_modules/mocha/bin/mocha.js", "apps/cli/dist/test/commands/freeze_structural_cli.test.js", "--grep", "rechecks insertion children after the commit hook|rechecks move participants after a metadata transaction hook|guards a mandatory parent-name change", "--reporter", "json"],
+  "npmBuild": ["node", "scripts/build-npm-package.cjs"],
+  "npmBuildEnvironment": {
+    "BUN_EXECUTABLE": "/private/tmp/anthracite-local-install-59ce4bdc/compiler/bun-darwin-aarch64/bun",
+    "npm_config_cache": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/npm-build-cache"
+  },
+  "installed": ["node", "scripts/test-npm-package.cjs", "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/danielbaars-anthracite.tgz"],
+  "installedEnvironment": {
+    "TMPDIR": "/private/tmp",
+    "ANTHRACITE_TEST_EVIDENCE_DIR": "/private/tmp/anthracite-insert-implementation-20261029/evidence-53/installed/fixtures",
+    "sandbox": "Scoped escalated run from outset for existing numeric-zero cancellation ps observation; offline install in disposable prefix with isolated HOME/npmrc and ignore-scripts. No user/global installation or configuration changed."
+  }
+}

@@ -130,6 +130,141 @@ describe('MCP command execution through stdio', function () {
     expect(fixture.git(['status', '--porcelain'])).to.equal('');
     expect(fs.existsSync(sentinel)).to.equal(false);
   });
+  it('scenario 17: discovers targeted insertion, preserves the unselected arm and refuses invalid children in one installed session', async () => {
+    fixture.git(['switch', '-c', 'comma,空間', 'base']);
+    fs.writeFileSync(
+      path.join(fixture.repo, 'chosen.txt'),
+      'chosen own work\n'
+    );
+    fixture.git(['add', 'chosen.txt']);
+    fixture.git(['commit', '-m', 'chosen own work']);
+    fixture.ok(['track', 'comma,空間', '--parent', 'base']);
+    fixture.git(['switch', 'base']);
+    const untouched = fixture.git([
+      'rev-parse',
+      'main',
+      'base',
+      'child',
+      'tip',
+      'other',
+      'refs/branch-metadata/child',
+      'refs/branch-metadata/tip',
+    ]);
+    const ownIdentity = fixture.git([
+      'show',
+      '-s',
+      '--format=%an%n%ae%n%aI%n%B',
+      'comma,空間',
+    ]);
+    fs.writeFileSync(
+      path.join(fixture.repo, 'prerequisite.txt'),
+      'installed prerequisite\n'
+    );
+    fixture.git(['add', 'prerequisite.txt']);
+    await connect();
+    const tools = await connection.client.listTools();
+    expect(tools.tools.map((tool) => tool.name).sort()).to.deep.equal([
+      'learn_an',
+      'run_an_cmd',
+    ]);
+    const learning = await connection.client.callTool({
+      name: 'learn_an',
+      arguments: {},
+    });
+    const guide = JSON.stringify(learning.content);
+    for (const fragment of [
+      '--insert-child',
+      'all children',
+      'literal',
+      'selected',
+      'continue',
+      'publication approval',
+    ])
+      expect(guide).to.include(fragment);
+    const inserted = await run(
+      [
+        'c',
+        'installed-insert',
+        '-i',
+        '--onto',
+        'base',
+        '--insert-child',
+        'comma,空間',
+        '-m',
+        'installed prerequisite',
+      ],
+      path.resolve(fixture.repo)
+    );
+    expect(inserted, inserted.stderr).to.include({
+      status: 'success',
+      exitCode: 0,
+      isError: false,
+      truncated: false,
+    });
+    expect(inserted.stdout).to.include('base').and.include('comma,空間');
+    expect(fixture.git(['branch', '--show-current'])).to.equal(
+      'installed-insert'
+    );
+    expect(fixture.git(['rev-parse', 'comma,空間^'])).to.equal(
+      fixture.git(['rev-parse', 'installed-insert'])
+    );
+    expect(fixture.git(['show', 'comma,空間:prerequisite.txt'])).to.equal(
+      'installed prerequisite'
+    );
+    expect(
+      fixture.git(['show', '-s', '--format=%an%n%ae%n%aI%n%B', 'comma,空間'])
+    ).to.equal(ownIdentity);
+    expect(
+      JSON.parse(
+        fixture.git(['cat-file', '-p', 'refs/branch-metadata/comma,空間'])
+      ).parentBranchName
+    ).to.equal('installed-insert');
+    expect(
+      fixture.git([
+        'rev-parse',
+        'main',
+        'base',
+        'child',
+        'tip',
+        'other',
+        'refs/branch-metadata/child',
+        'refs/branch-metadata/tip',
+      ])
+    ).to.equal(untouched);
+    const beforeInvalid = fixture.snapshot();
+    const metadataBeforeInvalid = fixture.git([
+      'for-each-ref',
+      '--format=%(refname) %(objectname)',
+      'refs/branch-metadata',
+    ]);
+    const invalid = await run([
+      'create',
+      'invalid-insert',
+      '--onto',
+      'base',
+      '--insert',
+      '--insert-child',
+      'missing',
+    ]);
+    expect(invalid).to.include({
+      status: 'cli_error',
+      exitCode: 1,
+      isError: true,
+      signal: null,
+      truncated: false,
+    });
+    expect(invalid.stderr).to.include('missing').and.include('base');
+    expect(fixture.snapshot()).to.deep.equal(beforeInvalid);
+    expect(
+      fixture.git([
+        'for-each-ref',
+        '--format=%(refname) %(objectname)',
+        'refs/branch-metadata',
+      ])
+    ).to.equal(metadataBeforeInvalid);
+    expect(connection.errors).to.deep.equal([]);
+    expect(connection.stderr).to.equal('');
+  });
   it('scenario 16: previews and continues a multi-target construction conflict with retained local work in one usable same-installation session', async () => {
     fixture.git(['switch', 'base']);
     fs.writeFileSync(
