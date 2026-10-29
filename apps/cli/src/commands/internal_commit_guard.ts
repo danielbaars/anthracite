@@ -1,4 +1,8 @@
 import fs from 'fs';
+import {
+  checkAbsorbGuard,
+  recordAbsorbHookFailure,
+} from '../lib/git/absorb_guard';
 import { runGitHook } from '../lib/git/run_hook';
 import yargs from 'yargs';
 import { assertBranchEditable } from '../lib/engine/frozen_branch';
@@ -12,6 +16,7 @@ export const builder = (cli: yargs.Argv): yargs.Argv =>
     .positional('branch', { type: 'string', demandOption: true })
     .positional('originalHook', { type: 'string', demandOption: true })
     .positional('phase', { type: 'string', demandOption: true })
+    .option('absorb-guard', { type: 'string' })
     .option('all-refs', { type: 'boolean', default: false })
     .option('participant', { type: 'string', array: true, nargs: 1 });
 
@@ -23,6 +28,7 @@ export const handler = (
     readonly phase: string;
     readonly 'all-refs': boolean;
     readonly participant?: string[];
+    readonly 'absorb-guard'?: string;
   }>
 ): void => {
   const input = fs.readFileSync(0);
@@ -33,10 +39,34 @@ export const handler = (
   } catch {
     /* A missing or non-executable hook is not a Git hook. */
   }
+  let hookFailure: number | undefined;
   if (executable) {
     const status = runGitHook(args.originalHook, [args.phase], input);
     if (status !== 0) {
-      process.exitCode = status;
+      if (args.phase === 'committed' && args['absorb-guard'])
+        hookFailure = status;
+      else {
+        process.exitCode = status;
+        return;
+      }
+    }
+  }
+  if (
+    args['absorb-guard'] &&
+    ['prepared', 'committed', 'before-mutation'].includes(args.phase)
+  ) {
+    try {
+      checkAbsorbGuard(args['absorb-guard'], args.phase, input);
+      if (hookFailure !== undefined) {
+        recordAbsorbHookFailure(args['absorb-guard'], hookFailure);
+        process.exitCode = hookFailure;
+        return;
+      }
+    } catch (error: unknown) {
+      process.stderr.write(
+        `ERROR: ${error instanceof Error ? error.message : String(error)}\n`
+      );
+      process.exitCode = 1;
       return;
     }
   }

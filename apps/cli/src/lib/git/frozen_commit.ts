@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { getAbsorbGuard } from './absorb_guard';
 import os from 'os';
 import path from 'path';
 import { runGitCommand } from './runner';
@@ -17,6 +18,8 @@ export function withFrozenCommitGuard(
     readonly participants?: readonly string[];
   } = {}
 ): void {
+  const absorbGuard = getAbsorbGuard();
+  const absorbArgs = absorbGuard ? ['--absorb-guard', absorbGuard] : [];
   const hooks = runGitCommand({
     args: ['rev-parse', '--path-format=absolute', '--git-path', 'hooks'],
     onError: 'throw',
@@ -61,6 +64,7 @@ export function withFrozenCommitGuard(
       branch,
       path.join(proxy, 'absent'),
       'before-mutation',
+      ...absorbArgs,
       ...(opts.participants ?? []).map((name) => `--participant=${name}`),
     ]
       .map(quote)
@@ -92,7 +96,9 @@ export function withFrozenCommitGuard(
     }
     fs.writeFileSync(
       path.join(proxy, 'reference-transaction'),
-      `${scriptHeader}if [ "$1" != prepared ]; then
+      `${scriptHeader}if [ "$1" != prepared ]${
+        absorbGuard ? ' && [ "$1" != committed ]' : ''
+      }; then
   if [ -x ${quote(originalReferenceHook)} ]; then exec ${quote(
         originalReferenceHook
       )} "$@"; fi
@@ -103,6 +109,7 @@ exec ${[
         'internal-commit-guard',
         branch,
         originalReferenceHook,
+        ...absorbArgs,
         ...(opts.allRefs ? ['--all-refs'] : []),
         ...(opts.participants ?? []).map((name) => `--participant=${name}`),
       ]

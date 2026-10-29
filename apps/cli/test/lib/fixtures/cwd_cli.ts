@@ -50,7 +50,7 @@ export class CwdCliFixture extends RelationCliFixture {
     const result = spawnSync(executable, cliArgs, {
       cwd,
       env: this.env,
-      timeout: 20000,
+      timeout: this.commandTimeoutMs,
       input,
     });
     if (process.env.ANTHRACITE_TEST_EVIDENCE_DIR)
@@ -60,7 +60,7 @@ export class CwdCliFixture extends RelationCliFixture {
           executable,
           args: cliArgs,
           cwd,
-          timeoutMs: 20000,
+          timeoutMs: this.commandTimeoutMs,
           status: result.status,
           signal: result.signal,
           error: result.error?.message,

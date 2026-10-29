@@ -1,6 +1,7 @@
 import { execFileSync } from 'child_process';
 import { TextDecoder } from 'util';
 
+import { runGitCommand, TRunGitCommandParameters } from '../lib/git/runner';
 import { PreconditionsFailedError } from '../lib/errors';
 
 const readOptions = [
@@ -70,3 +71,15 @@ export const absorbDiffOptions: readonly string[] = [
   '--diff-algorithm=myers',
   '--no-indent-heuristic',
 ];
+
+export function runAbsorbGit(
+  args: string[],
+  options: TRunGitCommandParameters['options'] = {}
+): string {
+  return runGitCommand({
+    args: ['--literal-pathspecs', ...args],
+    options: { cwd: getAbsorbRoot(), ...options },
+    onError: 'throw',
+    resource: 'absorb',
+  });
+}

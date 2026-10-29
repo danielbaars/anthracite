@@ -44,6 +44,26 @@ function assertNoActiveOperation(context: TContext): void {
   }
   if (readAbsorbGit(['ls-files', '--unmerged', '-z']))
     throw new PreconditionsFailedError('Absorb requires a resolved index.');
+  if (readAbsorbGit(['rev-parse', '--shared-index-path']).trim())
+    throw new PreconditionsFailedError(
+      'Absorb does not support split indexes.'
+    );
+  const intent = [
+    'diff',
+    '--cached',
+    '--raw',
+    '-z',
+    '--no-ext-diff',
+    '--no-textconv',
+    '--no-renames',
+  ];
+  if (
+    readAbsorbGit([...intent, '--ita-visible-in-index']) !==
+    readAbsorbGit([...intent, '--ita-invisible-in-index'])
+  )
+    throw new PreconditionsFailedError(
+      'Absorb does not support intent-to-add index entries.'
+    );
   if (/^[a-zS] /m.test(readAbsorbGit(['ls-files', '-v'])))
     throw new PreconditionsFailedError(
       'Absorb does not support skip-worktree or assume-unchanged index entries.'
