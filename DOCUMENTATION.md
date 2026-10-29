@@ -93,6 +93,30 @@ an modify -a            # amend current commit with all changes
 an modify -c -m "Fix"   # add a new commit instead
 ```
 
+### `absorb` (alias `ab`)
+Absorb staged corrections to existing regular text entries into their original feature commits, then replay every required tracked descendant. The candidate history is the current tracked branch and its synchronized downstack before trunk. Preview shows each hunk's original destination, explicit leftovers and required replay branches.
+
+| Flag | Description |
+| --- | --- |
+| `-d`, `--dry-run` | Inspect without changing refs, the real index or working files. With `--all`, inspect the prospective tracked selection. |
+| `-f`, `--force` | Skip the one plan confirmation. Required for noninteractive, quiet or closed-input application. |
+| `-a`, `--all` | Stage tracked modifications and deletions while retaining existing staged entries and excluding untracked files. |
+| `-p`, `--patch` | Use real Git terminal hunk selection against a private staging view. Accepted hunks join existing staged input; rejected hunks remain unstaged. Requires supported terminal input even with `--force`. |
+
+Active `--all` and `--patch` are mutually exclusive. `--dry-run` with `--patch` is refused before interaction; explicit false values do not activate a staging mode. Absorb accepts no positional operands. Use global `--cwd` to select the repository, including from a subdirectory.
+
+```sh
+an absorb -d              # inspect existing staged text corrections
+an ab -a -d               # preview tracked updates without real staging
+an absorb                 # inspect the plan and confirm once in a terminal
+an ab -p                  # select real Git hunks, then confirm the plan
+an absorb -a -f --no-interactive
+```
+
+Decline or cancellation before application retains the original index, work and refs. Unsupported entry changes (new/deleted files, binary, mode/type, symlink and gitlink changes) and unmatched text hunks remain staged and are reported separately. A staging-only result explicitly says nothing was absorbed. Frozen or occupied required participants, unsafe intermediate files, incompatible indexes and unsupported byte conversions refuse before publishing the staging selection or changing commits. Force does not bypass these guards.
+
+Original authors and full messages are retained; committer identity, hooks and signatures follow ordinary Git commits. Absorbed corrections become committed, remaining staged entries keep their staged role, and formerly unstaged work returns to the caller's checkout. No remote operation is implicit. A late failure can leave earlier published amendments: follow the printed reached-state and retained-input recovery instructions. Raw Git abort does not undo earlier amendments or restore isolated local input. See the [absorb specification](docs/specs/absorb.md) for the bounded text and recovery contract.
+
 ### `squash` (alias `sq`)
 Squash all commits in the current branch into one and restack upstack branches.
 

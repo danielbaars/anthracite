@@ -67,6 +67,7 @@ export function applyAbsorb(
   publishInput?: () => void
 ): void {
   if (!plan.targets.length) {
+    publishInput?.();
     if (!context.quiet) {
       for (const item of plan.leftovers)
         process.stdout.write(`Retained ${item.path}: ${item.reason}\n`);
