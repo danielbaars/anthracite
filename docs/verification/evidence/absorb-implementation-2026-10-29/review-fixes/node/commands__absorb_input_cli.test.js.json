@@ -1,0 +1,126 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-29T11:39:23.399Z",
+    "end": "2026-10-29T11:41:49.145Z",
+    "duration": 145746
+  },
+  "tests": [
+    {
+      "title": "preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "fullTitle": "absorb input compatibility through the public CLI preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 29017,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses non-UTF8 physical symlink targets before private staging or publication",
+      "fullTitle": "absorb input compatibility through the public CLI refuses non-UTF8 physical symlink targets before private staging or publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 11299,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an absent unchanged gitlink without reading its commit object as a blob",
+      "fullTitle": "absorb input compatibility through the public CLI retains an absent unchanged gitlink without reading its commit object as a blob",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 29947,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a changed submodule checkout or staged pointer before real or private staging",
+      "fullTitle": "absorb input compatibility through the public CLI refuses a changed submodule checkout or staged pointer before real or private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 15829,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "fullTitle": "absorb input compatibility through the public CLI refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 15428,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "fullTitle": "absorb input compatibility through the public CLI preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 28433,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "fullTitle": "absorb input compatibility through the public CLI preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 29017,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses non-UTF8 physical symlink targets before private staging or publication",
+      "fullTitle": "absorb input compatibility through the public CLI refuses non-UTF8 physical symlink targets before private staging or publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 11299,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an absent unchanged gitlink without reading its commit object as a blob",
+      "fullTitle": "absorb input compatibility through the public CLI retains an absent unchanged gitlink without reading its commit object as a blob",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 29947,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a changed submodule checkout or staged pointer before real or private staging",
+      "fullTitle": "absorb input compatibility through the public CLI refuses a changed submodule checkout or staged pointer before real or private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 15829,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "fullTitle": "absorb input compatibility through the public CLI refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 15428,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "fullTitle": "absorb input compatibility through the public CLI preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "duration": 28433,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

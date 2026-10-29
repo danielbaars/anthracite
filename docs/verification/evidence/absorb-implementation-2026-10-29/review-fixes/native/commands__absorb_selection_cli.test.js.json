@@ -1,0 +1,252 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 13,
+    "passes": 13,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-29T11:44:04.457Z",
+    "end": "2026-10-29T11:46:13.746Z",
+    "duration": 129289
+  },
+  "tests": [
+    {
+      "title": "selects exact original commits for two files in different branches",
+      "fullTitle": "absorb hunk selection through the public CLI selects exact original commits for two files in different branches",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 3402,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "assigns separated hunks in one file to distinct original commits",
+      "fullTitle": "absorb hunk selection through the public CLI assigns separated hunks in one file to distinct original commits",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 9520,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports every retained unsupported entry alongside an eligible hunk",
+      "fullTitle": "absorb hunk selection through the public CLI reports every retained unsupported entry alongside an eligible hunk",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 4076,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps distinct interior and current commit destinations within one branch",
+      "fullTitle": "absorb hunk selection through the public CLI keeps distinct interior and current commit destinations within one branch",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 7572,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "selects the most recent commit that changed an area instead of file introduction",
+      "fullTitle": "absorb hunk selection through the public CLI selects the most recent commit that changed an area instead of file introduction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 6509,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "translates independent line insertions and deletions through a newer prefix insertion",
+      "fullTitle": "absorb hunk selection through the public CLI translates independent line insertions and deletions through a newer prefix insertion",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 10745,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a correction whose historical duplicate placement is ambiguous",
+      "fullTitle": "absorb hunk selection through the public CLI retains a correction whose historical duplicate placement is ambiguous",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 9944,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not assign a canonical inserted copy when either repeated copy could be original",
+      "fullTitle": "absorb hunk selection through the public CLI does not assign a canonical inserted copy when either repeated copy could be original",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 8451,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "commutes repeated lines when history still forces their unique order",
+      "fullTitle": "absorb hunk selection through the public CLI commutes repeated lines when history still forces their unique order",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 9878,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "fullTitle": "absorb hunk selection through the public CLI preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 7066,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops ownership at an empty frozen anchor while permitting editable work above it",
+      "fullTitle": "absorb hunk selection through the public CLI stops ownership at an empty frozen anchor while permitting editable work above it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 3917,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "plans mandatory replay parent-first regardless of selected path ordering",
+      "fullTitle": "absorb hunk selection through the public CLI plans mandatory replay parent-first regardless of selected path ordering",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 9630,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "includes descendants above a middle caller and refuses an occupied side arm",
+      "fullTitle": "absorb hunk selection through the public CLI includes descendants above a middle caller and refuses an occupied side arm",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 6613,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "selects exact original commits for two files in different branches",
+      "fullTitle": "absorb hunk selection through the public CLI selects exact original commits for two files in different branches",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 3402,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "assigns separated hunks in one file to distinct original commits",
+      "fullTitle": "absorb hunk selection through the public CLI assigns separated hunks in one file to distinct original commits",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 9520,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports every retained unsupported entry alongside an eligible hunk",
+      "fullTitle": "absorb hunk selection through the public CLI reports every retained unsupported entry alongside an eligible hunk",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 4076,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps distinct interior and current commit destinations within one branch",
+      "fullTitle": "absorb hunk selection through the public CLI keeps distinct interior and current commit destinations within one branch",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 7572,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "selects the most recent commit that changed an area instead of file introduction",
+      "fullTitle": "absorb hunk selection through the public CLI selects the most recent commit that changed an area instead of file introduction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 6509,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "translates independent line insertions and deletions through a newer prefix insertion",
+      "fullTitle": "absorb hunk selection through the public CLI translates independent line insertions and deletions through a newer prefix insertion",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 10745,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a correction whose historical duplicate placement is ambiguous",
+      "fullTitle": "absorb hunk selection through the public CLI retains a correction whose historical duplicate placement is ambiguous",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 9944,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not assign a canonical inserted copy when either repeated copy could be original",
+      "fullTitle": "absorb hunk selection through the public CLI does not assign a canonical inserted copy when either repeated copy could be original",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 8451,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "commutes repeated lines when history still forces their unique order",
+      "fullTitle": "absorb hunk selection through the public CLI commutes repeated lines when history still forces their unique order",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 9878,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "fullTitle": "absorb hunk selection through the public CLI preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 7066,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops ownership at an empty frozen anchor while permitting editable work above it",
+      "fullTitle": "absorb hunk selection through the public CLI stops ownership at an empty frozen anchor while permitting editable work above it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 3917,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "plans mandatory replay parent-first regardless of selected path ordering",
+      "fullTitle": "absorb hunk selection through the public CLI plans mandatory replay parent-first regardless of selected path ordering",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 9630,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "includes descendants above a middle caller and refuses an occupied side arm",
+      "fullTitle": "absorb hunk selection through the public CLI includes descendants above a middle caller and refuses an occupied side arm",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "duration": 6613,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

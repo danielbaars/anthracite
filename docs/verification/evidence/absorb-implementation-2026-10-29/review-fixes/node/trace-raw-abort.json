@@ -1,0 +1,77 @@
+{
+  "commands": [
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "absorb",
+        "--force",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "status": 1,
+      "stdout": "",
+      "stderr": "ERROR: Absorb stopped. Completed: base. Active: constructing child. Pending: child, tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-xBYXPI. Command failed with error exit code 1:\ngit --literal-pathspecs -c submodule.recurse=false cherry-pick --no-commit c1ab77db723c5fe8a3f40352e9acc718cc42e590\nAuto-merging shared.txt\nCONFLICT (content): Merge conflict in shared.txt\n\nerror: could not apply c1ab77d... Neighbor\nhint: after resolving the conflicts, mark the corrected paths\nhint: with 'git add <paths>' or 'git rm <paths>'\nhint: Disable this message with \"git config set advice.mergeConflict false\"\n\nResolve the conflict in the owned construction checkout $FIXTURE/repo/.git/an-absorb-xBYXPI/construction. Stage only its resolutions with git -C '$FIXTURE/repo/.git/an-absorb-xBYXPI/construction' add <paths>, then run an continue from $FIXTURE/repo (or an continue --all to stage that construction checkout). Original source staged/unstaged input remains separate. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: '$NODE' '$FIXTURE/repo/.git/an-absorb-xBYXPI/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n"
+    },
+    {
+      "executable": "$NODE",
+      "args": [
+        "$WORKSPACE/apps/cli/dist/src/index.js",
+        "continue",
+        "--all",
+        "--no-interactive"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "status": 1,
+      "stdout": "",
+      "stderr": "ERROR: No owned active absorb construction replay. Inspect reached work; earlier amendments remain after abort. Retained input and manual restoration: $FIXTURE/repo/.git/an-absorb-xBYXPI/restore.cjs\n"
+    }
+  ],
+  "independentGitObservations": [
+    {
+      "args": [
+        "log",
+        "--reverse",
+        "--format=%an%n%ae%n%aI%n%B",
+        "main..child"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "Reorder fixture\nreorder@example.test\n2026-10-29T12:37:43+01:00\nbase\n\nReorder fixture\nreorder@example.test\n2026-10-29T12:37:45+01:00\nIntroduce shared\n\nOriginal full message.\n\nReorder fixture\nreorder@example.test\n2026-10-29T12:37:43+01:00\nchild\n\nReorder fixture\nreorder@example.test\n2026-10-29T12:37:50+01:00\nNeighbor\n\nPreserve this body."
+    },
+    {
+      "args": [
+        "rev-list",
+        "--count",
+        "main..child"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "4"
+    },
+    {
+      "args": [
+        "-C",
+        "$FIXTURE/repo/.git/an-absorb-xBYXPI/construction",
+        "cherry-pick",
+        "--abort"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": ""
+    },
+    {
+      "args": [
+        "show",
+        ":main.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "retained baseline"
+    },
+    {
+      "args": [
+        "show",
+        ":child.txt"
+      ],
+      "cwd": "$FIXTURE/repo",
+      "output": "corrected child"
+    }
+  ]
+}

@@ -1,0 +1,1986 @@
+{
+  "stats": {
+    "suites": 7,
+    "tests": 123,
+    "passes": 123,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-29T11:34:59.048Z",
+    "end": "2026-10-29T11:34:59.050Z",
+    "duration": 2
+  },
+  "tests": [
+    {
+      "title": "corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "fullTitle": "single-commit absorb application through the public CLI corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "fullTitle": "single-commit absorb application through the public CLI preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses redirected indexes before planning or writing any source state",
+      "fullTitle": "single-commit absorb application through the public CLI refuses redirected indexes before planning or writing any source state",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses working-tree conversions before constructing commits or cleaning input",
+      "fullTitle": "single-commit absorb application through the public CLI refuses working-tree conversions before constructing commits or cleaning input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "fullTitle": "single-commit absorb application through the public CLI preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "fullTitle": "single-commit absorb application through the public CLI keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "fullTitle": "single-commit absorb application through the public CLI keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "fullTitle": "single-commit absorb application through the public CLI refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "fullTitle": "single-commit absorb application through the public CLI stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "fullTitle": "single-commit absorb application through the public CLI applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies a root-relative correction from a nested directory with a literal Unicode path",
+      "fullTitle": "single-commit absorb application through the public CLI applies a root-relative correction from a nested directory with a literal Unicode path",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses frozen or occupied mandatory participants before input or refs change",
+      "fullTitle": "single-commit absorb application through the public CLI refuses frozen or occupied mandatory participants before input or refs change",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an opaque existing cache lock without deleting it or changing input",
+      "fullTitle": "single-commit absorb application through the public CLI refuses an opaque existing cache lock without deleting it or changing input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "fullTitle": "single-commit absorb application through the public CLI retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "fullTitle": "single-commit absorb application through the public CLI applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "fullTitle": "absorb continuation through the public CLI continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "continues selected-range construction before first publication without repeating prefixes or staging caller input",
+      "fullTitle": "absorb continuation through the public CLI continues selected-range construction before first publication without repeating prefixes or staging caller input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "continues selected-range construction after first publication without repeating prefixes or staging caller input",
+      "fullTitle": "absorb continuation through the public CLI continues selected-range construction after first publication without repeating prefixes or staging caller input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "resumes a selected correction that itself conflicts after a deliberate construction resolution",
+      "fullTitle": "absorb continuation through the public CLI resumes a selected correction that itself conflicts after a deliberate construction resolution",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses construction continuation after raw Git abort without losing an earlier publication or retained input",
+      "fullTitle": "absorb continuation through the public CLI refuses construction continuation after raw Git abort without losing an earlier publication or retained input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "fullTitle": "absorb continuation through the public CLI refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves a deliberate intermediate resolution inherited by the original checkout",
+      "fullTitle": "absorb continuation through the public CLI preserves a deliberate intermediate resolution inherited by the original checkout",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "fullTitle": "absorb continuation through the public CLI refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "fullTitle": "absorb continuation through the public CLI keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "fullTitle": "absorb continuation through the public CLI preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "fullTitle": "absorb continuation through the public CLI resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses occupied and foreign-worktree continuation before staging a resolution",
+      "fullTitle": "absorb continuation through the public CLI refuses occupied and foreign-worktree continuation before staging a resolution",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains both committed conflict work and original staged input when final remainders collide",
+      "fullTitle": "absorb continuation through the public CLI retains both committed conflict work and original staged input when final remainders collide",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "fullTitle": "absorb continuation through the public CLI refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "fullTitle": "absorb continuation through the public CLI distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "guards the actual trunk parent against an external hook move before first-feature publication",
+      "fullTitle": "absorb continuation through the public CLI guards the actual trunk parent against an external hook move before first-feature publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "fullTitle": "absorb input compatibility through the public CLI preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses non-UTF8 physical symlink targets before private staging or publication",
+      "fullTitle": "absorb input compatibility through the public CLI refuses non-UTF8 physical symlink targets before private staging or publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains an absent unchanged gitlink without reading its commit object as a blob",
+      "fullTitle": "absorb input compatibility through the public CLI retains an absent unchanged gitlink without reading its commit object as a blob",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a changed submodule checkout or staged pointer before real or private staging",
+      "fullTitle": "absorb input compatibility through the public CLI refuses a changed submodule checkout or staged pointer before real or private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "fullTitle": "absorb input compatibility through the public CLI refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "fullTitle": "absorb input compatibility through the public CLI preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "fullTitle": "multi-target absorb through the public CLI applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "fullTitle": "multi-target absorb through the public CLI keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "fullTitle": "multi-target absorb through the public CLI replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "fullTitle": "multi-target absorb through the public CLI retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an intermediate side-arm collision before staging or publishing any target",
+      "fullTitle": "multi-target absorb through the public CLI refuses an intermediate side-arm collision before staging or publishing any target",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "fullTitle": "multi-target absorb through the public CLI keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "fullTitle": "multi-target absorb through the public CLI retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "fullTitle": "multi-target absorb through the public CLI retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preflights frozen and occupied side-arm participants before any target or input publication",
+      "fullTitle": "multi-target absorb through the public CLI preflights frozen and occupied side-arm participants before any target or input publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves source work written by a later selected branch publication hook",
+      "fullTitle": "multi-target absorb through the public CLI preserves source work written by a later selected branch publication hook",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "identifies the original downstack commit and replay chain without effects",
+      "fullTitle": "absorb previews through the public CLI identifies the original downstack commit and replay chain without effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses saved recovery from a linked worktree without cleaning either index",
+      "fullTitle": "absorb previews through the public CLI refuses saved recovery from a linked worktree without cleaning either index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "fullTitle": "absorb previews through the public CLI reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "fullTitle": "absorb previews through the public CLI refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a frozen mandatory descendant instead of silently skipping it",
+      "fullTitle": "absorb previews through the public CLI refuses a frozen mandatory descendant instead of silently skipping it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "reports a frozen target and a trunk-owned correction as retained input",
+      "fullTitle": "absorb previews through the public CLI reports a frozen target and a trunk-owned correction as retained input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "explains a no-input preview, requires force for application and previews wider input",
+      "fullTitle": "absorb previews through the public CLI explains a no-input preview, requires force for application and previews wider input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "lets an empty tracked caller inspect an eligible ancestor",
+      "fullTitle": "absorb previews through the public CLI lets an empty tracked caller inspect an eligible ancestor",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "fullTitle": "absorb previews through the public CLI retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an unhandled content filter without invoking configured text conversion",
+      "fullTitle": "absorb previews through the public CLI refuses an unhandled content filter without invoking configured text conversion",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses trunk source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses trunk source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses detached source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses detached source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses untracked source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses untracked source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses stale source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses stale source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses merge source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses merge source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses unmerged source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses unmerged source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses active source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses active source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses uninitialized source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses uninitialized source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses outside source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses outside source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "selects exact original commits for two files in different branches",
+      "fullTitle": "absorb hunk selection through the public CLI selects exact original commits for two files in different branches",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "assigns separated hunks in one file to distinct original commits",
+      "fullTitle": "absorb hunk selection through the public CLI assigns separated hunks in one file to distinct original commits",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "reports every retained unsupported entry alongside an eligible hunk",
+      "fullTitle": "absorb hunk selection through the public CLI reports every retained unsupported entry alongside an eligible hunk",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps distinct interior and current commit destinations within one branch",
+      "fullTitle": "absorb hunk selection through the public CLI keeps distinct interior and current commit destinations within one branch",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "selects the most recent commit that changed an area instead of file introduction",
+      "fullTitle": "absorb hunk selection through the public CLI selects the most recent commit that changed an area instead of file introduction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "translates independent line insertions and deletions through a newer prefix insertion",
+      "fullTitle": "absorb hunk selection through the public CLI translates independent line insertions and deletions through a newer prefix insertion",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains a correction whose historical duplicate placement is ambiguous",
+      "fullTitle": "absorb hunk selection through the public CLI retains a correction whose historical duplicate placement is ambiguous",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not assign a canonical inserted copy when either repeated copy could be original",
+      "fullTitle": "absorb hunk selection through the public CLI does not assign a canonical inserted copy when either repeated copy could be original",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "commutes repeated lines when history still forces their unique order",
+      "fullTitle": "absorb hunk selection through the public CLI commutes repeated lines when history still forces their unique order",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "fullTitle": "absorb hunk selection through the public CLI preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "stops ownership at an empty frozen anchor while permitting editable work above it",
+      "fullTitle": "absorb hunk selection through the public CLI stops ownership at an empty frozen anchor while permitting editable work above it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "plans mandatory replay parent-first regardless of selected path ordering",
+      "fullTitle": "absorb hunk selection through the public CLI plans mandatory replay parent-first regardless of selected path ordering",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "includes descendants above a middle caller and refuses an occupied side arm",
+      "fullTitle": "absorb hunk selection through the public CLI includes descendants above a middle caller and refuses an occupied side arm",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "previews tracked-only all through ab -a -d without changing the raw index or work",
+      "fullTitle": "absorb staging and interaction through the public CLI previews tracked-only all through ab -a -d without changing the raw index or work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies tracked-only all and retains staged new entries and untracked bytes",
+      "fullTitle": "absorb staging and interaction through the public CLI applies tracked-only all and retains staged new entries and untracked bytes",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "shows the complete plan once and preserves the original index on declined confirmation",
+      "fullTitle": "absorb staging and interaction through the public CLI shows the complete plan once and preserves the original index on declined confirmation",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "uses real Git patch selection and absorbs only the accepted hunk while retaining prior staged work",
+      "fullTitle": "absorb staging and interaction through the public CLI uses real Git patch selection and absorbs only the accepted hunk while retaining prior staged work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves original state when terminal selection is canceled",
+      "fullTitle": "absorb staging and interaction through the public CLI preserves original state when terminal selection is canceled",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves original state when terminal confirmation is canceled",
+      "fullTitle": "absorb staging and interaction through the public CLI preserves original state when terminal confirmation is canceled",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses active all and patch before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses active all and patch before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses dry-run and patch before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses dry-run and patch before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses closed stdin without force before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses closed stdin without force before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses quiet without force before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses quiet without force before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses explicit noninteractive without force before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses explicit noninteractive without force before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses forced patch without a terminal before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses forced patch without a terminal before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an unknown option before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an unknown option before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an operand before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an operand before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not activate false staging options or false force during a safe explicit preview",
+      "fullTitle": "absorb staging and interaction through the public CLI does not activate false staging options or false force during a safe explicit preview",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "publishes tracked deletion as staging-only and never claims an amendment",
+      "fullTitle": "absorb staging and interaction through the public CLI publishes tracked deletion as staging-only and never claims an amendment",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies staged input after one terminal confirmation and returns the caller checkout",
+      "fullTitle": "absorb staging and interaction through the public CLI applies staged input after one terminal confirmation and returns the caller checkout",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a source edit made during confirmation without overwriting that external edit or the original index",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses a source edit made during confirmation without overwriting that external edit or the original index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses unstaged content filters before all preview can run them",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses unstaged content filters before all preview can run them",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses unstaged content filters before patch selection can run them",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses unstaged content filters before patch selection can run them",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all before publishing its index with a frozen descendant",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all before publishing its index with a frozen descendant",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all before publishing its index with a occupied descendant",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all before publishing its index with a occupied descendant",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all before publishing its index with a foreign cache lock",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all before publishing its index with a foreign cache lock",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all before publishing its index with a foreign index lock",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all before publishing its index with a foreign index lock",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an intermediate untracked file collision before all publishes its index",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an intermediate untracked file collision before all publishes its index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an intermediate untracked file collision before all previews an unsafe plan",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an intermediate untracked file collision before all previews an unsafe plan",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "describes absorb/ab and its options through help and completion outside Git without external tools",
+      "fullTitle": "absorb staging and interaction through the public CLI describes absorb/ab and its options through help and completion outside Git without external tools",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "projects root-relative spaces and Unicode paths from the effective subdirectory cwd",
+      "fullTitle": "absorb staging and interaction through the public CLI projects root-relative spaces and Unicode paths from the effective subdirectory cwd",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "suppresses routine no-input and staging-only progress in quiet mode",
+      "fullTitle": "absorb staging and interaction through the public CLI suppresses routine no-input and staging-only progress in quiet mode",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with saved recovery before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with saved recovery before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with split index before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with split index before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with intent-to-add before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with intent-to-add before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with skip-worktree before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with skip-worktree before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with assume-unchanged before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with assume-unchanged before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an all preview blocked by foreign .graphite_cache_lock while preserving its bytes",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an all preview blocked by foreign .graphite_cache_lock while preserving its bytes",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an all preview blocked by foreign index.lock while preserving its bytes",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an all preview blocked by foreign index.lock while preserving its bytes",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps the original raw index when all patch hunks are declined",
+      "fullTitle": "absorb staging and interaction through the public CLI keeps the original raw index when all patch hunks are declined",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not execute configured external diff, textconv or patch diff filters during private selection",
+      "fullTitle": "absorb staging and interaction through the public CLI does not execute configured external diff, textconv or patch diff filters during private selection",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "checks mandatory participants from the prospective all input rather than replaced staged hunks",
+      "fullTitle": "absorb staging and interaction through the public CLI checks mandatory participants from the prospective all input rather than replaced staged hunks",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a tracked parent-directory symlink before staging or following it for source fingerprints",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses a tracked parent-directory symlink before staging or following it for source fingerprints",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not publish accepted private patch hunks when final confirmation is declined",
+      "fullTitle": "absorb staging and interaction through the public CLI does not publish accepted private patch hunks when final confirmation is declined",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "publishes all from a linked source worktree without staging or checking out its primary sibling",
+      "fullTitle": "absorb staging and interaction through the public CLI publishes all from a linked source worktree without staging or checking out its primary sibling",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not execute an fsmonitor hook during private all preview",
+      "fullTitle": "absorb staging and interaction through the public CLI does not execute an fsmonitor hook during private all preview",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not execute an fsmonitor hook during private patch selection",
+      "fullTitle": "absorb staging and interaction through the public CLI does not execute an fsmonitor hook during private patch selection",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "fullTitle": "single-commit absorb application through the public CLI corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "fullTitle": "single-commit absorb application through the public CLI preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses redirected indexes before planning or writing any source state",
+      "fullTitle": "single-commit absorb application through the public CLI refuses redirected indexes before planning or writing any source state",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses working-tree conversions before constructing commits or cleaning input",
+      "fullTitle": "single-commit absorb application through the public CLI refuses working-tree conversions before constructing commits or cleaning input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "fullTitle": "single-commit absorb application through the public CLI preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "fullTitle": "single-commit absorb application through the public CLI keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "fullTitle": "single-commit absorb application through the public CLI keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "fullTitle": "single-commit absorb application through the public CLI refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "fullTitle": "single-commit absorb application through the public CLI stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "fullTitle": "single-commit absorb application through the public CLI applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies a root-relative correction from a nested directory with a literal Unicode path",
+      "fullTitle": "single-commit absorb application through the public CLI applies a root-relative correction from a nested directory with a literal Unicode path",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses frozen or occupied mandatory participants before input or refs change",
+      "fullTitle": "single-commit absorb application through the public CLI refuses frozen or occupied mandatory participants before input or refs change",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an opaque existing cache lock without deleting it or changing input",
+      "fullTitle": "single-commit absorb application through the public CLI refuses an opaque existing cache lock without deleting it or changing input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "fullTitle": "single-commit absorb application through the public CLI retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "fullTitle": "single-commit absorb application through the public CLI applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "fullTitle": "absorb continuation through the public CLI continues a genuine descendant conflict in a fresh process and restores middle-caller leftovers exactly once",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "continues selected-range construction before first publication without repeating prefixes or staging caller input",
+      "fullTitle": "absorb continuation through the public CLI continues selected-range construction before first publication without repeating prefixes or staging caller input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "continues selected-range construction after first publication without repeating prefixes or staging caller input",
+      "fullTitle": "absorb continuation through the public CLI continues selected-range construction after first publication without repeating prefixes or staging caller input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "resumes a selected correction that itself conflicts after a deliberate construction resolution",
+      "fullTitle": "absorb continuation through the public CLI resumes a selected correction that itself conflicts after a deliberate construction resolution",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses construction continuation after raw Git abort without losing an earlier publication or retained input",
+      "fullTitle": "absorb continuation through the public CLI refuses construction continuation after raw Git abort without losing an earlier publication or retained input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "fullTitle": "absorb continuation through the public CLI refuses a redirected index before continue --all changes resolved source or owned recovery",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves a deliberate intermediate resolution inherited by the original checkout",
+      "fullTitle": "absorb continuation through the public CLI preserves a deliberate intermediate resolution inherited by the original checkout",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "fullTitle": "absorb continuation through the public CLI refuses a newly frozen participant before continue --all and permits retry after its original protection metadata is restored",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "fullTitle": "absorb continuation through the public CLI keeps original owned input after raw Git abort and runs the printed guarded manual restoration",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "fullTitle": "absorb continuation through the public CLI preserves an unselected descendant own commit made redundant by the ancestor correction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "fullTitle": "absorb continuation through the public CLI resumes a pending selected caller after an earlier side-arm conflict using the saved no-verify choice",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses occupied and foreign-worktree continuation before staging a resolution",
+      "fullTitle": "absorb continuation through the public CLI refuses occupied and foreign-worktree continuation before staging a resolution",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains both committed conflict work and original staged input when final remainders collide",
+      "fullTitle": "absorb continuation through the public CLI retains both committed conflict work and original staged input when final remainders collide",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "fullTitle": "absorb continuation through the public CLI refuses a new ignored checkout collision created by a replay hook and retains its bytes for manual recovery",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "fullTitle": "absorb continuation through the public CLI distinguishes a retained failed Git exec from an unresolved content conflict and then continues it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "guards the actual trunk parent against an external hook move before first-feature publication",
+      "fullTitle": "absorb continuation through the public CLI guards the actual trunk parent against an external hook move before first-feature publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "fullTitle": "absorb input compatibility through the public CLI preserves an unchanged initialized gitlink and dirty nested bytes, HEAD and raw index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses non-UTF8 physical symlink targets before private staging or publication",
+      "fullTitle": "absorb input compatibility through the public CLI refuses non-UTF8 physical symlink targets before private staging or publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains an absent unchanged gitlink without reading its commit object as a blob",
+      "fullTitle": "absorb input compatibility through the public CLI retains an absent unchanged gitlink without reading its commit object as a blob",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a changed submodule checkout or staged pointer before real or private staging",
+      "fullTitle": "absorb input compatibility through the public CLI refuses a changed submodule checkout or staged pointer before real or private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "fullTitle": "absorb input compatibility through the public CLI refuses a transient gitlink transition inside a replay range even when its tip has the original pointer",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "fullTitle": "absorb input compatibility through the public CLI preserves ordinary Unicode symlink targets while applying an unrelated correction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_input_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "fullTitle": "multi-target absorb through the public CLI applies corrections to distinct original branch commits without losing earlier inherited corrections",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "fullTitle": "multi-target absorb through the public CLI keeps distinct same-file corrections in their original interior commits with exact authors and full messages",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "fullTitle": "multi-target absorb through the public CLI replays fan-out parent-first above a middle caller and retains local PR identity, unrelated refs and each own commit",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "fullTitle": "multi-target absorb through the public CLI retains a selected commit made empty by its exact text correction and keeps its branch identity",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an intermediate side-arm collision before staging or publishing any target",
+      "fullTitle": "multi-target absorb through the public CLI refuses an intermediate side-arm collision before staging or publishing any target",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "fullTitle": "multi-target absorb through the public CLI keeps an external protection change during a later target hook and restores retained input after partial progress",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "fullTitle": "multi-target absorb through the public CLI retains a frozen occupied read-only anchor while applying separate eligible corrections above it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "fullTitle": "multi-target absorb through the public CLI retains unchanged binary and symlink history and stages unsupported entries separately from multiple absorbed corrections",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preflights frozen and occupied side-arm participants before any target or input publication",
+      "fullTitle": "multi-target absorb through the public CLI preflights frozen and occupied side-arm participants before any target or input publication",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves source work written by a later selected branch publication hook",
+      "fullTitle": "multi-target absorb through the public CLI preserves source work written by a later selected branch publication hook",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_multi_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "identifies the original downstack commit and replay chain without effects",
+      "fullTitle": "absorb previews through the public CLI identifies the original downstack commit and replay chain without effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses saved recovery from a linked worktree without cleaning either index",
+      "fullTitle": "absorb previews through the public CLI refuses saved recovery from a linked worktree without cleaning either index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "fullTitle": "absorb previews through the public CLI reports a blocking foreign lock while preserving opaque caches, ignored work and dirty index stat data",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "fullTitle": "absorb previews through the public CLI refuses an occupied mandatory branch and preserves its dirty linked files and index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a frozen mandatory descendant instead of silently skipping it",
+      "fullTitle": "absorb previews through the public CLI refuses a frozen mandatory descendant instead of silently skipping it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "reports a frozen target and a trunk-owned correction as retained input",
+      "fullTitle": "absorb previews through the public CLI reports a frozen target and a trunk-owned correction as retained input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "explains a no-input preview, requires force for application and previews wider input",
+      "fullTitle": "absorb previews through the public CLI explains a no-input preview, requires force for application and previews wider input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "lets an empty tracked caller inspect an eligible ancestor",
+      "fullTitle": "absorb previews through the public CLI lets an empty tracked caller inspect an eligible ancestor",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "fullTitle": "absorb previews through the public CLI retains an unsupported staged mode change instead of advertising a text-only amendment",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an unhandled content filter without invoking configured text conversion",
+      "fullTitle": "absorb previews through the public CLI refuses an unhandled content filter without invoking configured text conversion",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses trunk source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses trunk source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses detached source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses detached source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses untracked source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses untracked source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses stale source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses stale source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses merge source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses merge source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses unmerged source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses unmerged source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses active source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses active source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses uninitialized source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses uninitialized source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses outside source before repair or cleanup",
+      "fullTitle": "absorb previews through the public CLI refuses outside source before repair or cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_preview_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "selects exact original commits for two files in different branches",
+      "fullTitle": "absorb hunk selection through the public CLI selects exact original commits for two files in different branches",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "assigns separated hunks in one file to distinct original commits",
+      "fullTitle": "absorb hunk selection through the public CLI assigns separated hunks in one file to distinct original commits",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "reports every retained unsupported entry alongside an eligible hunk",
+      "fullTitle": "absorb hunk selection through the public CLI reports every retained unsupported entry alongside an eligible hunk",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps distinct interior and current commit destinations within one branch",
+      "fullTitle": "absorb hunk selection through the public CLI keeps distinct interior and current commit destinations within one branch",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "selects the most recent commit that changed an area instead of file introduction",
+      "fullTitle": "absorb hunk selection through the public CLI selects the most recent commit that changed an area instead of file introduction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "translates independent line insertions and deletions through a newer prefix insertion",
+      "fullTitle": "absorb hunk selection through the public CLI translates independent line insertions and deletions through a newer prefix insertion",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "retains a correction whose historical duplicate placement is ambiguous",
+      "fullTitle": "absorb hunk selection through the public CLI retains a correction whose historical duplicate placement is ambiguous",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not assign a canonical inserted copy when either repeated copy could be original",
+      "fullTitle": "absorb hunk selection through the public CLI does not assign a canonical inserted copy when either repeated copy could be original",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "commutes repeated lines when history still forces their unique order",
+      "fullTitle": "absorb hunk selection through the public CLI commutes repeated lines when history still forces their unique order",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "fullTitle": "absorb hunk selection through the public CLI preserves CRLF and missing final newline for literal Unicode paths from a subdirectory",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "stops ownership at an empty frozen anchor while permitting editable work above it",
+      "fullTitle": "absorb hunk selection through the public CLI stops ownership at an empty frozen anchor while permitting editable work above it",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "plans mandatory replay parent-first regardless of selected path ordering",
+      "fullTitle": "absorb hunk selection through the public CLI plans mandatory replay parent-first regardless of selected path ordering",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "includes descendants above a middle caller and refuses an occupied side arm",
+      "fullTitle": "absorb hunk selection through the public CLI includes descendants above a middle caller and refuses an occupied side arm",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_selection_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "previews tracked-only all through ab -a -d without changing the raw index or work",
+      "fullTitle": "absorb staging and interaction through the public CLI previews tracked-only all through ab -a -d without changing the raw index or work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies tracked-only all and retains staged new entries and untracked bytes",
+      "fullTitle": "absorb staging and interaction through the public CLI applies tracked-only all and retains staged new entries and untracked bytes",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "shows the complete plan once and preserves the original index on declined confirmation",
+      "fullTitle": "absorb staging and interaction through the public CLI shows the complete plan once and preserves the original index on declined confirmation",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "uses real Git patch selection and absorbs only the accepted hunk while retaining prior staged work",
+      "fullTitle": "absorb staging and interaction through the public CLI uses real Git patch selection and absorbs only the accepted hunk while retaining prior staged work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves original state when terminal selection is canceled",
+      "fullTitle": "absorb staging and interaction through the public CLI preserves original state when terminal selection is canceled",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "preserves original state when terminal confirmation is canceled",
+      "fullTitle": "absorb staging and interaction through the public CLI preserves original state when terminal confirmation is canceled",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses active all and patch before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses active all and patch before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses dry-run and patch before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses dry-run and patch before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses closed stdin without force before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses closed stdin without force before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses quiet without force before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses quiet without force before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses explicit noninteractive without force before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses explicit noninteractive without force before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses forced patch without a terminal before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses forced patch without a terminal before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an unknown option before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an unknown option before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an operand before staging or effects",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an operand before staging or effects",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not activate false staging options or false force during a safe explicit preview",
+      "fullTitle": "absorb staging and interaction through the public CLI does not activate false staging options or false force during a safe explicit preview",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "publishes tracked deletion as staging-only and never claims an amendment",
+      "fullTitle": "absorb staging and interaction through the public CLI publishes tracked deletion as staging-only and never claims an amendment",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "applies staged input after one terminal confirmation and returns the caller checkout",
+      "fullTitle": "absorb staging and interaction through the public CLI applies staged input after one terminal confirmation and returns the caller checkout",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a source edit made during confirmation without overwriting that external edit or the original index",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses a source edit made during confirmation without overwriting that external edit or the original index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses unstaged content filters before all preview can run them",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses unstaged content filters before all preview can run them",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses unstaged content filters before patch selection can run them",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses unstaged content filters before patch selection can run them",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all before publishing its index with a frozen descendant",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all before publishing its index with a frozen descendant",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all before publishing its index with a occupied descendant",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all before publishing its index with a occupied descendant",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all before publishing its index with a foreign cache lock",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all before publishing its index with a foreign cache lock",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all before publishing its index with a foreign index lock",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all before publishing its index with a foreign index lock",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an intermediate untracked file collision before all publishes its index",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an intermediate untracked file collision before all publishes its index",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an intermediate untracked file collision before all previews an unsafe plan",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an intermediate untracked file collision before all previews an unsafe plan",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "describes absorb/ab and its options through help and completion outside Git without external tools",
+      "fullTitle": "absorb staging and interaction through the public CLI describes absorb/ab and its options through help and completion outside Git without external tools",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "projects root-relative spaces and Unicode paths from the effective subdirectory cwd",
+      "fullTitle": "absorb staging and interaction through the public CLI projects root-relative spaces and Unicode paths from the effective subdirectory cwd",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "suppresses routine no-input and staging-only progress in quiet mode",
+      "fullTitle": "absorb staging and interaction through the public CLI suppresses routine no-input and staging-only progress in quiet mode",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with saved recovery before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with saved recovery before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with split index before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with split index before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with intent-to-add before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with intent-to-add before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with skip-worktree before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with skip-worktree before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses all with assume-unchanged before private staging",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses all with assume-unchanged before private staging",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an all preview blocked by foreign .graphite_cache_lock while preserving its bytes",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an all preview blocked by foreign .graphite_cache_lock while preserving its bytes",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses an all preview blocked by foreign index.lock while preserving its bytes",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses an all preview blocked by foreign index.lock while preserving its bytes",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "keeps the original raw index when all patch hunks are declined",
+      "fullTitle": "absorb staging and interaction through the public CLI keeps the original raw index when all patch hunks are declined",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not execute configured external diff, textconv or patch diff filters during private selection",
+      "fullTitle": "absorb staging and interaction through the public CLI does not execute configured external diff, textconv or patch diff filters during private selection",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "checks mandatory participants from the prospective all input rather than replaced staged hunks",
+      "fullTitle": "absorb staging and interaction through the public CLI checks mandatory participants from the prospective all input rather than replaced staged hunks",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "refuses a tracked parent-directory symlink before staging or following it for source fingerprints",
+      "fullTitle": "absorb staging and interaction through the public CLI refuses a tracked parent-directory symlink before staging or following it for source fingerprints",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not publish accepted private patch hunks when final confirmation is declined",
+      "fullTitle": "absorb staging and interaction through the public CLI does not publish accepted private patch hunks when final confirmation is declined",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "publishes all from a linked source worktree without staging or checking out its primary sibling",
+      "fullTitle": "absorb staging and interaction through the public CLI publishes all from a linked source worktree without staging or checking out its primary sibling",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not execute an fsmonitor hook during private all preview",
+      "fullTitle": "absorb staging and interaction through the public CLI does not execute an fsmonitor hook during private all preview",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "does not execute an fsmonitor hook during private patch selection",
+      "fullTitle": "absorb staging and interaction through the public CLI does not execute an fsmonitor hook during private patch selection",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_staging_cli.test.js",
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ]
+}

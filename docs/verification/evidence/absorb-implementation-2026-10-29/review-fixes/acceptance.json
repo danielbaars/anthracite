@@ -1,0 +1,275 @@
+{
+  "candidateCommit": "14dda978a40a388daa904f906cd59f0cbaf6921c",
+  "sourceManifestSha256": "a39c702deaa661efa22d908febc7159dbf58e945acc2776d7dec8050431cd8af",
+  "emittedManifestSha256": "17192d69dc5b256b00e5c4a77c49dc85ddcb32c7e8d10d7c097862debc4c00f4",
+  "nativeSha256": "01d4f344353a877fe683137853fdb774430725418ad5547c58630c5d4c7cdbf7",
+  "runtimeCounts": {
+    "node": {
+      "featureExecutions": 123,
+      "legacyExecutions": 16,
+      "successfulExecutions": 139,
+      "uniqueFileFullTitles": 138,
+      "failures": 0,
+      "pending": 0
+    },
+    "native": {
+      "featureExecutions": 123,
+      "legacyExecutions": 16,
+      "successfulExecutions": 139,
+      "uniqueFileFullTitles": 138,
+      "failures": 0,
+      "pending": 0
+    }
+  },
+  "exactCounterParity": true,
+  "collectedCoreCounterMatches": true,
+  "reports": [
+    {
+      "runtime": "node",
+      "file": "node/commands__absorb_apply_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 15,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:35:00.294Z",
+        "end": "2026-10-29T11:39:23.299Z",
+        "duration": 263005
+      }
+    },
+    {
+      "runtime": "node",
+      "file": "node/commands__absorb_continue_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 16,
+        "passes": 16,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:35:00.294Z",
+        "end": "2026-10-29T11:43:51.901Z",
+        "duration": 531607
+      }
+    },
+    {
+      "runtime": "node",
+      "file": "node/commands__absorb_input_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:39:23.399Z",
+        "end": "2026-10-29T11:41:49.145Z",
+        "duration": 145746
+      }
+    },
+    {
+      "runtime": "node",
+      "file": "node/commands__absorb_multi_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:41:49.274Z",
+        "end": "2026-10-29T11:45:31.127Z",
+        "duration": 221853
+      }
+    },
+    {
+      "runtime": "node",
+      "file": "node/commands__absorb_preview_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 19,
+        "passes": 19,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:43:52.037Z",
+        "end": "2026-10-29T11:45:29.793Z",
+        "duration": 97756
+      }
+    },
+    {
+      "runtime": "node",
+      "file": "node/commands__absorb_selection_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:45:29.936Z",
+        "end": "2026-10-29T11:47:48.395Z",
+        "duration": 138459
+      }
+    },
+    {
+      "runtime": "node",
+      "file": "node/commands__absorb_staging_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 44,
+        "passes": 44,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:45:31.233Z",
+        "end": "2026-10-29T11:49:29.297Z",
+        "duration": 238064
+      }
+    },
+    {
+      "runtime": "node",
+      "file": "node/legacy.json",
+      "stats": {
+        "suites": 10,
+        "tests": 16,
+        "passes": 16,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:49:29.508Z",
+        "end": "2026-10-29T11:51:15.267Z",
+        "duration": 105759
+      }
+    },
+    {
+      "runtime": "native",
+      "file": "native/commands__absorb_apply_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 15,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:35:00.293Z",
+        "end": "2026-10-29T11:38:54.017Z",
+        "duration": 233724
+      }
+    },
+    {
+      "runtime": "native",
+      "file": "native/commands__absorb_continue_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 16,
+        "passes": 16,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:35:00.295Z",
+        "end": "2026-10-29T11:42:33.506Z",
+        "duration": 453211
+      }
+    },
+    {
+      "runtime": "native",
+      "file": "native/commands__absorb_input_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:38:54.149Z",
+        "end": "2026-10-29T11:40:58.235Z",
+        "duration": 124086
+      }
+    },
+    {
+      "runtime": "native",
+      "file": "native/commands__absorb_multi_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:40:58.365Z",
+        "end": "2026-10-29T11:44:10.801Z",
+        "duration": 192436
+      }
+    },
+    {
+      "runtime": "native",
+      "file": "native/commands__absorb_preview_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 19,
+        "passes": 19,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:42:33.637Z",
+        "end": "2026-10-29T11:44:04.361Z",
+        "duration": 90724
+      }
+    },
+    {
+      "runtime": "native",
+      "file": "native/commands__absorb_selection_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:44:04.457Z",
+        "end": "2026-10-29T11:46:13.746Z",
+        "duration": 129289
+      }
+    },
+    {
+      "runtime": "native",
+      "file": "native/commands__absorb_staging_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 44,
+        "passes": 44,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:44:10.896Z",
+        "end": "2026-10-29T11:47:58.631Z",
+        "duration": 227735
+      }
+    },
+    {
+      "runtime": "native",
+      "file": "native/legacy.json",
+      "stats": {
+        "suites": 10,
+        "tests": 16,
+        "passes": 16,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:47:58.855Z",
+        "end": "2026-10-29T11:49:29.250Z",
+        "duration": 90395
+      }
+    }
+  ],
+  "installed": {
+    "T16Executions": 1,
+    "T16Passed": true,
+    "packageSelectionPassed": 6,
+    "packageSelectionFailed": 0,
+    "outsideSandboxForExistingNumericZeroProcessObservation": true,
+    "isolatedOfflinePrefix": true,
+    "qualification": "Exactly one current-candidate installed T16; historical6014d46 T16 remains separate evidence."
+  },
+  "checks": {
+    "build": "passed",
+    "noEmit": "passed",
+    "uncachedRelevantLint": "passed",
+    "diffCheck": "passed",
+    "creditsAndLicenseUnchanged": "passed"
+  },
+  "scope": {
+    "fullRepositorySuite": false,
+    "fullCI": false,
+    "liveGitHub": false,
+    "releasePublication": false,
+    "globalInstallationOrClientChanges": false
+  }
+}
