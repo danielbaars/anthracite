@@ -1,4 +1,5 @@
 import yargs from 'yargs';
+import { assertAbsorbEnvironment } from '../actions/absorb_git';
 
 import {
   applyAbsorb,
@@ -71,19 +72,7 @@ export const handler = async (
   argv: yargs.Arguments<yargs.InferredOptionTypes<typeof options>>
 ): Promise<void> => {
   return graphiteInspection(argv, async (context) => {
-    if (
-      [
-        'GIT_DIR',
-        'GIT_WORK_TREE',
-        'GIT_INDEX_FILE',
-        'GIT_COMMON_DIR',
-        'GIT_OBJECT_DIRECTORY',
-        'GIT_ALTERNATE_OBJECT_DIRECTORIES',
-      ].some((name) => process.env[name] !== undefined)
-    )
-      throw new PreconditionsFailedError(
-        'Absorb does not support Git environment redirection. Unset repository/index overrides before retrying.'
-      );
+    assertAbsorbEnvironment();
     if (!argv['dry-run'] && !argv.force && !context.canPrompt)
       throw new PreconditionsFailedError(
         'Absorb application requires --force without supported terminal confirmation. Use --dry-run to preview.'

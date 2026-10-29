@@ -11,7 +11,10 @@ import { assertDeleteRecoveryEditable } from '../actions/delete_recovery';
 import { continueConfigFactory } from './spiffy/continuation_spf';
 import { assertDeleteAllowed } from '../actions/delete_branch';
 import { planFileSplit } from '../actions/split_file_plan';
-import { assertAbsorbContinuationAvailable } from '../actions/absorb_recovery';
+import {
+  assertAbsorbContinuationAvailable,
+  assertAbsorbContinuationEnvironment,
+} from '../actions/absorb_recovery';
 import { assertFileSplitAvailable } from '../actions/split_file_recovery';
 import {
   initContext,
@@ -125,7 +128,6 @@ async function graphiteInternal(
         cacheLock: getCacheLock(),
       }
     : { ...handler, cacheLock: undefined };
-
   process.on('SIGINT', (): never => {
     handlerMaybeWithCacheLock.cacheLock?.release();
     // End all current traces abruptly.
@@ -135,6 +137,7 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
+    if (canonicalName === 'continue') assertAbsorbContinuationEnvironment();
     const absorbContinuation =
       canonicalName === 'continue' &&
       continueConfigFactory.load(undefined, { preserveInvalid: true }).data

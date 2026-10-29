@@ -93,6 +93,38 @@ describe('absorb continuation through the public CLI', function () {
     ])
       expect(after[key]).to.deep.equal(before[key]);
   });
+  it('refuses a redirected index before continue --all changes resolved source or owned recovery', () => {
+    conflict();
+    stage('base.txt', 'deliberate child resolution\n');
+    const external = path.join(fixture.root, 'external-index');
+    fs.copyFileSync(path.join(fixture.repo, '.git', 'index'), external);
+    const index = fs.readFileSync(external);
+    const before = fixture.inspectionSnapshot();
+    const retained = artifacts();
+    fixture.env.GIT_INDEX_FILE = external;
+    const stopped = fixture.run(['continue', '--all', '--no-interactive']);
+    delete fixture.env.GIT_INDEX_FILE;
+    expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
+    expect(stopped.stderr).to.include('Git environment redirection');
+    expect(fs.readFileSync(external)).to.deep.equal(index);
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(artifacts()).to.deep.equal(retained);
+    const foreign = path.join(fixture.root, 'foreign.git');
+    fixture.git(['init', '--bare', foreign]);
+    fixture.env.GIT_DIR = foreign;
+    const redirected = fixture.run(['continue', '--all', '--no-interactive']);
+    delete fixture.env.GIT_DIR;
+    expect(redirected.status, redirected.stdout + redirected.stderr).to.equal(
+      1
+    );
+    expect(redirected.stderr).to.include('Git environment redirection');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(artifacts()).to.deep.equal(retained);
+    expect(fixture.run(['continue', '--no-interactive']).status).to.equal(0);
+    expect(fixture.git(['show', 'tip:base.txt'])).to.equal(
+      'deliberate child resolution'
+    );
+  });
   it('preserves a deliberate intermediate resolution inherited by the original checkout', () => {
     fixture.git(['switch', 'base']);
     stage('shared.txt', 'alpha\nmiddle\nomega\n');

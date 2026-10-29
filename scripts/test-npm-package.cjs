@@ -118,7 +118,7 @@ try {
       "apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
       "apps/cli/dist/test/commands/frozen_submit_cli.test.js",
       "--grep",
-      "scenario (3:|4:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base",
+      "scenario (3:|4:|16:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base",
     ],
     {
       cwd: root,
