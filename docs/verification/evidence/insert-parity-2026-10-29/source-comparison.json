@@ -1,0 +1,128 @@
+[
+  {
+    "path": "apps/cli/src/actions/create_branch.ts",
+    "integration_blob": "bd8dc0610a48c1445fd25a1023b5ca67a673b1b2",
+    "release_blob": "bd8dc0610a48c1445fd25a1023b5ca67a673b1b2",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/commands/create.ts",
+    "integration_blob": "55c14ddf07ec01e3b63199d771c53f0e075eefb8",
+    "release_blob": "55c14ddf07ec01e3b63199d771c53f0e075eefb8",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/actions/restack.ts",
+    "integration_blob": "0d175a7c8780931a8c3ca06b5c49ac9c4a52b5a7",
+    "release_blob": "0d175a7c8780931a8c3ca06b5c49ac9c4a52b5a7",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/actions/continue.ts",
+    "integration_blob": "3da87bb6697fd8cf7f2ec063eac54523933718c0",
+    "release_blob": "3da87bb6697fd8cf7f2ec063eac54523933718c0",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/actions/persist_continuation.ts",
+    "integration_blob": "6d10858df3cf183902bc86ef7a6ba968b59e95ca",
+    "release_blob": "6d10858df3cf183902bc86ef7a6ba968b59e95ca",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/engine/engine.ts",
+    "integration_blob": "62aa6adbca77f62649dce132b6d8d63b188fada7",
+    "release_blob": "62aa6adbca77f62649dce132b6d8d63b188fada7",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/engine/frozen_branch.ts",
+    "integration_blob": "1c7149174a6b4d8db1f5d116e30f2ab1ace4f296",
+    "release_blob": "1c7149174a6b4d8db1f5d116e30f2ab1ace4f296",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/git/worktrees.ts",
+    "integration_blob": "9d78698f736f013ab9506e5cf0e797fa2eb6853f",
+    "release_blob": "9d78698f736f013ab9506e5cf0e797fa2eb6853f",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/git/restack_files.ts",
+    "integration_blob": "decb27faf51ed17e4b6e46d812e52e4c6f8067db",
+    "release_blob": "decb27faf51ed17e4b6e46d812e52e4c6f8067db",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/git/create_changes.ts",
+    "integration_blob": "0bf3431074acfaf5e32224b330965f57d46a2266",
+    "release_blob": "0bf3431074acfaf5e32224b330965f57d46a2266",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/preconditions.ts",
+    "integration_blob": "9518e2edb052b30c946f7e983c7795a0bf8bd29f",
+    "release_blob": "9518e2edb052b30c946f7e983c7795a0bf8bd29f",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/interaction_policy.ts",
+    "integration_blob": "6900cccd9249449180a37756e316a80d9d57030d",
+    "release_blob": "6900cccd9249449180a37756e316a80d9d57030d",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/utils/branch_name.ts",
+    "integration_blob": "e605cc47e386ad2294f11fe52c4dd511010b5ef7",
+    "release_blob": "e605cc47e386ad2294f11fe52c4dd511010b5ef7",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/runner.ts",
+    "integration_blob": "4aa323928a96ea92962e7d90e7da90e643f194e0",
+    "release_blob": "4aa323928a96ea92962e7d90e7da90e643f194e0",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/src/lib/context.ts",
+    "integration_blob": "b6ec3f6d0c43e6a49342b345c429eaf6c561ec3d",
+    "release_blob": "b6ec3f6d0c43e6a49342b345c429eaf6c561ec3d",
+    "identical": true
+  },
+  {
+    "path": "DOCUMENTATION.md",
+    "integration_blob": "228fcae174e7c6f41e161fba1ddf1ac8112d242e",
+    "release_blob": "228fcae174e7c6f41e161fba1ddf1ac8112d242e",
+    "identical": true
+  },
+  {
+    "path": "COMPATIBILITY.md",
+    "integration_blob": "603c2cccf58d9058bf11ba02032aa9d1d60b1504",
+    "release_blob": "603c2cccf58d9058bf11ba02032aa9d1d60b1504",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/test/commands/create_onto_insert_cli.test.ts",
+    "integration_blob": "b03ca89fdf2edf7edf71c549485a08fa29ed2a99",
+    "release_blob": "b03ca89fdf2edf7edf71c549485a08fa29ed2a99",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/test/commands/freeze_structural_cli.test.ts",
+    "integration_blob": "5aeb9970f4cb31efe8b76fb7c934d1b7536fc2f4",
+    "release_blob": "5aeb9970f4cb31efe8b76fb7c934d1b7536fc2f4",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/test/commands/freeze_structural_recovery_cli.test.ts",
+    "integration_blob": "d72fb9fe64ea1f023548aaf6f59ac998edae76e5",
+    "release_blob": "d72fb9fe64ea1f023548aaf6f59ac998edae76e5",
+    "identical": true
+  },
+  {
+    "path": "apps/cli/test/commands/freeze_structural_routes_cli.test.ts",
+    "integration_blob": "3cc732600c0f40436abd7fdf7bc938099d5772c2",
+    "release_blob": "3cc732600c0f40436abd7fdf7bc938099d5772c2",
+    "identical": true
+  }
+]

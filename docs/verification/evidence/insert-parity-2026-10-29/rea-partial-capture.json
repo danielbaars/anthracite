@@ -1,0 +1,71 @@
+{
+  "status": "cleanup_incomplete",
+  "cleanup": {
+    "owned_process_group": {
+      "state": "unverified",
+      "reason": "process identity could not be revalidated",
+      "unverified_processes": [
+        {
+          "pid": 53324,
+          "reason": "platform_binary_environment_withheld"
+        },
+        {
+          "pid": 54049,
+          "reason": "platform_binary_environment_withheld"
+        },
+        {
+          "pid": 54291,
+          "reason": "platform_binary_environment_withheld"
+        }
+      ]
+    },
+    "terminal_renderer": {
+      "state": "cleaned",
+      "reason": null
+    },
+    "temporary_root": {
+      "state": "unverified",
+      "reason": "temporary root retained because owned process cleanup is unverified: process identity could not be revalidated"
+    }
+  },
+  "executableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+  "exit": {
+    "code": 1,
+    "signal": 0,
+    "reason": "exited"
+  },
+  "frames": [
+    {
+      "sequence": 0,
+      "at_ms": 560,
+      "data": "1 file changed, 1 insertion(+)\r\n create mode 100644 inserted.txt\r\n"
+    },
+    {
+      "sequence": 1,
+      "at_ms": 560,
+      "data": "\r\n"
+    },
+    {
+      "sequence": 2,
+      "at_ms": 560,
+      "data": "\u001b[?25l\u001b[2K\u001b[G? Which branches would you like to move onto \u001b[36minserted\u001b[39m? \u203a  Space to toggle; enter to confirm.\r\n\u25c9   \u001b[94mleft\u001b[39m\r\n\u25c9   \u001b[94mright\u001b[39m"
+    },
+    {
+      "sequence": 3,
+      "at_ms": 2500,
+      "data": "\u001b[2K\u001b[1A\u001b[2K\u001b[1A\u001b[2K\u001b[G\u2716 Which branches would you like to move onto \u001b[36minserted\u001b[39m? \u203a \u001b[94mleft\u001b[39m, \u001b[94mright\u001b[39m"
+    },
+    {
+      "sequence": 4,
+      "at_ms": 2500,
+      "data": "\r\n\u001b[?25h"
+    }
+  ],
+  "limitations": [
+    "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+    "Process trees are sampled and may omit short-lived descendants.",
+    "Filesystem observations are before/after snapshots, not syscall traces.",
+    "Inherited host environment variables are not recorded and may affect results.",
+    "No filesystem observation paths were selected; filesystem effects remain unknown."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "acceptedScenarioRecords": 30,
+  "additionalContinueCalls": 2,
+  "additionalGraphiteRestackCalls": 1,
+  "assertions": "All completed; expected refusals/cancellations are not classified as successful application tests.",
+  "excluded": "Four initial Anthracite PTY executions and one initial Graphite empty-selection execution hit a 12-second harness deadline; complete fresh probes with a 60-second ceiling replace them. They are not product failures.",
+  "rea": "Partial initial capture only, cleanup unverified; conclusions corroborated by fresh ordinary Python PTY and independent Git snapshots.",
+  "mcp": "No MCP request run in this comparison; agent-policy implications derive from the CLI noninteractive observations.",
+  "noGitHubFixtures": true,
+  "noCI": true
+}

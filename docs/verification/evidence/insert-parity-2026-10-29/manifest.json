@@ -1,0 +1,11 @@
+{
+  "fixture.py": "02ebf5ea08f3d691fc85041b24462fd95554174b00a42d5b684e7160262c32ac",
+  "identities.json": "ff9e644748d2e28aa637c1eea89487c81610911618be87822bbb8e2f19af3038",
+  "rea-partial-capture.json": "590ff4d2125b8d5313443be9ad6e601fbc3b51b75e422d4c6f43d42d2863fa18",
+  "conflict-probe.py": "67c525dbd2cf0403ec209158f698e4e183d8e50fa435cbda1a900be5b90f03e1",
+  "interactive.py": "f74db0b4ffc1815f105f400d53db5c5fa40d13d05c6f316eed88161a89a68e06",
+  "observations.json": "f491004237b91a5f8d1be6f2aeeadfededafb51ad561da325cf83eadbb726355",
+  "validation.json": "66ddce86a4e85a0d997cfd27659b321abdb79fdca935efba507a3b96a006fe69",
+  "source-comparison.json": "3ea8002d577d2dafe99916611fd186b93129f7e58da28bc732017cf06314aa5f",
+  "source-findings.md": "d58b99779f243bcf6676086f42657f63818c16b90e26415c4f743c5751123904"
+}
