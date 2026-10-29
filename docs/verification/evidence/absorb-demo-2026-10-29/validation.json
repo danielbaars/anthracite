@@ -1,0 +1,172 @@
+{
+  "status": "passed",
+  "predicateCount": 71,
+  "checks": [
+    "single: paired starting commits and files",
+    "single: Anthracite parser refusal preserves observed state",
+    "single: Anthracite fails explicitly",
+    "single: dry-run preserves logical Git state",
+    "single: Graphite preserves current checkout and worktree bytes",
+    "single: trunk and unrelated branch untouched",
+    "single: no external editor/gh/pager called",
+    "single: no unstaged changes introduced",
+    "single: captures completed without terminal truncation",
+    "single: successful Graphite execution",
+    "single: exact feature chain retained",
+    "single: original commit subjects retained",
+    "single: refactor hunk reaches its original commit",
+    "single: index and working copy clean",
+    "single: final tip contains exactly initial working files",
+    "two-targets: paired starting commits and files",
+    "two-targets: Anthracite parser refusal preserves observed state",
+    "two-targets: Anthracite fails explicitly",
+    "two-targets: dry-run preserves logical Git state",
+    "two-targets: Graphite preserves current checkout and worktree bytes",
+    "two-targets: trunk and unrelated branch untouched",
+    "two-targets: no external editor/gh/pager called",
+    "two-targets: no unstaged changes introduced",
+    "two-targets: captures completed without terminal truncation",
+    "two-targets: successful Graphite execution",
+    "two-targets: exact feature chain retained",
+    "two-targets: original commit subjects retained",
+    "two-targets: refactor hunk reaches its original commit",
+    "two-targets: API hunk reaches its own commit",
+    "two-targets: index and working copy clean",
+    "two-targets: final tip contains exactly initial working files",
+    "no-clear-target: paired starting commits and files",
+    "no-clear-target: Anthracite parser refusal preserves observed state",
+    "no-clear-target: Anthracite fails explicitly",
+    "no-clear-target: dry-run preserves logical Git state",
+    "no-clear-target: Graphite preserves current checkout and worktree bytes",
+    "no-clear-target: trunk and unrelated branch untouched",
+    "no-clear-target: no external editor/gh/pager called",
+    "no-clear-target: no unstaged changes introduced",
+    "no-clear-target: captures completed without terminal truncation",
+    "no-clear-target: successful Graphite execution",
+    "no-clear-target: exact feature chain retained",
+    "no-clear-target: original commit subjects retained",
+    "no-clear-target: refactor hunk reaches its original commit",
+    "no-clear-target: baseline edit and new file stay staged",
+    "frozen: paired starting commits and files",
+    "frozen: Anthracite parser refusal preserves observed state",
+    "frozen: Anthracite fails explicitly",
+    "frozen: dry-run preserves logical Git state",
+    "frozen: Graphite preserves current checkout and worktree bytes",
+    "frozen: trunk and unrelated branch untouched",
+    "frozen: no external editor/gh/pager called",
+    "frozen: no unstaged changes introduced",
+    "frozen: captures completed without terminal truncation",
+    "frozen: successful Graphite execution",
+    "frozen: exact feature chain retained",
+    "frozen: original commit subjects retained",
+    "frozen: protected target unchanged",
+    "frozen: eligible API change absorbed",
+    "frozen: protected hunk remains staged",
+    "occupied: paired starting commits and files",
+    "occupied: Anthracite parser refusal preserves observed state",
+    "occupied: Anthracite fails explicitly",
+    "occupied: dry-run preserves logical Git state",
+    "occupied: Graphite preserves current checkout and worktree bytes",
+    "occupied: trunk and unrelated branch untouched",
+    "occupied: no external editor/gh/pager called",
+    "occupied: no unstaged changes introduced",
+    "occupied: captures completed without terminal truncation",
+    "occupied: explicit failure with refs/staging/worktrees intact",
+    "bare absorb fails without relying on force flag"
+  ],
+  "cases": {
+    "single": {
+      "graphiteExit": 0,
+      "changedRefs": [
+        "api",
+        "refactor",
+        "tests"
+      ],
+      "remainingStatus": "",
+      "dryRunChangedFields": [
+        "indexSha256"
+      ],
+      "executionChangedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "metadata"
+      ],
+      "anthraciteObservedStateUnchanged": true
+    },
+    "two-targets": {
+      "graphiteExit": 0,
+      "changedRefs": [
+        "api",
+        "refactor",
+        "tests"
+      ],
+      "remainingStatus": "",
+      "dryRunChangedFields": [
+        "indexSha256",
+        "metadata"
+      ],
+      "executionChangedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "metadata"
+      ],
+      "anthraciteObservedStateUnchanged": true
+    },
+    "no-clear-target": {
+      "graphiteExit": 0,
+      "changedRefs": [
+        "api",
+        "refactor",
+        "tests"
+      ],
+      "remainingStatus": "M  README.md\nA  new-file.txt\n",
+      "dryRunChangedFields": [
+        "indexSha256",
+        "metadata"
+      ],
+      "executionChangedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "metadata"
+      ],
+      "anthraciteObservedStateUnchanged": true
+    },
+    "frozen": {
+      "graphiteExit": 0,
+      "changedRefs": [
+        "api",
+        "tests"
+      ],
+      "remainingStatus": "M  src/refactor.txt\n",
+      "dryRunChangedFields": [
+        "indexSha256",
+        "metadata"
+      ],
+      "executionChangedFields": [
+        "head",
+        "branches",
+        "status",
+        "staged",
+        "metadata"
+      ],
+      "anthraciteObservedStateUnchanged": true
+    },
+    "occupied": {
+      "graphiteExit": 1,
+      "changedRefs": [],
+      "remainingStatus": "M  src/api.txt\nM  src/refactor.txt\n",
+      "dryRunChangedFields": [
+        "indexSha256",
+        "metadata"
+      ],
+      "executionChangedFields": [],
+      "anthraciteObservedStateUnchanged": true
+    }
+  }
+}
