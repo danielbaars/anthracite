@@ -51,7 +51,9 @@ export function writeMetadataRef(
   const metaSha = runGitCommand({
     args: [`hash-object`, `-w`, `--stdin`],
     options: {
-      input: cuteString(meta),
+      input: cuteString(
+        guardFile ? { ...readMetadataRef(branchName, cwd), ...meta } : meta
+      ),
       cwd,
     },
     onError: 'throw',

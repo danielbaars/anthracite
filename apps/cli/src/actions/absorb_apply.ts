@@ -10,7 +10,10 @@ import {
 import { cacheLockConfigFactory } from '../lib/spiffy/cache_lock_spf';
 import { getCacheLock } from '../lib/engine/cache_lock';
 import { assertBranchEditable } from '../lib/engine/frozen_branch';
-import { getMetadataRefList } from '../lib/engine/metadata_ref';
+import {
+  getMetadataRefList,
+  readMetadataRef,
+} from '../lib/engine/metadata_ref';
 import { PreconditionsFailedError } from '../lib/errors';
 import { withFrozenCommitGuard } from '../lib/git/frozen_commit';
 import { assertRestackFilesAvailable } from '../lib/git/restack_files';
@@ -55,11 +58,13 @@ function assertExpected(
       );
 }
 
-/** One original correction, its remaining own commits, and a mandatory linear chain. */
+/** Apply immutable original corrections and replay their full tracked closure. */
+// eslint-disable-next-line max-params
 export function applyAbsorb(
   plan: AbsorbPlan,
   context: TContext,
-  noVerify: boolean
+  noVerify: boolean,
+  publishInput?: () => void
 ): void {
   if (!plan.targets.length) {
     if (!context.quiet) {
@@ -69,22 +74,8 @@ export function applyAbsorb(
     }
     return;
   }
-  const target = plan.targets[0];
-  if (
-    new Set(plan.targets.map((item) => item.commit)).size !== 1 ||
-    plan.replay.some(
-      (name, i) =>
-        i > 0 &&
-        context.engine.getParentPrecondition(name) !== plan.replay[i - 1]
-    )
-  )
-    throw new PreconditionsFailedError(
-      'Multiple target commits and fan-out application are not supported yet. Use --dry-run to inspect the retained input.'
-    );
-  const parent = context.engine.getParentPrecondition(target.branch);
   const names = [
     ...new Set([
-      parent,
       ...context.engine.getRelativeStack(plan.source, SCOPE.DOWNSTACK),
       ...plan.replay,
     ]),
@@ -95,11 +86,61 @@ export function applyAbsorb(
     revision: context.engine.getRevision(name),
     metadata: metadata[name],
   }));
-  const base = context.engine.getBaseRevision(target.branch);
-  const originalTip = context.engine.getRevision(target.branch);
-  const commits = git(['rev-list', '--reverse', `${base}..${originalTip}`])
-    .split('\n')
-    .filter(Boolean);
+  const ranges = plan.replay.map((name) => {
+    const base = context.engine.getBaseRevision(name);
+    const originalTip = context.engine.getRevision(name);
+    return {
+      name,
+      parent: context.engine.getParentPrecondition(name),
+      metadata: readMetadataRef(name),
+      base,
+      originalTip,
+      commits: git(['rev-list', '--reverse', `${base}..${originalTip}`])
+        .split('\n')
+        .filter(Boolean),
+    };
+  });
+  const amendedTrees = new Map(
+    [...new Set(plan.targets.map((target) => target.commit))].map((commit) => [
+      commit,
+      prepareAbsorbTree(
+        plan.targets.filter((target) => target.commit === commit)
+      ),
+    ])
+  );
+  assertAbsorbApplicationAvailable(plan, context);
+  const lock = getCacheLock();
+  lock.lock();
+  try {
+    assertExpected(expected, plan.replay);
+    publishInput?.();
+    executeAbsorb({
+      plan,
+      context,
+      noVerify,
+      expected,
+      ranges,
+      amendedTrees,
+    });
+  } finally {
+    try {
+      lock.release();
+    } catch (error: unknown) {
+      process.stderr.write(
+        `WARNING: Cache lock was preserved: ${
+          error instanceof Error ? error.message : String(error)
+        }\n`
+      );
+    }
+  }
+}
+
+/** Known blockers shared by strict preview and application, before staging writes. */
+export function assertAbsorbApplicationAvailable(
+  plan: AbsorbPlan,
+  context: TContext
+): void {
+  if (!plan.targets.length) return;
   assertAbsorbInputSupported([
     ...new Set(
       plan.replay.flatMap((name) =>
@@ -129,41 +170,19 @@ export function applyAbsorb(
     throw new PreconditionsFailedError(
       'Absorb requires the existing index lock to be released by its owner.'
     );
-  const amendedTree = prepareAbsorbTree(plan.targets);
   assertRestackFilesAvailable({
     branches: plan.replay.map((name) => ({
       name,
       from: context.engine.getBaseRevision(name),
     })),
-    checkoutRevisions: [base],
+    checkoutRevisions: plan.replay.map((name) =>
+      context.engine.getBaseRevision(name)
+    ),
     skipTrackedPaths: true,
     operation: 'absorb',
   });
-  const lock = getCacheLock();
-  lock.lock();
-  try {
-    assertExpected(expected, plan.replay);
-    executeAbsorb({
-      plan,
-      context,
-      noVerify,
-      expected,
-      base,
-      originalTip,
-      commits,
-      amendedTree,
-    });
-  } finally {
-    try {
-      lock.release();
-    } catch (error: unknown) {
-      process.stderr.write(
-        `WARNING: Cache lock was preserved: ${
-          error instanceof Error ? error.message : String(error)
-        }\n`
-      );
-    }
-  }
+  assertBranchesAvailableInWorktrees([...plan.replay]);
+  for (const name of plan.replay) assertBranchEditable(name);
 }
 
 type AbsorbExecution = {
@@ -171,60 +190,33 @@ type AbsorbExecution = {
   readonly context: TContext;
   readonly noVerify: boolean;
   readonly expected: readonly Expected[];
-  readonly base: string;
-  readonly originalTip: string;
-  readonly commits: readonly string[];
-  readonly amendedTree: string;
+  readonly ranges: readonly {
+    readonly name: string;
+    readonly parent: string;
+    readonly metadata: ReturnType<typeof readMetadataRef>;
+    readonly base: string;
+    readonly originalTip: string;
+    readonly commits: readonly string[];
+  }[];
+  readonly amendedTrees: ReadonlyMap<string, string>;
 };
+// eslint-disable-next-line max-lines-per-function
 function executeAbsorb(execution: AbsorbExecution): void {
-  const {
-    plan,
-    context,
-    noVerify,
-    expected,
-    base,
-    originalTip,
-    commits,
-    amendedTree,
-  } = execution;
-  const target = plan.targets[0];
+  const { plan, context, noVerify, expected, ranges, amendedTrees } = execution;
   const input = retainAbsorbInput(plan.source);
   const completed: string[] = [];
-  let active = `constructing ${target.branch}`;
+  let active = 'preparing replay';
   fs.writeFileSync(
     path.join(input.directory, 'plan.json'),
-    JSON.stringify({ plan, expected, base, originalTip })
+    JSON.stringify({ plan, expected, ranges })
   );
   const worktree = path.join(input.directory, 'construction');
   try {
     const guardFile = createGuard(input.directory, expected, plan);
     withAbsorbGuard(guardFile, () => {
-      const revision = prepareAbsorbRange({
-        target,
-        commits,
-        base,
-        amendedTree,
-        worktree,
-        noVerify,
-        participants: plan.replay,
-      });
-      assertExpected(expected, plan.replay);
-      assertAbsorbInputUnchanged(input);
-      active = `publishing ${target.branch}`;
-      publishAbsorbBranch({
-        branch: target.branch,
-        revision,
-        expected,
-        participants: plan.replay,
-      });
-      completed.push(target.branch);
-      checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
-      context.engine.rebuild();
-      // The caller's retained work is isolated before establishing the new checkout.
-      assertAbsorbInputUnchanged(input);
-      git(['read-tree', '--reset', '-u', 'HEAD']);
-      for (const name of plan.replay.filter((name) => name !== target.branch)) {
-        active = `replaying ${name}`;
+      let isolated = false;
+      for (const range of ranges) {
+        const name = range.name;
         const remaining = plan.replay.filter(
           (value) => !completed.includes(value)
         );
@@ -232,8 +224,70 @@ function executeAbsorb(execution: AbsorbExecution): void {
         guard.active = name;
         fs.writeFileSync(guardFile, JSON.stringify(guard));
         checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
-        assertBranchesAvailableInWorktrees([...plan.replay]);
         for (const participant of remaining) assertBranchEditable(participant);
+        const target = plan.targets.find((item) => item.branch === name);
+        if (target) {
+          active = `constructing ${name}`;
+          const revision = prepareAbsorbRange({
+            target,
+            commits: range.commits,
+            base: context.engine.getRevision(range.parent),
+            amendedTrees,
+            worktree,
+            noVerify,
+            participants: plan.replay,
+          });
+          checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
+          if (!isolated) assertAbsorbInputUnchanged(input);
+          else git(['diff-index', '--quiet', 'HEAD', '--']);
+          const checkoutTree = isolated ? git(['write-tree']) : undefined;
+          active = `publishing ${name}`;
+          const publicationGuard = readAbsorbGuard(guardFile);
+          const currentExpected = expected.map((item) => ({
+            ...item,
+            revision:
+              publicationGuard.expected.find(
+                (entry) => entry.ref === `refs/heads/${item.name}`
+              )?.oid ?? item.revision,
+            metadata:
+              publicationGuard.expected.find(
+                (entry) => entry.ref === `refs/branch-metadata/${item.name}`
+              )?.oid ?? item.metadata,
+          }));
+          const parentRevision = context.engine.getRevision(range.parent);
+          publishAbsorbBranch({
+            branch: name,
+            revision,
+            metadataRevision:
+              parentRevision === range.base
+                ? currentExpected.find((item) => item.name === name)?.metadata
+                : git(['hash-object', '-w', '--stdin'], {
+                    input: JSON.stringify({
+                      ...range.metadata,
+                      parentBranchRevision: parentRevision,
+                    }),
+                  }),
+            expected: currentExpected,
+            participants: plan.replay,
+          });
+          completed.push(name);
+          checkAbsorbGuard(guardFile, 'before-mutation', Buffer.alloc(0));
+          context.engine.rebuild();
+          // Isolate the caller's retained input exactly once, before real replay.
+          if (!isolated) assertAbsorbInputUnchanged(input);
+          else if (
+            git(['write-tree']) !== checkoutTree ||
+            git(['diff-files', '--name-only', '-z'])
+          )
+            throw new PreconditionsFailedError(
+              'Absorb source work changed during publication. Retained input is available; inspect hook effects.'
+            );
+          git(['read-tree', '--reset', '-u', 'HEAD']);
+          isolated = true;
+          git(['worktree', 'remove', worktree]);
+          continue;
+        }
+        active = `replaying ${name}`;
         const result = context.engine.restackBranch(name, remaining);
         if (result.result === 'REBASE_CONFLICT')
           throw new PreconditionsFailedError(
@@ -252,14 +306,13 @@ function executeAbsorb(execution: AbsorbExecution): void {
         for (const item of plan.leftovers)
           process.stdout.write(`Retained ${item.path}: ${item.reason}\n`);
         process.stdout.write(
-          `Absorbed ${plan.targets.length} hunk(s) into ${
-            target.branch
-          }, original commit ${target.commit}. Replayed: ${
-            completed.slice(1).join(', ') || 'none'
-          }. Retained input restored.\n`
+          `Absorbed ${plan.targets.length} hunk(s) into ${[
+            ...new Set(plan.targets.map((target) => target.branch)),
+          ].join(', ')}. Completed replay: ${completed.join(
+            ', '
+          )}. Retained input restored.\n`
         );
       }
-      git(['worktree', 'remove', worktree]);
       fs.rmSync(input.directory, { recursive: true });
     });
   } catch (error: unknown) {
@@ -322,10 +375,11 @@ function createGuard(
 function publishAbsorbBranch(input: {
   readonly branch: string;
   readonly revision: string;
+  readonly metadataRevision: string | undefined;
   readonly expected: readonly Expected[];
   readonly participants: readonly string[];
 }): void {
-  const { branch, revision, expected, participants } = input;
+  const { branch, revision, metadataRevision, expected, participants } = input;
   withFrozenCommitGuard(
     branch,
     (prefix) => {
@@ -335,7 +389,11 @@ function publishAbsorbBranch(input: {
             item.name
           }\0${item.name === branch ? revision + '\0' : ''}${item.revision}\0`,
           ...(item.metadata
-            ? [`verify refs/branch-metadata/${item.name}\0${item.metadata}\0`]
+            ? [
+                item.name === branch && metadataRevision
+                  ? `update refs/branch-metadata/${item.name}\0${metadataRevision}\0${item.metadata}\0`
+                  : `verify refs/branch-metadata/${item.name}\0${item.metadata}\0`,
+              ]
             : []),
         ])
         .join('');

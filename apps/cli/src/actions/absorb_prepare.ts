@@ -1,11 +1,12 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import { PreconditionsFailedError } from '../lib/errors';
 import { withFrozenCommitGuard } from '../lib/git/frozen_commit';
 import { AbsorbTarget } from './absorb_select';
 import { absorbLines, applyAbsorbHunk } from './absorb_hunks';
 import {
-  getAbsorbRoot,
+  absorbDiffOptions,
   readAbsorbBlob,
   runAbsorbGit as git,
 } from './absorb_git';
@@ -39,9 +40,8 @@ export function prepareAbsorbTree(targets: readonly AbsorbTarget[]): string {
       git(['hash-object', '-w', '--stdin'], { input: lines.join('') })
     );
   }
-  // Guard unsupported empty results before retaining/cleaning input or invoking hooks.
   const previewIndex = path.join(
-    fs.mkdtempSync(path.join(getAbsorbRoot(), '.an-absorb-plan-')),
+    fs.mkdtempSync(path.join(os.tmpdir(), 'an-absorb-plan-')),
     'index'
   );
   let amendedTree: string;
@@ -56,10 +56,6 @@ export function prepareAbsorbTree(targets: readonly AbsorbTarget[]): string {
       );
     }
     amendedTree = git(['write-tree'], { env });
-    if (amendedTree === git(['rev-parse', `${target.commit}^` + '^{tree}']))
-      throw new PreconditionsFailedError(
-        'A correction making its target empty is not supported yet. Input remains staged.'
-      );
   } finally {
     fs.rmSync(path.dirname(previewIndex), { recursive: true, force: true });
   }
@@ -70,7 +66,7 @@ export function prepareAbsorbRange(input: {
   readonly target: AbsorbTarget;
   readonly commits: readonly string[];
   readonly base: string;
-  readonly amendedTree: string;
+  readonly amendedTrees: ReadonlyMap<string, string>;
   readonly worktree: string;
   readonly noVerify: boolean;
   readonly participants: readonly string[];
@@ -79,7 +75,7 @@ export function prepareAbsorbRange(input: {
     target,
     commits,
     base,
-    amendedTree,
+    amendedTrees,
     worktree,
     noVerify,
     participants,
@@ -87,9 +83,26 @@ export function prepareAbsorbRange(input: {
   git(['worktree', 'add', '--quiet', '--detach', worktree, base]);
   for (const commit of commits) {
     const before = git(['rev-parse', 'HEAD'], { cwd: worktree });
-    if (commit === target.commit)
-      git(['read-tree', '--reset', '-u', amendedTree], { cwd: worktree });
-    else git(['cherry-pick', '--no-commit', commit], { cwd: worktree });
+    git(['cherry-pick', '--no-commit', commit], { cwd: worktree });
+    const amendedTree = amendedTrees.get(commit);
+    if (amendedTree) {
+      // Replay the original delta first, then merge only this commit's correction.
+      const correction = git(
+        [
+          'diff',
+          ...absorbDiffOptions,
+          '--unified=3',
+          '--full-index',
+          '--src-prefix=a/',
+          '--dst-prefix=b/',
+          '--binary',
+          commit,
+          amendedTree,
+        ],
+        { noTrim: true }
+      );
+      git(['apply', '--3way', '--index'], { cwd: worktree, input: correction });
+    }
     const expectedTree = git(['write-tree'], { cwd: worktree });
     withFrozenCommitGuard(
       target.branch,
