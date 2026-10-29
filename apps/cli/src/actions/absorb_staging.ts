@@ -11,7 +11,10 @@ import {
   runAbsorbGit,
   withAbsorbIndex,
 } from './absorb_git';
-import { assertAbsorbInputSupported } from './absorb_input';
+import {
+  assertAbsorbInputSupported,
+  assertOrdinaryParents,
+} from './absorb_input';
 import { assertAbsorbApplicationAvailable } from './absorb_apply';
 import { planAbsorb, AbsorbPlan, inspectAbsorbSource } from './absorb_plan';
 
@@ -167,21 +170,4 @@ function snapshotSource(): string {
         : [file, 'other', stat.mode];
     }),
   });
-}
-
-function assertOrdinaryParents(root: string, file: string): void {
-  let parent = root;
-  for (const part of file.split('/').slice(0, -1)) {
-    parent = path.join(parent, part);
-    const stat = fs.lstatSync(parent, { throwIfNoEntry: false });
-    if (!stat) break;
-    if (stat.isSymbolicLink())
-      throw new PreconditionsFailedError(
-        `Absorb cannot follow a parent-directory symlink for ${file}.`
-      );
-    if (!stat.isDirectory())
-      throw new PreconditionsFailedError(
-        `Absorb requires ordinary parent directories for ${file}.`
-      );
-  }
 }

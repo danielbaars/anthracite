@@ -56,7 +56,7 @@ export const builder = (cli: yargs.Argv): yargs.Argv =>
     .showHelpOnFail(false)
     .options(options)
     .epilog(
-      'Existing regular text entries only. Unsupported entries and unmatched hunks remain staged and are reported. Frozen or occupied required participants refuse before changes. No remote operations. Earlier amendments survive abort; retained input and explicit recovery instructions are printed on failure. Committer identity/signatures follow ordinary Git commits.'
+      'Existing regular text entries only. Unsupported entries and unmatched hunks remain staged and are reported. Frozen or occupied required participants refuse before changes. No remote operations. For an owned replay conflict, resolve and stage only the resolution, then run an continue in the same worktree. Retained staged/unstaged input stays isolated until checked restoration. Other failures print guarded manual recovery instructions; earlier amendments survive abort. Committer identity/signatures follow ordinary Git commits.'
     )
     .check((argv) => {
       if (argv._.length !== 1)

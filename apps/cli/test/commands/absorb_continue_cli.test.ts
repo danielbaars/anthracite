@@ -418,4 +418,36 @@ describe('absorb continuation through the public CLI', function () {
     );
     expect(fixture.git(['show', ':main.txt'])).to.equal('retained baseline');
   });
+  it('guards the actual trunk parent against an external hook move before first-feature publication', () => {
+    fixture.git(['switch', '-c', 'external-trunk', 'main']);
+    stage('main.txt', 'external trunk change\n');
+    fixture.git(['commit', '-m', 'External trunk advance']);
+    const external = fixture.git(['rev-parse', 'HEAD']);
+    fixture.git(['switch', 'child']);
+    stage('base.txt', 'corrected ancestor\n');
+    stage('leftover.txt', 'retained staged addition\n');
+    fs.writeFileSync(
+      path.join(fixture.repo, 'child.txt'),
+      'unstaged sentinel\n'
+    );
+    const originalBase = fixture.git(['rev-parse', 'base']);
+    const before = fixture.inspectionSnapshot();
+    fs.writeFileSync(
+      path.join(fixture.repo, '.git', 'hooks', 'pre-commit'),
+      '#!/bin/sh\ngit -c core.hooksPath=/dev/null update-ref refs/heads/main ' +
+        external +
+        '\n',
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['absorb', '--force', '--no-interactive']);
+    expect(result.status, result.stdout + result.stderr).to.equal(1);
+    expect(result.stderr).to.include(
+      'Absorb expected ref changed: refs/heads/main'
+    );
+    expect(fixture.git(['rev-parse', 'main'])).to.equal(external);
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(originalBase);
+    const after = fixture.inspectionSnapshot();
+    for (const key of ['head', 'branch', 'index', 'staging', 'status', 'files'])
+      expect(after[key]).to.deep.equal(before[key]);
+  });
 });

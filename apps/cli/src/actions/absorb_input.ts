@@ -91,11 +91,8 @@ export function retainAbsorbInput(source: string): AbsorbInput {
       readAbsorbGit(['rev-parse', '--git-path', 'an-absorb-']).trim()
     )
   );
-  const tree = runGitCommand({
-    args: ['write-tree'],
-    onError: 'throw',
-    resource: 'absorbInput',
-  });
+  const originalIndex = readIndex();
+  const tree = readAbsorbIndexTree(directory, originalIndex);
   const paths = [
     ...new Set(
       [
@@ -165,7 +162,7 @@ export function retainAbsorbInput(source: string): AbsorbInput {
   } finally {
     fs.rmSync(scratch, { force: true });
   }
-  fs.writeFileSync(path.join(directory, 'index'), readIndex());
+  fs.writeFileSync(path.join(directory, 'index'), originalIndex);
   runGitCommand({
     args: ['pack-objects', '--revs', path.join(directory, 'index-objects')],
     options: { input: [tree, originalTree, workingTree].join('\n') + '\n' },
@@ -191,13 +188,7 @@ export function retainAbsorbInput(source: string): AbsorbInput {
 
 export function assertAbsorbInputUnchanged(input: AbsorbInput): void {
   const root = getAbsorbRoot();
-  if (
-    runGitCommand({
-      args: ['write-tree'],
-      onError: 'throw',
-      resource: 'absorbInputCheck',
-    }) !== input.tree
-  )
+  if (readAbsorbIndexTree(input.directory, readIndex()) !== input.tree)
     throw new PreconditionsFailedError(
       'Absorb source work changed during construction. Retained input is available; inspect hook effects.'
     );
@@ -377,5 +368,17 @@ export function assertOrdinaryParents(root: string, file: string): void {
       throw new PreconditionsFailedError(
         `Absorb requires ordinary parent directories for ${file}.`
       );
+  }
+}
+
+function readAbsorbIndexTree(directory: string, index: Buffer): string {
+  const scratch = path.join(directory, 'read-index');
+  fs.writeFileSync(scratch, index, { flag: 'wx' });
+  try {
+    return git(['-c', 'core.fsmonitor=false', 'write-tree'], {
+      env: { ...process.env, GIT_INDEX_FILE: scratch },
+    });
+  } finally {
+    fs.rmSync(scratch, { force: true });
   }
 }

@@ -189,7 +189,7 @@ describe('single-commit absorb application through the public CLI', function () 
     expect(result.stderr)
       .to.include('Completed: base.')
       .and.include('Pending: child, tip.')
-      .and.include('Automatic absorb continuation is not available');
+      .and.include('No automatic continuation is available for this Git state.');
     expect(fixture.git(['show', 'base:base.txt'])).to.equal('corrected base');
     expect(fixture.git(['diff', '--cached', '--name-only'])).to.equal('');
     const match = /running: (?:BUN_BE_BUN=1 )?'([^'\n]+)' '([^'\n]+)'/.exec(
