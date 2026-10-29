@@ -37,8 +37,16 @@ const args = {
     type: 'boolean',
     alias: 'p',
   },
+  'insert-child': {
+    describe:
+      'Insert beneath this exact direct child of the selected parent; repeat for multiple children. Requires --insert; omitted choices select all children.',
+    type: 'string',
+    array: true,
+    nargs: 1,
+    requiresArg: true,
+  },
   insert: {
-    describe: `When true, any existing children of the selected parent (--onto, otherwise current branch) will become children of the new branch. Refuses frozen parent-change or mandatory replay participants before creation.`,
+    describe: `Make chosen direct children of --onto (otherwise current branch) children of the new branch. Defaults to all children; use --insert-child to narrow the set. Refuses frozen parent-change or mandatory replay participants before creation.`,
     demandOption: false,
     default: false,
     type: 'boolean',
@@ -52,7 +60,17 @@ export const command = 'create [name]';
 export const canonical = 'create';
 export const description =
   'Create a new branch above --onto (or the current branch) and commit staged changes. If no branch name is specified but a commit message is passed, generate a branch name from the commit message.';
-export const builder = args;
+export const builder = (cli: yargs.Argv): yargs.Argv =>
+  cli.options(args).check((argv) => {
+    const children = argv['insert-child'];
+    if (children !== undefined && !argv.insert)
+      throw new Error('--insert-child requires an active --insert.');
+    if (
+      children?.some((child) => typeof child !== 'string' || child.length === 0)
+    )
+      throw new Error('--insert-child requires a nonempty branch name.');
+    return true;
+  });
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {
     await createBranchAction(
@@ -62,6 +80,7 @@ export const handler = async (argv: argsT): Promise<void> => {
         message: argv.message,
         all: argv.all,
         insert: argv.insert,
+        insertChildren: argv['insert-child'],
         patch: argv.patch,
       },
       context
