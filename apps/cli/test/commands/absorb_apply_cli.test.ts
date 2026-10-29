@@ -189,7 +189,9 @@ describe('single-commit absorb application through the public CLI', function () 
     expect(result.stderr)
       .to.include('Completed: base.')
       .and.include('Pending: child, tip.')
-      .and.include('No automatic continuation is available for this Git state.');
+      .and.include(
+        'No automatic continuation is available for this Git state.'
+      );
     expect(fixture.git(['show', 'base:base.txt'])).to.equal('corrected base');
     expect(fixture.git(['diff', '--cached', '--name-only'])).to.equal('');
     const match = /running: (?:BUN_BE_BUN=1 )?'([^'\n]+)' '([^'\n]+)'/.exec(
@@ -202,16 +204,36 @@ describe('single-commit absorb application through the public CLI', function () 
     expect(fs.existsSync(restore)).to.equal(true);
     fixture.git(['reflog', 'expire', '--expire=now', '--all']);
     fixture.git(['gc', '--prune=now']);
-    const recovery = spawnSync(match[1], [restore], {
-      cwd: fixture.repo,
-      env: {
-        ...fixture.env,
-        ...(result.stderr.includes('running: BUN_BE_BUN=1 ')
-          ? { BUN_BE_BUN: '1' }
-          : {}),
-      },
-      encoding: 'utf8',
-    });
+    const recover = (overrides: NodeJS.ProcessEnv = {}) =>
+      spawnSync(match[1], [restore], {
+        cwd: fixture.repo,
+        env: {
+          ...fixture.env,
+          ...overrides,
+          ...(result.stderr.includes('running: BUN_BE_BUN=1 ')
+            ? { BUN_BE_BUN: '1' }
+            : {}),
+        },
+        encoding: 'utf8',
+      });
+    const external = path.join(fixture.root, 'manual-external-index');
+    fs.copyFileSync(path.join(fixture.repo, '.git', 'index'), external);
+    const index = fs.readFileSync(external);
+    const before = fixture.inspectionSnapshot();
+    const retained = fs.readFileSync(
+      path.join(path.dirname(restore), 'input.json')
+    );
+    const redirected = recover({ GIT_INDEX_FILE: external });
+    expect(redirected.status, redirected.stdout + redirected.stderr).to.equal(
+      1
+    );
+    expect(redirected.stderr).to.include('Git environment redirection');
+    expect(fs.readFileSync(external)).to.deep.equal(index);
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(
+      fs.readFileSync(path.join(path.dirname(restore), 'input.json'))
+    ).to.deep.equal(retained);
+    const recovery = recover();
     expect(recovery.status, recovery.stdout + recovery.stderr).to.equal(0);
     expect(fixture.git(['show', ':leftover.txt'])).to.equal(
       'staged durable content'

@@ -146,7 +146,9 @@ describe('absorb input compatibility through the public CLI', function () {
       ]) {
         const result = fixture.run(args);
         expect(result.status, result.stdout + result.stderr).to.equal(1);
-        expect(result.stderr).to.match(/unchanged.*(gitlink|submodule)/);
+        expect(result.stderr)
+          .to.match(/unchanged.*(gitlink|submodule)/)
+          .and.include('nested');
         expect(fixture.inspectionSnapshot()).to.deep.equal(before);
         expect(fs.readdirSync(path.join(fixture.repo, '.git'))).to.deep.equal(
           names
