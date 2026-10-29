@@ -1,0 +1,14 @@
+{
+  "Graphite1.8.6": {
+    "sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+    "path": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt"
+  },
+  "Charcoal1.0.1": {
+    "sha256": "387c7be6bba3a50405ceae1997876ce13b9894855f73c6f3f394d7ec489fc33a",
+    "path": "/opt/homebrew/Cellar/charcoal/1.0.1/bin/ch"
+  },
+  "Anthracite0.3.0": {
+    "sha256": "3953a3b7c1085c8258284146451808c3511a18b9caeb441e22e0ba652915d839",
+    "path": "$NODE_PREFIX/lib/node_modules/@danielbaars/anthracite/cli.cjs"
+  }
+}
