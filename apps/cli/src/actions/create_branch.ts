@@ -3,6 +3,10 @@ import { readIndex, restoreIndex } from '../lib/git/index_state';
 import { addPatch } from '../lib/git/add_patch';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { hasCreateChanges } from '../lib/git/create_changes';
+import { assertNoGitOperation } from '../lib/git/assert_no_operation';
+import { getCurrentBranchName } from '../lib/git/branch_ops';
+import { getSha } from '../lib/git/get_sha';
+import { readMetadataRef } from '../lib/engine/metadata_ref';
 import { assertRestackFilesAvailable } from '../lib/git/restack_files';
 import { ensurePatchInputPrecondition } from '../lib/preconditions';
 import { TContext } from '../lib/context';
@@ -29,7 +33,10 @@ export async function createBranchAction(
   if (opts.insertChildren !== undefined && !opts.insert) {
     throw new ExitFailedError('--insert-child requires an active --insert.');
   }
-  const selection = opts.insert ? getInsertChildren(opts, context) : undefined;
+  if (opts.insert) assertNoGitOperation('insert');
+  const selection = opts.insert
+    ? await getInsertChildren(opts, context)
+    : undefined;
   let insertPlan = selection
     ? getInsertPlan({ ...opts, ...selection }, context)
     : undefined;
@@ -174,16 +181,51 @@ function insertBranch(
   }
 }
 
-function getInsertChildren(
+async function getInsertChildren(
   opts: TCreateBranchOptions,
   context: TContext
-): { readonly parent: string; readonly children: readonly string[] } {
+): Promise<{ readonly parent: string; readonly children: readonly string[] }> {
   const parent = opts.onto ?? context.engine.currentBranchPrecondition;
   const scope = context.engine.getRelativeStack(parent, SCOPE.UPSTACK);
   const children = scope.filter(
     (branch) => context.engine.getParent(branch) === parent
   );
-  if (opts.insertChildren === undefined) return { parent, children };
+  if (opts.insertChildren === undefined) {
+    if (children.length < 2 || !context.canPrompt) return { parent, children };
+    const source = context.engine.currentBranchPrecondition;
+    const before = new Map(
+      [...new Set([source, parent, ...children])].map((name) => [
+        name,
+        getInsertSelectionState(name),
+      ])
+    );
+    const response = await context.prompts({
+      type: 'multiselect',
+      name: 'children',
+      message: `Choose children of ${parent} to insert beneath`,
+      min: 1,
+      choices: children.map((child) => ({
+        title: child,
+        value: child,
+        selected: true,
+      })),
+    });
+    const chosen: readonly string[] = response.children;
+    if (
+      getCurrentBranchName() !== source ||
+      [source, parent, ...chosen].some(
+        (name) => getInsertSelectionState(name) !== before.get(name)
+      )
+    ) {
+      throw new ExitFailedError(
+        'Cannot insert: source, parent or chosen children changed during child selection. Retry from the current state.'
+      );
+    }
+    assertNoGitOperation('insert');
+    // Structural create refreshes without repairing unrelated metadata.
+    context.engine.rebuild();
+    return { parent, children: chosen };
+  }
   const requested = opts.insertChildren;
   if (
     requested.some((child) => typeof child !== 'string' || child.length === 0)
@@ -204,6 +246,15 @@ function getInsertChildren(
     parent,
     children: children.filter((child) => requested.includes(child)),
   };
+}
+
+function getInsertSelectionState(branch: string): string {
+  const metadata = readMetadataRef(branch);
+  return JSON.stringify([
+    getSha(`refs/heads/${branch}`),
+    metadata.parentBranchName,
+    metadata.parentBranchRevision,
+  ]);
 }
 
 function getInsertPlan(
