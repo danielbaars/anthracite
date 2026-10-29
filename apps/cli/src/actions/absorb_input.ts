@@ -3,7 +3,11 @@ import fs from 'fs';
 import { z } from 'zod';
 import path from 'path';
 import { runAbsorbGit as git } from './absorb_git';
-import { getAbsorbRoot, readAbsorbGit } from './absorb_git';
+import {
+  getAbsorbRoot,
+  readAbsorbGit,
+  absorbEnvironmentOverrides,
+} from './absorb_git';
 import { runGitCommand } from '../lib/git/runner';
 import { readIndex } from '../lib/git/index_state';
 import { PreconditionsFailedError } from '../lib/errors';
@@ -35,18 +39,26 @@ export function assertAbsorbInputSupported(revisions: readonly string[]): void {
     );
   const links = indexedGitlinks();
   for (const revision of ['HEAD', ...revisions]) {
-    const entries = readAbsorbGit(['ls-tree', '-r', '-z', revision])
-      .split('\0')
-      .filter((entry) => entry.startsWith('160000 '))
-      .map((entry) => [
-        entry.slice(entry.indexOf('\t') + 1),
-        entry.split(' ')[2].split('\t')[0],
-      ]);
-    if (JSON.stringify([...links].sort()) !== JSON.stringify(entries.sort()))
+    const entries = new Map(
+      readAbsorbGit(['ls-tree', '-r', '-z', revision])
+        .split('\0')
+        .filter((entry) => entry.startsWith('160000 '))
+        .map((entry): [string, string] => [
+          entry.slice(entry.indexOf('\t') + 1),
+          entry.split(' ')[2].split('\t')[0],
+        ])
+    );
+    const changed = [...new Set([...links.keys(), ...entries.keys()])].filter(
+      (file) => links.get(file) !== entries.get(file)
+    );
+    if (changed.length)
       throw new PreconditionsFailedError(
-        'Absorb requires unchanged gitlink paths and pointers throughout construction and replay history. Save submodule transitions separately.'
+        'Absorb requires unchanged gitlink paths and pointers throughout construction and replay history: ' +
+          changed.join(', ') +
+          '. Save submodule transitions separately.'
       );
   }
+
   for (const file of links.keys()) {
     assertOrdinaryParents(getAbsorbRoot(), file);
     const stat = fs.lstatSync(path.join(getAbsorbRoot(), file), {
@@ -316,6 +328,9 @@ const dir=__dirname, input=JSON.parse(fs.readFileSync(path.join(dir,'input.json'
 const git=(args,options={})=>cp.execFileSync('git',['--no-optional-locks','--literal-pathspecs','-c','submodule.recurse=false','-C',input.root,...args],options);
 const safePath=file=>{ const parts=file.split('/'); if(path.isAbsolute(file)||parts.includes('..')) throw Error('Invalid retained path.'); let parent=input.root; for(const part of parts.slice(0,-1)) {parent=path.join(parent,part); const stat=fs.lstatSync(parent,{throwIfNoEntry:false}); if(stat&&(stat.isSymbolicLink()||!stat.isDirectory())) throw Error('Restoration parent collision at '+file); } return path.join(input.root,file); };
 try {
+ if(${JSON.stringify(
+   absorbEnvironmentOverrides
+ )}.some(name=>process.env[name]!==undefined)) throw Error('Absorb does not support Git environment redirection. Unset repository/index overrides before restoration.');
  if(git(['branch','--show-current']).toString().trim()!==input.source) throw Error('Switch to original source '+input.source+' before restoration.');
  for(const name of ['rebase-merge','rebase-apply','MERGE_HEAD','CHERRY_PICK_HEAD']) {
   if(fs.existsSync(path.resolve(input.root,git(['rev-parse','--git-path',name]).toString().trim()))) throw Error('Finish or abort active Git operation before restoring input.');
