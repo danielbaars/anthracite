@@ -1,0 +1,22 @@
+{
+  "gt": {
+    "path": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+    "version": "1.8.6",
+    "sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f"
+  },
+  "an": {
+    "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/lib/node_modules/@danielbaars/anthracite/cli.cjs",
+    "version": "0.2.1",
+    "sha256": "fa63a90a6e6f6c1b453459bdc64abdff654867bbbcb767eeb35079e363926540"
+  },
+  "anthraciteSourceCommit": "966877d4c382560c58d31a3ea9623705c57dbb83",
+  "npmRuntime": {
+    "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+    "sha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+    "version": "v24.19.0"
+  },
+  "postCaptureDigestsMatch": true,
+  "documentationParentCommit": "00efa5684ad5d8103b4e0f89c62c4ef50304d168",
+  "reaVersion": "6.7.0",
+  "captureCount": 8
+}

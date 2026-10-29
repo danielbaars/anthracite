@@ -1,0 +1,59 @@
+# Absorb specification: source and recovery notes — 29 October 2026
+
+Inspected Anthracite commit: `966877d4c382560c58d31a3ea9623705c57dbb83`. These are static implementation observations and design advice for the seven approved public test groups, not runtime acceptance of absorb or a prescribed implementation. Paths below are relative to the Anthracite repository; line anchors describe this pinned commit.
+
+## Existing mechanisms and their limits
+
+| Mechanism | What exists | What absorb still needs |
+| --- | --- | --- |
+| Current commit amendment | `apps/cli/src/actions/commit_amend.ts:10` delegates to `engine.commit` then restacks descendants. `apps/cli/src/lib/engine/engine.ts:997` operates on the physical current branch and amends its tip. | Per-hunk destination selection, arbitrary earlier commits in a multi-commit branch, and multiple branch targets. Repeated current-tip amendment alone does not implement these semantics. |
+| Whole-branch replay | `engine.ts:1180` rebases a branch's own range from its recorded old `parentBranchRevision` onto its parent's new tip, then updates metadata. | Save original own ranges before rewriting targets; replay parent before child, including off-chain children affected by an amended ancestor. Replaying against newly inferred bases risks incorporating/dropping wrong commits. |
+| Interactive branch edit | `engine.ts:1208`, `apps/cli/src/lib/git/rebase.ts:72`, and `apps/cli/src/actions/edit_branch.ts:11` can rebase all commits belonging to the selected branch, with subsequent descendant replay. | A bounded noninteractive commit-rewrite plan. The existing interface delegates choices to an external sequence editor; it has no automatic hunk-selection callback or command to amend a nominated interior commit. |
+| Detached construction | `apps/cli/src/actions/split_file_prepare.ts:10` creates commits with ordinary Git commit/hooks in an owned detached worktree; a separate index projects selected files. | Absorb must retain each original commit's author and complete message and replay later commits. File split deliberately flattens messages/history and uses invoking identity; reusing its behavior unchanged would violate the approved history contract. |
+| Checked ref publication | `apps/cli/src/lib/git/file_split.ts:21` prepares an `update-ref --stdin -z` transaction with expected old refs and metadata refs; it spreads source metadata to retain PR identity. | An absorb-specific bounded publication/adoption interface, or another existing-compatible path, which checks expected refs while retaining the same branch names/parents/PR data. This transaction is useful prior art, not a general transaction over refs, index, worktree, hooks and continuation. |
+
+A small design can separate (1) pure/read-only selection from immutable saved inputs, (2) bounded commit application and parent-first replay, and (3) reached-state/leftover recovery. No new generic rewrite framework is implied. However, an exact multi-commit target and an exact hunk assignment must be real plan data; they cannot be reconstructed safely from current tips after a partial failure.
+
+## Recovery is narrower than a durable absorb job
+
+`apps/cli/src/lib/spiffy/continuation_spf.ts:19` stores branch sync/restack queues, return override, active rebase base/ownership, and optional structural roles for delete/split/insert/reorder/fold/move. It has **no absorb role**, pending per-commit amendments, selection record, or retained staged/unstaged work artifact.
+
+`apps/cli/src/actions/persist_continuation.ts:5` records the active rebase ownership marker and the remaining branch queue. `apps/cli/src/actions/continue.ts:35` continues an active rebase, records completed branch replay, runs queued branches, finishes existing structural roles and clears continuation. This supports genuine branch-replay conflicts after an amendment checkpoint. It does not know whether further selected commits still need amendment, or how to restore original leftover changes exactly once.
+
+Three traps matter:
+
+1. `apps/cli/src/lib/context.ts:109` deletes continuation during ordinary context initialization when no rebase is active. Passing `preserveMetadata: true` does **not** prevent this: the local `preserving` variable covers inspection/metadata-only paths. Ordinary initialization also removes the legacy PR-info cache (`context.ts:150`).
+2. `continue.ts:39` calls `clearContinuation` and fails when no rebase is active. `continue.ts:57` clears it when no saved rebase base exists. An abort or a hook failure without active rebase therefore cannot be advertised as automatically resumable with the existing `an continue`.
+3. `apps/cli/src/lib/git/rebase.ts:92` calls any nonzero Git rebase with a remaining rebase directory `REBASE_CONFLICT`. That directory can also remain after an `exec`/hook failure; diagnostics must inspect reached Git state rather than promise that all such failures are unresolved content conflicts.
+
+For the approved fresh-process conflict case, a minimal optional absorb role and owned retained-work record may integrate with existing continuation. It would need explicit handling in role recognition, preflight, completion recording, finalization and clearing (`frozen_branch.ts`, `runner.ts`, `restack.ts`, `continue.ts`, `persist_continuation.ts`). It must record enough to avoid repeating completed absorption when resuming a later replay. Do not silently reuse a split/reorder role with different semantics.
+
+The spec can require a genuine replay-conflict continuation contract without requiring every hook failure or post-abort state to resume automatically. When there is no active rebase, retain reached work and any owned backup, state exactly what is complete/pending, and give an actually executable manual recovery path. Do not clear the only copy of leftover work merely because Git removed its rebase directory.
+
+## Staged and unstaged work preservation is new absorb-specific work
+
+Existing `modify_patch_cli.test.ts:41` publicly exercises patch selection while retaining an unselected unstaged hunk and untracked file. That is useful prior art, but its selected commit is the current tip and the fixture has no descendant replay. No reusable general stash/restore transaction was found in the inspected actions/Git adapters.
+
+Absorb changes an earlier commit while the caller has staged input, possibly unstaged edits to the same file, and untracked/ignored files. Ordinary Git checkout/rebase cannot simply proceed through those changes. Saving only `git diff --cached` is insufficient: preserve the original index tree, staged additions/deletions/modes, worktree differences relative to that index, relevant bytes and recovery ownership as needed. After success, absorbed changes belong to HEAD while unabsorbed changes stay staged and formerly unstaged edits stay unstaged; raw index byte equality is not a success requirement. On a rebase-conflict pause, do not inject leftover staged input into Git's resolution index. Keep it safely recoverable and restore at an appropriate checked final checkpoint.
+
+Foreign/user stash entries are not disposable recovery artifacts. If an owned stash or temporary worktree/index is used, identify it exactly, report it after failure and remove it only after verified restoration. External hook effects, concurrent changes and SIGKILL prevent a blanket rollback promise. Reject or preserve unsupported content explicitly, rather than silently placing it in an unrelated commit.
+
+## Preflight, metadata and protection
+
+- `apps/cli/src/lib/runner.ts:112` ordinarily initializes/repairs state before calling the action, and `graphiteHelper` (`runner.ts:273`) may auto-init uninitialized repositories and persist/clear cache on exit. The file-split route already performs a command-specific early preflight. Absorb's invalid-repository, active-operation, worktree/frozen and no-effects failure checks need an equally early preserving route. A read-only planner can use the inspection-style context (`runner.ts:53`) without ordinary mutation cleanup.
+- Strict dry-run must avoid even incidental index refresh, cache repair or continuation cleanup. It cannot just invoke ordinary mutating initialization and skip final commit writes. Reading Git with `--no-optional-locks`, `diff.autoRefreshIndex=false`, no external diff/textconv, and saved metadata is existing inspection prior art; test index bytes and recovery files explicitly.
+- `apps/cli/src/lib/engine/frozen_branch.ts:6` reads frozen state from Git afresh. `getStructuralRole` recognizes only existing operations. Generic restack skips frozen branches, while structural continuation treats mandatory participants explicitly. Absorb must exclude frozen **candidate commits** while separately protecting every branch whose own range must replay. A frozen descendant cannot silently be skipped if its ancestor has been changed and correctness requires its replay.
+- `apps/cli/src/lib/git/worktrees.ts:6` refuses supplied occupied branches, but it does not discover the absorb participants. Plan all selected target branches and mandatory replay branches first, then check them before `--all` stages anything. Recheck at commit/publication/resume boundaries.
+- `apps/cli/src/lib/git/restack_files.ts:7` protects untracked/ignored files from planned checkout/replay paths, including transient history paths. Its accepted operation union currently excludes absorb. Known working files surviving a final tree match does not prove safety through intermediate checkouts.
+- `engine.ts:395` updates metadata retaining parent name/revision, `prInfo` and freshly read frozen status. `handleSuccessfulRebase` (`engine.ts:505`) preserves PR identity while updating base/revision, then returns to the remembered caller. A metadata or final-checkout failure is wrapped separately from Git replay completion. Preserve those distinctions in failure reports.
+- `apps/cli/src/lib/git/frozen_commit.ts:10` wraps real Git hooks with fresh same-build guard invocations and participant checks. Rewrites must preserve the established verify/no-verify scope; do not use plumbing commits solely to bypass real hooks. Current rebase adapter itself has no `noVerify` argument, so the spec should not invent a universal hook bypass via `--no-verify`.
+
+## Staging and interaction traps
+
+`apps/cli/src/lib/git/add_all.ts:3` runs `git add --all`, which includes untracked files. Absorb's agreed tracked-only `--all` cannot reuse it unchanged; use a bounded tracked-update operation and leave existing staged new files explicit leftovers. Preflight must account for the prospective tracked input before staging changes into the user's index.
+
+`apps/cli/src/lib/git/add_patch.ts:3` invokes real `git add --patch`. `apps/cli/src/lib/preconditions.ts:57` provides the existing terminal-input guard. `apps/cli/src/lib/interaction_policy.ts:9` makes quiet imply noninteractive and requires both terminal input/output for prompts; MCP runs without interactive input. Apply without force must fail clearly when confirmation cannot occur; `--force` bypasses confirmation, not protection or required patch input.
+
+Specify flag combinations rather than inherit them accidentally. In particular, strict no-write dry-run must not run real `git add --patch` or stage `--all` into the user's index; dry-run+all can project prospective tracked input in an owned index, and dry-run+patch should be explicitly rejected or implemented against an owned staging view. Also define all+patch and cancellation after staging: an accepted command must not accidentally commit work that the user declined. This is an Anthracite contract decision, not already-working absorb behavior.
+
+The existing MCP route can carry the new literal args without a new tool. One installed npm MCP smoke is sufficient for that interface; it does not replace Node/native CLI selection, protection and recovery acceptance.
