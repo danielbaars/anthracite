@@ -347,26 +347,29 @@ describe('absorb staging and interaction through the public CLI', function () {
       if (linked)
         expect(fixture.inspectionSnapshot(linked)).to.deep.equal(outside);
     });
-  it('refuses an intermediate untracked file collision before all publishes its index', () => {
-    fs.writeFileSync(
-      path.join(fixture.repo, 'transient.txt'),
-      'historical file\n'
-    );
-    fixture.git(['add', 'transient.txt']);
-    fixture.git(['commit', '-m', 'intermediate file']);
-    fixture.git(['rm', 'transient.txt']);
-    fixture.git(['commit', '-m', 'remove intermediate file']);
-    fs.writeFileSync(
-      path.join(fixture.repo, 'transient.txt'),
-      'untracked collision\n'
-    );
-    fs.writeFileSync(path.join(fixture.repo, 'tip.txt'), 'corrected tip\n');
-    const before = fixture.inspectionSnapshot();
-    const result = fixture.run(['absorb', '-a', '-f']);
-    expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stderr).to.include('transient.txt');
-    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
-  });
+  for (const preview of [false, true])
+    it(`refuses an intermediate untracked file collision before all ${
+      preview ? 'previews an unsafe plan' : 'publishes its index'
+    }`, () => {
+      fs.writeFileSync(
+        path.join(fixture.repo, 'transient.txt'),
+        'historical file\n'
+      );
+      fixture.git(['add', 'transient.txt']);
+      fixture.git(['commit', '-m', 'intermediate file']);
+      fixture.git(['rm', 'transient.txt']);
+      fixture.git(['commit', '-m', 'remove intermediate file']);
+      fs.writeFileSync(
+        path.join(fixture.repo, 'transient.txt'),
+        'untracked collision\n'
+      );
+      fs.writeFileSync(path.join(fixture.repo, 'tip.txt'), 'corrected tip\n');
+      const before = fixture.inspectionSnapshot();
+      const result = fixture.run(['absorb', '-a', preview ? '-d' : '-f']);
+      expect(result.status, result.stdout + result.stderr).to.equal(1);
+      expect(result.stderr).to.include('transient.txt');
+      expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    });
   it('describes absorb/ab and its options through help and completion outside Git without external tools', () => {
     const before = fixture.inspectionSnapshot();
     const restore = fixture.refuseExternalTools();
@@ -562,4 +565,120 @@ describe('absorb staging and interaction through the public CLI', function () {
     expect(result.stdout).to.include('No staged changes to absorb.');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
+  it('refuses a tracked parent-directory symlink before staging or following it for source fingerprints', () => {
+    const directory = path.join(fixture.repo, 'nested');
+    const external = path.join(fixture.root, 'outside');
+    fs.mkdirSync(directory);
+    fs.writeFileSync(
+      path.join(directory, 'tracked.txt'),
+      'original nested text\n'
+    );
+    fixture.git(['add', 'nested/tracked.txt']);
+    fixture.git(['commit', '-m', 'nested baseline']);
+    fs.mkdirSync(external);
+    fs.writeFileSync(path.join(external, 'tracked.txt'), 'outside sentinel\n');
+    fs.rmSync(directory, { recursive: true });
+    fs.symlinkSync(external, directory);
+    fs.chmodSync(path.join(external, 'tracked.txt'), 0);
+    const before = fixture.inspectionSnapshot();
+    const result = fixture.run(['absorb', '-a', '-d']);
+    expect(result.status, result.stdout + result.stderr).to.equal(1);
+    expect(result.stderr).to.include('parent-directory symlink');
+    fs.chmodSync(path.join(external, 'tracked.txt'), 0o600);
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(
+      fs.readFileSync(path.join(external, 'tracked.txt'), 'utf8')
+    ).to.equal('outside sentinel\n');
+  });
+  it('does not publish accepted private patch hunks when final confirmation is declined', () => {
+    fs.writeFileSync(path.join(fixture.repo, 'base.txt'), 'corrected base\n');
+    fs.writeFileSync(path.join(fixture.repo, 'prepared.txt'), 'staged new\n');
+    fixture.git(['add', 'prepared.txt']);
+    const before = fixture.inspectionSnapshot();
+    const result = runCliInPty(getTestCliCommand(['absorb', '-p']), {
+      cwd: fixture.repo,
+      env: fixture.env,
+      responses: [
+        { prompt: 'Stage this hunk', input: 'y\n' },
+        { prompt: 'Apply this absorb plan?', input: 'n\n' },
+      ],
+    });
+    expect(result.status, result.output).to.equal(0);
+    expect(result.output)
+      .to.include('base.txt: absorb into base')
+      .and.to.include('Absorb canceled');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+  });
+  it('publishes all from a linked source worktree without staging or checking out its primary sibling', () => {
+    fixture.git(['switch', 'base']);
+    const linked = path.join(fixture.root, 'linked-source');
+    fixture.git(['worktree', 'add', linked, 'tip']);
+    const primaryIndex = fs.readFileSync(
+      path.join(fixture.repo, '.git', 'index')
+    );
+    const base = fixture.git(['rev-parse', 'base']);
+    fs.writeFileSync(path.join(linked, 'tip.txt'), 'linked correction\n');
+    fs.writeFileSync(
+      path.join(linked, 'loose.txt'),
+      'linked untracked sentinel\n'
+    );
+    const result = fixture.run(
+      ['ab', '-a', '-f', '--cwd', linked],
+      fixture.root
+    );
+    expect(result.status, result.stdout + result.stderr).to.equal(0);
+    expect(fixture.git(['show', 'tip:tip.txt'])).to.equal('linked correction');
+    expect(fixture.git(['rev-parse', 'base'])).to.equal(base);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('base');
+    expect(fixture.git(['branch', '--show-current'], linked)).to.equal('tip');
+    expect(fixture.git(['diff', '--cached'], linked)).to.equal('');
+    expect(
+      fs.readFileSync(path.join(fixture.repo, '.git', 'index'))
+    ).to.deep.equal(primaryIndex);
+    expect(fs.readFileSync(path.join(linked, 'loose.txt'), 'utf8')).to.equal(
+      'linked untracked sentinel\n'
+    );
+  });
+  for (const patch of [false, true])
+    it(`does not execute an fsmonitor hook during private ${
+      patch ? 'patch selection' : 'all preview'
+    }`, () => {
+      const marker = path.join(fixture.root, 'fsmonitor-invoked');
+      const hook = path.join(fixture.root, 'fsmonitor-hook');
+      fs.writeFileSync(
+        hook,
+        '#!/bin/sh\nprintf invoked >> ' +
+          JSON.stringify(marker) +
+          '\nprintf "token\\0"\n',
+        { mode: 0o755 }
+      );
+      fixture.git(['config', 'core.fsmonitor', hook]);
+      fs.writeFileSync(path.join(fixture.repo, 'base.txt'), 'corrected base\n');
+      const index = fs.readFileSync(path.join(fixture.repo, '.git', 'index'));
+      const refs = fixture.git([
+        'for-each-ref',
+        '--format=%(refname) %(objectname)',
+      ]);
+      const result = runCliInPty(
+        getTestCliCommand(['absorb', ...(patch ? ['-p', '-f'] : ['-a', '-d'])]),
+        {
+          cwd: fixture.repo,
+          env: fixture.env,
+          responses: patch ? [{ prompt: 'Stage this hunk', input: 'n\n' }] : [],
+        }
+      );
+      const invoked = fs.existsSync(marker);
+      fixture.git(['config', '--unset', 'core.fsmonitor']);
+      expect(result.status, result.output).to.equal(0);
+      expect(invoked, result.output).to.equal(false);
+      expect(
+        fs.readFileSync(path.join(fixture.repo, '.git', 'index'))
+      ).to.deep.equal(index);
+      expect(
+        fixture.git(['for-each-ref', '--format=%(refname) %(objectname)'])
+      ).to.equal(refs);
+      expect(
+        fs.readFileSync(path.join(fixture.repo, 'base.txt'), 'utf8')
+      ).to.equal('corrected base\n');
+    });
 });

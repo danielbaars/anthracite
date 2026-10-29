@@ -68,7 +68,7 @@ export function assertRestackFilesAvailable({
   const paths = [
     ...new Set(
       (skipTrackedPaths
-        ? getPathsOutsideIndex(plannedPaths, cwd)
+        ? getPathsOutsideIndex(plannedPaths, cwd, operation === 'absorb')
         : plannedPaths
       ).flatMap((file) => getCheckoutPaths(file, cwd))
     ),
@@ -91,6 +91,9 @@ export function assertRestackFilesAvailable({
   for (const ignored of all ? [true] : [true, false]) {
     const collision = runGitCommand({
       args: [
+        ...(operation === 'absorb'
+          ? ['--no-optional-locks', '-c', 'core.fsmonitor=false']
+          : []),
         'ls-files',
         '--others',
         ...(ignored ? ['--ignored'] : []),
@@ -147,12 +150,19 @@ function getCheckoutPaths(file: string, cwd: string): string[] {
   return paths;
 }
 
-function getPathsOutsideIndex(files: readonly string[], cwd: string): string[] {
+function getPathsOutsideIndex(
+  files: readonly string[],
+  cwd: string,
+  isInspection: boolean
+): string[] {
   // Git can list a clean indexed Unicode alias as ignored under its stored
   // spelling. Later phases let Git protect indexed work and check the rest here.
   const indexed = new Set(
     runGitCommand({
       args: [
+        ...(isInspection
+          ? ['--no-optional-locks', '-c', 'core.fsmonitor=false']
+          : []),
         'ls-files',
         '--cached',
         '-z',
