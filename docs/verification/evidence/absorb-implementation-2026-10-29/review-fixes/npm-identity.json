@@ -1,0 +1,40 @@
+{
+  "sourceCommit": "14dda978a40a388daa904f906cd59f0cbaf6921c",
+  "tarballSha256": "593bb8c917d4401dbb86c3f8849c416d4e74f9a78bc59515002cf9dc8e0be8a5",
+  "bundledCliSha256": "1ab726ae7d777c534c26ffae97dd5c938e9fcdbd9adeab5bff7ccbb3acfa29ba",
+  "package": {
+    "name": "@danielbaars/anthracite",
+    "version": "0.2.1",
+    "description": "Stacked Git branches and GitHub pull requests, with local MCP support",
+    "license": "AGPL-3.0-only",
+    "homepage": "https://github.com/danielbaars/anthracite",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/danielbaars/anthracite.git"
+    },
+    "bugs": {
+      "url": "https://github.com/danielbaars/anthracite/issues"
+    },
+    "engines": {
+      "node": ">=24"
+    },
+    "bin": {
+      "an": "cli.cjs",
+      "anthracite": "cli.cjs"
+    },
+    "files": [
+      "cli.cjs",
+      "README.md",
+      "LICENSE",
+      "CREDITS.md",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "publishConfig": {
+      "access": "public"
+    }
+  },
+  "offlineInstall": true,
+  "isolatedPrefix": true,
+  "sameInstallationT16Executions": 1,
+  "packageSelectionOutsideSandboxForExistingProcessObservation": true
+}

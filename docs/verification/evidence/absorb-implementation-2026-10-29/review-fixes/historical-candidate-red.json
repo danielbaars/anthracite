@@ -1,0 +1,74 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2026-10-29T11:32:01.597Z",
+    "end": "2026-10-29T11:32:40.908Z",
+    "duration": 39311
+  },
+  "tests": [
+    {
+      "title": "continues selected-range construction before first publication without repeating prefixes or staging caller input",
+      "fullTitle": "absorb continuation through the public CLI continues selected-range construction before first publication without repeating prefixes or staging caller input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 16794,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Absorb stopped. Completed: non…' to include 'construction checkout'",
+        "showDiff": false,
+        "actual": "ERROR: Absorb stopped. Completed: none. Active: constructing base. Pending: base, child, tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-4x1cxF. Command failed with error exit code 1:\ngit --literal-pathspecs -c submodule.recurse=false cherry-pick --no-commit db9142898af8e39d70e558c407bb1c6c4ceba03b\nAuto-merging shared.txt\nCONFLICT (content): Merge conflict in shared.txt\n\nerror: could not apply db91428... Neighbor\nhint: after resolving the conflicts, mark the corrected paths\nhint: with 'git add <paths>' or 'git rm <paths>'\nhint: Disable this message with \"git config set advice.mergeConflict false\"\n\nNo automatic continuation is available for this Git state. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: BUN_BE_BUN=1 '$TASK/evidence46/an-final' '$FIXTURE/repo/.git/an-absorb-4x1cxF/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Absorb stopped. Completed: non…' to include 'construction checkout'\n    at Context.<anonymous> (apps/cli/dist/test/commands/absorb_continue_cli.test.js:130:51)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "continues selected-range construction after first publication without repeating prefixes or staging caller input",
+      "fullTitle": "absorb continuation through the public CLI continues selected-range construction after first publication without repeating prefixes or staging caller input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 17918,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Absorb stopped. Completed: bas…' to include 'construction checkout'",
+        "showDiff": false,
+        "actual": "ERROR: Absorb stopped. Completed: base. Active: constructing child. Pending: child, tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-kqZ7c9. Command failed with error exit code 1:\ngit --literal-pathspecs -c submodule.recurse=false cherry-pick --no-commit 1b972a880750e605e41f92855bb19615e6a6789d\nAuto-merging shared.txt\nCONFLICT (content): Merge conflict in shared.txt\n\nerror: could not apply 1b972a8... Neighbor\nhint: after resolving the conflicts, mark the corrected paths\nhint: with 'git add <paths>' or 'git rm <paths>'\nhint: Disable this message with \"git config set advice.mergeConflict false\"\n\nNo automatic continuation is available for this Git state. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: BUN_BE_BUN=1 '$TASK/evidence46/an-final' '$FIXTURE/repo/.git/an-absorb-kqZ7c9/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Absorb stopped. Completed: bas…' to include 'construction checkout'\n    at Context.<anonymous> (apps/cli/dist/test/commands/absorb_continue_cli.test.js:130:51)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "continues selected-range construction before first publication without repeating prefixes or staging caller input",
+      "fullTitle": "absorb continuation through the public CLI continues selected-range construction before first publication without repeating prefixes or staging caller input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 16794,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Absorb stopped. Completed: non…' to include 'construction checkout'",
+        "showDiff": false,
+        "actual": "ERROR: Absorb stopped. Completed: none. Active: constructing base. Pending: base, child, tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-4x1cxF. Command failed with error exit code 1:\ngit --literal-pathspecs -c submodule.recurse=false cherry-pick --no-commit db9142898af8e39d70e558c407bb1c6c4ceba03b\nAuto-merging shared.txt\nCONFLICT (content): Merge conflict in shared.txt\n\nerror: could not apply db91428... Neighbor\nhint: after resolving the conflicts, mark the corrected paths\nhint: with 'git add <paths>' or 'git rm <paths>'\nhint: Disable this message with \"git config set advice.mergeConflict false\"\n\nNo automatic continuation is available for this Git state. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: BUN_BE_BUN=1 '$TASK/evidence46/an-final' '$FIXTURE/repo/.git/an-absorb-4x1cxF/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Absorb stopped. Completed: non…' to include 'construction checkout'\n    at Context.<anonymous> (apps/cli/dist/test/commands/absorb_continue_cli.test.js:130:51)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "continues selected-range construction after first publication without repeating prefixes or staging caller input",
+      "fullTitle": "absorb continuation through the public CLI continues selected-range construction after first publication without repeating prefixes or staging caller input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_continue_cli.test.js",
+      "duration": 17918,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Absorb stopped. Completed: bas…' to include 'construction checkout'",
+        "showDiff": false,
+        "actual": "ERROR: Absorb stopped. Completed: base. Active: constructing child. Pending: child, tip. Retained input and construction: $FIXTURE/repo/.git/an-absorb-kqZ7c9. Command failed with error exit code 1:\ngit --literal-pathspecs -c submodule.recurse=false cherry-pick --no-commit 1b972a880750e605e41f92855bb19615e6a6789d\nAuto-merging shared.txt\nCONFLICT (content): Merge conflict in shared.txt\n\nerror: could not apply 1b972a8... Neighbor\nhint: after resolving the conflicts, mark the corrected paths\nhint: with 'git add <paths>' or 'git rm <paths>'\nhint: Disable this message with \"git config set advice.mergeConflict false\"\n\nNo automatic continuation is available for this Git state. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: BUN_BE_BUN=1 '$TASK/evidence46/an-final' '$FIXTURE/repo/.git/an-absorb-kqZ7c9/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Absorb stopped. Completed: bas…' to include 'construction checkout'\n    at Context.<anonymous> (apps/cli/dist/test/commands/absorb_continue_cli.test.js:130:51)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

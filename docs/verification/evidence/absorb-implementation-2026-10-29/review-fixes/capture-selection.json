@@ -1,0 +1,58 @@
+[
+  {
+    "runtime": "node",
+    "kind": "raw-abort",
+    "file": "node/trace-raw-abort.json",
+    "rawCliSha256": "eecd376ee19de66e725b9d244b9a340ffc8e9022328073ff1f738717860f23ba",
+    "rawGitSha256": "828062306dda21d52b2b207d0fce78a4cef7d1702817dd3e776130bdfb70cbe3"
+  },
+  {
+    "runtime": "node",
+    "kind": "before-publication",
+    "file": "node/trace-before-publication.json",
+    "rawCliSha256": "f329c5295aee4c1be657edbc2b91b59348d510342d36b1b46f275f6c2ea8931d",
+    "rawGitSha256": "9a19c74170900e3d38fb6171f1c64737cba820628b13558bf8ab8efd4303b504"
+  },
+  {
+    "runtime": "node",
+    "kind": "after-publication",
+    "file": "node/trace-after-publication.json",
+    "rawCliSha256": "7c6b1f7217218b1383785b5084dcf4bf5c14663d3436b4a3fccfa8d1b753e066",
+    "rawGitSha256": "be112ac1830dbc7d06afc8913d614a4dd91addaa59794ba6dcb1e63db87cf1af"
+  },
+  {
+    "runtime": "node",
+    "kind": "correction-conflict",
+    "file": "node/trace-correction-conflict.json",
+    "rawCliSha256": "7cd1c4ceb48ed211c5af2088f305e38ec5c8d73f2c6c2eb48a92323ccd448289",
+    "rawGitSha256": "81944cdb923b470909f977a6fe2250e97fc807f4c645bf859357b723d2486ccd"
+  },
+  {
+    "runtime": "native",
+    "kind": "raw-abort",
+    "file": "native/trace-raw-abort.json",
+    "rawCliSha256": "383a6f64274efa87e14abe4f14af6af18fb73fbdd5e663d8f0d0cfa3529996bd",
+    "rawGitSha256": "263027df24ff1f6d2e60d9ff17a96598b8fb83357dbc54b6441a7b316d8ac2e0"
+  },
+  {
+    "runtime": "native",
+    "kind": "correction-conflict",
+    "file": "native/trace-correction-conflict.json",
+    "rawCliSha256": "ef7c5fd687771afe0aa48eb9c0697951c19d4927fbb17e0718afbc8609f6554f",
+    "rawGitSha256": "29be1d89ed64b8217a8f942a5d39bc8019ac48ddefbf1e4ed6e62c67215344eb"
+  },
+  {
+    "runtime": "native",
+    "kind": "before-publication",
+    "file": "native/trace-before-publication.json",
+    "rawCliSha256": "16ed96213ae874a6279fdae6b4270b805e6fb09f93415965ab92b8de4a3b08d4",
+    "rawGitSha256": "e7d19b7870d35c1f9bb1260768c6a616e99d0e8b3e3bb7e3886733ca5b37a635"
+  },
+  {
+    "runtime": "native",
+    "kind": "after-publication",
+    "file": "native/trace-after-publication.json",
+    "rawCliSha256": "c507a1af486af2d60bf3f822ac96e23fe413a5a9167d4ca1549c65d4a270643a",
+    "rawGitSha256": "9b69a87c8ee59e92b642b2be256a554e90424d886493b961570236cf480e012c"
+  }
+]

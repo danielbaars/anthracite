@@ -1,0 +1,72 @@
+{
+  "initialTddRed": "Before product edits, both new public construction regressions failed because the original candidate reported no automatic continuation. Initial fixture tip.txt collision was corrected to same-file staged/unstaged child.txt input before that red.",
+  "cycles": [
+    {
+      "file": "historical-candidate-red.json",
+      "candidate": "6014d46d13413fec2d60b436af3fd6cfe51e1e13",
+      "purpose": "Post-fix reconfirmation of the original immutable native candidate failing both new public before/after-publication regressions; not current-candidate acceptance.",
+      "passed": 0,
+      "failed": 2
+    },
+    {
+      "name": "review-green01.json",
+      "rawSha256": "f46917a6e969e9aeb942f093792bca95490755f75818adf4d5a6919205166c56",
+      "stats": {
+        "suites": 2,
+        "tests": 3,
+        "passes": 3,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:22:11.615Z",
+        "end": "2026-10-29T11:24:05.315Z",
+        "duration": 113700
+      },
+      "qualification": "Development only; final fixed-candidate execution is recorded separately."
+    },
+    {
+      "name": "review-green02.json",
+      "rawSha256": "6d646a2efa3690f94789cc226d443d69ececf42c4c5b42d2118397522e5d989c",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:23:39.118Z",
+        "end": "2026-10-29T11:24:14.856Z",
+        "duration": 35738
+      },
+      "qualification": "Development only; final fixed-candidate execution is recorded separately."
+    },
+    {
+      "name": "review-green03.json",
+      "rawSha256": "76ed60fc9d2c88e99609cdfe9c95aba57cf9cd791516f82cfa80760b1b900a2c",
+      "stats": {
+        "suites": 1,
+        "tests": 3,
+        "passes": 2,
+        "pending": 0,
+        "failures": 2,
+        "start": "2026-10-29T11:29:25.277Z",
+        "end": "2026-10-29T11:31:11.529Z",
+        "duration": 106252
+      },
+      "qualification": "Invalid development run: rebuilding dist concurrently removed index.js during a later fixture; excluded from every acceptance count."
+    },
+    {
+      "name": "review-green04.json",
+      "rawSha256": "63bd4ee283acfc3457cedd65e641d801db89892a442067a71354b014f93e2d84",
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-29T11:31:37.955Z",
+        "end": "2026-10-29T11:33:58.858Z",
+        "duration": 140903
+      },
+      "qualification": "Development only; final fixed-candidate execution is recorded separately."
+    }
+  ]
+}

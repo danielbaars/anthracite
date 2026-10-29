@@ -1,0 +1,170 @@
+[
+  {
+    "file": "identity.json",
+    "rawSha256": "7eed8f3e453b9dcfd5f8e7b1a63b85c6447c2c8ed871442a967e998165e1b040"
+  },
+  {
+    "file": "npm-identity.json",
+    "rawSha256": "87035b7ea429c669289b9642ffb377c43c22b37d6c7e29529f1c155ac284858c"
+  },
+  {
+    "file": "inventory.json",
+    "rawSha256": "a6a8957638470dbb2de13bd8543a1421b8fc0238471d93f5e964d8dc118a334b"
+  },
+  {
+    "file": "compatibility-checks.json",
+    "rawSha256": "903823e7c7779e83b7061bd29284dc8cf6bdc0b6dc787f2d7e4c3efd060c0bf3"
+  },
+  {
+    "file": "node/commands__absorb_apply_cli.test.js.json",
+    "rawSha256": "e25f0d328f0178fae1f9f593319d6a82a4c8dc414853a4c3ded377a7477d2fc2"
+  },
+  {
+    "file": "node/commands__absorb_continue_cli.test.js.json",
+    "rawSha256": "3ce564bf61a1d9005b178cb3460afafd5e9dff61b7c7803482c857eb15017319"
+  },
+  {
+    "file": "node/commands__absorb_input_cli.test.js.json",
+    "rawSha256": "6517a762a2305fabd3e5c0c48f064ee79a88dae9c25c3d2c9127f7b3dd3b5c79"
+  },
+  {
+    "file": "node/commands__absorb_multi_cli.test.js.json",
+    "rawSha256": "06ecb12f66264c06fb4e80ce5b70f2bd9b796b99980d9f0a28c004dda8a75660"
+  },
+  {
+    "file": "node/commands__absorb_preview_cli.test.js.json",
+    "rawSha256": "3a89cc5d655016d02c4df495a3d3c3759bac386428db18543ece013d0b55634b"
+  },
+  {
+    "file": "node/commands__absorb_selection_cli.test.js.json",
+    "rawSha256": "7fa1fc1aa3da8c92d733fe112dd3d8d732e37f2d547746a9f19fcffbd80c791e"
+  },
+  {
+    "file": "node/commands__absorb_staging_cli.test.js.json",
+    "rawSha256": "893c7dc3f58bcff97e92b4fee493e70524a75aa0fa11e1f4ee0fa5c905359a6a"
+  },
+  {
+    "file": "node/legacy.json",
+    "rawSha256": "ab0de57329d0412c2c8570e8795bb91019d7e07687b78dc1e7d3b2fd9b786f9d"
+  },
+  {
+    "file": "native/commands__absorb_apply_cli.test.js.json",
+    "rawSha256": "cc33c99609eebc6e36e523b40e11594b547c4cf7629bb8b650a87728ccc6d1b4"
+  },
+  {
+    "file": "native/commands__absorb_continue_cli.test.js.json",
+    "rawSha256": "df154b5c8a8d7a6eeaa033f4a49bba4c68aa1488d988f734eb411e09f8f49e16"
+  },
+  {
+    "file": "native/commands__absorb_input_cli.test.js.json",
+    "rawSha256": "a0d93ff4baf85228017637d92f1f7e144649dfa6dda54da44034ccffa00f6433"
+  },
+  {
+    "file": "native/commands__absorb_multi_cli.test.js.json",
+    "rawSha256": "3443b9fb799f8500d9e7ae569a5ea738f5550e8d508dd1d4c25aa4805a974086"
+  },
+  {
+    "file": "native/commands__absorb_preview_cli.test.js.json",
+    "rawSha256": "235fd010c52edba45fd042db8dd9103dd0d8d3dce8ce8a329ced03af7367d123"
+  },
+  {
+    "file": "native/commands__absorb_selection_cli.test.js.json",
+    "rawSha256": "1c8ccbbcac812188614be61397a0508493dfac611d878ba52fdf4bc4e529ef46"
+  },
+  {
+    "file": "native/commands__absorb_staging_cli.test.js.json",
+    "rawSha256": "753c5a29f2585d14104d3d48fab735b185c9194f8615c62cf125c62cf29fa343"
+  },
+  {
+    "file": "native/legacy.json",
+    "rawSha256": "2f9c6b862f1f22f2936bc5fbab6cb35946a689681d6407a32660d5503c0db927"
+  },
+  {
+    "file": "build-final.log",
+    "rawSha256": "6a4df0f2aceb647baf95f3b96c99ce1b22e3335a6a521adfdc8566dc537c332d"
+  },
+  {
+    "file": "native-build-final.log",
+    "rawSha256": "659f895b1adc9a047aad89ecb51013a0bd66878b593a8d8aa731a9b3ef7d92f4"
+  },
+  {
+    "file": "typecheck-final.log",
+    "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "lint-final.log",
+    "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "npm-build-final.log",
+    "rawSha256": "f0d80d4405001044145beac777fa18c65685754bd64b5a0db672cdbee614fd75"
+  },
+  {
+    "file": "installed-final.log",
+    "rawSha256": "800e9678b252facb3ca5d10ef7b6ef266d5c68b1c540d75768bd7b825fd3f7a4"
+  },
+  {
+    "file": "historical-candidate-red.json",
+    "rawSha256": "1fa49ebd02bfcc51351a49e8503ec26fd193640ce8f0aee121a1519b3c5abb61"
+  },
+  {
+    "file": "node/trace-raw-abort.json",
+    "rawSha256": "eecd376ee19de66e725b9d244b9a340ffc8e9022328073ff1f738717860f23ba"
+  },
+  {
+    "file": "node/trace-before-publication.json",
+    "rawSha256": "f329c5295aee4c1be657edbc2b91b59348d510342d36b1b46f275f6c2ea8931d"
+  },
+  {
+    "file": "node/trace-after-publication.json",
+    "rawSha256": "7c6b1f7217218b1383785b5084dcf4bf5c14663d3436b4a3fccfa8d1b753e066"
+  },
+  {
+    "file": "node/trace-correction-conflict.json",
+    "rawSha256": "7cd1c4ceb48ed211c5af2088f305e38ec5c8d73f2c6c2eb48a92323ccd448289"
+  },
+  {
+    "file": "native/trace-raw-abort.json",
+    "rawSha256": "383a6f64274efa87e14abe4f14af6af18fb73fbdd5e663d8f0d0cfa3529996bd"
+  },
+  {
+    "file": "native/trace-correction-conflict.json",
+    "rawSha256": "ef7c5fd687771afe0aa48eb9c0697951c19d4927fbb17e0718afbc8609f6554f"
+  },
+  {
+    "file": "native/trace-before-publication.json",
+    "rawSha256": "16ed96213ae874a6279fdae6b4270b805e6fb09f93415965ab92b8de4a3b08d4"
+  },
+  {
+    "file": "native/trace-after-publication.json",
+    "rawSha256": "c507a1af486af2d60bf3f822ac96e23fe413a5a9167d4ca1549c65d4a270643a"
+  },
+  {
+    "file": "installed-construction-mcp.json",
+    "rawSha256": "e74423ea27ad19897dd43b044389d9c2a62fd1045c78eb0a0ea5a3ea5a4e2210"
+  },
+  {
+    "file": "review-standards.md",
+    "rawSha256": "eab24fec4cf2685bc845c148d035531b07c2e69112349d6c75796f33ce552235"
+  },
+  {
+    "file": "review-spec.md",
+    "rawSha256": "16d76f5e2cc68492d4e3644b9aa6b87341e6af3c2b19c56a33bb8959fc84bf64"
+  },
+  {
+    "file": "review-standards-confirmation.md",
+    "rawSha256": "5b439bc49e0948c2633811b920d911c6c770c00633ff73bd6d4e2df2b417b270"
+  },
+  {
+    "file": "review-spec-confirmation.md",
+    "rawSha256": "b4cf308582afc847f1042bd3d897378b0e54faf12fb1dc058dd6e5b9e0850bf3"
+  },
+  {
+    "file": "spec-repro-fixed.cjs",
+    "rawSha256": "4fa60703c54d26fea4ad535c770e7df105503314f4d318e1916c05df3e6ea46f"
+  },
+  {
+    "file": "spec-repro-fixed.json",
+    "rawSha256": "361c3dfc939ad8eb6f4730db18d05595cc3a0bd91a2582b01caf7c99be610124"
+  }
+]

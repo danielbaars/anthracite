@@ -1,0 +1,6 @@
+Bundled 612 modules in 37ms
+
+  cli.cjs  2.75 MB  (entry point)
+
+npm warn Unknown user config "always-auth". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+Packaged @danielbaars/anthracite@0.2.1: $WORKSPACE/release/npm/danielbaars-anthracite-0.2.1.tgz

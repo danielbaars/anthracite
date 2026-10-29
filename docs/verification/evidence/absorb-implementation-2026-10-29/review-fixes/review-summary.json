@@ -1,0 +1,18 @@
+{
+  "originalReviewHead": "277692214090229416610d7716f5ef265181a6db",
+  "originalFindings": [
+    {
+      "priority": 1,
+      "area": "selected-range construction continuation"
+    },
+    {
+      "priority": 3,
+      "area": "shared readonly Git environment override list"
+    }
+  ],
+  "confirmedSourceCommit": "14dda978a40a388daa904f906cd59f0cbaf6921c",
+  "standardsConfirmation": "resolved; no new material standards finding",
+  "specConfirmation": "resolved through independent original native repro and final Git assertions",
+  "remainingFindings": 0,
+  "qualification": "Independent confirmation evidence is separate from the fixed-candidate acceptance executions above."
+}

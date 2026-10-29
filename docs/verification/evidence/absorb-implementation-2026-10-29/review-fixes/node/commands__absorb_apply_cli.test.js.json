@@ -1,0 +1,288 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 15,
+    "passes": 15,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-29T11:35:00.294Z",
+    "end": "2026-10-29T11:39:23.299Z",
+    "duration": 263005
+  },
+  "tests": [
+    {
+      "title": "corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "fullTitle": "single-commit absorb application through the public CLI corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 22636,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "fullTitle": "single-commit absorb application through the public CLI preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 31711,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses redirected indexes before planning or writing any source state",
+      "fullTitle": "single-commit absorb application through the public CLI refuses redirected indexes before planning or writing any source state",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 647,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses working-tree conversions before constructing commits or cleaning input",
+      "fullTitle": "single-commit absorb application through the public CLI refuses working-tree conversions before constructing commits or cleaning input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 2663,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "fullTitle": "single-commit absorb application through the public CLI preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 9027,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "fullTitle": "single-commit absorb application through the public CLI keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 11634,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "fullTitle": "single-commit absorb application through the public CLI keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 24348,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "fullTitle": "single-commit absorb application through the public CLI refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 10873,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "fullTitle": "single-commit absorb application through the public CLI stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 10385,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "fullTitle": "single-commit absorb application through the public CLI applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 8913,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "applies a root-relative correction from a nested directory with a literal Unicode path",
+      "fullTitle": "single-commit absorb application through the public CLI applies a root-relative correction from a nested directory with a literal Unicode path",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 28453,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses frozen or occupied mandatory participants before input or refs change",
+      "fullTitle": "single-commit absorb application through the public CLI refuses frozen or occupied mandatory participants before input or refs change",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 4666,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an opaque existing cache lock without deleting it or changing input",
+      "fullTitle": "single-commit absorb application through the public CLI refuses an opaque existing cache lock without deleting it or changing input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 2979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "fullTitle": "single-commit absorb application through the public CLI retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 29329,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "fullTitle": "single-commit absorb application through the public CLI applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 23081,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "fullTitle": "single-commit absorb application through the public CLI corrects the original ancestor and replays descendants while returning staged and unstaged work",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 22636,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "fullTitle": "single-commit absorb application through the public CLI preserves interior authors, exact full messages and own order despite inherited author overrides",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 31711,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses redirected indexes before planning or writing any source state",
+      "fullTitle": "single-commit absorb application through the public CLI refuses redirected indexes before planning or writing any source state",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 647,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses working-tree conversions before constructing commits or cleaning input",
+      "fullTitle": "single-commit absorb application through the public CLI refuses working-tree conversions before constructing commits or cleaning input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 2663,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "fullTitle": "single-commit absorb application through the public CLI preserves hook changes to the source instead of overwriting them during checkout cleanup",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 9027,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "fullTitle": "single-commit absorb application through the public CLI keeps local input durable after replay hook failure, legacy cleanup and Git pruning, then executes manual restoration",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 11634,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "fullTitle": "single-commit absorb application through the public CLI keeps a genuine mandatory descendant conflict separate from retained work, and preserves earlier amendments after raw Git abort",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 24348,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "fullTitle": "single-commit absorb application through the public CLI refuses manual restoration over newer same-path staging or a newer clean source commit",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 10873,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "fullTitle": "single-commit absorb application through the public CLI stops when a replay hook changes an already-adopted ancestor and preserves that external ref",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 10385,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "fullTitle": "single-commit absorb application through the public CLI applies a current-commit correction with a minimal PATH and retains staged non-UTF8 bytes and ignored files",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 8913,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "applies a root-relative correction from a nested directory with a literal Unicode path",
+      "fullTitle": "single-commit absorb application through the public CLI applies a root-relative correction from a nested directory with a literal Unicode path",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 28453,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses frozen or occupied mandatory participants before input or refs change",
+      "fullTitle": "single-commit absorb application through the public CLI refuses frozen or occupied mandatory participants before input or refs change",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 4666,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an opaque existing cache lock without deleting it or changing input",
+      "fullTitle": "single-commit absorb application through the public CLI refuses an opaque existing cache lock without deleting it or changing input",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 2979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "fullTitle": "single-commit absorb application through the public CLI retains original input on a real commit hook failure and honors no-verify without deleting the failed construction",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 29329,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "fullTitle": "single-commit absorb application through the public CLI applies from a linked source worktree while preserving the primary checkout and both local-work layers",
+      "file": "$WORKSPACE/apps/cli/dist/test/commands/absorb_apply_cli.test.js",
+      "duration": 23081,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

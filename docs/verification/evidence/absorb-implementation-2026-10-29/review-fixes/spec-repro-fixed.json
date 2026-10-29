@@ -1,0 +1,25 @@
+{
+  "candidate": "14dda978a40a388daa904f906cd59f0cbaf6921c",
+  "nativeSha256": "01d4f344353a877fe683137853fdb774430725418ad5547c58630c5d4c7cdbf7",
+  "repo": "$REPRO/repo",
+  "preview": {
+    "status": 0,
+    "stdout": "child.txt: absorb into child, commit 436da672c4de324f9d24880dec65e55680d5c9f9 (source line 1)\nshared.txt: absorb into base, commit 958ec6b8bcaa9359c0c777b975cc136924c253e0 (source line 1)\nRetained main.txt: No eligible feature commit owns this correction. (source line 1)\nAbsorbable hunks: 2. Retained hunks: 1. Retained entries: 0.\nRequired replay: base, child.\nDry run complete; no changes applied.\n",
+    "stderr": ""
+  },
+  "apply": {
+    "status": 1,
+    "stdout": "",
+    "stderr": "ERROR: Absorb stopped. Completed: base. Active: constructing child. Pending: child. Retained input and construction: $REPRO/repo/.git/an-absorb-H0ETss. Command failed with error exit code 1:\ngit --literal-pathspecs -c submodule.recurse=false cherry-pick --no-commit a4590ce49aeb6b24860bf8028e96a4724e18475b\nAuto-merging shared.txt\nCONFLICT (content): Merge conflict in shared.txt\n\nerror: could not apply a4590ce... Edit neighboring inherited line\nhint: after resolving the conflicts, mark the corrected paths\nhint: with 'git add <paths>' or 'git rm <paths>'\nhint: Disable this message with \"git config set advice.mergeConflict false\"\n\nResolve the conflict in the owned construction checkout $REPRO/repo/.git/an-absorb-H0ETss/construction. Stage only its resolutions with git -C '$REPRO/repo/.git/an-absorb-H0ETss/construction' add <paths>, then run an continue from $REPRO/repo (or an continue --all to stage that construction checkout). Original source staged/unstaged input remains separate. Inspect the saved plan/progress and actual refs. Finish or abort the active Git replay deliberately if one exists. Return to child and restore retained input FIRST by running: BUN_BE_BUN=1 '$NATIVE' '$REPRO/repo/.git/an-absorb-H0ETss/restore.cjs'. This restores the original staged/unstaged input only when collision checks pass; save newer work separately first. Pending branches remain stale. Save the restored local work deliberately before a later restack; do not restack before this guarded restoration. Earlier published amendments remain after abort.\n"
+  },
+  "continue": {
+    "status": 0,
+    "stdout": "Retained main.txt: No eligible feature commit owns this correction.\nAbsorbed 2 hunk(s) into child, base. Completed replay: base, child. Retained input restored.\n",
+    "stderr": ""
+  },
+  "repeat": {
+    "status": 1,
+    "stderr": "ERROR: No Anthracite operation to continue.\n"
+  },
+  "checks": "Independent Git assertions passed: exact base/child trees, unchanged adopted base, pending child correction, deliberate resolution, author/message/order/count, ancestry, trunk, original checkout, staged leftovers, unstaged sentinel, metadata parent, cleanup, repeat no effects."
+}
