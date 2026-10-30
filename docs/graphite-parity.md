@@ -33,7 +33,7 @@ These are source/interface gaps and bounded candidates, not newly reproduced def
 
 | ID | Remaining item | Status and next action |
 | --- | --- | --- |
-| G01 | Dedicated PR opening/review and stack-aware merge workflows | **Specified; not shipped.** The approved [PR review and stack landing specification](specs/pr-review-stack-landing.md) defines direct-GitHub `pr`, head-bound single-PR `review` and scoped rebase-only `land`, preserving raw Git `merge`. See the [design/evidence limits](verification/pr-review-stack-landing-spec-2026-10-30.md). No new Graphite runtime or live GitHub review/merge acceptance is claimed. |
+| G01 | Dedicated PR opening/review and stack-aware merge workflows | **Specified; not shipped; tracked in [#57](https://github.com/danielbaars/anthracite/issues/57).** The approved [PR review and stack landing specification](specs/pr-review-stack-landing.md) defines direct-GitHub `pr`, head-bound single-PR `review` and scoped rebase-only `land`, preserving raw Git `merge`. See the [design/evidence limits](verification/pr-review-stack-landing-spec-2026-10-30.md). No new Graphite runtime or live GitHub review/merge acceptance is claimed. |
 | G02 | Anthracite `abort` | No dedicated handler. Raw `an rebase --abort` cancels its active Git rebase, retaining earlier completed work/parent changes. Compare representative operation recovery before specifying an operation-aware abort; do not promise whole-operation rollback. |
 | G03 | Anthracite `undo` | No dedicated handler or general undo contract. Research snapshot coverage, local work, PR effects and failure limits before implementation. Git reflog availability is not equivalent feature acceptance. |
 | G04 | `unlink`: remove PR association without untracking the branch | No public route. An internal `clearPrInfo` primitive is not a complete user workflow; `untrack` changes tracking and is not a substitute. Measure the intended association-only contract. |
@@ -96,7 +96,7 @@ The old `info` child-list defect is already resolved by S02/PR #28. Historical s
 
 ## Tracking and next work
 
-At this reconciliation, the only open issue in `danielbaars/anthracite` is [#12](https://github.com/danielbaars/anthracite/issues/12); its L1/L2 remain deferred. Closed MCP, split, roles, absorb and insert issues are shipped work, not still-open tasks. This document opens or closes no issues and does not resume the log backlog.
+The original reconciliation recorded [#12](https://github.com/danielbaars/anthracite/issues/12) as the only open issue; its L1/L2 remain deferred. The subsequent approved G01 specification is now tracked in [#57](https://github.com/danielbaars/anthracite/issues/57). Closed MCP, split, roles, absorb and insert issues are shipped work, not still-open tasks. This document closes no issues and does not resume the log backlog.
 
 Keep the IDs stable. When implementing or deciding an item, link its issue/specification, merged source/release and exact bounded evidence; move it to shipped, deliberately retained or excluded status rather than deleting it. Split interface findings from runtime defects. Keep #12 open until its existing tracking rule is satisfied. Do not turn a related documentation PR into a closing reference for that backlog.
 
