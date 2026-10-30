@@ -102,6 +102,28 @@ describe('targeted insert public routes', function () {
     });
   }
 
+  it('warns on stderr for implicit noninteractive fanout even in quiet mode', () => {
+    fixture.branch('sibling', 'base');
+    fixture.git(['switch', 'base']);
+    const result = fixture.run(['create', 'inserted', '--insert', '--quiet']);
+    expect(result.status, result.stderr).to.equal(0);
+    expect(result.stdout).to.equal('');
+    expect(result.stderr)
+      .to.include('WARNING:')
+      .and.include('No --insert-child specified')
+      .and.include('all 2 direct children of base')
+      .and.include('child')
+      .and.include('sibling')
+      .and.include('--insert-child <branch>');
+    for (const branch of ['child', 'sibling']) {
+      expect(
+        JSON.parse(
+          fixture.git(['cat-file', '-p', `refs/branch-metadata/${branch}`])
+        ).parentBranchName
+      ).to.equal('inserted');
+    }
+  });
+
   it('keeps explicit scope quiet and retains an actionable invalid-child refusal', () => {
     fixture.branch('sibling', 'base');
     fixture.git(['switch', 'base']);
@@ -123,6 +145,7 @@ describe('targeted insert public routes', function () {
     ]);
     expect(success.status, success.stderr).to.equal(0);
     expect(success.stdout).to.equal('');
+    expect(success.stderr).not.to.include('No --insert-child specified');
     expect(
       fixture.git(['rev-parse', 'sibling', 'refs/branch-metadata/sibling'])
     ).to.equal(sibling);

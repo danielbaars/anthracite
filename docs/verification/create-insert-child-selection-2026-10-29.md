@@ -21,8 +21,8 @@ Node archives, host-native executable, npm tarball and extracted npm entry point
 The complete artifacts and raw reports are retained outside the author worktree
 at `/private/tmp/anthracite-insert-implementation-20261029/evidence-53`, so author
 worktree cleanup does not remove them. The source manifest is reproducible from
-the commit containing this document; artifact identity does not depend on the
-commit hash of the verification prose.
+the original verified commit `3a288c8d629b66ac33df59d95d8455da658b3107`;
+artifact identity does not depend on the commit hash of the verification prose.
 
 Runtime: Node **24.19.0**, Bun **1.3.14**, independently compiled native executable
 on **Darwin 27.2.0 arm64**. Existing locked dependencies were reused. No dependency,
@@ -110,3 +110,21 @@ npm-test caller adds scenario 17; no CI workflow was changed. Recovery retains
 Anthracite's immediate nonzero conflict outcome, strict mandatory frozen/worktree
 protection and bounded raw-abort semantics. A local acceptance result does not
 claim transactional rollback for arbitrary external hooks/ref races.
+
+## Review follow-up — 30 October 2026
+
+Implicit noninteractive insertion with multiple children now warns on stderr
+before branch creation, naming the chosen parent and all selected children and
+pointing to `--insert-child`. The warning remains visible with quiet output and
+does not change the compatible all-children default. Explicit choices and zero
+or one candidate produce no such warning.
+
+The new public CLI regression first failed on the missing warning. After the
+change, the five public-route cases and two existing zero/one-child terminal
+cases pass on both Node 24.19.0 and the independently rebuilt host-native
+candidate: **7 matching cases per runtime**, zero failures or pending cases.
+Those checks include explicit selection remaining quiet and the unchanged
+implicit parent changes. Typecheck, touched-file uncached lint and diff checks
+pass. The original 193-case and installed-artifact results above remain evidence
+for commit `3a288c8d`; they were not repeated or relabeled for this follow-up.
+Only the existing cheap CI is permitted after pushing; the full matrix stays off.
