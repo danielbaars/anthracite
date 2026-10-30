@@ -141,7 +141,9 @@ describe('public scoped landing preview', function () {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
-  it('requires explicit application consent and refuses unimplemented scopes before writes', () => {
+  it('requires explicit application consent and refuses unimplemented fanout scopes before writes', () => {
+    fixture.branch('sibling', 'base');
+    fixture.git(['switch', 'base']);
     const before = fixture.inspectionSnapshot();
     const refusal = fixture.run(['land', '--no-interactive']);
     expect(refusal.status).to.equal(1);

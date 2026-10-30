@@ -47,7 +47,13 @@ if (args[0] === 'api') {
     )
       throw new Error('durable intent missing before merge');
     const input = JSON.parse(fs.readFileSync(0, 'utf8'));
-    if (input.sha !== progress.merges[0].head)
+    if (
+      input.sha !==
+      (
+        progress.merges[progress.index || 0].reached ||
+        progress.merges[progress.index || 0]
+      ).head
+    )
       throw new Error('expected head not retained');
     if (
       Object.keys(input).sort().join(',') !== 'merge_method,sha' ||
@@ -154,6 +160,14 @@ if (args[0] === 'api') {
         const result = git(['rev-parse', 'HEAD'], cwd);
         if (result === pr.headRefOid)
           throw new Error('fixture failed to produce distinct rebase OID');
+        if (policy.replayConflict) {
+          fs.writeFileSync(
+            path.join(cwd, 'child.txt'),
+            'concurrent trunk change\n'
+          );
+          git(['add', 'child.txt'], cwd);
+          git(['commit', '-m', 'Concurrent trunk change'], cwd);
+        }
         git(['push', 'origin', 'HEAD:refs/heads/main'], cwd);
         pr.state = 'MERGED';
         pr.mergeResult = result;
@@ -221,5 +235,105 @@ if (args[0] === 'api') {
   } else {
     process.stderr.write('HTTP 404: Not Found');
     process.exitCode = 1;
+  }
+}
+
+if (
+  args[0] === 'pr' &&
+  ['list', 'view', 'edit'].includes(args[1]) &&
+  !args.includes('--web')
+) {
+  const fs = require('fs');
+  const cp = require('child_process');
+  const file = process.env.ANTHRACITE_TEST_PR_STATE;
+  const policy = JSON.parse(
+    fs.readFileSync(process.env.ANTHRACITE_TEST_LAND_POLICY, 'utf8')
+  );
+  const prs = JSON.parse(fs.readFileSync(file, 'utf8'));
+  let changed = false;
+  const save = () => {
+    const temporary = file + '.' + process.pid + '.tmp';
+    fs.writeFileSync(temporary, JSON.stringify(prs));
+    fs.renameSync(temporary, file);
+  };
+  const observedFile = process.env.ANTHRACITE_TEST_LAND_OBSERVED;
+  const previous = JSON.parse(fs.readFileSync(observedFile, 'utf8'));
+  const actual = Object.fromEntries(
+    cp
+      .execFileSync(
+        'git',
+        [
+          '--git-dir=' + process.env.ANTHRACITE_TEST_LAND_REMOTE,
+          'for-each-ref',
+          '--format=%(refname:short) %(objectname)',
+          'refs/heads',
+        ],
+        { encoding: 'utf8' }
+      )
+      .trim()
+      .split('\n')
+      .filter(Boolean)
+      .map((line) => line.split(' '))
+  );
+  for (const pr of prs.filter((item) => item.state === 'OPEN')) {
+    const revision = (branch) => actual[branch];
+    const head = revision(pr.headRefName);
+    if (head && previous[pr.headRefName] && head !== previous[pr.headRefName]) {
+      changed = true;
+      pr.headRefOid = head;
+      if (policy.dismissAfterPush) pr.reviewDecision = 'REVIEW_REQUIRED';
+      if (policy.pendingAfterPush)
+        pr.statusCheckRollup = [
+          {
+            __typename: 'CheckRun',
+            name: 'unit',
+            status: 'IN_PROGRESS',
+            conclusion: null,
+          },
+        ];
+    }
+    const base = revision(pr.baseRefName);
+    if (base && previous[pr.baseRefName] && base !== previous[pr.baseRefName]) {
+      changed = true;
+      pr.baseRefOid = base;
+    }
+  }
+  if (changed) save();
+  if (JSON.stringify(previous) !== JSON.stringify(actual)) {
+    const temporary = observedFile + '.' + process.pid + '.tmp';
+    fs.writeFileSync(temporary, JSON.stringify(actual));
+    fs.renameSync(temporary, observedFile);
+  }
+  if (args[1] === 'edit') {
+    fs.appendFileSync(
+      process.env.ANTHRACITE_TEST_PR_CALLS,
+      JSON.stringify(args) + '\n'
+    );
+    if (
+      args.length !== 9 ||
+      args[3] !== '--base' ||
+      args[5] !== '--body' ||
+      args[7] !== '--repo' ||
+      args[8] !== 'github.com/fixture/inspection'
+    )
+      throw new Error('unsupported landing PR edit');
+    const pr = prs.find((item) => String(item.number) === args[2]);
+    if (!pr || pr.state !== 'OPEN')
+      throw new Error('PR edit identity mismatch');
+    if (policy.failPrEdit) throw new Error('injected PR update failure');
+    pr.baseRefName = args[4];
+    pr.body = args[6];
+    pr.baseRefOid = cp
+      .execFileSync(
+        'git',
+        [
+          '--git-dir=' + process.env.ANTHRACITE_TEST_LAND_REMOTE,
+          'rev-parse',
+          'refs/heads/' + args[4],
+        ],
+        { encoding: 'utf8' }
+      )
+      .trim();
+    save();
   }
 }

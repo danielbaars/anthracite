@@ -1,3 +1,4 @@
+import { loadLandingProgress } from '../lib/landing_progress';
 import chalk from 'chalk';
 import { continueAbsorb } from './absorb_apply';
 import { TContext } from '../lib/context';
@@ -6,6 +7,7 @@ import {
   getMandatoryBranches,
 } from '../lib/engine/frozen_branch';
 import {
+  ExitFailedError,
   NoGraphiteContinue,
   RebaseCheckoutError,
   RebaseConflictError,
@@ -152,5 +154,14 @@ export async function continueAction(
     throw error;
   }
   finishReorder(context);
+  finishContinuation(context, loadLandingProgress() !== undefined);
+}
+
+function finishContinuation(context: TContext, landingReplay: boolean): void {
+  if (landingReplay && loadLandingProgress()?.replay)
+    throw new ExitFailedError(
+      'Landing local replay queue remains incomplete. Recovery preserved; inspect the original project before resuming land.'
+    );
   clearContinuation(context);
+  if (landingReplay) context.continueConfig.delete();
 }

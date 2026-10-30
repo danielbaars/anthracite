@@ -13,10 +13,21 @@ const member = z
     parent: branch,
     base: oid,
     head: oid,
-    remoteHead: oid,
+    remoteHead: oid.optional(),
     metadata: oid,
-    number: z.number().int().positive(),
-    url: z.string().url(),
+    number: z.number().int().positive().optional(),
+    url: z.string().url().optional(),
+    reached: z
+      .object({
+        head: oid,
+        metadata: oid,
+        parent: branch,
+        base: oid,
+        remoteHead: oid.optional(),
+      })
+      .strict()
+      .optional(),
+    result: oid.optional(),
   })
   .strict();
 const schema = z
@@ -33,8 +44,13 @@ const schema = z
     trunkHead: oid,
     target: branch,
     checkout: branch,
-    merges: z.tuple([member]),
-    maintenance: z.tuple([]),
+    merges: z.array(member).min(1),
+    maintenance: z.array(member),
+    index: z.number().int().nonnegative().optional(),
+    replay: z
+      .object({ pending: z.array(branch).min(1), onto: oid })
+      .strict()
+      .optional(),
     phase: z.enum([
       'prepared',
       'merge-requested',
@@ -87,13 +103,35 @@ export function loadLandingProgress(): LandingProgress | undefined {
       throw new Error('not an owned regular record');
     const record = schema.parse(JSON.parse(fs.readFileSync(file, 'utf8')));
     const first = record.merges[0];
+    const participants = [...record.merges, ...record.maintenance];
+    const survivors = [
+      ...record.merges.slice((record.index ?? 0) + 1),
+      ...record.maintenance,
+    ].map((item) => item.branch);
+    const pending = record.replay?.pending;
     if (
-      first.branch !== record.target ||
+      (pending &&
+        JSON.stringify(pending) !==
+          JSON.stringify(survivors.slice(survivors.indexOf(pending[0])))) ||
+      record.merges[record.merges.length - 1].branch !== record.target ||
       first.parent !== record.trunk ||
-      first.remoteHead !== first.head ||
+      new Set(participants.map((item) => item.branch)).size !==
+        participants.length ||
+      (record.index ?? 0) >= record.merges.length ||
+      record.merges.some(
+        (item, index) =>
+          !item.number ||
+          !item.url ||
+          item.remoteHead !== item.head ||
+          (index > 0 && item.parent !== record.merges[index - 1].branch)
+      ) ||
+      participants.some(
+        (item) =>
+          item.url !== undefined &&
+          item.url.toLowerCase() !==
+            `https://github.com/${record.repo}/pull/${item.number}`.toLowerCase()
+      ) ||
       record.target === record.trunk ||
-      first.url.toLowerCase() !==
-        `https://github.com/${record.repo}/pull/${first.number}`.toLowerCase() ||
       record.directory !==
         fs.realpathSync(landingGit(['rev-parse', '--show-toplevel'])) ||
       record.gitDirectory !==
@@ -163,4 +201,26 @@ function syncDirectory(file: string): void {
 
 function exists(file: string): boolean {
   return fs.lstatSync(file, { throwIfNoEntry: false }) !== undefined;
+}
+
+export function current(
+  record: LandingProgress
+): LandingProgress['merges'][number] & { number: number; url: string } {
+  const member = record.merges[record.index ?? 0];
+  if (!member?.number || !member.url)
+    throw new ExitFailedError('Landing merge identity is unavailable.');
+  return { ...member, number: member.number, url: member.url };
+}
+export function owned(
+  member: LandingProgress['merges'][number]
+): NonNullable<LandingProgress['merges'][number]['reached']> {
+  return (
+    member.reached ?? {
+      head: member.head,
+      metadata: member.metadata,
+      parent: member.parent,
+      base: member.base,
+      remoteHead: member.remoteHead,
+    }
+  );
 }
