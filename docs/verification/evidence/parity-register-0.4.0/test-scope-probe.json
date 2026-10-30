@@ -1,0 +1,51 @@
+{
+  "version": "0.4.0",
+  "sourceCommit": "9c173deb652509ca55ba9104b1254705b439d396",
+  "seam": "public npm CLI, isolated real Git and external marker; no Graphite or live service",
+  "observations": [
+    {
+      "argv": [
+        "test",
+        "--upstack",
+        "<owned marker command>",
+        "--no-interactive"
+      ],
+      "status": 0,
+      "expectedBranches": [
+        "child",
+        "tip"
+      ],
+      "actualBranches": [
+        "base",
+        "child",
+        "tip"
+      ],
+      "matchesRequestedScope": false,
+      "returnCheckout": "child",
+      "stdout": "- [pending]: base\n- [pending]: child\n- [pending]: tip\n- [running]: base\n- [pending]: child\n- [pending]: tip\n- [success]: base (00:00:00)\n- [pending]: child\n- [pending]: tip\n- [success]: base (00:00:00)\n- [running]: child\n- [pending]: tip\n- [success]: base (00:00:00)\n- [success]: child (00:00:00)\n- [pending]: tip\n- [success]: base (00:00:00)\n- [success]: child (00:00:00)\n- [running]: tip\n- [success]: base (00:00:00)\n- [success]: child (00:00:00)\n- [success]: tip (00:00:00)\nOutput files: /var/folders/gg/xctw127s4hs8gzlcdtghgzdr0000gn/T/tmp-31480-L1GLB4ngiQkT/\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "test",
+        "--downstack",
+        "<owned marker command>",
+        "--no-interactive"
+      ],
+      "status": 0,
+      "expectedBranches": [
+        "base",
+        "child"
+      ],
+      "actualBranches": [
+        "base",
+        "child",
+        "tip"
+      ],
+      "matchesRequestedScope": false,
+      "returnCheckout": "child",
+      "stdout": "- [pending]: base\n- [pending]: child\n- [pending]: tip\n- [running]: base\n- [pending]: child\n- [pending]: tip\n- [success]: base (00:00:00)\n- [pending]: child\n- [pending]: tip\n- [success]: base (00:00:00)\n- [running]: child\n- [pending]: tip\n- [success]: base (00:00:00)\n- [success]: child (00:00:00)\n- [pending]: tip\n- [success]: base (00:00:00)\n- [success]: child (00:00:00)\n- [running]: tip\n- [success]: base (00:00:00)\n- [success]: child (00:00:00)\n- [success]: tip (00:00:00)\nOutput files: /var/folders/gg/xctw127s4hs8gzlcdtghgzdr0000gn/T/tmp-31480-L1GLB4ngiQkT/\n",
+      "stderr": ""
+    }
+  ]
+}
