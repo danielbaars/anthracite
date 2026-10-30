@@ -37,6 +37,8 @@ Use `an split --by-file 'path/**'` or `an sp -f path` to extract selected commit
 
 Use `an submit --reviewers alice --assignees @me --roles-branch my-change` to add roles only to one selected PR while retaining the usual submission scope. See [reviewers, assignees and submission scope](docs/submit.md).
 
+Use `an pr [branch]` for fresh GitHub PR information, `--stack` for its connected stack, or `--web` to explicitly open the selected PR. See [PR inspection and preserved local state](docs/pr.md).
+
 To uninstall an npm installation, run `npm uninstall --global @danielbaars/anthracite`. For a standalone installation, remove the command links and managed completion block using `sh scripts/uninstall.sh` from a clone. Version directories and preferences are retained for rollback. See [installation and upgrades](docs/installation.md), the [command reference](DOCUMENTATION.md), and [compatibility](COMPATIBILITY.md).
 
 ## MCP

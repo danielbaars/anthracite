@@ -38,6 +38,10 @@ Every command accepts these:
 
 ---
 
+## GitHub PR inspection
+
+`an pr [branch]` reads fresh PR identity, state/draft, actual base, full head OID, review decision and checks/GitHub merge state from the configured github.com repository. Unknown information and absent PRs are explicit. `--stack` includes fanout under the same trunk child; `--web` opens only the selected validated PR URL. Physical detached HEAD requires an explicit tracked branch. Inspection preserves local work, associations, caches and saved recovery. See [selectors, service errors and policy limits](docs/pr.md).
+
 ## Frozen branch status
 
 `an freeze [branch]` marks the selected tracked branch and its downstack before trunk as frozen. `an unfreeze [branch]` makes the selected branch and every tracked descendant editable, including branching descendants. Both default to the current branch. An explicit local branch selector also works with detached HEAD; trunk, untracked names and invalid scopes are refused before any status writes. There are no extra branch or force flags.
