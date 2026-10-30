@@ -386,7 +386,7 @@ async function readyToMerge(
     throw new ExitFailedError(
       'Fresh trunk/base changed or fast-forward is unavailable.'
     );
-  const blockers = githubLandReadiness(pr, policy);
+  const blockers = await githubLandReadiness(pr, policy, record.repo);
   if (blockers.length)
     throw new ExitFailedError(`Fresh readiness blocked: ${blockers.join(' ')}`);
 }

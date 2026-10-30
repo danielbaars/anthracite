@@ -18,6 +18,7 @@ import {
 } from '../lib/api/github_pr';
 import {
   getGithubLandPolicy,
+  LandPolicy,
   githubLandReadiness,
 } from '../lib/api/github_land_policy';
 import { z } from 'zod';
@@ -48,11 +49,7 @@ export type LandPlan = {
   readonly trunkHead: string;
   readonly remoteTrunk: string | undefined;
   readonly checkout: string;
-  readonly policy: {
-    readonly reviews: number;
-    readonly checks: readonly string[];
-    readonly blockers: readonly string[];
-  };
+  readonly policy: LandPolicy;
   readonly merges: readonly LandParticipant[];
   readonly maintenance: readonly LandParticipant[];
   readonly blockers: readonly string[];
@@ -241,7 +238,7 @@ async function inspectParticipant(
         if (pr.baseRefName !== context.engine.getParentPrecondition(name))
           blockers.push(`${name}: PR base does not match tracked parent.`);
         blockers.push(
-          ...githubLandReadiness(pr, policy).map(
+          ...(await githubLandReadiness(pr, policy, repo)).map(
             (message) => `${name}: ${message}`
           )
         );

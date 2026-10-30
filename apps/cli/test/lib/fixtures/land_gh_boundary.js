@@ -210,7 +210,31 @@ if (args[0] === 'api') {
     policy.protection
   )
     process.stdout.write(JSON.stringify(policy.protection));
-  else if (endpoint.startsWith(prefix + '/pulls/')) {
+  else if (endpoint.startsWith(prefix + '/commits/')) {
+    const match = endpoint.match(
+      /^repos\/fixture\/inspection\/commits\/([a-f0-9]{40})\/check-runs\?per_page=100&page=([1-9][0-9]*)&filter=latest$/
+    );
+    if (!match || !Array.isArray(policy.checkRuns))
+      throw new Error('unsupported check-run request');
+    const page = Number(match[2]);
+    if (
+      policy.failCheckRunsRead &&
+      fs
+        .readFileSync(process.env.ANTHRACITE_TEST_PR_CALLS, 'utf8')
+        .split('\n')
+        .filter((line) => line.includes('/check-runs?')).length >=
+        policy.failCheckRunsRead
+    )
+      throw new Error('injected later check-run read failure');
+    if (policy.failCheckRunsPage === page)
+      throw new Error('injected check-run read failure');
+    process.stdout.write(
+      JSON.stringify({
+        total_count: policy.checkRunsTotal ?? policy.checkRuns.length,
+        check_runs: policy.checkRuns.slice((page - 1) * 100, page * 100),
+      })
+    );
+  } else if (endpoint.startsWith(prefix + '/pulls/')) {
     const prs = JSON.parse(
       fs.readFileSync(process.env.ANTHRACITE_TEST_PR_STATE, 'utf8')
     );
