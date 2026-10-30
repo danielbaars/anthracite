@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 1,
+    "pending": 0,
+    "failures": 3,
+    "start": "2026-10-30T19:13:57.540Z",
+    "end": "2026-10-30T19:19:13.336Z",
+    "duration": 315796
+  },
+  "tests": [
+    {
+      "title": "merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 68989,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:56:32)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 70344,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:148:36)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 70237,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:148:36)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "preserves a later arm lease race and earlier published arms across retry",
+      "fullTitle": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 72920,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 68989,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:56:32)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 70344,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:148:36)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 70237,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:148:36)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "preserves a later arm lease race and earlier published arms across retry",
+      "fullTitle": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 72920,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

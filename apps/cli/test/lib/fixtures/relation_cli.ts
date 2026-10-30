@@ -88,6 +88,7 @@ export class RelationCliFixture extends ReorderCliFixture {
           'config',
           '.graphite_repo_config',
           '.gtcontinue',
+          '.anthracite_landing',
           '.graphite_pr_info',
           '.graphite_cache_lock',
           '.graphite_cache_persist',

@@ -82,6 +82,9 @@ const BRANCH_COMPLETING_COMMANDS = [
   'move',
   'get',
   'g',
+  'pr',
+  'review',
+  'land',
 ];
 
 function shouldCompleteBranch(current: string, argv: Arguments): boolean {

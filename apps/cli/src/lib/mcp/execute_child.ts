@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { StringDecoder } from 'string_decoder';
 
-import { z } from 'zod';
+import { releaseOwnedCacheLockFile } from '../engine/owned_cache_lock';
 
 import { ExecutionResult } from './execute';
 import { getSelfCliCommand } from '../utils/self_cli_command';
@@ -199,18 +199,7 @@ async function releaseOwnedCacheLock(cwd: string, pid: number): Promise<void> {
     common.replace(/\r?\n$/, ''),
     '.graphite_cache_lock'
   );
-  try {
-    const bytes = await fs.readFile(lock, 'utf8');
-    const parsed: unknown = JSON.parse(bytes);
-    const owner = z.object({ pid: z.literal(pid) }).safeParse(parsed);
-    if (owner.success && (await fs.readFile(lock, 'utf8')) === bytes)
-      await fs.unlink(lock);
-  } catch (error: unknown) {
-    if (error instanceof SyntaxError) return;
-    if (error instanceof Error && 'code' in error && error.code === 'ENOENT')
-      return;
-    throw error;
-  }
+  releaseOwnedCacheLockFile(lock, pid);
 }
 
 /** Even cleanup's Git lookup is bounded and cannot leave an owned probe group. */

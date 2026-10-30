@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-30T19:01:11.481Z",
+  "reason": "Stop only owned parallel cohorts after observed system pressure and fixture spawn timeouts; preserve completed reports for bounded reduced-concurrency reruns",
+  "stopped": [
+    {
+      "pid": 69422,
+      "pgid": 69422,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/run-final-cohort.cjs node",
+      "signal": "SIGINT",
+      "ownedMembers": [
+        19948,
+        69422,
+        69468,
+        79202,
+        88091,
+        97737
+      ]
+    },
+    {
+      "pid": 69423,
+      "pgid": 69423,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/run-final-cohort.cjs native",
+      "signal": "SIGINT",
+      "ownedMembers": [
+        12081,
+        19260,
+        19793,
+        19946,
+        19996,
+        33894,
+        43955,
+        69423,
+        69469
+      ]
+    }
+  ]
+}

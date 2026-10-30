@@ -1,3 +1,4 @@
+import { deleteLandedLeafRefs } from '../git/land_cleanup';
 import { withFrozenCommitGuard } from '../git/frozen_commit';
 import chalk from 'chalk';
 import {
@@ -117,6 +118,10 @@ export type TEngine = {
       readonly roots?: readonly string[];
       readonly participants?: readonly string[];
     }
+  ) => void;
+  deleteLandedLeaf: (
+    branch: string,
+    expected: { readonly head: string; readonly metadata: string }
   ) => void;
   deleteBranch: (
     branchName: string,
@@ -975,6 +980,24 @@ export function composeEngine({
         checkoutBranch(cachedMeta.parentBranchName);
         deleteAllBranchData(currentBranchName, participants);
       }
+    },
+    deleteLandedLeaf: (branch, expected) => {
+      const meta = assertBranchIsValidAndNotTrunkAndGetMeta(branch);
+      assertBranchEditable(branch);
+      if (meta.children.length)
+        throw new PreconditionsFailedError(
+          'Landed leaf gained descendants; preview again.'
+        );
+      cache.currentBranch = git.getCurrentBranchName();
+      if (branch === cache.currentBranch)
+        checkoutBranch(meta.parentBranchName, { preserveIgnored: true });
+      if (git.getCurrentBranchName() === branch)
+        throw new PreconditionsFailedError(
+          'Checkout changed before landed branch deletion.'
+        );
+      deleteLandedLeafRefs(branch, expected);
+      removeChild(meta.parentBranchName, branch);
+      delete cache.branches[branch];
     },
     deleteBranch: (
       branchName: string,

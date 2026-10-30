@@ -22,6 +22,7 @@ import * as info from './commands/info';
 import * as init from './commands/init';
 import * as internalCommitGuard from './commands/internal_commit_guard';
 import * as internalPushGuard from './commands/internal_push_guard';
+import * as land from './commands/land';
 import * as ll from './commands/ll';
 import * as log from './commands/log';
 import * as ls from './commands/ls';
@@ -30,6 +31,8 @@ import * as mcp from './commands/mcp';
 import * as move from './commands/move';
 import * as parent from './commands/parent';
 import * as pop from './commands/pop';
+import * as pr from './commands/pr';
+import * as review from './commands/review';
 import * as rename from './commands/rename';
 import * as reorder from './commands/reorder';
 import * as repo from './commands/repo';
@@ -71,6 +74,7 @@ export const commandModules = [
   init,
   internalCommitGuard,
   internalPushGuard,
+  land,
   ll,
   log,
   ls,
@@ -79,6 +83,8 @@ export const commandModules = [
   move,
   parent,
   pop,
+  pr,
+  review,
   rename,
   reorder,
   repo,

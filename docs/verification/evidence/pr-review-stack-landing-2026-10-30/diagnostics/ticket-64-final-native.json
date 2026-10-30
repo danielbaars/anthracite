@@ -1,0 +1,491 @@
+{
+  "stats": {
+    "suites": 13,
+    "tests": 25,
+    "passes": 23,
+    "pending": 0,
+    "failures": 2,
+    "start": "2026-10-30T17:39:57.863Z",
+    "end": "2026-10-30T17:47:31.233Z",
+    "duration": 453370
+  },
+  "tests": [
+    {
+      "title": "reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "fullTitle": "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 19972,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "fullTitle": "public landing interruption recovery resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 33885,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "fullTitle": "public landing interruption recovery preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 13883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "fullTitle": "public landing interruption recovery preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 9414,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Pending landing has no matchin…' to include 'preserved'",
+        "showDiff": false,
+        "actual": "ERROR: Pending landing has no matching owned active local replay or proven pending queue. Raw Git abort cancels only its active rebase; completed effects and both recovery records remain. Inspect git status, git log --oneline --all and saved branch metadata in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-xXMk2U/repo; use an land base --dry-run to inspect remote progress. Do not clear recovery or repeat patches to bypass this guard.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Pending landing has no matchin…' to include 'preserved'\n    at Context.<anonymous> (dist/test/commands/land_recovery_cli.test.js:115:49)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "fullTitle": "public landing interruption recovery preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 5127,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "fullTitle": "public landing interruption recovery retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 9869,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not invent landing ownership when SIGKILL happens before the first durable record",
+      "fullTitle": "public landing interruption recovery does not invent landing ownership when SIGKILL happens before the first durable record",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 3059,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "fullTitle": "public landing interruption recovery preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 11026,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 22497,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 24902,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 25032,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 29999,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "fullTitle": "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 20178,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "fullTitle": "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_mcp_cli.test.js",
+      "duration": 41061,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "fullTitle": "review and landing public surface documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_surface_cli.test.js",
+      "duration": 5308,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "fullTitle": "public one-leaf landing retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 8489,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "fullTitle": "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 23781,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks queued sibling identity between completed local replays",
+      "fullTitle": "public scoped fanout landing rechecks queued sibling identity between completed local replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 16350,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a newly frozen later generic queue item while completing earlier editable replays",
+      "fullTitle": "frozen anchors and recovery through the public CLI skips a newly frozen later generic queue item while completing earlier editable replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/freeze_restack_cli.test.js",
+      "duration": 8449,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/freeze_structural_recovery_cli.test.js",
+      "duration": 14277,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "submits the selected stack but adds reviewers only to its explicit role target",
+      "fullTitle": "submit reviewer role targets through the public CLI submits the selected stack but adds reviewers only to its explicit role target",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 4730,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "drafts unchanged ready PRs only in the selected scope and preserves their fields",
+      "fullTitle": "draft existing PRs through the built CLI drafts unchanged ready PRs only in the selected scope and preserves their fields",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/submit_draft_cli.test.js",
+      "duration": 6429,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gets the implicit current target and keeps equal tips stable on repetition",
+      "fullTitle": "get CLI safe fast-forward gets the implicit current target and keeps equal tips stable on repetition",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/get_fast_forward_cli.test.js",
+      "duration": 2218,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "fullTitle": "frozen sync through the public CLI skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/frozen_sync_cli.test.js",
+      "duration": 5820,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "fullTitle": "MCP cancellation and shutdown through stdio scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
+      "duration": 10211,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected false to equal true",
+        "showDiff": true,
+        "actual": "false",
+        "expected": "true",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (dist/test/commands/mcp_lifecycle_cli.test.js:188:64)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "fullTitle": "public landing interruption recovery preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 9414,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Pending landing has no matchin…' to include 'preserved'",
+        "showDiff": false,
+        "actual": "ERROR: Pending landing has no matching owned active local replay or proven pending queue. Raw Git abort cancels only its active rebase; completed effects and both recovery records remain. Inspect git status, git log --oneline --all and saved branch metadata in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-xXMk2U/repo; use an land base --dry-run to inspect remote progress. Do not clear recovery or repeat patches to bypass this guard.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Pending landing has no matchin…' to include 'preserved'\n    at Context.<anonymous> (dist/test/commands/land_recovery_cli.test.js:115:49)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "fullTitle": "MCP cancellation and shutdown through stdio scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
+      "duration": 10211,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected false to equal true",
+        "showDiff": true,
+        "actual": "false",
+        "expected": "true",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (dist/test/commands/mcp_lifecycle_cli.test.js:188:64)"
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "fullTitle": "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 19972,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "fullTitle": "public landing interruption recovery resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 33885,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "fullTitle": "public landing interruption recovery preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 13883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "fullTitle": "public landing interruption recovery preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 5127,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "fullTitle": "public landing interruption recovery retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 9869,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not invent landing ownership when SIGKILL happens before the first durable record",
+      "fullTitle": "public landing interruption recovery does not invent landing ownership when SIGKILL happens before the first durable record",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 3059,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "fullTitle": "public landing interruption recovery preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 11026,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 22497,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 24902,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 25032,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 29999,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "fullTitle": "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 20178,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "fullTitle": "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_mcp_cli.test.js",
+      "duration": 41061,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "fullTitle": "review and landing public surface documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_surface_cli.test.js",
+      "duration": 5308,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "fullTitle": "public one-leaf landing retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 8489,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "fullTitle": "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 23781,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks queued sibling identity between completed local replays",
+      "fullTitle": "public scoped fanout landing rechecks queued sibling identity between completed local replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 16350,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a newly frozen later generic queue item while completing earlier editable replays",
+      "fullTitle": "frozen anchors and recovery through the public CLI skips a newly frozen later generic queue item while completing earlier editable replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/freeze_restack_cli.test.js",
+      "duration": 8449,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/freeze_structural_recovery_cli.test.js",
+      "duration": 14277,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "submits the selected stack but adds reviewers only to its explicit role target",
+      "fullTitle": "submit reviewer role targets through the public CLI submits the selected stack but adds reviewers only to its explicit role target",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 4730,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "drafts unchanged ready PRs only in the selected scope and preserves their fields",
+      "fullTitle": "draft existing PRs through the built CLI drafts unchanged ready PRs only in the selected scope and preserves their fields",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/submit_draft_cli.test.js",
+      "duration": 6429,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gets the implicit current target and keeps equal tips stable on repetition",
+      "fullTitle": "get CLI safe fast-forward gets the implicit current target and keeps equal tips stable on repetition",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/get_fast_forward_cli.test.js",
+      "duration": 2218,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "fullTitle": "frozen sync through the public CLI skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/frozen_sync_cli.test.js",
+      "duration": 5820,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

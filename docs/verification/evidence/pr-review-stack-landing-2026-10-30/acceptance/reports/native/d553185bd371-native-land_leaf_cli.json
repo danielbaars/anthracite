@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:15:15.041Z",
+    "end": "2026-10-30T19:15:34.673Z",
+    "duration": 19632
+  },
+  "tests": [
+    {
+      "title": "preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "fullTitle": "public one-leaf landing preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 13885,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "fullTitle": "public one-leaf landing preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 13885,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

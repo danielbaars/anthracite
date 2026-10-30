@@ -38,6 +38,18 @@ Every command accepts these:
 
 ---
 
+## GitHub PR inspection
+
+`an pr [branch]` reads fresh PR identity, state/draft, actual base, full head OID, review decision and checks/GitHub merge state from the configured github.com repository. Unknown information and absent PRs are explicit. `--stack` includes fanout under the same trunk child; `--web` opens only the selected validated PR URL. Physical detached HEAD requires an explicit tracked branch. Inspection preserves local work, associations, caches and saved recovery. See [selectors, service errors and policy limits](docs/pr.md).
+
+## GitHub review and scoped landing
+
+`an review [branch]` displays the actual PR base-to-head diff. One explicit `--approve`, `--request-changes` or `--comment` action requires `--head <full-oid>` matching its fresh head. Use one `--body` or UTF-8 `--body-file`; comment and request-changes need nonempty text. The returned review is read back and the PR head checked again. An uncertain or stale-head response returns nonzero and must be inspected before deliberately resubmitting; there is no automatic POST retry. See [head-bound review](docs/review.md).
+
+`an land [branch] --dry-run` previews the unique trunk-to-target merge chain and all mandatory surviving descendants/sibling arms. Application requires terminal confirmation or `--yes`; noninteractive and quiet modes require `--yes`. Each PR merges directly by rebase only after fresh expected-head readiness. Local trunk advances by fast-forward, necessary survivors replay in dependency order, existing remote heads use explicit leases, existing PR bases/managed footers are maintained, and only confirmed landed refs/metadata are cleaned. Surviving PR identities, user content, roles and drafts remain; missing PRs/unpublished heads stay that way. No queue, bypass, alternate method, broad sync or implicit submit is provided.
+
+A conflict retains completed remote effects and prints the original worktree. `an continue` completes only its local replay and retains landing recovery for explicit `an land [original-target] --yes`, including when the target branch was deleted. A proven pending queue can continue after explicit unfreeze or fixing a rejected hook; changed refs, metadata, scope and occupied worktrees still refuse. Raw abort and ambiguous metadata/replay completion preserve reached work for manual inspection. Invalid/foreign/old recovery and unproven locks are never silently cleared. See [landing readiness, recovery and service limits](docs/land.md).
+
 ## Frozen branch status
 
 `an freeze [branch]` marks the selected tracked branch and its downstack before trunk as frozen. `an unfreeze [branch]` makes the selected branch and every tracked descendant editable, including branching descendants. Both default to the current branch. An explicit local branch selector also works with detached HEAD; trunk, untracked names and invalid scopes are refused before any status writes. There are no extra branch or force flags.
@@ -341,7 +353,7 @@ an test "npm test"
 ```
 
 ### `continue` (alias `cont`)
-Continue the most recent Anthracite command halted by a merge conflict (e.g. during a restack or sync).
+Continue the most recent Anthracite command halted by a merge conflict (e.g. during a restack or sync). Owned landing continuation is local-only: it never merges PRs, pushes heads or edits PRs. The landing record remains for an explicit `an land` resumption. It can also resume an exact pending local queue after a durably completed replay; raw-aborted or ambiguous replay instead requires inspection.
 
 | Flag | Description |
 | --- | --- |

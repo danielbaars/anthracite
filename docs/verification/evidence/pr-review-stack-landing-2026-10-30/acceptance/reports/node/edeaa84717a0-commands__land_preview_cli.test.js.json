@@ -1,0 +1,270 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 14,
+    "passes": 14,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:56:58.874Z",
+    "end": "2026-10-30T18:59:00.863Z",
+    "duration": 121989
+  },
+  "tests": [
+    {
+      "title": "previews the exact prefix and full surviving fanout without persistent effects",
+      "fullTitle": "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1832,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "fullTitle": "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1894,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports all later readiness blockers before applying and accepts known empty requirements",
+      "fullTitle": "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1961,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses local dirt and recovery while preserving every byte",
+      "fullTitle": "public scoped landing preview refuses local dirt and recovery while preserving every byte",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2704,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "requires explicit application consent for fanout before any writes",
+      "fullTitle": "public scoped landing preview requires explicit application consent for fanout before any writes",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2015,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "supports literal selectors, help and completion and rejects unsupported routes",
+      "fullTitle": "public scoped landing preview supports literal selectors, help and completion and rejects unsupported routes",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 8194,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "fullTitle": "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1305,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1670,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects mandatory participants and ignores frozen or occupied independent stacks",
+      "fullTitle": "public scoped landing preview protects mandatory participants and ignores frozen or occupied independent stacks",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 4248,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "fullTitle": "public scoped landing preview reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 3309,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cancels terminal confirmation and revalidates changed participants before application",
+      "fullTitle": "public scoped landing preview cancels terminal confirmation and revalidates changed participants before application",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2462,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not accept malformed classic policy as known no-requirements",
+      "fullTitle": "public scoped landing preview does not accept malformed classic policy as known no-requirements",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1016,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "fullTitle": "public scoped landing preview fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 13968,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "fullTitle": "public scoped landing preview previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2767,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "previews the exact prefix and full surviving fanout without persistent effects",
+      "fullTitle": "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1832,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "fullTitle": "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1894,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports all later readiness blockers before applying and accepts known empty requirements",
+      "fullTitle": "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1961,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses local dirt and recovery while preserving every byte",
+      "fullTitle": "public scoped landing preview refuses local dirt and recovery while preserving every byte",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2704,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "requires explicit application consent for fanout before any writes",
+      "fullTitle": "public scoped landing preview requires explicit application consent for fanout before any writes",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2015,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "supports literal selectors, help and completion and rejects unsupported routes",
+      "fullTitle": "public scoped landing preview supports literal selectors, help and completion and rejects unsupported routes",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 8194,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "fullTitle": "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1305,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1670,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects mandatory participants and ignores frozen or occupied independent stacks",
+      "fullTitle": "public scoped landing preview protects mandatory participants and ignores frozen or occupied independent stacks",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 4248,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "fullTitle": "public scoped landing preview reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 3309,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cancels terminal confirmation and revalidates changed participants before application",
+      "fullTitle": "public scoped landing preview cancels terminal confirmation and revalidates changed participants before application",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2462,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not accept malformed classic policy as known no-requirements",
+      "fullTitle": "public scoped landing preview does not accept malformed classic policy as known no-requirements",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1016,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "fullTitle": "public scoped landing preview fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 13968,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "fullTitle": "public scoped landing preview previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2767,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "preview": {
+    "status": 0,
+    "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target child\nTrunk: 2526ebcf2a67be81c372063eb1f60a3bd550a400 -> a3e4976629e94fac7e0617376c59376d96228017 (fast-forward only)\nCleanup-only 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: 61adadabd43d7e461edf4866604ab57f323524fa\n  Base: main 2526ebcf2a67be81c372063eb1f60a3bd550a400 (tracked parent main; replay base 2526ebcf2a67be81c372063eb1f60a3bd550a400)\n  State: MERGED; draft false; readiness CLEAN; verified merged result a79b4be4a57f21503f3e2b629e01a421d4aa447c\n  Verify trunk base/head immediately before effect\nCleanup-only 2: child #18 https://github.com/fixture/inspection/pull/18\n  Head: d92d96cd5b879f16bc823c0c390a15e0bbfd50e5\n  Base: main a79b4be4a57f21503f3e2b629e01a421d4aa447c (tracked parent base; replay base 61adadabd43d7e461edf4866604ab57f323524fa)\n  State: MERGED; draft false; readiness CLEAN; verified merged result a3e4976629e94fac7e0617376c59376d96228017\n  Verify trunk base/head immediately before effect\nMaintain: tip\n  Reparent to main; replay from child (d92d96cd5b879f16bc823c0c390a15e0bbfd50e5); head ab89949f80542d600bcc6b6694c69d83a88b8a25\n  Update existing remote head ab89949f80542d600bcc6b6694c69d83a88b8a25\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base, child (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\n",
+    "stderr": ""
+  },
+  "apply": {
+    "status": 1,
+    "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target child\nTrunk: 2526ebcf2a67be81c372063eb1f60a3bd550a400 -> a3e4976629e94fac7e0617376c59376d96228017 (fast-forward only)\nCleanup-only 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: 61adadabd43d7e461edf4866604ab57f323524fa\n  Base: main 2526ebcf2a67be81c372063eb1f60a3bd550a400 (tracked parent main; replay base 2526ebcf2a67be81c372063eb1f60a3bd550a400)\n  State: MERGED; draft false; readiness CLEAN; verified merged result a79b4be4a57f21503f3e2b629e01a421d4aa447c\n  Verify trunk base/head immediately before effect\nCleanup-only 2: child #18 https://github.com/fixture/inspection/pull/18\n  Head: d92d96cd5b879f16bc823c0c390a15e0bbfd50e5\n  Base: main a79b4be4a57f21503f3e2b629e01a421d4aa447c (tracked parent base; replay base 61adadabd43d7e461edf4866604ab57f323524fa)\n  State: MERGED; draft false; readiness CLEAN; verified merged result a3e4976629e94fac7e0617376c59376d96228017\n  Verify trunk base/head immediately before effect\nMaintain: tip\n  Reparent to main; replay from child (d92d96cd5b879f16bc823c0c390a15e0bbfd50e5); head ab89949f80542d600bcc6b6694c69d83a88b8a25\n  Update existing remote head ab89949f80542d600bcc6b6694c69d83a88b8a25\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base, child (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: a79b4be4a57f21503f3e2b629e01a421d4aa447c.\n",
+    "stderr": "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (a79b4be4a57f21503f3e2b629e01a421d4aa447c); later work unattempted. Survivor maintenance incomplete for child. Existing survivor PR identity changed for child. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-ObnWeb/repo; rerun an land child --yes.\n"
+  },
+  "before": "d92d96cd5b879f16bc823c0c390a15e0bbfd50e5",
+  "after": "a3e4976629e94fac7e0617376c59376d96228017",
+  "remoteMergedHeadMutated": true,
+  "prs": [
+    {
+      "number": 17,
+      "url": "https://github.com/fixture/inspection/pull/17",
+      "title": "PR for base",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "base",
+      "headRefOid": "61adadabd43d7e461edf4866604ab57f323524fa",
+      "baseRefName": "main",
+      "baseRefOid": "2526ebcf2a67be81c372063eb1f60a3bd550a400",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "a79b4be4a57f21503f3e2b629e01a421d4aa447c"
+    },
+    {
+      "number": 18,
+      "url": "https://github.com/fixture/inspection/pull/18",
+      "title": "PR for child",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "child",
+      "headRefOid": "d92d96cd5b879f16bc823c0c390a15e0bbfd50e5",
+      "baseRefName": "main",
+      "baseRefOid": "a79b4be4a57f21503f3e2b629e01a421d4aa447c",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "a3e4976629e94fac7e0617376c59376d96228017"
+    },
+    {
+      "number": 19,
+      "url": "https://github.com/fixture/inspection/pull/19",
+      "title": "PR for tip",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "tip",
+      "headRefOid": "ab89949f80542d600bcc6b6694c69d83a88b8a25",
+      "baseRefName": "child",
+      "baseRefOid": "a3e4976629e94fac7e0617376c59376d96228017",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ]
+    }
+  ]
+}

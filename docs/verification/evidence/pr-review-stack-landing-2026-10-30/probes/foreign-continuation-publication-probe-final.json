@@ -1,0 +1,119 @@
+{
+  "source": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "method": "public CLI; real Git and bare remote; external gh controlled only; ordinary pre-rebase hook creates foreign recovery before first conflict publication",
+  "observation": {
+    "expectedForeignBytes": "{\"foreign\":\"preserve-this-exact-file\"}\n",
+    "exitCode": 1,
+    "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target base\nTrunk: 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 -> 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 (fast-forward only)\nMerge 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: b575cee74f56a26320e517a191b51bd793eb326f\n  Base: main 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 (tracked parent main; replay base 16a3b4176df772ce21cc67ec14ffbcedb44e5f64)\n  State: OPEN; draft false; readiness CLEAN\n  Verify trunk base/head immediately before effect\nMaintain: child\n  Reparent to main; replay from base (b575cee74f56a26320e517a191b51bd793eb326f); head 72ee4b709db131e9a975f3eb57932ea372023b26\n  Update existing remote head 72ee4b709db131e9a975f3eb57932ea372023b26\n  Update existing PR #18 base/dependency footer; preserve user fields\nMaintain: tip\n  Reparent to child; replay from child (72ee4b709db131e9a975f3eb57932ea372023b26); head 4075b3753f85355b631c70c7807a93751b83e92a\n  Update existing remote head 4075b3753f85355b631c70c7807a93751b83e92a\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: f4f643a9473243f97c50cede6b189f4e4c343ea3.\n",
+    "stderr": "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (f4f643a9473243f97c50cede6b189f4e4c343ea3); later work unattempted. Landing continuation publication refused; foreign, missing or changed continuation and active Git replay preserved. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LOmlwr/repo; rerun an land base --yes.\n",
+    "foreignBytesAfter": "{\"foreign\":\"preserve-this-exact-file\"}\n",
+    "foreignFilePreserved": true,
+    "gitUnmerged": "100644 07ab47f0dabb13352945bb02871bec54dc9a9760 2\tchild.txt\n100644 b0c6ee1e00f4ab52bd72a934d047a6380e877421 3\tchild.txt",
+    "landingRecordPreserved": true,
+    "ghState": [
+      {
+        "number": 17,
+        "url": "https://github.com/fixture/inspection/pull/17",
+        "title": "PR for base",
+        "body": "User body",
+        "author": {
+          "login": "reviewer"
+        },
+        "state": "MERGED",
+        "isDraft": false,
+        "headRefName": "base",
+        "headRefOid": "b575cee74f56a26320e517a191b51bd793eb326f",
+        "baseRefName": "main",
+        "baseRefOid": "16a3b4176df772ce21cc67ec14ffbcedb44e5f64",
+        "headRepository": {
+          "name": "inspection",
+          "nameWithOwner": "fixture/inspection"
+        },
+        "headRepositoryOwner": {
+          "login": "fixture"
+        },
+        "isCrossRepository": false,
+        "reviewDecision": "APPROVED",
+        "mergeable": "MERGEABLE",
+        "mergeStateStatus": "CLEAN",
+        "statusCheckRollup": [
+          {
+            "__typename": "CheckRun",
+            "name": "unit",
+            "status": "COMPLETED",
+            "conclusion": "SUCCESS"
+          }
+        ],
+        "mergeResult": "f4f643a9473243f97c50cede6b189f4e4c343ea3"
+      },
+      {
+        "number": 18,
+        "url": "https://github.com/fixture/inspection/pull/18",
+        "title": "PR for child",
+        "body": "User body",
+        "author": {
+          "login": "reviewer"
+        },
+        "state": "OPEN",
+        "isDraft": false,
+        "headRefName": "child",
+        "headRefOid": "72ee4b709db131e9a975f3eb57932ea372023b26",
+        "baseRefName": "base",
+        "baseRefOid": "b575cee74f56a26320e517a191b51bd793eb326f",
+        "headRepository": {
+          "name": "inspection",
+          "nameWithOwner": "fixture/inspection"
+        },
+        "headRepositoryOwner": {
+          "login": "fixture"
+        },
+        "isCrossRepository": false,
+        "reviewDecision": "APPROVED",
+        "mergeable": "MERGEABLE",
+        "mergeStateStatus": "CLEAN",
+        "statusCheckRollup": [
+          {
+            "__typename": "CheckRun",
+            "name": "unit",
+            "status": "COMPLETED",
+            "conclusion": "SUCCESS"
+          }
+        ]
+      },
+      {
+        "number": 19,
+        "url": "https://github.com/fixture/inspection/pull/19",
+        "title": "PR for tip",
+        "body": "User body",
+        "author": {
+          "login": "reviewer"
+        },
+        "state": "OPEN",
+        "isDraft": false,
+        "headRefName": "tip",
+        "headRefOid": "4075b3753f85355b631c70c7807a93751b83e92a",
+        "baseRefName": "child",
+        "baseRefOid": "72ee4b709db131e9a975f3eb57932ea372023b26",
+        "headRepository": {
+          "name": "inspection",
+          "nameWithOwner": "fixture/inspection"
+        },
+        "headRepositoryOwner": {
+          "login": "fixture"
+        },
+        "isCrossRepository": false,
+        "reviewDecision": "APPROVED",
+        "mergeable": "MERGEABLE",
+        "mergeStateStatus": "CLEAN",
+        "statusCheckRollup": [
+          {
+            "__typename": "CheckRun",
+            "name": "unit",
+            "status": "COMPLETED",
+            "conclusion": "SUCCESS"
+          }
+        ]
+      }
+    ]
+  }
+}

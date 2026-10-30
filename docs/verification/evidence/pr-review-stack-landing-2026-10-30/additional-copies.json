@@ -1,0 +1,95 @@
+{
+  "allCopiesByteIdentical": true,
+  "copied": [
+    {
+      "from": "final/reduced/expected-cases.json",
+      "relative": "acceptance/expected-cases.json",
+      "sha256": "5c585533570d4dd8ddf4049e380e4f271bbbf872ef592a7116712cfff40a620e",
+      "bytes": 39717
+    },
+    {
+      "from": "final/installed.json",
+      "relative": "acceptance/installed.json",
+      "sha256": "feef5d25612b0cd436723e877e875d4f9ab85cb22fc79a332539344415372a50",
+      "bytes": 1491
+    },
+    {
+      "from": "final/diagnostics/initial-installed.json",
+      "relative": "diagnostics/initial-installed.json",
+      "sha256": "fb0532949cc33a2bcc1fc377d345010796d0221446feb278ced84c7ee3cd15f9",
+      "bytes": 2396
+    },
+    {
+      "from": "final/diagnostics/initial-installed-mcp.json",
+      "relative": "diagnostics/initial-installed-mcp.json",
+      "sha256": "7477fe7950e9207424267bca7ca4f858a5d6977f4f7e4f3abc106b8437b1a778",
+      "bytes": 2765
+    },
+    {
+      "from": "final/diagnostics/parallel-cbd4/inventory.json",
+      "relative": "diagnostics/parallel-inventory.json",
+      "sha256": "e9f9c86b7b3544015547b7b8f4d2e5d2c8d8eb0e0a1bdd5baba8b36579dfa191",
+      "bytes": 7128
+    },
+    {
+      "from": "final/diagnostics/parallel-owned-processes.json",
+      "relative": "diagnostics/parallel-owned-processes.json",
+      "sha256": "ae701cf70e3f4761e64163480f196fbfdaa4c9f79da96f50cca59725df97b507",
+      "bytes": 9440
+    },
+    {
+      "from": "final/diagnostics/parallel-stop.json",
+      "relative": "diagnostics/parallel-stop.json",
+      "sha256": "68e7028d2ab8aceff871d498e72d11bd4196a2f13ccea0d4e058d409cbb7c114",
+      "bytes": 996
+    },
+    {
+      "from": "fanout-diagnosis/default-node.json",
+      "relative": "diagnostics/fanout-default-60s.json",
+      "sha256": "acda36ec8c1876b770218f3a1ce35d1bf855475c603586c120a9bfb7d289e413",
+      "bytes": 3197
+    },
+    {
+      "from": "fanout-diagnosis/extended-node.json",
+      "relative": "diagnostics/fanout-extended-120s.json",
+      "sha256": "a3fa76cb3cdd863e7f66e26a45dd5ac52350093c7302247e36e73c97f00f6d73",
+      "bytes": 4492
+    },
+    {
+      "from": "fanout-time-budget-result.md",
+      "relative": "diagnostics/fanout-time-budget-result.md",
+      "sha256": "075d21fc3ce59e4c197b414be721b2609d492d506c20b56b4b8369794fcf636d",
+      "bytes": 2803
+    },
+    {
+      "from": "fanout-time-budget-receipt.json",
+      "relative": "diagnostics/fanout-time-budget-receipt.json",
+      "sha256": "6d9895d1956bccb628c34cf4f6e8caa32767cdfdf436affbfe855b3d93d976d3",
+      "bytes": 11007
+    },
+    {
+      "from": "review-fixes-mcp-expectation-result.md",
+      "relative": "diagnostics/mcp-expectation-result.md",
+      "sha256": "bea0e753d970b7e41a2dd8646eb5a361ece9fc2021a9d05ee4a72723579be5df",
+      "bytes": 1375
+    },
+    {
+      "from": "review-fixes-mcp-expectation-receipt.json",
+      "relative": "diagnostics/mcp-expectation-receipt.json",
+      "sha256": "33a28606bddad0b54846a34266504d2db58e065a528e2468a9c569cd5c8498e2",
+      "bytes": 3835
+    },
+    {
+      "from": "fanout-time-budget-source.json",
+      "relative": "build/final-source-test-corrections.json",
+      "sha256": "2b94ca48c999b427f37070a56ccec524538843b103ab183fb08e3d14496acbdb",
+      "bytes": 60671
+    },
+    {
+      "from": "merge-fanout-time-budget.json",
+      "relative": "build/merge-test-corrections.json",
+      "sha256": "4be6e8c7db66821e43e04879a390c93370945ea7fefa71a4fffbdcf65072cdd4",
+      "bytes": 13263
+    }
+  ]
+}

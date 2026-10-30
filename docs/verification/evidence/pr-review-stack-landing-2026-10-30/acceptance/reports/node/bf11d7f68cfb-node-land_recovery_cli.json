@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 8,
+    "passes": 8,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:19:13.467Z",
+    "end": "2026-10-30T19:23:14.961Z",
+    "duration": 241494
+  },
+  "tests": [
+    {
+      "title": "reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "fullTitle": "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 28184,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "fullTitle": "public landing interruption recovery preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 7723,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "fullTitle": "public landing interruption recovery retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 14251,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not invent landing ownership when SIGKILL happens before the first durable record",
+      "fullTitle": "public landing interruption recovery does not invent landing ownership when SIGKILL happens before the first durable record",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 4039,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 30582,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 35822,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 36455,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 43184,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "fullTitle": "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 28184,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "fullTitle": "public landing interruption recovery preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 7723,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "fullTitle": "public landing interruption recovery retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 14251,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not invent landing ownership when SIGKILL happens before the first durable record",
+      "fullTitle": "public landing interruption recovery does not invent landing ownership when SIGKILL happens before the first durable record",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 4039,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 30582,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 35822,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 36455,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 43184,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

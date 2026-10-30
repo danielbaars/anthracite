@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:52:00.690Z",
+    "end": "2026-10-30T18:56:54.697Z",
+    "duration": 294007
+  },
+  "tests": [
+    {
+      "title": "rebase merges the selected leaf, fast-forwards trunk and cleans only landed refs and metadata",
+      "fullTitle": "public one-leaf landing rebase merges the selected leaf, fast-forwards trunk and cleans only landed refs and metadata",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 10407,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "fullTitle": "public one-leaf landing retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 10934,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves unrelated recovery and blocks ordinary mutation before initialization can erase pending landing",
+      "fullTitle": "public one-leaf landing preserves unrelated recovery and blocks ordinary mutation before initialization can erase pending landing",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 9637,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles after target deletion and restores a surviving original checkout",
+      "fullTitle": "public one-leaf landing reconciles after target deletion and restores a surviving original checkout",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 13407,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a remote head changed inside pre-push using the captured deletion lease",
+      "fullTitle": "public one-leaf landing preserves a remote head changed inside pre-push using the captured deletion lease",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 11575,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a confirmed merge when trunk advancement fails and resumes without resetting local work",
+      "fullTitle": "public one-leaf landing retains a confirmed merge when trunk advancement fails and resumes without resetting local work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 11925,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves invalid and foreign landing records and refuses before external effects",
+      "fullTitle": "public one-leaf landing preserves invalid and foreign landing records and refuses before external effects",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 1479,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains merge intent through terminal interruption and reconciles it in a fresh process",
+      "fullTitle": "public one-leaf landing retains merge intent through terminal interruption and reconciles it in a fresh process",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 21658,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects an expected-head race at the direct merge boundary without merging newer remote work",
+      "fullTitle": "public one-leaf landing rejects an expected-head race at the direct merge boundary without merging newer remote work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 6276,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an exit-zero queued response and never treats an unmerged PR as landed",
+      "fullTitle": "public one-leaf landing refuses an exit-zero queued response and never treats an unmerged PR as landed",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 6387,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses multiple push destinations before merge, record or remote cleanup effects",
+      "fullTitle": "public one-leaf landing refuses multiple push destinations before merge, record or remote cleanup effects",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 1716,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "fullTitle": "public one-leaf landing preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 14384,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "rebase merges the selected leaf, fast-forwards trunk and cleans only landed refs and metadata",
+      "fullTitle": "public one-leaf landing rebase merges the selected leaf, fast-forwards trunk and cleans only landed refs and metadata",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 10407,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "fullTitle": "public one-leaf landing retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 10934,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves unrelated recovery and blocks ordinary mutation before initialization can erase pending landing",
+      "fullTitle": "public one-leaf landing preserves unrelated recovery and blocks ordinary mutation before initialization can erase pending landing",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 9637,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles after target deletion and restores a surviving original checkout",
+      "fullTitle": "public one-leaf landing reconciles after target deletion and restores a surviving original checkout",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 13407,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a remote head changed inside pre-push using the captured deletion lease",
+      "fullTitle": "public one-leaf landing preserves a remote head changed inside pre-push using the captured deletion lease",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 11575,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a confirmed merge when trunk advancement fails and resumes without resetting local work",
+      "fullTitle": "public one-leaf landing retains a confirmed merge when trunk advancement fails and resumes without resetting local work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 11925,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves invalid and foreign landing records and refuses before external effects",
+      "fullTitle": "public one-leaf landing preserves invalid and foreign landing records and refuses before external effects",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 1479,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains merge intent through terminal interruption and reconciles it in a fresh process",
+      "fullTitle": "public one-leaf landing retains merge intent through terminal interruption and reconciles it in a fresh process",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 21658,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects an expected-head race at the direct merge boundary without merging newer remote work",
+      "fullTitle": "public one-leaf landing rejects an expected-head race at the direct merge boundary without merging newer remote work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 6276,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an exit-zero queued response and never treats an unmerged PR as landed",
+      "fullTitle": "public one-leaf landing refuses an exit-zero queued response and never treats an unmerged PR as landed",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 6387,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses multiple push destinations before merge, record or remote cleanup effects",
+      "fullTitle": "public one-leaf landing refuses multiple push destinations before merge, record or remote cleanup effects",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 1716,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "fullTitle": "public one-leaf landing preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 14384,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

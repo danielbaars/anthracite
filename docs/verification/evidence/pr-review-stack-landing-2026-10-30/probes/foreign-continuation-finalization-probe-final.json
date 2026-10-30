@@ -1,0 +1,15 @@
+{
+  "source": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "method": "public CLI; real Git/bare remote; external gh controlled only; final replay post-rewrite hook creates foreign recovery before continuation completion",
+  "observation": {
+    "expectedForeignBytes": "{\"foreign\":\"preserve-this-final-file\"}\n",
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "ERROR: Landing continuation changed during local replay; reached refs and both recovery records preserved. Inspect the original project before recovery.\n",
+    "foreignBytesAfter": "{\"foreign\":\"preserve-this-final-file\"}\n",
+    "foreignFilePreserved": true,
+    "remoteUnchangedDuringContinue": true,
+    "gitUnmerged": "",
+    "landingRecordPreserved": true
+  }
+}

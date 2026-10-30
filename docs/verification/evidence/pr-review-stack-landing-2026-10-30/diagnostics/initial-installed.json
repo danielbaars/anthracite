@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "offline": true,
+  "globalInstall": false,
+  "scriptsDisabled": true,
+  "userInstallationUnchanged": true,
+  "prefix": "/private/tmp/anthracite-pr-land-implementation-20261030/final/npm-isolation/prefix",
+  "home": "/private/tmp/anthracite-pr-land-implementation-20261030/final/npm-isolation/home",
+  "packageSha256": "35c3729f4e153d9bb49f8217470246d819dd61750a0bf802caac680a4fec42de",
+  "bundleSha256": "b7e526b86c4929866c454d18dd4e9bc3c0317601ba366a26133a3abc81aa4c45",
+  "manifestSha256": "601985a502bc53ee12a17de1fcc669c38766a7e4884ef05d68d7f78669a0bd74",
+  "reportSha256": "7477fe7950e9207424267bca7ca4f858a5d6977f4f7e4f3abc106b8437b1a778",
+  "exitCode": 1,
+  "signal": null,
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-30T18:46:43.260Z",
+    "end": "2026-10-30T18:47:07.210Z",
+    "duration": 23950
+  },
+  "cases": [
+    "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery"
+  ],
+  "failures": [
+    {
+      "title": "inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "fullTitle": "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_mcp_cli.test.js",
+      "duration": 23949,
+      "currentRetry": 0,
+      "err": {
+        "message": "ERROR: Pending landing preview blocked; recovery and repository preserved.\n: expected { status: 'cli_error', …(5) } to have property 'status' of 'success', but got 'cli_error'",
+        "showDiff": true,
+        "actual": "cli_error",
+        "expected": "success",
+        "stack": "AssertionError: ERROR: Pending landing preview blocked; recovery and repository preserved.\n: expected { status: 'cli_error', …(5) } to have property 'status' of 'success', but got 'cli_error'\n    at run (dist/test/commands/land_mcp_cli.test.js:60:62)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Context.<anonymous> (dist/test/commands/land_mcp_cli.test.js:103:33)"
+      }
+    }
+  ]
+}

@@ -1,6 +1,10 @@
+import { withLandingLock } from '../actions/land_scoped';
+import { loadLandingProgress } from './landing_progress';
+import { allowLandingContinuation } from '../actions/land_replay';
 // Why does an open source CLI include telemetry?
 // We the creators want to understand how people are using the tool
 // All metrics logged are listed plain to see, and are non blocking in case the server is unavailable.
+import { assertNoPendingLanding } from './landing_progress';
 import yargs from 'yargs';
 import chalk from 'chalk';
 import { version } from '../../package.json';
@@ -137,6 +141,10 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
+    const landingContinuation =
+      canonicalName === 'continue' && allowLandingContinuation();
+    if (handler.repo && !isZeroDepthLog && !landingContinuation)
+      assertNoPendingLanding();
     if (canonicalName === 'continue') assertAbsorbContinuationEnvironment();
     const continueData =
       canonicalName === 'continue'
@@ -208,7 +216,8 @@ async function graphiteInternal(
             .graphiteInitialized();
         const context = initContext(contextLite, git, {
           ...args,
-          inspection: isZeroDepthLog || absorbContinuation,
+          inspection:
+            isZeroDepthLog || absorbContinuation || landingContinuation,
           preserveMetadata:
             preserveStructuralMetadata ||
             (canonicalName === 'reorder' && args.stack === true),
@@ -301,7 +310,11 @@ async function graphiteHelper(
       context.splog.newline();
     }
 
-    await handler.run(context);
+    const landing =
+      canonicalName === 'continue' ? loadLandingProgress() : undefined;
+    if (landing?.replay)
+      await withLandingLock(async () => await handler.run(context), landing);
+    else await handler.run(context);
     commandFailed = false;
   } catch (err) {
     if (

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:39:14.071Z",
+    "end": "2026-10-30T18:39:23.836Z",
+    "duration": 9765
+  },
+  "tests": [
+    {
+      "title": "skips a newly frozen later generic queue item while completing earlier editable replays",
+      "fullTitle": "frozen anchors and recovery through the public CLI skips a newly frozen later generic queue item while completing earlier editable replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/freeze_restack_cli.test.js",
+      "duration": 7869,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "skips a newly frozen later generic queue item while completing earlier editable replays",
+      "fullTitle": "frozen anchors and recovery through the public CLI skips a newly frozen later generic queue item while completing earlier editable replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/freeze_restack_cli.test.js",
+      "duration": 7869,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

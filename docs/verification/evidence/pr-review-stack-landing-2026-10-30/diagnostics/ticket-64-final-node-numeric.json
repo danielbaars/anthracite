@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T17:49:13.018Z",
+    "end": "2026-10-30T17:49:23.049Z",
+    "duration": 10031
+  },
+  "tests": [
+    {
+      "title": "scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "fullTitle": "MCP cancellation and shutdown through stdio scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
+      "duration": 5317,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "fullTitle": "MCP cancellation and shutdown through stdio scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64/apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
+      "duration": 5317,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

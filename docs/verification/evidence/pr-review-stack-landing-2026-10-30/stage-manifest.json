@@ -1,0 +1,215 @@
+{
+  "status": "Partial staging, not final acceptance",
+  "copied": [
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/review-standards.md",
+      "relative": "reviews/review-standards.md",
+      "sha256": "5ab79d22fa458bbf21ecb1178e44e05de74d0701b74b764a2d035559d8a3b384",
+      "bytes": 2396
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/review-spec.md",
+      "relative": "reviews/review-spec.md",
+      "sha256": "92b7aa792e4098e79c5b141990f6a14d2a1c586d81c2388f0ec6959806349304",
+      "bytes": 2606
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/review-standards-final-confirmation.md",
+      "relative": "reviews/review-standards-final-confirmation.md",
+      "sha256": "25f641179528a9a49591769c35088b9a4e59ef295b38e029f5964cc2f73ebfd4",
+      "bytes": 2090
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/review-spec-final-confirmation.md",
+      "relative": "reviews/review-spec-final-confirmation.md",
+      "sha256": "ad7cc770d6025db535ff7739062be8e42913df9f40972dc5b6bbf54f4fdc196a",
+      "bytes": 2723
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/remote-repository-identity-probe-before.json",
+      "relative": "probes/remote-repository-identity-probe-before.json",
+      "sha256": "d08fa1d435394a92cb82b380dacd956e41840251c54f5738268ec5f31e9b8725",
+      "bytes": 7316
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/foreign-continuation-publication-probe-before.json",
+      "relative": "probes/foreign-continuation-publication-probe-before.json",
+      "sha256": "f57130e5b1bc77a4f20dc450b6f9de6b3778f676805c28548bd56aa91ba21de1",
+      "bytes": 5846
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/foreign-continuation-finalization-probe-before.json",
+      "relative": "probes/foreign-continuation-finalization-probe-before.json",
+      "sha256": "8046ac790f586887fdf3063ba9e80df206bb661e2f8c8cfafa44decaeea80fac",
+      "bytes": 583
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-merged-chain-probe.json",
+      "relative": "probes/spec-merged-chain-probe.json",
+      "sha256": "aa94245dbd4bd8fcb30fbd7c058d8bb22b1671eab00c4bc0712bcc903f6af3e9",
+      "bytes": 6717
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-recovery-preview-probe.json",
+      "relative": "probes/spec-recovery-preview-probe.json",
+      "sha256": "2456ef7129e931a7992ccb3082f536e92e897258e05503dc96de2bec9a5c6e3a",
+      "bytes": 3264
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/foreign-continuation-finalization-probe-final-output.json",
+      "relative": "probes/foreign-continuation-finalization-probe-final-output.json",
+      "sha256": "34551aadb9b438f6a5a3ff5004ec92b8462459b91756faf95121617c41003655",
+      "bytes": 494
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/foreign-continuation-finalization-probe-final.cjs",
+      "relative": "probes/foreign-continuation-finalization-probe-final.cjs",
+      "sha256": "d69cd924b02d28a97e4bea9adca1d77649fc067588d7a759e2615b441068d452",
+      "bytes": 2293
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/foreign-continuation-finalization-probe-final.json",
+      "relative": "probes/foreign-continuation-finalization-probe-final.json",
+      "sha256": "5b0f4324a80e546cd3b78fcb7766997eb56e72502afdc5099cca029e2938d134",
+      "bytes": 741
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/foreign-continuation-publication-probe-final-output.json",
+      "relative": "probes/foreign-continuation-publication-probe-final-output.json",
+      "sha256": "0f832afffca71e01612effa9e4aed9cc01428b120984b667b124a5ef9eb11f1b",
+      "bytes": 545
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/foreign-continuation-publication-probe-final.cjs",
+      "relative": "probes/foreign-continuation-publication-probe-final.cjs",
+      "sha256": "70c154a565fd99839e6045b8bf604e45cba6652ecd333474bdf1b78e1738d1db",
+      "bytes": 1991
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/foreign-continuation-publication-probe-final.json",
+      "relative": "probes/foreign-continuation-publication-probe-final.json",
+      "sha256": "d8d461f360b03b1a1a3c68113f93e70be2bfde27dbe169e6b2830413ad539c1f",
+      "bytes": 5539
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/remote-repository-identity-probe-final-output.json",
+      "relative": "probes/remote-repository-identity-probe-final-output.json",
+      "sha256": "39968dc5f9613e8801acff1e39fbefec73b164c0d7d23f4d275e74aa5dfb9512",
+      "bytes": 603
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/remote-repository-identity-probe-final.cjs",
+      "relative": "probes/remote-repository-identity-probe-final.cjs",
+      "sha256": "f224823eceb6b226e3040121fa6b7a70b1a2c24caf744d7fa9cef9fb583d7cd5",
+      "bytes": 3400
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/remote-repository-identity-probe-final.json",
+      "relative": "probes/remote-repository-identity-probe-final.json",
+      "sha256": "6b06bb584952ef9178a142aa3be4e6b65c2e21dc8d8960399b3e4da8368446cc",
+      "bytes": 1346
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-final-attest.cjs",
+      "relative": "probes/spec-final-attest.cjs",
+      "sha256": "1aa53480c570ab53bb393699d6a563cc1c6c3fab3dd5b90b277091a2f98ee4ef",
+      "bytes": 1351
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-final-late-endpoint-controls.json",
+      "relative": "probes/spec-final-late-endpoint-controls.json",
+      "sha256": "cb283880f1efc8d096f121d928db6081d528e58c271d2dd1ea1af80bf3e0e212",
+      "bytes": 2313
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-final-probes-summary.json",
+      "relative": "probes/spec-final-probes-summary.json",
+      "sha256": "0abe08aa94372f0d9d9eeedf34404e65fd3e1677e629212eb8b2a7ea5da834da",
+      "bytes": 1831
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-final-source-after.json",
+      "relative": "probes/spec-final-source-after.json",
+      "sha256": "33113b47dce0b19e2c37ca789bba4f472f475178f3f06a551f403d83bbf8a33b",
+      "bytes": 400957
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-final-source-before.json",
+      "relative": "probes/spec-final-source-before.json",
+      "sha256": "33113b47dce0b19e2c37ca789bba4f472f475178f3f06a551f403d83bbf8a33b",
+      "bytes": 400957
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-merged-chain-probe-final-output.json",
+      "relative": "probes/spec-merged-chain-probe-final-output.json",
+      "sha256": "4a1f1ba47b768846a8a287d381b16a5d267ce1e51104aa7b05ee5dc5ecedc218",
+      "bytes": 7297
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-merged-chain-probe-final.cjs",
+      "relative": "probes/spec-merged-chain-probe-final.cjs",
+      "sha256": "cfaf64399dad8aa377b082daff8fb12f74c878e83ccd284cc3e0b143f84c368e",
+      "bytes": 2938
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-recovery-preview-probe-final-output.json",
+      "relative": "probes/spec-recovery-preview-probe-final-output.json",
+      "sha256": "090e4e32205ceedcb62b69233560653958e6de2640e48a1cc0c2bc707ea3b38c",
+      "bytes": 4089
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/spec-recovery-preview-probe-final.cjs",
+      "relative": "probes/spec-recovery-preview-probe-final.cjs",
+      "sha256": "a169a02fdf46b57a4afc42502af2e9ec2cc43bf30b3d435c5adac3bc7681c069",
+      "bytes": 1461
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64-final-node.json",
+      "relative": "diagnostics/ticket-64-final-node.json",
+      "sha256": "f62f4668df49c66203b9b9d6c5634097bce1d9af34e16cecda4b37fb69719bb4",
+      "bytes": 27979
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64-final-native.json",
+      "relative": "diagnostics/ticket-64-final-native.json",
+      "sha256": "476ae7a5a407d8e364f0282fb4434b89d303629c1f150bf8d64683c306cd29c5",
+      "bytes": 27975
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64-final-node-numeric.json",
+      "relative": "diagnostics/ticket-64-final-node-numeric.json",
+      "sha256": "5dd1364c1fcf30d7ad1341abdbfc7ddf292a8fb4fa15c79523ea2ab37a472d55",
+      "bytes": 1419
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64-final-native-numeric.json",
+      "relative": "diagnostics/ticket-64-final-native-numeric.json",
+      "sha256": "8fc29659484a6dc9d49dd07ad08bf16c85372c63faf75f04f037253ed606b99e",
+      "bytes": 1418
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64-final-node-rawabort.json",
+      "relative": "diagnostics/ticket-64-final-node-rawabort.json",
+      "sha256": "2a9c66d51b0ce43f60dbf4ce28ae8c32eb91bfb5da7701e7fd7b456115cb545d",
+      "bytes": 19502
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/ticket-64-final-native-rawabort.json",
+      "relative": "diagnostics/ticket-64-final-native-rawabort.json",
+      "sha256": "1715436bda33c69de9153121de72678d1ef0d4c3431cf8eadefa62b67e3e44a6",
+      "bytes": 19504
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/final/build.json",
+      "relative": "build/build.json",
+      "sha256": "4053de2e585328a01d7ce01a12ea32ff09ff2ede7f117265d2e677e79bc40390",
+      "bytes": 864
+    },
+    {
+      "from": "/private/tmp/anthracite-pr-land-implementation-20261030/final/source.json",
+      "relative": "build/source.json",
+      "sha256": "5c42ee5c068dc88f5993854d3ce3d4851f25b5fd9e648142188429ebe16bf5c6",
+      "bytes": 59998
+    }
+  ]
+}

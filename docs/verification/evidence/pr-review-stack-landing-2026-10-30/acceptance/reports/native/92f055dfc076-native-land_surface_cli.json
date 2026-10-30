@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:19:19.165Z",
+    "end": "2026-10-30T19:19:25.662Z",
+    "duration": 6497
+  },
+  "tests": [
+    {
+      "title": "documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "fullTitle": "review and landing public surface documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_surface_cli.test.js",
+      "duration": 6495,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "fullTitle": "review and landing public surface documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_surface_cli.test.js",
+      "duration": 6495,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

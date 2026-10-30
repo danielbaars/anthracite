@@ -1,0 +1,15 @@
+{
+  "source": "115d151c436ae85d4e877af61c627df92d5121f9",
+  "method": "public CLI; real Git/bare remote; external gh controlled only; final replay post-rewrite hook creates foreign recovery before continuation completion",
+  "observation": {
+    "expectedForeignBytes": "{\"foreign\":\"preserve-this-final-file\"}\n",
+    "exitCode": 0,
+    "stdout": "Resolved rebase conflict for child.\n",
+    "stderr": "",
+    "foreignBytesAfter": null,
+    "foreignFilePreserved": false,
+    "remoteUnchangedDuringContinue": true,
+    "gitUnmerged": "",
+    "landingRecordPreserved": true
+  }
+}

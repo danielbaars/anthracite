@@ -1,0 +1,34 @@
+{
+  "productionCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "testCommit": "901561275fac5ee356e8651f0f2a7f536ce2ccf7",
+  "offlineOriginalInstallation": true,
+  "reusedExactArtifact": true,
+  "reinstalled": false,
+  "globalInstall": false,
+  "userInstallationUnchanged": true,
+  "prefix": "/private/tmp/anthracite-pr-land-implementation-20261030/final/npm-isolation/prefix",
+  "home": "/private/tmp/anthracite-pr-land-implementation-20261030/final/npm-isolation/home",
+  "packageSha256": "35c3729f4e153d9bb49f8217470246d819dd61750a0bf802caac680a4fec42de",
+  "bundleSha256": "b7e526b86c4929866c454d18dd4e9bc3c0317601ba366a26133a3abc81aa4c45",
+  "manifestSha256": "601985a502bc53ee12a17de1fcc669c38766a7e4884ef05d68d7f78669a0bd74",
+  "initialPreflightPassedBeforeExpectedPreviewAssertion": true,
+  "initialFailure": "diagnostics/initial-installed-mcp.json",
+  "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/installed-mcp-rerun.json",
+  "reportSha256": "bf1d5f70102d59aefb55e190ecb471b81b48494833ffc499dd33f2c7d2d11f47",
+  "exitCode": 0,
+  "signal": null,
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:39:45.056Z",
+    "end": "2026-10-30T19:40:43.744Z",
+    "duration": 58688
+  },
+  "cases": [
+    "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery"
+  ],
+  "failures": []
+}

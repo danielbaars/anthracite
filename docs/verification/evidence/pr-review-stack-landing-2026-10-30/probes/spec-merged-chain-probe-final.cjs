@@ -1,0 +1,33 @@
+const fs=require('fs');
+const path=require('path');
+const repo='/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes';
+const {RelationCliFixture}=require(repo+'/apps/cli/dist/test/lib/fixtures/relation_cli');
+const {prepareLand}=require(repo+'/apps/cli/dist/test/lib/fixtures/land_gh');
+const fixture=new RelationCliFixture(); const source=require('child_process').execFileSync('git',['rev-parse','HEAD'],{cwd:repo,encoding:'utf8'}).trim();
+try {
+ const github=prepareLand(fixture);
+ const external=path.join(fixture.root,'external');
+ fixture.git(['clone',github.remote,external]);
+ fixture.git(['config','user.name','External'],external);
+ fixture.git(['config','user.email','external@example.test'],external);
+ const prs=JSON.parse(fs.readFileSync(github.state,'utf8'));
+ const oldMain=fixture.git(['rev-parse','main']);
+ fixture.env.GIT_COMMITTER_DATE='2035-01-01T00:00:00Z';
+ fixture.git(['checkout','-B','landing',prs[0].headRefOid],external);
+ fixture.git(['rebase','--force-rebase','--onto','origin/main',oldMain,'landing'],external);
+ const resultBase=fixture.git(['rev-parse','HEAD'],external);
+ fixture.git(['push','origin','HEAD:refs/heads/main'],external);
+ fixture.git(['checkout','-B','landing',prs[1].headRefOid],external);
+ fixture.git(['rebase','--force-rebase','--onto',resultBase,prs[0].headRefOid,'landing'],external);
+ const resultChild=fixture.git(['rev-parse','HEAD'],external);
+ fixture.git(['push','origin','HEAD:refs/heads/main'],external);
+ delete fixture.env.GIT_COMMITTER_DATE;
+ Object.assign(prs[0],{state:'MERGED',mergeResult:resultBase});
+ Object.assign(prs[1],{state:'MERGED',mergeResult:resultChild,baseRefName:'main',baseRefOid:resultBase});
+ fs.writeFileSync(github.state,JSON.stringify(prs));
+ const before=fixture.git(['rev-parse','refs/heads/child'],github.remote); const observed=path.join(fixture.root,'observed-child');fs.writeFileSync(path.join(fixture.repo,'.git/hooks/pre-push'),'#!'+process.execPath+'\nconst fs=require("fs"),cp=require("child_process");fs.appendFileSync('+JSON.stringify(observed)+',cp.execFileSync("git",'+JSON.stringify(['--git-dir='+github.remote,'for-each-ref','--format=%(objectname)','refs/heads/child'])+',{encoding:"utf8"}));\n',{mode:0o755});
+ const preview=fixture.run(['land','child','--dry-run']);
+ const apply=fixture.run(['land','child','--yes']);
+ const after=fixture.git(['for-each-ref','--format=%(objectname)','refs/heads/child'],github.remote);const observedChildHeads=fs.readFileSync(observed,'utf8').split('\n').filter(Boolean);
+ process.stdout.write(JSON.stringify({source,node:process.version,preview:{status:preview.status,stdout:preview.stdout,stderr:preview.stderr},apply:{status:apply.status,stdout:apply.stdout,stderr:apply.stderr},before,after,observedChildHeads,remoteMergedHeadRewritten:observedChildHeads.some(h=>h!==before),prs:JSON.parse(fs.readFileSync(github.state,'utf8'))},null,2)+'\n');
+} finally {fixture.cleanup();}

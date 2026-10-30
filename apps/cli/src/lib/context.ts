@@ -1,3 +1,4 @@
+import { assertNoPendingLanding } from './landing_progress';
 import { composeEngine, TEngine } from './engine/engine';
 import { TGit } from './git/git';
 import { rebaseInProgress } from './git/rebase_in_progress';
@@ -92,6 +93,7 @@ export function initContext(
   }
 ): TContext {
   const preserving = opts?.inspection || opts?.metadataOnly;
+  if (!preserving) assertNoPendingLanding();
   const repoConfig = repoConfigFactory.load(undefined, {
     preserveInvalid: preserving,
   });

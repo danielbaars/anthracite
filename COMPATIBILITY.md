@@ -62,7 +62,7 @@ Rows link existing public-boundary tests or acceptance records. Quoted scenario 
 | Feature | Status / boundary |
 | --- | --- |
 | Central `config` UI / configurable aliases / Graphite alias files | Unsupported. Existing `repo`/`user` configuration is not that UI; standard forms above are fixed registrations. |
-| Dedicated PR review/stack merge (`mg` etc.) | Optional direct-GitHub work remains open as [G01](./docs/graphite-parity.md#open-functionality-and-decisions). Raw `an merge` retains Git semantics. Graphite's hosted merge queue is outside the goal. |
+| Dedicated PR review/stack merge (`mg` etc.) | Direct-GitHub `pr`, head-bound `review` and scoped `land` are implemented in the candidate, pending release and live-service acceptance under [G01](./docs/graphite-parity.md#open-functionality-and-decisions). Raw `an merge` retains Git semantics. Graphite's hosted merge queue is outside the goal. |
 | Dedicated `abort`, `undo`, `unlink` and stack-aware revert | No public handlers for those workflows. Raw Git abort/revert and `untrack` are not equivalent full contracts; see [G02–G04/G08](./docs/graphite-parity.md#open-functionality-and-decisions). |
 | Graphite token transport | Unsupported; rejected explicitly. Existing `an auth` uses `gh`, not Graphite activation. |
 | Feedback message service | Unsupported. Existing `feedback debug-context` is a local diagnostic route, not a message submission service. |

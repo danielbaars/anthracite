@@ -1,3 +1,7 @@
+import { validateLandingIdentity } from '../lib/landing_identity';
+import { finishLandingContinuation } from './land_replay';
+import { validateLocal } from './land_local';
+import { loadLandingProgress } from '../lib/landing_progress';
 import chalk from 'chalk';
 import { continueAbsorb } from './absorb_apply';
 import { TContext } from '../lib/context';
@@ -6,6 +10,7 @@ import {
   getMandatoryBranches,
 } from '../lib/engine/frozen_branch';
 import {
+  ExitFailedError,
   NoGraphiteContinue,
   RebaseCheckoutError,
   RebaseConflictError,
@@ -38,16 +43,18 @@ export async function continueAction(
   opts: { addAll: boolean },
   context: TContext
 ): Promise<void> {
+  const landing = loadLandingProgress();
+  if (landing) validateLandingIdentity(landing, context);
   const data = context.continueConfig.data;
   if (data.absorb) {
     continueAbsorb(opts, context);
     return;
   }
   if (!context.engine.rebaseInProgress()) {
+    if (resumeLandingLocalQueue(context)) return;
     clearContinuation(context);
     throw new NoGraphiteContinue();
   }
-
   const activeBranch = context.engine.getRebaseHead();
   assertContinuationBranchesEditable(data, activeBranch);
   if (activeBranch) context.engine.assertBranchEditable(activeBranch);
@@ -152,5 +159,23 @@ export async function continueAction(
     throw error;
   }
   finishReorder(context);
-  clearContinuation(context);
+  finishContinuation(context, loadLandingProgress() !== undefined);
+}
+
+function finishContinuation(context: TContext, landingReplay: boolean): void {
+  if (landingReplay && loadLandingProgress()?.replay)
+    throw new ExitFailedError(
+      'Landing local replay queue remains incomplete. Recovery preserved; inspect the original project before resuming land.'
+    );
+  if (landingReplay) finishLandingContinuation(context);
+  else clearContinuation(context);
+}
+
+function resumeLandingLocalQueue(context: TContext): boolean {
+  const landing = loadLandingProgress();
+  if (!landing?.replay?.ready) return false;
+  validateLocal(landing, context, true);
+  restackBranches([...landing.replay.pending], context);
+  finishContinuation(context, true);
+  return true;
 }

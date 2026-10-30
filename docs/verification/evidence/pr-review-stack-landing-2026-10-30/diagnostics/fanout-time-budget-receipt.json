@@ -1,0 +1,193 @@
+{
+  "testCommit": "735a3d9a83f3efdd6a20920510cf8b7564c79a8d",
+  "tree": "012b71fcb136d640ecf188e998c95cc80013fce1",
+  "baseCommit": "901561275fac5ee356e8651f0f2a7f536ce2ccf7",
+  "productionCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "onlyChangedPaths": [
+    "apps/cli/test/commands/land_fanout_cli.test.ts"
+  ],
+  "sourceManifest": "/private/tmp/anthracite-pr-land-implementation-20261030/fanout-time-budget-source.json",
+  "sourceManifestSha256": "2b94ca48c999b427f37070a56ccec524538843b103ab183fb08e3d14496acbdb",
+  "sourceAggregateSha256": "c5e0456062c49010afb1e8f67353e43630925fc18204c9fde62b483ad693afdb",
+  "appsrcAndCompiledUnchanged": true,
+  "globalCommandBudgetMs": 60000,
+  "globalFixtureSha256": "371ce15858d725bacfa798318cf56bc1e630bf37c240f6eb6c239c34db937276",
+  "localScenarioCommandBudgetMs": 120000,
+  "localScenarioMochaBudgetMs": 180000,
+  "normalizedFunctionalTestTextExact": true,
+  "originalFanoutTestSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a",
+  "normalizedFanoutTestSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a",
+  "nodeAcceptance": {
+    "path": "/private/tmp/anthracite-pr-land-implementation-20261030/fanout-time-budget-node.json",
+    "sha256": "b339526b55868b79d3edf7de77dcd80b354d677ca6afe92d479527370dca823c",
+    "stats": {
+      "suites": 1,
+      "tests": 3,
+      "passes": 3,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-30T19:42:39.125Z",
+      "end": "2026-10-30T19:46:37.168Z",
+      "duration": 238043
+    },
+    "cases": [
+      {
+        "title": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+        "durationMs": 72444
+      },
+      {
+        "title": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+        "durationMs": 70894
+      },
+      {
+        "title": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+        "durationMs": 70591
+      }
+    ],
+    "serial": true,
+    "otherWorkersHeldByParent": true,
+    "ordinaryCaptureNoDiagnosticTrace": true,
+    "timingLog": "/private/tmp/anthracite-pr-land-implementation-20261030/fanout-time-budget-node-timing.log",
+    "timingLogSha256": "a4e8f3bc184f128fd2adc965deeefbe80178646efd6f945a11bda35ea5fe7fd7"
+  },
+  "nativePriorStricterBudget": {
+    "rerun": false,
+    "distinctPassedCases": 13,
+    "reports": [
+      {
+        "path": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "sha256": "402c5de4ef24166ef242e0b676f0cd67531a76155ae9626bc0bf2415e6a32808",
+        "stats": {
+          "suites": 1,
+          "tests": 13,
+          "passes": 12,
+          "pending": 0,
+          "failures": 1,
+          "start": "2026-10-30T18:45:47.945Z",
+          "end": "2026-10-30T18:56:20.001Z",
+          "duration": 632056
+        },
+        "source": "cbd4 production; fanout test source identical to901 before local-only budget change",
+        "fixtureCommandBudgetMs": 60000
+      },
+      {
+        "path": "/private/tmp/anthracite-pr-land-implementation-20261030/final/reduced/native-land_fanout_cli.json",
+        "sha256": "bf42eec4a9d027ec7c2a3bf15e2a5be981f907e929525cc84e76541a0ab84d3c",
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-10-30T19:13:58.076Z",
+          "end": "2026-10-30T19:15:14.908Z",
+          "duration": 76832
+        },
+        "source": "cbd4 production; fanout test source identical to901 before local-only budget change",
+        "fixtureCommandBudgetMs": 60000
+      }
+    ],
+    "caseProvenance": {
+      "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 60101
+      },
+      "public scoped fanout landing continues a first-arm conflict across all reparented roots locally, then explicitly publishes the surviving arms": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 57629
+      },
+      "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 58566
+      },
+      "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 58430
+      },
+      "public scoped fanout landing refuses a necessary frozen sibling before the first merge while unrelated protection is irrelevant": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 1516
+      },
+      "public scoped fanout landing refuses a necessary worktree sibling before the first merge while unrelated protection is irrelevant": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 1156
+      },
+      "public scoped fanout landing stops before replay when a necessary sibling's protection changes after the merge": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 9612
+      },
+      "public scoped fanout landing stops before replay when a necessary sibling's scope changes after the merge": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 9006
+      },
+      "public scoped fanout landing stops before replay when a necessary sibling's head changes after the merge": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 8193
+      },
+      "public scoped fanout landing retains earlier arms when a later PR update fails and retries without duplicate replay or merge": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 71924
+      },
+      "public scoped fanout landing preserves a changed pending sibling before resolving an owned conflict continuation": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 17003
+      },
+      "public scoped fanout landing rechecks queued sibling identity between completed local replays": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json",
+        "durationMs": 25832
+      },
+      "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry": {
+        "report": "/private/tmp/anthracite-pr-land-implementation-20261030/final/reduced/native-land_fanout_cli.json",
+        "durationMs": 69184
+      }
+    },
+    "limit": "Retain the original partial report failure and separately passed lease rerun honestly; no overlap-summed count and no claim of one13/13 original run."
+  },
+  "original60sFailure": {
+    "report": "/private/tmp/anthracite-pr-land-implementation-20261030/fanout-diagnosis/default-node.json",
+    "sha256": "acda36ec8c1876b770218f3a1ce35d1bf855475c603586c120a9bfb7d289e413",
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "failures": 1,
+      "start": "2026-10-30T19:29:05.381Z",
+      "end": "2026-10-30T19:30:18.789Z",
+      "duration": 73408
+    }
+  },
+  "diagnostic120s": {
+    "report": "/private/tmp/anthracite-pr-land-implementation-20261030/fanout-diagnosis/extended-node.json",
+    "sha256": "a3fa76cb3cdd863e7f66e26a45dd5ac52350093c7302247e36e73c97f00f6d73",
+    "acceptance": false,
+    "commandElapsedMs": 71699.862958,
+    "publicScenarioAssertionsPassed": true
+  },
+  "staticChecks": {
+    "typecheck": "pass",
+    "testEslint": "pass; existing describe-container length exception",
+    "format": "pass",
+    "cleanWorktree": true,
+    "integrationMergeLog": "/private/tmp/anthracite-pr-land-implementation-20261030/fanout-time-budget-integration-merge.log"
+  },
+  "limits": [
+    "No production optimization claimed; production and compiled code unchanged.",
+    "No extra Node/native/full test cohort beyond the exact3 serial Node cases.",
+    "No integration source/dist, native/package/global installation, push/PR/CI/live service or issue changes."
+  ],
+  "artifactHashes": {
+    "fanout-time-budget-result.md": "075d21fc3ce59e4c197b414be721b2609d492d506c20b56b4b8369794fcf636d",
+    "fanout-time-budget-source.json": "2b94ca48c999b427f37070a56ccec524538843b103ab183fb08e3d14496acbdb",
+    "fanout-time-budget-node.json": "b339526b55868b79d3edf7de77dcd80b354d677ca6afe92d479527370dca823c",
+    "fanout-time-budget-node-timing.log": "a4e8f3bc184f128fd2adc965deeefbe80178646efd6f945a11bda35ea5fe7fd7",
+    "fanout-diagnosis/test-budget-static-proof.json": "c89532d37cad7f22ddaf481dea39c1a40a0c8e9423160d67fd6bcec003784505",
+    "fanout-diagnosis/test-budget-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fanout-diagnosis/test-budget-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fanout-diagnosis/default-node.json": "acda36ec8c1876b770218f3a1ce35d1bf855475c603586c120a9bfb7d289e413",
+    "fanout-diagnosis/extended-node.json": "a3fa76cb3cdd863e7f66e26a45dd5ac52350093c7302247e36e73c97f00f6d73",
+    "fanout-diagnosis/receipt.json": "f586670de48b5a1bccf1dfe49980980bee54e502a7e6d72ec05666954f263b29",
+    "final/diagnostics/parallel-cbd4/native/commands__land_fanout_cli.test.js.json": "402c5de4ef24166ef242e0b676f0cd67531a76155ae9626bc0bf2415e6a32808",
+    "final/reduced/native-land_fanout_cli.json": "bf42eec4a9d027ec7c2a3bf15e2a5be981f907e929525cc84e76541a0ab84d3c"
+  }
+}

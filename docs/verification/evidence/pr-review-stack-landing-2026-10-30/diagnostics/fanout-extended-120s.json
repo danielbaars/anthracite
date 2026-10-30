@@ -1,0 +1,38 @@
+{
+  "diagnosticOnly": true,
+  "acceptance": false,
+  "fixtureCommandBudgetUnchanged": 60000,
+  "diagnosticLandBudgetMs": 120000,
+  "sourceCommit": "901561275fac5ee356e8651f0f2a7f536ce2ccf7",
+  "startedAtUtc": "2026-10-30T19:32:53.973Z",
+  "setupMs": 8942.100042,
+  "loadBeforeCommand": [
+    5.3173828125,
+    5.81494140625,
+    11.9052734375
+  ],
+  "freeMemoryBeforeCommand": 65388544,
+  "command": [
+    "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+    "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/src/index.js",
+    "land",
+    "child",
+    "--yes"
+  ],
+  "status": 0,
+  "signal": null,
+  "timedOut": false,
+  "commandElapsedMs": 71699.862958,
+  "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target child\nTrunk: 807be174fa073b473f6fbaadd0350a8d5caa8f90 -> 807be174fa073b473f6fbaadd0350a8d5caa8f90 (fast-forward only)\nMerge 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: b0f19ba86f64313a9b0c063582777ee42b4f89c0\n  Base: main 807be174fa073b473f6fbaadd0350a8d5caa8f90 (tracked parent main; replay base 807be174fa073b473f6fbaadd0350a8d5caa8f90)\n  State: OPEN; draft false; readiness CLEAN\n  Verify trunk base/head immediately before effect\nMerge 2: child #18 https://github.com/fixture/inspection/pull/18\n  Head: f7b468e4609093abe708ca975aea316b37c7c792\n  Base: base b0f19ba86f64313a9b0c063582777ee42b4f89c0 (tracked parent base; replay base b0f19ba86f64313a9b0c063582777ee42b4f89c0)\n  State: OPEN; draft false; readiness CLEAN\n  Before merge: replay own commits onto trunk; update existing remote head and PR base/footer; recheck readiness\nMaintain: tip\n  Reparent to main; replay from child (f7b468e4609093abe708ca975aea316b37c7c792); head 5363c27c564e7c16b6682bde9109d27dd36fcd3e\n  Update existing remote head 5363c27c564e7c16b6682bde9109d27dd36fcd3e\n  Update existing PR #19 base/dependency footer; preserve user fields\nMaintain: local-only\n  Reparent to main; replay from base (b0f19ba86f64313a9b0c063582777ee42b4f89c0); head b1992c32eb3a2a2c6b2a12e6dee62581652c9dac\n  Unpublished: remain unpublished\n  No PR: do not create one\nMaintain: sibling\n  Reparent to main; replay from base (b0f19ba86f64313a9b0c063582777ee42b4f89c0); head 2fb865a89b8fe7eea0a4a804fa6b4a36b718d39b\n  Update existing remote head 2fb865a89b8fe7eea0a4a804fa6b4a36b718d39b\n  Update existing PR #20 base/dependency footer; preserve user fields\nMaintain: sibling-tip\n  Reparent to sibling; replay from sibling (2fb865a89b8fe7eea0a4a804fa6b4a36b718d39b); head a5621640ee754f7ad3efcf4cb2fc26e78f2eae3e\n  Update existing remote head a5621640ee754f7ad3efcf4cb2fc26e78f2eae3e\n  Update existing PR #21 base/dependency footer; preserve user fields\nCleanup: base, child (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: 22b937fe809486d7a114a5eb334f09db764cbd9e.\nMaintained: child; head 941acf34203ef375771ac125ea94803e41de010c; existing PR #18; existing remote head verified.\nMaintained: tip; head f95c8fde973e829ab822c0378eebc0f609c95c27; existing PR #19; existing remote head verified.\nMaintained: local-only; head 395e04af040deb41d10a5695c845f8ffe1362158; no PR; remains unpublished.\nMaintained: sibling; head 419ba2e6306452e15c282c8153bed4b19cc7574c; existing PR #20; existing remote head verified.\nMaintained: sibling-tip; head 833217eeace0dbd878c1680c50c12dc29e9c1b9a; existing PR #21; existing remote head verified.\nConfirmed merged #18: fa28c2a9436f52e056255a5067c1220cc0ab1730.\nMaintained: tip; head 173ed9e72ed64ea3a1c7b5d486d4bcbf9f0915b6; existing PR #19; existing remote head verified.\nLanding complete: child; trunk advanced and landed refs/metadata cleaned.\n",
+  "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-h2bGKk/remote.git\n - [deleted]         base\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-h2bGKk/remote.git\n - [deleted]         child\n",
+  "loadAfterCommand": [
+    6.35888671875,
+    5.95556640625,
+    11.4716796875
+  ],
+  "traceFile": "/private/tmp/anthracite-pr-land-implementation-20261030/fanout-diagnosis/extended-git-trace2.jsonl",
+  "phaseFile": "/private/tmp/anthracite-pr-land-implementation-20261030/fanout-diagnosis/extended-phases.jsonl",
+  "publicScenarioAssertionsPassed": true,
+  "totalMs": 82669.53079199999,
+  "productionHashesUnchanged": true
+}

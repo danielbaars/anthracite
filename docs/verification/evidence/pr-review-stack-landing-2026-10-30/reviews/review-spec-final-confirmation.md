@@ -1,0 +1,13 @@
+## Spec confirmation
+
+Confirmed frozen clean `/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes` at HEAD `cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de`, tree `034362659f02c8fa1626ffde3ed91d89dc2bf0d6`. Original review baseline remains `a070dd5ce4890a37a4e6506bb2b2fd50752c5379`; fix comparison starts at `115d151c436ae85d4e877af61c627df92d5121f9`.
+
+**Both original Spec findings are resolved.** Captured `cleanupResult` retains verified already-landed identity through recovery. `land_maintenance.ts` revalidates that evidence and excludes those members from replay, push and PR edits while maintaining actual survivors. The independent two-merged-ancestor probe now completes with status0; pre-push observations retain the original merged-child OID until its leased deletion. Pending preview in `land_scoped.ts` now validates remaining scope, local state, remote leases and current merge readiness. The independent dirty/pending-check probe returns1, discloses tip maintenance/push/PR updates, and preserves the full inspection snapshot, including raw index bytes after a same-content timestamp change.
+
+**The two parent findings are resolved.** Declared GitHub repository identity is checked against configured identity, with resolved hashes retained. The equal-OID wrong-repository probe refuses preview/application with status1 and leaves both bare repositories unchanged. Foreign `.gtcontinue` publication and finalization probes both return1, preserve exact foreign bytes and retain landing recovery; genuine conflict/reached local work remains intact and final local continuation leaves remote refs unchanged.
+
+The final `522fb5f..cbd4b796` delta adds entry/queue/finalization identity guards for active continuation, repeats local validation after asynchronous readiness immediately before merge intent, and suppresses optional index refresh. Two targeted public Node controls for post-checkout endpoint redirection and active/between-replay endpoint changes passed2/2.
+
+All five independent probes were rerun on Node `v24.22.2`, using real Git/bare remotes and only controlled gh. Evidence: `spec-final-probes-summary.json`, `*-probe-final*.json`, and `spec-final-late-endpoint-controls.json`. `spec-final-source-before.json` and `spec-final-source-after.json` match exactly:1405 tracked files and1510 compiled files unchanged; all502 implementer manifest files also verified. Provisional522 evidence remains separate.
+
+No remaining concrete defect established in the requested fix areas. This bounded confirmation is not the parent’s full focused integration acceptance or live-service certification. No source/dist/dependency edits, CI, installation, publication or live effects were performed.

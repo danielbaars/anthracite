@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "sourceTree": "034362659f02c8fa1626ffde3ed91d89dc2bf0d6",
+  "aggregateSha256": "c8fa2f13f8d8ff6f51219e409966fafe5a976a4ac4fb09f0c9a97d2216e024e8",
+  "clean": true,
+  "toolchain": {
+    "node": "v24.19.0",
+    "typescript": "Version 5.5.4",
+    "bun": "1.3.14",
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "native": {
+    "path": "/private/tmp/anthracite-pr-land-implementation-20261030/final/anthracite-native",
+    "sha256": "a148f592752d21378768f18e02c165e6bb7e3129e91439d8fede6c2ed522c179",
+    "version": "0.4.0"
+  },
+  "compiledEntrySha256": "f41af96e346bcfc1648d5636bc8feb109e70d0df7e5fd91e9a4ebf2b07c010bd",
+  "cleanAfter": true,
+  "sourceManifestSha256": "5c42ee5c068dc88f5993854d3ce3d4851f25b5fd9e648142188429ebe16bf5c6"
+}

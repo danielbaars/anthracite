@@ -1,0 +1,216 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 11,
+    "passes": 11,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:45:47.945Z",
+    "end": "2026-10-30T18:52:00.548Z",
+    "duration": 372603
+  },
+  "tests": [
+    {
+      "title": "lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "fullTitle": "public linear landing and prefixes lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 24350,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "fullTitle": "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 35564,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 36836,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 36436,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "fullTitle": "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 29840,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "fullTitle": "public linear landing and prefixes retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 31810,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves an unpublished descendant local without creating a PR or remote branch",
+      "fullTitle": "public linear landing and prefixes leaves an unpublished descendant local without creating a PR or remote branch",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 21003,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 24936,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "recognizes a completed owned replay when its checkout hook fails and resumes without duplicating commits",
+      "fullTitle": "public linear landing and prefixes recognizes a completed owned replay when its checkout hook fails and resumes without duplicating commits",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 29123,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports incomplete cleanup when an earlier landed remote branch is recreated during final checkout",
+      "fullTitle": "public linear landing and prefixes reports incomplete cleanup when an earlier landed remote branch is recreated during final checkout",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 35565,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "never reports a completed local continuation when a late frozen survivor leaves replay pending",
+      "fullTitle": "public linear landing and prefixes never reports a completed local continuation when a late frozen survivor leaves replay pending",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 15998,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "fullTitle": "public linear landing and prefixes lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 24350,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "fullTitle": "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 35564,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 36836,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 36436,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "fullTitle": "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 29840,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "fullTitle": "public linear landing and prefixes retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 31810,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves an unpublished descendant local without creating a PR or remote branch",
+      "fullTitle": "public linear landing and prefixes leaves an unpublished descendant local without creating a PR or remote branch",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 21003,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 24936,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "recognizes a completed owned replay when its checkout hook fails and resumes without duplicating commits",
+      "fullTitle": "public linear landing and prefixes recognizes a completed owned replay when its checkout hook fails and resumes without duplicating commits",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 29123,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports incomplete cleanup when an earlier landed remote branch is recreated during final checkout",
+      "fullTitle": "public linear landing and prefixes reports incomplete cleanup when an earlier landed remote branch is recreated during final checkout",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 35565,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "never reports a completed local continuation when a late frozen survivor leaves replay pending",
+      "fullTitle": "public linear landing and prefixes never reports a completed local continuation when a late frozen survivor leaves replay pending",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 15998,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

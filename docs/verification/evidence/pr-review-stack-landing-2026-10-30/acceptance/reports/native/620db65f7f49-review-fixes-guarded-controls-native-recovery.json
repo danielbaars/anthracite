@@ -1,0 +1,108 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:35:35.792Z",
+    "end": "2026-10-30T18:37:30.100Z",
+    "duration": 114308
+  },
+  "tests": [
+    {
+      "title": "resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "fullTitle": "public landing interruption recovery resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 35680,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "fullTitle": "public landing interruption recovery preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 15411,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "fullTitle": "public landing interruption recovery preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 10930,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "fullTitle": "public landing interruption recovery preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 12319,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "fullTitle": "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 21558,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "fullTitle": "public landing interruption recovery resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 35680,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "fullTitle": "public landing interruption recovery preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 15411,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "fullTitle": "public landing interruption recovery preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 10930,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "fullTitle": "public landing interruption recovery preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 12319,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "fullTitle": "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 21558,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

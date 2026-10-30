@@ -1,0 +1,349 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 13,
+    "passes": 9,
+    "pending": 0,
+    "failures": 4,
+    "start": "2026-10-30T18:45:47.945Z",
+    "end": "2026-10-30T18:56:32.145Z",
+    "duration": 644200
+  },
+  "tests": [
+    {
+      "title": "merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 60802,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:56:32)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "continues a first-arm conflict across all reparented roots locally, then explicitly publishes the surviving arms",
+      "fullTitle": "public scoped fanout landing continues a first-arm conflict across all reparented roots locally, then explicitly publishes the surviving arms",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 62186,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 61096,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:148:36)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 61247,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:148:36)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "refuses a necessary frozen sibling before the first merge while unrelated protection is irrelevant",
+      "fullTitle": "public scoped fanout landing refuses a necessary frozen sibling before the first merge while unrelated protection is irrelevant",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 1647,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a necessary worktree sibling before the first merge while unrelated protection is irrelevant",
+      "fullTitle": "public scoped fanout landing refuses a necessary worktree sibling before the first merge while unrelated protection is irrelevant",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 1180,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before replay when a necessary sibling's protection changes after the merge",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's protection changes after the merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 9219,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before replay when a necessary sibling's scope changes after the merge",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's scope changes after the merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 9520,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before replay when a necessary sibling's head changes after the merge",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's head changes after the merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 8175,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "fullTitle": "public scoped fanout landing retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 76716,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a changed pending sibling before resolving an owned conflict continuation",
+      "fullTitle": "public scoped fanout landing preserves a changed pending sibling before resolving an owned conflict continuation",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 18048,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a later arm lease race and earlier published arms across retry",
+      "fullTitle": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 149869,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:288:32)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "base",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "rechecks queued sibling identity between completed local replays",
+      "fullTitle": "public scoped fanout landing rechecks queued sibling identity between completed local replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 24170,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 60802,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:56:32)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 61096,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:148:36)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 61247,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:148:36)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "child",
+          "--yes"
+        ]
+      }
+    },
+    {
+      "title": "preserves a later arm lease race and earlier published arms across retry",
+      "fullTitle": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 149869,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at RelationCliFixture.run (dist/test/lib/fixtures/reorder_cli.js:65:54)\n    at Context.<anonymous> (dist/test/commands/land_fanout_cli.test.js:288:32)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+        "errno": -60,
+        "code": "ETIMEDOUT",
+        "syscall": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "path": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+        "spawnargs": [
+          "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js",
+          "land",
+          "base",
+          "--yes"
+        ]
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "continues a first-arm conflict across all reparented roots locally, then explicitly publishes the surviving arms",
+      "fullTitle": "public scoped fanout landing continues a first-arm conflict across all reparented roots locally, then explicitly publishes the surviving arms",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 62186,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a necessary frozen sibling before the first merge while unrelated protection is irrelevant",
+      "fullTitle": "public scoped fanout landing refuses a necessary frozen sibling before the first merge while unrelated protection is irrelevant",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 1647,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a necessary worktree sibling before the first merge while unrelated protection is irrelevant",
+      "fullTitle": "public scoped fanout landing refuses a necessary worktree sibling before the first merge while unrelated protection is irrelevant",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 1180,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before replay when a necessary sibling's protection changes after the merge",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's protection changes after the merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 9219,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before replay when a necessary sibling's scope changes after the merge",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's scope changes after the merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 9520,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before replay when a necessary sibling's head changes after the merge",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's head changes after the merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 8175,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "fullTitle": "public scoped fanout landing retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 76716,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a changed pending sibling before resolving an owned conflict continuation",
+      "fullTitle": "public scoped fanout landing preserves a changed pending sibling before resolving an owned conflict continuation",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 18048,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks queued sibling identity between completed local replays",
+      "fullTitle": "public scoped fanout landing rechecks queued sibling identity between completed local replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 24170,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

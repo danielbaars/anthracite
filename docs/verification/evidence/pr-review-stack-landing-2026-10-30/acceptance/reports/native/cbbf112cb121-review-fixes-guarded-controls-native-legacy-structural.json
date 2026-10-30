@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:39:23.922Z",
+    "end": "2026-10-30T18:39:39.044Z",
+    "duration": 15122
+  },
+  "tests": [
+    {
+      "title": "retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/freeze_structural_recovery_cli.test.js",
+      "duration": 13241,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "fullTitle": "frozen structural recovery through fresh public CLI processes retains the inserted commit and mandatory queue across frozen refusal and actual resolution",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/freeze_structural_recovery_cli.test.js",
+      "duration": 13241,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
