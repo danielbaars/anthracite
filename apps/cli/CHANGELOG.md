@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.4.0](https://github.com/danielbaars/anthracite/compare/v0.3.0...v0.4.0) (2026-10-30)
+
+
+### Features
+
+* **cli:** choose insertion children interactively ([43ab22b](https://github.com/danielbaars/anthracite/commit/43ab22bb9604900cdce08b53afad1e32449f0e9d))
+* **cli:** deliver targeted insertion to agents ([d5b6985](https://github.com/danielbaars/anthracite/commit/d5b69854c70cd8d1033996a8334ef6c530e73310))
+* **cli:** select explicit children for branch insertion ([b45856d](https://github.com/danielbaars/anthracite/commit/b45856d9b9b4ff3cde73122b4ce94875ddbe27c4))
+
+
+### Bug Fixes
+
+* **cli:** protect selected insert continuation scope ([f116e7f](https://github.com/danielbaars/anthracite/commit/f116e7f37a139cf58698734971657bef813412bc))
+* **cli:** warn before implicit multi-child insertion ([98251af](https://github.com/danielbaars/anthracite/commit/98251af933641b02c658942ed06a5e20928643fa))
+
 ## [0.3.0](https://github.com/danielbaars/anthracite/compare/v0.2.1...v0.3.0) (2026-10-29)
 
 
