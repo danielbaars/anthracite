@@ -148,14 +148,15 @@ describe('public scoped fanout landing', function () {
     ).to.equal(1);
   });
 
-  it('does not replay, push or demand protection changes on an independent arm completed by the previous merge', () => {
-    fixture.ok(['freeze', 'sibling']);
-    const frozen = fixture.git(['rev-parse', 'refs/branch-metadata/sibling']);
-    fixture.ok(['unfreeze', 'base']);
-    const marker = path.join(fixture.root, 'completed-arm');
-    const gh = path.join(github.bin, 'gh');
-    const script = fs.readFileSync(gh, 'utf8');
-    const injection = `
+  for (const protection of ['frozen', 'worktree'] as const) {
+    it(`does not replay, push or demand ${protection} changes on an independent arm completed by the previous merge`, () => {
+      fixture.ok(['freeze', 'sibling']);
+      const frozen = fixture.git(['rev-parse', 'refs/branch-metadata/sibling']);
+      fixture.ok(['unfreeze', 'base']);
+      const marker = path.join(fixture.root, 'completed-arm');
+      const gh = path.join(github.bin, 'gh');
+      const script = fs.readFileSync(gh, 'utf8');
+      const injection = `
       if (process.argv[3] === 'repos/fixture/inspection/pulls/18') {
         const fs = require('fs'), cp = require('child_process');
         const record = JSON.parse(fs.readFileSync('.git/.anthracite_landing', 'utf8'));
@@ -163,34 +164,48 @@ describe('public scoped fanout landing', function () {
           fs.writeFileSync(${JSON.stringify(
             marker
           )}, cp.execFileSync('git', ['rev-parse', 'sibling', 'sibling-tip'], {encoding:'utf8'}));
-          cp.execFileSync('git', ['update-ref', 'refs/branch-metadata/sibling', '${frozen}']);
+          if ('${protection}' === 'frozen') {
+            const meta = JSON.parse(cp.execFileSync('git', ['cat-file', '-p', 'refs/branch-metadata/sibling'], {encoding:'utf8'}));
+            meta.frozen = JSON.parse(cp.execFileSync('git', ['cat-file', '-p', '${frozen}'], {encoding:'utf8'})).frozen;
+            const oid = cp.execFileSync('git', ['hash-object', '-w', '--stdin'], {input:JSON.stringify(meta),encoding:'utf8'}).trim();
+            cp.execFileSync('git', ['update-ref', 'refs/branch-metadata/sibling', oid]);
+            fs.writeFileSync(${JSON.stringify(marker + '.metadata')}, oid);
+          } else cp.execFileSync('git', ['worktree', 'add', ${JSON.stringify(
+            path.join(fixture.root, 'completed-worktree')
+          )}, 'sibling']);
         }
       }
     `;
-    fs.writeFileSync(gh, script.replace('\n', '\n' + injection + '\n'), {
-      mode: 0o755,
+      fs.writeFileSync(gh, script.replace('\n', '\n' + injection + '\n'), {
+        mode: 0o755,
+      });
+      const result = fixture.run(['land', 'child', '--yes']);
+      expect(result.status, result.stdout + result.stderr).to.equal(0);
+      expect(fixture.git(['rev-parse', 'sibling', 'sibling-tip'])).to.equal(
+        fs.readFileSync(marker, 'utf8').trim()
+      );
+      if (protection === 'frozen')
+        expect(
+          fixture.git(['rev-parse', 'refs/branch-metadata/sibling'])
+        ).to.equal(fs.readFileSync(marker + '.metadata', 'utf8'));
+      else
+        expect(fixture.git(['worktree', 'list'])).to.include(
+          'completed-worktree'
+        );
+      const edits = fs
+        .readFileSync(github.calls, 'utf8')
+        .split('\n')
+        .filter(Boolean)
+        .map((line) => JSON.parse(line))
+        .filter((args: string[]) => args[0] === 'pr' && args[1] === 'edit');
+      expect(edits.filter((args: string[]) => args[2] === '20')).to.have.length(
+        1
+      );
+      expect(edits.filter((args: string[]) => args[2] === '21')).to.have.length(
+        1
+      );
     });
-    const result = fixture.run(['land', 'child', '--yes']);
-    expect(result.status, result.stdout + result.stderr).to.equal(0);
-    expect(fixture.git(['rev-parse', 'sibling', 'sibling-tip'])).to.equal(
-      fs.readFileSync(marker, 'utf8').trim()
-    );
-    expect(fixture.git(['rev-parse', 'refs/branch-metadata/sibling'])).to.equal(
-      frozen
-    );
-    const edits = fs
-      .readFileSync(github.calls, 'utf8')
-      .split('\n')
-      .filter(Boolean)
-      .map((line) => JSON.parse(line))
-      .filter((args: string[]) => args[0] === 'pr' && args[1] === 'edit');
-    expect(edits.filter((args: string[]) => args[2] === '20')).to.have.length(
-      1
-    );
-    expect(edits.filter((args: string[]) => args[2] === '21')).to.have.length(
-      1
-    );
-  });
+  }
 
   for (const protection of ['frozen', 'worktree'] as const) {
     it(`refuses a necessary ${protection} sibling before the first merge while unrelated protection is irrelevant`, () => {
@@ -263,7 +278,7 @@ describe('public scoped fanout landing', function () {
     const policy = JSON.parse(fs.readFileSync(github.policy, 'utf8'));
     fs.writeFileSync(
       github.policy,
-      JSON.stringify({ ...policy, failPrEditNumber: 20 })
+      JSON.stringify({ ...policy, failPrEditNumber: 21 })
     );
     const result = fixture.run(['land', 'base', '--yes']);
     expect(result.status, result.stdout + result.stderr).to.equal(1);
@@ -272,10 +287,10 @@ describe('public scoped fanout landing', function () {
       .and.include('sibling');
     expect(result.stdout)
       .to.include('Maintained: child')
-      .and.include('Maintained: tip');
+      .and.include('Maintained: sibling');
     const names = ['child', 'tip', 'sibling', 'sibling-tip', 'local-only'];
     const heads = names.map((name) => fixture.git(['rev-parse', name]));
-    for (const name of ['child', 'tip', 'sibling'])
+    for (const name of ['child', 'sibling', 'sibling-tip'])
       expect(fixture.git(['rev-parse', name], github.remote)).to.equal(
         fixture.git(['rev-parse', name])
       );

@@ -92,7 +92,6 @@ export function restackBranches(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')
   );
   while (branchNames.length > 0) {
-    assertLandingReplayParticipants();
     assertDeleteRecoveryEditable(context.continueConfig.data.delete);
     assertContinuationBranchesEditable(context.continueConfig.data);
     assertFileSplitAvailable(context.continueConfig.data);
@@ -198,6 +197,7 @@ export function recordRestackCompletion(
   context: TContext
 ): void {
   recordLandingReplayCompletion(branch, context);
+  assertLandingReplayParticipants();
   recordAbsorbCompletion(branch, context);
   recordFileSplitCompletion(branch, context);
   recordDeleteCompletion(branch, context);

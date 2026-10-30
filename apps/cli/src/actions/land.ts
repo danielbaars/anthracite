@@ -75,7 +75,7 @@ export async function planLand(
   }
   const affected: string[] = [];
   const visit = (name: string): void => {
-    for (const child of context.engine.getChildrenPrecondition(name)) {
+    for (const child of context.engine.getChildrenPrecondition(name).sort()) {
       if (!affected.includes(child)) {
         affected.push(child);
         visit(child);

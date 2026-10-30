@@ -2,7 +2,7 @@
 
 `an land [branch] --dry-run` explains the unique tracked chain from trunk through the selected local branch. The default is the physically checked-out branch. Numeric branch names remain literal branch names. Landing requires an initialized repository and attached checkout. Raw `an merge` remains Git merge passthrough.
 
-The preview lists merge order, repository/PR/head/base identities, fast-forward trunk advancement, each mandatory surviving descendant and fanout replay, pre-existing remote-head and PR-base/dependency-footer updates, and landed-only cleanup. An unpublished survivor stays unpublished. Independent trunk stacks are outside the scope.
+The preview lists merge order, repository/PR/head/base identities, fast-forward trunk advancement, each mandatory surviving descendant and fanout replay, pre-existing remote-head and PR-base/dependency-footer updates, and landed-only cleanup. Disclosed maintenance uses a dependency-first traversal, ordering each parent's children by branch name so previews and replay order are stable across runtimes and retries. An unpublished survivor stays unpublished. Independent trunk stacks are outside the scope.
 
 Preview uses the preserving inspection path. It writes no repository refs, index/files, metadata/cache, recovery, remote refs or PRs and launches no browser/editor/pager. When remote objects are absent, ancestry is inspected in a disposable bare repository outside the working repository.
 
