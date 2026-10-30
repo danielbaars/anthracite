@@ -58,7 +58,7 @@ const requiredChecks = z.object({
     .array(
       z.object({
         context: z.string(),
-        app_id: z.number().nullable().optional(),
+        app_id: z.number().int().nullable().optional(),
       })
     )
     .optional(),
@@ -78,6 +78,10 @@ const ruleSchema = z.object({
 export type LandPolicy = {
   readonly reviews: number;
   readonly checks: readonly string[];
+  readonly publishers: readonly {
+    readonly context: string;
+    readonly appId: number;
+  }[];
   readonly blockers: readonly string[];
 };
 
@@ -117,18 +121,31 @@ export async function getGithubLandPolicy(
   }
   let reviews = 0;
   const checks = new Set<string>();
+  const publishers: { readonly context: string; readonly appId: number }[] = [];
   if (protection.protected) {
     // A 404 may mean insufficient Administration permission: it never proves absence.
     const classic = classicSchema.parse(
       await readGithubLandApi(`${prefix}/branches/${branch}/protection`)
     );
+    if (
+      classic.url !==
+      `https://api.github.com/repos/${repository.full_name}/branches/${branch}/protection`
+    )
+      throw new ExitFailedError('Classic protection identity mismatch.');
     reviews =
       classic.required_pull_request_reviews?.required_approving_review_count ??
       0;
     for (const name of classic.required_status_checks?.contexts ?? [])
       checks.add(name);
-    for (const check of classic.required_status_checks?.checks ?? [])
+    for (const check of classic.required_status_checks?.checks ?? []) {
       checks.add(check.context);
+      if (
+        check.app_id !== undefined &&
+        check.app_id !== null &&
+        check.app_id !== -1
+      )
+        publishers.push({ context: check.context, appId: check.app_id });
+    }
   }
   for (const rule of rules) {
     switch (rule.type) {
@@ -150,11 +167,25 @@ export async function getGithubLandPolicy(
       case 'required_status_checks': {
         const parameters = z
           .object({
-            required_status_checks: z.array(z.object({ context: z.string() })),
+            required_status_checks: z.array(
+              z.object({
+                context: z.string(),
+                integration_id: z.number().int().nullable().optional(),
+              })
+            ),
           })
           .parse(rule.parameters);
-        for (const check of parameters.required_status_checks)
+        for (const check of parameters.required_status_checks) {
           checks.add(check.context);
+          if (
+            check.integration_id !== undefined &&
+            check.integration_id !== null
+          )
+            publishers.push({
+              context: check.context,
+              appId: check.integration_id,
+            });
+        }
         break;
       }
       case 'merge_queue':
@@ -168,13 +199,14 @@ export async function getGithubLandPolicy(
         blockers.push(`Unsupported active policy: ${rule.type}.`);
     }
   }
-  return { reviews, checks: [...checks], blockers };
+  return { reviews, checks: [...checks], publishers, blockers };
 }
 
-export function githubLandReadiness(
+export async function githubLandReadiness(
   pr: GithubPr,
-  policy: LandPolicy
-): string[] {
+  policy: LandPolicy,
+  repo: string
+): Promise<string[]> {
   const blockers = [...policy.blockers];
   if (pr.state !== 'OPEN') blockers.push(`PR is ${pr.state}, not open.`);
   if (pr.isDraft) blockers.push('PR is a draft.');
@@ -192,13 +224,101 @@ export function githubLandReadiness(
   if (!pr.statusCheckRollup) blockers.push('Checks unavailable.');
   const successful = new Set<string>();
   for (const check of pr.statusCheckRollup ?? []) {
-    const name = check.name ?? check.context ?? 'unnamed';
-    const state = check.conclusion || check.state || check.status || 'UNKNOWN';
-    if (['SUCCESS', 'NEUTRAL', 'SKIPPED'].includes(state)) successful.add(name);
+    const name =
+      (check.__typename === 'CheckRun' ? check.name : check.context) ??
+      'unnamed';
+    const state =
+      check.__typename === 'CheckRun'
+        ? check.status === 'COMPLETED'
+          ? check.conclusion || 'UNKNOWN'
+          : check.status || 'UNKNOWN'
+        : check.state || 'UNKNOWN';
+    const passed =
+      check.__typename === 'CheckRun'
+        ? check.status === 'COMPLETED' &&
+          ['SUCCESS', 'NEUTRAL', 'SKIPPED'].includes(state)
+        : state === 'SUCCESS';
+    if (passed) successful.add(name);
     else blockers.push(`Check ${name}: ${state}.`);
   }
   for (const name of policy.checks)
     if (!successful.has(name))
       blockers.push(`Required check missing or not successful: ${name}.`);
+  if (policy.publishers.length) {
+    try {
+      blockers.push(
+        ...(await verifyCheckPublishers(repo, pr.headRefOid, policy.publishers))
+      );
+    } catch {
+      blockers.push(
+        'Required check publisher evidence unavailable or incomplete.'
+      );
+    }
+  }
+  return blockers;
+}
+
+const checkRunSchema = z.object({
+  id: z.number().int().positive(),
+  name: z.string().min(1),
+  head_sha: z.string().regex(/^[a-f0-9]{40}$/),
+  status: z.string(),
+  conclusion: z.string().nullable(),
+  app: z.object({ id: z.number().int().positive() }),
+});
+
+/** Fixed-publisher requirements need explicit provenance on the inspected head. */
+async function verifyCheckPublishers(
+  repo: string,
+  head: string,
+  publishers: LandPolicy['publishers']
+): Promise<string[]> {
+  const runs: z.infer<typeof checkRunSchema>[] = [];
+  let total: number | undefined;
+  for (let page = 1; ; page++) {
+    const response = z
+      .object({
+        total_count: z.number().int().nonnegative(),
+        check_runs: z.array(checkRunSchema).max(100),
+      })
+      .parse(
+        await readGithubLandApi(
+          `repos/${repo}/commits/${head}/check-runs?per_page=100&page=${page}&filter=latest`
+        )
+      );
+    if (total !== undefined && total !== response.total_count)
+      throw new ExitFailedError(
+        'Check-run evidence changed during pagination.'
+      );
+    total = response.total_count;
+    runs.push(...response.check_runs);
+    if (response.check_runs.length < 100) break;
+    if (page >= 1000)
+      throw new ExitFailedError('Check-run pagination incomplete.');
+  }
+  if (
+    runs.length !== total ||
+    new Set(runs.map((run) => run.id)).size !== runs.length
+  )
+    throw new ExitFailedError('Check-run evidence incomplete or duplicated.');
+  if (runs.some((run) => run.head_sha !== head))
+    throw new ExitFailedError('Check-run evidence belongs to another head.');
+  const blockers: string[] = [];
+  for (const publisher of publishers) {
+    const matching = runs.filter(
+      (run) => run.name === publisher.context && run.app.id === publisher.appId
+    );
+    if (matching.length !== 1)
+      blockers.push(
+        `Required check publisher missing or ambiguous: ${publisher.context} (GitHub App ${publisher.appId}).`
+      );
+    else if (
+      matching[0].status !== 'completed' ||
+      !['success', 'neutral', 'skipped'].includes(matching[0].conclusion ?? '')
+    )
+      blockers.push(
+        `Required check publisher not successful: ${publisher.context} (GitHub App ${publisher.appId}).`
+      );
+  }
   return blockers;
 }
