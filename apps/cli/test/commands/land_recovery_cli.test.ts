@@ -160,7 +160,7 @@ describe('public landing interruption recovery', function () {
     const remote = fixture.git(['for-each-ref'], github.remote);
     const continued = fixture.run(['continue', '--all']);
     expect(continued.status).to.equal(1);
-    expect(continued.stderr).to.include('preserved');
+    expect(continued.stderr).to.include('both recovery records remain');
     const resumed = fixture.run(['land', 'base', '--yes']);
     expect(resumed.status).to.equal(1);
     expect(resumed.stderr).to.include('original project');

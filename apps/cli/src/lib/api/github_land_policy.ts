@@ -1,3 +1,4 @@
+import { githubProcessOptions, githubFailureKind } from './github_process';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
 import { z } from 'zod';
@@ -12,40 +13,20 @@ export async function readGithubLandApi(endpoint: string): Promise<unknown> {
     const result = await execFileAsync(
       'gh',
       ['api', endpoint, '--hostname', 'github.com', '--method', 'GET'],
-      {
-        env: {
-          ...process.env,
-          GH_HOST: 'github.com',
-          GH_PROMPT_DISABLED: '1',
-          GH_PAGER: '',
-          PAGER: '',
-        },
-        maxBuffer: 16 * 1024 * 1024,
-      }
+      githubProcessOptions()
     );
     return JSON.parse(result.stdout);
   } catch (error: unknown) {
-    const failure = z
-      .object({
-        code: z.union([z.string(), z.number()]).optional(),
-        stderr: z.string().optional(),
-      })
-      .safeParse(error);
-    const detail = failure.success ? failure.data.stderr ?? '' : '';
     const reason =
       error instanceof SyntaxError
         ? 'malformed JSON'
-        : failure.success && failure.data.code === 'ENOENT'
-        ? 'GitHub CLI missing'
-        : /rate.?limit|HTTP 429/i.test(detail)
-        ? 'rate limit'
-        : /auth|login|HTTP 401|HTTP 403|permission|forbidden|not accessible/i.test(
-            detail
-          )
-        ? 'authentication or permission'
-        : /network|connect|timeout|resolve host|TLS/i.test(detail)
-        ? 'network failure'
-        : 'request failed';
+        : {
+            missing: 'GitHub CLI missing',
+            'rate-limit': 'rate limit',
+            authentication: 'authentication or permission',
+            network: 'network failure',
+            request: 'request failed',
+          }[githubFailureKind(error)];
     throw new ExitFailedError(
       `GitHub identity or policy unavailable (${reason}): ${endpoint}. No readiness assumed.`
     );

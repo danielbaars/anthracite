@@ -8,7 +8,10 @@ export function prepareLand(fixture: RelationCliFixture): PrFixture & {
   readonly prs: readonly Record<string, unknown>[];
 } {
   const github = preparePrInspection(fixture);
-  fixture.git(['remote', 'set-url', 'origin', github.remote]);
+  const declared = 'https://github.com/fixture/inspection.git';
+  fixture.git(['config', `url.${github.remote}.insteadOf`, declared]);
+  fixture.git(['remote', 'set-url', 'origin', declared]);
+  fixture.git(['remote', 'set-url', '--push', 'origin', declared]);
   const config = path.join(fixture.repo, '.git', '.graphite_repo_config');
   fs.writeFileSync(
     config,

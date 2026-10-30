@@ -1,3 +1,4 @@
+import { githubProcessOptions } from './github_process';
 import { execFile } from 'child_process';
 import { z } from 'zod';
 import { ExitFailedError } from '../errors';
@@ -42,16 +43,7 @@ export async function mergeGithubLandPr(
         '--input',
         '-',
       ],
-      {
-        env: {
-          ...process.env,
-          GH_HOST: 'github.com',
-          GH_PROMPT_DISABLED: '1',
-          GH_PAGER: '',
-          PAGER: '',
-        },
-        maxBuffer: 16 * 1024 * 1024,
-      },
+      githubProcessOptions(),
       (error, stdout, stderr) =>
         error
           ? reject(

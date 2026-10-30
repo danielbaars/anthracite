@@ -1,4 +1,4 @@
-import { withLandingLock } from '../actions/land_leaf';
+import { withLandingLock } from '../actions/land_scoped';
 import { loadLandingProgress } from './landing_progress';
 import { allowLandingContinuation } from '../actions/land_replay';
 // Why does an open source CLI include telemetry?

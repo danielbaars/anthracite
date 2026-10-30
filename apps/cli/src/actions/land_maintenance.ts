@@ -1,3 +1,4 @@
+import { confirmedLandingResult } from '../lib/landing_confirmation';
 import { TContext, initContext } from '../lib/context';
 import { composeGit } from '../lib/git/git';
 import { withFrozenPushGuard } from '../lib/git/frozen_push';
@@ -28,6 +29,19 @@ export async function maintainLandingSurvivors(
   initial: LandingProgress,
   context: TContext
 ): Promise<LandingProgress> {
+  // Reconfirm every captured cleanup-only identity/result before it influences
+  // metadata or replay scope. MERGED in a cached PR alone never permits skipping.
+  for (let index = initial.index ?? 0; index < initial.merges.length; index++) {
+    const member = initial.merges[index];
+    if (
+      member.cleanupResult &&
+      (await confirmedLandingResult({ ...initial, index })) !==
+        member.cleanupResult
+    )
+      throw new ExitFailedError(
+        'Cleanup-only merged identity/result changed; recovery preserved.'
+      );
+  }
   const replayed = replaySurvivors(initial, context);
   const associated = associatePrs(replayed, context);
   return await publishSurvivors(associated, context);
@@ -63,11 +77,17 @@ function replaySurvivors(
 ): LandingProgress {
   let record = initial;
   const survivors = landingSurvivors(record);
+  const landedParents = new Set([
+    current(record).branch,
+    ...survivors
+      .filter((member) => member.cleanupResult)
+      .map((member) => member.branch),
+  ]);
   for (const member of survivors) {
     validateLocal(record, context);
     const fresh = initContext(context, composeGit(), { inspection: true });
     const expected = owned(participant(record, member.branch));
-    if (expected.parent === current(record).branch) {
+    if (landedParents.has(expected.parent)) {
       fresh.engine.setParent(
         member.branch,
         record.trunk,
@@ -82,7 +102,8 @@ function replaySurvivors(
   }
   // Continuation replays the whole pending queue, so every direct root must
   // already have its durable parent before the first possible conflict.
-  for (const member of survivors) {
+  const replayable = survivors.filter((member) => !member.cleanupResult);
+  for (const member of replayable) {
     validateLocal(record, context);
     const fresh = initContext(context, composeGit(), { inspection: true });
     const before = owned(participant(record, member.branch));
@@ -90,8 +111,8 @@ function replaySurvivors(
       const next = {
         ...record,
         replay: {
-          pending: survivors
-            .slice(survivors.indexOf(member))
+          pending: replayable
+            .slice(replayable.indexOf(member))
             .map((item) => item.branch),
           onto: fresh.engine.getRevision(before.parent),
         },
@@ -133,8 +154,8 @@ function replaySurvivors(
         persistContinuation(
           {
             branchesToSync: [],
-            branchesToRestack: survivors
-              .slice(survivors.indexOf(member) + 1)
+            branchesToRestack: replayable
+              .slice(replayable.indexOf(member) + 1)
               .map((item) => item.branch),
             rebasedBranchBase: result.rebasedBranchBase,
           },
@@ -166,7 +187,7 @@ function associatePrs(
   // Associate only already-existing participant PRs, so the existing footer builder
   // sees the complete surviving chain without submitting or creating any PR.
   for (const member of survivors) {
-    if (!member.number) continue;
+    if (!member.number || member.cleanupResult) continue;
     validateLocal(record, context);
     const fresh = initContext(context, composeGit(), { inspection: true });
     const expected = owned(participant(record, member.branch));
@@ -188,6 +209,7 @@ async function publishSurvivors(
   let record = initial;
   const survivors = landingSurvivors(record);
   for (const member of survivors) {
+    if (member.cleanupResult) continue;
     try {
       validateLocal(record, context);
       const expected = owned(participant(record, member.branch));

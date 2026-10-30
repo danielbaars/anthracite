@@ -2,7 +2,11 @@ import {
   landingRemoteIdentity,
   loadLandingProgress,
 } from '../lib/landing_progress';
-import { resumeLandLeaf, startLandLeaf, withLandingLock } from './land_leaf';
+import {
+  resumeScopedLanding,
+  startScopedLanding,
+  withLandingLock,
+} from './land_scoped';
 import fs from 'fs';
 import path from 'path';
 import { initContext, TContext } from '../lib/context';
@@ -109,9 +113,7 @@ export async function planLand(
     assertBranchesAvailableInWorktrees([context.engine.trunk, ...participants])
   );
   const remote = context.repoConfig.getRemote();
-  protect(() => {
-    landingRemoteIdentity(remote);
-  });
+  landingRemoteIdentity(remote, repo);
   const remoteRefs = gitRead([
     'ls-remote',
     '--heads',
@@ -343,7 +345,7 @@ export async function land(
       throw new ExitFailedError(
         'A different landing target is pending; original recovery preserved.'
       );
-    await resumeLandLeaf(pending, args, context);
+    await resumeScopedLanding(pending, args, context);
     return;
   }
   const plan = await planLand(target, context);
@@ -385,6 +387,6 @@ export async function land(
       throw new ExitFailedError(
         'Landing scope/readiness changed under lock; preview again. No changes made.'
       );
-    await startLandLeaf(locked, lockedContext, cacheLock);
+    await startScopedLanding(locked, lockedContext, cacheLock);
   });
 }

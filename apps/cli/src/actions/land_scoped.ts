@@ -1,7 +1,7 @@
+import { confirmedLandingResult as confirmedResult } from '../lib/landing_confirmation';
 import fs from 'fs';
 import path from 'path';
 import { releaseOwnedCacheLockFile } from '../lib/engine/owned_cache_lock';
-import { z } from 'zod';
 import { initContext, TContext } from '../lib/context';
 import { ExitFailedError } from '../lib/errors';
 import { getCacheLock } from '../lib/engine/cache_lock';
@@ -9,11 +9,10 @@ import { composeGit } from '../lib/git/git';
 import { inspectLandAncestry } from '../lib/git/land_inspection';
 import { withFrozenCommitGuard } from '../lib/git/frozen_commit';
 import { deleteLandedRemote } from '../lib/git/land_cleanup';
-import { getGithubPr, inspectionGithubRepo } from '../lib/api/github_pr';
+import { getGithubPr } from '../lib/api/github_pr';
 import {
   getGithubLandPolicy,
   githubLandReadiness,
-  readGithubLandApi,
 } from '../lib/api/github_land_policy';
 import {
   mergeGithubLandPr,
@@ -26,12 +25,14 @@ import {
   LandingProgress,
   landingGit as git,
   landingRemoteIdentity,
+  landingSurvivors,
   loadLandingProgress,
   saveLandingProgress,
 } from '../lib/landing_progress';
 import { LandPlan } from './land';
 import { maintainLandingSurvivors } from './land_maintenance';
 import { validateLocal } from './land_local';
+import { validateLandingIdentity as validateIdentity } from '../lib/landing_identity';
 
 const phaseOrder: LandingProgress['phase'][] = [
   'prepared',
@@ -108,14 +109,16 @@ function deadPid(pid: number): boolean {
   }
 }
 
-export async function startLandLeaf(
+export async function startScopedLanding(
   plan: LandPlan,
   context: TContext,
   cacheLock: NonNullable<LandingProgress['cacheLock']>
 ): Promise<void> {
   const member = plan.merges[0];
   if (!member.pr || (!member.remoteHead && !member.mergedResult))
-    throw new ExitFailedError('Leaf publication identity is unavailable.');
+    throw new ExitFailedError(
+      'Scoped landing publication identity is unavailable.'
+    );
   const record: LandingProgress = {
     owner: 'anthracite-landing',
     version: 1,
@@ -123,7 +126,7 @@ export async function startLandLeaf(
     gitDirectory: fs.realpathSync(git(['rev-parse', '--absolute-git-dir'])),
     repo: plan.repo,
     remote: context.repoConfig.getRemote(),
-    ...landingRemoteIdentity(context.repoConfig.getRemote()),
+    ...landingRemoteIdentity(context.repoConfig.getRemote(), plan.repo),
     target: plan.target,
     trunk: plan.trunk,
     trunkHead: plan.trunkHead,
@@ -144,6 +147,7 @@ export async function startLandLeaf(
       remoteHead:
         member.remoteHead ?? (member.mergedResult ? member.head : undefined),
       metadata: ref(`refs/branch-metadata/${member.branch}`),
+      cleanupResult: member.mergedResult,
       number: member.pr?.number,
       url: member.pr?.url,
     };
@@ -151,10 +155,10 @@ export async function startLandLeaf(
   validateIdentity(record, context);
   validateLocal(record, context);
   saveLandingProgress(record);
-  await applyLandLeaf(record, context);
+  await applyScopedLanding(record, context);
 }
 
-export async function resumeLandLeaf(
+export async function resumeScopedLanding(
   record: LandingProgress,
   args: { readonly 'dry-run': boolean; readonly yes: boolean },
   context: TContext
@@ -168,7 +172,7 @@ export async function resumeLandLeaf(
     }\nCleanup: ${record.target}; original project ${record.directory}\n`
   );
   if (args['dry-run']) {
-    await confirmedResult(record);
+    await previewPendingLanding(record, context);
     return;
   }
   if (!args.yes) {
@@ -191,11 +195,179 @@ export async function resumeLandLeaf(
       JSON.stringify(fresh) !== JSON.stringify({ ...record, cacheLock })
     )
       throw new ExitFailedError('Landing recovery changed; inspect again.');
-    await applyLandLeaf(fresh, context);
+    await applyScopedLanding(fresh, context);
   }, record);
 }
 
-async function applyLandLeaf(
+function printPendingLanding(record: LandingProgress): void {
+  const remaining = record.merges.slice(record.index ?? 0);
+  const survivors = landingSurvivors(record);
+  process.stdout.write(
+    `Remaining trunk maintenance: fast-forward ${record.trunk}; phase ${record.phase}.\n`
+  );
+  if (record.replay)
+    process.stdout.write(
+      `Local replay incomplete: ${record.replay.pending.join(
+        ', '
+      )}; resolve the owned local replay before remote work.\n`
+    );
+  for (const member of remaining)
+    process.stdout.write(
+      `${member.cleanupResult ? 'Cleanup-only' : 'Merge'}: ${member.branch} #${
+        member.number
+      }; reached head ${owned(member).head}; captured head ${member.head}\n`
+    );
+  for (const member of survivors) {
+    const expected = owned(member);
+    process.stdout.write(
+      `Maintain: ${member.branch}; parent ${expected.parent}; replay base ${
+        expected.base
+      }; reached head ${expected.head}${
+        member.cleanupResult
+          ? '; metadata only, already landed'
+          : '; verify required replay'
+      }\n`
+    );
+    if (!member.cleanupResult) {
+      process.stdout.write(
+        `Push: ${member.branch}; ${
+          expected.remoteHead
+            ? 'verify or update existing leased head'
+            : 'remain unpublished'
+        }\n`
+      );
+      process.stdout.write(
+        `PR update: ${member.branch}; ${
+          member.number
+            ? `verify existing #${member.number} base/dependency footer`
+            : 'no PR creation'
+        }\n`
+      );
+    }
+  }
+  process.stdout.write(
+    `Cleanup: ${remaining
+      .map((member) => member.branch)
+      .join(
+        ', '
+      )}; verify merged results and leased remote/local deletion; restore ${
+      record.checkout
+    }.\n`
+  );
+}
+
+/** Inspect the captured remaining scope through the same identity/readiness adapters. */
+async function previewPendingLanding(
+  record: LandingProgress,
+  context: TContext
+): Promise<void> {
+  const blockers: string[] = [];
+  const inspect = async (action: () => void | Promise<void>): Promise<void> => {
+    try {
+      await action();
+    } catch (error: unknown) {
+      blockers.push(error instanceof Error ? error.message : String(error));
+    }
+  };
+  const remaining = record.merges.slice(record.index ?? 0);
+  const survivors = landingSurvivors(record);
+  printPendingLanding(record);
+  await inspect(() => validateLocal(record, context));
+  await inspect(() => {
+    const trunk = remoteHead(record, record.trunk);
+    if (
+      !trunk ||
+      !inspectLandAncestry(ref(`refs/heads/${record.trunk}`), trunk, {
+        name: record.remote,
+        trunk: record.trunk,
+      })
+    )
+      throw new ExitFailedError(
+        'Remote trunk unavailable or local trunk divergent; fast-forward required.'
+      );
+  });
+  const policy = await getGithubLandPolicy(record.repo, record.trunk);
+  blockers.push(...policy.blockers);
+  const fresh = initContext(context, composeGit(), { inspection: true });
+  const participants = [current(record), ...survivors];
+  for (const member of participants)
+    await inspect(async () => {
+      const expected = owned(member);
+      const published = remoteHead(record, member.branch);
+      const isMerge = remaining.some((item) => item.branch === member.branch);
+      const pr = await getGithubPr(member.branch, fresh);
+      if (isMerge && !pr)
+        throw new ExitFailedError(`${member.branch}: Missing pull request.`);
+      if (pr && (pr.number !== member.number || pr.url !== member.url))
+        throw new ExitFailedError(
+          `${member.branch}: Fresh PR identity changed.`
+        );
+      if (pr?.state === 'MERGED' && isMerge) {
+        const index = record.merges.findIndex(
+          (item) => item.branch === member.branch
+        );
+        const result = await confirmedResult({ ...record, index });
+        const captured =
+          member.cleanupResult ??
+          member.result ??
+          (index === (record.index ?? 0) ? record.result : undefined);
+        if (!result || (captured && captured !== result))
+          throw new ExitFailedError(
+            `${member.branch}: Merged result changed or unconfirmed.`
+          );
+        if (published && published !== expected.remoteHead)
+          throw new ExitFailedError(
+            `${member.branch}: Remote cleanup lease changed.`
+          );
+        process.stdout.write(
+          `Confirmed cleanup-only: ${member.branch}; result ${result}.\n`
+        );
+        return;
+      }
+      if (member.cleanupResult)
+        throw new ExitFailedError(
+          `${member.branch}: Cleanup-only merged identity changed.`
+        );
+      if (published !== expected.remoteHead && published !== expected.head)
+        throw new ExitFailedError(
+          `${member.branch}: Remote head changed outside saved progress.`
+        );
+      if (!expected.remoteHead && published)
+        throw new ExitFailedError(
+          `${member.branch}: Previously unpublished branch was published externally.`
+        );
+      if (
+        pr &&
+        (pr.state !== 'OPEN' ||
+          pr.headRefOid !== published ||
+          (pr.baseRefName !== expected.parent &&
+            pr.baseRefName !== member.parent))
+      )
+        throw new ExitFailedError(
+          `${member.branch}: Fresh PR state/head/base differs from saved publication.`
+        );
+      if (isMerge && pr) {
+        const readiness = await githubLandReadiness(pr, policy, record.repo);
+        blockers.push(
+          ...readiness.map((message) => `${member.branch}: ${message}`)
+        );
+        if (published !== expected.head)
+          blockers.push(
+            `${member.branch}: Readiness for the reached local head is unknown until its mandatory push and fresh checks.`
+          );
+      }
+    });
+  for (const blocker of blockers) process.stdout.write(`BLOCKED: ${blocker}\n`);
+  if (blockers.length)
+    throw new ExitFailedError(
+      'Pending landing preview blocked; recovery and repository preserved.'
+    );
+  process.stdout.write(
+    'Readiness: READY for remaining disclosed work; revalidation required before every effect.\n'
+  );
+}
+
+async function applyScopedLanding(
   initial: LandingProgress,
   context: TContext
 ): Promise<void> {
@@ -404,19 +576,6 @@ function advanceTrunk(record: LandingProgress, context: TContext): void {
     throw new ExitFailedError('Trunk fast-forward was not confirmed.');
 }
 
-function validateIdentity(record: LandingProgress, context: TContext): void {
-  const identity = landingRemoteIdentity(context.repoConfig.getRemote());
-  if (
-    inspectionGithubRepo(context) !== record.repo ||
-    context.engine.trunk !== record.trunk ||
-    context.repoConfig.getRemote() !== record.remote ||
-    identity.remoteUrlHash !== record.remoteUrlHash ||
-    identity.pushUrlHash !== record.pushUrlHash
-  )
-    throw new ExitFailedError(
-      'Landing repository/trunk/remote identity changed or split fetch/push remotes; recovery preserved.'
-    );
-}
 async function readyToMerge(
   record: LandingProgress,
   context: TContext
@@ -451,66 +610,6 @@ async function readyToMerge(
   const blockers = await githubLandReadiness(pr, policy, record.repo);
   if (blockers.length)
     throw new ExitFailedError(`Fresh readiness blocked: ${blockers.join(' ')}`);
-}
-async function confirmedResult(
-  record: LandingProgress
-): Promise<string | undefined> {
-  const pr = z
-    .object({
-      number: z.number(),
-      merged: z.boolean(),
-      state: z.string().optional(),
-      merge_commit_sha: z
-        .string()
-        .regex(/^[a-f0-9]{40}$/)
-        .nullable(),
-      head: z.object({
-        ref: z.string(),
-        sha: z.string(),
-        repo: z.object({ full_name: z.string() }),
-      }),
-      base: z.object({
-        ref: z.string(),
-        repo: z.object({ full_name: z.string() }),
-      }),
-    })
-    .parse(
-      await readGithubLandApi(
-        `repos/${record.repo}/pulls/${current(record).number}`
-      )
-    );
-  const member = current(record);
-  if (
-    pr.number !== member.number ||
-    pr.head.ref !== member.branch ||
-    pr.head.sha !== owned(member).head ||
-    pr.head.repo.full_name.toLowerCase() !== record.repo.toLowerCase() ||
-    pr.base.ref !== record.trunk ||
-    pr.base.repo.full_name.toLowerCase() !== record.repo.toLowerCase()
-  )
-    throw new ExitFailedError(
-      'Merged PR identity does not match original target/head/repository.'
-    );
-  if (!pr.merged) {
-    if (pr.state !== 'open')
-      throw new ExitFailedError(
-        'PR is closed-unmerged or its state is unavailable.'
-      );
-    return undefined;
-  }
-  const trunk = remoteHead(record, record.trunk);
-  if (
-    !pr.merge_commit_sha ||
-    !trunk ||
-    !inspectLandAncestry(pr.merge_commit_sha, trunk, {
-      name: record.remote,
-      trunk: record.trunk,
-    })
-  )
-    throw new ExitFailedError(
-      'Merged result is not confirmed in remote trunk.'
-    );
-  return pr.merge_commit_sha;
 }
 function remoteHead(
   record: LandingProgress,

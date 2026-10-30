@@ -133,13 +133,22 @@ export function recordLandingReplayCompletion(
   };
   const replace = (item: typeof member): typeof member =>
     item.branch === branch ? { ...item, reached } : item;
+  const continuationUnchanged =
+    record.replay.continuation !== undefined &&
+    record.replay.continuation === landingContinuationDigest();
   const pending = record.replay.pending.slice(1);
   saveLandingProgress(
     {
       ...record,
       merges: record.merges.map(replace),
       maintenance: record.maintenance.map(replace),
-      replay: pending.length
+      continuationCleanup:
+        !pending.length && continuationUnchanged
+          ? record.replay.continuation
+          : undefined,
+      replay: !continuationUnchanged
+        ? record.replay
+        : pending.length
         ? {
             pending,
             ready:
@@ -155,6 +164,10 @@ export function recordLandingReplayCompletion(
     },
     record
   );
+  if (!continuationUnchanged)
+    throw new ExitFailedError(
+      'Landing continuation changed during local replay; reached refs and both recovery records preserved. Inspect the original project before recovery.'
+    );
 }
 
 /** A completed replay durably proves the next queue has not started. */
@@ -236,4 +249,34 @@ export function recordLandingContinuation(): void {
     },
     record
   );
+}
+
+/** Landing owns only absence before first publication, or its exact saved bytes. */
+export function assertLandingContinuationWritable(): void {
+  const record = loadLandingProgress();
+  if (!record?.replay) return;
+  const file = path.resolve(git(['rev-parse', '--git-path', '.gtcontinue']));
+  if (
+    record.replay.continuation
+      ? record.replay.continuation !== landingContinuationDigest()
+      : fs.lstatSync(file, { throwIfNoEntry: false }) !== undefined
+  )
+    throw new ExitFailedError(
+      'Landing continuation publication refused; foreign, missing or changed continuation and active Git replay preserved.'
+    );
+}
+
+export function finishLandingContinuation(context: TContext): void {
+  const record = loadLandingProgress();
+  if (!record) return;
+  if (
+    record.replay ||
+    !record.continuationCleanup ||
+    record.continuationCleanup !== landingContinuationDigest()
+  )
+    throw new ExitFailedError(
+      'Landing continuation completion refused; local replay or changed continuation and both recovery records preserved.'
+    );
+  context.continueConfig.delete();
+  saveLandingProgress({ ...record, continuationCleanup: undefined }, record);
 }

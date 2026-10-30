@@ -28,6 +28,7 @@ const member = z
       .strict()
       .optional(),
     result: oid.optional(),
+    cleanupResult: oid.optional(),
   })
   .strict();
 const schema = z
@@ -54,6 +55,10 @@ const schema = z
     merges: z.array(member).min(1),
     maintenance: z.array(member),
     index: z.number().int().nonnegative().optional(),
+    continuationCleanup: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .optional(),
     replay: z
       .object({
         pending: z.array(branch).min(1),
@@ -87,10 +92,48 @@ export function landingGit(args: string[]): string {
   return runGitCommand({ args, onError: 'throw', resource: 'landing' });
 }
 /** Keep credentials out of durable recovery while detecting endpoint changes. */
-export function landingRemoteIdentity(remote: string): {
+export function landingRemoteIdentity(
+  remote: string,
+  repo: string
+): {
   readonly remoteUrlHash: string;
   readonly pushUrlHash: string;
 } {
+  const declared = (key: string): string[] =>
+    runGitCommand({
+      args: ['config', '--get-all', key],
+      onError: 'ignore',
+      resource: 'landingRemoteIdentity',
+    })
+      .split('\n')
+      .filter(Boolean);
+  const fetchUrls = declared(`remote.${remote}.url`);
+  const pushUrls = declared(`remote.${remote}.pushurl`);
+  // Validate declarations before transport resolution; Git/SSH routing remains
+  // the user's trusted configuration, not proof of the actual server endpoint.
+  const githubRepo = (url: string): string | undefined => {
+    const match =
+      /^(?:https:\/\/github\.com\/|git@github\.com:|ssh:\/\/git@github\.com\/)([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+?)(?:\.git)?$/i.exec(
+        url
+      );
+    return match &&
+      !['.', '..'].includes(match[1]) &&
+      !['.', '..'].includes(match[2])
+      ? `${match[1]}/${match[2]}`.toLowerCase()
+      : undefined;
+  };
+  if (fetchUrls.length !== 1 || pushUrls.length > 1)
+    throw new ExitFailedError(
+      'Landing requires one matching fetch/push remote endpoint. No credentials are recorded.'
+    );
+  if (
+    [...fetchUrls, ...pushUrls].some(
+      (url) => githubRepo(url) !== repo.toLowerCase()
+    )
+  )
+    throw new ExitFailedError(
+      'Landing requires a supported declared GitHub remote matching the configured repository (HTTPS, git@github.com or ssh://git@github.com). No credentials are recorded.'
+    );
   const fetch = landingGit(['remote', 'get-url', '--all', remote]);
   const push = landingGit(['remote', 'get-url', '--push', '--all', remote]);
   if (!fetch || fetch.includes('\n') || fetch !== push)
@@ -100,6 +143,16 @@ export function landingRemoteIdentity(remote: string): {
   const digest = (url: string): string =>
     createHash('sha256').update(url).digest('hex');
   return { remoteUrlHash: digest(fetch), pushUrlHash: digest(push) };
+}
+export function assertLandingRemoteIdentity(record: LandingProgress): void {
+  const identity = landingRemoteIdentity(record.remote, record.repo);
+  if (
+    identity.remoteUrlHash !== record.remoteUrlHash ||
+    identity.pushUrlHash !== record.pushUrlHash
+  )
+    throw new ExitFailedError(
+      'Landing remote endpoint changed; recovery preserved.'
+    );
 }
 export function landingProgressPath(): string {
   return path.join(
@@ -122,7 +175,9 @@ export function loadLandingProgress(): LandingProgress | undefined {
     const record = schema.parse(JSON.parse(fs.readFileSync(file, 'utf8')));
     const first = record.merges[0];
     const participants = [...record.merges, ...record.maintenance];
-    const survivors = landingSurvivors(record).map((item) => item.branch);
+    const survivors = landingSurvivors(record)
+      .filter((item) => !item.cleanupResult)
+      .map((item) => item.branch);
     const pending = record.replay?.pending;
     if (
       (record.replay?.ready &&

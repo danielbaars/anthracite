@@ -1,3 +1,4 @@
+import { githubProcessOptions, githubFailureKind } from './github_process';
 import { execFile } from 'child_process';
 import { z } from 'zod';
 import { ExitFailedError } from '../errors';
@@ -46,32 +47,16 @@ async function runReviewApi(
         `Accept: ${options.accept ?? 'application/vnd.github+json'}`,
         ...(options.payload === undefined ? [] : ['--input', '-']),
       ],
-      {
-        env: {
-          ...process.env,
-          GH_HOST: 'github.com',
-          GH_PROMPT_DISABLED: '1',
-          GH_PAGER: '',
-          PAGER: '',
-        },
-        maxBuffer: 16 * 1024 * 1024,
-      },
+      githubProcessOptions(),
       (error, stdout, stderr) => {
         if (error) {
-          const kind =
-            error.code === 'ENOENT'
-              ? 'GitHub CLI is missing'
-              : /rate.?limit|HTTP 429/i.test(stderr)
-              ? 'GitHub rate limit exceeded'
-              : /auth|login|HTTP 401|HTTP 403|permission|forbidden/i.test(
-                  stderr
-                )
-              ? 'GitHub authentication or permission failure'
-              : /network|connect|timeout|timed out|resolve host|TLS/i.test(
-                  stderr
-                )
-              ? 'GitHub network failure'
-              : 'GitHub request failed';
+          const kind = {
+            missing: 'GitHub CLI is missing',
+            'rate-limit': 'GitHub rate limit exceeded',
+            authentication: 'GitHub authentication or permission failure',
+            network: 'GitHub network failure',
+            request: 'GitHub request failed',
+          }[githubFailureKind({ code: error.code, stderr })];
           reject(
             new ExitFailedError(
               `${kind}${stderr.trim() ? `: ${stderr.trim()}` : '.'}`

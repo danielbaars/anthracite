@@ -1,3 +1,7 @@
+import {
+  assertLandingRemoteIdentity,
+  loadLandingProgress,
+} from '../lib/landing_progress';
 import fs from 'fs';
 import { runGitHook } from '../lib/git/run_hook';
 import yargs from 'yargs';
@@ -45,6 +49,8 @@ export const handler = (
   }
   try {
     assertBranchEditable(args.branch);
+    const landing = loadLandingProgress();
+    if (landing) assertLandingRemoteIdentity(landing);
   } catch (error: unknown) {
     process.stderr.write(
       `ERROR: ${error instanceof Error ? error.message : String(error)}\n`

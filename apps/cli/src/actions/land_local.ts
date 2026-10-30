@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { validateLandingIdentity } from '../lib/landing_identity';
 import path from 'path';
 import { TContext, initContext } from '../lib/context';
 import { ExitFailedError } from '../lib/errors';
@@ -18,6 +19,7 @@ export function validateLocal(
   context: TContext,
   ownedReplayQueue = false
 ): void {
+  validateLandingIdentity(record, context);
   assertNoGitOperation('land');
   if (record.replay && !ownedReplayQueue)
     throw new ExitFailedError(

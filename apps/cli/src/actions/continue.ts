@@ -1,3 +1,4 @@
+import { finishLandingContinuation } from './land_replay';
 import { validateLocal } from './land_local';
 import { loadLandingProgress } from '../lib/landing_progress';
 import chalk from 'chalk';
@@ -163,8 +164,8 @@ function finishContinuation(context: TContext, landingReplay: boolean): void {
     throw new ExitFailedError(
       'Landing local replay queue remains incomplete. Recovery preserved; inspect the original project before resuming land.'
     );
-  clearContinuation(context);
-  if (landingReplay) context.continueConfig.delete();
+  if (landingReplay) finishLandingContinuation(context);
+  else clearContinuation(context);
 }
 
 function resumeLandingLocalQueue(context: TContext): boolean {

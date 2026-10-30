@@ -1,3 +1,4 @@
+import { githubProcessOptions, githubFailureKind } from './github_process';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
 import { z } from 'zod';
@@ -66,38 +67,17 @@ export async function runGithubPrCommand(
     const result = await execFileAsync(
       'gh',
       [...args, '--repo', `github.com/${repo}`],
-      {
-        env: {
-          ...process.env,
-          GH_HOST: 'github.com',
-          GH_PROMPT_DISABLED: '1',
-          GH_PAGER: '',
-          PAGER: '',
-        },
-        maxBuffer: 16 * 1024 * 1024,
-      }
+      githubProcessOptions()
     );
     return result.stdout;
   } catch (error: unknown) {
-    const failure = z
-      .object({
-        code: z.union([z.string(), z.number()]).optional(),
-        stderr: z.string().optional(),
-      })
-      .safeParse(error);
-    const detail = failure.success ? failure.data.stderr ?? '' : '';
-    const kind =
-      failure.success && failure.data.code === 'ENOENT'
-        ? 'GitHub CLI is missing'
-        : /rate.?limit|HTTP 429/i.test(detail)
-        ? 'GitHub rate limit exceeded'
-        : /auth|login|HTTP 401|HTTP 403|permission|forbidden|not accessible/i.test(
-            detail
-          )
-        ? 'GitHub authentication or permission failure'
-        : /network|connect|timeout|timed out|resolve host|TLS/i.test(detail)
-        ? 'GitHub network failure'
-        : 'GitHub request failed';
+    const kind = {
+      missing: 'GitHub CLI is missing',
+      'rate-limit': 'GitHub rate limit exceeded',
+      authentication: 'GitHub authentication or permission failure',
+      network: 'GitHub network failure',
+      request: 'GitHub request failed',
+    }[githubFailureKind(error)];
     throw new ExitFailedError(`${kind}; PR information is unavailable.`);
   }
 }
