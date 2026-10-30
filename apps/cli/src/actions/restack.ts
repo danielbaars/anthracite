@@ -1,3 +1,4 @@
+import { recordLandingReplayCompletion } from './land_replay';
 import chalk from 'chalk';
 import { recordAbsorbCompletion } from './absorb_recovery';
 import { TContext } from '../lib/context';
@@ -192,6 +193,7 @@ export function recordRestackCompletion(
   branch: string,
   context: TContext
 ): void {
+  recordLandingReplayCompletion(branch, context);
   recordAbsorbCompletion(branch, context);
   recordFileSplitCompletion(branch, context);
   recordDeleteCompletion(branch, context);

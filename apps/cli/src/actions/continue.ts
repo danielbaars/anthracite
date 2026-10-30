@@ -1,3 +1,4 @@
+import { loadLandingProgress } from '../lib/landing_progress';
 import chalk from 'chalk';
 import { continueAbsorb } from './absorb_apply';
 import { TContext } from '../lib/context';
@@ -152,5 +153,10 @@ export async function continueAction(
     throw error;
   }
   finishReorder(context);
+  finishContinuation(context, loadLandingProgress() !== undefined);
+}
+
+function finishContinuation(context: TContext, landingReplay: boolean): void {
   clearContinuation(context);
+  if (landingReplay) context.continueConfig.delete();
 }

@@ -35,7 +35,7 @@ export function prepareLand(fixture: RelationCliFixture): PrFixture & {
     `#!${process.execPath}\n${fs.readFileSync(
       path.join(__dirname, 'land_gh_boundary.js'),
       'utf8'
-    )}\nif (args[0] !== 'api') {\n${original.slice(
+    )}\nif (args[0] !== 'api' && args[1] !== 'edit') {\n${original.slice(
       original.indexOf('\n') + 1
     )}\n}`,
     { mode: 0o755 }

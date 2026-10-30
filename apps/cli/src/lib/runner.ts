@@ -1,3 +1,4 @@
+import { allowLandingContinuation } from '../actions/land_replay';
 // Why does an open source CLI include telemetry?
 // We the creators want to understand how people are using the tool
 // All metrics logged are listed plain to see, and are non blocking in case the server is unavailable.
@@ -138,7 +139,10 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
-    if (handler.repo && !isZeroDepthLog) assertNoPendingLanding();
+    const landingContinuation =
+      canonicalName === 'continue' && allowLandingContinuation();
+    if (handler.repo && !isZeroDepthLog && !landingContinuation)
+      assertNoPendingLanding();
     if (canonicalName === 'continue') assertAbsorbContinuationEnvironment();
     const continueData =
       canonicalName === 'continue'
@@ -210,7 +214,8 @@ async function graphiteInternal(
             .graphiteInitialized();
         const context = initContext(contextLite, git, {
           ...args,
-          inspection: isZeroDepthLog || absorbContinuation,
+          inspection:
+            isZeroDepthLog || absorbContinuation || landingContinuation,
           preserveMetadata:
             preserveStructuralMetadata ||
             (canonicalName === 'reorder' && args.stack === true),

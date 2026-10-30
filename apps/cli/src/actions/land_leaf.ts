@@ -1,12 +1,9 @@
 import fs from 'fs';
-import path from 'path';
 import { z } from 'zod';
 import { initContext, TContext } from '../lib/context';
 import { ExitFailedError } from '../lib/errors';
 import { getCacheLock } from '../lib/engine/cache_lock';
 import { composeGit } from '../lib/git/git';
-import { assertNoGitOperation } from '../lib/git/assert_no_operation';
-import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { inspectLandAncestry } from '../lib/git/land_inspection';
 import { withFrozenCommitGuard } from '../lib/git/frozen_commit';
 import { deleteLandedRemote } from '../lib/git/land_cleanup';
@@ -18,6 +15,8 @@ import {
 } from '../lib/api/github_land_policy';
 import { mergeGithubLandPr } from '../lib/api/github_land_merge';
 import {
+  current,
+  owned,
   clearLandingProgress,
   LandingProgress,
   landingGit as git,
@@ -26,6 +25,8 @@ import {
   saveLandingProgress,
 } from '../lib/landing_progress';
 import { LandPlan } from './land';
+import { maintainLandingSurvivors } from './land_maintenance';
+import { validateLocal } from './land_local';
 
 const phaseOrder: LandingProgress['phase'][] = [
   'prepared',
@@ -80,21 +81,25 @@ export async function startLandLeaf(
     trunk: plan.trunk,
     trunkHead: plan.trunkHead,
     checkout: plan.checkout,
-    merges: [
-      {
-        branch: member.branch,
-        parent: member.parent,
-        base: member.base,
-        head: member.head,
-        remoteHead: member.remoteHead ?? member.head,
-        metadata: ref(`refs/branch-metadata/${member.branch}`),
-        number: member.pr.number,
-        url: member.pr.url,
-      },
-    ],
-    maintenance: [],
+    merges: plan.merges.map(capture),
+    maintenance: plan.maintenance.map(capture),
     phase: 'prepared',
   };
+  function capture(
+    member: LandPlan['merges'][number]
+  ): LandingProgress['merges'][number] {
+    return {
+      branch: member.branch,
+      parent: member.parent,
+      base: member.base,
+      head: member.head,
+      remoteHead:
+        member.remoteHead ?? (member.mergedResult ? member.head : undefined),
+      metadata: ref(`refs/branch-metadata/${member.branch}`),
+      number: member.pr?.number,
+      url: member.pr?.url,
+    };
+  }
   validateIdentity(record, context);
   validateLocal(record, context);
   saveLandingProgress(record);
@@ -108,7 +113,11 @@ export async function resumeLandLeaf(
 ): Promise<void> {
   validateIdentity(record, context);
   process.stdout.write(
-    `Pending landing: ${record.repo} trunk ${record.trunk} target ${record.target}; phase ${record.phase}.\nMerge: #${record.merges[0].number} head ${record.merges[0].head}\nCleanup: ${record.target}; original project ${record.directory}\n`
+    `Pending landing: ${record.repo} trunk ${record.trunk} target ${
+      record.target
+    }; phase ${record.phase}.\nMerge: #${current(record).number} head ${
+      owned(current(record)).head
+    }\nCleanup: ${record.target}; original project ${record.directory}\n`
   );
   if (args['dry-run']) {
     await confirmedResult(record);
@@ -154,81 +163,81 @@ async function applyLandLeaf(
   try {
     validateIdentity(record, context);
     validateLocal(record, context);
-    let result = await confirmedResult(record);
-    if (!result) {
-      if (record.phase !== 'prepared')
-        throw new ExitFailedError(
-          'Merge remains uncertain or unconfirmed. No merge is repeated; inspect GitHub and recovery.'
-        );
-      stage = 'merge request';
-      await readyToMerge(record, context);
-      advance({ phase: 'merge-requested' });
-      let response: string;
-      try {
-        response = await mergeGithubLandPr(
-          record.repo,
-          record.merges[0].number,
-          record.merges[0].head
-        );
-      } catch (error: unknown) {
-        const reconciled = await confirmedResult(record);
-        if (reconciled) {
-          advance({ phase: 'merged', result: reconciled });
-          process.stdout.write(
-            `Confirmed merged #${record.merges[0].number} after uncertain response: ${reconciled}.\n`
+    while ((record.index ?? 0) < record.merges.length) {
+      let result = await confirmedResult(record);
+      if (!result) {
+        if (record.phase !== 'prepared')
+          throw new ExitFailedError(
+            'Merge remains uncertain or unconfirmed. No merge is repeated; inspect GitHub and recovery.'
           );
+        stage = 'merge request';
+        await readyToMerge(record, context);
+        advance({ phase: 'merge-requested' });
+        let response: string;
+        try {
+          response = await mergeGithubLandPr(
+            record.repo,
+            current(record).number,
+            owned(current(record)).head
+          );
+        } catch (error: unknown) {
+          const reconciled = await confirmedResult(record);
+          if (reconciled) {
+            advance({ phase: 'merged', result: reconciled });
+            process.stdout.write(
+              `Confirmed merged #${
+                current(record).number
+              } after uncertain response: ${reconciled}.\n`
+            );
+          }
+          throw error;
         }
-        throw error;
+        result = await confirmedResult(record);
+        if (result) advance({ result, phase: 'merged' });
+        if (!result || result !== response)
+          throw new ExitFailedError(
+            'Merge response/result agreement is unconfirmed; later maintenance unattempted.'
+          );
       }
-      result = await confirmedResult(record);
-      if (result) advance({ result, phase: 'merged' });
-      if (!result || result !== response)
+      if (record.result && record.result !== result)
         throw new ExitFailedError(
-          'Merge response/result agreement is unconfirmed; later maintenance unattempted.'
+          'Saved merge result changed; inspect recovery.'
         );
+      advance({ result, phase: 'merged' });
+      process.stdout.write(
+        `Confirmed merged #${current(record).number}: ${result}.\n`
+      );
+      stage = 'trunk advance';
+      advanceTrunk(record, context);
+      advance({ phase: 'trunk-advanced' });
+      stage = 'survivor maintenance';
+      record = await maintainLandingSurvivors(record, context);
+      stage = 'remote cleanup';
+      validateLocal(record, context);
+      const published = remoteHead(record, current(record).branch);
+      if (published && published !== owned(current(record)).remoteHead)
+        throw new ExitFailedError(
+          'Remote branch changed; preserved, explicit captured-OID lease refused cleanup.'
+        );
+      if (published && !owned(current(record)).remoteHead)
+        throw new ExitFailedError('Captured remote lease unavailable.');
+      if (published)
+        deleteLandedRemote(
+          record.remote,
+          current(record).branch,
+          owned(current(record)).remoteHead ?? current(record).head
+        );
+      if (remoteHead(record, current(record).branch))
+        throw new ExitFailedError(
+          'Remote deletion is unconfirmed or branch was recreated; preserved.'
+        );
+      advance({ phase: 'remote-deleted' });
+      stage = 'local cleanup';
+      deleteLocal(record, context);
+      advance({ phase: 'local-deleted' });
+      if ((record.index ?? 0) + 1 >= record.merges.length) break;
+      record = nextMerge(record, result);
     }
-    if (record.result && record.result !== result)
-      throw new ExitFailedError(
-        'Saved merge result changed; inspect recovery.'
-      );
-    advance({ result, phase: 'merged' });
-    process.stdout.write(
-      `Confirmed merged #${record.merges[0].number}: ${result}.\n`
-    );
-    stage = 'trunk advance';
-    advanceTrunk(record, context);
-    advance({ phase: 'trunk-advanced' });
-    stage = 'remote cleanup';
-    validateLocal(record, context);
-    const published = remoteHead(record, record.target);
-    if (published && published !== record.merges[0].remoteHead)
-      throw new ExitFailedError(
-        'Remote branch changed; preserved, explicit captured-OID lease refused cleanup.'
-      );
-    if (published)
-      deleteLandedRemote(
-        record.remote,
-        record.target,
-        record.merges[0].remoteHead
-      );
-    if (remoteHead(record, record.target))
-      throw new ExitFailedError(
-        'Remote deletion is unconfirmed or branch was recreated; preserved.'
-      );
-    advance({ phase: 'remote-deleted' });
-    stage = 'local cleanup';
-    validateLocal(record, context);
-    if (ref(`refs/heads/${record.target}`))
-      context.engine.deleteLandedLeaf(record.target, {
-        head: record.merges[0].head,
-        metadata: record.merges[0].metadata,
-      });
-    if (
-      ref(`refs/heads/${record.target}`) ||
-      ref(`refs/branch-metadata/${record.target}`)
-    )
-      throw new ExitFailedError('Local cleanup is incomplete.');
-    advance({ phase: 'local-deleted' });
     stage = 'checkout restoration';
     restoreCheckout(record, context);
     advance({ phase: 'checkout-restored' });
@@ -238,9 +247,14 @@ async function applyLandLeaf(
     );
   } catch (error: unknown) {
     throw new ExitFailedError(
-      `Landing incomplete at ${stage}. ${
+      `Landing incomplete at ${stage}. ${record.merges
+        .filter((member) => member.result)
+        .map(
+          (member) => `Confirmed merged #${member.number} (${member.result}); `
+        )
+        .join('')}${
         record.result
-          ? `Confirmed merged #${record.merges[0].number} (${record.result});`
+          ? `Confirmed merged #${current(record).number} (${record.result});`
           : 'Merge unconfirmed or uncertain;'
       } later work unattempted. ${
         error instanceof Error ? error.message : String(error)
@@ -260,9 +274,12 @@ function restoreCheckout(record: LandingProgress, context: TContext): void {
     throw new ExitFailedError('Checkout restoration is unconfirmed.');
   validateLocal(record, context);
   if (
-    ref(`refs/heads/${record.target}`) ||
-    ref(`refs/branch-metadata/${record.target}`) ||
-    remoteHead(record, record.target)
+    record.merges.some(
+      (member) =>
+        ref(`refs/heads/${member.branch}`) ||
+        ref(`refs/branch-metadata/${member.branch}`) ||
+        remoteHead(record, member.branch)
+    )
   )
     throw new ExitFailedError(
       'A landed ref was recreated during cleanup; preserved for inspection.'
@@ -338,62 +355,21 @@ function validateIdentity(record: LandingProgress, context: TContext): void {
       'Landing repository/trunk/remote identity changed or split fetch/push remotes; recovery preserved.'
     );
 }
-function validateLocal(record: LandingProgress, context: TContext): void {
-  assertNoGitOperation('land');
-  if (!composeGit().getCurrentBranchName())
-    throw new ExitFailedError(
-      'Landing requires a physically checked-out branch.'
-    );
-  if (
-    fs.existsSync(path.resolve(git(['rev-parse', '--git-path', '.gtcontinue'])))
-  )
-    throw new ExitFailedError('Saved unrelated recovery exists; preserved.');
-  if (git(['status', '--porcelain=v1', '--untracked-files=normal']))
-    throw new ExitFailedError(
-      'Clean index/worktree required, including untracked files.'
-    );
-  const engine = initContext(context, composeGit(), {
-    inspection: true,
-  }).engine;
-  engine.assertBranchEditable(record.trunk);
-  const head = ref(`refs/heads/${record.target}`);
-  const metadata = ref(`refs/branch-metadata/${record.target}`);
-  if (head || metadata) {
-    if (
-      head !== record.merges[0].head ||
-      metadata !== record.merges[0].metadata
-    )
-      throw new ExitFailedError(
-        'Local target or metadata changed; recovery preserved.'
-      );
-    engine.assertBranchEditable(record.target);
-    if (
-      engine.getParentPrecondition(record.target) !== record.trunk ||
-      engine.getChildrenPrecondition(record.target).length
-    )
-      throw new ExitFailedError(
-        'Landing scope changed; no undisclosed descendants may be edited.'
-      );
-  } else if (record.phase === 'prepared')
-    throw new ExitFailedError(
-      'Original landing target disappeared before merge; inspect recovery.'
-    );
-  assertBranchesAvailableInWorktrees([record.trunk, record.target]);
-}
 async function readyToMerge(
   record: LandingProgress,
   context: TContext
 ): Promise<void> {
   const policy = await getGithubLandPolicy(record.repo, record.trunk);
-  const pr = await getGithubPr(record.target, context);
+  const pr = await getGithubPr(current(record).branch, context);
   validateLocal(record, context);
   if (
     !pr ||
-    pr.number !== record.merges[0].number ||
-    pr.url !== record.merges[0].url ||
-    pr.headRefOid !== record.merges[0].head ||
+    pr.number !== current(record).number ||
+    pr.url !== current(record).url ||
+    pr.headRefOid !== owned(current(record)).head ||
     pr.baseRefName !== record.trunk ||
-    remoteHead(record, record.target) !== record.merges[0].remoteHead
+    remoteHead(record, current(record).branch) !==
+      owned(current(record)).remoteHead
   )
     throw new ExitFailedError(
       'Fresh merge identity/base/head or remote lease changed.'
@@ -438,14 +414,14 @@ async function confirmedResult(
     })
     .parse(
       await readGithubLandApi(
-        `repos/${record.repo}/pulls/${record.merges[0].number}`
+        `repos/${record.repo}/pulls/${current(record).number}`
       )
     );
-  const member = record.merges[0];
+  const member = current(record);
   if (
     pr.number !== member.number ||
     pr.head.ref !== member.branch ||
-    pr.head.sha !== member.head ||
+    pr.head.sha !== owned(member).head ||
     pr.head.repo.full_name.toLowerCase() !== record.repo.toLowerCase() ||
     pr.base.ref !== record.trunk ||
     pr.base.repo.full_name.toLowerCase() !== record.repo.toLowerCase()
@@ -487,4 +463,34 @@ function remoteHead(
 function ref(name: string): string {
   const output = git(['for-each-ref', '--format=%(objectname)', name]);
   return output.split('\n')[0] || '';
+}
+
+function deleteLocal(record: LandingProgress, context: TContext): void {
+  validateLocal(record, context);
+  if (ref(`refs/heads/${current(record).branch}`))
+    initContext(context, composeGit(), {
+      inspection: true,
+    }).engine.deleteLandedLeaf(current(record).branch, {
+      head: owned(current(record)).head,
+      metadata: owned(current(record)).metadata,
+    });
+  if (
+    ref(`refs/heads/${current(record).branch}`) ||
+    ref(`refs/branch-metadata/${current(record).branch}`)
+  )
+    throw new ExitFailedError('Local cleanup is incomplete.');
+}
+
+function nextMerge(record: LandingProgress, result: string): LandingProgress {
+  const next = {
+    ...record,
+    index: (record.index ?? 0) + 1,
+    phase: 'prepared' as const,
+    result: undefined,
+    merges: record.merges.map((member, index) =>
+      index === (record.index ?? 0) ? { ...member, result } : member
+    ),
+  };
+  saveLandingProgress(next, record);
+  return next;
 }
