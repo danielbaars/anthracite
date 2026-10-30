@@ -54,6 +54,10 @@ The original [Standards review](evidence/pr-review-stack-landing-2026-10-30/revi
 
 Final [Standards](evidence/pr-review-stack-landing-2026-10-30/reviews/review-standards-final-confirmation.md) and [Spec](evidence/pr-review-stack-landing-2026-10-30/reviews/review-spec-final-confirmation.md) confirmations report no remaining findings in their stated scope. Five independent final real-Git probes and two late-endpoint controls passed. Those reviewer probes used Node 24.22.2; primary acceptance above used pinned Node 24.19.0. The subsequent two test-only commits preserve the reviewed production bytes. Earlier #64 23/25 cohorts, stale assertions and sandbox-denied observer results remain diagnostics, superseded by explicit final case membership.
 
+### Release-gate lint correction
+
+The first cheap CI for release PR #66 found two source functions just over the 120-line limit; the earlier scoped lint claim did not establish this uncached full-source gate. The [correction receipt](evidence/pr-review-stack-landing-2026-10-30/diagnostics/release-lint.json) records removal of two blank lines and a local binding for an unchanged log expression. Full uncached source lint, build and typecheck then passed; compiled continuation code remained byte-identical. The existing accepted-but-uncertain merge regression passed on [Node](evidence/pr-review-stack-landing-2026-10-30/diagnostics/release-lint-node.json) and [native](evidence/pr-review-stack-landing-2026-10-30/diagnostics/release-lint-native.json), preserving the exact output and retry behavior. These are separate release-follow-up checks, not a rerun of the original 112-case acceptance.
+
 ## Boundaries and follow-up
 
 These results establish controlled-adapter acceptance for same-repository github.com PRs. No live feature review/merge smoke or new Graphite runtime comparison was performed. A disposable live fixture and an independently eligible reviewer, where required, remain a separately authorized follow-up.

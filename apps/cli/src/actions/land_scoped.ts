@@ -410,10 +410,9 @@ async function applyScopedLanding(
           const reconciled = await confirmedResult(record);
           if (reconciled) {
             advance({ phase: 'merged', result: reconciled });
+            const number = current(record).number;
             process.stdout.write(
-              `Confirmed merged #${
-                current(record).number
-              } after uncertain response: ${reconciled}.\n`
+              `Confirmed merged #${number} after uncertain response: ${reconciled}.\n`
             );
           } else record = retainRejectedMerge(record, error);
           throw error;

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T21:03:30.677Z",
+    "end": "2026-10-30T21:03:49.114Z",
+    "duration": 18437
+  },
+  "tests": [
+    {
+      "title": "retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "fullTitle": "public one-leaf landing retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "file": "/private/tmp/anthracite-npm-0.5.0-20261030/source/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 11770,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "fullTitle": "public one-leaf landing retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "file": "/private/tmp/anthracite-npm-0.5.0-20261030/source/apps/cli/dist/test/commands/land_leaf_cli.test.js",
+      "duration": 11770,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

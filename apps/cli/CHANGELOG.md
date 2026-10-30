@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/danielbaars/anthracite/compare/v0.4.0...v0.5.0) (2026-10-30)
+
+
+### Features
+
+* **cli:** add GitHub review and scoped stack landing ([#65](https://github.com/danielbaars/anthracite/issues/65)) [skip ci] ([1d3f753](https://github.com/danielbaars/anthracite/commit/1d3f753f5e40d8a0aeab2ce2ef2738de2435a74a))
+
 ## [0.4.0](https://github.com/danielbaars/anthracite/compare/v0.3.0...v0.4.0) (2026-10-30)
 
 
