@@ -99,14 +99,15 @@ export function landingRemoteIdentity(
   readonly remoteUrlHash: string;
   readonly pushUrlHash: string;
 } {
-  const declared = (key: string): string[] =>
-    runGitCommand({
-      args: ['config', '--get-all', key],
+  const declared = (key: string): string[] => {
+    const values = runGitCommand({
+      args: ['config', '--null', '--get-all', key],
       onError: 'ignore',
       resource: 'landingRemoteIdentity',
-    })
-      .split('\n')
-      .filter(Boolean);
+      options: { noTrim: true },
+    });
+    return values ? values.split('\0').slice(0, -1) : [];
+  };
   const fetchUrls = declared(`remote.${remote}.url`);
   const pushUrls = declared(`remote.${remote}.pushurl`);
   // Validate declarations before transport resolution; Git/SSH routing remains

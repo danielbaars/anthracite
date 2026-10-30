@@ -34,7 +34,14 @@ export function validateLocal(
     fs.existsSync(path.resolve(git(['rev-parse', '--git-path', '.gtcontinue'])))
   )
     throw new ExitFailedError('Saved unrelated recovery exists; preserved.');
-  if (git(['status', '--porcelain=v1', '--untracked-files=normal']))
+  if (
+    git([
+      '--no-optional-locks',
+      'status',
+      '--porcelain=v1',
+      '--untracked-files=normal',
+    ])
+  )
     throw new ExitFailedError(
       'Clean index/worktree required, including untracked files.'
     );

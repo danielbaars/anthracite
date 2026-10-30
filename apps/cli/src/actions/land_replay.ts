@@ -21,6 +21,7 @@ import {
   saveLandingProgress,
   owned,
   landingSurvivors,
+  assertLandingRemoteIdentity,
 } from '../lib/landing_progress';
 
 /** A pending landing permits only its exact owned local rebase continuation. */
@@ -69,6 +70,7 @@ export function assertLandingReplayParticipants(
 ): void {
   const record = loadLandingProgress();
   if (!record?.replay) return;
+  assertLandingRemoteIdentity(record);
   if (
     !updatingContinuation &&
     record.replay.continuation &&
@@ -269,6 +271,7 @@ export function assertLandingContinuationWritable(): void {
 export function finishLandingContinuation(context: TContext): void {
   const record = loadLandingProgress();
   if (!record) return;
+  assertLandingRemoteIdentity(record);
   if (
     record.replay ||
     !record.continuationCleanup ||

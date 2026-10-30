@@ -1,3 +1,4 @@
+import { validateLandingIdentity } from '../lib/landing_identity';
 import { finishLandingContinuation } from './land_replay';
 import { validateLocal } from './land_local';
 import { loadLandingProgress } from '../lib/landing_progress';
@@ -42,6 +43,8 @@ export async function continueAction(
   opts: { addAll: boolean },
   context: TContext
 ): Promise<void> {
+  const landing = loadLandingProgress();
+  if (landing) validateLandingIdentity(landing, context);
   const data = context.continueConfig.data;
   if (data.absorb) {
     continueAbsorb(opts, context);

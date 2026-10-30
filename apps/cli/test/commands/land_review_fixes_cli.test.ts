@@ -338,6 +338,10 @@ describe('public landing review regressions', function () {
     expect(localChild).not.to.equal(
       fixture.git(['rev-parse', 'child'], github.remote)
     );
+    // A same-content timestamp change requires Git's optional index refresh;
+    // a preserving preview must leave the raw index bytes unchanged.
+    const touched = path.join(fixture.repo, 'main.txt');
+    fs.utimesSync(touched, new Date(), new Date(Date.now() + 5000));
     const before = fixture.inspectionSnapshot();
     const journal = fs.readFileSync(
       path.join(fixture.repo, '.git/.anthracite_landing'),
@@ -413,5 +417,64 @@ describe('public landing review regressions', function () {
     ).to.equal(journal);
     expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
     expect(fs.readFileSync(github.state, 'utf8')).to.equal(state);
+  });
+  it('revalidates endpoint identity before active continuation writes and between completed local replays', () => {
+    fs.writeFileSync(
+      github.policy,
+      JSON.stringify({
+        allow_rebase_merge: true,
+        protected: false,
+        rules: [],
+        protection: null,
+        replayConflict: true,
+      })
+    );
+    expect(fixture.run(['land', 'base', '--yes']).status).to.equal(1);
+    fs.writeFileSync(path.join(fixture.repo, 'child.txt'), 'resolved child\n');
+    fixture.git(['add', 'child.txt']);
+    fs.writeFileSync(
+      path.join(fixture.repo, 'guard-untracked'),
+      'do not stage'
+    );
+    const mirror = path.join(fixture.root, 'mirror.git');
+    fixture.git(['clone', '--mirror', github.remote, mirror]);
+    const wrong = 'https://github.com/other/mirror.git';
+    const declared = 'https://github.com/fixture/inspection.git';
+    fixture.git(['config', `url.${mirror}.insteadOf`, wrong]);
+    fixture.git(['remote', 'set-url', 'origin', wrong]);
+    fixture.git(['remote', 'set-url', '--push', 'origin', wrong]);
+    const before = fixture.inspectionSnapshot();
+    const initial = fixture.run(['continue', '--all']);
+    expect(initial.status, initial.stdout + initial.stderr).to.equal(1);
+    expect(initial.stderr).to.include('declared GitHub remote');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    fixture.git(['remote', 'set-url', 'origin', declared]);
+    fixture.git(['remote', 'set-url', '--push', 'origin', declared]);
+    fs.unlinkSync(path.join(fixture.repo, 'guard-untracked'));
+    const tip = fixture.git(['rev-parse', 'tip']);
+    const child = fixture.git(['rev-parse', 'child']);
+    const remote = fixture.git(['for-each-ref'], github.remote);
+    const other = fixture.git(['for-each-ref'], mirror);
+    const calls = fs.readFileSync(github.calls, 'utf8');
+    const continuation = fs.readFileSync(
+      path.join(fixture.repo, '.git/.gtcontinue'),
+      'utf8'
+    );
+    fs.writeFileSync(
+      path.join(fixture.repo, '.git/hooks/post-rewrite'),
+      `#!/bin/sh\ngit remote set-url origin ${wrong}\ngit remote set-url --push origin ${wrong}\n`,
+      { mode: 0o755 }
+    );
+    const stopped = fixture.run(['continue']);
+    expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
+    expect(stopped.stderr).to.include('declared GitHub remote');
+    expect(fixture.git(['rev-parse', 'child'])).not.to.equal(child);
+    expect(fixture.git(['rev-parse', 'tip'])).to.equal(tip);
+    expect(
+      fs.readFileSync(path.join(fixture.repo, '.git/.gtcontinue'), 'utf8')
+    ).to.equal(continuation);
+    expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
+    expect(fixture.git(['for-each-ref'], mirror)).to.equal(other);
+    expect(fs.readFileSync(github.calls, 'utf8')).to.equal(calls);
   });
 });

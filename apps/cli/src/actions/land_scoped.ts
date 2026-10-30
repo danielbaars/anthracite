@@ -220,9 +220,11 @@ function printPendingLanding(record: LandingProgress): void {
   for (const member of survivors) {
     const expected = owned(member);
     process.stdout.write(
-      `Maintain: ${member.branch}; parent ${expected.parent}; replay base ${
-        expected.base
-      }; reached head ${expected.head}${
+      `Maintain: ${member.branch}; parent ${expected.parent} -> ${
+        remaining.some((merge) => merge.branch === expected.parent)
+          ? record.trunk
+          : expected.parent
+      }; replay base ${expected.base}; reached head ${expected.head}${
         member.cleanupResult
           ? '; metadata only, already landed'
           : '; verify required replay'
@@ -395,6 +397,7 @@ async function applyScopedLanding(
           );
         stage = 'merge request';
         await readyToMerge(record, context);
+        validateLocal(record, context);
         advance({ phase: 'merge-requested' });
         let response: string;
         try {
