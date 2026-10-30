@@ -64,6 +64,38 @@ work prevents it from starting; disconnect discards the queue. Interruption does
 not erase Git recovery data or authorize an automatic retry. Inspect actual refs,
 staged changes and continuation before proceeding.
 
+Inspect GitHub with an pr [branch] (optional --stack includes connected fanout)
+and an review [branch] for the actual base-to-head diff. Neither authorizes a
+write. An explicit review action --approve, --request-changes or --comment must
+include --head <full-oid> matching the fresh selected PR. Comment and changes
+request need --body or --body-file; approval may omit it. Review submission is
+separate from reviewer assignment. Uncertain review responses require inspection;
+never automatically repeat a review POST or claim a newer head was approved.
+
+Preview an land [branch] --dry-run. The merge set is the unique trunk-to-target
+chain; necessary surviving descendants and sibling arms are maintenance only.
+Only user-authorized application with --yes can merge that chain, replay local
+survivors, push their existing heads, update existing PR bases/managed footers and
+clean confirmed landed refs. Missing survivor PRs stay missing and unpublished
+heads stay unpublished. Independent stacks stay outside scope. Every next merge
+requires fresh expected-head readiness after maintenance; dismissed approvals,
+pending checks, unreadable policy or missing publisher provenance stop progress.
+There is no queue, bypass, automatic approval or implicit submit route.
+
+A landing conflict returns cli_error and retains completed merges and parents.
+Resolve and stage deliberately, then an continue in the printed original project
+performs local-only replay. It never merges, pushes or edits PRs. The landing
+record remains until explicit an land [original-target] --yes revalidates and
+finishes remote maintenance, even if that target branch was already deleted.
+A durably completed preceding replay can retain an exact pending local queue;
+freeze/worktree/ref guards still apply. Public unfreeze changes protection only.
+Raw Git abort cancels only the active rebase. Ambiguous replay or metadata
+publication requires guarded manual inspection; never clear recovery or assume
+rollback. Exact owned dead-process locks can be reconciled by explicit resumption;
+foreign, live, invalid or unproven locks remain. Inspect after cancellation or
+reconnect before authorizing another call. Same-repository github.com only;
+adapter acceptance does not establish live-service or enterprise compatibility.
+
 Submit deliberately with an submit (or an submit --help to inspect selectors).
 Reviewer and assignee lists apply to every selected PR by default. Use
 --roles-branch <exact-local-branch> to add both lists only to that selected PR;

@@ -1,4 +1,6 @@
 import fs from 'fs';
+import path from 'path';
+import { releaseOwnedCacheLockFile } from '../lib/engine/owned_cache_lock';
 import { z } from 'zod';
 import { initContext, TContext } from '../lib/context';
 import { ExitFailedError } from '../lib/errors';
@@ -13,7 +15,10 @@ import {
   githubLandReadiness,
   readGithubLandApi,
 } from '../lib/api/github_land_policy';
-import { mergeGithubLandPr } from '../lib/api/github_land_merge';
+import {
+  mergeGithubLandPr,
+  GithubLandMergeRejected,
+} from '../lib/api/github_land_merge';
 import {
   current,
   owned,
@@ -39,32 +44,74 @@ const phaseOrder: LandingProgress['phase'][] = [
 ];
 
 export async function withLandingLock(
-  action: () => Promise<void>
+  action: (
+    identity: NonNullable<LandingProgress['cacheLock']>
+  ) => Promise<void>,
+  previous?: LandingProgress
 ): Promise<void> {
+  const file = path.resolve(
+    git(['rev-parse', '--git-common-dir']),
+    '.graphite_cache_lock'
+  );
+  if (fs.lstatSync(file, { throwIfNoEntry: false })) {
+    const identity = previous?.cacheLock;
+    if (identity && fs.lstatSync(file).isFile()) {
+      const bytes = fs.readFileSync(file, 'utf8');
+      if (bytes === cacheLockBytes(identity) && deadPid(identity.pid))
+        releaseOwnedCacheLockFile(file, identity.pid, bytes);
+    }
+    if (fs.lstatSync(file, { throwIfNoEntry: false }))
+      throw new ExitFailedError(
+        'Cache lock ownership or dead process is unproven; lock and landing recovery preserved. Inspect the original project before manual recovery.'
+      );
+  }
+  const identity = { pid: process.pid, timestamp: Date.now() };
+  if (previous)
+    saveLandingProgress({ ...previous, cacheLock: identity }, previous);
   const lock = getCacheLock();
-  lock.lock();
+  lock.lock(identity.timestamp);
   const interrupted = (): void => {
-    lock.release();
+    releaseOwnedCacheLockFile(file, identity.pid, cacheLockBytes(identity));
     process.stderr.write(
       'Landing interrupted; completed or uncertain effects are retained. Run an land to reconcile.\n'
     );
     // eslint-disable-next-line no-restricted-syntax
     process.exit(1);
   };
-  process.once('SIGINT', interrupted);
+  process.prependOnceListener('SIGINT', interrupted);
   process.once('SIGTERM', interrupted);
   try {
-    await action();
+    await action(identity);
   } finally {
     process.removeListener('SIGINT', interrupted);
     process.removeListener('SIGTERM', interrupted);
-    lock.release();
+    releaseOwnedCacheLockFile(file, identity.pid, cacheLockBytes(identity));
+  }
+}
+
+function cacheLockBytes(
+  identity: NonNullable<LandingProgress['cacheLock']>
+): string {
+  return JSON.stringify(
+    { timestamp: identity.timestamp, pid: identity.pid },
+    null,
+    2
+  );
+}
+
+function deadPid(pid: number): boolean {
+  try {
+    process.kill(pid, 0);
+    return false;
+  } catch (error: unknown) {
+    return error instanceof Error && 'code' in error && error.code === 'ESRCH';
   }
 }
 
 export async function startLandLeaf(
   plan: LandPlan,
-  context: TContext
+  context: TContext,
+  cacheLock: NonNullable<LandingProgress['cacheLock']>
 ): Promise<void> {
   const member = plan.merges[0];
   if (!member.pr || (!member.remoteHead && !member.mergedResult))
@@ -84,6 +131,7 @@ export async function startLandLeaf(
     merges: plan.merges.map(capture),
     maintenance: plan.maintenance.map(capture),
     phase: 'prepared',
+    cacheLock,
   };
   function capture(
     member: LandPlan['merges'][number]
@@ -136,12 +184,15 @@ export async function resumeLandLeaf(
     });
     if (!answer.confirmed) return;
   }
-  await withLandingLock(async () => {
+  await withLandingLock(async (cacheLock) => {
     const fresh = loadLandingProgress();
-    if (JSON.stringify(fresh) !== JSON.stringify(record))
+    if (
+      !fresh ||
+      JSON.stringify(fresh) !== JSON.stringify({ ...record, cacheLock })
+    )
       throw new ExitFailedError('Landing recovery changed; inspect again.');
-    await applyLandLeaf(record, context);
-  });
+    await applyLandLeaf(fresh, context);
+  }, record);
 }
 
 async function applyLandLeaf(
@@ -189,7 +240,7 @@ async function applyLandLeaf(
                 current(record).number
               } after uncertain response: ${reconciled}.\n`
             );
-          }
+          } else record = retainRejectedMerge(record, error);
           throw error;
         }
         result = await confirmedResult(record);
@@ -263,6 +314,17 @@ async function applyLandLeaf(
       } --yes.`
     );
   }
+}
+
+/** Fresh verified OPEN plus explicit rejection permits only a later authorized run. */
+function retainRejectedMerge(
+  record: LandingProgress,
+  error: unknown
+): LandingProgress {
+  if (!(error instanceof GithubLandMergeRejected)) return record;
+  const next = { ...record, phase: 'prepared' as const };
+  saveLandingProgress(next, record);
+  return next;
 }
 
 function restoreCheckout(record: LandingProgress, context: TContext): void {

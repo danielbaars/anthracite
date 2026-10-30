@@ -1,3 +1,4 @@
+import { recordLandingContinuation } from './land_replay';
 import { GetImportDecision } from './sync/get';
 import { TContext } from '../lib/context';
 import { recordRebaseOwnership } from '../lib/git/rebase_ownership';
@@ -37,6 +38,7 @@ export function persistContinuation(
     data.rebasedBranchBase = args.rebasedBranchBase;
     data.rebaseOwnership = rebaseOwnership;
   });
+  recordLandingContinuation();
 }
 
 export function clearContinuation(context: TContext): void {

@@ -2,6 +2,27 @@ import { execFile } from 'child_process';
 import { z } from 'zod';
 import { ExitFailedError } from '../errors';
 
+export class GithubLandMergeRejected extends ExitFailedError {
+  constructor() {
+    super(
+      'Merge rejected by GitHub authentication or permission; no automatic retry.'
+    );
+  }
+}
+
+function definiteRejection(stdout: string, stderr: string): boolean {
+  try {
+    const body = z
+      .object({ status: z.enum(['401', '403']), message: z.string().min(1) })
+      .parse(JSON.parse(stdout));
+    return new RegExp(
+      `^gh: [^\\r\\n]+ \\(HTTP ${body.status}\\)\\r?\\n?$`
+    ).test(stderr);
+  } catch {
+    return false;
+  }
+}
+
 /** Synchronous direct merge only: literal JSON, expected head, no queue or bypass. */
 export async function mergeGithubLandPr(
   repo: string,
@@ -31,12 +52,14 @@ export async function mergeGithubLandPr(
         },
         maxBuffer: 16 * 1024 * 1024,
       },
-      (error, stdout) =>
+      (error, stdout, stderr) =>
         error
           ? reject(
-              new ExitFailedError(
-                'Merge response unavailable; outcome uncertain.'
-              )
+              definiteRejection(stdout, stderr)
+                ? new GithubLandMergeRejected()
+                : new ExitFailedError(
+                    'Merge response unavailable; outcome uncertain. Inspect GitHub before another request.'
+                  )
             )
           : resolve(stdout)
     );

@@ -1,13 +1,13 @@
 import {
   assertLandingReplayParticipants,
   recordLandingReplayCompletion,
+  restackLandingBranch,
 } from './land_replay';
 import chalk from 'chalk';
 import { recordAbsorbCompletion } from './absorb_recovery';
 import { TContext } from '../lib/context';
 import {
   assertContinuationBranchesEditable,
-  getMandatoryBranches,
   getStructuralRole,
 } from '../lib/engine/frozen_branch';
 import {
@@ -125,10 +125,7 @@ export function restackBranches(
           context
         );
       }
-      const result = context.engine.restackBranch(
-        branchName,
-        getMandatoryBranches(context.continueConfig.data)
-      );
+      const result = restackLandingBranch(branchName, context);
       context.splog.debug(`${result}: ${branchName}`);
       switch (result.result) {
         case 'REBASE_DONE':

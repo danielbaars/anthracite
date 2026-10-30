@@ -1,7 +1,13 @@
+import fs from 'fs';
+import path from 'path';
+import { createHash } from 'crypto';
 import { TContext } from '../lib/context';
 import { ExitFailedError } from '../lib/errors';
 import { composeGit } from '../lib/git/git';
-import { assertBranchEditable } from '../lib/engine/frozen_branch';
+import {
+  assertBranchEditable,
+  getMandatoryBranches,
+} from '../lib/engine/frozen_branch';
 import {
   getMetadataRefList,
   readMetadataRef,
@@ -18,13 +24,23 @@ import {
 } from '../lib/landing_progress';
 
 /** A pending landing permits only its exact owned local rebase continuation. */
-export function allowLandingContinuation(): boolean {
+export function allowLandingContinuation(
+  updatingContinuation = false
+): boolean {
   const record = loadLandingProgress();
   if (!record?.replay) return false;
   const data = continueConfigFactory.load(undefined, {
     preserveInvalid: true,
   }).data;
   const active = composeGit().getRebaseHead();
+  if (!composeGit().rebaseInProgress() && record.replay.ready) {
+    if (record.replay.ready !== landingContinuationDigest())
+      throw new ExitFailedError(
+        'Landing local queue continuation changed; both recovery records preserved.'
+      );
+    assertLandingReplayParticipants();
+    return true;
+  }
   if (
     !ownsRebase(data.rebaseOwnership) ||
     active !== record.replay.pending[0] ||
@@ -41,16 +57,26 @@ export function allowLandingContinuation(): boolean {
     data.move
   )
     throw new ExitFailedError(
-      'Pending landing has no matching owned active local replay. Recovery preserved; inspect an land in the original project.'
+      `Pending landing has no matching owned active local replay or proven pending queue. Raw Git abort cancels only its active rebase; completed effects and both recovery records remain. Inspect git status, git log --oneline --all and saved branch metadata in ${record.directory}; use an land ${record.target} --dry-run to inspect remote progress. Do not clear recovery or repeat patches to bypass this guard.`
     );
-  assertLandingReplayParticipants();
+  assertLandingReplayParticipants(updatingContinuation);
   return true;
 }
 
 /** Hooks can change a queued participant after an earlier replay completes. */
-export function assertLandingReplayParticipants(): void {
+export function assertLandingReplayParticipants(
+  updatingContinuation = false
+): void {
   const record = loadLandingProgress();
   if (!record?.replay) return;
+  if (
+    !updatingContinuation &&
+    record.replay.continuation &&
+    record.replay.continuation !== landingContinuationDigest()
+  )
+    throw new ExitFailedError(
+      'Landing local queue continuation changed; both recovery records preserved.'
+    );
   const survivors = landingSurvivors(record);
   const names = new Set(survivors.map((member) => member.branch));
   for (const branch of record.replay.pending) {
@@ -116,11 +142,97 @@ export function recordLandingReplayCompletion(
       replay: pending.length
         ? {
             pending,
+            ready:
+              record.replay.continuation === landingContinuationDigest()
+                ? record.replay.continuation
+                : undefined,
+            continuation: record.replay.continuation,
             onto: context.engine.getRevision(
               context.engine.getParentPrecondition(pending[0])
             ),
           }
         : undefined,
+    },
+    record
+  );
+}
+
+/** A completed replay durably proves the next queue has not started. */
+function startLandingReplay(branch: string): string | undefined {
+  const record = loadLandingProgress();
+  if (!record?.replay?.ready) return;
+  if (record.replay.pending[0] !== branch)
+    throw new ExitFailedError(
+      'Landing local queue changed; recovery preserved.'
+    );
+  saveLandingProgress(
+    { ...record, replay: { ...record.replay, ready: undefined } },
+    record
+  );
+  return record.replay.ready;
+}
+function landingContinuationDigest(): string | undefined {
+  const file = path.resolve(git(['rev-parse', '--git-path', '.gtcontinue']));
+  if (!fs.lstatSync(file, { throwIfNoEntry: false })?.isFile())
+    return undefined;
+  return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+
+/** A rejected replay may retry only when no ref/metadata or owned queue changed. */
+function retainRejectedLandingReplay(branch: string, ready?: string): void {
+  if (
+    !ready ||
+    composeGit().rebaseInProgress() ||
+    ready !== landingContinuationDigest()
+  )
+    return;
+  const record = loadLandingProgress();
+  if (
+    !record?.replay ||
+    record.replay.pending[0] !== branch ||
+    record.replay.ready
+  )
+    return;
+  for (const member of landingSurvivors(record)) {
+    if (
+      git(['rev-parse', `refs/heads/${member.branch}`]) !==
+        owned(member).head ||
+      git(['rev-parse', `refs/branch-metadata/${member.branch}`]) !==
+        owned(member).metadata
+    )
+      return;
+  }
+  saveLandingProgress(
+    { ...record, replay: { ...record.replay, ready } },
+    record
+  );
+}
+
+export function restackLandingBranch(
+  branch: string,
+  context: TContext
+): ReturnType<TContext['engine']['restackBranch']> {
+  const ready = startLandingReplay(branch);
+  try {
+    return context.engine.restackBranch(
+      branch,
+      getMandatoryBranches(context.continueConfig.data)
+    );
+  } catch (error: unknown) {
+    retainRejectedLandingReplay(branch, ready);
+    throw error;
+  }
+}
+
+/** Bind the ordinary continuation bytes while its exact owned conflict is active. */
+export function recordLandingContinuation(): void {
+  const record = loadLandingProgress();
+  if (!record?.replay) return;
+  allowLandingContinuation(true);
+  saveLandingProgress(
+    {
+      ...record,
+      replay: { ...record.replay, continuation: landingContinuationDigest() },
     },
     record
   );

@@ -373,7 +373,7 @@ export async function land(
     throw new ExitFailedError(
       'Landing scope/readiness changed after confirmation; preview again. No changes made.'
     );
-  await withLandingLock(async () => {
+  await withLandingLock(async (cacheLock) => {
     const lockedContext = initContext(context, composeGit(), {
       inspection: true,
     });
@@ -385,6 +385,6 @@ export async function land(
       throw new ExitFailedError(
         'Landing scope/readiness changed under lock; preview again. No changes made.'
       );
-    await startLandLeaf(locked, lockedContext);
+    await startLandLeaf(locked, lockedContext, cacheLock);
   });
 }

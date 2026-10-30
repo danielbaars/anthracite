@@ -1,3 +1,5 @@
+import { withLandingLock } from '../actions/land_leaf';
+import { loadLandingProgress } from './landing_progress';
 import { allowLandingContinuation } from '../actions/land_replay';
 // Why does an open source CLI include telemetry?
 // We the creators want to understand how people are using the tool
@@ -308,7 +310,11 @@ async function graphiteHelper(
       context.splog.newline();
     }
 
-    await handler.run(context);
+    const landing =
+      canonicalName === 'continue' ? loadLandingProgress() : undefined;
+    if (landing?.replay)
+      await withLandingLock(async () => await handler.run(context), landing);
+    else await handler.run(context);
     commandFailed = false;
   } catch (err) {
     if (

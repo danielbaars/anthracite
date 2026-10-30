@@ -1,3 +1,4 @@
+import { validateLocal } from './land_local';
 import { loadLandingProgress } from '../lib/landing_progress';
 import chalk from 'chalk';
 import { continueAbsorb } from './absorb_apply';
@@ -46,10 +47,10 @@ export async function continueAction(
     return;
   }
   if (!context.engine.rebaseInProgress()) {
+    if (resumeLandingLocalQueue(context)) return;
     clearContinuation(context);
     throw new NoGraphiteContinue();
   }
-
   const activeBranch = context.engine.getRebaseHead();
   assertContinuationBranchesEditable(data, activeBranch);
   if (activeBranch) context.engine.assertBranchEditable(activeBranch);
@@ -164,4 +165,13 @@ function finishContinuation(context: TContext, landingReplay: boolean): void {
     );
   clearContinuation(context);
   if (landingReplay) context.continueConfig.delete();
+}
+
+function resumeLandingLocalQueue(context: TContext): boolean {
+  const landing = loadLandingProgress();
+  if (!landing?.replay?.ready) return false;
+  validateLocal(landing, context, true);
+  restackBranches([...landing.replay.pending], context);
+  finishContinuation(context, true);
+  return true;
 }

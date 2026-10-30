@@ -1,3 +1,4 @@
+import { setLandingFrozen } from './land_freeze';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 
@@ -7,6 +8,7 @@ export function setBranchFrozen(
   context: TContext
 ): void {
   const target = branch ?? context.engine.currentBranchPrecondition;
+  if (setLandingFrozen(target, frozen)) return;
   // Validate the non-trunk target before traversing any editable participants.
   context.engine.getParentPrecondition(target);
   const descendants = (parent: string): string[] =>

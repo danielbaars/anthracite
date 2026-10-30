@@ -15,10 +15,11 @@ import {
 
 export function validateLocal(
   record: LandingProgress,
-  context: TContext
+  context: TContext,
+  ownedReplayQueue = false
 ): void {
   assertNoGitOperation('land');
-  if (record.replay)
+  if (record.replay && !ownedReplayQueue)
     throw new ExitFailedError(
       'Saved local replay is incomplete without an active Git rebase. Inspect reached refs and metadata in the original project; recovery preserved.'
     );
@@ -27,6 +28,7 @@ export function validateLocal(
       'Landing requires a physically checked-out branch.'
     );
   if (
+    !ownedReplayQueue &&
     fs.existsSync(path.resolve(git(['rev-parse', '--git-path', '.gtcontinue'])))
   )
     throw new ExitFailedError('Saved unrelated recovery exists; preserved.');

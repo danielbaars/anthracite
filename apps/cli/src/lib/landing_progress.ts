@@ -44,11 +44,29 @@ const schema = z
     trunkHead: oid,
     target: branch,
     checkout: branch,
+    cacheLock: z
+      .object({
+        pid: z.number().int().positive(),
+        timestamp: z.number().int().positive(),
+      })
+      .strict()
+      .optional(),
     merges: z.array(member).min(1),
     maintenance: z.array(member),
     index: z.number().int().nonnegative().optional(),
     replay: z
-      .object({ pending: z.array(branch).min(1), onto: oid })
+      .object({
+        pending: z.array(branch).min(1),
+        onto: oid,
+        continuation: z
+          .string()
+          .regex(/^[a-f0-9]{64}$/)
+          .optional(),
+        ready: z
+          .string()
+          .regex(/^[a-f0-9]{64}$/)
+          .optional(),
+      })
       .strict()
       .optional(),
     phase: z.enum([
@@ -107,6 +125,8 @@ export function loadLandingProgress(): LandingProgress | undefined {
     const survivors = landingSurvivors(record).map((item) => item.branch);
     const pending = record.replay?.pending;
     if (
+      (record.replay?.ready &&
+        record.replay.ready !== record.replay.continuation) ||
       (pending &&
         JSON.stringify(pending) !==
           JSON.stringify(survivors.slice(survivors.indexOf(pending[0])))) ||
