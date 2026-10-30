@@ -1,3 +1,8 @@
+import {
+  landingRemoteIdentity,
+  loadLandingProgress,
+} from '../lib/landing_progress';
+import { resumeLandLeaf, startLandLeaf, withLandingLock } from './land_leaf';
 import fs from 'fs';
 import path from 'path';
 import { initContext, TContext } from '../lib/context';
@@ -107,6 +112,9 @@ export async function planLand(
     assertBranchesAvailableInWorktrees([context.engine.trunk, ...participants])
   );
   const remote = context.repoConfig.getRemote();
+  protect(() => {
+    landingRemoteIdentity(remote);
+  });
   const remoteRefs = gitRead([
     'ls-remote',
     '--heads',
@@ -332,6 +340,15 @@ export async function land(
   args: { readonly 'dry-run': boolean; readonly yes: boolean },
   context: TContext
 ): Promise<void> {
+  const pending = loadLandingProgress();
+  if (pending) {
+    if (target !== undefined && target !== pending.target)
+      throw new ExitFailedError(
+        'A different landing target is pending; original recovery preserved.'
+      );
+    await resumeLandLeaf(pending, args, context);
+    return;
+  }
   const plan = await planLand(target, context);
   printLandPlan(plan);
   if (plan.blockers.length)
@@ -359,7 +376,26 @@ export async function land(
     throw new ExitFailedError(
       'Landing scope/readiness changed after confirmation; preview again. No changes made.'
     );
-  throw new ExitFailedError(
-    'Landing application is not implemented for this scope yet; no changes made. Use --dry-run.'
-  );
+  if (
+    fresh.merges.length !== 1 ||
+    fresh.maintenance.length !== 0 ||
+    fresh.merges[0].parent !== fresh.trunk
+  )
+    throw new ExitFailedError(
+      'Landing application is not implemented for this scope yet; no changes made. Use --dry-run.'
+    );
+  await withLandingLock(async () => {
+    const lockedContext = initContext(context, composeGit(), {
+      inspection: true,
+    });
+    const locked = await planLand(target, lockedContext);
+    if (
+      JSON.stringify(locked) !== JSON.stringify(fresh) ||
+      locked.blockers.length
+    )
+      throw new ExitFailedError(
+        'Landing scope/readiness changed under lock; preview again. No changes made.'
+      );
+    await startLandLeaf(locked, lockedContext);
+  });
 }

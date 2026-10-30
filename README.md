@@ -39,7 +39,7 @@ Use `an submit --reviewers alice --assignees @me --roles-branch my-change` to ad
 
 Use `an pr [branch]` for fresh GitHub PR information, `--stack` for its connected stack, or `--web` to explicitly open the selected PR. See [PR inspection and preserved local state](docs/pr.md).
 
-Use `an land [branch] --dry-run` to preview scoped bottom-up rebase landing, mandatory surviving-branch maintenance and readiness blockers. Application currently refuses before writes. See [scoped landing preview](docs/land.md).
+Use `an land [branch] --dry-run` to preview scoped bottom-up rebase landing, mandatory surviving-branch maintenance and readiness blockers. A ready trunk-based leaf can be applied with `--yes`, including guarded cleanup and retained retry progress; broader execution currently refuses before writes. See [scoped landing](docs/land.md).
 
 To uninstall an npm installation, run `npm uninstall --global @danielbaars/anthracite`. For a standalone installation, remove the command links and managed completion block using `sh scripts/uninstall.sh` from a clone. Version directories and preferences are retained for rollback. See [installation and upgrades](docs/installation.md), the [command reference](DOCUMENTATION.md), and [compatibility](COMPATIBILITY.md).
 

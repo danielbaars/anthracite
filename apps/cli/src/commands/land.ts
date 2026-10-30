@@ -5,7 +5,7 @@ import { graphiteInspection } from '../lib/runner';
 export const command = 'land [branch]';
 export const canonical = 'land';
 export const description =
-  'Preview scoped bottom-up GitHub rebase landing and mandatory maintenance.';
+  'Land a ready GitHub leaf with guarded cleanup; preview broader stack scope.';
 const options = {
   'dry-run': {
     type: 'boolean',

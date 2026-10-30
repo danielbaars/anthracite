@@ -28,6 +28,7 @@ export function prepareLand(fixture: RelationCliFixture): PrFixture & {
     })
   );
   fixture.env.ANTHRACITE_TEST_LAND_POLICY = policy;
+  fixture.env.ANTHRACITE_TEST_LAND_REMOTE = github.remote;
   const original = fs.readFileSync(path.join(github.bin, 'gh'), 'utf8');
   fs.writeFileSync(
     path.join(github.bin, 'gh'),
