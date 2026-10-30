@@ -382,4 +382,33 @@ describe('public one-leaf landing', function () {
     }
     expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"PUT"');
   });
+  it('preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance', () => {
+    fixture.branch('spare', 'main', true);
+    fixture.git(['switch', 'leaf']);
+    const spare = fixture.git(['rev-parse', 'spare']);
+    const trunk = fixture.git(['rev-parse', 'main']);
+    const hook = path.join(fixture.repo, '.git', 'hooks', 'post-checkout');
+    fs.writeFileSync(
+      hook,
+      '#!/bin/sh\nif [ "$(git branch --show-current)" = main ]; then git symbolic-ref HEAD refs/heads/spare; fi\n',
+      { mode: 0o755 }
+    );
+    const failed = fixture.run(['land', '--yes']);
+    expect(failed.status).to.equal(1);
+    expect(failed.stderr)
+      .to.include('trunk advance')
+      .and.include('Confirmed merged');
+    expect(fixture.git(['rev-parse', 'spare'])).to.equal(spare);
+    expect(fixture.git(['rev-parse', 'main'])).to.equal(trunk);
+    expect(fixture.git(['show', 'main:leaf.txt'], github.remote)).to.equal(
+      'leaf'
+    );
+    fs.unlinkSync(hook);
+    const retry = fixture.run(['land', '--yes']);
+    expect(retry.status, retry.stdout + retry.stderr).to.equal(0);
+    expect(fixture.git(['rev-parse', 'spare'])).to.equal(spare);
+    expect(
+      fs.readFileSync(github.calls, 'utf8').split('"PUT"').length - 1
+    ).to.equal(1);
+  });
 });

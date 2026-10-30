@@ -988,7 +988,13 @@ export function composeEngine({
         throw new PreconditionsFailedError(
           'Landed leaf gained descendants; preview again.'
         );
-      if (branch === cache.currentBranch) checkoutBranch(meta.parentBranchName);
+      cache.currentBranch = git.getCurrentBranchName();
+      if (branch === cache.currentBranch)
+        checkoutBranch(meta.parentBranchName, { preserveIgnored: true });
+      if (git.getCurrentBranchName() === branch)
+        throw new PreconditionsFailedError(
+          'Checkout changed before landed branch deletion.'
+        );
       deleteLandedLeafRefs(branch, expected);
       removeChild(meta.parentBranchName, branch);
       delete cache.branches[branch];

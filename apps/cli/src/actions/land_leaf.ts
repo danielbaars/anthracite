@@ -302,6 +302,11 @@ function advanceTrunk(record: LandingProgress, context: TContext): void {
   ]);
   validateLocal(record, context);
   composeGit().switchBranch(record.trunk, { preserveIgnored: true });
+  if (composeGit().getCurrentBranchName() !== record.trunk)
+    throw new ExitFailedError(
+      'Checkout changed before trunk advance; no undisclosed branch may be advanced.'
+    );
+  validateLocal(record, context);
   withFrozenCommitGuard(
     record.trunk,
     (prefix) => {
