@@ -425,6 +425,7 @@ describe('create --insert child selection through a real terminal', function () 
       const result = select('\u0003', ['--onto', onto]);
       expect(result.status, result.output).to.equal(0);
       expect(result.output).not.to.include('Choose children');
+      expect(result.output).not.to.include('No --insert-child specified');
       expect(parent('inserted')).to.equal(onto);
       if (onto === 'child') expect(parent('tip')).to.equal('inserted');
     });

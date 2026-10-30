@@ -191,7 +191,17 @@ async function getInsertChildren(
     (branch) => context.engine.getParent(branch) === parent
   );
   if (opts.insertChildren === undefined) {
-    if (children.length < 2 || !context.canPrompt) return { parent, children };
+    if (children.length < 2) return { parent, children };
+    if (!context.canPrompt) {
+      context.splog.warn(
+        `No --insert-child specified: noninteractive insertion selects all ${
+          children.length
+        } direct children of ${parent}: ${children.join(
+          ', '
+        )}. Use --insert-child <branch> to select only the intended children.`
+      );
+      return { parent, children };
+    }
     const source = context.engine.currentBranchPrecondition;
     const before = new Map(
       [...new Set([source, parent, ...children])].map((name) => [

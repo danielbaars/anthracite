@@ -30,6 +30,9 @@ remain selected. Cancel before confirmation to retain checkout, refs, staging
 roles and working files. Zero or one child needs no menu. Non-TTY input,
 `--no-interactive` and `--quiet` retain the established all-children default;
 forcing `--interactive` without a usable terminal also keeps that default.
+An implicit noninteractive choice of multiple children warns on stderr, naming
+the parent and children, even with `--quiet`. This warning does not cancel the
+insertion or change its all-children default; use `--insert-child` to narrow it.
 Explicit choices remain authoritative in every mode. Normal progress names the
 chosen parent and children; quiet suppresses routine progress and prompting,
 while retaining actionable errors and recovery guidance. `--cwd` and invocation
