@@ -133,9 +133,18 @@ describe('MCP head-bound review and scoped landing through stdio', function () {
       await connection.close();
       connections.splice(connections.indexOf(connection), 1);
       const fresh = await connect();
-      expect(
-        (await run(fresh, ['land', 'base', '--dry-run'])).stdout
-      ).to.include('Pending landing');
+      const paused = fixture.inspectionSnapshot();
+      const pausedPrs = fs.readFileSync(github.state, 'utf8');
+      const preview = await run(fresh, ['land', 'base', '--dry-run'], 1);
+      expect(preview.stdout)
+        .to.include('Pending landing')
+        .and.include('Local replay incomplete');
+      expect(preview.stderr).to.include('Pending landing preview blocked');
+      expect(fixture.inspectionSnapshot()).to.deep.equal(paused);
+      expect(fixture.git(['for-each-ref'], github.remote)).to.equal(
+        remotePaused
+      );
+      expect(fs.readFileSync(github.state, 'utf8')).to.equal(pausedPrs);
       const afterPreviewCalls = fs.readFileSync(github.calls, 'utf8');
       expect(afterPreviewCalls).to.include(callsPaused);
       fs.writeFileSync(
