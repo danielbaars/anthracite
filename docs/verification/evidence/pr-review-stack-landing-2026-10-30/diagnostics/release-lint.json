@@ -1,0 +1,29 @@
+{
+  "releasePR": 66,
+  "initialReleaseHead": "927ecb547355b404fd176f95e2b9537b2a1cc985",
+  "failedCheapCI": 41127308186,
+  "failure": "max-lines-per-function: continueAction122, applyScopedLanding121; limit120",
+  "correction": "Remove two blank lines and bind the already-read PR number locally; no output, guard or state transition changes",
+  "fullSourceEslintWithoutCachePassed": true,
+  "typecheckPassed": true,
+  "fullBuild": {
+    "exitCode": 0,
+    "error": null
+  },
+  "compiledContinueByteIdentical": true,
+  "regressions": {
+    "node": {
+      "tests": 1,
+      "passes": 1,
+      "failures": 0,
+      "sha256": "bcb3f85af716df5579784068651a1df738472a09d45abf65578764dcd2e0706a"
+    },
+    "native": {
+      "tests": 1,
+      "passes": 1,
+      "failures": 0,
+      "sha256": "4b8fe5d1c3203657f7e31cd50a0279ebf65041065119a311ffb2cfb5a833fa7e"
+    }
+  },
+  "fullMatrixStarted": false
+}

@@ -69,12 +69,10 @@ export async function continueAction(
   const rebasedBranchBase = data.rebasedBranchBase;
   const branchesToSync = data.branchesToSync;
   const branchesToRestack = data.branchesToRestack;
-
   if (!rebasedBranchBase) {
     clearContinuation(context);
     throw new NoGraphiteContinue('git rebase --continue');
   }
-
   let cont: ReturnType<TContext['engine']['continueRebase']>;
   try {
     assertReorderContinuationClean(context);
