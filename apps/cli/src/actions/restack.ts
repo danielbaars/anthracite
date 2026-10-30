@@ -1,4 +1,7 @@
-import { recordLandingReplayCompletion } from './land_replay';
+import {
+  assertLandingReplayParticipants,
+  recordLandingReplayCompletion,
+} from './land_replay';
 import chalk from 'chalk';
 import { recordAbsorbCompletion } from './absorb_recovery';
 import { TContext } from '../lib/context';
@@ -89,6 +92,7 @@ export function restackBranches(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')
   );
   while (branchNames.length > 0) {
+    assertLandingReplayParticipants();
     assertDeleteRecoveryEditable(context.continueConfig.data.delete);
     assertContinuationBranchesEditable(context.continueConfig.data);
     assertFileSplitAvailable(context.continueConfig.data);

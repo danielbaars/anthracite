@@ -9,6 +9,7 @@ import {
   LandingProgress,
   current,
   owned,
+  landingSurvivors,
   landingGit as git,
 } from '../lib/landing_progress';
 
@@ -37,7 +38,7 @@ export function validateLocal(
     inspection: true,
   }).engine;
   engine.assertBranchEditable(record.trunk);
-  const all = [...record.merges, ...record.maintenance];
+  const all = [current(record), ...landingSurvivors(record)];
   const names = new Set(all.map((member) => member.branch));
   for (const member of all) {
     const expected = owned(member);

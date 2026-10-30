@@ -320,7 +320,8 @@ if (
     const pr = prs.find((item) => String(item.number) === args[2]);
     if (!pr || pr.state !== 'OPEN')
       throw new Error('PR edit identity mismatch');
-    if (policy.failPrEdit) throw new Error('injected PR update failure');
+    if (policy.failPrEdit || policy.failPrEditNumber === pr.number)
+      throw new Error('injected PR update failure');
     pr.baseRefName = args[4];
     pr.body = args[6];
     pr.baseRefOid = cp

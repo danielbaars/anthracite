@@ -13,6 +13,7 @@ import {
   saveLandingProgress,
   current,
   owned,
+  landingSurvivors,
 } from '../lib/landing_progress';
 import { createPrBodyFooter } from './create_pr_body_footer';
 import { updatePrBodyFooter } from './submit/submit_action';
@@ -22,7 +23,7 @@ import { validateLocal } from './land_local';
 type Member = LandingProgress['merges'][number];
 type Reached = NonNullable<Member['reached']>;
 
-/** Only the disclosed surviving chain; never submit, sync, publish or discover PRs. */
+/** Only the disclosed affected survivors; never submit, sync, publish or discover PRs. */
 export async function maintainLandingSurvivors(
   initial: LandingProgress,
   context: TContext
@@ -30,12 +31,6 @@ export async function maintainLandingSurvivors(
   const replayed = replaySurvivors(initial, context);
   const associated = associatePrs(replayed, context);
   return await publishSurvivors(associated, context);
-}
-function survivorsOf(record: LandingProgress): Member[] {
-  return [
-    ...record.merges.slice((record.index ?? 0) + 1),
-    ...record.maintenance,
-  ];
 }
 function participant(record: LandingProgress, branch: string): Member {
   const member = [...record.merges, ...record.maintenance].find(
@@ -67,10 +62,10 @@ function replaySurvivors(
   context: TContext
 ): LandingProgress {
   let record = initial;
-  const survivors = survivorsOf(record);
+  const survivors = landingSurvivors(record);
   for (const member of survivors) {
     validateLocal(record, context);
-    let fresh = initContext(context, composeGit(), { inspection: true });
+    const fresh = initContext(context, composeGit(), { inspection: true });
     const expected = owned(participant(record, member.branch));
     if (expected.parent === current(record).branch) {
       fresh.engine.setParent(
@@ -83,8 +78,13 @@ function replaySurvivors(
         parent: record.trunk,
         metadata: git(['rev-parse', `refs/branch-metadata/${member.branch}`]),
       });
-      fresh = initContext(context, composeGit(), { inspection: true });
     }
+  }
+  // Continuation replays the whole pending queue, so every direct root must
+  // already have its durable parent before the first possible conflict.
+  for (const member of survivors) {
+    validateLocal(record, context);
+    const fresh = initContext(context, composeGit(), { inspection: true });
     const before = owned(participant(record, member.branch));
     if (!fresh.engine.isBranchFixed(member.branch)) {
       const next = {
@@ -162,7 +162,7 @@ function associatePrs(
   context: TContext
 ): LandingProgress {
   let record = initial;
-  const survivors = survivorsOf(record);
+  const survivors = landingSurvivors(record);
   // Associate only already-existing participant PRs, so the existing footer builder
   // sees the complete surviving chain without submitting or creating any PR.
   for (const member of survivors) {
@@ -186,55 +186,72 @@ async function publishSurvivors(
   context: TContext
 ): Promise<LandingProgress> {
   let record = initial;
-  const survivors = survivorsOf(record);
+  const survivors = landingSurvivors(record);
   for (const member of survivors) {
-    validateLocal(record, context);
-    const expected = owned(participant(record, member.branch));
-    const published =
-      git([
-        'ls-remote',
-        '--heads',
-        record.remote,
-        `refs/heads/${member.branch}`,
-      ]).split(/\s+/)[0] || undefined;
-    if (expected.remoteHead) {
-      if (published !== expected.remoteHead && published !== expected.head)
-        throw new ExitFailedError(
-          `Remote head changed for ${member.branch}; captured-OID lease refused survivor push.`
-        );
-      if (published !== expected.head) {
-        withFrozenPushGuard(
-          { branch: member.branch, noVerify: false },
-          (prefix) =>
-            git([
-              ...prefix,
-              'push',
-              record.remote,
-              `--force-with-lease=refs/heads/${member.branch}:${expected.remoteHead}`,
-              `refs/heads/${member.branch}:refs/heads/${member.branch}`,
-            ])
-        );
-      }
-      if (
+    try {
+      validateLocal(record, context);
+      const expected = owned(participant(record, member.branch));
+      const published =
         git([
           'ls-remote',
           '--heads',
           record.remote,
           `refs/heads/${member.branch}`,
-        ]).split(/\s+/)[0] !== expected.head
-      )
+        ]).split(/\s+/)[0] || undefined;
+      if (expected.remoteHead) {
+        if (published !== expected.remoteHead && published !== expected.head)
+          throw new ExitFailedError(
+            `Remote head changed for ${member.branch}; captured-OID lease refused survivor push.`
+          );
+        if (published !== expected.head) {
+          withFrozenPushGuard(
+            { branch: member.branch, noVerify: false },
+            (prefix) =>
+              git([
+                ...prefix,
+                'push',
+                record.remote,
+                `--force-with-lease=refs/heads/${member.branch}:${expected.remoteHead}`,
+                `refs/heads/${member.branch}:refs/heads/${member.branch}`,
+              ])
+          );
+        }
+        if (
+          git([
+            'ls-remote',
+            '--heads',
+            record.remote,
+            `refs/heads/${member.branch}`,
+          ]).split(/\s+/)[0] !== expected.head
+        )
+          throw new ExitFailedError(
+            `Survivor push unconfirmed for ${member.branch}.`
+          );
+        record = updateReached(record, member.branch, {
+          ...expected,
+          remoteHead: expected.head,
+        });
+      } else if (published)
         throw new ExitFailedError(
-          `Survivor push unconfirmed for ${member.branch}.`
+          `Previously unpublished survivor ${member.branch} was published externally; inspect the saved scope.`
         );
-      record = updateReached(record, member.branch, {
-        ...expected,
-        remoteHead: expected.head,
-      });
-    } else if (published)
-      throw new ExitFailedError(
-        `Previously unpublished survivor ${member.branch} was published externally; inspect the saved scope.`
+      await updateSurvivorPr(record, member, context);
+      process.stdout.write(
+        `Maintained: ${member.branch}; head ${
+          owned(participant(record, member.branch)).head
+        }; ${member.number ? `existing PR #${member.number}` : 'no PR'}; ${
+          member.remoteHead
+            ? 'existing remote head verified'
+            : 'remains unpublished'
+        }.\n`
       );
-    await updateSurvivorPr(record, member, context);
+    } catch (error: unknown) {
+      throw new ExitFailedError(
+        `Survivor maintenance incomplete for ${member.branch}. ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
   }
   return record;
 }
@@ -263,7 +280,7 @@ async function updateSurvivorPr(
     createPrBodyFooter(fresh, member.branch)
   );
   if (pr.baseRefName !== expected.parent || pr.body !== body) {
-    fresh.engine.assertBranchEditable(member.branch);
+    validateLocal(record, context);
     await runGithubPrCommand(
       [
         'pr',

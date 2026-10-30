@@ -2,6 +2,10 @@ import { TContext } from '../lib/context';
 import { ExitFailedError } from '../lib/errors';
 import { composeGit } from '../lib/git/git';
 import { assertBranchEditable } from '../lib/engine/frozen_branch';
+import {
+  getMetadataRefList,
+  readMetadataRef,
+} from '../lib/engine/metadata_ref';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { ownsRebase } from '../lib/git/rebase_ownership';
 import { continueConfigFactory } from '../lib/spiffy/continuation_spf';
@@ -9,6 +13,8 @@ import {
   landingGit as git,
   loadLandingProgress,
   saveLandingProgress,
+  owned,
+  landingSurvivors,
 } from '../lib/landing_progress';
 
 /** A pending landing permits only its exact owned local rebase continuation. */
@@ -37,9 +43,37 @@ export function allowLandingContinuation(): boolean {
     throw new ExitFailedError(
       'Pending landing has no matching owned active local replay. Recovery preserved; inspect an land in the original project.'
     );
-  for (const branch of record.replay.pending) assertBranchEditable(branch);
-  assertBranchesAvailableInWorktrees(record.replay.pending);
+  assertLandingReplayParticipants();
   return true;
+}
+
+/** Hooks can change a queued participant after an earlier replay completes. */
+export function assertLandingReplayParticipants(): void {
+  const record = loadLandingProgress();
+  if (!record?.replay) return;
+  const survivors = landingSurvivors(record);
+  const names = new Set(survivors.map((member) => member.branch));
+  for (const branch of record.replay.pending) {
+    const member = survivors.find((item) => item.branch === branch);
+    if (
+      !member ||
+      git(['rev-parse', `refs/heads/${branch}`]) !== owned(member).head ||
+      git(['rev-parse', `refs/branch-metadata/${branch}`]) !==
+        owned(member).metadata
+    )
+      throw new ExitFailedError(
+        'Landing replay participant changed; replay queue remains incomplete; recovery preserved.'
+      );
+    assertBranchEditable(branch);
+  }
+  for (const branch of Object.keys(getMetadataRefList())) {
+    const parent = readMetadataRef(branch).parentBranchName;
+    if (parent && record.replay.pending.includes(parent) && !names.has(branch))
+      throw new ExitFailedError(
+        'Landing replay scope changed; no undisclosed descendants may be edited.'
+      );
+  }
+  assertBranchesAvailableInWorktrees(record.replay.pending);
 }
 
 export function recordLandingReplayCompletion(

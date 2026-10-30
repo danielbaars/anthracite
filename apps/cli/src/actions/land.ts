@@ -376,16 +376,6 @@ export async function land(
     throw new ExitFailedError(
       'Landing scope/readiness changed after confirmation; preview again. No changes made.'
     );
-  const participants = [...fresh.merges, ...fresh.maintenance];
-  if (
-    [fresh.trunk, ...participants.map((member) => member.branch)].some(
-      (parent) =>
-        participants.filter((member) => member.parent === parent).length > 1
-    )
-  )
-    throw new ExitFailedError(
-      'Fanout landing application is not implemented for this scope yet; no changes made. Use --dry-run.'
-    );
   await withLandingLock(async () => {
     const lockedContext = initContext(context, composeGit(), {
       inspection: true,

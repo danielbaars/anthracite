@@ -104,10 +104,7 @@ export function loadLandingProgress(): LandingProgress | undefined {
     const record = schema.parse(JSON.parse(fs.readFileSync(file, 'utf8')));
     const first = record.merges[0];
     const participants = [...record.merges, ...record.maintenance];
-    const survivors = [
-      ...record.merges.slice((record.index ?? 0) + 1),
-      ...record.maintenance,
-    ].map((item) => item.branch);
+    const survivors = landingSurvivors(record).map((item) => item.branch);
     const pending = record.replay?.pending;
     if (
       (pending &&
@@ -223,4 +220,22 @@ export function owned(
       remoteHead: member.remoteHead,
     }
   );
+}
+
+/** Original captured ancestry retains this merge's scope across partial reparents. */
+export function landingSurvivors(
+  record: LandingProgress
+): LandingProgress['merges'] {
+  const candidates = [
+    ...record.merges.slice((record.index ?? 0) + 1),
+    ...record.maintenance,
+  ];
+  const affected = new Set([current(record).branch]);
+  const survivors: LandingProgress['merges'] = [];
+  for (const member of candidates) {
+    if (!affected.has(member.parent)) continue;
+    affected.add(member.branch);
+    survivors.push(member);
+  }
+  return survivors;
 }

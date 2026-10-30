@@ -256,21 +256,6 @@ describe('public linear landing and prefixes', function () {
       .not.to.include('"create"')
       .and.not.include('"ready"');
   });
-  it('refuses fanout before the first write until fanout application is supported', () => {
-    fixture.branch('sibling', 'base');
-    const before = fixture.inspectionSnapshot();
-    const remote = fixture.git(['for-each-ref'], github.remote);
-    const result = fixture.run(['land', 'base', '--yes']);
-    expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stderr, fs.readFileSync(github.calls, 'utf8')).to.include(
-      'Fanout'
-    );
-    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
-    expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
-    expect(fs.readFileSync(github.calls, 'utf8'))
-      .not.to.include('"PUT"')
-      .and.not.include('"edit"');
-  });
 
   it('preserves concurrent remote work when a survivor push loses its explicit captured lease', () => {
     const original = fixture.git(['rev-parse', 'child']);
