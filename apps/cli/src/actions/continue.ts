@@ -7,6 +7,7 @@ import {
   getMandatoryBranches,
 } from '../lib/engine/frozen_branch';
 import {
+  ExitFailedError,
   NoGraphiteContinue,
   RebaseCheckoutError,
   RebaseConflictError,
@@ -157,6 +158,10 @@ export async function continueAction(
 }
 
 function finishContinuation(context: TContext, landingReplay: boolean): void {
+  if (landingReplay && loadLandingProgress()?.replay)
+    throw new ExitFailedError(
+      'Landing local replay queue remains incomplete. Recovery preserved; inspect the original project before resuming land.'
+    );
   clearContinuation(context);
   if (landingReplay) context.continueConfig.delete();
 }

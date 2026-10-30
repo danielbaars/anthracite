@@ -29,6 +29,23 @@ export function prepareLand(fixture: RelationCliFixture): PrFixture & {
   );
   fixture.env.ANTHRACITE_TEST_LAND_POLICY = policy;
   fixture.env.ANTHRACITE_TEST_LAND_REMOTE = github.remote;
+  const observed = path.join(fixture.root, 'land-observed-heads.json');
+  const remoteHeads = Object.fromEntries(
+    fixture
+      .git(
+        [
+          'for-each-ref',
+          '--format=%(refname:short) %(objectname)',
+          'refs/heads',
+        ],
+        github.remote
+      )
+      .split('\n')
+      .filter(Boolean)
+      .map((line) => line.split(' '))
+  );
+  fs.writeFileSync(observed, JSON.stringify(remoteHeads));
+  fixture.env.ANTHRACITE_TEST_LAND_OBSERVED = observed;
   const original = fs.readFileSync(path.join(github.bin, 'gh'), 'utf8');
   fs.writeFileSync(
     path.join(github.bin, 'gh'),

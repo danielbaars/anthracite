@@ -256,27 +256,29 @@ if (
     fs.writeFileSync(temporary, JSON.stringify(prs));
     fs.renameSync(temporary, file);
   };
+  const observedFile = process.env.ANTHRACITE_TEST_LAND_OBSERVED;
+  const previous = JSON.parse(fs.readFileSync(observedFile, 'utf8'));
+  const actual = Object.fromEntries(
+    cp
+      .execFileSync(
+        'git',
+        [
+          '--git-dir=' + process.env.ANTHRACITE_TEST_LAND_REMOTE,
+          'for-each-ref',
+          '--format=%(refname:short) %(objectname)',
+          'refs/heads',
+        ],
+        { encoding: 'utf8' }
+      )
+      .trim()
+      .split('\n')
+      .filter(Boolean)
+      .map((line) => line.split(' '))
+  );
   for (const pr of prs.filter((item) => item.state === 'OPEN')) {
-    const revision = (branch) => {
-      try {
-        return cp
-          .execFileSync(
-            'git',
-            [
-              '--git-dir=' + process.env.ANTHRACITE_TEST_LAND_REMOTE,
-              'rev-parse',
-              '--verify',
-              'refs/heads/' + branch,
-            ],
-            { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }
-          )
-          .trim();
-      } catch {
-        return undefined;
-      }
-    };
+    const revision = (branch) => actual[branch];
     const head = revision(pr.headRefName);
-    if (head && head !== pr.headRefOid) {
+    if (head && previous[pr.headRefName] && head !== previous[pr.headRefName]) {
       changed = true;
       pr.headRefOid = head;
       if (policy.dismissAfterPush) pr.reviewDecision = 'REVIEW_REQUIRED';
@@ -291,12 +293,17 @@ if (
         ];
     }
     const base = revision(pr.baseRefName);
-    if (base && base !== pr.baseRefOid) {
+    if (base && previous[pr.baseRefName] && base !== previous[pr.baseRefName]) {
       changed = true;
       pr.baseRefOid = base;
     }
   }
   if (changed) save();
+  if (JSON.stringify(previous) !== JSON.stringify(actual)) {
+    const temporary = observedFile + '.' + process.pid + '.tmp';
+    fs.writeFileSync(temporary, JSON.stringify(actual));
+    fs.renameSync(temporary, observedFile);
+  }
   if (args[1] === 'edit') {
     fs.appendFileSync(
       process.env.ANTHRACITE_TEST_PR_CALLS,

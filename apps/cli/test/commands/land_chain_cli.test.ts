@@ -381,4 +381,39 @@ describe('public linear landing and prefixes', function () {
         .map((pr: { state: string }) => pr.state)
     ).to.deep.equal(['MERGED', 'MERGED']);
   });
+  it('never reports a completed local continuation when a late frozen survivor leaves replay pending', () => {
+    fixture.ok(['freeze', 'tip']);
+    const frozen = fixture.git(['rev-parse', 'refs/branch-metadata/tip']);
+    fixture.ok(['unfreeze', 'base']);
+    const policy = JSON.parse(fs.readFileSync(github.policy, 'utf8'));
+    fs.writeFileSync(
+      github.policy,
+      JSON.stringify({ ...policy, replayConflict: true })
+    );
+    const stopped = fixture.run(['land', 'base', '--yes']);
+    expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
+    expect(stopped.stderr).to.include('an continue');
+    const tip = fixture.git(['rev-parse', 'tip']);
+    const remote = fixture.git(['for-each-ref'], github.remote);
+    const calls = fs.readFileSync(github.calls, 'utf8');
+    fs.writeFileSync(
+      path.join(fixture.repo, '.git', 'hooks', 'post-rewrite'),
+      '#!/bin/sh\ngit update-ref refs/branch-metadata/tip ' + frozen + '\n',
+      { mode: 0o755 }
+    );
+    fs.writeFileSync(path.join(fixture.repo, 'child.txt'), 'resolved child\n');
+    fixture.git(['add', 'child.txt']);
+    const continued = fixture.run(['continue']);
+    expect(continued.status, continued.stdout + continued.stderr).to.equal(1);
+    expect(continued.stderr).to.include('replay queue remains incomplete');
+    expect(fixture.git(['rev-parse', 'tip'])).to.equal(tip);
+    expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
+    expect(fs.readFileSync(github.calls, 'utf8')).to.equal(calls);
+    expect(
+      fs.existsSync(path.join(fixture.repo, '.git', '.anthracite_landing'))
+    ).to.equal(true);
+    expect(
+      fs.existsSync(path.join(fixture.repo, '.git', '.gtcontinue'))
+    ).to.equal(true);
+  });
 });
