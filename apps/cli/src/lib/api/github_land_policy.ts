@@ -58,7 +58,7 @@ const requiredChecks = z.object({
     .array(
       z.object({
         context: z.string(),
-        app_id: z.number().nullable().optional(),
+        app_id: z.number().int().nullable().optional(),
       })
     )
     .optional(),
@@ -122,13 +122,27 @@ export async function getGithubLandPolicy(
     const classic = classicSchema.parse(
       await readGithubLandApi(`${prefix}/branches/${branch}/protection`)
     );
+    if (
+      classic.url !==
+      `https://api.github.com/repos/${repository.full_name}/branches/${branch}/protection`
+    )
+      throw new ExitFailedError('Classic protection identity mismatch.');
     reviews =
       classic.required_pull_request_reviews?.required_approving_review_count ??
       0;
     for (const name of classic.required_status_checks?.contexts ?? [])
       checks.add(name);
-    for (const check of classic.required_status_checks?.checks ?? [])
+    for (const check of classic.required_status_checks?.checks ?? []) {
       checks.add(check.context);
+      if (
+        check.app_id !== undefined &&
+        check.app_id !== null &&
+        check.app_id !== -1
+      )
+        blockers.push(
+          `Required check publisher is unsupported: ${check.context} (GitHub App ${check.app_id}).`
+        );
+    }
   }
   for (const rule of rules) {
     switch (rule.type) {
@@ -150,11 +164,24 @@ export async function getGithubLandPolicy(
       case 'required_status_checks': {
         const parameters = z
           .object({
-            required_status_checks: z.array(z.object({ context: z.string() })),
+            required_status_checks: z.array(
+              z.object({
+                context: z.string(),
+                integration_id: z.number().int().nullable().optional(),
+              })
+            ),
           })
           .parse(rule.parameters);
-        for (const check of parameters.required_status_checks)
+        for (const check of parameters.required_status_checks) {
           checks.add(check.context);
+          if (
+            check.integration_id !== undefined &&
+            check.integration_id !== null
+          )
+            blockers.push(
+              `Required check publisher is unsupported: ${check.context} (GitHub App ${check.integration_id}).`
+            );
+        }
         break;
       }
       case 'merge_queue':
@@ -192,9 +219,21 @@ export function githubLandReadiness(
   if (!pr.statusCheckRollup) blockers.push('Checks unavailable.');
   const successful = new Set<string>();
   for (const check of pr.statusCheckRollup ?? []) {
-    const name = check.name ?? check.context ?? 'unnamed';
-    const state = check.conclusion || check.state || check.status || 'UNKNOWN';
-    if (['SUCCESS', 'NEUTRAL', 'SKIPPED'].includes(state)) successful.add(name);
+    const name =
+      (check.__typename === 'CheckRun' ? check.name : check.context) ??
+      'unnamed';
+    const state =
+      check.__typename === 'CheckRun'
+        ? check.status === 'COMPLETED'
+          ? check.conclusion || 'UNKNOWN'
+          : check.status || 'UNKNOWN'
+        : check.state || 'UNKNOWN';
+    const passed =
+      check.__typename === 'CheckRun'
+        ? check.status === 'COMPLETED' &&
+          ['SUCCESS', 'NEUTRAL', 'SKIPPED'].includes(state)
+        : state === 'SUCCESS';
+    if (passed) successful.add(name);
     else blockers.push(`Check ${name}: ${state}.`);
   }
   for (const name of policy.checks)
