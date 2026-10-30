@@ -2,16 +2,19 @@
 
 This is a finite description of this source candidate. Use `an` for Anthracite and `gt` for Graphite. It is not a claim that every Graphite option, service or installed release behaves identically. [The command reference](./DOCUMENTATION.md) describes the actual flags.
 
+The [0.4.0 parity register](./docs/graphite-parity.md) is the current index of shipped work, remaining interfaces, deliberate differences and unanswered comparisons against the pinned Graphite 1.8.6 reference. Historical specifications and acceptance records keep their original source/version boundaries.
+
 The evidence below consists of public CLI subprocess tests with real temporary Git repositories, independent state observations and controlled external tools. Native acceptance runs the same scenario identities against a separately compiled candidate. Local PR adapters prove local workflow behavior, not GitHub or Graphite service acceptance. Build identities, measured counts, final review and publication receipts belong to the implementation delivery report; source test links alone do not assert that a particular build passed.
 
-## Twenty supported standard short forms
+## Supported short forms
 
-Each row has its own positive execution alongside its canonical form. The quoted scenario suffix is literal under the named public test suite, so the delivery report can reconcile it to current JS/native results. Other flags and modes require their own evidence.
+Rows link existing public-boundary tests or acceptance records. Quoted scenario suffixes are literal under their named suites. Historical execution counts belong to those records' pinned candidates; this documentation update does not rerun or relabel them as 0.4.0 acceptance. Other flags and modes require their own evidence.
 
 | Short form | Canonical target | Scope / default | Public outcome evidence |
 | --- | --- | --- | --- |
 | `c` | `create` | New branch above current or explicit `--onto`; staged commit | [short options](./apps/cli/test/commands/modern_short_options_cli.test.ts): `creates through c -o on the selected parent with staged content` |
 | `m` | `modify` | Amend current commit and restack descendants; `--commit` adds a commit | [short options](./apps/cli/test/commands/modern_short_options_cli.test.ts): `amends through m -e with a real permitted message editor and restacks children` |
+| `ab` | `absorb` | Staged text corrections into original feature commits, then mandatory descendant replay | [absorb acceptance](./docs/verification/absorb-implementation-2026-10-29.md), [bounded contract](./docs/specs/absorb.md) |
 | `s` | `submit` | Selected downstack, excluding descendants by default | [submit aliases](./apps/cli/test/commands/modern_submit_aliases_cli.test.ts): `submits downstack through s without publishing descendants or another stack` |
 | `ss` | `submit --stack` | Selected ancestors and descendants; later explicit stack booleans override default | [submit aliases](./apps/cli/test/commands/modern_submit_aliases_cli.test.ts): `submits the whole selected stack through ss by default` |
 | `co` | `checkout` | Explicit branch or interactive selector | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `co navigates to other while preserving refs and untracked work` |
@@ -24,7 +27,7 @@ Each row has its own positive execution alongside its canonical form. The quoted
 | `b` | `bottom` | First feature branch above trunk | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `b navigates to base while preserving refs and untracked work` |
 | `rn` | `rename` | Current branch; explicit name required without interaction | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `rn renames the branch and repairs its child parent without rewriting commits` |
 | `dl` | `delete` | Selected local branch; existing force/PR rules | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `dl deletes only the selected leaf and retains other refs` |
-| `sp` | `split` | Existing interactive by-commit/by-hunk workflow | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `sp splits two commits through real terminal selection and names` |
+| `sp` | `split` | Interactive by-commit/by-hunk or noninteractive by-file workflow | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `sp splits two commits through real terminal selection and names`; [file-split acceptance](./docs/verification/split-by-file-implementation-2026-10-28.md) |
 | `sq` | `squash` | Current branch commits, then descendant restack | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `sq squashes current commits and restacks descendants` |
 | `r` | `restack` | Whole selected stack by default; existing scope flags retained | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `r respects branch and only scope while rebasing a stale child` |
 | `tr` | `track` | Selected branch; explicit parent/force/downstack retained | [alias compatibility](./apps/cli/test/commands/modern_alias_compatibility_cli.test.ts): `tr tracks a selected untracked downstack without changing refs` |
@@ -35,7 +38,12 @@ Each row has its own positive execution alongside its canonical form. The quoted
 
 | Entry / family | Supported behavior | Evidence and limits |
 | --- | --- | --- |
-| `create -o` | Same tracked local parent selection as `--onto`; insert affects the selected parent's children | [short-option CLI](./apps/cli/test/commands/modern_short_options_cli.test.ts), existing create-onto suites. No remote branch selector or new staging mode. |
+| `create -o` | Same tracked local parent selection as `--onto`; insert affects chosen children of that parent | [short-option CLI](./apps/cli/test/commands/modern_short_options_cli.test.ts), existing create-onto suites. No remote branch selector or new staging mode. |
+| `create/c --insert/-i --insert-child` | Exact repeated child choices, or terminal multi-selection before mutation; noninteractive omission keeps all children and warns on multi-child scope | [targeted insertion](./docs/targeted-insertion.md), [acceptance and warning follow-up](./docs/verification/create-insert-child-selection-2026-10-29.md). Only chosen roots and necessary descendants are mandatory. |
+| `split/sp --by-file/--file/-f` | Extract a proper committed pathspec subset into a generated parent; retain original identity and replay necessary descendants | [file-split guide](./docs/split.md), [acceptance](./docs/verification/split-by-file-implementation-2026-10-28.md). Existing commit/hunk workflows remain. |
+| `mcp` | Local stdio server with `learn_an` and same-build `run_an_cmd` | [MCP guide](./docs/mcp.md), [acceptance](./docs/verification/mcp-support-implementation-2026-10-27.md). Existing publication authority and GitHub authentication remain; no new Graphite login. |
+| `freeze/unfreeze`, `get/g --unfrozen/-U` | Persistent directional protection and per-branch new-import author defaults | [frozen contract](#frozen-branch-compatibility). Existing status wins on updates; U affects new imports only. |
+| `absorb/ab` | Bounded text corrections, preview and owned input/conflict recovery | [absorb compatibility](#absorb-compatibility). Not a universal undo or arbitrary index-entry transformation. |
 | `modify -e` | Existing explicit message editor; message/no-edit precedence retained | [short-option CLI](./apps/cli/test/commands/modern_short_options_cli.test.ts). Editor permission still required. |
 | `modify` / `m --interactive-rebase` | Existing current-branch rebase, real editor change, descendant restack and saved continuation | [interactive-rebase CLI](./apps/cli/test/commands/modern_interactive_rebase_cli.test.ts). Other operation flags are ignored only when selector is true. Global interaction/cwd rules remain. Conflicts can preserve partial progress; no universal rollback. |
 | `log` / `l --classic` | Existing full classic renderer; effective false retains ordinary display | [classic-log CLI](./apps/cli/test/commands/modern_log_classic_cli.test.ts). Classic ignores reverse/stack/steps/show-untracked display selectors. Global pager/quiet rules remain. |
@@ -47,28 +55,28 @@ Each row has its own positive execution alongside its canonical form. The quoted
 | Extra `i`, `g`, `ro`, `ut`, `edit`/`e` | Registered legacy inspection/get/reorder/untrack/rebase entries remain | [legacy routes](./apps/cli/test/commands/modern_legacy_routes_cli.test.ts) exercises each. `g` uses a local bare remote and controlled PR adapter. |
 | `repo i`, `repo s`, `log s`, `log l`, `repo`/`user` | Local nested meanings retained; root aliases do not replace them | [legacy routes](./apps/cli/test/commands/modern_legacy_routes_cli.test.ts). Representative read/write workflow, not every setter or route mode certified. |
 | Bash/zsh/Fish completion | Actual public root/option/branch queries; generated Bash/zsh scripts and available shell smoke; Fish script content | [completion CLI](./apps/cli/test/commands/modern_completion_cli.test.ts). Fish uses local branches for move/track etc. and remote branches for get/g. No branch suggestions for mv. Full interactive Fish runtime certification remains unmeasured. |
-| Submit/get/sync PR workflows | Existing GitHub CLI integration and scoped local branch/PR behavior | Existing public CLI adapter suites. Live GitHub/Graphite acceptance, installation and release remain separate assignments. |
+| Submit/get/sync PR workflows | Existing GitHub CLI integration and scoped local branch/PR behavior; additive reviewers/assignees with `--roles-branch` | [role guide](./docs/submit.md), [acceptance](./docs/verification/submit-pr-roles-implementation-2026-10-28.md), [review corrections](./docs/verification/submit-pr-roles-review-fixes-2026-10-28.md). Retained controlled/live evidence is bounded; additional modes and service combinations need their own comparison. |
 
 ## Deliberate differences and deferred functionality
 
 | Feature | Status / boundary |
 | --- | --- |
 | Central `config` UI / configurable aliases / Graphite alias files | Unsupported. Existing `repo`/`user` configuration is not that UI; standard forms above are fixed registrations. |
-| `mg`, PR review/merge or merge queue | Unsupported. Raw `an merge` and `an revert` retain Git semantics and do not operate Graphite PRs. |
+| Dedicated PR review/stack merge (`mg` etc.) | Optional direct-GitHub work remains open as [G01](./docs/graphite-parity.md#open-functionality-and-decisions). Raw `an merge` retains Git semantics. Graphite's hosted merge queue is outside the goal. |
+| Dedicated `abort`, `undo`, `unlink` and stack-aware revert | No public handlers for those workflows. Raw Git abort/revert and `untrack` are not equivalent full contracts; see [G02–G04/G08](./docs/graphite-parity.md#open-functionality-and-decisions). |
 | Graphite token transport | Unsupported; rejected explicitly. Existing `an auth` uses `gh`, not Graphite activation. |
 | Feedback message service | Unsupported. Existing `feedback debug-context` is a local diagnostic route, not a message submission service. |
-| `freeze [branch]`, `unfreeze [branch]` | Persistent directional status with content, structural, restack, lifecycle, import, recovery and publication policies. See the bounded [frozen branch contract](#frozen-branch-compatibility) below and the [command reference](./DOCUMENTATION.md#frozen-branch-status). Final execution and review receipts identify the accepted source. |
-| `absorb` / `ab` | Local bounded text correction, mandatory replay and retained-input recovery; see [absorb compatibility](#absorb-compatibility). |
 | Multitrunk | Deferred; no success stubs introduced. |
-| `get`/`g` new-import defaults | Per-branch PR-author/current-gh-login matching; other or unknown authors are frozen. `--unfrozen`/`-U` overrides only new imports; saved decisions survive real get conflicts. Existing status survives remote updates. [Controlled CLI scenarios](./apps/cli/test/commands/get_import_defaults_cli.test.ts) use external gh fixtures and bare remotes; no live Graphite backend claim. |
-| Extra staging/selection/restack modes, split-by-file, extra get/submit/sync/delete/checkout modes | Deferred unless explicitly documented in the command reference. A similar existing option does not imply all modern Graphite modes. |
-| AI, update/verbose/into/reset-author and Graphite browser/service integrations | Outside this compatibility round. Unregistered internal source modules are not supported public commands. |
+| Additional create/modify/move/fold/get/submit/sync/delete/checkout/navigation modes | [G07](./docs/graphite-parity.md#g07-source-checked-option-examples) separates current interface gaps from unverified semantics. Split-by-file, interactive rebase, role targeting and selected insertion are already shipped. |
+| Graphite AI/browser/backend services and hosted merge queue | Outside the parity goal, not a later implementation phase. Independent local option gaps such as into/reset-author are separate from those services. |
 | Quiet interactive-rebase behavior | Deliberate Anthracite choice: quiet blocks the editor before mutation. The investigated Graphite invocation opened an editor. |
 | `ss` boolean overrides | Explicit fixed contract: later stack booleans replace its true default. Graphite backend scope with these combinations was not live measured. |
 | Raw Git prefixes | Existing direct cwd selection retained; other unsupported prefix positions may fail. No automatic branch fallback and no new generic Git-prefix grammar. |
 | Runtime / service coverage | JS/native local workflows and available shell checks are bounded evidence. No overall Graphite-parity percentage, cross-platform certification or live-service claim follows. |
 
-The proposed [local MCP specification](./docs/specs/mcp-support.md) and [protocol research](./docs/research/mcp-support-2026-10-27.md) describe the next agent-facing feature. This is planned functionality: the current accepted CLI does not yet serve MCP. Log-parity tracker #12 remains deferred.
+Local MCP is implemented and included in 0.4.0; its [specification](./docs/specs/mcp-support.md), [protocol research](./docs/research/mcp-support-2026-10-27.md) and [implementation acceptance](./docs/verification/mcp-support-implementation-2026-10-27.md) describe different evidence stages. Its existing tools now also expose split, role targeting, absorb and selected insertion through the same CLI. Log-parity tracker [#12](https://github.com/danielbaars/anthracite/issues/12) remains deferred; MCP delivery does not close or resume that work.
+
+Separate Anthracite maintenance: `test --upstack/--downstack` currently executes the whole stack. The two public 0.4.0 probes and source cause are recorded as [B01](./docs/graphite-parity.md#anthracite-maintenance-separate-from-parity); do not treat the flags as effective execution boundaries.
 
 ## Frozen branch compatibility
 
@@ -97,7 +105,7 @@ The approved research measured Graphite **1.8.6** cascade and lifecycle behavior
 
 Public feature suites use built CLI subprocesses, real temporary Git/bare/worktrees and independent commits/parents/trees/index/files/recovery observations. External gh, editors and hooks are controlled replay. This proves bounded local behavior, without live GitHub/Graphite accounts, authentication, PR services, global installation, source/upstream push or release acceptance. Bash/zsh smoke runs without startup files; Fish receives generated-content and public-query checks, without claiming full interactive Fish or platform certification.
 
-The freeze/unfreeze delivery must reconcile **100 stories, 32 policy rows and 15 decisions** to exact current JS/native scenario identities or explicit documentation controls. It requires the actual full current local suite (excluding the existing external large-repository clone), all current native command scenarios, exact Counter equality including multiplicity, zero failures/pending and independent Standards/Spec reviews on the same pinned source. Counts, hashes, original failed/red/partial runs and final source/run/review identities belong in that delivery evidence; this source document does not claim those gates have completed. The prior 81-story modern-command delivery and 34 original Graphite observations remain baseline/research, never acceptance of this implementation. Historical timeouts and incomplete reverse-engineering captures retain their original status.
+The original freeze/unfreeze specification set a delivery gate reconciling **100 stories, 32 policy rows and 15 decisions**, with complete local/native selections, Counter equality and independent reviews on a pinned source. Those are historical delivery requirements, not new 0.4.0 execution counts or instructions to run the full matrix for documentation or npm-only releases. Counts, hashes and failed/red/partial qualifications remain attached to their original delivery evidence. The prior modern-command observations likewise remain historical evidence; this source document does not claim fresh execution or complete Graphite parity.
 
 ## Absorb compatibility
 

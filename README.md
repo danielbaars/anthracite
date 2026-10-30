@@ -4,6 +4,8 @@ A CLI for stacked Git branches and GitHub pull requests. Use **`an`** or **`anth
 
 Anthracite builds on [Charcoal](https://github.com/danerwilliams/charcoal) and the formerly open-source Graphite CLI. See [credits and provenance](CREDITS.md). It supports local stacks and GitHub PRs through `gh`; it does not implement every current Graphite feature or require a Graphite subscription.
 
+See the [0.4.0 Graphite parity register](docs/graphite-parity.md) for shipped work, remaining interfaces, deliberate differences and evidence limits.
+
 ## Install
 
 Install the npm package with Node.js 24 or newer:

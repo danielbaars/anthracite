@@ -1,8 +1,8 @@
 # Anthracite command reference
 
-Anthracite is an open-source fork of the Graphite CLI for working with stacked branches and pull requests on GitHub. The command is `an`.
+Anthracite builds on Charcoal and the formerly open-source Graphite CLI for working with stacked branches and pull requests on GitHub. The commands are `an` and `anthracite`; see [credits](CREDITS.md).
 
-> **Using Graphite alongside Anthracite?** Use `an` for Anthracite and `gt` for Graphite. Modern top-level names and the twenty supported short forms are listed in [COMPATIBILITY.md](./COMPATIBILITY.md), together with retained legacy entries and explicit feature limits. This reference describes the source candidate, independently of any installed release.
+> **Using Graphite alongside Anthracite?** Use `an` for Anthracite and `gt` for Graphite. Modern top-level names and supported short forms are listed in [COMPATIBILITY.md](./COMPATIBILITY.md). The [0.4.0 parity register](docs/graphite-parity.md) separates shipped work, remaining interfaces and deliberate differences. This reference describes the source candidate, independently of any installed release.
 
 ---
 
@@ -24,8 +24,8 @@ Every command accepts these:
 | Flag | Description |
 | --- | --- |
 | `--cwd <directory>` | Select a repository before or after a Anthracite command. Raw Git accepts the existing direct prefix form. Relative paths resolve from the process directory. |
-| `--interactive` / `--no-interactive` | Default: both stdin and stdout must be terminals. Explicit interactive enables supported prompts/editors in pipes; quiet disables interaction. |
-| `-q`, `--quiet` | Suppress progress/tips and interaction. Inspection and help/completion data retain their output. Errors stay on stderr. |
+| `--interactive` / `--no-interactive` | Default: both stdin and stdout must be terminals. Explicit interactive can enable supported editor paths in pipes; prompts and pagers still need a usable terminal. Quiet disables interaction. |
+| `-q`, `--quiet` | Suppress progress/tips and interaction. Inspection and help/completion data retain their output. Errors and actionable warnings stay on stderr. |
 | `--verify` / `--no-verify` | Run commit/push hooks by default; disable them on those existing paths. This does not disable all Git rebase hooks. |
 | `--debug` | Display debug output. |
 | `--help` | Show help for any command. |
@@ -68,7 +68,10 @@ Create a new branch stacked on top of the current branch and commit staged chang
 | `-m`, `--message` | Commit staged changes on the new branch with this message. |
 | `-a`, `--all` | Stage all unstaged changes before committing. |
 | `-p`, `--patch` | Pick hunks to stage before committing. |
-| `-i`, `--insert` | Existing children of the selected parent (`--onto`, otherwise current branch) become children of the new branch. |
+| `-i`, `--insert` | Chosen direct children of the selected parent (`--onto`, otherwise current branch) become children of the new branch. |
+| `--insert-child <branch>` | Choose one exact direct child; repeat for more. Requires active `--insert`. Values are literal names, not comma lists or patterns. |
+
+With no explicit child values, a usable terminal offers multiple children with all initially selected and at least one required. Zero or one child is automatic. Noninteractive execution, including MCP and quiet, retains all children; implicit multi-child scope warns on stderr before creation. Explicit selection suppresses only the child menu. See [targeted insertion and recovery](docs/targeted-insertion.md).
 
 ```
 an create -am "Add login form"
@@ -322,18 +325,19 @@ an utr feature-x       # modern short form; an untrack and an ut remain availabl
 ```
 
 ### `test`
-Run a command on each branch in the current stack and aggregate the results. Use scope flags to limit which branches run.
+Run a command on each branch in the current stack and aggregate the results.
+
+**Known 0.4.0 limitation:** `--upstack` and `--downstack` are parsed but currently ignored by the action, which runs the whole stack. Do not rely on them to bound command execution. See [B01 and its public marker evidence](docs/graphite-parity.md#anthracite-maintenance-separate-from-parity).
 
 | Flag | Description |
 | --- | --- |
 | `<command>` | Positional: the command to run on each branch. |
-| `-d`, `--downstack` | Run from trunk to the current branch. |
-| `-u`, `--upstack` | Run on the current branch and its descendants. |
+| `-d`, `--downstack` | Intended ancestor scope; ineffective in 0.4.0, as noted above. |
+| `-u`, `--upstack` | Intended current/descendant scope; ineffective in 0.4.0, as noted above. |
 | `-t`, `--trunk` | Also run on the trunk branch. |
 
 ```
 an test "npm test"
-an test --upstack "npm run lint"
 ```
 
 ### `continue` (alias `cont`)
@@ -360,7 +364,9 @@ Idempotently force-push all branches from trunk to the current branch to GitHub,
 | `-d`, `--draft` | Create drafts or turn existing ready PRs into drafts. Conflicts with `--publish`. |
 | `-p`, `--publish` | Create ready PRs or publish existing drafts, including without interaction. With neither flag, new non-interactive PRs default to draft; existing status is retained. |
 | `-e`, `--edit` / `-n`, `--no-edit` | Edit PR fields inline. `--no-edit` takes precedence. |
-| `-r`, `--reviewers` | Prompt for reviewers, or pass a comma-separated list. |
+| `-r`, `--reviewers` | Add comma-separated users or organization/team reviewers without removing existing requests; no value prompts when interaction permits. |
+| `--assignees` | Add comma-separated GitHub users, including `@me`, without removing existing assignees. |
+| `--roles-branch <branch>` | Apply both supplied role lists only to this exact PR within the submission scope. Without it, roles apply to every selected PR. |
 | `--dry-run` | Report which PRs would be submitted, then exit. Nothing is pushed. |
 | `-c`, `--confirm` | Report the PRs and ask for confirmation before pushing. Ignored with `--no-interactive`/`--dry-run`. |
 | `--select` | Report the PRs and ask which to update/create. Ignored with `--no-interactive`/`--dry-run`. |
@@ -375,6 +381,8 @@ an ss -d               # whole selected stack, as drafts
 an ss --no-stack       # explicit downstack override
 an ss --branch target --dry-run
 ```
+
+Role targeting does not change which branches are submitted or implicitly publish drafts. See [reviewers, assignees and role targeting](docs/submit.md) for validation and partial-progress behavior.
 
 ### `sync`
 Pull the trunk branch from remote and delete any branches that have been merged. If trunk can't be fast-forwarded, it is overwritten with the remote version.
@@ -561,6 +569,16 @@ Create or regenerate a `.graphite_repo_config` file for the current repo (same a
 ```
 an init --trunk main
 ```
+
+### `mcp`
+Start the local stdio MCP server with `an mcp` or `anthracite mcp`. It exposes `learn_an` and `run_an_cmd`; execution uses the same build with literal arguments and an explicit absolute cwd. Discovery and learning require no GitHub login or Graphite token. GitHub actions retain existing `gh` authentication and publication approvals.
+
+| Flag | Description |
+| --- | --- |
+| `--command-timeout-ms` | Child execution deadline; default 300000 ms, range 1–3600000. |
+| `--max-output-bytes` | Combined child stdout/stderr limit; default 1048576 bytes, range 1024–16777216. |
+
+Children are noninteractive; give selectors and required metadata explicitly. Cancellation/interruption stops owned work but does not roll back Git changes. See [client configuration, execution envelopes and recovery](docs/mcp.md).
 
 ### `completion`
 Print a yargs bash/zsh completion script to stdout for the current shell. Root candidates include supported aliases; command option queries use their actual builders. Cwd selects branch candidates without prompts or a pager. Fish generator content is checked separately; full interactive fish behavior is not certified.
