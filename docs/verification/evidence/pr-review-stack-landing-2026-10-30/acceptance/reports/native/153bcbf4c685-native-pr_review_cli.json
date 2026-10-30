@@ -1,0 +1,288 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 15,
+    "passes": 15,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:20:39.127Z",
+    "end": "2026-10-30T19:22:13.569Z",
+    "duration": 94442
+  },
+  "tests": [
+    {
+      "title": "displays only the actual selected base-to-head diff while preserving dirty local work",
+      "fullTitle": "public head-bound GitHub review displays only the actual selected base-to-head diff while preserving dirty local work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1228,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a moving base or head without printing an unstable diff",
+      "fullTitle": "public head-bound GitHub review refuses a moving base or head without printing an unstable diff",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1691,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "submits one explicit approval to its full expected head and confirms the authenticated review",
+      "fullTitle": "public head-bound GitHub review submits one explicit approval to its full expected head and confirms the authenticated review",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1700,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves literal multiline Markdown and shell text in comment and changes-requested reviews",
+      "fullTitle": "public head-bound GitHub review preserves literal multiline Markdown and shell text in comment and changes-requested reviews",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 2006,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid action, expected-head and body input before any external write",
+      "fullTitle": "public head-bound GitHub review rejects invalid action, expected-head and body input before any external write",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 7436,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects a PR snapshot that moves before submission without creating a review",
+      "fullTitle": "public head-bound GitHub review rejects a PR snapshot that moves before submission without creating a review",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 2177,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an accepted older-head review and refuses current-head success without replacing it",
+      "fullTitle": "public head-bound GitHub review retains an accepted older-head review and refuses current-head success without replacing it",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1360,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports an accepted but lost response as uncertain and never duplicates its POST",
+      "fullTitle": "public head-bound GitHub review reports an accepted but lost response as uncertain and never duplicates its POST",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1167,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps wrong or unavailable review readback unverified without issuing another review",
+      "fullTitle": "public head-bound GitHub review keeps wrong or unavailable review readback unverified without issuing another review",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 7367,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "surfaces GitHub eligibility and permission rejection without changing PRs or local work",
+      "fullTitle": "public head-bound GitHub review surfaces GitHub eligibility and permission rejection without changing PRs or local work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1762,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a UTF-8 body file byte-for-text including its leading BOM",
+      "fullTitle": "public head-bound GitHub review preserves a UTF-8 body file byte-for-text including its leading BOM",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 952,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "provides public review help, literal branch completion and normal cwd selection",
+      "fullTitle": "public head-bound GitHub review provides public review help, literal branch completion and normal cwd selection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 3902,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves damaged caches and saved recovery while selecting physical HEAD for reads and writes",
+      "fullTitle": "public head-bound GitHub review preserves damaged caches and saved recovery while selecting physical HEAD for reads and writes",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 2727,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "permits explicit review reads and a single review during real detached conflict recovery without touching it",
+      "fullTitle": "public head-bound GitHub review permits explicit review reads and a single review during real detached conflict recovery without touching it",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 7064,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a changed base after submission without falsely calling its unchanged review head old",
+      "fullTitle": "public head-bound GitHub review reports a changed base after submission without falsely calling its unchanged review head old",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 958,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "displays only the actual selected base-to-head diff while preserving dirty local work",
+      "fullTitle": "public head-bound GitHub review displays only the actual selected base-to-head diff while preserving dirty local work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1228,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a moving base or head without printing an unstable diff",
+      "fullTitle": "public head-bound GitHub review refuses a moving base or head without printing an unstable diff",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1691,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "submits one explicit approval to its full expected head and confirms the authenticated review",
+      "fullTitle": "public head-bound GitHub review submits one explicit approval to its full expected head and confirms the authenticated review",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1700,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves literal multiline Markdown and shell text in comment and changes-requested reviews",
+      "fullTitle": "public head-bound GitHub review preserves literal multiline Markdown and shell text in comment and changes-requested reviews",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 2006,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid action, expected-head and body input before any external write",
+      "fullTitle": "public head-bound GitHub review rejects invalid action, expected-head and body input before any external write",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 7436,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects a PR snapshot that moves before submission without creating a review",
+      "fullTitle": "public head-bound GitHub review rejects a PR snapshot that moves before submission without creating a review",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 2177,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an accepted older-head review and refuses current-head success without replacing it",
+      "fullTitle": "public head-bound GitHub review retains an accepted older-head review and refuses current-head success without replacing it",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1360,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports an accepted but lost response as uncertain and never duplicates its POST",
+      "fullTitle": "public head-bound GitHub review reports an accepted but lost response as uncertain and never duplicates its POST",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1167,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps wrong or unavailable review readback unverified without issuing another review",
+      "fullTitle": "public head-bound GitHub review keeps wrong or unavailable review readback unverified without issuing another review",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 7367,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "surfaces GitHub eligibility and permission rejection without changing PRs or local work",
+      "fullTitle": "public head-bound GitHub review surfaces GitHub eligibility and permission rejection without changing PRs or local work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 1762,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a UTF-8 body file byte-for-text including its leading BOM",
+      "fullTitle": "public head-bound GitHub review preserves a UTF-8 body file byte-for-text including its leading BOM",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 952,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "provides public review help, literal branch completion and normal cwd selection",
+      "fullTitle": "public head-bound GitHub review provides public review help, literal branch completion and normal cwd selection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 3902,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves damaged caches and saved recovery while selecting physical HEAD for reads and writes",
+      "fullTitle": "public head-bound GitHub review preserves damaged caches and saved recovery while selecting physical HEAD for reads and writes",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 2727,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "permits explicit review reads and a single review during real detached conflict recovery without touching it",
+      "fullTitle": "public head-bound GitHub review permits explicit review reads and a single review during real detached conflict recovery without touching it",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 7064,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a changed base after submission without falsely calling its unchanged review head old",
+      "fullTitle": "public head-bound GitHub review reports a changed base after submission without falsely calling its unchanged review head old",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_review_cli.test.js",
+      "duration": 958,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:42:39.125Z",
+    "end": "2026-10-30T19:46:37.168Z",
+    "duration": 238043
+  },
+  "tests": [
+    {
+      "title": "merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 72444,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 70894,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 70591,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 72444,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 70894,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 70591,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

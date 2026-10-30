@@ -1,0 +1,216 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 11,
+    "passes": 11,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:56:12.646Z",
+    "end": "2026-10-30T18:58:00.272Z",
+    "duration": 107626
+  },
+  "tests": [
+    {
+      "title": "refuses a noncompleted check even when its conclusion says success",
+      "fullTitle": "public landing policy guards refuses a noncompleted check even when its conclusion says success",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1237,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "binds classic policy identity to the exact configured repository and trunk",
+      "fullTitle": "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1000,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses app-bound classic requirements when the check publisher is unverified",
+      "fullTitle": "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1117,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "fullTitle": "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1030,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses missing or contradictory completion data and ignores unrelated union fields",
+      "fullTitle": "public landing policy guards refuses missing or contradictory completion data and ignores unrelated union fields",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 14483,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "fullTitle": "public landing policy guards rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 5947,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains known no-requirements and successful unrestricted-check cases",
+      "fullTitle": "public landing policy guards retains known no-requirements and successful unrestricted-check cases",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 5630,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "verifies an app-bound required check on the exact PR head",
+      "fullTitle": "public landing policy guards verifies an app-bound required check on the exact PR head",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1053,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "fullTitle": "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 10259,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reads complete check-run pagination and refuses a later-page read failure",
+      "fullTitle": "public landing policy guards reads complete check-run pagination and refuses a later-page read failure",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1921,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "fullTitle": "public landing policy guards uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 13349,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses a noncompleted check even when its conclusion says success",
+      "fullTitle": "public landing policy guards refuses a noncompleted check even when its conclusion says success",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1237,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "binds classic policy identity to the exact configured repository and trunk",
+      "fullTitle": "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1000,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses app-bound classic requirements when the check publisher is unverified",
+      "fullTitle": "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1117,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "fullTitle": "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1030,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses missing or contradictory completion data and ignores unrelated union fields",
+      "fullTitle": "public landing policy guards refuses missing or contradictory completion data and ignores unrelated union fields",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 14483,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "fullTitle": "public landing policy guards rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 5947,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains known no-requirements and successful unrestricted-check cases",
+      "fullTitle": "public landing policy guards retains known no-requirements and successful unrestricted-check cases",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 5630,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "verifies an app-bound required check on the exact PR head",
+      "fullTitle": "public landing policy guards verifies an app-bound required check on the exact PR head",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1053,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "fullTitle": "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 10259,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reads complete check-run pagination and refuses a later-page read failure",
+      "fullTitle": "public landing policy guards reads complete check-run pagination and refuses a later-page read failure",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1921,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "fullTitle": "public landing policy guards uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 13349,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

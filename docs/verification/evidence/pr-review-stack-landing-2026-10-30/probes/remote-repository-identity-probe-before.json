@@ -1,0 +1,220 @@
+{
+  "source": "3b2f5e2fb864088ecf9f89b55b5bb5d1ce2c7cbc",
+  "method": "public CLI; real Git and two bare repositories; controlled external gh only; no live service effects",
+  "observation": {
+    "configuredGithubRepo": "fixture/inspection",
+    "declaredGitRemote": "https://github.com/other/mirror.git",
+    "transport": "repository-local normal Git insteadOf to a separate real bare mirror",
+    "sharedHead": "c03bf6a066a5ab16fef03a3d8c775e6232f7816e",
+    "sharedMergedResult": "80b501a52554ce086a5f4a089310b4b9173bc1fe",
+    "preview": {
+      "exitCode": 0,
+      "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target base\nTrunk: 80a4dab9c8e8580edcc29d011c0919cfe2d853dd -> 80b501a52554ce086a5f4a089310b4b9173bc1fe (fast-forward only)\nCleanup-only 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: c03bf6a066a5ab16fef03a3d8c775e6232f7816e\n  Base: main 80a4dab9c8e8580edcc29d011c0919cfe2d853dd (tracked parent main; replay base 80a4dab9c8e8580edcc29d011c0919cfe2d853dd)\n  State: MERGED; draft false; readiness CLEAN; verified merged result 80b501a52554ce086a5f4a089310b4b9173bc1fe\n  Verify trunk base/head immediately before effect\nCleanup: base (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\n",
+      "stderr": "",
+      "repositoryUnchanged": true
+    },
+    "application": {
+      "exitCode": 0,
+      "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target base\nTrunk: 80a4dab9c8e8580edcc29d011c0919cfe2d853dd -> 80b501a52554ce086a5f4a089310b4b9173bc1fe (fast-forward only)\nCleanup-only 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: c03bf6a066a5ab16fef03a3d8c775e6232f7816e\n  Base: main 80a4dab9c8e8580edcc29d011c0919cfe2d853dd (tracked parent main; replay base 80a4dab9c8e8580edcc29d011c0919cfe2d853dd)\n  State: MERGED; draft false; readiness CLEAN; verified merged result 80b501a52554ce086a5f4a089310b4b9173bc1fe\n  Verify trunk base/head immediately before effect\nCleanup: base (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: 80b501a52554ce086a5f4a089310b4b9173bc1fe.\nLanding complete: base; trunk advanced and landed refs/metadata cleaned.\n",
+      "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-7t1kzl/other-repository.git\n - [deleted]         base\n"
+    },
+    "configuredRepositoryBranchAfter": "c03bf6a066a5ab16fef03a3d8c775e6232f7816e",
+    "otherRepositoryBranchAfter": "",
+    "configuredRepositoryUnchanged": true,
+    "otherRepositoryChanged": true,
+    "ghCalls": [
+      [
+        "api",
+        "repos/fixture/inspection",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/branches/main",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/rules/branches/main?per_page=100&page=1",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "pr",
+        "list",
+        "--head",
+        "base",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/fixture/inspection"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/pulls/17",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/branches/main",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/rules/branches/main?per_page=100&page=1",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "pr",
+        "list",
+        "--head",
+        "base",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/fixture/inspection"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/pulls/17",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/branches/main",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/rules/branches/main?per_page=100&page=1",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "pr",
+        "list",
+        "--head",
+        "base",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/fixture/inspection"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/pulls/17",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/branches/main",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/rules/branches/main?per_page=100&page=1",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "pr",
+        "list",
+        "--head",
+        "base",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/fixture/inspection"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/pulls/17",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ],
+      [
+        "api",
+        "repos/fixture/inspection/pulls/17",
+        "--hostname",
+        "github.com",
+        "--method",
+        "GET"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "source": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "node": "v24.22.2",
+  "first": {
+    "status": 1,
+    "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target child\nTrunk: 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 -> 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 (fast-forward only)\nMerge 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: b575cee74f56a26320e517a191b51bd793eb326f\n  Base: main 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 (tracked parent main; replay base 16a3b4176df772ce21cc67ec14ffbcedb44e5f64)\n  State: OPEN; draft false; readiness CLEAN\n  Verify trunk base/head immediately before effect\nMerge 2: child #18 https://github.com/fixture/inspection/pull/18\n  Head: 72ee4b709db131e9a975f3eb57932ea372023b26\n  Base: base b575cee74f56a26320e517a191b51bd793eb326f (tracked parent base; replay base b575cee74f56a26320e517a191b51bd793eb326f)\n  State: OPEN; draft false; readiness CLEAN\n  Before merge: replay own commits onto trunk; update existing remote head and PR base/footer; recheck readiness\nMaintain: tip\n  Reparent to main; replay from child (72ee4b709db131e9a975f3eb57932ea372023b26); head 4075b3753f85355b631c70c7807a93751b83e92a\n  Update existing remote head 4075b3753f85355b631c70c7807a93751b83e92a\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base, child (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: f4f643a9473243f97c50cede6b189f4e4c343ea3.\nMaintained: child; head ec9fd66ec46977b14fff07886a3951f9e21950d9; existing PR #18; existing remote head verified.\nMaintained: tip; head 0ae44c7bfb7daf83cf6b352d55b6cc62a064ad15; existing PR #19; existing remote head verified.\n",
+    "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-8syhOJ/remote.git\n - [deleted]         base\nERROR: Landing incomplete at merge request. Confirmed merged #17 (f4f643a9473243f97c50cede6b189f4e4c343ea3); Merge unconfirmed or uncertain; later work unattempted. Fresh readiness blocked: Check unit: IN_PROGRESS. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-8syhOJ/repo; rerun an land child --yes.\n"
+  },
+  "preview": {
+    "status": 1,
+    "stdout": "Pending landing: fixture/inspection trunk main target child; phase prepared.\nMerge: #18 head ec9fd66ec46977b14fff07886a3951f9e21950d9\nCleanup: child; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-8syhOJ/repo\nRemaining trunk maintenance: fast-forward main; phase prepared.\nMerge: child #18; reached head ec9fd66ec46977b14fff07886a3951f9e21950d9; captured head 72ee4b709db131e9a975f3eb57932ea372023b26\nMaintain: tip; parent child -> main; replay base ec9fd66ec46977b14fff07886a3951f9e21950d9; reached head 0ae44c7bfb7daf83cf6b352d55b6cc62a064ad15; verify required replay\nPush: tip; verify or update existing leased head\nPR update: tip; verify existing #19 base/dependency footer\nCleanup: child; verify merged results and leased remote/local deletion; restore base.\nBLOCKED: Clean index/worktree required, including untracked files.\nBLOCKED: child: Check unit: IN_PROGRESS.\n",
+    "stderr": "ERROR: Pending landing preview blocked; recovery and repository preserved.\n"
+  },
+  "unchanged": true,
+  "apply": {
+    "status": 1,
+    "stdout": "Pending landing: fixture/inspection trunk main target child; phase prepared.\nMerge: #18 head ec9fd66ec46977b14fff07886a3951f9e21950d9\nCleanup: child; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-8syhOJ/repo\n",
+    "stderr": "ERROR: Landing incomplete at reconciliation. Confirmed merged #17 (f4f643a9473243f97c50cede6b189f4e4c343ea3); Merge unconfirmed or uncertain; later work unattempted. Clean index/worktree required, including untracked files. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-8syhOJ/repo; rerun an land child --yes.\n"
+  }
+}

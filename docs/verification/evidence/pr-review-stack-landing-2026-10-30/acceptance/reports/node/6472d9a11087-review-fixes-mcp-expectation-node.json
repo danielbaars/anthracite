@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:51:39.143Z",
+    "end": "2026-10-30T18:52:33.657Z",
+    "duration": 54514
+  },
+  "tests": [
+    {
+      "title": "inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "fullTitle": "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_mcp_cli.test.js",
+      "duration": 54513,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "fullTitle": "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_mcp_cli.test.js",
+      "duration": 54513,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

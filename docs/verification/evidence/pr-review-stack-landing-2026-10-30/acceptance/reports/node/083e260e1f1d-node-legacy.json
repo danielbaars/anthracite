@@ -1,0 +1,108 @@
+{
+  "stats": {
+    "suites": 5,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:26:28.019Z",
+    "end": "2026-10-30T19:27:07.594Z",
+    "duration": 39575
+  },
+  "tests": [
+    {
+      "title": "submits the selected stack but adds reviewers only to its explicit role target",
+      "fullTitle": "submit reviewer role targets through the public CLI submits the selected stack but adds reviewers only to its explicit role target",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 6033,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "drafts unchanged ready PRs only in the selected scope and preserves their fields",
+      "fullTitle": "draft existing PRs through the built CLI drafts unchanged ready PRs only in the selected scope and preserves their fields",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/submit_draft_cli.test.js",
+      "duration": 8084,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gets the implicit current target and keeps equal tips stable on repetition",
+      "fullTitle": "get CLI safe fast-forward gets the implicit current target and keeps equal tips stable on repetition",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/get_fast_forward_cli.test.js",
+      "duration": 2946,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "fullTitle": "frozen sync through the public CLI skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/frozen_sync_cli.test.js",
+      "duration": 7982,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "fullTitle": "MCP cancellation and shutdown through stdio scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
+      "duration": 5438,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "submits the selected stack but adds reviewers only to its explicit role target",
+      "fullTitle": "submit reviewer role targets through the public CLI submits the selected stack but adds reviewers only to its explicit role target",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/submit_roles_branch_cli.test.js",
+      "duration": 6033,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "drafts unchanged ready PRs only in the selected scope and preserves their fields",
+      "fullTitle": "draft existing PRs through the built CLI drafts unchanged ready PRs only in the selected scope and preserves their fields",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/submit_draft_cli.test.js",
+      "duration": 8084,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gets the implicit current target and keeps equal tips stable on repetition",
+      "fullTitle": "get CLI safe fast-forward gets the implicit current target and keeps equal tips stable on repetition",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/get_fast_forward_cli.test.js",
+      "duration": 2946,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "fullTitle": "frozen sync through the public CLI skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/frozen_sync_cli.test.js",
+      "duration": 7982,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "fullTitle": "MCP cancellation and shutdown through stdio scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
+      "duration": 5438,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

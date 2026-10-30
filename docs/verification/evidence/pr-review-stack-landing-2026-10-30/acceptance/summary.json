@@ -1,0 +1,20 @@
+{
+  "status": "accepted",
+  "implementationCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "validationTestCommit": "735a3d9a83f3efdd6a20920510cf8b7564c79a8d",
+  "productionSourceFiles": 270,
+  "productionAggregateSha256": "be245d1aa6620f8bb058c0ee1881ab82a30054da6811109afecbff9954a2864d",
+  "node": {
+    "feature": 112,
+    "legacy": 7
+  },
+  "native": {
+    "feature": 112,
+    "legacy": 7
+  },
+  "installedMcp": {
+    "tests": 1,
+    "passes": 1
+  },
+  "reportFiles": 35
+}

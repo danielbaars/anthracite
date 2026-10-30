@@ -1,0 +1,18 @@
+{
+  "first": {
+    "status": 1,
+    "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target child\nTrunk: 3a1f7cb45f894e2a3bf0a715a05b145db2c1d1a8 -> 3a1f7cb45f894e2a3bf0a715a05b145db2c1d1a8 (fast-forward only)\nMerge 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: ebaaebb50b5d4f17a9676dabca532e01a1700854\n  Base: main 3a1f7cb45f894e2a3bf0a715a05b145db2c1d1a8 (tracked parent main; replay base 3a1f7cb45f894e2a3bf0a715a05b145db2c1d1a8)\n  State: OPEN; draft false; readiness CLEAN\n  Verify trunk base/head immediately before effect\nMerge 2: child #18 https://github.com/fixture/inspection/pull/18\n  Head: 5f5d977b6c2516e788dccff21f457b73819d5290\n  Base: base ebaaebb50b5d4f17a9676dabca532e01a1700854 (tracked parent base; replay base ebaaebb50b5d4f17a9676dabca532e01a1700854)\n  State: OPEN; draft false; readiness CLEAN\n  Before merge: replay own commits onto trunk; update existing remote head and PR base/footer; recheck readiness\nMaintain: tip\n  Reparent to main; replay from child (5f5d977b6c2516e788dccff21f457b73819d5290); head c37ff126d37bc65c7e93774a11527c53e26afb05\n  Update existing remote head c37ff126d37bc65c7e93774a11527c53e26afb05\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base, child (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: 0c0eff14aec4142534e8e91ca937133dd8da29ae.\nMaintained: child; head 0a6810b96de57332038a77f9bf88ae311f8c2574; existing PR #18; existing remote head verified.\nMaintained: tip; head a243001e128b90751f856a498e9e0fcae013f939; existing PR #19; existing remote head verified.\n",
+    "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-ZWL2iQ/remote.git\n - [deleted]         base\nERROR: Landing incomplete at merge request. Confirmed merged #17 (0c0eff14aec4142534e8e91ca937133dd8da29ae); Merge unconfirmed or uncertain; later work unattempted. Fresh readiness blocked: Check unit: IN_PROGRESS. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-ZWL2iQ/repo; rerun an land child --yes.\n"
+  },
+  "preview": {
+    "status": 0,
+    "stdout": "Pending landing: fixture/inspection trunk main target child; phase prepared.\nMerge: #18 head 0a6810b96de57332038a77f9bf88ae311f8c2574\nCleanup: child; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-ZWL2iQ/repo\n",
+    "stderr": ""
+  },
+  "unchanged": true,
+  "apply": {
+    "status": 1,
+    "stdout": "Pending landing: fixture/inspection trunk main target child; phase prepared.\nMerge: #18 head 0a6810b96de57332038a77f9bf88ae311f8c2574\nCleanup: child; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-ZWL2iQ/repo\n",
+    "stderr": "ERROR: Landing incomplete at reconciliation. Confirmed merged #17 (0c0eff14aec4142534e8e91ca937133dd8da29ae); Merge unconfirmed or uncertain; later work unattempted. Clean index/worktree required, including untracked files. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-ZWL2iQ/repo; rerun an land child --yes.\n"
+  }
+}

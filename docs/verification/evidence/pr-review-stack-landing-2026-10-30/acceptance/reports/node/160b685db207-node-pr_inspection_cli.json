@@ -1,0 +1,216 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 11,
+    "passes": 11,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:23:22.497Z",
+    "end": "2026-10-30T19:24:42.864Z",
+    "duration": 80367
+  },
+  "tests": [
+    {
+      "title": "shows fresh complete configured-repository identity without changing local or remote state",
+      "fullTitle": "public GitHub PR inspection shows fresh complete configured-repository identity without changing local or remote state",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 1159,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the complete connected fanout and opens only the selected PR when explicitly requested",
+      "fullTitle": "public GitHub PR inspection shows the complete connected fanout and opens only the selected PR when explicitly requested",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 3294,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "provides help and literal branch completion and rejects invalid selectors before inspection",
+      "fullTitle": "public GitHub PR inspection provides help and literal branch completion and rejects invalid selectors before inspection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 3693,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps numeric and shell-sensitive branch names literal through cwd and subdirectory selection",
+      "fullTitle": "public GitHub PR inspection keeps numeric and shell-sensitive branch names literal through cwd and subdirectory selection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 3586,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves dirty bytes, staging, damaged caches and saved recovery while using physical HEAD",
+      "fullTitle": "public GitHub PR inspection preserves dirty bytes, staging, damaged caches and saved recovery while using physical HEAD",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 2172,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports unavailable policy and checks explicitly and refuses web when no PR exists",
+      "fullTitle": "public GitHub PR inspection reports unavailable policy and checks explicitly and refuses web when no PR exists",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 2436,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses stale associations, wrong identities and ambiguous PRs without relinking",
+      "fullTitle": "public GitHub PR inspection refuses stale associations, wrong identities and ambiguous PRs without relinking",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 6154,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not reuse a stored association from a different configured repository",
+      "fullTitle": "public GitHub PR inspection does not reuse a stored association from a different configured repository",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 2864,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "distinguishes missing gh, authentication, rate limit, network and malformed responses from no PR",
+      "fullTitle": "public GitHub PR inspection distinguishes missing gh, authentication, rate limit, network and malformed responses from no PR",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 4561,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a real detached rebase recovery and permits only explicit branch inspection",
+      "fullTitle": "public GitHub PR inspection preserves a real detached rebase recovery and permits only explicit branch inspection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 7518,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses uninitialized, untracked and unsupported-host repositories without repairing them",
+      "fullTitle": "public GitHub PR inspection refuses uninitialized, untracked and unsupported-host repositories without repairing them",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 1699,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "shows fresh complete configured-repository identity without changing local or remote state",
+      "fullTitle": "public GitHub PR inspection shows fresh complete configured-repository identity without changing local or remote state",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 1159,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the complete connected fanout and opens only the selected PR when explicitly requested",
+      "fullTitle": "public GitHub PR inspection shows the complete connected fanout and opens only the selected PR when explicitly requested",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 3294,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "provides help and literal branch completion and rejects invalid selectors before inspection",
+      "fullTitle": "public GitHub PR inspection provides help and literal branch completion and rejects invalid selectors before inspection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 3693,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps numeric and shell-sensitive branch names literal through cwd and subdirectory selection",
+      "fullTitle": "public GitHub PR inspection keeps numeric and shell-sensitive branch names literal through cwd and subdirectory selection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 3586,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves dirty bytes, staging, damaged caches and saved recovery while using physical HEAD",
+      "fullTitle": "public GitHub PR inspection preserves dirty bytes, staging, damaged caches and saved recovery while using physical HEAD",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 2172,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports unavailable policy and checks explicitly and refuses web when no PR exists",
+      "fullTitle": "public GitHub PR inspection reports unavailable policy and checks explicitly and refuses web when no PR exists",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 2436,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses stale associations, wrong identities and ambiguous PRs without relinking",
+      "fullTitle": "public GitHub PR inspection refuses stale associations, wrong identities and ambiguous PRs without relinking",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 6154,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not reuse a stored association from a different configured repository",
+      "fullTitle": "public GitHub PR inspection does not reuse a stored association from a different configured repository",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 2864,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "distinguishes missing gh, authentication, rate limit, network and malformed responses from no PR",
+      "fullTitle": "public GitHub PR inspection distinguishes missing gh, authentication, rate limit, network and malformed responses from no PR",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 4561,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a real detached rebase recovery and permits only explicit branch inspection",
+      "fullTitle": "public GitHub PR inspection preserves a real detached rebase recovery and permits only explicit branch inspection",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 7518,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses uninitialized, untracked and unsupported-host repositories without repairing them",
+      "fullTitle": "public GitHub PR inspection refuses uninitialized, untracked and unsupported-host repositories without repairing them",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/pr_inspection_cli.test.js",
+      "duration": 1699,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

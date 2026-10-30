@@ -1,0 +1,679 @@
+{
+  "sourceHead": "901561275fac5ee356e8651f0f2a7f536ce2ccf7",
+  "productionCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "count": 112,
+  "cases": [
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes leaves an unpublished descendant local without creating a PR or remote branch",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes recognizes a completed owned replay when its checkout hook fails and resumes without duplicating commits",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes reports incomplete cleanup when an earlier landed remote branch is recreated during final checkout",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_chain_cli.test.js",
+      "fullTitle": "public linear landing and prefixes never reports a completed local continuation when a late frozen survivor leaves replay pending",
+      "testPath": "apps/cli/test/commands/land_chain_cli.test.ts",
+      "testSha256": "f1c633de831f50b289ab725070f908516f30708a46f0ccf723be1a5b9250d753"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing continues a first-arm conflict across all reparented roots locally, then explicitly publishes the surviving arms",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing refuses a necessary frozen sibling before the first merge while unrelated protection is irrelevant",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing refuses a necessary worktree sibling before the first merge while unrelated protection is irrelevant",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's protection changes after the merge",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's scope changes after the merge",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing stops before replay when a necessary sibling's head changes after the merge",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing preserves a changed pending sibling before resolving an owned conflict continuation",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_fanout_cli.test.js",
+      "fullTitle": "public scoped fanout landing rechecks queued sibling identity between completed local replays",
+      "testPath": "apps/cli/test/commands/land_fanout_cli.test.ts",
+      "testSha256": "e13d95e73eaef43ebb40f009a814440819735cc3e18df0010939b7f1b24a345a"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing rebase merges the selected leaf, fast-forwards trunk and cleans only landed refs and metadata",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing retains an accepted uncertain merge and resumes from a fresh process without merging twice",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing preserves unrelated recovery and blocks ordinary mutation before initialization can erase pending landing",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing reconciles after target deletion and restores a surviving original checkout",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing preserves a remote head changed inside pre-push using the captured deletion lease",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing retains a confirmed merge when trunk advancement fails and resumes without resetting local work",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing preserves invalid and foreign landing records and refuses before external effects",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing retains merge intent through terminal interruption and reconciles it in a fresh process",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing rejects an expected-head race at the direct merge boundary without merging newer remote work",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing refuses an exit-zero queued response and never treats an unmerged PR as landed",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing refuses multiple push destinations before merge, record or remote cleanup effects",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_leaf_cli.test.js",
+      "fullTitle": "public one-leaf landing preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance",
+      "testPath": "apps/cli/test/commands/land_leaf_cli.test.ts",
+      "testSha256": "157f3a8dace26a1371259e266a62b7a030e5d1e2687f5d28ed11d99c7c33339b"
+    },
+    {
+      "file": "land_mcp_cli.test.js",
+      "fullTitle": "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+      "testPath": "apps/cli/test/commands/land_mcp_cli.test.ts",
+      "testSha256": "f1f88af2829cc4f8292c1e0b98880f7ad56757732bcad24c546ab20bf208e2a2"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards refuses a noncompleted check even when its conclusion says success",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards refuses missing or contradictory completion data and ignores unrelated union fields",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards retains known no-requirements and successful unrestricted-check cases",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards verifies an app-bound required check on the exact PR head",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards reads complete check-run pagination and refuses a later-page read failure",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_policy_cli.test.js",
+      "fullTitle": "public landing policy guards uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "testPath": "apps/cli/test/commands/land_policy_cli.test.ts",
+      "testSha256": "ffabd049715a411c87b13bc54ed5128d202638560ba77dc55995133e7af89da7"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview refuses local dirt and recovery while preserving every byte",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview requires explicit application consent for fanout before any writes",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview supports literal selectors, help and completion and rejects unsupported routes",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview protects mandatory participants and ignores frozen or occupied independent stacks",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview cancels terminal confirmation and revalidates changed participants before application",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview does not accept malformed classic policy as known no-requirements",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_preview_cli.test.js",
+      "fullTitle": "public scoped landing preview previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "testPath": "apps/cli/test/commands/land_preview_cli.test.ts",
+      "testSha256": "4b244033491dd4792a5942682101aea1955f188ff7f6f518e96eb30e803c987a"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery preserves an unchanged pending local queue after a rejected pre-rebase hook and resumes explicitly",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery preserves raw-aborted replay and foreign continuation with actionable local inspection",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery preserves malformed, foreign, live and unproven locks rather than guessing acquisition ownership",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery retains an interrupted replay with changed refs for guarded manual inspection without replaying again",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery does not invent landing ownership when SIGKILL happens before the first durable record",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery preserves a replaced continuation after a completed replay without starting the next pending branch",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after trunk advance without repeating confirmed merge or completed replay",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after head push without repeating confirmed merge or completed replay",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after PR update without repeating confirmed merge or completed replay",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery reconciles SIGKILL after local cleanup without repeating confirmed merge or completed replay",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_recovery_cli.test.js",
+      "fullTitle": "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "testPath": "apps/cli/test/commands/land_recovery_cli.test.ts",
+      "testSha256": "b3a94c34dc3778682128c932cd6d70ca81dcf94865d73cc54d77b2254812f5bb"
+    },
+    {
+      "file": "land_surface_cli.test.js",
+      "fullTitle": "review and landing public surface documents full landing and local-only continue, completes literal branches, preserves quiet cwd preview and raw merge semantics",
+      "testPath": "apps/cli/test/commands/land_surface_cli.test.ts",
+      "testSha256": "31fd1c470a832fb3c057e631cb96e2769144ca16b0662cf511db806d8e4e6ebb"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions refuses equal-OID remotes declaring a different repository or provider before transport or service effects",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions accepts canonical SSH declarations and refuses credential, port and URL suffix ambiguity without echoing credentials",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions preserves a foreign continuation introduced during the final local replay and records its reached head",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions cleans multiple verified merged ancestors without replaying or publishing them while maintaining the open target and fanout",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "land_review_fixes_cli.test.js",
+      "fullTitle": "public landing review regressions revalidates endpoint identity before active continuation writes and between completed local replays",
+      "testPath": "apps/cli/test/commands/land_review_fixes_cli.test.ts",
+      "testSha256": "7a4e66134abbe2459f571ecdfb4a4d2dd97a96cdf98ac7e33b6ad8a83d5926f8"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection shows fresh complete configured-repository identity without changing local or remote state",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection shows the complete connected fanout and opens only the selected PR when explicitly requested",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection provides help and literal branch completion and rejects invalid selectors before inspection",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection keeps numeric and shell-sensitive branch names literal through cwd and subdirectory selection",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection preserves dirty bytes, staging, damaged caches and saved recovery while using physical HEAD",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection reports unavailable policy and checks explicitly and refuses web when no PR exists",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection refuses stale associations, wrong identities and ambiguous PRs without relinking",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection does not reuse a stored association from a different configured repository",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection distinguishes missing gh, authentication, rate limit, network and malformed responses from no PR",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection preserves a real detached rebase recovery and permits only explicit branch inspection",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_inspection_cli.test.js",
+      "fullTitle": "public GitHub PR inspection refuses uninitialized, untracked and unsupported-host repositories without repairing them",
+      "testPath": "apps/cli/test/commands/pr_inspection_cli.test.ts",
+      "testSha256": "2159e873909be235aa25083938181c815eec4558229eb2f912b91b55cb529b21"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review displays only the actual selected base-to-head diff while preserving dirty local work",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review refuses a moving base or head without printing an unstable diff",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review submits one explicit approval to its full expected head and confirms the authenticated review",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review preserves literal multiline Markdown and shell text in comment and changes-requested reviews",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review rejects invalid action, expected-head and body input before any external write",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review rejects a PR snapshot that moves before submission without creating a review",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review retains an accepted older-head review and refuses current-head success without replacing it",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review reports an accepted but lost response as uncertain and never duplicates its POST",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review keeps wrong or unavailable review readback unverified without issuing another review",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review surfaces GitHub eligibility and permission rejection without changing PRs or local work",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review preserves a UTF-8 body file byte-for-text including its leading BOM",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review provides public review help, literal branch completion and normal cwd selection",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review preserves damaged caches and saved recovery while selecting physical HEAD for reads and writes",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review permits explicit review reads and a single review during real detached conflict recovery without touching it",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    },
+    {
+      "file": "pr_review_cli.test.js",
+      "fullTitle": "public head-bound GitHub review reports a changed base after submission without falsely calling its unchanged review head old",
+      "testPath": "apps/cli/test/commands/pr_review_cli.test.ts",
+      "testSha256": "06351ba55d0729729c7758be91392aaaca59da49a72795c364611affe0c4064b"
+    }
+  ]
+}

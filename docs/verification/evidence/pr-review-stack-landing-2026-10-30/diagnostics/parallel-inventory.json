@@ -1,0 +1,229 @@
+{
+  "copiedAt": "2026-10-30T19:03:52.622Z",
+  "load": [
+    5.3115234375,
+    45.04052734375,
+    49.6923828125
+  ],
+  "freeMemory": 561004544,
+  "status": "Stopped owned parallel cohorts after observed resource pressure; no final acceptance implied",
+  "reports": [
+    {
+      "runtime": "node",
+      "file": "commands__land_chain_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:45:47.945Z",
+        "end": "2026-10-30T18:52:00.548Z",
+        "duration": 372603
+      },
+      "failures": []
+    },
+    {
+      "runtime": "node",
+      "file": "commands__land_fanout_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 9,
+        "pending": 0,
+        "failures": 4,
+        "start": "2026-10-30T18:45:47.945Z",
+        "end": "2026-10-30T18:56:32.145Z",
+        "duration": 644200
+      },
+      "failures": [
+        {
+          "title": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        },
+        {
+          "title": "public scoped fanout landing does not replay, push or demand frozen changes on an independent arm completed by the previous merge",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        },
+        {
+          "title": "public scoped fanout landing does not replay, push or demand worktree changes on an independent arm completed by the previous merge",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        },
+        {
+          "title": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        }
+      ]
+    },
+    {
+      "runtime": "node",
+      "file": "commands__land_leaf_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 12,
+        "passes": 12,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:52:00.690Z",
+        "end": "2026-10-30T18:56:54.697Z",
+        "duration": 294007
+      },
+      "failures": []
+    },
+    {
+      "runtime": "node",
+      "file": "commands__land_mcp_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-30T18:56:32.305Z",
+        "end": "2026-10-30T18:56:58.777Z",
+        "duration": 26472
+      },
+      "failures": [
+        {
+          "title": "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+          "message": "ERROR: Pending landing preview blocked; recovery and repository preserved.\n: expected { status: 'cli_error', …(5) } to have property 'status' of 'success', but got 'cli_error'"
+        }
+      ]
+    },
+    {
+      "runtime": "node",
+      "file": "commands__land_policy_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:56:54.791Z",
+        "end": "2026-10-30T18:58:49.210Z",
+        "duration": 114419
+      },
+      "failures": []
+    },
+    {
+      "runtime": "node",
+      "file": "commands__land_preview_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 14,
+        "passes": 14,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:56:58.874Z",
+        "end": "2026-10-30T18:59:00.863Z",
+        "duration": 121989
+      },
+      "failures": []
+    },
+    {
+      "runtime": "native",
+      "file": "commands__land_chain_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:45:47.945Z",
+        "end": "2026-10-30T18:51:28.167Z",
+        "duration": 340222
+      },
+      "failures": []
+    },
+    {
+      "runtime": "native",
+      "file": "commands__land_fanout_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 13,
+        "passes": 12,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-30T18:45:47.945Z",
+        "end": "2026-10-30T18:56:20.001Z",
+        "duration": 632056
+      },
+      "failures": [
+        {
+          "title": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+          "message": "spawnSync /private/tmp/anthracite-pr-land-implementation-20261030/final/anthracite-native ETIMEDOUT"
+        }
+      ]
+    },
+    {
+      "runtime": "native",
+      "file": "commands__land_leaf_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-30T18:51:28.289Z",
+        "end": "2026-10-30T18:55:02.988Z",
+        "duration": 214699
+      },
+      "failures": [
+        {
+          "title": "public one-leaf landing \"before each\" hook for \"preserves an unrelated branch when a post-checkout hook redirects HEAD before trunk advance\"",
+          "message": "spawnSync /private/tmp/anthracite-pr-land-implementation-20261030/final/anthracite-native ETIMEDOUT"
+        }
+      ]
+    },
+    {
+      "runtime": "native",
+      "file": "commands__land_mcp_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-10-30T18:55:03.913Z",
+        "end": "2026-10-30T18:56:12.512Z",
+        "duration": 68599
+      },
+      "failures": [
+        {
+          "title": "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery",
+          "message": "ERROR: Pending landing preview blocked; recovery and repository preserved.\n: expected { status: 'cli_error', …(5) } to have property 'status' of 'success', but got 'cli_error'"
+        }
+      ]
+    },
+    {
+      "runtime": "native",
+      "file": "commands__land_policy_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 11,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:56:12.646Z",
+        "end": "2026-10-30T18:58:00.272Z",
+        "duration": 107626
+      },
+      "failures": []
+    },
+    {
+      "runtime": "native",
+      "file": "commands__land_preview_cli.test.js.json",
+      "stats": {
+        "suites": 1,
+        "tests": 14,
+        "passes": 14,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:56:20.108Z",
+        "end": "2026-10-30T18:58:09.354Z",
+        "duration": 109246
+      },
+      "failures": []
+    }
+  ]
+}

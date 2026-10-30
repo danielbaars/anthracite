@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:43:09.077Z",
+    "end": "2026-10-30T18:43:37.758Z",
+    "duration": 28681
+  },
+  "tests": [
+    {
+      "title": "refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "fullTitle": "public landing review regressions refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 5722,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "revalidates endpoint identity before active continuation writes and between completed local replays",
+      "fullTitle": "public landing review regressions revalidates endpoint identity before active continuation writes and between completed local replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 14816,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "fullTitle": "public landing review regressions refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 5722,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "revalidates endpoint identity before active continuation writes and between completed local replays",
+      "fullTitle": "public landing review regressions revalidates endpoint identity before active continuation writes and between completed local replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 14816,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

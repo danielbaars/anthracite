@@ -1,0 +1,198 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 10,
+    "passes": 10,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T18:30:46.884Z",
+    "end": "2026-10-30T18:34:01.581Z",
+    "duration": 194697
+  },
+  "tests": [
+    {
+      "title": "refuses equal-OID remotes declaring a different repository or provider before transport or service effects",
+      "fullTitle": "public landing review regressions refuses equal-OID remotes declaring a different repository or provider before transport or service effects",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 2446,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "accepts canonical SSH declarations and refuses credential, port and URL suffix ambiguity without echoing credentials",
+      "fullTitle": "public landing review regressions accepts canonical SSH declarations and refuses credential, port and URL suffix ambiguity without echoing credentials",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 5296,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "fullTitle": "public landing review regressions refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 5563,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+      "fullTitle": "public landing review regressions preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 9679,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a foreign continuation introduced during the final local replay and records its reached head",
+      "fullTitle": "public landing review regressions preserves a foreign continuation introduced during the final local replay and records its reached head",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 11084,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cleans multiple verified merged ancestors without replaying or publishing them while maintaining the open target and fanout",
+      "fullTitle": "public landing review regressions cleans multiple verified merged ancestors without replaying or publishing them while maintaining the open target and fanout",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 48357,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "fullTitle": "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 21922,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "fullTitle": "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 28790,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "fullTitle": "public landing review regressions refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 11164,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "revalidates endpoint identity before active continuation writes and between completed local replays",
+      "fullTitle": "public landing review regressions revalidates endpoint identity before active continuation writes and between completed local replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 12616,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses equal-OID remotes declaring a different repository or provider before transport or service effects",
+      "fullTitle": "public landing review regressions refuses equal-OID remotes declaring a different repository or provider before transport or service effects",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 2446,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "accepts canonical SSH declarations and refuses credential, port and URL suffix ambiguity without echoing credentials",
+      "fullTitle": "public landing review regressions accepts canonical SSH declarations and refuses credential, port and URL suffix ambiguity without echoing credentials",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 5296,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "fullTitle": "public landing review regressions refuses a post-checkout hook redirecting the declared endpoint after the confirmed merge",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 5563,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+      "fullTitle": "public landing review regressions preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 9679,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a foreign continuation introduced during the final local replay and records its reached head",
+      "fullTitle": "public landing review regressions preserves a foreign continuation introduced during the final local replay and records its reached head",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 11084,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cleans multiple verified merged ancestors without replaying or publishing them while maintaining the open target and fanout",
+      "fullTitle": "public landing review regressions cleans multiple verified merged ancestors without replaying or publishing them while maintaining the open target and fanout",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 48357,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "fullTitle": "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 21922,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "fullTitle": "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 28790,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "fullTitle": "public landing review regressions refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 11164,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "revalidates endpoint identity before active continuation writes and between completed local replays",
+      "fullTitle": "public landing review regressions revalidates endpoint identity before active continuation writes and between completed local replays",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 12616,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

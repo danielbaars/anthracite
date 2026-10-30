@@ -1,0 +1,267 @@
+{
+  "at": "2026-10-30T19:00:10.489Z",
+  "load": [
+    21.37060546875,
+    88.4248046875,
+    62.78564453125
+  ],
+  "freeMemory": 457195520,
+  "roots": [
+    {
+      "pid": 69422,
+      "ppid": 17461,
+      "pgid": 69422,
+      "cpu": 0,
+      "rssKiB": 35136,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/run-final-cohort.cjs node"
+    },
+    {
+      "pid": 69423,
+      "ppid": 17461,
+      "pgid": 69423,
+      "cpu": 0,
+      "rssKiB": 35152,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/run-final-cohort.cjs native"
+    }
+  ],
+  "ownedCount": 16,
+  "ownedRssMiB": 823.109375,
+  "groups": [
+    {
+      "pgid": 69422,
+      "members": [
+        {
+          "pid": 53264,
+          "ppid": 97737,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js land base --yes"
+        },
+        {
+          "pid": 53307,
+          "ppid": 88091,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js land base --yes"
+        },
+        {
+          "pid": 59695,
+          "ppid": 53264,
+          "owned": true,
+          "command": "(git)"
+        },
+        {
+          "pid": 59696,
+          "ppid": 53307,
+          "owned": true,
+          "command": "(git)"
+        },
+        {
+          "pid": 69422,
+          "ppid": 17461,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/run-final-cohort.cjs node"
+        },
+        {
+          "pid": 69468,
+          "ppid": 69422,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/scripts/test-cli.cjs node"
+        },
+        {
+          "pid": 88091,
+          "ppid": 69468,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/node_modules/mocha/bin/mocha.js /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_rec"
+        },
+        {
+          "pid": 97737,
+          "ppid": 69468,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/node_modules/mocha/bin/mocha.js /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_rev"
+        }
+      ]
+    },
+    {
+      "pgid": 69423,
+      "members": [
+        {
+          "pid": 20022,
+          "ppid": 43955,
+          "owned": true,
+          "command": "/private/tmp/anthracite-pr-land-implementation-20261030/final/anthracite-native land tip --yes"
+        },
+        {
+          "pid": 33894,
+          "ppid": 69469,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/node_modules/mocha/bin/mocha.js /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_rec"
+        },
+        {
+          "pid": 43955,
+          "ppid": 69469,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/node_modules/mocha/bin/mocha.js /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_rev"
+        },
+        {
+          "pid": 59363,
+          "ppid": 33894,
+          "owned": true,
+          "command": "/private/tmp/anthracite-pr-land-implementation-20261030/final/anthracite-native info base --no-interactive"
+        },
+        {
+          "pid": 59682,
+          "ppid": 20022,
+          "owned": true,
+          "command": "(git)"
+        },
+        {
+          "pid": 59699,
+          "ppid": 59363,
+          "owned": true,
+          "command": "(git)"
+        },
+        {
+          "pid": 69423,
+          "ppid": 17461,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/run-final-cohort.cjs native"
+        },
+        {
+          "pid": 69469,
+          "ppid": 69423,
+          "owned": true,
+          "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/scripts/test-cli.cjs native"
+        }
+      ]
+    }
+  ],
+  "owned": [
+    {
+      "pid": 20022,
+      "ppid": 43955,
+      "pgid": 69423,
+      "cpu": 3.6,
+      "rssKiB": 100624,
+      "command": "/private/tmp/anthracite-pr-land-implementation-20261030/final/anthracite-native land tip --yes"
+    },
+    {
+      "pid": 33894,
+      "ppid": 69469,
+      "pgid": 69423,
+      "cpu": 0.7,
+      "rssKiB": 73008,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/node_modules/mocha/bin/mocha.js /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js --reporter json"
+    },
+    {
+      "pid": 43955,
+      "ppid": 69469,
+      "pgid": 69423,
+      "cpu": 0,
+      "rssKiB": 73136,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/node_modules/mocha/bin/mocha.js /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_review_fixes_cli.test.js --reporter json"
+    },
+    {
+      "pid": 53264,
+      "ppid": 97737,
+      "pgid": 69422,
+      "cpu": 4.9,
+      "rssKiB": 100656,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js land base --yes"
+    },
+    {
+      "pid": 53307,
+      "ppid": 88091,
+      "pgid": 69422,
+      "cpu": 6.3,
+      "rssKiB": 100032,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/src/index.js land base --yes"
+    },
+    {
+      "pid": 59363,
+      "ppid": 33894,
+      "pgid": 69423,
+      "cpu": 22.4,
+      "rssKiB": 72880,
+      "command": "/private/tmp/anthracite-pr-land-implementation-20261030/final/anthracite-native info base --no-interactive"
+    },
+    {
+      "pid": 59682,
+      "ppid": 20022,
+      "pgid": 69423,
+      "cpu": 0,
+      "rssKiB": 3024,
+      "command": "(git)"
+    },
+    {
+      "pid": 59695,
+      "ppid": 53264,
+      "pgid": 69422,
+      "cpu": 0,
+      "rssKiB": 3008,
+      "command": "(git)"
+    },
+    {
+      "pid": 59696,
+      "ppid": 53307,
+      "pgid": 69422,
+      "cpu": 0,
+      "rssKiB": 2944,
+      "command": "(git)"
+    },
+    {
+      "pid": 59699,
+      "ppid": 59363,
+      "pgid": 69423,
+      "cpu": 0,
+      "rssKiB": 1920,
+      "command": "(git)"
+    },
+    {
+      "pid": 69422,
+      "ppid": 17461,
+      "pgid": 69422,
+      "cpu": 0,
+      "rssKiB": 35136,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/run-final-cohort.cjs node"
+    },
+    {
+      "pid": 69423,
+      "ppid": 17461,
+      "pgid": 69423,
+      "cpu": 0,
+      "rssKiB": 35152,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/run-final-cohort.cjs native"
+    },
+    {
+      "pid": 69468,
+      "ppid": 69422,
+      "pgid": 69422,
+      "cpu": 0,
+      "rssKiB": 47792,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/scripts/test-cli.cjs node"
+    },
+    {
+      "pid": 69469,
+      "ppid": 69423,
+      "pgid": 69423,
+      "cpu": 0,
+      "rssKiB": 47712,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/scripts/test-cli.cjs native"
+    },
+    {
+      "pid": 88091,
+      "ppid": 69468,
+      "pgid": 69422,
+      "cpu": 0,
+      "rssKiB": 72656,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/node_modules/mocha/bin/mocha.js /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_recovery_cli.test.js --reporter json"
+    },
+    {
+      "pid": 97737,
+      "ppid": 69468,
+      "pgid": 69422,
+      "cpu": 0,
+      "rssKiB": 73184,
+      "command": "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node /private/tmp/anthracite-pr-land-implementation-20261030/integration/node_modules/mocha/bin/mocha.js /private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_review_fixes_cli.test.js --reporter json"
+    }
+  ]
+}

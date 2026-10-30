@@ -1,0 +1,27 @@
+{
+  "source": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "method": "public CLI; real Git and two bare repositories; controlled external gh only; no live service effects",
+  "observation": {
+    "configuredGithubRepo": "fixture/inspection",
+    "declaredGitRemote": "https://github.com/other/mirror.git",
+    "transport": "repository-local normal Git insteadOf to a separate real bare mirror",
+    "sharedHead": "b575cee74f56a26320e517a191b51bd793eb326f",
+    "sharedMergedResult": "d9a8b7f0ec78fab3c77e92f3a90f603fa281ebee",
+    "preview": {
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "ERROR: Landing requires a supported declared GitHub remote matching the configured repository (HTTPS, git@github.com or ssh://git@github.com). No credentials are recorded.\n",
+      "repositoryUnchanged": true
+    },
+    "application": {
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "ERROR: Landing requires a supported declared GitHub remote matching the configured repository (HTTPS, git@github.com or ssh://git@github.com). No credentials are recorded.\n"
+    },
+    "configuredRepositoryBranchAfter": "b575cee74f56a26320e517a191b51bd793eb326f",
+    "otherRepositoryBranchAfter": "b575cee74f56a26320e517a191b51bd793eb326f",
+    "configuredRepositoryUnchanged": true,
+    "otherRepositoryChanged": false,
+    "ghCalls": []
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "source": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "node": "v24.22.2",
+  "preview": {
+    "status": 1,
+    "preserved": true,
+    "remainingMaintenanceDisclosed": true,
+    "dirtyAndPendingBlockers": true
+  },
+  "mergedChain": {
+    "status": 0,
+    "landedChildRemoved": true,
+    "capturedRemoteHeads": [
+      "72ee4b709db131e9a975f3eb57932ea372023b26",
+      "72ee4b709db131e9a975f3eb57932ea372023b26",
+      "72ee4b709db131e9a975f3eb57932ea372023b26"
+    ],
+    "mergedHeadRewritten": false
+  },
+  "wrongRepository": {
+    "preview": 1,
+    "application": 1,
+    "configuredUnchanged": true,
+    "otherUnchanged": true
+  },
+  "foreignPublication": {
+    "source": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+    "exitCode": 1,
+    "foreignFilePreserved": true,
+    "hasRealConflict": true,
+    "landingRecordPreserved": true,
+    "stderr": "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (f4f643a9473243f97c50cede6b189f4e4c343ea3); later work unattempted. Landing continuation publication refused; foreign, missing or changed continuation and active Git replay preserved. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LOmlwr/repo; rerun an land base --yes.\n"
+  },
+  "foreignFinalization": {
+    "source": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+    "expectedForeignBytes": "{\"foreign\":\"preserve-this-final-file\"}\n",
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "ERROR: Landing continuation changed during local replay; reached refs and both recovery records preserved. Inspect the original project before recovery.\n",
+    "foreignBytesAfter": "{\"foreign\":\"preserve-this-final-file\"}\n",
+    "foreignFilePreserved": true,
+    "remoteUnchangedDuringContinue": true,
+    "gitUnmerged": "",
+    "landingRecordPreserved": true
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "testCommit": "901561275fac5ee356e8651f0f2a7f536ce2ccf7",
+  "tree": "cc7786f52af0df1bf6c732e74cbf9fe6b6c7aece",
+  "productionCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "filesChanged": [
+    "apps/cli/test/commands/land_mcp_cli.test.ts"
+  ],
+  "sourceManifest": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes-mcp-expectation-source.json",
+  "sourceManifestSha256": "3f806310f0a23ee54c15eca9edee85b65045c790f9ec435d4921b28317705174",
+  "unchangedProduction": {
+    "appsrc": true,
+    "compiledAppsrc": true,
+    "appsrcAggregateSha256": "be245d1aa6620f8bb058c0ee1881ab82a30054da6811109afecbff9954a2864d",
+    "compiledAppsrcAggregateSha256": "8ccb0dc7ae452fa4d5d59520e165c29881c85a31a966f109cfa28a8fcee234b4",
+    "beforeManifestSha256": "2a2c568f32218e644ae64ec7098cdc4d9257a5355860a76825153c5ef0a98c3c"
+  },
+  "reports": {
+    "node": {
+      "path": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes-mcp-expectation-node.json",
+      "sha256": "6472d9a11087ed29a46e574cf90a55e2fbe1546f6eb3b2646421b66ad75a9447",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:51:39.143Z",
+        "end": "2026-10-30T18:52:33.657Z",
+        "duration": 54514
+      },
+      "testCommit": "901561275fac5ee356e8651f0f2a7f536ce2ccf7",
+      "productionCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+      "cases": [
+        "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery"
+      ]
+    },
+    "native": {
+      "path": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes-mcp-expectation-native.json",
+      "sha256": "254aee67a4973e8388d03eb083bee2297ba3bd02ec17c1bf07c71e40f59282db",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-10-30T18:51:39.143Z",
+        "end": "2026-10-30T18:52:29.488Z",
+        "duration": 50345
+      },
+      "testCommit": "901561275fac5ee356e8651f0f2a7f536ce2ccf7",
+      "productionCommit": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+      "cases": [
+        "MCP head-bound review and scoped landing through stdio inspects, reviews one head, lands a synthetic fanout prefix and reconnects for local-only recovery"
+      ]
+    }
+  },
+  "nativeBinary": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes-final-native",
+  "nativeSha256": "99ac73716134530891a32739a6cf65fbdcff405106efdefb1123db396b345a2b",
+  "beforeInstalledFailure": {
+    "path": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes-mcp-expectation-installed-before.json",
+    "sha256": "7477fe7950e9207424267bca7ca4f858a5d6977f4f7e4f3abc106b8437b1a778"
+  },
+  "beforeInstalledSummary": {
+    "path": "/private/tmp/anthracite-pr-land-implementation-20261030/review-fixes-mcp-expectation-installed-summary-before.json",
+    "sha256": "fb0532949cc33a2bcc1fc377d345010796d0221446feb278ced84c7ee3cd15f9"
+  },
+  "assertions": "Normal cli_error/exit1/isError error envelope for a genuine unresolved replay preview; exact blocker; byte-preserving inspection snapshot; unchanged remote refs and PR state. Existing local-only continue, review ledger, PR identities and later explicit landing assertions retained.",
+  "checks": {
+    "TypeScript": "pass",
+    "testEslint": "pass with existing max-lines-per-function exception",
+    "format": "pass",
+    "cleanWorktree": true
+  },
+  "limits": "Targeted test-only correction. Parent immutable cbd4 cohorts are ongoing and remain separately attributed. No integration/dist, installed prefix, artifact, dependencies, production source, push/PR/CI/live service writes were changed."
+}

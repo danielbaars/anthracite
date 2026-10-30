@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-30T19:13:58.076Z",
+    "end": "2026-10-30T19:15:14.908Z",
+    "duration": 76832
+  },
+  "tests": [
+    {
+      "title": "preserves a later arm lease race and earlier published arms across retry",
+      "fullTitle": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 69184,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves a later arm lease race and earlier published arms across retry",
+      "fullTitle": "public scoped fanout landing preserves a later arm lease race and earlier published arms across retry",
+      "file": "/private/tmp/anthracite-pr-land-implementation-20261030/integration/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 69184,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

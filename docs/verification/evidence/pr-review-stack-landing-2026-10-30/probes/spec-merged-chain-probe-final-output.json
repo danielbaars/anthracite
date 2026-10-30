@@ -1,0 +1,128 @@
+{
+  "source": "cbd4b7964a2fdcb05fcdab6f2c4e9ac3f13b70de",
+  "node": "v24.22.2",
+  "preview": {
+    "status": 0,
+    "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target child\nTrunk: 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 -> d0b5d07e74425489cdfb3a6fbf5e800c18b6414b (fast-forward only)\nCleanup-only 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: b575cee74f56a26320e517a191b51bd793eb326f\n  Base: main 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 (tracked parent main; replay base 16a3b4176df772ce21cc67ec14ffbcedb44e5f64)\n  State: MERGED; draft false; readiness CLEAN; verified merged result ce2cb0103bd7fe98af9fc16493c2ce15584181b2\n  Verify trunk base/head immediately before effect\nCleanup-only 2: child #18 https://github.com/fixture/inspection/pull/18\n  Head: 72ee4b709db131e9a975f3eb57932ea372023b26\n  Base: main ce2cb0103bd7fe98af9fc16493c2ce15584181b2 (tracked parent base; replay base b575cee74f56a26320e517a191b51bd793eb326f)\n  State: MERGED; draft false; readiness CLEAN; verified merged result d0b5d07e74425489cdfb3a6fbf5e800c18b6414b\n  Verify trunk base/head immediately before effect\nMaintain: tip\n  Reparent to main; replay from child (72ee4b709db131e9a975f3eb57932ea372023b26); head 4075b3753f85355b631c70c7807a93751b83e92a\n  Update existing remote head 4075b3753f85355b631c70c7807a93751b83e92a\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base, child (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\n",
+    "stderr": ""
+  },
+  "apply": {
+    "status": 0,
+    "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target child\nTrunk: 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 -> d0b5d07e74425489cdfb3a6fbf5e800c18b6414b (fast-forward only)\nCleanup-only 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: b575cee74f56a26320e517a191b51bd793eb326f\n  Base: main 16a3b4176df772ce21cc67ec14ffbcedb44e5f64 (tracked parent main; replay base 16a3b4176df772ce21cc67ec14ffbcedb44e5f64)\n  State: MERGED; draft false; readiness CLEAN; verified merged result ce2cb0103bd7fe98af9fc16493c2ce15584181b2\n  Verify trunk base/head immediately before effect\nCleanup-only 2: child #18 https://github.com/fixture/inspection/pull/18\n  Head: 72ee4b709db131e9a975f3eb57932ea372023b26\n  Base: main ce2cb0103bd7fe98af9fc16493c2ce15584181b2 (tracked parent base; replay base b575cee74f56a26320e517a191b51bd793eb326f)\n  State: MERGED; draft false; readiness CLEAN; verified merged result d0b5d07e74425489cdfb3a6fbf5e800c18b6414b\n  Verify trunk base/head immediately before effect\nMaintain: tip\n  Reparent to main; replay from child (72ee4b709db131e9a975f3eb57932ea372023b26); head 4075b3753f85355b631c70c7807a93751b83e92a\n  Update existing remote head 4075b3753f85355b631c70c7807a93751b83e92a\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base, child (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: ce2cb0103bd7fe98af9fc16493c2ce15584181b2.\nMaintained: tip; head 6a14e6d6295896e300d662bda471f0b96b055bac; existing PR #19; existing remote head verified.\nConfirmed merged #18: d0b5d07e74425489cdfb3a6fbf5e800c18b6414b.\nMaintained: tip; head 6a14e6d6295896e300d662bda471f0b96b055bac; existing PR #19; existing remote head verified.\nLanding complete: child; trunk advanced and landed refs/metadata cleaned.\n",
+    "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-k10edj/remote.git\n - [deleted]         base\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-k10edj/remote.git\n - [deleted]         child\n"
+  },
+  "before": "72ee4b709db131e9a975f3eb57932ea372023b26",
+  "after": "",
+  "observedChildHeads": [
+    "72ee4b709db131e9a975f3eb57932ea372023b26",
+    "72ee4b709db131e9a975f3eb57932ea372023b26",
+    "72ee4b709db131e9a975f3eb57932ea372023b26"
+  ],
+  "remoteMergedHeadRewritten": false,
+  "prs": [
+    {
+      "number": 17,
+      "url": "https://github.com/fixture/inspection/pull/17",
+      "title": "PR for base",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "base",
+      "headRefOid": "b575cee74f56a26320e517a191b51bd793eb326f",
+      "baseRefName": "main",
+      "baseRefOid": "16a3b4176df772ce21cc67ec14ffbcedb44e5f64",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "ce2cb0103bd7fe98af9fc16493c2ce15584181b2"
+    },
+    {
+      "number": 18,
+      "url": "https://github.com/fixture/inspection/pull/18",
+      "title": "PR for child",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "child",
+      "headRefOid": "72ee4b709db131e9a975f3eb57932ea372023b26",
+      "baseRefName": "main",
+      "baseRefOid": "ce2cb0103bd7fe98af9fc16493c2ce15584181b2",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "d0b5d07e74425489cdfb3a6fbf5e800c18b6414b"
+    },
+    {
+      "number": 19,
+      "url": "https://github.com/fixture/inspection/pull/19",
+      "title": "PR for tip",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #19** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "tip",
+      "headRefOid": "6a14e6d6295896e300d662bda471f0b96b055bac",
+      "baseRefName": "main",
+      "baseRefOid": "d0b5d07e74425489cdfb3a6fbf5e800c18b6414b",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "runtime": "native",
+  "candidate": "115d151c436ae85d4e877af61c627df92d5121f9",
+  "started": "2026-10-30T17:49:51.751Z",
+  "conflict": {
+    "status": 1,
+    "signal": null,
+    "output": [
+      null,
+      "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target base\nTrunk: 7a53b34a5f8b8076bba50ad972340ff936016711 -> 7a53b34a5f8b8076bba50ad972340ff936016711 (fast-forward only)\nMerge 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: ad99bc3af6325ec262c5fd0fe7771cf0af3faf64\n  Base: main 7a53b34a5f8b8076bba50ad972340ff936016711 (tracked parent main; replay base 7a53b34a5f8b8076bba50ad972340ff936016711)\n  State: OPEN; draft false; readiness CLEAN\n  Verify trunk base/head immediately before effect\nMaintain: child\n  Reparent to main; replay from base (ad99bc3af6325ec262c5fd0fe7771cf0af3faf64); head 01939008d257b5f485b5ad2fa8020e5e31e2fbfd\n  Update existing remote head 01939008d257b5f485b5ad2fa8020e5e31e2fbfd\n  Update existing PR #18 base/dependency footer; preserve user fields\nMaintain: tip\n  Reparent to child; replay from child (01939008d257b5f485b5ad2fa8020e5e31e2fbfd); head c4abbb101bcdd38ea1162c542d25196199a0e720\n  Update existing remote head c4abbb101bcdd38ea1162c542d25196199a0e720\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: 5a0b89d1d0a3ea3c039cb992f3473f7befb2c655.\n",
+      "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (5a0b89d1d0a3ea3c039cb992f3473f7befb2c655); later work unattempted. Local replay conflict in child. Resolve and stage files, run an continue in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo, then rerun an land base --yes for remote maintenance. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo; rerun an land base --yes.\n"
+    ],
+    "pid": 34719,
+    "stdout": "Policy: No required reviews or checks (complete rules and classic protection evidence).\nLanding plan: fixture/inspection trunk main target base\nTrunk: 7a53b34a5f8b8076bba50ad972340ff936016711 -> 7a53b34a5f8b8076bba50ad972340ff936016711 (fast-forward only)\nMerge 1: base #17 https://github.com/fixture/inspection/pull/17\n  Head: ad99bc3af6325ec262c5fd0fe7771cf0af3faf64\n  Base: main 7a53b34a5f8b8076bba50ad972340ff936016711 (tracked parent main; replay base 7a53b34a5f8b8076bba50ad972340ff936016711)\n  State: OPEN; draft false; readiness CLEAN\n  Verify trunk base/head immediately before effect\nMaintain: child\n  Reparent to main; replay from base (ad99bc3af6325ec262c5fd0fe7771cf0af3faf64); head 01939008d257b5f485b5ad2fa8020e5e31e2fbfd\n  Update existing remote head 01939008d257b5f485b5ad2fa8020e5e31e2fbfd\n  Update existing PR #18 base/dependency footer; preserve user fields\nMaintain: tip\n  Reparent to child; replay from child (01939008d257b5f485b5ad2fa8020e5e31e2fbfd); head c4abbb101bcdd38ea1162c542d25196199a0e720\n  Update existing remote head c4abbb101bcdd38ea1162c542d25196199a0e720\n  Update existing PR #19 base/dependency footer; preserve user fields\nCleanup: base (confirmed landed local metadata/refs and unchanged remote heads only)\nReadiness: READY for disclosed plan.\nConfirmed merged #17: 5a0b89d1d0a3ea3c039cb992f3473f7befb2c655.\n",
+    "stderr": "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (5a0b89d1d0a3ea3c039cb992f3473f7befb2c655); later work unattempted. Local replay conflict in child. Resolve and stage files, run an continue in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo, then rerun an land base --yes for remote maintenance. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo; rerun an land base --yes.\n"
+  },
+  "afterAbort": {
+    "heads": "7cc4f8af330d5f625b1fa2983a88816910b16b63 blob\trefs/branch-metadata/base\n6f7d6afe10a0cfcfabcf0c46b6ffee77892777ef blob\trefs/branch-metadata/child\n7cc4f8af330d5f625b1fa2983a88816910b16b63 blob\trefs/branch-metadata/other\n8d0c2e40cf98df02a9c18f57ca3457cf3490e490 blob\trefs/branch-metadata/tip\nad99bc3af6325ec262c5fd0fe7771cf0af3faf64 commit\trefs/heads/base\n01939008d257b5f485b5ad2fa8020e5e31e2fbfd commit\trefs/heads/child\n267614cd1b5edc76db3cbc3c005caa145fa8bdf3 commit\trefs/heads/main\n4bf68f055854c8bc0d230c38ac3bed778ad8598a commit\trefs/heads/other\nc4abbb101bcdd38ea1162c542d25196199a0e720 commit\trefs/heads/tip\nad99bc3af6325ec262c5fd0fe7771cf0af3faf64 commit\trefs/remotes/origin/base\n01939008d257b5f485b5ad2fa8020e5e31e2fbfd commit\trefs/remotes/origin/child\n267614cd1b5edc76db3cbc3c005caa145fa8bdf3 commit\trefs/remotes/origin/main\n4bf68f055854c8bc0d230c38ac3bed778ad8598a commit\trefs/remotes/origin/other\nc4abbb101bcdd38ea1162c542d25196199a0e720 commit\trefs/remotes/origin/tip",
+    "remote": "ad99bc3af6325ec262c5fd0fe7771cf0af3faf64 commit\trefs/heads/base\n01939008d257b5f485b5ad2fa8020e5e31e2fbfd commit\trefs/heads/child\n267614cd1b5edc76db3cbc3c005caa145fa8bdf3 commit\trefs/heads/main\n4bf68f055854c8bc0d230c38ac3bed778ad8598a commit\trefs/heads/other\nc4abbb101bcdd38ea1162c542d25196199a0e720 commit\trefs/heads/tip",
+    "continuation": "{\n  \"branchesToSync\": [],\n  \"branchesToRestack\": [\n    \"tip\"\n  ],\n  \"currentBranchOverride\": \"main\",\n  \"rebasedBranchBase\": \"267614cd1b5edc76db3cbc3c005caa145fa8bdf3\",\n  \"rebaseOwnership\": \"b9a013f3-e532-4234-a730-8b993dced561\"\n}",
+    "journal": {
+      "owner": "anthracite-landing",
+      "version": 1,
+      "directory": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo",
+      "gitDirectory": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo/.git",
+      "repo": "fixture/inspection",
+      "remote": "origin",
+      "remoteUrlHash": "89bb3b3574a02d6bdfe8c0d6771573879f030537df3b46ebe2b04389d1847add",
+      "pushUrlHash": "89bb3b3574a02d6bdfe8c0d6771573879f030537df3b46ebe2b04389d1847add",
+      "trunk": "main",
+      "trunkHead": "7a53b34a5f8b8076bba50ad972340ff936016711",
+      "target": "base",
+      "checkout": "base",
+      "cacheLock": {
+        "pid": 34719,
+        "timestamp": 1793382594479
+      },
+      "merges": [
+        {
+          "branch": "base",
+          "parent": "main",
+          "base": "7a53b34a5f8b8076bba50ad972340ff936016711",
+          "head": "ad99bc3af6325ec262c5fd0fe7771cf0af3faf64",
+          "remoteHead": "ad99bc3af6325ec262c5fd0fe7771cf0af3faf64",
+          "metadata": "7cc4f8af330d5f625b1fa2983a88816910b16b63",
+          "number": 17,
+          "url": "https://github.com/fixture/inspection/pull/17"
+        }
+      ],
+      "maintenance": [
+        {
+          "branch": "child",
+          "parent": "base",
+          "base": "ad99bc3af6325ec262c5fd0fe7771cf0af3faf64",
+          "head": "01939008d257b5f485b5ad2fa8020e5e31e2fbfd",
+          "remoteHead": "01939008d257b5f485b5ad2fa8020e5e31e2fbfd",
+          "metadata": "a61624d3e73e9bab12da9686b44f0b83988195ce",
+          "number": 18,
+          "url": "https://github.com/fixture/inspection/pull/18",
+          "reached": {
+            "head": "01939008d257b5f485b5ad2fa8020e5e31e2fbfd",
+            "metadata": "6f7d6afe10a0cfcfabcf0c46b6ffee77892777ef",
+            "parent": "main",
+            "base": "ad99bc3af6325ec262c5fd0fe7771cf0af3faf64",
+            "remoteHead": "01939008d257b5f485b5ad2fa8020e5e31e2fbfd"
+          }
+        },
+        {
+          "branch": "tip",
+          "parent": "child",
+          "base": "01939008d257b5f485b5ad2fa8020e5e31e2fbfd",
+          "head": "c4abbb101bcdd38ea1162c542d25196199a0e720",
+          "remoteHead": "c4abbb101bcdd38ea1162c542d25196199a0e720",
+          "metadata": "8d0c2e40cf98df02a9c18f57ca3457cf3490e490",
+          "number": 19,
+          "url": "https://github.com/fixture/inspection/pull/19"
+        }
+      ],
+      "replay": {
+        "pending": [
+          "child",
+          "tip"
+        ],
+        "onto": "267614cd1b5edc76db3cbc3c005caa145fa8bdf3",
+        "continuation": "2858dc0a55ac3f2f6666756154c018334d96f1bed7a201973930981071544436"
+      },
+      "phase": "trunk-advanced",
+      "result": "5a0b89d1d0a3ea3c039cb992f3473f7befb2c655"
+    }
+  },
+  "continued": {
+    "status": 1,
+    "signal": null,
+    "output": [
+      null,
+      "",
+      "ERROR: Pending landing has no matching owned active local replay or proven pending queue. Raw Git abort cancels only its active rebase; completed effects and both recovery records remain. Inspect git status, git log --oneline --all and saved branch metadata in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo; use an land base --dry-run to inspect remote progress. Do not clear recovery or repeat patches to bypass this guard.\n"
+    ],
+    "pid": 47606,
+    "stdout": "",
+    "stderr": "ERROR: Pending landing has no matching owned active local replay or proven pending queue. Raw Git abort cancels only its active rebase; completed effects and both recovery records remain. Inspect git status, git log --oneline --all and saved branch metadata in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo; use an land base --dry-run to inspect remote progress. Do not clear recovery or repeat patches to bypass this guard.\n"
+  },
+  "resumed": {
+    "status": 1,
+    "signal": null,
+    "output": [
+      null,
+      "Pending landing: fixture/inspection trunk main target base; phase trunk-advanced.\nMerge: #17 head ad99bc3af6325ec262c5fd0fe7771cf0af3faf64\nCleanup: base; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo\n",
+      "ERROR: Landing incomplete at reconciliation. Confirmed merged #17 (5a0b89d1d0a3ea3c039cb992f3473f7befb2c655); later work unattempted. Saved local replay is incomplete without an active Git rebase. Inspect reached refs and metadata in the original project; recovery preserved. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo; rerun an land base --yes.\n"
+    ],
+    "pid": 47931,
+    "stdout": "Pending landing: fixture/inspection trunk main target base; phase trunk-advanced.\nMerge: #17 head ad99bc3af6325ec262c5fd0fe7771cf0af3faf64\nCleanup: base; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo\n",
+    "stderr": "ERROR: Landing incomplete at reconciliation. Confirmed merged #17 (5a0b89d1d0a3ea3c039cb992f3473f7befb2c655); later work unattempted. Saved local replay is incomplete without an active Git rebase. Inspect reached refs and metadata in the original project; recovery preserved. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-LuP6o1/repo; rerun an land base --yes.\n"
+  },
+  "foreign": {
+    "status": 1,
+    "signal": null,
+    "output": [
+      null,
+      "",
+      "ERROR: Malformed data at .git/.gtcontinue\n"
+    ],
+    "pid": 48397,
+    "stdout": "",
+    "stderr": "ERROR: Malformed data at .git/.gtcontinue\n"
+  },
+  "differentTarget": {
+    "status": 1,
+    "signal": null,
+    "output": [
+      null,
+      "",
+      "ERROR: Malformed data at .git/.gtcontinue\n"
+    ],
+    "pid": 48707,
+    "stdout": "",
+    "stderr": "ERROR: Malformed data at .git/.gtcontinue\n"
+  },
+  "prs": [
+    {
+      "number": 17,
+      "url": "https://github.com/fixture/inspection/pull/17",
+      "title": "PR for base",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "base",
+      "headRefOid": "ad99bc3af6325ec262c5fd0fe7771cf0af3faf64",
+      "baseRefName": "main",
+      "baseRefOid": "7a53b34a5f8b8076bba50ad972340ff936016711",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "5a0b89d1d0a3ea3c039cb992f3473f7befb2c655"
+    },
+    {
+      "number": 18,
+      "url": "https://github.com/fixture/inspection/pull/18",
+      "title": "PR for child",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "child",
+      "headRefOid": "01939008d257b5f485b5ad2fa8020e5e31e2fbfd",
+      "baseRefName": "base",
+      "baseRefOid": "ad99bc3af6325ec262c5fd0fe7771cf0af3faf64",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "url": "https://github.com/fixture/inspection/pull/19",
+      "title": "PR for tip",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "tip",
+      "headRefOid": "c4abbb101bcdd38ea1162c542d25196199a0e720",
+      "baseRefName": "child",
+      "baseRefOid": "01939008d257b5f485b5ad2fa8020e5e31e2fbfd",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ]
+    }
+  ],
+  "calls": "[\"api\",\"repos/fixture/inspection\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection/branches/main\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection/rules/branches/main?per_page=100&page=1\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"pr\",\"list\",\"--head\",\"base\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"pr\",\"list\",\"--head\",\"tip\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"pr\",\"list\",\"--head\",\"child\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"api\",\"repos/fixture/inspection\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection/branches/main\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection/rules/branches/main?per_page=100&page=1\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"pr\",\"list\",\"--head\",\"tip\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"pr\",\"list\",\"--head\",\"base\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"pr\",\"list\",\"--head\",\"child\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"api\",\"repos/fixture/inspection\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection/branches/main\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection/rules/branches/main?per_page=100&page=1\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"pr\",\"list\",\"--head\",\"child\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"pr\",\"list\",\"--head\",\"base\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"pr\",\"list\",\"--head\",\"tip\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"api\",\"repos/fixture/inspection/pulls/17\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection/branches/main\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"api\",\"repos/fixture/inspection/rules/branches/main?per_page=100&page=1\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n[\"pr\",\"list\",\"--head\",\"base\",\"--state\",\"all\",\"--limit\",\"100\",\"--json\",\"number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup\",\"--repo\",\"github.com/fixture/inspection\"]\n[\"api\",\"repos/fixture/inspection/pulls/17/merge\",\"--hostname\",\"github.com\",\"--method\",\"PUT\",\"--input\",\"-\"]\n[\"api\",\"repos/fixture/inspection/pulls/17\",\"--hostname\",\"github.com\",\"--method\",\"GET\"]\n",
+  "passed": true,
+  "ended": "2026-10-30T17:50:03.267Z"
+}
