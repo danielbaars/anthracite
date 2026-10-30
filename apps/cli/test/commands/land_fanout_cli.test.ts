@@ -31,7 +31,10 @@ describe('public scoped fanout landing', function () {
   });
   afterEach(() => fixture?.cleanup());
 
-  it('merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work', () => {
+  it('merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work', function () {
+    // The measured two-merge fanout completes in 71.70 s on Node.
+    this.timeout(180000);
+    fixture.commandTimeoutMs = 120000;
     fixture.ok(['freeze', 'other']);
     fixture.git([
       'worktree',
@@ -149,7 +152,9 @@ describe('public scoped fanout landing', function () {
   });
 
   for (const protection of ['frozen', 'worktree'] as const) {
-    it(`does not replay, push or demand ${protection} changes on an independent arm completed by the previous merge`, () => {
+    it(`does not replay, push or demand ${protection} changes on an independent arm completed by the previous merge`, function () {
+      this.timeout(180000);
+      fixture.commandTimeoutMs = 120000;
       fixture.ok(['freeze', 'sibling']);
       const frozen = fixture.git(['rev-parse', 'refs/branch-metadata/sibling']);
       fixture.ok(['unfreeze', 'base']);
