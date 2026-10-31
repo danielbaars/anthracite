@@ -122,9 +122,7 @@ export async function getAction(
           context
         ),
         nodes,
-        onComplete: (branch) => {
-          completedFeatures.push(branch);
-        },
+        onComplete: (branch) => completedFeatures.push(branch),
       },
       context
     );
