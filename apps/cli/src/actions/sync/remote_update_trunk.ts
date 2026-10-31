@@ -59,7 +59,7 @@ export function applyRemoteTrunk(
 
 export function releaseRemoteTrunk(trunk: RemoteTrunkUpdate): void {
   runGitCommand({
-    args: ['update-ref', '-d', trunk.sourceRef],
+    args: ['update-ref', '-d', trunk.sourceRef, trunk.head],
     onError: 'throw',
     resource: 'releaseGetTrunk',
   });

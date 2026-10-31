@@ -163,7 +163,8 @@ export type TEngine = {
     | { result: 'REBASE_DONE' };
   continueRebase: (
     parentBranchRevision: string,
-    participants?: readonly string[]
+    participants?: readonly string[],
+    preserveOtherRefs?: boolean
   ) =>
     | {
         result: 'REBASE_DONE';
@@ -1260,10 +1261,18 @@ export function composeEngine({
       handleSuccessfulRebase(branchName, cachedMeta.parentBranchRevision);
       return { result: 'REBASE_DONE' };
     },
-    continueRebase: (parentBranchRevision: string, participants) => {
+    continueRebase: (
+      parentBranchRevision: string,
+      participants,
+      preserveOtherRefs
+    ) => {
       const activeBranch = git.getRebaseHead();
       if (activeBranch) assertBranchEditable(activeBranch);
-      const result = git.rebaseContinue(activeBranch, participants);
+      const result = git.rebaseContinue(
+        activeBranch,
+        participants,
+        preserveOtherRefs
+      );
       if (result === 'REBASE_CONFLICT') {
         for (const name of participants ?? []) assertBranchEditable(name);
         if (activeBranch) assertBranchEditable(activeBranch);

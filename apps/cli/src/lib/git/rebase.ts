@@ -45,12 +45,16 @@ export function rebase(args: {
 
 export function rebaseContinue(
   branchName?: string,
-  participants?: readonly string[]
+  participants?: readonly string[],
+  preserveOtherRefs?: boolean
 ): TRebaseResult {
   const run = (prefix: readonly string[]): TRebaseResult =>
     rebaseInternal({
       args: ['--continue'],
-      prefix,
+      prefix: [
+        ...prefix,
+        ...(preserveOtherRefs ? ['-c', 'rebase.updateRefs=false'] : []),
+      ],
       options: {
         env: { ...process.env, GIT_EDITOR: 'true' },
       },

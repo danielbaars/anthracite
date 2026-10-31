@@ -1,3 +1,5 @@
+import path from 'path';
+import { getRepoRootPathPrecondition } from '../../lib/preconditions';
 import { randomUUID } from 'crypto';
 import fs from 'fs';
 import { execFileSync } from 'child_process';
@@ -34,8 +36,8 @@ export type RemoteUpdateSelection = {
   readonly pullRequestUrl: string;
   readonly previousHead: string;
   readonly previousMetadata: string;
-  readonly previousParentBranchName: string | undefined;
-  readonly previousBase: string | undefined;
+  readonly previousParentBranchName?: string;
+  readonly previousBase?: string;
 };
 export type RemoteUpdateNode = RemoteUpdateSelection & {
   resolution?: 'REBASE' | 'OVERWRITE' | 'UPDATE';
@@ -241,11 +243,14 @@ export function assertGetOperationAvailable(): void {
     'sequencer',
     '.gtcontinue',
   ]) {
-    const file = runGitCommand({
-      args: ['rev-parse', '--git-path', name],
-      onError: 'throw',
-      resource: 'getOperationPath',
-    });
+    const file =
+      name === '.gtcontinue'
+        ? path.join(getRepoRootPathPrecondition(), name)
+        : runGitCommand({
+            args: ['rev-parse', '--git-path', name],
+            onError: 'throw',
+            resource: 'getOperationPath',
+          });
     if (name === '.gtcontinue' && isCompletedLegacyContinuation(file)) continue;
     if (fs.existsSync(file))
       throw new ExitFailedError(
@@ -360,7 +365,7 @@ export function releaseRemoteUpdateGraph(
 ): void {
   for (const node of nodes)
     runGitCommand({
-      args: ['update-ref', '-d', node.sourceRef],
+      args: ['update-ref', '-d', node.sourceRef, node.head],
       onError: 'throw',
       resource: 'releaseGetSource',
     });

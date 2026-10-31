@@ -114,7 +114,15 @@ describe('get CLI new import defaults', function () {
       .readFileSync(fixture.ghCalls, 'utf8')
       .trim()
       .split('\n')
-      .map((line) => JSON.parse(line));
+      .map((line) => {
+        const args: unknown = JSON.parse(line);
+        if (
+          !Array.isArray(args) ||
+          !args.every((item) => typeof item === 'string')
+        )
+          throw new Error('Expected gh argument array');
+        return args;
+      });
     expect(
       calls.filter((args) => Array.isArray(args) && args[0] === 'api')
     ).to.have.length(1);
@@ -369,6 +377,29 @@ describe('get CLI new import defaults', function () {
         wasTracked: false,
         frozen: false,
       });
+      const ownershipCalls = fs
+        .readFileSync(fixture.ghCalls, 'utf8')
+        .trim()
+        .split('\n')
+        .map((line) => {
+          const args: unknown = JSON.parse(line);
+          if (
+            !Array.isArray(args) ||
+            !args.every((item) => typeof item === 'string')
+          )
+            throw new Error('Expected gh argument array');
+          return args;
+        });
+      expect(
+        ownershipCalls.some(
+          (args) => args[0] === 'pr' && args[2] === '3' && args[6] === 'author'
+        )
+      ).to.equal(true);
+      expect(
+        ownershipCalls.some(
+          (args) => args[0] === 'pr' && args[2] === '4' && args[6] === 'author'
+        )
+      ).to.equal(true);
       const saved = parseRecord(fs.readFileSync(recovery, 'utf8'));
       fs.writeJsonSync(fixture.identities, {
         accountError: true,

@@ -1,7 +1,7 @@
 import chalk from 'chalk';
+import { createGetOperation, executeGetOperation } from './get_execute';
 import {
   assertGetMaintenanceAvailable,
-  applyGetMaintenance,
   planGetMaintenance,
   GetMaintenanceEntry,
 } from './get_maintenance';
@@ -18,11 +18,7 @@ import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { assertUnreachable } from '../../lib/utils/assert_unreachable';
 import { persistContinuation } from '../persist_continuation';
 import { printConflictStatus } from '../print_conflict_status';
-import {
-  GetCheckoutIdentity,
-  captureGetCheckout,
-  finishGetCheckout,
-} from './get_checkout';
+import { GetCheckoutIdentity, captureGetCheckout } from './get_checkout';
 import { getMergeBase } from '../../lib/git/merge_base';
 import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
@@ -40,7 +36,6 @@ import {
   RemoteTrunkUpdate,
   snapshotRemoteTrunk,
   assertRemoteTrunkUnchanged,
-  applyRemoteTrunk,
   releaseRemoteTrunk,
 } from './remote_update_trunk';
 
@@ -75,11 +70,7 @@ export async function getAction(
   let importDecisions: GetImportDecision[] = [];
   try {
     nodes = snapshotRemoteUpdateGraph(selected, context, remoteTrunk);
-    importDecisions = decideImports(
-      nodes.map((node) => node.branchName),
-      args.unfrozen,
-      context
-    );
+    importDecisions = decideImports(nodes, args.unfrozen, context);
     await prepareRemoteUpdates(
       {
         nodes,
@@ -106,53 +97,20 @@ export async function getAction(
     releaseRemoteTrunk(remoteTrunk);
     throw error;
   }
-  let updatedBranches: string[];
-  const completedFeatures: string[] = [];
-  let phase = 'trunk fast-forward';
-  try {
-    applyRemoteTrunk(remoteTrunk, context);
-    phase = 'remote refresh';
-    updatedBranches = await getBranchesFromRemote(
+  await executeGetOperation(
+    createGetOperation(
       {
-        downstack: nodes.map((node) => node.branchName),
-        base: trunk,
-        force: args.force,
-        importDecisions,
         nodes,
-        onComplete: (branch) => completedFeatures.push(branch),
+        trunk: remoteTrunk,
+        maintenance,
+        imports: importDecisions,
+        checkout: { target, original, shouldCheckout: args.checkout ?? true },
+        force: args.force,
+        shouldRestack: args.restack ?? true,
       },
       context
-    );
-    if (remoteTrunk.head !== remoteTrunk.previousHead)
-      updatedBranches.unshift(trunk);
-  } catch (error) {
-    const reached = getSha(`refs/heads/${trunk}`) !== remoteTrunk.previousHead;
-    if (reached)
-      throw new ExitFailedError(
-        `Trunk ${trunk} reached ${getSha(
-          `refs/heads/${trunk}`
-        )} before get stopped during ${phase}.\nCompleted feature refresh: ${
-          completedFeatures.join(', ') || 'none'
-        }.\nPending feature refresh: ${
-          nodes
-            .filter((node) => !completedFeatures.includes(node.branchName))
-            .map((node) => node.branchName)
-            .join(', ') || 'none'
-        }.\n${error instanceof Error ? error.message : String(error)}`
-      );
-    throw error;
-  }
-  const maintained = applyGetMaintenance(
-    maintenance,
-    { shouldRestack: args.restack ?? true, updatedBranches },
+    ),
     context
-  );
-  releaseRemoteUpdateGraph(nodes);
-  releaseRemoteTrunk(remoteTrunk);
-
-  finishGetCheckout(
-    { target, original, shouldCheckout: args.checkout ?? true },
-    [...new Set([...updatedBranches, ...maintained])]
   );
 }
 
@@ -232,10 +190,11 @@ function trustedLogin(value: unknown): string | undefined {
 }
 
 function decideImports(
-  downstack: string[],
+  nodes: readonly RemoteUpdateNode[],
   unfrozen: boolean,
   context: TContext
 ): GetImportDecision[] {
+  const downstack = nodes.map((node) => node.branchName);
   const newBranches = downstack.filter(
     (name) => !getSha(`refs/branch-metadata/${name}`)
   );
@@ -257,7 +216,10 @@ function decideImports(
         ? optionalGhJson([
             'pr',
             'view',
-            branchName,
+            String(
+              nodes.find((node) => node.branchName === branchName)
+                ?.pullRequestNumber ?? branchName
+            ),
             '--repo',
             repo,
             '--json',
@@ -419,19 +381,6 @@ function continuationBranches(
   args: { downstack: readonly string[]; nodes?: readonly RemoteUpdateNode[] },
   index: number
 ): string[] {
-  if (
-    args.nodes &&
-    args.nodes
-      .slice(index + 1)
-      .some(
-        (pending, offset) =>
-          pending.parentBranchName !== args.downstack[index + offset]
-      )
-  ) {
-    throw new ExitFailedError(
-      'Graph reconciliation requires graph-aware continuation. Pending remote updates remain pinned; inspect the selected branches before retrying.'
-    );
-  }
   return args.downstack.slice(index + 1);
 }
 
@@ -502,14 +451,6 @@ async function prepareRemoteUpdates(
       getSha(`refs/heads/${node.branchName}`)
     ) {
       node.resolution = await chooseRemoteResolution(node.branchName, context);
-      if (node.resolution === 'REBASE')
-        continuationBranches(
-          {
-            downstack: args.nodes.map((item) => item.branchName),
-            nodes: args.nodes,
-          },
-          args.nodes.indexOf(node)
-        );
     }
   }
 }

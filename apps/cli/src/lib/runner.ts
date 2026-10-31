@@ -1,3 +1,4 @@
+import { preflightGetRecovery } from '../actions/sync/get_recovery';
 import { assertGetOperationAvailable } from '../actions/sync/remote_update_graph';
 import { withLandingLock } from '../actions/land_scoped';
 import { loadLandingProgress } from './landing_progress';
@@ -142,6 +143,7 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
+    if (handler.repo) preflightGetRecovery(canonicalName);
     const landingContinuation =
       canonicalName === 'continue' && allowLandingContinuation();
     if (handler.repo && !isZeroDepthLog && !landingContinuation)
@@ -151,7 +153,7 @@ async function graphiteInternal(
       canonicalName === 'continue'
         ? continueConfigFactory.load(undefined, { preserveInvalid: true }).data
         : undefined;
-    const absorbContinuation = continueData?.absorb !== undefined;
+    const owned = Boolean(continueData?.get || continueData?.absorb);
     if (canonicalName === 'split' && args['by-file'] !== undefined)
       preflightFileSplit(args);
     if (isZeroDepthLog && !git.getCurrentBranchName())
@@ -217,8 +219,7 @@ async function graphiteInternal(
             .graphiteInitialized();
         const context = initContext(contextLite, git, {
           ...args,
-          inspection:
-            isZeroDepthLog || absorbContinuation || landingContinuation,
+          inspection: isZeroDepthLog || owned || landingContinuation,
           preserveMetadata:
             preserveStructuralMetadata ||
             (canonicalName === 'reorder' && args.stack === true),
