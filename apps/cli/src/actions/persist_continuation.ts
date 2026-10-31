@@ -3,6 +3,12 @@ import {
   assertLandingContinuationWritable,
 } from './land_replay';
 import { GetImportDecision } from './sync/get';
+import {
+  assertGetRecoveryWrite,
+  recordGetRecoveryWrite,
+  recordGetConflict,
+  getRecoveryDigest,
+} from './sync/get_recovery';
 import { TContext } from '../lib/context';
 import { recordRebaseOwnership } from '../lib/git/rebase_ownership';
 
@@ -32,7 +38,7 @@ export function persistContinuation(
     )
   );
   assertLandingContinuationWritable();
-  const rebaseOwnership = recordRebaseOwnership();
+  if (context.continueConfig.data.get) assertGetRecoveryWrite(context);
   context.continueConfig.update((data) => {
     data.getImportDecisions =
       args.getImportDecisions ?? data.getImportDecisions;
@@ -40,8 +46,12 @@ export function persistContinuation(
     data.branchesToRestack = branchesToRestack;
     data.currentBranchOverride = context.engine.currentBranch;
     data.rebasedBranchBase = args.rebasedBranchBase;
-    data.rebaseOwnership = rebaseOwnership;
+    recordGetConflict(data, args.rebasedBranchBase);
+    data.rebaseOwnership = recordRebaseOwnership(
+      data.get ? getRecoveryDigest(data) : undefined
+    );
   });
+  recordGetRecoveryWrite(context);
   recordLandingContinuation();
 }
 

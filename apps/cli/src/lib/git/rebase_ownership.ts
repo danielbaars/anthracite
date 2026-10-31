@@ -7,14 +7,26 @@ import { getRebaseDirectory } from './rebase_in_progress';
 const OWNERSHIP_FILE = 'charcoal-continuation';
 
 /** Git removes this marker on abort or completion, even for an identical retry. */
-export function recordRebaseOwnership(): string | undefined {
+export function recordRebaseOwnership(
+  intentDigest?: string
+): string | undefined {
   const directory = getRebaseDirectory();
   if (!directory) return undefined;
-  const ownership = randomUUID();
+  const ownership = `${randomUUID()}${intentDigest ? `:${intentDigest}` : ''}`;
   fs.writeFileSync(path.join(directory, OWNERSHIP_FILE), ownership, {
     mode: 0o600,
   });
   return ownership;
+}
+
+export function readRebaseIntentDigest(): string | undefined {
+  const directory = getRebaseDirectory();
+  if (!directory) return undefined;
+  const marker = path.join(directory, OWNERSHIP_FILE);
+  if (!fs.existsSync(marker)) return undefined;
+  return /^[a-f0-9-]{36}:([a-f0-9]{64})$/.exec(
+    fs.readFileSync(marker, 'utf8')
+  )?.[1];
 }
 
 export function ownsRebase(ownership: string | undefined): boolean {

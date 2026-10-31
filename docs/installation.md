@@ -30,7 +30,7 @@ Open a new terminal. Bash users can save `an completion` and source the file; fi
 
 To switch from the standalone installer, first finish any interrupted Anthracite operation, then run `sh scripts/uninstall.sh` from a clone to remove only its managed links and completion block. Install the npm package and configure completion as above. Verify `command -v an`, `command -v anthracite` and both versions; an earlier PATH entry can mask the npm commands. Existing stacks and preferences remain usable. Do not force npm to overwrite unrelated commands.
 
-Upgrade with `npm install --global @danielbaars/anthracite@latest`; roll back with an explicit previously published version. Uninstall with `npm uninstall --global @danielbaars/anthracite` and remove completion you configured manually. npm does not remove your stack data or preferences. Finish a pending rewrite before downgrading across recovery-format changes. Existing MCP configurations using `an mcp` can stay unchanged if the command resolves to the intended npm installation.
+Upgrade with `npm install --global @danielbaars/anthracite@latest`; roll back with an explicit previously published version. Uninstall with `npm uninstall --global @danielbaars/anthracite` and remove completion you configured manually. npm does not remove your stack data or preferences. Finish a pending rewrite before downgrading across recovery-format changes. Finish any pending get workflow and its continuation before downgrading; older releases cannot resume its graph-aware saved intent. Existing MCP configurations using `an mcp` can stay unchanged if the command resolves to the intended npm installation.
 
 ## Standalone installation
 

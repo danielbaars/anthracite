@@ -14,7 +14,7 @@ import { RemoteUpdateNode } from './remote_update_graph';
 export type GetMaintenanceEntry = {
   readonly branchName: string;
   readonly parentBranchName: string;
-  readonly head: string | undefined;
+  readonly head?: string;
   readonly base: string;
   readonly frozen: boolean;
 };
@@ -137,9 +137,11 @@ export function applyGetMaintenance(
   {
     shouldRestack,
     updatedBranches,
+    onComplete,
   }: {
     readonly shouldRestack: boolean;
     readonly updatedBranches: readonly string[];
+    readonly onComplete?: (branchName: string) => void;
   },
   context: TContext
 ): string[] {
@@ -167,7 +169,10 @@ export function applyGetMaintenance(
         assertGetMaintenanceUnchanged(pending, expectedHeads, context);
         assertGetMaintenanceAvailable(pending, context);
       },
-      onComplete: (branch) => completed.add(branch),
+      onComplete: (branch) => {
+        completed.add(branch);
+        onComplete?.(branch);
+      },
     });
     const frozen = plan.filter((entry) =>
       context.engine.isBranchFrozen(entry.branchName)

@@ -1,5 +1,6 @@
 import * as t from '@withgraphite/retype';
 import { spiffy } from './spiffy';
+import { isGetOperation } from '../../actions/sync/get_operation';
 
 /**
  * After Graphite is interrupted by a merge conflict, upon continuing, there
@@ -15,6 +16,7 @@ import { spiffy } from './spiffy';
  * hit a merge conflict, as we cannot pull this information from Git.
  */
 const ContinueSchema = t.shape({
+  get: t.optional(isGetOperation),
   getImportDecisions: t.optional(
     t.array(
       t.shape({
