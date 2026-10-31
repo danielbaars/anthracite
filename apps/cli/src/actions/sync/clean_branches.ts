@@ -6,7 +6,7 @@ import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { assertNoGitOperation } from '../../lib/git/assert_no_operation';
 import { ExitFailedError } from '../../lib/errors';
 
-/** Selection retains the existing DFS scope: only descend through candidates. */
+/** Inspect every tracked descendant independently of its parent's eligibility. */
 export async function cleanBranches(
   opts: { showDeleteProgress: boolean; force: boolean; restack: boolean },
   context: TContext
@@ -17,6 +17,7 @@ export async function cleanBranches(
   while (queue.length) {
     const branch = queue.pop();
     if (!branch) continue;
+    queue.push(...context.engine.getChildren(branch));
     if (branch in progress)
       context.splog.info(
         `${progress[branch]} done searching for merged/closed branches to delete...`
@@ -28,7 +29,6 @@ export async function cleanBranches(
       )
     ) {
       selected.push(branch);
-      queue.push(...context.engine.getChildren(branch));
     }
   }
 
@@ -49,7 +49,10 @@ export async function cleanBranches(
     mandatory: [],
   };
   for (const root of allowed.filter(
-    (branch) => !allowed.includes(context.engine.getParentPrecondition(branch))
+    (branch) =>
+      !context.engine
+        .getRelativeStack(branch, SCOPE.DOWNSTACK)
+        .some((ancestor) => ancestor !== branch && allowed.includes(ancestor))
   )) {
     const group = context.engine
       .getRelativeStack(root, SCOPE.UPSTACK)
