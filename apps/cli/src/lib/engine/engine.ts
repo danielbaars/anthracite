@@ -1334,6 +1334,17 @@ export function composeEngine({
             `Trunk ${trunk} changed while getting the stack. Please retry.`
           );
       };
+      const assertPhysicalTrunk = (expectedHead: string): void => {
+        if (
+          git.getCurrentBranchName() !== trunk ||
+          git.getShaOrThrow('HEAD') !== expectedHead
+        )
+          throw new PreconditionsFailedError(
+            `Physical checkout changed while advancing trunk ${trunk}. Actual checkout: ${
+              git.getCurrentBranchName() ?? 'detached HEAD'
+            }. Please inspect before retrying.`
+          );
+      };
       assertUnchanged();
       if (git.getMergeBase(previousHead, head) !== previousHead)
         throw new PreconditionsFailedError(
@@ -1341,7 +1352,9 @@ export function composeEngine({
         );
       checkoutBranch(trunk, { preserveIgnored: true });
       assertUnchanged();
+      assertPhysicalTrunk(previousHead);
       git.fastForward(head);
+      assertPhysicalTrunk(head);
       if (git.getShaOrThrow(`refs/heads/${trunk}`) !== head)
         throw new PreconditionsFailedError(
           `Trunk ${trunk} changed while getting the stack. Please retry.`
@@ -1351,6 +1364,7 @@ export function composeEngine({
         branchRevision: head,
       };
       git.setRemoteTracking({ remote, branchName: trunk, sha: head });
+      assertPhysicalTrunk(head);
       if (git.getShaOrThrow(`refs/heads/${trunk}`) !== head)
         throw new PreconditionsFailedError(
           `Trunk ${trunk} changed while getting the stack. Please retry.`

@@ -261,4 +261,112 @@ describe('get CLI safe trunk and changed parents', function () {
     fixture.assertTip('main', trunk);
     fixture.assertTip('child', fixture.oldChild);
   });
+  it('does not fast-forward another branch when a trunk checkout hook redirects physical HEAD', () => {
+    const originalTrunk = fixture.git(fixture.consumer, 'rev-parse', 'main');
+    fixture.git(fixture.producer, 'switch', 'main');
+    fixture.git(fixture.producer, 'merge', '--ff-only', 'child');
+    fixture.commit(
+      fixture.producer,
+      'trunk.txt',
+      'new trunk includes old child'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'main');
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'post-checkout'),
+      '#!/bin/sh\nif [ "$(git branch --show-current)" = main ]; then git -c core.hooksPath=/dev/null switch child; fi\n',
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['get', 'child']);
+    expect(result.status, result.output).to.equal(1);
+    fixture.assertTip('main', originalTrunk);
+    fixture.assertTip('child', fixture.oldChild);
+    fixture.assertTip('HEAD', fixture.oldChild);
+  });
+
+  for (const ignored of [false, true]) {
+    it(`preserves a ${
+      ignored ? 'ignored' : 'untracked'
+    } file colliding with incoming trunk before any branch advances`, () => {
+      const oldTrunk = fixture.git(fixture.consumer, 'rev-parse', 'main');
+      advanceTrunk(fixture);
+      if (ignored)
+        fs.writeFileSync(
+          path.join(fixture.consumer, '.git', 'info', 'exclude'),
+          'trunk.txt\n'
+        );
+      fs.writeFileSync(
+        path.join(fixture.consumer, 'trunk.txt'),
+        'local trunk collision bytes'
+      );
+      const index = fixture.git(fixture.consumer, 'write-tree');
+      const result = fixture.run(['get', 'child', '--force']);
+      expect(result.status, result.output).to.equal(1);
+      expect(result.output).to.include(ignored ? 'ignored' : 'untracked');
+      fixture.assertTip('main', oldTrunk);
+      fixture.assertTip('child', fixture.oldChild);
+      expect(fixture.git(fixture.consumer, 'write-tree')).to.equal(index);
+      expect(
+        fs.readFileSync(path.join(fixture.consumer, 'trunk.txt'), 'utf8')
+      ).to.equal('local trunk collision bytes');
+    });
+  }
+
+  it('finds an occupied feature before applying an otherwise safe trunk fast-forward', () => {
+    fixture.ok('checkout', 'main');
+    const other = path.join(fixture.root, 'child-worktree');
+    fixture.git(fixture.consumer, 'worktree', 'add', other, 'child');
+    const oldTrunk = fixture.git(fixture.consumer, 'rev-parse', 'main');
+    advanceTrunk(fixture);
+    fixture.git(fixture.producer, 'switch', 'child');
+    fixture.advanceChild();
+    const result = fixture.run(['get', 'child']);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include(other);
+    fixture.assertTip('main', oldTrunk);
+    fixture.assertTip('child', fixture.oldChild);
+  });
+
+  it('restores the original trunk identity at its advanced head with no-checkout', () => {
+    fixture.ok('checkout', 'main');
+    const trunk = advanceTrunk(fixture);
+    fixture.ok('get', 'child', '--no-checkout');
+    fixture.assertTip('main', trunk);
+    fixture.assertTip('HEAD', trunk);
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'main'
+    );
+    expect(
+      fs.readFileSync(path.join(fixture.consumer, 'trunk.txt'), 'utf8')
+    ).to.equal('incoming trunk content');
+  });
+
+  it('does not replace a stored descendant PR association with a mismatched head', () => {
+    fixture.ok('sync', '--no-pull', '--no-delete');
+    const oldTrunk = fixture.git(fixture.consumer, 'rev-parse', 'main');
+    advanceTrunk(fixture);
+    fs.writeJsonSync(fixture.identities, {
+      prReferenceOverrides: { '2': { headRefName: 'other-head' } },
+    });
+    const result = fixture.run(['get', 'parent']);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('identity');
+    fixture.assertTip('main', oldTrunk);
+    fixture.assertTip('child', fixture.oldChild);
+  });
+  it('reports a reached trunk and refuses when a merge hook redirects the physical checkout', () => {
+    const trunk = advanceTrunk(fixture);
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'post-merge'),
+      '#!/bin/sh\nif [ "$(git branch --show-current)" = main ]; then git -c core.hooksPath=/dev/null switch child; fi\n',
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['get', 'child', '--quiet']);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('Trunk main reached');
+    expect(result.output).to.include('during trunk fast-forward');
+    expect(result.output).to.include('Physical checkout changed');
+    fixture.assertTip('main', trunk);
+    fixture.assertTip('child', fixture.oldChild);
+    fixture.assertTip('HEAD', fixture.oldChild);
+  });
 });
