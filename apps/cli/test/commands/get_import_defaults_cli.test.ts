@@ -595,7 +595,9 @@ describe('get CLI new import defaults', function () {
     expect(fixture.git(fixture.consumer, 'rev-parse', 'child')).to.equal(
       fixture.git(fixture.consumer, 'rev-parse', 'main')
     );
-    fixture.status('parent', false);
+    expect(
+      fixture.git(fixture.consumer, 'branch', '--list', 'parent')
+    ).to.equal('');
   });
 
   it('does not trust identical invalid account and author logins containing consecutive hyphens', () => {

@@ -81,15 +81,21 @@ const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : args[2];
 const base = require('fs').readFileSync(${JSON.stringify(this.prs)}, 'utf8');
 const parents = JSON.parse(base);
 const parent = parents[head];
+const failure = (identity.prErrors || {})[head];
+if (failure) respond(failure.stdout || '', failure.status === undefined ? 1 : failure.status, failure.stderr === undefined ? 'fixture lookup failure' : failure.stderr);
 if (!parent) respond('', 3, 'no pull requests found\\n');
 const details = JSON.parse(require('fs').readFileSync(${JSON.stringify(
         this.details
       )}, 'utf8'));
-const response = { headRefName: head, baseRefName: parent, number: head === 'parent' ? 1 : 2, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : 2), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
+const headRefOid = require('child_process').execFileSync('git', ['rev-parse', 'refs/heads/' + head], { cwd: ${JSON.stringify(
+        this.producer
+      )}, encoding: 'utf8' }).trim();
+const response = { headRefName: head, baseRefName: parent, headRefOid, number: head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
 if (args[6] === 'author') {
   if (identity.authorError) respond('', 8);
   respond((identity.authorRaw === undefined ? JSON.stringify({author: (identity.authors || {})[head]}) : identity.authorRaw) + '\\n');
 }
+Object.assign(response, (identity.prOverrides || {})[head] || {});
 const selected = {};
 for (const field of args[6].split(',')) { if (!(field in response)) respond('', 2); selected[field] = response[field]; }
 respond(JSON.stringify(selected) + '\\n');\n`,

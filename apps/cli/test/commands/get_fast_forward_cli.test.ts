@@ -40,8 +40,12 @@ class GetFixture {
 if (args[0] !== 'pr' || args[1] !== 'view' || args[4] !== 'get-fixture/repo' || args[5] !== '--json') process.exit(2);
 const head = args[2] === '2' ? 'child' : args[2];
 const base = head === 'parent' ? 'main' : head === 'child' ? 'parent' : undefined;
-if (!base) process.exit(3);
-console.log(JSON.stringify({headRefName: head, baseRefName: base}));\n`,
+if (!base) { console.error('no pull requests found'); process.exit(3); }
+const number = head === 'parent' ? 1 : 2;
+const headRefOid = require('child_process').execFileSync('git', ['rev-parse', 'refs/heads/' + head], {cwd: ${JSON.stringify(
+        this.producer
+      )}, encoding: 'utf8'}).trim();
+console.log(JSON.stringify({headRefName: head, baseRefName: base, headRefOid, number, url: 'https://github.com/get-fixture/repo/pull/' + number}));\n`,
       { mode: 0o755 }
     );
     fs.writeJsonSync(this.env.GRAPHITE_USER_CONFIG_PATH, {});
@@ -214,8 +218,8 @@ describe('get CLI safe fast-forward', function () {
     expect(fixture.ok('get').output).to.include('child is up to date');
   });
 
-  it('reports completed layers when a later branch cannot be updated', () => {
-    const head = fixture.advanceBoth();
+  it('refuses known later divergence before applying earlier layers', () => {
+    fixture.advanceBoth();
     const local = fixture.commit(
       fixture.consumer,
       'local.txt',
@@ -223,13 +227,12 @@ describe('get CLI safe fast-forward', function () {
     );
     const result = fixture.run(['get', 'child']);
     expect(result.status, result.output).not.to.equal(0);
-    expect(result.output).to.include('Updated parent before get stopped');
-    fixture.assertTip('parent', head.parent);
+    expect(result.output).to.include('diverged');
+    expect(result.output).not.to.include('Updated parent');
+    fixture.assertTip('parent', fixture.oldParent);
     fixture.assertTip('child', local);
-    fixture.assertTip('HEAD', head.parent);
-    expect(fixture.git(fixture.consumer, 'status', '--porcelain')).to.equal('');
-    fixture.ok('up');
     fixture.assertTip('HEAD', local);
+    expect(fixture.git(fixture.consumer, 'status', '--porcelain')).to.equal('');
     expect(
       fs.readFileSync(path.join(fixture.consumer, 'local.txt'), 'utf8')
     ).to.equal('local child commit');

@@ -572,13 +572,15 @@ describe('get CLI existing frozen branches', function () {
     fixture.ok('track', 'child', '--parent', 'parent');
     fixture.status();
   });
-  it('reports a completed parent-metadata import even when its head was unchanged before a later fetch failure', () => {
+  it('preserves parent metadata when a later required snapshot cannot be fetched', () => {
     fixture.ok('freeze', 'child');
     const before = fixture.git(
       fixture.consumer,
       'rev-parse',
       'refs/branch-metadata/child'
     );
+    fixture.git(fixture.producer, 'switch', '-c', 'missing');
+    fixture.commit(fixture.producer, 'missing.txt', 'unavailable source');
     fs.writeJsonSync(fixture.prs, {
       parent: 'main',
       child: 'main',
@@ -586,15 +588,16 @@ describe('get CLI existing frozen branches', function () {
     });
     const result = fixture.run(['get', 'missing', '--force']);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('Updated child before get stopped');
+    expect(result.output).not.to.include('Updated child');
+    expect(result.output).to.include('fetch');
     fixture.assertTip('child', fixture.oldChild);
     expect(
       fixture.git(fixture.consumer, 'rev-parse', 'refs/branch-metadata/child')
-    ).not.to.equal(before);
+    ).to.equal(before);
     fixture.status();
     fixture.ok('down');
     expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
-      'main'
+      'parent'
     );
   });
   it('refuses a freeze from the original pre-rebase hook before any local replay or checkout', () => {
