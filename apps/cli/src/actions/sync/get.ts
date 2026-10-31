@@ -12,15 +12,31 @@ import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { assertUnreachable } from '../../lib/utils/assert_unreachable';
 import { persistContinuation } from '../persist_continuation';
 import { printConflictStatus } from '../print_conflict_status';
+import { getCurrentBranchName } from '../../lib/git/branch_ops';
+import { getMergeBase } from '../../lib/git/merge_base';
+import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
+import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
+import {
+  activateRemoteUpdateNode,
+  assertRemoteUpdateNodeUnchanged,
+  getPullRequest,
+  selectRemoteUpdateGraph,
+  snapshotRemoteUpdateGraph,
+  releaseRemoteUpdateGraph,
+  RemoteUpdateNode,
+} from './remote_update_graph';
 
 export async function getAction(
-  args: { branchName: string | undefined; force: boolean; unfrozen: boolean },
+  args: {
+    branchName: string | undefined;
+    force: boolean;
+    unfrozen: boolean;
+    downstack?: boolean;
+  },
   context: TContext
 ): Promise<void> {
   const trunk = context.engine.trunk;
-  const repo = githubRepoSlug(context);
-
-  let target = args.branchName ?? context.engine.currentBranch;
+  let target = args.branchName ?? getCurrentBranchName();
   if (!target) {
     throw new ExitFailedError(
       'No branch or PR specified, and no current branch to get.'
@@ -29,7 +45,7 @@ export async function getAction(
 
   // A numeric argument is a PR number; resolve it to its head branch.
   if (/^\d+$/.test(target)) {
-    target = prFieldOrThrow(target, 'headRefName', repo);
+    target = getPullRequest(target, context).headRefName;
   }
 
   if (target === trunk) {
@@ -37,46 +53,33 @@ export async function getAction(
     return;
   }
 
-  // Anthracite doesn't push branch metadata to the remote, so we reconstruct the
-  // downstack chain (trunk -> target) by walking each PR's base ref.
-  const downstack: string[] = [];
-  const seen = new Set<string>();
-  let branch: string | undefined = target;
-  while (branch && branch !== trunk) {
-    if (seen.has(branch)) {
-      throw new ExitFailedError(
-        `Encountered a cycle while resolving the stack for ${chalk.yellow(
-          target
-        )}.`
-      );
-    }
-    seen.add(branch);
-    downstack.unshift(branch);
-    branch = prFieldMaybe(branch, 'baseRefName', repo);
+  const selected = selectRemoteUpdateGraph(
+    target,
+    args.downstack ?? false,
+    context
+  );
+  const nodes = snapshotRemoteUpdateGraph(selected, context);
+  try {
+    await prepareRemoteUpdates({ nodes, force: args.force, target }, context);
+  } catch (error) {
+    releaseRemoteUpdateGraph(nodes);
+    throw error;
   }
-
-  if (branch !== trunk) {
-    throw new ExitFailedError(
-      [
-        `Could not trace ${chalk.yellow(target)} back to trunk (${chalk.cyan(
-          trunk
-        )}) from its pull requests.`,
-        `\`an get\` reconstructs a stack from open PRs, so every branch from trunk to ${chalk.yellow(
-          target
-        )} needs one.`,
-      ].join('\n')
-    );
-  }
-
   const updatedBranches = await getBranchesFromRemote(
     {
-      downstack,
+      downstack: nodes.map((node) => node.branchName),
       base: trunk,
       force: args.force,
-      importDecisions: decideImports(downstack, args.unfrozen, context),
+      importDecisions: decideImports(
+        nodes.map((node) => node.branchName),
+        args.unfrozen,
+        context
+      ),
+      nodes,
     },
     context
   );
+  releaseRemoteUpdateGraph(nodes);
 
   try {
     context.engine.checkoutBranch(target, { preserveIgnored: true });
@@ -92,41 +95,6 @@ export async function getAction(
     }
     throw error;
   }
-}
-
-function prFieldMaybe(
-  branchOrNumber: string,
-  field: 'headRefName' | 'baseRefName',
-  repo: string
-): string | undefined {
-  try {
-    const pr = JSON.parse(
-      execFileSync(
-        'gh',
-        ['pr', 'view', branchOrNumber, '--repo', repo, '--json', field],
-        {
-          stdio: ['ignore', 'pipe', 'ignore'],
-        }
-      ).toString()
-    );
-    return pr[field] || undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-function prFieldOrThrow(
-  branchOrNumber: string,
-  field: 'headRefName' | 'baseRefName',
-  repo: string
-): string {
-  const value = prFieldMaybe(branchOrNumber, field, repo);
-  if (!value) {
-    throw new ExitFailedError(
-      `Could not find an open pull request for "${branchOrNumber}".`
-    );
-  }
-  return value;
 }
 
 export type GetImportDecision = {
@@ -209,6 +177,7 @@ export async function getBranchesFromRemote(
     base: string;
     force: boolean;
     importDecisions?: GetImportDecision[];
+    nodes?: readonly RemoteUpdateNode[];
   },
   context: TContext
 ): Promise<string[]> {
@@ -217,20 +186,22 @@ export async function getBranchesFromRemote(
   try {
     let parentBranchName = args.base;
     for (const [index, branchName] of args.downstack.entries()) {
+      const node = args.nodes?.find((item) => item.branchName === branchName);
+      if (node) parentBranchName = node.parentBranchName;
       const decision = args.importDecisions?.find(
         (item) => item.branchName === branchName
       );
-      const importFrozen =
-        decision &&
-        !decision.wasTracked &&
-        !getSha(`refs/branch-metadata/${branchName}`)
-          ? decision.frozen
-          : undefined;
+      const importFrozen = getImportFrozen(branchName, decision);
       const previousRevision = getSha(`refs/heads/${branchName}`);
       const previousMetadata = getSha(`refs/branch-metadata/${branchName}`);
       let completed = false;
       try {
-        context.engine.fetchBranch(branchName, parentBranchName);
+        if (node) {
+          if (node.resolution === 'REBASE')
+            context.engine.assertBranchEditable(branchName);
+          assertRemoteUpdateNodeUnchanged(node);
+          activateRemoteUpdateNode(node);
+        } else context.engine.fetchBranch(branchName, parentBranchName);
         if (
           args.force ||
           !context.engine.branchExists(branchName) ||
@@ -246,7 +217,11 @@ export async function getBranchesFromRemote(
           context.engine.branchMatchesFetched(branchName)
         ) {
           context.splog.info(`${chalk.cyan(branchName)} is up to date.`);
-        } else if (args.force || !context.engine.branchExists(branchName)) {
+        } else if (
+          node?.resolution === 'OVERWRITE' ||
+          args.force ||
+          !context.engine.branchExists(branchName)
+        ) {
           context.engine.checkoutBranchFromFetched(
             branchName,
             parentBranchName,
@@ -273,13 +248,14 @@ export async function getBranchesFromRemote(
             context.splog.info('Local children may need to be restacked.');
           }
         } else {
-          const remainingBranchesToSync = args.downstack.slice(index + 1);
+          const remainingBranchesToSync = continuationBranches(args, index);
           await handleSameParent(
             {
               branchName,
               parentBranchName,
               remainingBranchesToSync,
               importDecisions: args.importDecisions,
+              fetchChoice: node?.resolution === 'REBASE' ? 'REBASE' : undefined,
             },
             context
           );
@@ -309,6 +285,96 @@ export async function getBranchesFromRemote(
     throw error;
   }
   return updatedBranches;
+}
+
+function getImportFrozen(
+  branchName: string,
+  decision: GetImportDecision | undefined
+): boolean | undefined {
+  return decision &&
+    !decision.wasTracked &&
+    !getSha(`refs/branch-metadata/${branchName}`)
+    ? decision.frozen
+    : undefined;
+}
+
+function continuationBranches(
+  args: { downstack: readonly string[]; nodes?: readonly RemoteUpdateNode[] },
+  index: number
+): string[] {
+  if (
+    args.nodes &&
+    args.nodes
+      .slice(index + 1)
+      .some(
+        (pending, offset) =>
+          pending.parentBranchName !== args.downstack[index + offset]
+      )
+  ) {
+    throw new ExitFailedError(
+      'Graph reconciliation requires graph-aware continuation. Pending remote updates remain pinned; inspect the selected branches before retrying.'
+    );
+  }
+  return args.downstack.slice(index + 1);
+}
+
+async function prepareRemoteUpdates(
+  args: { nodes: readonly RemoteUpdateNode[]; force: boolean; target: string },
+  context: TContext
+): Promise<void> {
+  for (const node of args.nodes) assertRemoteUpdateNodeUnchanged(node);
+  const changing = args.nodes.filter(
+    (node) =>
+      args.force ||
+      getSha(`refs/heads/${node.branchName}`) !== node.head ||
+      !context.engine.branchExists(node.branchName) ||
+      !context.engine.isBranchTracked(node.branchName) ||
+      context.engine.getParentPrecondition(node.branchName) !==
+        node.parentBranchName
+  );
+  if (changing.length > 0) uncommittedTrackedChangesPrecondition();
+  assertBranchesAvailableInWorktrees([
+    ...changing.map((node) => node.branchName),
+    args.target,
+  ]);
+  assertRestackFilesAvailable({
+    branches: [],
+    checkoutRevisions: args.nodes.map((node) => node.head),
+    operation: 'get',
+  });
+  for (const node of changing) {
+    const exists = context.engine.branchExists(node.branchName);
+    if (args.force || !exists) {
+      node.resolution = 'OVERWRITE';
+      continue;
+    }
+    if (
+      !context.engine.isBranchTracked(node.branchName) ||
+      context.engine.getParentPrecondition(node.branchName) !==
+        node.parentBranchName
+    ) {
+      context.splog.info(
+        context.engine.isBranchTracked(node.branchName)
+          ? `${node.branchName} and its remote source have different parents.`
+          : `${node.branchName} is not tracked by Anthracite.`
+      );
+      await confirmOverwriteBranch(node.branchName, context);
+      node.resolution = 'OVERWRITE';
+    } else if (
+      getMergeBase(node.branchName, node.head) !==
+      getSha(`refs/heads/${node.branchName}`)
+    ) {
+      node.resolution = await chooseRemoteResolution(node.branchName, context);
+      if (node.resolution === 'REBASE')
+        continuationBranches(
+          {
+            downstack: args.nodes.map((item) => item.branchName),
+            nodes: args.nodes,
+          },
+          args.nodes.indexOf(node)
+        );
+    }
+  }
 }
 
 async function handleUntrackedLocally(
@@ -362,6 +428,20 @@ async function maybeOverwriteBranch(
   context: TContext
 ): Promise<void> {
   const { branchName, parentBranchName } = args;
+  await confirmOverwriteBranch(branchName, context);
+
+  context.engine.checkoutBranchFromFetched(
+    branchName,
+    parentBranchName,
+    args.importFrozen
+  );
+  context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
+}
+
+async function confirmOverwriteBranch(
+  branchName: string,
+  context: TContext
+): Promise<void> {
   if (!context.interactive) {
     throw new ExitFailedError(
       `Cannot overwrite local branch ${branchName} without confirmation in non-interactive mode. Retry interactively, or use --force to overwrite it with the remote version.`
@@ -381,49 +461,34 @@ async function maybeOverwriteBranch(
   ) {
     throw new KilledError();
   }
-
-  context.engine.checkoutBranchFromFetched(
-    branchName,
-    parentBranchName,
-    args.importFrozen
-  );
-  context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
 }
 
-// This is the most complex case - if the branch's parent matches meta,
-// we need to not only allow for overwrite and abort, but also rebasing
-// local changes onto the changes from remote.
-async function handleSameParent(
-  args: {
-    branchName: string;
-    parentBranchName: string;
-    remainingBranchesToSync: string[];
-    importDecisions?: GetImportDecision[];
-  },
+type RemoteResolution = 'REBASE' | 'OVERWRITE';
+
+async function chooseRemoteResolution(
+  branchName: string,
   context: TContext
-): Promise<void> {
-  const frozen = context.engine.isBranchFrozen(args.branchName);
+): Promise<RemoteResolution> {
+  const frozen = context.engine.isBranchFrozen(branchName);
   context.splog.info(
     [
       `${chalk.yellow(
-        args.branchName
+        branchName
       )} shares a name with a local branch, and they have the same parent.`,
       frozen
-        ? `This branch is frozen. Use an unfreeze ${args.branchName} before rebasing local changes, or explicitly overwrite it with the remote version.`
+        ? `This branch is frozen. Use an unfreeze ${branchName} before rebasing local changes, or explicitly overwrite it with the remote version.`
         : `You can either overwrite your copy of the branch, or rebase your local changes onto the remote version.`,
       `You can also abort the command entirely and keep your local state as is.`,
     ].join('\n')
   );
 
-  const fetchChoice: 'REBASE' | 'OVERWRITE' | 'ABORT' = !context.interactive
+  const fetchChoice: RemoteResolution | 'ABORT' = !context.interactive
     ? 'ABORT'
     : (
         await context.prompts({
           type: 'select',
           name: 'value',
-          message: `How would you like to handle ${chalk.yellow(
-            args.branchName
-          )}?`,
+          message: `How would you like to handle ${chalk.yellow(branchName)}?`,
           choices: [
             ...(frozen
               ? []
@@ -441,6 +506,37 @@ async function handleSameParent(
           ],
         })
       ).value;
+
+  if (fetchChoice === 'ABORT') {
+    if (!context.interactive)
+      throw new ExitFailedError(
+        `Local branch ${branchName} has diverged from remote.${
+          frozen
+            ? ` It is frozen; use an unfreeze ${branchName} before rebasing local changes.`
+            : ''
+        } Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.`
+      );
+    throw new KilledError();
+  }
+  return fetchChoice;
+}
+
+// This is the most complex case - if the branch's parent matches meta,
+// we need to not only allow for overwrite and abort, but also rebasing
+// local changes onto the changes from remote.
+async function handleSameParent(
+  args: {
+    branchName: string;
+    parentBranchName: string;
+    remainingBranchesToSync: string[];
+    importDecisions?: GetImportDecision[];
+    fetchChoice?: RemoteResolution;
+  },
+  context: TContext
+): Promise<void> {
+  const fetchChoice =
+    args.fetchChoice ??
+    (await chooseRemoteResolution(args.branchName, context));
 
   switch (fetchChoice) {
     case 'REBASE': {
@@ -479,17 +575,6 @@ async function handleSameParent(
       );
       context.splog.info(`Synced ${chalk.cyan(args.branchName)} from remote.`);
       break;
-    case 'ABORT':
-      if (!context.interactive) {
-        throw new ExitFailedError(
-          `Local branch ${args.branchName} has diverged from remote.${
-            frozen
-              ? ` It is frozen; use an unfreeze ${args.branchName} before rebasing local changes.`
-              : ''
-          } Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.`
-        );
-      }
-      throw new KilledError();
     default:
       assertUnreachable(fetchChoice);
   }

@@ -197,10 +197,14 @@ describe('modern preserved routes through the public CLI', function () {
       fixture.ok(['repo', 'name', '--set', 'compatibility']);
       fs.writeFileSync(
         path.join(fixture.root, 'sentinel-bin', 'gh'),
-        `#!${process.execPath}\nconst a=process.argv.slice(2);if(a[0]!=='pr'||a[1]!=='view'||a[2]!=='base')process.exit(2);console.log(JSON.stringify({headRefName:'base',baseRefName:'main'}));`,
+        `#!${
+          process.execPath
+        }\nconst a=process.argv.slice(2);if(a[0]!=='pr'||a[1]!=='view'||a[2]!=='base')process.exit(2);console.log(JSON.stringify({headRefName:'base',baseRefName:'main',headRefOid:${JSON.stringify(
+          target
+        )},number:1,url:'https://github.com/fixture/compatibility/pull/1'}));`,
         { mode: 0o755 }
       );
-      fixture.ok([command, 'base']);
+      fixture.ok([command, 'base', '--downstack']);
       expect(fixture.git(['rev-parse', 'base'])).to.equal(target);
       expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
       expect(fixture.git(['branch', '--show-current'])).to.equal('base');

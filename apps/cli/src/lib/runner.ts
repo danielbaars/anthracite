@@ -1,3 +1,4 @@
+import { assertGetOperationAvailable } from '../actions/sync/remote_update_graph';
 import { withLandingLock } from '../actions/land_scoped';
 import { loadLandingProgress } from './landing_progress';
 import { allowLandingContinuation } from '../actions/land_replay';
@@ -258,6 +259,7 @@ async function preflightLifecycle(
   canonicalName: string,
   git: TGit
 ): Promise<void> {
+  if (canonicalName === 'get') assertGetOperationAvailable();
   const isInit = canonicalName === 'repo init' || canonicalName === 'init';
   if (!isInit && canonicalName !== 'delete') return;
   if (isInit && args.reset === true) return;
