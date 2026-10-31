@@ -71,23 +71,18 @@ export function getBranchesToRestack(
   return [...branchesToChange];
 }
 
+type RestackOptions = {
+  readonly preserveOtherRefs?: boolean;
+  readonly beforeBranch?: (branchName: string) => void;
+  readonly onComplete?: (branchName: string) => void;
+};
+
 export function restackBranches(
   branchNames: string[],
-  context: TContext
+  context: TContext,
+  options: RestackOptions = {}
 ): void {
-  const data = context.continueConfig.data;
-  const skipFrozen = !getStructuralRole(data);
-  assertDeleteRecoveryEditable(data.delete);
-  assertContinuationBranchesEditable(data);
-  assertFileSplitAvailable(data);
-  try {
-    assertBranchesAvailableInWorktrees(
-      getBranchesToRestack(branchNames, context, { skipFrozen })
-    );
-  } catch (error) {
-    reportReorderFailure(context);
-    throw error;
-  }
+  const skipFrozen = assertRestackAvailable(branchNames, context);
   context.splog.debug(
     branchNames.reduce((acc, curr) => `${acc}\n${curr}`, 'RESTACKING:')
   );
@@ -97,6 +92,7 @@ export function restackBranches(
     assertFileSplitAvailable(context.continueConfig.data);
     const branchName = branchNames.shift();
     if (!branchName) continue;
+    options.beforeBranch?.(branchName);
 
     if (context.engine.isTrunk(branchName)) {
       context.splog.info(
@@ -125,11 +121,12 @@ export function restackBranches(
           context
         );
       }
-      const result = restackLandingBranch(branchName, context);
+      const result = restackLandingBranch(branchName, context, options);
       context.splog.debug(`${result}: ${branchName}`);
       switch (result.result) {
         case 'REBASE_DONE':
           recordRestackCompletion(branchName, context);
+          options.onComplete?.(branchName);
           context.splog.info(
             `Restacked ${chalk.green(branchName)} on ${chalk.cyan(
               context.engine.getParentPrecondition(branchName)
@@ -157,6 +154,7 @@ export function restackBranches(
 
         case 'REBASE_UNNEEDED':
           recordRestackCompletion(branchName, context);
+          options.onComplete?.(branchName);
           context.splog.info(
             `${chalk.cyan(
               branchName
@@ -187,6 +185,26 @@ export function restackBranches(
       throw error;
     }
   }
+}
+
+function assertRestackAvailable(
+  branchNames: string[],
+  context: TContext
+): boolean {
+  const data = context.continueConfig.data;
+  const skipFrozen = !getStructuralRole(data);
+  assertDeleteRecoveryEditable(data.delete);
+  assertContinuationBranchesEditable(data);
+  assertFileSplitAvailable(data);
+  try {
+    assertBranchesAvailableInWorktrees(
+      getBranchesToRestack(branchNames, context, { skipFrozen })
+    );
+  } catch (error) {
+    reportReorderFailure(context);
+    throw error;
+  }
+  return skipFrozen;
 }
 
 export function recordRestackCompletion(

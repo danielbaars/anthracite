@@ -225,13 +225,15 @@ function retainRejectedLandingReplay(branch: string, ready?: string): void {
 
 export function restackLandingBranch(
   branch: string,
-  context: TContext
+  context: TContext,
+  options: { readonly preserveOtherRefs?: boolean } = {}
 ): ReturnType<TContext['engine']['restackBranch']> {
   const ready = startLandingReplay(branch);
   try {
     return context.engine.restackBranch(
       branch,
-      getMandatoryBranches(context.continueConfig.data)
+      getMandatoryBranches(context.continueConfig.data),
+      options.preserveOtherRefs
     );
   } catch (error: unknown) {
     retainRejectedLandingReplay(branch, ready);

@@ -1,4 +1,10 @@
 import chalk from 'chalk';
+import {
+  assertGetMaintenanceAvailable,
+  applyGetMaintenance,
+  planGetMaintenance,
+  GetMaintenanceEntry,
+} from './get_maintenance';
 import { execFileSync } from 'child_process';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
@@ -12,7 +18,11 @@ import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { assertUnreachable } from '../../lib/utils/assert_unreachable';
 import { persistContinuation } from '../persist_continuation';
 import { printConflictStatus } from '../print_conflict_status';
-import { captureGetCheckout, finishGetCheckout } from './get_checkout';
+import {
+  GetCheckoutIdentity,
+  captureGetCheckout,
+  finishGetCheckout,
+} from './get_checkout';
 import { getMergeBase } from '../../lib/git/merge_base';
 import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
@@ -41,50 +51,35 @@ export async function getAction(
     unfrozen: boolean;
     downstack?: boolean;
     checkout?: boolean;
+    restack?: boolean;
   },
   context: TContext
 ): Promise<void> {
   const original = captureGetCheckout();
   const trunk = context.engine.trunk;
-  let target =
-    args.branchName ??
-    ('branchName' in original ? original.branchName : undefined);
-  if (!target) {
-    throw new ExitFailedError(
-      'No branch or PR specified, and no current branch to get.'
-    );
-  }
-
-  // Keep the requested PR's full identity pinned through branch graph discovery.
-  const requestedPr = /^\d+$/.test(target)
-    ? getPullRequest(target, context)
-    : undefined;
-  if (requestedPr) target = requestedPr.headRefName;
-
+  const { target, selected } = selectGetTarget(
+    {
+      branchName: args.branchName,
+      downstack: args.downstack ?? false,
+      original,
+    },
+    context
+  );
   if (target === trunk) {
     context.splog.info(`Nothing to get: ${chalk.cyan(trunk)} is trunk.`);
     return;
   }
-
-  const selected = selectRemoteUpdateGraph(
-    target,
-    args.downstack ?? false,
-    context
-  );
-  const targetSource = selected.find((node) => node.branchName === target);
-  if (
-    requestedPr &&
-    (targetSource?.pullRequestNumber !== requestedPr.number ||
-      targetSource.expectedSourceHead !== requestedPr.headRefOid ||
-      targetSource.parentBranchName !== requestedPr.baseRefName)
-  )
-    throw new ExitFailedError(
-      `Pull request identity for ${target} changed while planning get. Please retry.`
-    );
   const remoteTrunk = snapshotRemoteTrunk(context);
   let nodes: RemoteUpdateNode[] = [];
+  let maintenance: GetMaintenanceEntry[] = [];
+  let importDecisions: GetImportDecision[] = [];
   try {
     nodes = snapshotRemoteUpdateGraph(selected, context, remoteTrunk);
+    importDecisions = decideImports(
+      nodes.map((node) => node.branchName),
+      args.unfrozen,
+      context
+    );
     await prepareRemoteUpdates(
       {
         nodes,
@@ -100,6 +95,12 @@ export async function getAction(
       },
       context
     );
+    maintenance = planGetMaintenance(
+      { nodes, trunk: remoteTrunk, importDecisions },
+      context
+    );
+    if (args.restack ?? true)
+      assertGetMaintenanceAvailable(maintenance, context);
   } catch (error) {
     releaseRemoteUpdateGraph(nodes);
     releaseRemoteTrunk(remoteTrunk);
@@ -116,11 +117,7 @@ export async function getAction(
         downstack: nodes.map((node) => node.branchName),
         base: trunk,
         force: args.force,
-        importDecisions: decideImports(
-          nodes.map((node) => node.branchName),
-          args.unfrozen,
-          context
-        ),
+        importDecisions,
         nodes,
         onComplete: (branch) => completedFeatures.push(branch),
       },
@@ -145,13 +142,61 @@ export async function getAction(
       );
     throw error;
   }
+  const maintained = applyGetMaintenance(
+    maintenance,
+    { shouldRestack: args.restack ?? true, updatedBranches },
+    context
+  );
   releaseRemoteUpdateGraph(nodes);
   releaseRemoteTrunk(remoteTrunk);
 
   finishGetCheckout(
     { target, original, shouldCheckout: args.checkout ?? true },
-    updatedBranches
+    [...new Set([...updatedBranches, ...maintained])]
   );
+}
+
+function selectGetTarget(
+  {
+    branchName,
+    downstack,
+    original,
+  }: {
+    branchName: string | undefined;
+    downstack: boolean;
+    original: GetCheckoutIdentity;
+  },
+  context: TContext
+): { target: string; selected: ReturnType<typeof selectRemoteUpdateGraph> } {
+  const trunk = context.engine.trunk;
+  let target =
+    branchName ?? ('branchName' in original ? original.branchName : undefined);
+  if (!target) {
+    throw new ExitFailedError(
+      'No branch or PR specified, and no current branch to get.'
+    );
+  }
+
+  // Keep the requested PR's full identity pinned through branch graph discovery.
+  const requestedPr = /^\d+$/.test(target)
+    ? getPullRequest(target, context)
+    : undefined;
+  if (requestedPr) target = requestedPr.headRefName;
+
+  if (target === trunk) return { target, selected: [] };
+
+  const selected = selectRemoteUpdateGraph(target, downstack, context);
+  const targetSource = selected.find((node) => node.branchName === target);
+  if (
+    requestedPr &&
+    (targetSource?.pullRequestNumber !== requestedPr.number ||
+      targetSource.expectedSourceHead !== requestedPr.headRefOid ||
+      targetSource.parentBranchName !== requestedPr.baseRefName)
+  )
+    throw new ExitFailedError(
+      `Pull request identity for ${target} changed while planning get. Please retry.`
+    );
+  return { target, selected };
 }
 
 export type GetImportDecision = {
@@ -315,6 +360,7 @@ export async function getBranchesFromRemote(
               remainingBranchesToSync,
               importDecisions: args.importDecisions,
               fetchChoice: node?.resolution === 'REBASE' ? 'REBASE' : undefined,
+              preserveOtherRefs: args.nodes !== undefined,
             },
             context
           );
@@ -622,6 +668,7 @@ async function handleSameParent(
     remainingBranchesToSync: string[];
     importDecisions?: GetImportDecision[];
     fetchChoice?: RemoteResolution;
+    preserveOtherRefs?: boolean;
   },
   context: TContext
 ): Promise<void> {
@@ -631,7 +678,10 @@ async function handleSameParent(
 
   switch (fetchChoice) {
     case 'REBASE': {
-      const result = context.engine.rebaseBranchOntoFetched(args.branchName);
+      const result = context.engine.rebaseBranchOntoFetched(
+        args.branchName,
+        args.preserveOtherRefs
+      );
       if (result.result === 'REBASE_CONFLICT') {
         persistContinuation(
           {

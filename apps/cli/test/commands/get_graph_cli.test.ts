@@ -43,7 +43,7 @@ describe('get CLI remote graph selection', function () {
       ).to.equal(fixture.git(fixture.remote, 'rev-parse', `${branch}^{tree}`));
     }
   });
-  it('retains an unpublished tracked descendant and explains its skipped refresh', () => {
+  it('retains unpublished descendant heads with no-restack and explains skipped refresh', () => {
     fixture.ok('unfreeze', 'child');
     fixture.ok('create', 'local-work');
     const local = fixture.commit(
@@ -53,14 +53,14 @@ describe('get CLI remote graph selection', function () {
     );
     fixture.git(fixture.producer, 'switch', 'child');
     const child = fixture.advanceChild();
-    const result = fixture.ok('get', 'parent');
+    const result = fixture.ok('get', 'parent', '--no-restack');
     fixture.assertTip('child', child);
     fixture.assertTip('local-work', local);
     expect(
       fixture.git(fixture.consumer, 'show', 'local-work:local.txt')
     ).to.equal('unpublished bytes');
     expect(result.output).to.include('local-work is local-only');
-    fixture.ok('get', 'parent', '--force');
+    fixture.ok('get', 'parent', '--force', '--no-restack');
     fixture.assertTip('local-work', local);
     expect(
       fixture.git(fixture.remote, 'branch', '--list', 'local-work')
@@ -288,7 +288,7 @@ describe('get CLI remote graph selection', function () {
     fixture.assertTip('parent', fixture.oldParent);
     fixture.assertTip('child', fixture.oldChild);
   });
-  it('reports maintenance when both heads advance but the child still lacks its new parent commits', () => {
+  it('reports deferred no-restack maintenance when the child lacks new parent commits', () => {
     fixture.ok('unfreeze', 'parent');
     fixture.ok('unfreeze', 'child');
     const child = fixture.advanceChild();
@@ -299,7 +299,7 @@ describe('get CLI remote graph selection', function () {
       'parent advanced independently'
     );
     fixture.git(fixture.producer, 'push', 'origin', 'parent');
-    fixture.ok('get', 'parent');
+    fixture.ok('get', 'parent', '--no-restack');
     fixture.assertTip('parent', parent);
     fixture.assertTip('child', child);
     expect(fixture.git(fixture.consumer, 'merge-base', parent, child)).to.equal(

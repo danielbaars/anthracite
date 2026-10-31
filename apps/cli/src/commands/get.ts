@@ -22,6 +22,12 @@ const args = {
     type: 'boolean',
     default: false,
   },
+  restack: {
+    describe:
+      'Restack affected local work after incoming updates; --no-restack defers maintenance',
+    type: 'boolean',
+    default: true,
+  },
   checkout: {
     describe:
       'Select the target on success; --no-checkout restores the original checkout',
@@ -56,6 +62,7 @@ export const handler = async (argv: argsT): Promise<void> =>
           unfrozen: argv.unfrozen,
           downstack: argv.downstack,
           checkout: argv.checkout,
+          restack: argv.restack,
         },
         context
       )
