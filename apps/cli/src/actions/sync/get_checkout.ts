@@ -78,3 +78,19 @@ export function finishGetCheckout(
     );
   }
 }
+
+export function assertGetCheckout(intent: GetCheckoutIntent): void {
+  const destination = intent.shouldCheckout
+    ? { branchName: intent.target }
+    : intent.original;
+  const actual = captureGetCheckout();
+  if (
+    'branchName' in destination
+      ? !('branchName' in actual) ||
+        actual.branchName !== destination.branchName ||
+        getShaOrThrow('HEAD') !== getSha(`refs/heads/${destination.branchName}`)
+      : !('detachedOid' in actual) ||
+        actual.detachedOid !== destination.detachedOid
+  )
+    throw new Error('The checkout changed after selecting the final identity.');
+}

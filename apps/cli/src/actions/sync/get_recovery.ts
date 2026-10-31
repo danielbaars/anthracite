@@ -24,6 +24,7 @@ import {
 } from '../../lib/spiffy/continuation_spf';
 import { repoConfigFactory } from '../../lib/spiffy/repo_config_spf';
 import { GetOperation, getOperationSchema } from './get_operation';
+import { assertGetCheckout } from './get_checkout';
 import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 
 const savedRecords = new WeakMap<TContinueConfig, string>();
@@ -431,11 +432,15 @@ export function finishGetRecovery(
       'Saved get ownership differs from the completed workflow.',
       operation
     );
+  assertGetExpectedState(operation);
+  assertGetCheckout(operation.checkout);
   validateGetSources(operation);
   for (const source of [operation.trunk, ...operation.nodes]) {
     assertGetRecoveryWrite(context);
     gitPath('update-ref', '-d', source.sourceRef, source.head);
   }
+  assertGetExpectedState(operation);
+  assertGetCheckout(operation.checkout);
   assertGetRecoveryWrite(context);
   if (context.continueConfig.data.get !== operation)
     refuseGet('Get recovery owner changed.', operation);
