@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/danielbaars/anthracite/compare/v0.5.0...v0.5.1) (2026-10-31)
+
+
+### Bug Fixes
+
+* **cli:** clean closed descendants below retained branches [skip ci] ([beaee3f](https://github.com/danielbaars/anthracite/commit/beaee3f846f93d8f5dc867645727da1db46b48fa))
+
 ## [0.5.0](https://github.com/danielbaars/anthracite/compare/v0.4.0...v0.5.0) (2026-10-30)
 
 
