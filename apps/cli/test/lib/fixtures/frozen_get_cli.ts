@@ -77,9 +77,9 @@ if (args[0] === 'api' && args[1] === 'user') {
   respond((identity.accountRaw === undefined ? JSON.stringify(identity.account || {}) : identity.accountRaw) + '\\n');
 }
 if (args[0] !== 'pr' || args[1] !== 'view' || args[4] !== 'get-fixture/repo' || args[5] !== '--json') respond('', 2);
-const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : args[2];
 const base = require('fs').readFileSync(${JSON.stringify(this.prs)}, 'utf8');
 const parents = JSON.parse(base);
+const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : /^\\d+$/.test(args[2]) ? Object.keys(parents)[Number(args[2]) - 1] || args[2] : args[2];
 const parent = parents[head];
 const failure = (identity.prErrors || {})[head];
 if (failure) respond(failure.stdout || '', failure.status === undefined ? 1 : failure.status, failure.stderr === undefined ? 'fixture lookup failure' : failure.stderr);
@@ -95,7 +95,7 @@ if (args[6] === 'author') {
   if (identity.authorError) respond('', 8);
   respond((identity.authorRaw === undefined ? JSON.stringify({author: (identity.authors || {})[head]}) : identity.authorRaw) + '\\n');
 }
-Object.assign(response, (identity.prOverrides || {})[head] || {});
+Object.assign(response, (identity.prOverrides || {})[head] || {}, (identity.prReferenceOverrides || {})[args[2]] || {});
 const selected = {};
 for (const field of args[6].split(',')) { if (!(field in response)) respond('', 2); selected[field] = response[field]; }
 respond(JSON.stringify(selected) + '\\n');\n`,

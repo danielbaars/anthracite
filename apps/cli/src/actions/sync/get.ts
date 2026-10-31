@@ -26,6 +26,14 @@ import {
   RemoteUpdateNode,
 } from './remote_update_graph';
 
+import {
+  RemoteTrunkUpdate,
+  snapshotRemoteTrunk,
+  assertRemoteTrunkUnchanged,
+  applyRemoteTrunk,
+  releaseRemoteTrunk,
+} from './remote_update_trunk';
+
 export async function getAction(
   args: {
     branchName: string | undefined;
@@ -47,10 +55,11 @@ export async function getAction(
     );
   }
 
-  // A numeric argument is a PR number; resolve it to its head branch.
-  if (/^\d+$/.test(target)) {
-    target = getPullRequest(target, context).headRefName;
-  }
+  // Keep the requested PR's full identity pinned through branch graph discovery.
+  const requestedPr = /^\d+$/.test(target)
+    ? getPullRequest(target, context)
+    : undefined;
+  if (requestedPr) target = requestedPr.headRefName;
 
   if (target === trunk) {
     context.splog.info(`Nothing to get: ${chalk.cyan(trunk)} is trunk.`);
@@ -62,13 +71,26 @@ export async function getAction(
     args.downstack ?? false,
     context
   );
-  const nodes = snapshotRemoteUpdateGraph(selected, context);
+  const targetSource = selected.find((node) => node.branchName === target);
+  if (
+    requestedPr &&
+    (targetSource?.pullRequestNumber !== requestedPr.number ||
+      targetSource.expectedSourceHead !== requestedPr.headRefOid ||
+      targetSource.parentBranchName !== requestedPr.baseRefName)
+  )
+    throw new ExitFailedError(
+      `Pull request identity for ${target} changed while planning get. Please retry.`
+    );
+  const remoteTrunk = snapshotRemoteTrunk(context);
+  let nodes: RemoteUpdateNode[] = [];
   try {
+    nodes = snapshotRemoteUpdateGraph(selected, context, remoteTrunk);
     await prepareRemoteUpdates(
       {
         nodes,
         force: args.force,
         target,
+        trunk: remoteTrunk,
         finalBranch:
           args.checkout === false
             ? 'branchName' in original
@@ -80,23 +102,51 @@ export async function getAction(
     );
   } catch (error) {
     releaseRemoteUpdateGraph(nodes);
+    releaseRemoteTrunk(remoteTrunk);
     throw error;
   }
-  const updatedBranches = await getBranchesFromRemote(
-    {
-      downstack: nodes.map((node) => node.branchName),
-      base: trunk,
-      force: args.force,
-      importDecisions: decideImports(
-        nodes.map((node) => node.branchName),
-        args.unfrozen,
-        context
-      ),
-      nodes,
-    },
-    context
-  );
+  let updatedBranches: string[];
+  const completedFeatures: string[] = [];
+  let phase = 'trunk fast-forward';
+  try {
+    applyRemoteTrunk(remoteTrunk, context);
+    phase = 'remote refresh';
+    updatedBranches = await getBranchesFromRemote(
+      {
+        downstack: nodes.map((node) => node.branchName),
+        base: trunk,
+        force: args.force,
+        importDecisions: decideImports(
+          nodes.map((node) => node.branchName),
+          args.unfrozen,
+          context
+        ),
+        nodes,
+        onComplete: (branch) => completedFeatures.push(branch),
+      },
+      context
+    );
+    if (remoteTrunk.head !== remoteTrunk.previousHead)
+      updatedBranches.unshift(trunk);
+  } catch (error) {
+    const reached = getSha(`refs/heads/${trunk}`) !== remoteTrunk.previousHead;
+    if (reached)
+      throw new ExitFailedError(
+        `Trunk ${trunk} reached ${getSha(
+          `refs/heads/${trunk}`
+        )} before get stopped during ${phase}.\nCompleted feature refresh: ${
+          completedFeatures.join(', ') || 'none'
+        }.\nPending feature refresh: ${
+          nodes
+            .filter((node) => !completedFeatures.includes(node.branchName))
+            .map((node) => node.branchName)
+            .join(', ') || 'none'
+        }.\n${error instanceof Error ? error.message : String(error)}`
+      );
+    throw error;
+  }
   releaseRemoteUpdateGraph(nodes);
+  releaseRemoteTrunk(remoteTrunk);
 
   finishGetCheckout(
     { target, original, shouldCheckout: args.checkout ?? true },
@@ -185,6 +235,7 @@ export async function getBranchesFromRemote(
     force: boolean;
     importDecisions?: GetImportDecision[];
     nodes?: readonly RemoteUpdateNode[];
+    onComplete?: (branchName: string) => void;
   },
   context: TContext
 ): Promise<string[]> {
@@ -203,12 +254,8 @@ export async function getBranchesFromRemote(
       const previousMetadata = getSha(`refs/branch-metadata/${branchName}`);
       let completed = false;
       try {
-        if (node) {
-          if (node.resolution === 'REBASE')
-            context.engine.assertBranchEditable(branchName);
-          assertRemoteUpdateNodeUnchanged(node);
-          activateRemoteUpdateNode(node);
-        } else context.engine.fetchBranch(branchName, parentBranchName);
+        if (node) activateGuardedRemoteNode(node, context);
+        else context.engine.fetchBranch(branchName, parentBranchName);
         if (
           args.force ||
           !context.engine.branchExists(branchName) ||
@@ -241,13 +288,18 @@ export async function getBranchesFromRemote(
             context
           );
         } else if (
-          context.engine.getParentPrecondition(branchName) !== parentBranchName
+          context.engine.getParentPrecondition(branchName) !==
+            parentBranchName &&
+          node?.resolution !== 'UPDATE'
         ) {
           await handleDifferentParents(branchName, parentBranchName, context);
         } else if (
           context.engine.fastForwardBranchFromFetched(
             branchName,
-            parentBranchName
+            parentBranchName,
+            node
+              ? { number: node.pullRequestNumber, url: node.pullRequestUrl }
+              : undefined
           )
         ) {
           context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
@@ -268,6 +320,7 @@ export async function getBranchesFromRemote(
           );
         }
         completed = true;
+        args.onComplete?.(branchName);
       } finally {
         if (
           getSha(`refs/heads/${branchName}`) !== previousRevision ||
@@ -292,6 +345,17 @@ export async function getBranchesFromRemote(
     throw error;
   }
   return updatedBranches;
+}
+
+function activateGuardedRemoteNode(
+  node: RemoteUpdateNode,
+  context: TContext
+): void {
+  if (node.resolution === 'REBASE')
+    context.engine.assertBranchEditable(node.branchName);
+  assertRemoteUpdateNodeUnchanged(node);
+  activateRemoteUpdateNode(node);
+  assertRemoteUpdateNodeUnchanged(node);
 }
 
 function getImportFrozen(
@@ -330,10 +394,12 @@ async function prepareRemoteUpdates(
     nodes: readonly RemoteUpdateNode[];
     force: boolean;
     target: string;
+    trunk?: RemoteTrunkUpdate;
     finalBranch: string | undefined;
   },
   context: TContext
 ): Promise<void> {
+  if (args.trunk) assertRemoteTrunkUnchanged(args.trunk);
   for (const node of args.nodes) assertRemoteUpdateNodeUnchanged(node);
   const changing = args.nodes.filter(
     (node) =>
@@ -344,7 +410,10 @@ async function prepareRemoteUpdates(
       context.engine.getParentPrecondition(node.branchName) !==
         node.parentBranchName
   );
-  if (changing.length > 0) uncommittedTrackedChangesPrecondition();
+  const advancingTrunk =
+    args.trunk && args.trunk.head !== args.trunk.previousHead;
+  if (changing.length > 0 || advancingTrunk)
+    uncommittedTrackedChangesPrecondition();
   assertBranchesAvailableInWorktrees([
     ...changing.map((node) => node.branchName),
     args.target,
@@ -352,7 +421,10 @@ async function prepareRemoteUpdates(
   ]);
   assertRestackFilesAvailable({
     branches: [],
-    checkoutRevisions: args.nodes.map((node) => node.head),
+    checkoutRevisions: [
+      ...args.nodes.map((node) => node.head),
+      ...(advancingTrunk && args.trunk ? [args.trunk.head] : []),
+    ],
     operation: 'get',
   });
   for (const node of changing) {
@@ -362,6 +434,12 @@ async function prepareRemoteUpdates(
       continue;
     }
     if (
+      context.engine.isBranchTracked(node.branchName) &&
+      node.previousParentBranchName !== node.parentBranchName &&
+      getMergeBase(node.previousHead, node.head) === node.previousHead
+    ) {
+      node.resolution = 'UPDATE';
+    } else if (
       !context.engine.isBranchTracked(node.branchName) ||
       context.engine.getParentPrecondition(node.branchName) !==
         node.parentBranchName
