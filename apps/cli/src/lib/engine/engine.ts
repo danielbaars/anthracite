@@ -146,7 +146,8 @@ export type TEngine = {
 
   restackBranch: (
     branchName: string,
-    participants?: readonly string[]
+    participants?: readonly string[],
+    preserveOtherRefs?: boolean
   ) =>
     | {
         result: 'REBASE_CONFLICT';
@@ -199,7 +200,10 @@ export type TEngine = {
     parentBranchName: string,
     importFrozen?: boolean
   ) => void;
-  rebaseBranchOntoFetched: (branchName: string) =>
+  rebaseBranchOntoFetched: (
+    branchName: string,
+    preserveOtherRefs?: boolean
+  ) =>
     | {
         result: 'REBASE_CONFLICT';
         rebasedBranchBase: string;
@@ -1207,7 +1211,7 @@ export function composeEngine({
     forceCheckoutBranch: (branchToSplit: string) => {
       git.switchBranch(branchToSplit, { force: true });
     },
-    restackBranch: (branchName: string, participants) => {
+    restackBranch: (branchName: string, participants, preserveOtherRefs) => {
       const cachedMeta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
       if (isBranchFixed(branchName)) {
         return { result: 'REBASE_UNNEEDED' };
@@ -1225,6 +1229,7 @@ export function composeEngine({
           from: cachedMeta.parentBranchRevision,
           restackCommitterDateIsAuthorDate,
           participants,
+          preserveOtherRefs,
         }) === 'REBASE_CONFLICT'
       ) {
         return {
@@ -1477,7 +1482,7 @@ export function composeEngine({
       });
       cache.currentBranch = branchName;
     },
-    rebaseBranchOntoFetched: (branchName: string) => {
+    rebaseBranchOntoFetched: (branchName: string, preserveOtherRefs) => {
       assertBranchEditable(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
@@ -1498,6 +1503,7 @@ export function composeEngine({
           from: cachedMeta.parentBranchRevision,
           branchName,
           restackCommitterDateIsAuthorDate,
+          preserveOtherRefs,
         }) === 'REBASE_CONFLICT'
       ) {
         return {

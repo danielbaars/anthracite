@@ -238,14 +238,14 @@ describe('get CLI safe fast-forward', function () {
     ).to.equal('local child commit');
   });
 
-  it('preserves a local descendant and reports that it needs restacking', () => {
+  it('preserves a local descendant with no-restack and reports pending maintenance', () => {
     fixture.git(fixture.consumer, 'switch', '-c', 'local-descendant');
     fixture.commit(fixture.consumer, 'descendant.txt', 'local descendant');
     fixture.ok('track', '--parent', 'child');
     const descendant = fixture.git(fixture.consumer, 'rev-parse', 'HEAD');
     const tree = fixture.git(fixture.consumer, 'rev-parse', 'HEAD^{tree}');
     const head = fixture.advanceChild();
-    const result = fixture.ok('get', 'child');
+    const result = fixture.ok('get', 'child', '--no-restack');
     fixture.assertTip('child', head);
     fixture.assertTip('local-descendant', descendant);
     expect(

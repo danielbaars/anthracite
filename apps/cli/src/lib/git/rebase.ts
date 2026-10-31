@@ -12,6 +12,7 @@ export function rebase(args: {
   branchName: string;
   restackCommitterDateIsAuthorDate?: boolean;
   participants?: readonly string[];
+  preserveOtherRefs?: boolean;
 }): TRebaseResult {
   let result: TRebaseResult = 'REBASE_DONE';
   withFrozenCommitGuard(
@@ -30,7 +31,10 @@ export function rebase(args: {
           args.from,
           args.branchName,
         ],
-        prefix,
+        prefix: [
+          ...prefix,
+          ...(args.preserveOtherRefs ? ['-c', 'rebase.updateRefs=false'] : []),
+        ],
         resource: 'rebase',
       });
     },
