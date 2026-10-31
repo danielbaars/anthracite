@@ -173,7 +173,6 @@ export function restackBranches(
         error instanceof RebaseMetadataError
       ) {
         recordRestackCompletion(error.branchName, context);
-        options.onComplete?.(error.branchName);
       }
       assertDeleteRecoveryEditable(context.continueConfig.data.delete);
       reportMoveFailure(branchName, branchNames, context);

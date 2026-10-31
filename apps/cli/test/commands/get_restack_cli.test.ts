@@ -507,4 +507,45 @@ describe('get CLI automatic local maintenance', function () {
     fixture.status('parent', false);
     fixture.status('child', false);
   });
+  it('reports replayed content with pending metadata when publication fails after Git completes', () => {
+    fixture.ok('unfreeze', 'child');
+    fixture.git(fixture.producer, 'switch', 'parent');
+    const parent = fixture.commit(
+      fixture.producer,
+      'parent-new.txt',
+      'incoming parent bytes'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'parent');
+    const oldMetadata = fixture.git(
+      fixture.consumer,
+      'rev-parse',
+      'refs/branch-metadata/child'
+    );
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'post-rewrite'),
+      '#!/bin/sh\nmkdir -p "$(git rev-parse --git-path refs/branch-metadata)"\ntouch "$(git rev-parse --git-path refs/branch-metadata/child.lock)"\n',
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['get', 'parent', '--downstack', '--quiet']);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('Completed local maintenance: none');
+    expect(result.output).to.include('Pending local maintenance: child');
+    expect(result.output).to.include(
+      'Rewrite of child completed, but metadata publication failed'
+    );
+    fixture.assertTip('parent', parent);
+    expect(
+      fixture.git(fixture.consumer, 'merge-base', 'parent', 'child')
+    ).to.equal(parent);
+    expect(
+      fixture.git(fixture.consumer, 'show', 'child:parent-new.txt')
+    ).to.equal('incoming parent bytes');
+    expect(
+      fixture.git(fixture.consumer, 'rev-parse', 'refs/branch-metadata/child')
+    ).to.equal(oldMetadata);
+    expect(fixture.git(fixture.consumer, 'status', '--porcelain')).to.equal('');
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', 'rebase-merge'))
+    ).to.equal(false);
+  });
 });
