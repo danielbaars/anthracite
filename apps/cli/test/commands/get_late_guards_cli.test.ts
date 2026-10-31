@@ -405,6 +405,17 @@ describe('get CLI late participant guards', function () {
       'other pending bytes'
     );
     expect(result.output).to.include(other);
+    expect(result.output).to.include(
+      'Resolve the conflict and run an continue'
+    );
+    fs.removeSync(
+      path.join(fixture.consumer, '.git/hooks/reference-transaction')
+    );
+    fixture.git(other, 'switch', '--detach');
+    fixture.ok('continue');
+    expect(fs.readFileSync(path.join(other, 'pending.txt'), 'utf8')).to.equal(
+      'other pending bytes'
+    );
   });
 
   it('preserves a maintenance parent changed by the original pre-rebase hook before replay', () => {
