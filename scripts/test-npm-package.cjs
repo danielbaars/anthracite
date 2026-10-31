@@ -71,7 +71,12 @@ try {
   assert.equal(manifest.engines.node, ">=24");
   for (const name of ["an", "anthracite"]) {
     const executable = path.join(prefix, "bin", name);
-    for (const args of [["--version"], ["--help"], ["completion"]]) {
+    for (const args of [
+      ["--version"],
+      ["--help"],
+      ["completion"],
+      ["--get-yargs-completions", name, "get", "--"],
+    ]) {
       const result = spawnSync(executable, args, {
         cwd: home,
         env,
@@ -81,6 +86,15 @@ try {
       assert.equal(result.status, 0, result.stdout + result.stderr);
       assert.ok(result.stdout.trim());
       if (args[0] === "--version") assert.equal(result.stdout.trim(), version);
+      if (args[0] === "--get-yargs-completions")
+        for (const option of [
+          "--downstack",
+          "--restack",
+          "--checkout",
+          "--no-restack",
+          "--no-checkout",
+        ])
+          assert.ok(result.stdout.includes(option), option);
     }
   }
   const directory = path.join(

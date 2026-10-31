@@ -52,7 +52,13 @@ describe('get CLI and installed MCP delivery', function () {
         .ok('--get-yargs-completions', 'an', command, '--')
         .output.split('\n')
         .map((line) => line.split(':')[0]);
-      for (const flag of ['--downstack', '--restack', '--checkout'])
+      for (const flag of [
+        '--downstack',
+        '--restack',
+        '--checkout',
+        '--no-restack',
+        '--no-checkout',
+      ])
         expect(completion).to.include(flag);
     });
   }

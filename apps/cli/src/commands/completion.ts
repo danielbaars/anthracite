@@ -62,6 +62,18 @@ export function registerCompletion(
           }
         );
       }
+      if (['get', 'g'].includes('' + argv['_'][1]) && current.startsWith('-')) {
+        return defaultCompletion(
+          (error: Error | null, candidates: string[]) => {
+            if (error) throw error;
+            done([
+              ...candidates,
+              '--no-restack:Defer automatic local maintenance',
+              '--no-checkout:Restore the original physical checkout after success',
+            ]);
+          }
+        );
+      }
       return defaultCompletion();
     }
   );
