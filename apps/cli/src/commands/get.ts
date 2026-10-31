@@ -22,6 +22,12 @@ const args = {
     type: 'boolean',
     default: false,
   },
+  checkout: {
+    describe:
+      'Select the target on success; --no-checkout restores the original checkout',
+    type: 'boolean',
+    default: true,
+  },
   force: {
     describe: 'Overwrite all fetched branches with remote source of truth',
     demandOption: false,
@@ -49,6 +55,7 @@ export const handler = async (argv: argsT): Promise<void> =>
           force: argv.force,
           unfrozen: argv.unfrozen,
           downstack: argv.downstack,
+          checkout: argv.checkout,
         },
         context
       )
