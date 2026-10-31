@@ -51,6 +51,162 @@ describe('get CLI completed publication guards', function () {
         fs.existsSync(path.join(fixture.consumer, '.git', '.gtcontinue'))
       ).to.equal(true);
     });
+  it('preserves a final checkout hook topology change as manual work', () => {
+    const metadata = fixture.git(
+      fixture.consumer,
+      'rev-parse',
+      'refs/branch-metadata/child'
+    );
+    fixture.git(fixture.consumer, 'switch', '-c', 'inspection', 'main');
+    fs.writeJsonSync(fixture.prs, { parent: 'main', child: 'main' });
+    const incoming = fixture.advanceChild();
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'post-checkout'),
+      `#!/bin/sh\nif [ "$(git branch --show-current)" = inspection ]; then git update-ref refs/branch-metadata/child ${metadata}; fi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run([
+      'get',
+      'child',
+      '--downstack',
+      '--no-restack',
+      '--no-checkout',
+      '--quiet',
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('final checkout');
+    expect(result.output).to.include('manually');
+    expect(result.output).to.include('child changed outside');
+    fixture.assertTip('child', incoming);
+    fixture.assertTip('refs/branch-metadata/child', metadata);
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'inspection'
+    );
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', '.gtcontinue'))
+    ).to.equal(true);
+    const before = fixture.observe();
+    expect(fixture.run(['continue', '--all']).status).to.equal(1);
+    expect(fixture.observe()).to.deep.equal(before);
+  });
+
+  it('preserves topology changed by a source cleanup hook and retains manual recovery', () => {
+    const metadata = fixture.git(
+      fixture.consumer,
+      'rev-parse',
+      'refs/branch-metadata/child'
+    );
+    fixture.git(fixture.consumer, 'switch', '-c', 'inspection', 'main');
+    fs.writeJsonSync(fixture.prs, { parent: 'main', child: 'main' });
+    const incoming = fixture.advanceChild();
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'reference-transaction'),
+      `#!/bin/sh\nupdates=$(cat)\nif [ "$1" = committed ] && printf '%s' "$updates" | grep -q ' 0000000000000000000000000000000000000000 refs/gt-metadata/get/' && [ ! -f .git/cleanup-once ]; then\n touch .git/cleanup-once\n git -c core.hooksPath=/dev/null update-ref refs/branch-metadata/child ${metadata}\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run([
+      'get',
+      'child',
+      '--downstack',
+      '--no-restack',
+      '--no-checkout',
+      '--quiet',
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('manually');
+    expect(result.output).to.include('child changed outside');
+    expect(result.output).to.include('Get source refs for inspection:');
+    fixture.assertTip('child', incoming);
+    fixture.assertTip('refs/branch-metadata/child', metadata);
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'inspection'
+    );
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', '.gtcontinue'))
+    ).to.equal(true);
+  });
+
+  it('preserves a source cleanup hook physical checkout change instead of completing', () => {
+    fixture.git(fixture.consumer, 'switch', '-c', 'inspection', 'main');
+    const incoming = fixture.advanceChild();
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'reference-transaction'),
+      `#!/bin/sh\nupdates=$(cat)\nif [ "$1" = committed ] && printf '%s' "$updates" | grep -q ' 0000000000000000000000000000000000000000 refs/gt-metadata/get/' && [ ! -f .git/cleanup-once ]; then\n touch .git/cleanup-once\n git -c core.hooksPath=/dev/null switch --detach ${incoming}\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run([
+      'get',
+      'child',
+      '--downstack',
+      '--no-restack',
+      '--no-checkout',
+      '--quiet',
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('manually');
+    expect(result.output).to.include('checkout changed');
+    fixture.assertTip('child', incoming);
+    fixture.assertTip('HEAD', incoming);
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      ''
+    );
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', '.gtcontinue'))
+    ).to.equal(true);
+  });
+
+  it('preserves completed continued replay when final restoration replaces its metadata', () => {
+    fixture.ok('unfreeze', 'child');
+    fixture.ok('create', 'local-work');
+    fixture.commit(fixture.consumer, 'parent.txt', 'local conflicting bytes');
+    const metadata = fixture.git(
+      fixture.consumer,
+      'rev-parse',
+      'refs/branch-metadata/local-work'
+    );
+    fixture.git(fixture.consumer, 'switch', 'main');
+    fixture.git(fixture.producer, 'switch', 'parent');
+    const parent = fixture.commit(
+      fixture.producer,
+      'parent.txt',
+      'remote conflicting bytes'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'parent');
+    const initial = fixture.run(['get', 'parent', '--no-checkout']);
+    expect(initial.status, initial.output).to.equal(1);
+    expect(initial.output).to.include('Hit conflict');
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'post-checkout'),
+      `#!/bin/sh\nif [ "$(git branch --show-current)" = main ]; then git update-ref refs/branch-metadata/local-work ${metadata}; fi\n`,
+      { mode: 0o755 }
+    );
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'parent.txt'),
+      'resolved both'
+    );
+    const result = fixture.run(['continue', '--all', '--quiet']);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('final checkout');
+    expect(result.output).to.include('manually');
+    expect(result.output).to.include('local-work changed outside');
+    expect(
+      fixture.git(fixture.consumer, 'merge-base', 'parent', 'local-work')
+    ).to.equal(parent);
+    expect(
+      fixture.git(fixture.consumer, 'show', 'local-work:parent.txt')
+    ).to.equal('resolved both');
+    fixture.assertTip('refs/branch-metadata/local-work', metadata);
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'main'
+    );
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', '.gtcontinue'))
+    ).to.equal(true);
+    const before = fixture.observe();
+    expect(fixture.run(['continue', '--all']).status).to.equal(1);
+    expect(fixture.observe()).to.deep.equal(before);
+  });
+
   it('retains an automatic replay with overwritten publication as pending manual work', () => {
     fixture.ok('unfreeze', 'child');
     const metadata = fixture.git(
