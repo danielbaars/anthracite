@@ -1,0 +1,14 @@
+{
+  "runtime": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-merged-an",
+  "status": 0,
+  "output": "",
+  "stdout": "",
+  "stderr": "",
+  "incoming": "c0031262e96384f0e1748125ba01961ccc1eff00",
+  "actualChild": "c0031262e96384f0e1748125ba01961ccc1eff00",
+  "actualCheckout": "inspection",
+  "metadataBefore": "d989b4b67d497b2203ec1578f523f5d455df439e",
+  "metadataAfter": "d989b4b67d497b2203ec1578f523f5d455df439e",
+  "parentAfter": "child (frozen) \n10 days ago\n\nParent: parent\nChildren:\n\n\u001b[33mcommit c0031262e96384f0e1748125ba01961ccc1eff00\u001b[m\nAuthor: Get Test <get@example.test>\nDate:   Wed Oct 21 12:00:00 2026 +0000\n\n    child-new\n\n\u001b[33mcommit 9f9ab5f2a7afbae613aa928ac788b3870a2c8131\u001b[m\nAuthor: Get Test <get@example.test>\nDate:   Wed Oct 21 12:00:00 2026 +0000\n\n    child-old\n",
+  "recoveryExists": false
+}

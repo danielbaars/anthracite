@@ -50,6 +50,7 @@ export function switchBranch(
     force?: boolean;
     startPoint?: string;
     preserveIgnored?: boolean;
+    noGuess?: boolean;
     frozenGuardBranch?: string;
   }
 ): void {
@@ -59,6 +60,7 @@ export function switchBranch(
         ...prefix,
         `switch`,
         ...(opts?.detach ? ['-d'] : []),
+        ...(opts?.noGuess ? ['--no-guess'] : []),
         ...(opts?.preserveIgnored ? ['--no-overwrite-ignore'] : []),
         ...(opts?.force ? ['-f'] : []),
         ...(opts?.new ? ['-c'] : []),

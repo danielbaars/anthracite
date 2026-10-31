@@ -106,6 +106,24 @@ An owned absorb replay conflict keeps original local input separate from the res
 A normal rebase conflict returns `cli_error` and leaves recovery state in the repository. Stopping the server does not abort that rebase or erase continuation data. Resolve files deliberately using ordinary tooling, stage the intended resolutions and invoke `an continue` through a fresh MCP session if needed. Further conflicts may require another inspection/resolution cycle. Do not automatically abort, retry or bypass frozen/worktree guards. See `learn_an` and `an <command> --help` for supported workflow commands.
 
 
+## Get through the existing tools
+
+Learn with `learn_an`, then execute authorized get work through `run_an_cmd` using the same literal flags as the direct CLI:
+
+```json
+{
+  "args": ["get", "target", "--downstack", "--no-restack", "--no-checkout"],
+  "cwd": "/absolute/path/to/project",
+  "why": "Refresh the authorized chain and retain the original checkout"
+}
+```
+
+Get/g default to the required PR chain plus eligible locally tracked descendants, automatic local maintenance after all incoming updates, and final target checkout. The example explicitly limits remote selection, defers automatic maintenance and restores original checkout identity on success. Necessary maintenance can include a sibling outside downstack remote refresh; it is reported separately. Trunk advances by fast-forward only, including with feature force. Remote-only discovery, cleanup, pushes and PR writes are excluded, and sync retains its own behavior. See [the get guide](get.md) for changed defaults, import/frozen policy and the compatibility recipe.
+
+The existing `success`/`cli_error` envelope applies. Get does not gain prompts under MCP, and local-file/worktree/frozen checks remain authoritative. An owned conflict retains actual Git state and saved source/parent/import/replay/checkout intent; resolve in the printed original worktree and invoke `continue`/`cont` in a fresh call. Mandatory protections are rechecked before `--all` stages. Raw abort, invalid ownership or ambiguous no-active-rebase publication/final-checkout failure requires inspection and preserves reached work; do not clear records or blindly retry. Finish pending owned get before downgrading.
+
+[Candidate verification](verification/get-updates-implementation-2026-10-31.md) includes one isolated installed npm/stdio MCP workflow with actual direct-CLI Git parity and a protected failure. It does not certify live GitHub/Graphite behavior or authorize publication.
+
 ## Review and landing
 
 Use the existing `run_an_cmd` tool with literal arguments: `["pr", "target"]`, `["review", "target"]`, and `["land", "target", "--dry-run"]` inspect without authorizing writes. A single explicit review action needs its fresh full `--head` and, for comment/request-changes, a nonempty body. Never automatically repeat an uncertain review POST. Reviewer assignment in `submit` is separate from a submitted review.

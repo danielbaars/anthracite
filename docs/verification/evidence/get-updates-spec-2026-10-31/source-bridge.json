@@ -1,0 +1,105 @@
+{
+  "status": "source comparison only; no new runtime acceptance",
+  "date": "2026-10-31",
+  "measuredAnthracite": {
+    "version": "0.5.0",
+    "commit": "609fb557d4b6a429d91f500169c596592139d9d1"
+  },
+  "currentAnthracite": {
+    "version": "0.5.1",
+    "commit": "5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5"
+  },
+  "modules": [
+    {
+      "path": "apps/cli/src/commands/get.ts",
+      "sourceSha256": "616134f0b7555f41a6b42a9c6c6745c256a57fe5c1fc5662065f5ac68698065e",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/commands/get.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/commands/get.ts"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/get.ts",
+      "sourceSha256": "cc2cb6969fbfc5b316a996615fb24c516473c8ff67de51cca06d5afe2bf65ab4",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/actions/sync/get.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/actions/sync/get.ts"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/sync.ts",
+      "sourceSha256": "0d91915c0c537d8823617e2195191086821e33aaf9c7255f72d6b0f0d61a537a",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/actions/sync/sync.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/actions/sync/sync.ts"
+    },
+    {
+      "path": "apps/cli/src/lib/engine/engine.ts",
+      "sourceSha256": "533bc8d64e9065ff76ec0d62b314ed8247b1dbb1d19e69ef0f42faf765c7bfff",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/lib/engine/engine.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/lib/engine/engine.ts"
+    },
+    {
+      "path": "apps/cli/src/lib/git/fetch_branch.ts",
+      "sourceSha256": "d1ee9c2ba3e86ab975a3bb3f8f8baf3b174e7b3e1f6264997daf77cc26941752",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/lib/git/fetch_branch.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/lib/git/fetch_branch.ts"
+    },
+    {
+      "path": "apps/cli/src/lib/git/worktrees.ts",
+      "sourceSha256": "32e9f8b771faf747801d76400efd130786cc23856f3e874ec899540be240cd0d",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/lib/git/worktrees.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/lib/git/worktrees.ts"
+    },
+    {
+      "path": "apps/cli/src/lib/engine/frozen_branch.ts",
+      "sourceSha256": "70a86288d9429beb79470cf44c850540941eda12f67c7e47bffdcc44c18927a5",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/lib/engine/frozen_branch.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/lib/engine/frozen_branch.ts"
+    },
+    {
+      "path": "apps/cli/src/lib/spiffy/continuation_spf.ts",
+      "sourceSha256": "69894b9d8f5c574ad9775881474520f3d914fc0230012d8b2eca84ee3ae3ff3d",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/lib/spiffy/continuation_spf.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/lib/spiffy/continuation_spf.ts"
+    },
+    {
+      "path": "apps/cli/src/actions/persist_continuation.ts",
+      "sourceSha256": "39fb87bedd2a977a34c133f1a4d0b2b3372a8bbdd3b6de00ae5fee10806083e5",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/actions/persist_continuation.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/actions/persist_continuation.ts"
+    },
+    {
+      "path": "apps/cli/src/actions/continue.ts",
+      "sourceSha256": "5babdb16042d89ae0dc71e50b6144afc2b74f81247d860a744d5daf5d872df0e",
+      "unchanged": true,
+      "measuredSourceUrl": "https://github.com/danielbaars/anthracite/blob/609fb557d4b6a429d91f500169c596592139d9d1/apps/cli/src/actions/continue.ts",
+      "currentSourceUrl": "https://github.com/danielbaars/anthracite/blob/5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5/apps/cli/src/actions/continue.ts"
+    }
+  ],
+  "lockedDependencyInputs": [
+    {
+      "path": "yarn.lock",
+      "sha256": "320ba30f2dedb4a61c779ad666289f9f1490e2624b71678ddb242d053b73dcb7",
+      "unchanged": true
+    },
+    {
+      "path": ".yarn/patches/@modelcontextprotocol-sdk-npm-1.32.2-e12560701c.patch",
+      "sha256": "d831f1a233a86e840a527ae2ad9fbcbde21828ae76c27594b0d96a6cfd342d5b",
+      "unchanged": true
+    }
+  ],
+  "cliDependencyDeclarationsUnchanged": true,
+  "separateShippedChange": {
+    "id": "B02",
+    "path": "apps/cli/src/actions/sync/clean_branches.ts",
+    "measuredSha256": "117fbb82ad2aca822996cd22e15e3b044eba10afa32ea7e7e6160bb786541e04",
+    "currentSha256": "50a4acbef36e6b30b9338ec4231ce602e1c37e432a9b06ed2b4fd9ed986ac8ec",
+    "pullRequest": "https://github.com/danielbaars/anthracite/pull/67",
+    "note": "Cleanup changed in 0.5.1; historical C23 is not relabeled as an unfixed current bug."
+  }
+}

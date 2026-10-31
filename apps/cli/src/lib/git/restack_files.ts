@@ -20,7 +20,14 @@ export function assertRestackFilesAvailable({
   all?: boolean;
   skipTrackedPaths?: boolean;
   cwd?: string;
-  operation: 'insert' | 'move' | 'fold' | 'reorder' | 'split' | 'absorb';
+  operation:
+    | 'insert'
+    | 'move'
+    | 'fold'
+    | 'reorder'
+    | 'split'
+    | 'absorb'
+    | 'get';
 }): void {
   if (branches.length === 0 && checkoutRevisions.length === 0) return;
   const env = { ...process.env };
@@ -121,6 +128,12 @@ export function assertRestackFilesAvailable({
       resource: 'restackFileCollisions',
     }).split('\0')[0];
     if (collision) {
+      if (operation === 'get')
+        throw new ExitFailedError(
+          `Cannot get: ${
+            ignored ? 'ignored' : 'untracked'
+          } files would be overwritten: ${collision}. Move the file away or add it intentionally, then retry.`
+        );
       throw new ExitFailedError(
         `Cannot ${operation}: restacking would overwrite ${
           ignored ? 'ignored' : 'untracked'

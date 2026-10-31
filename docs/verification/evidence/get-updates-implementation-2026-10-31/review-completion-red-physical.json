@@ -1,0 +1,48 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-31T15:21:17.774Z",
+    "end": "2026-10-31T15:21:24.942Z",
+    "duration": 7168
+  },
+  "tests": [
+    {
+      "title": "preserves a source cleanup hook physical checkout change instead of completing",
+      "fullTitle": "get CLI completed publication guards preserves a source cleanup hook physical checkout change instead of completing",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 3148,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/get_publication_cli.test.js:104:61)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "preserves a source cleanup hook physical checkout change instead of completing",
+      "fullTitle": "get CLI completed publication guards preserves a source cleanup hook physical checkout change instead of completing",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 3148,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/get_publication_cli.test.js:104:61)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

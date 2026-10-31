@@ -1,0 +1,14 @@
+{
+  "runtime": "Node WT76 exact production",
+  "status": 1,
+  "output": "ERROR: Get stopped during final checkout. Updated child.\nCompleted feature refresh: child.\nPending feature refresh: none.\nCompleted local maintenance: none.\nPending local maintenance: none.\nReached changes requiring inspection: child.\nGet source refs for inspection: refs/gt-metadata/get/08b6041c-70d4-474c-9ca4-668187e57f6a/trunk, refs/gt-metadata/get/9d7b174c-08f1-4e71-bd50-6316eb29da9f/0.\nActual checkout: inspection (01f6c88a17847dae93ffa5206d8ddfc8c618c764).\nOriginal project: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-JUBUPJ/consumer. No verified owned continuation; inspect reached work and saved get intent manually.\nchild changed outside the saved get plan. Get recovery preserved in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-JUBUPJ/consumer. Inspect git status, git log and saved .gtcontinue in the original project; raw git rebase --abort cancels only its active rebase, not completed updates. Do not advance an unverified queue.\n",
+  "stdout": "",
+  "stderr": "ERROR: Get stopped during final checkout. Updated child.\nCompleted feature refresh: child.\nPending feature refresh: none.\nCompleted local maintenance: none.\nPending local maintenance: none.\nReached changes requiring inspection: child.\nGet source refs for inspection: refs/gt-metadata/get/08b6041c-70d4-474c-9ca4-668187e57f6a/trunk, refs/gt-metadata/get/9d7b174c-08f1-4e71-bd50-6316eb29da9f/0.\nActual checkout: inspection (01f6c88a17847dae93ffa5206d8ddfc8c618c764).\nOriginal project: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-JUBUPJ/consumer. No verified owned continuation; inspect reached work and saved get intent manually.\nchild changed outside the saved get plan. Get recovery preserved in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-JUBUPJ/consumer. Inspect git status, git log and saved .gtcontinue in the original project; raw git rebase --abort cancels only its active rebase, not completed updates. Do not advance an unverified queue.\n",
+  "incoming": "c0031262e96384f0e1748125ba01961ccc1eff00",
+  "actualChild": "c0031262e96384f0e1748125ba01961ccc1eff00",
+  "actualCheckout": "inspection",
+  "metadataBefore": "d989b4b67d497b2203ec1578f523f5d455df439e",
+  "metadataAfter": "d989b4b67d497b2203ec1578f523f5d455df439e",
+  "parentAfter": "child (frozen) \n10 days ago\n\nParent: parent\nChildren:\n\n\u001b[33mcommit c0031262e96384f0e1748125ba01961ccc1eff00\u001b[m\nAuthor: Get Test <get@example.test>\nDate:   Wed Oct 21 12:00:00 2026 +0000\n\n    child-new\n\n\u001b[33mcommit 9f9ab5f2a7afbae613aa928ac788b3870a2c8131\u001b[m\nAuthor: Get Test <get@example.test>\nDate:   Wed Oct 21 12:00:00 2026 +0000\n\n    child-old\n",
+  "recoveryExists": true
+}

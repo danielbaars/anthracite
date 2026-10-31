@@ -38,10 +38,14 @@ class GetFixture {
       path.join(this.bin, 'gh'),
       `#!${process.execPath}\nconst args = process.argv.slice(2);
 if (args[0] !== 'pr' || args[1] !== 'view' || args[4] !== 'get-fixture/repo' || args[5] !== '--json') process.exit(2);
-const head = args[2] === '2' ? 'child' : args[2];
+const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : args[2];
 const base = head === 'parent' ? 'main' : head === 'child' ? 'parent' : undefined;
-if (!base) process.exit(3);
-console.log(JSON.stringify({headRefName: head, baseRefName: base}));\n`,
+if (!base) { console.error('no pull requests found'); process.exit(3); }
+const number = head === 'parent' ? 1 : 2;
+const headRefOid = require('child_process').execFileSync('git', ['rev-parse', 'refs/heads/' + head], {cwd: ${JSON.stringify(
+        this.producer
+      )}, encoding: 'utf8'}).trim();
+console.log(JSON.stringify({headRefName: head, baseRefName: base, headRefOid, number, url: 'https://github.com/get-fixture/repo/pull/' + number}));\n`,
       { mode: 0o755 }
     );
     fs.writeJsonSync(this.env.GRAPHITE_USER_CONFIG_PATH, {});
@@ -81,6 +85,40 @@ console.log(JSON.stringify({headRefName: head, baseRefName: base}));\n`,
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'pipe'],
     }).trim();
+  }
+
+  observe() {
+    const git = (...args: string[]): string =>
+      execFileSync('git', args, {
+        cwd: this.consumer,
+        env: { ...this.env, GIT_OPTIONAL_LOCKS: '0' },
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+      }).trim();
+    const index = path.resolve(
+      this.consumer,
+      git('rev-parse', '--git-path', 'index')
+    );
+    const recovery = path.resolve(
+      this.consumer,
+      git('rev-parse', '--git-path', '.gtcontinue')
+    );
+    return {
+      head: git('rev-parse', 'HEAD'),
+      branch: git('branch', '--show-current'),
+      refs: git('for-each-ref', '--format=%(refname) %(objectname)'),
+      status: git('status', '--porcelain'),
+      index: fs.readFileSync(index).toString('base64'),
+      recovery: fs.existsSync(recovery)
+        ? fs.readFileSync(recovery).toString('base64')
+        : null,
+      files: ['main.txt', 'parent.txt', 'child.txt'].map((name) => {
+        const file = path.join(this.consumer, name);
+        return fs.existsSync(file)
+          ? fs.readFileSync(file).toString('base64')
+          : null;
+      }),
+    };
   }
 
   commit(cwd: string, file: string, contents: string): string {
@@ -214,8 +252,8 @@ describe('get CLI safe fast-forward', function () {
     expect(fixture.ok('get').output).to.include('child is up to date');
   });
 
-  it('reports completed layers when a later branch cannot be updated', () => {
-    const head = fixture.advanceBoth();
+  it('refuses known later divergence before applying earlier layers', () => {
+    fixture.advanceBoth();
     const local = fixture.commit(
       fixture.consumer,
       'local.txt',
@@ -223,26 +261,25 @@ describe('get CLI safe fast-forward', function () {
     );
     const result = fixture.run(['get', 'child']);
     expect(result.status, result.output).not.to.equal(0);
-    expect(result.output).to.include('Updated parent before get stopped');
-    fixture.assertTip('parent', head.parent);
+    expect(result.output).to.include('diverged');
+    expect(result.output).not.to.include('Updated parent');
+    fixture.assertTip('parent', fixture.oldParent);
     fixture.assertTip('child', local);
-    fixture.assertTip('HEAD', head.parent);
-    expect(fixture.git(fixture.consumer, 'status', '--porcelain')).to.equal('');
-    fixture.ok('up');
     fixture.assertTip('HEAD', local);
+    expect(fixture.git(fixture.consumer, 'status', '--porcelain')).to.equal('');
     expect(
       fs.readFileSync(path.join(fixture.consumer, 'local.txt'), 'utf8')
     ).to.equal('local child commit');
   });
 
-  it('preserves a local descendant and reports that it needs restacking', () => {
+  it('preserves a local descendant with no-restack and reports pending maintenance', () => {
     fixture.git(fixture.consumer, 'switch', '-c', 'local-descendant');
     fixture.commit(fixture.consumer, 'descendant.txt', 'local descendant');
     fixture.ok('track', '--parent', 'child');
     const descendant = fixture.git(fixture.consumer, 'rev-parse', 'HEAD');
     const tree = fixture.git(fixture.consumer, 'rev-parse', 'HEAD^{tree}');
     const head = fixture.advanceChild();
-    const result = fixture.ok('get', 'child');
+    const result = fixture.ok('get', 'child', '--no-restack');
     fixture.assertTip('child', head);
     fixture.assertTip('local-descendant', descendant);
     expect(
@@ -285,24 +322,25 @@ describe('get CLI safe fast-forward', function () {
   }
 
   for (const tracked of [false, true]) {
-    it(`refuses a ${
-      tracked ? 'different local parent' : 'local untracked namesake'
+    it(`${
+      tracked
+        ? 'adopts a verified different local parent without overwrite'
+        : 'refuses a local untracked namesake'
     }`, () => {
       fixture.advanceChild();
       if (tracked) fixture.ok('track', 'child', '--parent', 'main');
       else fixture.ok('untrack', 'child');
       const result = fixture.run(['get', 'child']);
-      expect(result.status, result.output).not.to.equal(0);
-      expect(result.output).to.include(
-        tracked ? 'different parents' : 'not tracked'
-      );
-      fixture.assertTip('child', fixture.oldChild);
-      fixture.assertTip('HEAD', fixture.oldChild);
+      expect(result.status, result.output).to.equal(tracked ? 0 : 1);
       if (tracked) {
-        fixture.ok('down');
-        expect(
-          fixture.git(fixture.consumer, 'branch', '--show-current')
-        ).to.equal('main');
+        expect(fixture.ok('info', 'child').output).to.include('Parent: parent');
+        expect(fixture.git(fixture.consumer, 'rev-parse', 'child')).to.equal(
+          fixture.git(fixture.remote, 'rev-parse', 'child')
+        );
+      } else {
+        expect(result.output).to.include('not tracked');
+        fixture.assertTip('child', fixture.oldChild);
+        fixture.assertTip('HEAD', fixture.oldChild);
       }
     });
   }
@@ -472,8 +510,14 @@ fi
     );
     fixture.assertTip('HEAD', local);
     fs.removeSync(path.resolve(fixture.consumer, hook));
-    fixture.ok('down');
-    fixture.ok('up');
+    const before = fixture.observe();
+    expect(before.recovery).not.to.equal(null);
+    for (const command of ['down', 'up']) {
+      const blocked = fixture.run([command]);
+      expect(blocked.status, blocked.output).to.equal(1);
+      expect(blocked.output).to.include('Get recovery preserved');
+      expect(fixture.observe()).to.deep.equal(before);
+    }
     fixture.assertTip('HEAD', local);
   });
 
@@ -519,15 +563,12 @@ fi
     fixture.assertTip('child', fixture.oldChild);
     expect(fixture.git(fixture.remote, 'rev-parse', 'child')).to.equal(head);
     fs.removeSync(path.resolve(fixture.consumer, lock));
+    const before = fixture.observe();
     const retry = fixture.run(['get', 'child']);
-    // Git may have updated the index/tree before discovering the ref lock.
-    if (fixture.git(fixture.consumer, 'status', '--porcelain')) {
-      expect(retry.status, retry.output).not.to.equal(0);
-      expect(retry.output).to.include('tracked changes');
-    } else {
-      expect(retry.status, retry.output).to.equal(0);
-      fixture.assertTip('child', head);
-    }
+    // A failed ref publication retains an owned manual-inspection boundary.
+    expect(retry.status, retry.output).to.equal(1);
+    expect(retry.output).to.include('Get recovery preserved');
+    expect(fixture.observe()).to.deep.equal(before);
   });
 
   it('keeps the explicit force path working on a separate OLD to NEW consumer', () => {

@@ -1,0 +1,540 @@
+{
+  "stats": {
+    "suites": 4,
+    "tests": 29,
+    "passes": 29,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-31T15:22:09.926Z",
+    "end": "2026-10-31T15:26:44.076Z",
+    "duration": 274150
+  },
+  "tests": [
+    {
+      "title": "preserves committed-hook topology and reached head after force import",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after force import",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2562,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2369,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a final checkout hook topology change as manual work",
+      "fullTitle": "get CLI completed publication guards preserves a final checkout hook topology change as manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 3091,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves topology changed by a source cleanup hook and retains manual recovery",
+      "fullTitle": "get CLI completed publication guards preserves topology changed by a source cleanup hook and retains manual recovery",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2729,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a source cleanup hook physical checkout change instead of completing",
+      "fullTitle": "get CLI completed publication guards preserves a source cleanup hook physical checkout change instead of completing",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 3590,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves completed continued replay when final restoration replaces its metadata",
+      "fullTitle": "get CLI completed publication guards preserves completed continued replay when final restoration replaces its metadata",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 13442,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an automatic replay with overwritten publication as pending manual work",
+      "fullTitle": "get CLI completed publication guards retains an automatic replay with overwritten publication as pending manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 6651,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "fullTitle": "get CLI completed publication guards keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 12857,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "fullTitle": "get CLI completed publication guards gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 11566,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "restores another starting branch after incoming updates with no-checkout",
+      "fullTitle": "get CLI final checkout policy restores another starting branch after incoming updates with no-checkout",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2931,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports the actual reached checkout when the original branch disappears",
+      "fullTitle": "get CLI final checkout policy reports the actual reached checkout when the original branch disappears",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2800,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "get defaults to the target and accepts checkout=true",
+      "fullTitle": "get CLI final checkout policy get defaults to the target and accepts checkout=true",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 4848,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "get restores the exact detached OID with checkout=false",
+      "fullTitle": "get CLI final checkout policy get restores the exact detached OID with checkout=false",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2762,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "get help explains the default and negative checkout flag",
+      "fullTitle": "get CLI final checkout policy get help explains the default and negative checkout flag",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 148,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g defaults to the target and accepts checkout=true",
+      "fullTitle": "get CLI final checkout policy g defaults to the target and accepts checkout=true",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 4799,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g restores the exact detached OID with checkout=false",
+      "fullTitle": "get CLI final checkout policy g restores the exact detached OID with checkout=false",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2772,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g help explains the default and negative checkout flag",
+      "fullTitle": "get CLI final checkout policy g help explains the default and negative checkout flag",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 145,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "restores the branch identity at its updated head rather than resetting its old OID",
+      "fullTitle": "get CLI final checkout policy restores the branch identity at its updated head rather than resetting its old OID",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2698,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses the effective explicit cwd and restores physical checkout from a subdirectory",
+      "fullTitle": "get CLI final checkout policy uses the effective explicit cwd and restores physical checkout from a subdirectory",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2803,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not report success when a post-checkout hook changes the final physical identity",
+      "fullTitle": "get CLI final checkout policy does not report success when a post-checkout hook changes the final physical identity",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2823,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a late untracked collision during final restoration",
+      "fullTitle": "get CLI final checkout policy preserves a late untracked collision during final restoration",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2756,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a late ignored collision during final restoration",
+      "fullTitle": "get CLI final checkout policy preserves a late ignored collision during final restoration",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2668,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a late occupied original branch and leaves the reached update intact",
+      "fullTitle": "get CLI final checkout policy refuses a late occupied original branch and leaves the reached update intact",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2741,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves a real reconciliation conflict in its reached recovery checkout",
+      "fullTitle": "get CLI final checkout policy leaves a real reconciliation conflict in its reached recovery checkout",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 4182,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a known occupied original branch before applying incoming updates",
+      "fullTitle": "get CLI final checkout policy refuses a known occupied original branch before applying incoming updates",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 1365,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "finishes maintenance in a fresh process before restoring the saved original branch",
+      "fullTitle": "get CLI owned graph recovery finishes maintenance in a fresh process before restoring the saved original branch",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_recovery_cli.test.js",
+      "duration": 13080,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes fanout from pinned sources with correct sibling parents and exact detached restoration",
+      "fullTitle": "get CLI owned graph recovery resumes fanout from pinned sources with correct sibling parents and exact detached restoration",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_recovery_cli.test.js",
+      "duration": 23490,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a fresh freeze from a real post-merge hook through fast-forward publication and a later metadata write",
+      "fullTitle": "get CLI existing frozen branches retains a fresh freeze from a real post-merge hook through fast-forward publication and a later metadata write",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 5091,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a fresh freeze from a real post-checkout hook through fast-forward publication and a later metadata write",
+      "fullTitle": "get CLI existing frozen branches retains a fresh freeze from a real post-checkout hook through fast-forward publication and a later metadata write",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 5589,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves committed-hook topology and reached head after force import",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after force import",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2562,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2369,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a final checkout hook topology change as manual work",
+      "fullTitle": "get CLI completed publication guards preserves a final checkout hook topology change as manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 3091,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves topology changed by a source cleanup hook and retains manual recovery",
+      "fullTitle": "get CLI completed publication guards preserves topology changed by a source cleanup hook and retains manual recovery",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2729,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a source cleanup hook physical checkout change instead of completing",
+      "fullTitle": "get CLI completed publication guards preserves a source cleanup hook physical checkout change instead of completing",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 3590,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves completed continued replay when final restoration replaces its metadata",
+      "fullTitle": "get CLI completed publication guards preserves completed continued replay when final restoration replaces its metadata",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 13442,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an automatic replay with overwritten publication as pending manual work",
+      "fullTitle": "get CLI completed publication guards retains an automatic replay with overwritten publication as pending manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 6651,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "fullTitle": "get CLI completed publication guards keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 12857,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "fullTitle": "get CLI completed publication guards gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 11566,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "restores another starting branch after incoming updates with no-checkout",
+      "fullTitle": "get CLI final checkout policy restores another starting branch after incoming updates with no-checkout",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2931,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports the actual reached checkout when the original branch disappears",
+      "fullTitle": "get CLI final checkout policy reports the actual reached checkout when the original branch disappears",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2800,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "get defaults to the target and accepts checkout=true",
+      "fullTitle": "get CLI final checkout policy get defaults to the target and accepts checkout=true",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 4848,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "get restores the exact detached OID with checkout=false",
+      "fullTitle": "get CLI final checkout policy get restores the exact detached OID with checkout=false",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2762,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "get help explains the default and negative checkout flag",
+      "fullTitle": "get CLI final checkout policy get help explains the default and negative checkout flag",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 148,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g defaults to the target and accepts checkout=true",
+      "fullTitle": "get CLI final checkout policy g defaults to the target and accepts checkout=true",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 4799,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g restores the exact detached OID with checkout=false",
+      "fullTitle": "get CLI final checkout policy g restores the exact detached OID with checkout=false",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2772,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g help explains the default and negative checkout flag",
+      "fullTitle": "get CLI final checkout policy g help explains the default and negative checkout flag",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 145,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "restores the branch identity at its updated head rather than resetting its old OID",
+      "fullTitle": "get CLI final checkout policy restores the branch identity at its updated head rather than resetting its old OID",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2698,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses the effective explicit cwd and restores physical checkout from a subdirectory",
+      "fullTitle": "get CLI final checkout policy uses the effective explicit cwd and restores physical checkout from a subdirectory",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2803,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not report success when a post-checkout hook changes the final physical identity",
+      "fullTitle": "get CLI final checkout policy does not report success when a post-checkout hook changes the final physical identity",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2823,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a late untracked collision during final restoration",
+      "fullTitle": "get CLI final checkout policy preserves a late untracked collision during final restoration",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2756,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a late ignored collision during final restoration",
+      "fullTitle": "get CLI final checkout policy preserves a late ignored collision during final restoration",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2668,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a late occupied original branch and leaves the reached update intact",
+      "fullTitle": "get CLI final checkout policy refuses a late occupied original branch and leaves the reached update intact",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 2741,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves a real reconciliation conflict in its reached recovery checkout",
+      "fullTitle": "get CLI final checkout policy leaves a real reconciliation conflict in its reached recovery checkout",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 4182,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a known occupied original branch before applying incoming updates",
+      "fullTitle": "get CLI final checkout policy refuses a known occupied original branch before applying incoming updates",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_checkout_cli.test.js",
+      "duration": 1365,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "finishes maintenance in a fresh process before restoring the saved original branch",
+      "fullTitle": "get CLI owned graph recovery finishes maintenance in a fresh process before restoring the saved original branch",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_recovery_cli.test.js",
+      "duration": 13080,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes fanout from pinned sources with correct sibling parents and exact detached restoration",
+      "fullTitle": "get CLI owned graph recovery resumes fanout from pinned sources with correct sibling parents and exact detached restoration",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_recovery_cli.test.js",
+      "duration": 23490,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a fresh freeze from a real post-merge hook through fast-forward publication and a later metadata write",
+      "fullTitle": "get CLI existing frozen branches retains a fresh freeze from a real post-merge hook through fast-forward publication and a later metadata write",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 5091,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a fresh freeze from a real post-checkout hook through fast-forward publication and a later metadata write",
+      "fullTitle": "get CLI existing frozen branches retains a fresh freeze from a real post-checkout hook through fast-forward publication and a later metadata write",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 5589,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

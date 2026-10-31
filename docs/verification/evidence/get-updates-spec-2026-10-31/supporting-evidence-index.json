@@ -1,0 +1,31 @@
+{
+  "status": "existing primary/help and independent audit references",
+  "researchCommit": "78937d87424a331de34c2cf3cf95a8944c8d6ff5",
+  "files": [
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/interface/graphite-get.json",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/interface/graphite-get.json",
+      "sha256": "52d6702ffb3eb5eae6485246c128a19274828ab3627269283a369cadcf5559cc"
+    },
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/interface/anthracite-get.json",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/interface/anthracite-get.json",
+      "sha256": "305ffc6f620b916370e033dd708cd6a35cdddb83cfadf38927caf1c60bafb394"
+    },
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/audits/live-audit.md",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/audits/live-audit.md",
+      "sha256": "470854802edd22d93feef1bc1a37448eeea809cb0348df640e1d204ca123b8ae"
+    },
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/audits/cleanup-live-audit.md",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/audits/cleanup-live-audit.md",
+      "sha256": "baae03ebc5b1666495a8a00067d271055c9a8bd1c1dd70d0453d0328f2189499"
+    },
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/controls/offline-an-results.md",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/controls/offline-an-results.md",
+      "sha256": "93d5043affa2c622ffa3f203439888c2bf3540666dd223223702e23b5f12e686"
+    }
+  ]
+}

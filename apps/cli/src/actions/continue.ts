@@ -1,3 +1,4 @@
+import { continueGetOperation } from './sync/get_execute';
 import { validateLandingIdentity } from '../lib/landing_identity';
 import { finishLandingContinuation } from './land_replay';
 import { validateLocal } from './land_local';
@@ -46,10 +47,8 @@ export async function continueAction(
   const landing = loadLandingProgress();
   if (landing) validateLandingIdentity(landing, context);
   const data = context.continueConfig.data;
-  if (data.absorb) {
-    continueAbsorb(opts, context);
-    return;
-  }
+  if (data.get) return await continueGetOperation(opts, context);
+  if (data.absorb) return continueAbsorb(opts, context);
   if (!context.engine.rebaseInProgress()) {
     if (resumeLandingLocalQueue(context)) return;
     clearContinuation(context);

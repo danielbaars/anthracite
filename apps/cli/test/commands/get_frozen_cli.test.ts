@@ -35,7 +35,7 @@ describe('get CLI existing frozen branches', function () {
     fixture.ok('track', '--parent', 'child');
     fixture.ok('freeze', 'child');
     const head = fixture.advanceChild();
-    fixture.ok('get', 'child', '--force');
+    fixture.ok('get', 'child', '--force', '--no-restack');
     fixture.assertTip('child', head);
     fixture.assertTip('descendant', descendant);
     fixture.status();
@@ -293,7 +293,9 @@ describe('get CLI existing frozen branches', function () {
     );
     const result = fixture.run(['get', 'child', '--force']);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('changed while getting the stack');
+    expect(result.output).to.include(
+      'Physical checkout changed while getting child'
+    );
     expect(result.output).to.include('Updated child before get stopped');
     expect(result.output).not.to.include('Synced child');
     const reached = fixture.git(fixture.consumer, 'rev-parse', 'child');
@@ -347,26 +349,17 @@ describe('get CLI existing frozen branches', function () {
       });
 
   for (const frozen of [false, true])
-    it(`imports a valid changed remote parent with explicit ${
-      frozen ? 'force while frozen' : 'PTY confirmation while editable'
+    it(`adopts a valid changed remote parent without overwrite while ${
+      frozen ? 'frozen' : 'editable'
     }`, () => {
       if (frozen) fixture.ok('freeze', 'child');
       else fixture.ok('unfreeze', 'child');
       const parent = fixture.git(fixture.consumer, 'rev-parse', 'parent');
       const head = fixture.advanceChild();
       fs.writeJsonSync(fixture.prs, { parent: 'main', child: 'main' });
-      const before = fixture.observe();
-      const refused = fixture.run(['get', 'child']);
-      expect(refused.status, refused.output).to.equal(1);
-      expect(refused.output).to.include('different parents');
-      expect(refused.output).not.to.include('Rebase your changes');
-      expect(fixture.observe()).to.deep.equal(before);
-      const accepted = frozen
-        ? fixture.run(['get', 'child', '-f'])
-        : fixture.run(['get', 'child'], true, [
-            { prompt: 'Overwrite child', input: 'y\r' },
-          ]);
+      const accepted = fixture.run(['get', 'child']);
       expect(accepted.status, accepted.output).to.equal(0);
+      expect(accepted.output).not.to.include('Overwrite');
       fixture.assertTip('child', head);
       fixture.assertTip('parent', parent);
       fixture.status('child', frozen);
@@ -572,13 +565,15 @@ describe('get CLI existing frozen branches', function () {
     fixture.ok('track', 'child', '--parent', 'parent');
     fixture.status();
   });
-  it('reports a completed parent-metadata import even when its head was unchanged before a later fetch failure', () => {
+  it('preserves parent metadata when a later required snapshot cannot be fetched', () => {
     fixture.ok('freeze', 'child');
     const before = fixture.git(
       fixture.consumer,
       'rev-parse',
       'refs/branch-metadata/child'
     );
+    fixture.git(fixture.producer, 'switch', '-c', 'missing');
+    fixture.commit(fixture.producer, 'missing.txt', 'unavailable source');
     fs.writeJsonSync(fixture.prs, {
       parent: 'main',
       child: 'main',
@@ -586,15 +581,16 @@ describe('get CLI existing frozen branches', function () {
     });
     const result = fixture.run(['get', 'missing', '--force']);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('Updated child before get stopped');
+    expect(result.output).not.to.include('Updated child');
+    expect(result.output).to.include('fetch');
     fixture.assertTip('child', fixture.oldChild);
     expect(
       fixture.git(fixture.consumer, 'rev-parse', 'refs/branch-metadata/child')
-    ).not.to.equal(before);
+    ).to.equal(before);
     fixture.status();
     fixture.ok('down');
     expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
-      'main'
+      'parent'
     );
   });
   it('refuses a freeze from the original pre-rebase hook before any local replay or checkout', () => {

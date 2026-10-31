@@ -429,24 +429,28 @@ an auth
 ## Collaborate
 
 ### `get` (alias `g`)
-Get branches from trunk to the specified branch from remote, prompting to resolve conflicts. With no argument, gets downstack from the current branch. Useful for pulling a teammate's stack.
+Refresh the target's PR ancestor chain and eligible locally tracked descendants, then maintain affected local work and select the target on complete success. These are intentional candidate default changes from released 0.5.1. Omit the argument for the physical current branch; detached HEAD requires an explicit target. Trunk itself remains a no-op.
 
 | Flag | Description |
 | --- | --- |
-| `[branch]` | Positional: branch or numeric PR number to fetch down to. Omit for the current branch. |
-| `-f`, `--force` | Overwrite all fetched branches with the remote source of truth, preserving existing frozen status and work/worktree checks. |
-| `-U`, `--unfrozen` | Make only new imports editable. Default false, including explicit `--unfrozen=false`. |
+| `[branch]` | Positional branch or numeric PR number. |
+| `--downstack` | Default false. Restrict remote refresh to the required PR chain; necessary local sibling maintenance can still be required. |
+| `--restack`, `--no-restack` | Default true. Maintain affected editable histories after all incoming updates, or retain them and report pending work. |
+| `--checkout`, `--no-checkout` | Default true. Select the target after all phases, or restore original branch identity/exact detached OID on success. Intermediate checkouts can occur. |
+| `-f`, `--force` | Overwrite eligible selected feature sources; never reset trunk, unfreeze existing work or bypass file/worktree guards. |
+| `-U`, `--unfrozen` | Make only new imports editable. Default false; verified own PR imports are otherwise editable and unknown/other authors frozen. |
 
+```sh
+an get teammate-branch
+an g 123 --no-checkout
+an get feature --downstack --no-restack # old-selection/no-replay compatibility scope
 ```
-an get teammate-branch       # protect new imports from other or unknown authors
-an g 123 -U                  # explicitly make new imports editable
-```
 
-Each new import is frozen unless its PR author login matches the current `gh` account login, or `--unfrozen` is true. A mixed stack is decided per branch. Missing, invalid or unavailable optional identity information conservatively means frozen; the required PR head/base chain must still resolve to trunk. Anthracite uses read-only `gh` requests and does not infer ownership from Git names or email or start a login flow.
+The compatibility recipe still permits safe trunk fast-forward and validated PR-parent adoption; it does not promise identical old execution. Trunk refuses ahead/diverged histories even with force. Get does not discover remote-only descendants, publish work or delete branches. Local-only and frozen skips are explained; affected independent trunk stacks are not swept into maintenance.
 
-Existing tracked branches keep their current status through no-op, fast-forward and permitted remote overwrite, even with force or `-U`. Frozen divergence offers remote overwrite or abort; use explicit `an unfreeze` before local replay. An editable get rebase conflict saves the pending new-import decisions for a fresh `continue`/`cont`; account changes do not change those saved defaults. An active replay that becomes frozen stops before `--all` staging until explicitly unfrozen. Late failures report reached refs and unfinished metadata/status publication; earlier imports remain completed.
+Existing frozen status, tracked dirt, ignored/untracked collisions and occupied worktrees remain protected. Real conflicts retain reached Git state and saved graph/replay/checkout intent for fresh `continue`/`cont` in the original worktree. Raw Git abort cancels only its active rebase; missing/foreign/stale intent and ambiguous metadata/final-checkout failures require inspection. Finish a pending owned get before downgrading.
 
-These behaviors are tested against controlled external `gh` responses and local bare remotes, not a live Graphite service.
+See [refresh versus maintenance, flags and recovery](docs/get.md), [existing MCP execution](docs/mcp.md#get-through-the-existing-tools) and [candidate verification/review status](docs/verification/get-updates-implementation-2026-10-31.md). Evidence uses controlled external `gh` responses and local bare remotes, not a live Graphite service.
 
 ---
 

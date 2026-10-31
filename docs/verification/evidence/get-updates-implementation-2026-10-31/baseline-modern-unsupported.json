@@ -1,0 +1,48 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-31T12:01:52.860Z",
+    "end": "2026-10-31T12:01:56.670Z",
+    "duration": 3810
+  },
+  "tests": [
+    {
+      "title": "known unsupported names and modes fail before tools without successful stubs",
+      "fullTitle": "modern preserved routes through the public CLI known unsupported names and modes fail before tools without successful stubs",
+      "file": "/private/tmp/anthracite-npm-0.5.1-20261031/source/apps/cli/dist/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 1056,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected true to equal false",
+        "showDiff": true,
+        "actual": "true",
+        "expected": "false",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected true to equal false\n    at Context.<anonymous> (apps/cli/dist/test/commands/modern_legacy_routes_cli.test.js:181:114)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "known unsupported names and modes fail before tools without successful stubs",
+      "fullTitle": "modern preserved routes through the public CLI known unsupported names and modes fail before tools without successful stubs",
+      "file": "/private/tmp/anthracite-npm-0.5.1-20261031/source/apps/cli/dist/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 1056,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected true to equal false",
+        "showDiff": true,
+        "actual": "true",
+        "expected": "false",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected true to equal false\n    at Context.<anonymous> (apps/cli/dist/test/commands/modern_legacy_routes_cli.test.js:181:114)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

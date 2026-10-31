@@ -1,0 +1,34 @@
+an get [branch]
+
+Refresh the target PR chain and eligible tracked local descendants; --downstack
+excludes descendant refresh. Restack affected local work by default, including
+necessary siblings outside refresh scope. Trunk advances by fast-forward only,
+even with --force. Final checkout runs after all phases. An omitted target uses
+the physical current branch; detached HEAD needs an explicit target. New imports
+retain ownership-based freeze defaults. Get performs no cleanup or publication.
+
+Options:
+      --help         Show help                                         [boolean]
+      --version      Show version number                               [boolean]
+      --cwd          Working directory. Use a direct --cwd prefix before the Git
+                     command for passthroughs; before or after the command for
+                     Anthracite commands.                               [string]
+      --interactive  Enable interactive features. Defaults to terminal input and
+                     output. Disable with --no-interactive; quiet also disables
+                     interaction.                                      [boolean]
+  -q, --quiet        Minimize output to the terminal. [boolean] [default: false]
+      --verify       Run git hooks. Disable with --no-verify.
+                                                       [boolean] [default: true]
+      --debug        Display debug output.            [boolean] [default: false]
+  -U, --unfrozen     Make new imports editable (default: only verified own PRs
+                     are editable)                    [boolean] [default: false]
+      --downstack    Limit remote refresh to the required PR chain; affected
+                     siblings may still need maintenance
+                                                      [boolean] [default: false]
+      --restack      Restack affected local work after incoming updates;
+                     --no-restack defers maintenance   [boolean] [default: true]
+      --checkout     Select the target after all phases; --no-checkout restores
+                     the original branch or detached OID
+                                                       [boolean] [default: true]
+  -f, --force        Overwrite eligible selected feature heads; preserve frozen
+                     status and file/worktree guards  [boolean] [default: false]
