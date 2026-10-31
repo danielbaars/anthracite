@@ -2,7 +2,7 @@
 
 Date: **31 October 2026**. Baseline: public **0.5.1**, `5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5`. Candidate: `724e7d75228dbe7f9bd4b8f0a374c10cf3ff4098`, implementing the [approved specification](../specs/get-updates.md). See [the user guide](../get.md) and [compatibility recipe](../../COMPATIBILITY.md#scoped-get-candidate).
 
-**Status:** source-qualified local checks below are complete. Independent Standards and Spec reviews and any resulting fixes remain pending. This is not approval, release readiness or functionality shipped in public 0.5.1. The temporary package deliberately retains version 0.5.1; hashes identify this source candidate. No version bump or publication occurred.
+**Status:** local acceptance and independent Standards/Spec review are complete. The one Spec finding was fixed and independently confirmed; no findings remain. This is a source candidate for PR #77, not functionality shipped in public 0.5.1 or a release/installation claim. Temporary packages retain version 0.5.1; source and artifact identities below distinguish them. The final production source is `41d5695329353ea57fd58e399b749113d63cffe0`, integrated unchanged at `13f84c72deeda37a461076b8a3c5ad8a802ce116`. Later documentation-only commits do not change the tested production source.
 
 ## Delivered scope
 
@@ -25,7 +25,7 @@ The initial failures were diagnosed before corrections: eight fixture/explicit c
 
 The merged 20-case rerun covers all 15 affected cases plus five new publication/guidance cases. It preserves reached commits and hook-written metadata on late failure. The [original post-publication negative probe](evidence/get-updates-implementation-2026-10-31/pending-post-publication-probe.json) remains negative evidence on immutable #75; the corrected publication cases prove safe refusal, not forced restoration or rollback.
 
-Across the explicitly selected, source-qualified receipts, **263 distinct current named cases have passing evidence per runtime: 118 new get cases and 145 existing controls**. This is not one 263-case run on a single revision. The [summary](evidence/get-updates-implementation-2026-10-31/summary.json) records exact source/group/case identities, the one replaced actor case and overlaps. An inherited literal scene title repeats three legacy names; those configured executions, repeated reruns and artifact checks are not inflated into new feature counts.
+Before the final review correction, across the explicitly selected, source-qualified receipts, **263 distinct named cases have passing evidence per runtime: 118 new get cases and 145 existing controls**. This is not one 263-case run on a single revision. The [summary](evidence/get-updates-implementation-2026-10-31/summary.json) records exact source/group/case identities, the one replaced actor case and overlaps. An inherited literal scene title repeats three legacy names; those configured executions, repeated reruns and artifact checks are not inflated into new feature counts.
 
 ## Installed artifact and build identity
 
@@ -39,10 +39,22 @@ The exact merged temporary npm tarball passes the bounded **8/8** installed scen
 
 Node **24.19.0**, Yarn **3.2.1**, TypeScript **5.5.4**, Bun compiler **1.3.14**. Project build, uncached CLI source lint and no-emit check passed on the merged source. Runtime artifacts remained frozen during each run. The installer uses offline disposable HOME/config/cache/prefix containing a space and removes it afterward; the owner's installation is untouched. [Reproduction details, earlier artifact identities and unchanged receipts](evidence/get-updates-implementation-2026-10-31/README.md) are retained without committing binaries/tarballs.
 
-## Evidence limits and remaining review
+## Evidence limits
 
 All feature checks use public CLI/real stdio MCP processes, real temporary Git repositories/bare remotes and strict controlled `gh`. Independent Git observations cover refs/ancestry/content, authors/messages, parents, physical HEAD, index/files and recovery. There is no new live GitHub/Graphite service, universal parity or cross-platform claim. Historical observations are not current feature passes.
 
 The exact get/g modern-route filter excludes the independently public-0.5.1-confirmed stale unsupported-absorb sentinel. Its [original failure](evidence/get-updates-implementation-2026-10-31/baseline-modern-unsupported.json) is retained and **not** reported green. Explicit Mocha file/filter selection is used, never the known ineffective `an test` scope selectors.
 
-CI, the full validation matrix, live fixture writes, package publication, standalone release assets and owner installation changes remain off. Independent Standards and Spec review follows this integration; any resulting fixes and affected rechecks must update this record before final approval/readiness.
+CI, the full validation matrix, live fixture writes, package publication, standalone release assets and owner installation changes remain off. Independent review and the final correction are recorded below. PR readiness does not authorize merging, releasing or changing the owner installation.
+
+
+## Final independent review and correction
+
+- **Standards:** [full review](evidence/get-updates-implementation-2026-10-31/final-review-standards.md) and [final-delta confirmation](evidence/get-updates-implementation-2026-10-31/final-review-standards-confirmation.md): zero documented breaches or actionable smells.
+- **Spec:** [original review](evidence/get-updates-implementation-2026-10-31/final-review-spec.md) found one completion defect: a final checkout or source-cleanup hook could invalidate completed metadata while get returned success and removed recovery. The [same reserved implementer's fix](evidence/get-updates-implementation-2026-10-31/review-fixes-report.md) checks expected graph and physical checkout before and after cleanup, preserving reached work and concurrent state on refusal. [Independent confirmation](evidence/get-updates-implementation-2026-10-31/final-review-spec-confirmation.md) passes five real-CLI probes on the corrected source; zero Spec findings remain.
+
+Final focused acceptance passes **29/29 on Node and 29/29 on native**, including four new direct/continued completion regressions. The rebuilt exact npm tarball passes the same **8/8** offline installed Git/MCP scenarios. Full CLI source lint, compilation and no-emit checks pass. This is an affected-case rerun, not a fresh full assembled suite; earlier failed receipts, source-qualified controls and the known excluded baseline sentinel remain as documented above.
+
+Final native SHA-256: `bc21794905c4af2b7c1e8a5cd86b5ca1e53a5ba30e0f07541c3a73bf0e915d9e`. Final temporary tarball SHA-256: `53f49626d4ebb046abb2920fcb08c2481aee5c761dfbf5d262cf8576333d927a`. The final [production-TypeScript manifest](evidence/get-updates-implementation-2026-10-31/review-completion-source-manifest.sha256) hashes to `746909e2b99b5b5f76fb31e17c32c7ee5bb3fdf6456ce1bbfa619e340d6e0229`; its narrower scope differs from the earlier source/package/lock manifest. [Final receipt index](evidence/get-updates-implementation-2026-10-31/final-review.json) preserves unchanged reports, red/green boundaries, final runtime receipts and the independent probes. Original probe scripts retain temporary paths as provenance and are not portable test entry points; the public regression file is `apps/cli/test/commands/get_publication_cli.test.ts`.
+
+CI and the full matrix remained off. No live fixture writes, release, npm publication or owner-installation changes were performed.

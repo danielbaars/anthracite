@@ -1,0 +1,51 @@
+{
+  "reviewedIntegration": "13f84c72deeda37a461076b8a3c5ad8a802ce116",
+  "fixCommit": "41d5695329353ea57fd58e399b749113d63cffe0",
+  "standardsRemaining": 0,
+  "specOriginalFindings": 1,
+  "specRemaining": 0,
+  "focusedPerRuntime": {
+    "passing": 29,
+    "failing": 0,
+    "newCases": 4
+  },
+  "installedPackage": {
+    "passing": 8,
+    "failing": 0
+  },
+  "independentConfirmation": {
+    "passing": 5,
+    "failing": 0
+  },
+  "nativeSha256": "bc21794905c4af2b7c1e8a5cd86b5ca1e53a5ba30e0f07541c3a73bf0e915d9e",
+  "tarballSha256": "53f49626d4ebb046abb2920fcb08c2481aee5c761dfbf5d262cf8576333d927a",
+  "sourceManifestSha256": "746909e2b99b5b5f76fb31e17c32c7ee5bb3fdf6456ce1bbfa619e340d6e0229",
+  "sourceManifestScope": "all CLI production TypeScript; differs from the broader earlier package/lock manifest",
+  "files": {
+    "final-review-standards.md": "94b0a4e4d406e8858c2718b052f202a3ad108e06c88914e79fc384d390385c9c",
+    "final-review-standards-confirmation.md": "e54f8a6ea7dd90c2dcefffb9a50d1f653fc85df094acc8050e2e91207f7faecd",
+    "final-review-spec.md": "e0ff908a3d1178c56c53a0f70d47823ed2f9d76892d0eae92a3e2a87c1a10a2a",
+    "final-review-spec-confirmation.md": "ca6fd39db815932eda357525dba3eba44ffbf09d6b789da6df6ee347f0d8472e",
+    "review-fixes-report.md": "465824932500b0473586d4a06c75bfdefd60dcdfc6fb2d540860ad479f5eaad8",
+    "review-completion-node-final.json": "846c8cf09eea59ab5ac7a9d2cbf8a61c3fa78d6ecf14625b5edfbb991dda1839",
+    "review-completion-native-final.json": "b234c7518c04b8dea8c3252561c1aa0ed328b24975ecdd530762518df2df8b60",
+    "review-completion-installed-package.log": "354dafef9ca64b2b0e0bd23050bde0e1f76b04911d728e8eac0addaca737a8cd",
+    "review-completion-source-manifest.sha256": "746909e2b99b5b5f76fb31e17c32c7ee5bb3fdf6456ce1bbfa619e340d6e0229",
+    "review-completion-red-checkout.json": "a18753dd6816c111fd0c8ed0548cd6f507167af4ebf2f06342c1d8afe5216ae2",
+    "review-completion-red-cleanup.json": "768e8355fd3003abf84e8c45a6147168c2d517848891793c8c858c71f5daf84b",
+    "review-completion-red-physical.json": "8a7eb2aace0dfed6948492ab26acf7eee9e3513fcd7ea016e36cf121cf03a5dd",
+    "spec-review-final-checkout-probe.cjs": "a439f27ef36113cf97f7a271fad4a3ebc46e0475388c0e818ad6ed6d00e82d6b",
+    "spec-review-cleanup-probe.cjs": "8b895f58846d4dbecfd5f5dc4f331feaf660fed7d93aceaf0d13a3872a023027",
+    "spec-review-final-checkout-node.json": "317e24f40735ddae9245d52cae343a7c0d28e71b927edc6bdbfb0aeca5635977",
+    "spec-review-final-checkout-native.json": "3a3076eee4545b1c9cf28bdbbe4d32f34e6ebb3d1ecdb96175bbf04a81e1e914",
+    "spec-review-cleanup-node.json": "317e24f40735ddae9245d52cae343a7c0d28e71b927edc6bdbfb0aeca5635977",
+    "spec-confirmation-final-checkout-probe.cjs": "ddbb951439964925c810ff32fab02cd6fbbb0bf817df3c3e1ab95ccd2d86cf3c",
+    "spec-confirmation-cleanup-probe.cjs": "2e2f36c82c55e6f858e1943115b225ec149d01673225b7b79ce8922b2ad04a82",
+    "spec-confirmation-physical-probe.cjs": "71d0d491f2fafd6f3a5dd593210efca652722ac1ee465c3c5176d50331ed87e8",
+    "spec-confirmation-final-checkout-node.json": "38ae1982190a2587eecdc9852120a147fa0b1057a6fc7ab73931563229e30bbf",
+    "spec-confirmation-final-checkout-native.json": "03e60331cdef3b0992f6dc9c4fd775c2e75f313dc5bc1ace4748d2ba542e08b7",
+    "spec-confirmation-cleanup-node.json": "ec09f0f01e3e6346b1ee121dc810523cb33b3b23a4df60fd6c4dfec529680fd7",
+    "spec-confirmation-cleanup-native.json": "f072868848aacfaa179cc0b3d8222228819867d30acf858e914170ea3d3d9a4f",
+    "spec-confirmation-physical-node.json": "42bbde0efd002bc419a498f3c2e969eaf2586eca436c145a662b413320bdbd8b"
+  }
+}

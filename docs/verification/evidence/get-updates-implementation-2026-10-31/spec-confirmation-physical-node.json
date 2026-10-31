@@ -1,0 +1,14 @@
+{
+  "runtime": "Node WT76 exact production",
+  "status": 1,
+  "output": "ERROR: Get stopped during final checkout. Updated child.\nCompleted feature refresh: child.\nPending feature refresh: none.\nCompleted local maintenance: none.\nPending local maintenance: none.\nReached changes requiring inspection: none.\nGet source refs for inspection: refs/gt-metadata/get/b6ceccd5-f1b6-48f9-ad3e-d6e8a739284f/trunk, refs/gt-metadata/get/3b0fb8c7-01b3-494a-8ed8-87fb8027c00e/0.\nActual checkout: detached HEAD (01f6c88a17847dae93ffa5206d8ddfc8c618c764).\nOriginal project: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-hfRIQg/consumer. No verified owned continuation; inspect reached work and saved get intent manually.\nThe checkout changed after selecting the final identity.\n",
+  "stdout": "",
+  "stderr": "ERROR: Get stopped during final checkout. Updated child.\nCompleted feature refresh: child.\nPending feature refresh: none.\nCompleted local maintenance: none.\nPending local maintenance: none.\nReached changes requiring inspection: none.\nGet source refs for inspection: refs/gt-metadata/get/b6ceccd5-f1b6-48f9-ad3e-d6e8a739284f/trunk, refs/gt-metadata/get/3b0fb8c7-01b3-494a-8ed8-87fb8027c00e/0.\nActual checkout: detached HEAD (01f6c88a17847dae93ffa5206d8ddfc8c618c764).\nOriginal project: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-hfRIQg/consumer. No verified owned continuation; inspect reached work and saved get intent manually.\nThe checkout changed after selecting the final identity.\n",
+  "incoming": "c0031262e96384f0e1748125ba01961ccc1eff00",
+  "actualChild": "c0031262e96384f0e1748125ba01961ccc1eff00",
+  "actualCheckout": "",
+  "metadataBefore": "d989b4b67d497b2203ec1578f523f5d455df439e",
+  "metadataAfter": "ecc42e513f24c5ce6ae46bdeacdc937acfb12fb4",
+  "parentAfter": "child (frozen) \n10 days ago\nhttps://github.com/get-fixture/repo/pull/2\n\nParent: main\nChildren:\n\n\u001b[33mcommit c0031262e96384f0e1748125ba01961ccc1eff00\u001b[m\nAuthor: Get Test <get@example.test>\nDate:   Wed Oct 21 12:00:00 2026 +0000\n\n    child-new\n\n\u001b[33mcommit 9f9ab5f2a7afbae613aa928ac788b3870a2c8131\u001b[m\nAuthor: Get Test <get@example.test>\nDate:   Wed Oct 21 12:00:00 2026 +0000\n\n    child-old\n\n\u001b[33mcommit d6b09eb53d84a29b9128c1bc4dc63376177d365e\u001b[m\nAuthor: Get Test <get@example.test>\nDate:   Wed Oct 21 12:00:00 2026 +0000\n\n    parent-old\n",
+  "recoveryExists": true
+}

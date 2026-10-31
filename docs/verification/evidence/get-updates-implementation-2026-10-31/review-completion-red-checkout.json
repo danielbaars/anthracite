@@ -1,0 +1,48 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-10-31T15:20:20.817Z",
+    "end": "2026-10-31T15:20:26.642Z",
+    "duration": 5825
+  },
+  "tests": [
+    {
+      "title": "preserves a final checkout hook topology change as manual work",
+      "fullTitle": "get CLI completed publication guards preserves a final checkout hook topology change as manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 1935,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/get_publication_cli.test.js:57:61)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "preserves a final checkout hook topology change as manual work",
+      "fullTitle": "get CLI completed publication guards preserves a final checkout hook topology change as manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 1935,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/get_publication_cli.test.js:57:61)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

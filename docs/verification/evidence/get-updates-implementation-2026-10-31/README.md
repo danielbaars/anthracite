@@ -32,3 +32,8 @@ Build the local package with scripts/build-npm-package.cjs and BUN_EXECUTABLE po
 The modern route filter is exactly `get fast-forwards|g fast-forwards`. The unrelated baseline unsupported-absorb sentinel remains a retained0/1 negative receipt, never a passing get case. The post-publication probe/script retain their original immutable75 build and task paths as provenance. Corrected publication tests verify refusal/preservation on the merged build; they do not rewrite that old negative evidence into a pass.
 
 Source manifest hashes and native/tarball identities for each stage are in artifact-identities.json. Only the final merged identities describe the last package gate; older artifacts are not relabeled as the final build. Independent review and any subsequent fixes remain separate work.
+
+
+## Final review source
+
+The [final review index](final-review.json) supersedes earlier pending-review statements and artifact identities for final acceptance. Corrected production41d56953 is integrated unchanged at13f84c72. Final focused checks29/29 per runtime, rebuilt installed gate8/8 and five independent probes pass; Standards and Spec have zero remaining findings. See the parent verification's final review section for exact hashes and scope. The earlier failed observations remain unchanged historical negative evidence.
