@@ -133,7 +133,8 @@ export function preflightGetRecovery(command: string): boolean {
 }
 
 export function validateGetRecovery(
-  data: TContinueConfig['data']
+  data: TContinueConfig['data'],
+  checkProtections = true
 ): GetOperation {
   const operation = data.get;
   if (!operation) refuseGet('No owned get intent.');
@@ -186,7 +187,9 @@ export function validateGetRecovery(
       operation
     );
   validateGetSources(operation);
-  assertGetParticipantsAvailable(operation, active.branchName);
+  if (checkProtections)
+    assertGetParticipantsAvailable(operation, active.branchName);
+  else assertGetExpectedState(operation);
   return operation;
 }
 
@@ -219,6 +222,7 @@ export function assertGetHookParticipants(branch: string): void {
   for (const entry of operation.shouldRestack ? operation.maintenance : []) {
     if (
       entry.frozen &&
+      !isPendingGetImport(operation, entry.branchName) &&
       !operation.completedMaintenance.includes(entry.branchName) &&
       readMetadataRef(entry.branchName).frozen !== true
     )
@@ -230,21 +234,29 @@ export function assertGetHookParticipants(branch: string): void {
   assertGetParticipantsAvailable(operation, branch, branch);
 }
 
+/** An unchanged, unpublished import has no local freeze status until it is applied. */
+function isPendingGetImport(operation: GetOperation, branch: string): boolean {
+  const expected = operation.expected.find(
+    (item) => item.branchName === branch
+  );
+  return (
+    !operation.completedRemote.includes(branch) &&
+    operation.imports.some(
+      (decision) => decision.branchName === branch && !decision.wasTracked
+    ) &&
+    expected?.metadata === '' &&
+    getSha(`refs/branch-metadata/${branch}`) === '' &&
+    getSha(`refs/heads/${branch}`) === expected.head
+  );
+}
+
 function assertGetParticipantsAvailable(
   operation: GetOperation,
   activeBranch: string,
   hookBranch?: string
 ): void {
   assertBranchEditable(activeBranch);
-  if (
-    !operation.checkout.shouldCheckout &&
-    'branchName' in operation.checkout.original &&
-    !getSha(`refs/heads/${operation.checkout.original.branchName}`)
-  )
-    refuseGet(
-      `Original checkout ${operation.checkout.original.branchName} no longer exists; refusing before staging or advancing.`,
-      operation
-    );
+  assertGetExpectedState(operation, hookBranch);
   for (const node of operation.nodes.filter(
     (item) => !operation.completedRemote.includes(item.branchName)
   ))
@@ -256,20 +268,6 @@ function assertGetParticipantsAvailable(
       (operation.active || readMetadataRef(entry.branchName).frozen !== true)
     )
       assertBranchEditable(entry.branchName);
-  // Git may publish its active ref before the final HEAD transaction; Git owns that ref's CAS.
-  for (const expected of operation.expected)
-    if (
-      (expected.branchName !== hookBranch &&
-        getSha(`refs/heads/${expected.branchName}`) !== expected.head) ||
-      !sameMetadataExceptFrozen(
-        getSha(`refs/branch-metadata/${expected.branchName}`),
-        expected.metadata
-      )
-    )
-      refuseGet(
-        `${expected.branchName} changed outside the saved get plan.`,
-        operation
-      );
   const pending = operation.nodes.filter(
     (node) => !operation.completedRemote.includes(node.branchName)
   );
@@ -313,6 +311,35 @@ function assertGetParticipantsAvailable(
     skipTrackedPaths: true,
     operation: 'get',
   });
+}
+
+function assertGetExpectedState(
+  operation: GetOperation,
+  hookBranch?: string
+): void {
+  if (
+    !operation.checkout.shouldCheckout &&
+    'branchName' in operation.checkout.original &&
+    !getSha(`refs/heads/${operation.checkout.original.branchName}`)
+  )
+    refuseGet(
+      `Original checkout ${operation.checkout.original.branchName} no longer exists; refusing before staging or advancing.`,
+      operation
+    );
+  // Git may publish its active ref before the final HEAD transaction; Git owns that ref's CAS.
+  for (const expected of operation.expected)
+    if (
+      (expected.branchName !== hookBranch &&
+        getSha(`refs/heads/${expected.branchName}`) !== expected.head) ||
+      !sameMetadataExceptFrozen(
+        getSha(`refs/branch-metadata/${expected.branchName}`),
+        expected.metadata
+      )
+    )
+      refuseGet(
+        `${expected.branchName} changed outside the saved get plan.`,
+        operation
+      );
 }
 
 export function validateGetSources(operation: GetOperation): void {
@@ -421,13 +448,11 @@ export function reportGetFailure(
 ): never {
   let live = false;
   try {
-    live = Boolean(
-      operation.active &&
-        ownsRebase(
-          continueConfigFactory.load(undefined, { preserveInvalid: true }).data
-            .rebaseOwnership
-        )
-    );
+    const data = continueConfigFactory.load(undefined, {
+      preserveInvalid: true,
+    }).data;
+    const saved = validateGetRecovery(data, false);
+    live = JSON.stringify(saved) === JSON.stringify(operation);
   } catch {
     /* Preserve unreadable foreign recovery. */
   }
@@ -444,7 +469,15 @@ export function reportGetFailure(
       reachedTrunk !== operation.trunk.previousHead
         ? `Trunk ${operation.trunk.branchName} reached ${reachedTrunk}.\n`
         : ''
-    }Get stopped during ${operation.phase}. Updated ${
+    }Get stopped during ${
+      {
+        trunk: 'trunk fast-forward',
+        remote: 'remote refresh',
+        maintenance: 'local maintenance',
+        checkout: 'final checkout',
+        manual: 'manual inspection',
+      }[operation.phase]
+    }. Updated ${
       operation.updated.join(', ') || 'none'
     }.\nCompleted feature refresh: ${
       operation.completedRemote.join(', ') || 'none'
@@ -464,14 +497,14 @@ export function reportGetFailure(
         .join(', ') || 'none'
     }.\nReached changes requiring inspection: ${
       uncertain.join(', ') || 'none'
-    }.\nRetained get sources: ${[operation.trunk, ...operation.nodes]
+    }.\nGet source refs for inspection: ${[operation.trunk, ...operation.nodes]
       .map((source) => source.sourceRef)
       .join(', ')}.\nActual checkout: ${
       getCurrentBranchName() ?? 'detached HEAD'
     } (${getSha('HEAD')}).\nOriginal project: ${operation.root}. ${
       live
         ? 'Resolve the conflict and run an continue.'
-        : 'No verified active rebase; inspect reached work and saved get intent manually.'
+        : 'No verified owned continuation; inspect reached work and saved get intent manually.'
     }\n${error instanceof Error ? error.message : String(error)}`
   );
 }

@@ -474,7 +474,7 @@ describe('get CLI new import defaults', function () {
       ).to.equal(false);
     });
 
-  it('preserves the current editable status of a queued import newly tracked by another process', () => {
+  it('refuses a queued import newly tracked by another process while preserving editable content and recovery', () => {
     fixture.ok('get', 'child', '-U');
     fixture.commit(fixture.consumer, 'local.txt', 'local replay');
     fixture.advanceChild();
@@ -492,7 +492,29 @@ describe('get CLI new import defaults', function () {
     expect(initial.status, initial.output).to.equal(1);
     expect(initial.output).to.include('Hit conflict');
     fixture.git(fixture.consumer, 'branch', 'tip', 'child');
-    fixture.ok('track', 'tip', '--parent', 'child');
+    const actorHead = fixture.git(fixture.consumer, 'rev-parse', 'tip');
+    const actorMetadata = path.join(
+      fixture.consumer,
+      '.git',
+      'actor-metadata.json'
+    );
+    fs.writeJsonSync(actorMetadata, {
+      parentBranchName: 'child',
+      parentBranchRevision: fixture.git(fixture.consumer, 'rev-parse', 'child'),
+      frozen: false,
+    });
+    const actorOid = fixture.git(
+      fixture.consumer,
+      'hash-object',
+      '-w',
+      actorMetadata
+    );
+    fixture.git(
+      fixture.consumer,
+      'update-ref',
+      'refs/branch-metadata/tip',
+      actorOid
+    );
     fixture.status('tip', false);
     fs.writeFileSync(
       path.join(fixture.consumer, 'child.txt'),
@@ -500,19 +522,23 @@ describe('get CLI new import defaults', function () {
     );
     fixture.git(fixture.consumer, 'add', 'child.txt');
     fs.writeFileSync(fixture.ghCalls, '');
-    const resumed = fixture.run(['cont'], true, [
-      { prompt: 'How would you like to handle', input: '\u001b[B\r' },
-    ]);
-    expect(resumed.status, resumed.output).to.equal(0);
-    fixture.assertTip('tip', tip);
-    fixture.status('tip', false);
-    fixture.ok('checkout', 'tip');
-    fs.writeFileSync(
-      path.join(fixture.consumer, 'actor.txt'),
-      'actor editable'
+    const before = fixture.observe();
+    const resumed = fixture.run(['cont', '--all']);
+    expect(resumed.status, resumed.output).to.equal(1);
+    expect(resumed.output).to.match(
+      /frozen anchor|changed outside the saved get plan/
     );
-    fixture.ok('modify', '--commit', '--all', '-m', 'actor local commit');
-    expect(fixture.git(fixture.consumer, 'rev-parse', 'tip^')).to.equal(tip);
+    expect(fixture.observe()).to.deep.equal(before);
+    fixture.assertTip('tip', actorHead);
+    expect(fixture.git(fixture.consumer, 'rev-parse', 'tip')).not.to.equal(tip);
+    fixture.assertTip('refs/branch-metadata/tip', actorOid);
+    fixture.status('tip', false);
+    expect(fixture.git(fixture.consumer, 'show', 'tip:child.txt')).to.equal(
+      'child-old'
+    );
+    expect(fixture.git(fixture.consumer, 'show', 'tip:local.txt')).to.equal(
+      'local replay'
+    );
     expect(fs.readFileSync(fixture.ghCalls, 'utf8')).to.equal('');
   });
   it('reports reached new head and incomplete status when normal import metadata publication fails', () => {

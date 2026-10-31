@@ -247,6 +247,22 @@ function assertFetchedMetadata(
     );
 }
 
+function assertGetPublication(
+  expected: { branchName: string; head: string; metadata: string },
+  git: TGit
+): void {
+  if (
+    git.getSha(`refs/heads/${expected.branchName}`) !== expected.head ||
+    !sameMetadataExceptFrozen(
+      git.getSha(`refs/branch-metadata/${expected.branchName}`),
+      expected.metadata
+    )
+  )
+    throw new PreconditionsFailedError(
+      `${expected.branchName} publication changed after its write. The planned head, parent, base or PR metadata is incomplete; concurrent refs and metadata were preserved. Inspect reached work before retrying.`
+    );
+}
+
 // eslint-disable-next-line max-lines-per-function
 export function composeEngine({
   git,
@@ -485,8 +501,10 @@ export function composeEngine({
       prInfo: newCachedMeta.prInfo,
       frozen: newCachedMeta.frozen,
     };
-    const publish = (prefix: readonly string[]): void =>
-      writeMetadataRef(branchName, metadata, { prefix });
+    let publishedMetadata = '';
+    const publish = (prefix: readonly string[]): void => {
+      publishedMetadata = writeMetadataRef(branchName, metadata, { prefix });
+    };
     if (participants?.length)
       withFrozenCommitGuard(branchName, publish, {
         participants,
@@ -504,6 +522,7 @@ export function composeEngine({
     if (oldCachedMeta.validationResult !== 'VALID') {
       revalidateChildren(newCachedMeta.children);
     }
+    return publishedMetadata;
   };
 
   const revalidateChildren = (children: string[]) => {
@@ -557,22 +576,31 @@ export function composeEngine({
   const handleSuccessfulRebase = (
     branchName: string,
     parentBranchRevision: string,
-    participants?: readonly string[]
+    options?: { participants?: readonly string[]; verifyPublication?: boolean }
   ) => {
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
     const branchRevision = git.getShaOrThrow(`refs/heads/${branchName}`);
+    let publishedMetadata = '';
+    const assertPublication = (): void => {
+      if (options?.verifyPublication)
+        assertGetPublication(
+          { branchName, head: branchRevision, metadata: publishedMetadata },
+          git
+        );
+    };
     try {
       assertBranchEditable(branchName);
-      updateMeta(
+      publishedMetadata = updateMeta(
         branchName,
         {
           ...cachedMeta,
           branchRevision,
           parentBranchRevision,
         },
-        participants
+        options?.participants
       );
+      assertPublication();
     } catch (error) {
       throw new RebaseMetadataError(branchName, error);
     }
@@ -587,6 +615,11 @@ export function composeEngine({
           cause: error,
         });
       }
+    }
+    try {
+      assertPublication();
+    } catch (error) {
+      throw new RebaseMetadataError(branchName, error);
     }
   };
 
@@ -1276,7 +1309,10 @@ export function composeEngine({
       }
       if (preserveOtherRefs)
         assertFetchedMetadata(branchName, previousMetadata, git);
-      handleSuccessfulRebase(branchName, newBase, participants);
+      handleSuccessfulRebase(branchName, newBase, {
+        participants,
+        verifyPublication: preserveOtherRefs,
+      });
       return { result: 'REBASE_DONE' };
     },
     rebaseInteractive: (branchName: string) => {
@@ -1333,7 +1369,10 @@ export function composeEngine({
           );
         assertFetchedMetadata(branchName, previousMetadata, git);
       }
-      handleSuccessfulRebase(branchName, parentBranchRevision, participants);
+      handleSuccessfulRebase(branchName, parentBranchRevision, {
+        participants,
+        verifyPublication: preserveOtherRefs,
+      });
       return { result, branchName };
     },
     abortRebase: () => {
@@ -1503,7 +1542,7 @@ export function composeEngine({
       git.setRemoteTracking({ remote, branchName, sha: head });
       assertFetchedCheckout(branchName, head, git);
       assertFetchedMetadata(branchName, previousMetadata, git);
-      updateMeta(branchName, {
+      const publishedMetadata = updateMeta(branchName, {
         ...cachedMeta,
         ...readMetadataRef(branchName),
         parentBranchName,
@@ -1517,6 +1556,11 @@ export function composeEngine({
             }
           : readMetadataRef(branchName).prInfo,
       });
+      if (options?.source)
+        assertGetPublication(
+          { branchName, head, metadata: publishedMetadata },
+          git
+        );
       return true;
     },
     checkoutBranchFromFetched: (
@@ -1543,7 +1587,7 @@ export function composeEngine({
       assertFetchedCheckout(branchName, head, git);
       assertFetchedMetadata(branchName, previousMetadata, git);
 
-      updateMeta(branchName, {
+      const publishedMetadata = updateMeta(branchName, {
         ...readMetadataRef(branchName),
         frozen: readMetadataRef(branchName).frozen ?? options?.importFrozen,
         validationResult: 'VALID',
@@ -1552,6 +1596,11 @@ export function composeEngine({
         branchRevision: head,
         children: cache.branches[branchName]?.children ?? [],
       });
+      if (options?.source)
+        assertGetPublication(
+          { branchName, head, metadata: publishedMetadata },
+          git
+        );
       cache.currentBranch = branchName;
     },
     rebaseBranchOntoFetched: (branchName: string, options) => {
@@ -1588,7 +1637,9 @@ export function composeEngine({
       }
       if (options?.source)
         assertFetchedMetadata(branchName, previousMetadata, git);
-      handleSuccessfulRebase(branchName, base);
+      handleSuccessfulRebase(branchName, base, {
+        verifyPublication: Boolean(options?.source),
+      });
       return { result: 'REBASE_DONE' };
     },
   };

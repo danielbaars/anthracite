@@ -39,7 +39,7 @@ export function writeMetadataRef(
   branchName: string,
   meta: TMeta,
   location?: string | { readonly prefix: readonly string[] }
-): void {
+): string {
   const cwd = typeof location === 'string' ? location : undefined;
   const prefix = typeof location === 'object' ? location.prefix : [];
   const guardFile = getAbsorbGuard();
@@ -74,6 +74,7 @@ export function writeMetadataRef(
     onError: 'throw',
     resource: 'writeMetadataRef',
   });
+  return metaSha;
 }
 
 export function readMetadataRef(branchName: string, cwd?: string): TMeta {
