@@ -1,7 +1,5 @@
 import fs from 'fs';
 import { createHash } from 'crypto';
-import { isDeepStrictEqual } from 'util';
-import { z } from 'zod';
 import path from 'path';
 import { TContext } from '../../lib/context';
 import { ExitFailedError } from '../../lib/errors';
@@ -9,6 +7,7 @@ import { getRepoRootPathPrecondition } from '../../lib/preconditions';
 import { runGitCommand } from '../../lib/git/runner';
 import { getSha } from '../../lib/git/get_sha';
 import { getCurrentBranchName } from '../../lib/git/branch_ops';
+import { readMetadataRef } from '../../lib/engine/metadata_ref';
 import { getRebaseDirectory } from '../../lib/git/rebase_in_progress';
 import { getRebaseHead } from '../../lib/git/merge_conflict_help';
 import {
@@ -25,6 +24,7 @@ import {
 } from '../../lib/spiffy/continuation_spf';
 import { repoConfigFactory } from '../../lib/spiffy/repo_config_spf';
 import { GetOperation, getOperationSchema } from './get_operation';
+import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 
 const savedRecords = new WeakMap<TContinueConfig, string>();
 export function assertGetRecoveryWrite(context: TContext): void {
@@ -190,30 +190,61 @@ export function validateGetRecovery(
   return operation;
 }
 
-function sameGetMetadata(current: string, expected: string): boolean {
-  if (current === expected) return true;
-  if (!current || !expected) return false;
-  const withoutFreeze = (oid: string): unknown => {
-    const value = z
-      .record(z.string(), z.unknown())
-      .parse(JSON.parse(gitPath('cat-file', '-p', oid)));
-    if (value.frozen !== undefined && typeof value.frozen !== 'boolean')
-      throw new Error('Invalid frozen metadata.');
-    delete value.frozen;
-    return value;
-  };
-  try {
-    return isDeepStrictEqual(withoutFreeze(current), withoutFreeze(expected));
-  } catch {
-    return false;
+/** Original Git hooks run first; recheck this owned replay before its ref writes. */
+export function assertGetHookParticipants(branch: string): void {
+  const file = getRecoveryFile();
+  if (!fs.existsSync(file)) {
+    if (readRebaseIntentDigest())
+      refuseGet('Owned get recovery disappeared in a Git hook.');
+    return;
   }
+  const data = continueConfigFactory.load(undefined, {
+    preserveInvalid: true,
+  }).data;
+  const operation = data.get;
+  if (!operation) {
+    if (readRebaseIntentDigest())
+      refuseGet('Owned get intent disappeared in a Git hook.');
+    return;
+  }
+  // Completed Git replay metadata is checked by the engine before publication.
+  if (operation.active && !getRebaseDirectory()) return;
+  if (
+    operation.active &&
+    (!ownsRebase(data.rebaseOwnership) ||
+      !data.rebaseOwnership?.endsWith(`:${getRecoveryDigest(data)}`))
+  )
+    refuseGet('Owned get intent changed during a Git hook.', operation);
+  validateGetSources(operation);
+  for (const entry of operation.shouldRestack ? operation.maintenance : []) {
+    if (
+      entry.frozen &&
+      !operation.completedMaintenance.includes(entry.branchName) &&
+      readMetadataRef(entry.branchName).frozen !== true
+    )
+      refuseGet(
+        `${entry.branchName} was planned as a frozen anchor and became editable.`,
+        operation
+      );
+  }
+  assertGetParticipantsAvailable(operation, branch, branch);
 }
 
 function assertGetParticipantsAvailable(
   operation: GetOperation,
-  activeBranch: string
+  activeBranch: string,
+  hookBranch?: string
 ): void {
   assertBranchEditable(activeBranch);
+  if (
+    !operation.checkout.shouldCheckout &&
+    'branchName' in operation.checkout.original &&
+    !getSha(`refs/heads/${operation.checkout.original.branchName}`)
+  )
+    refuseGet(
+      `Original checkout ${operation.checkout.original.branchName} no longer exists; refusing before staging or advancing.`,
+      operation
+    );
   for (const node of operation.nodes.filter(
     (item) => !operation.completedRemote.includes(item.branchName)
   ))
@@ -221,13 +252,16 @@ function assertGetParticipantsAvailable(
   for (const entry of operation.shouldRestack ? operation.maintenance : [])
     if (
       !entry.frozen &&
-      !operation.completedMaintenance.includes(entry.branchName)
+      !operation.completedMaintenance.includes(entry.branchName) &&
+      (operation.active || readMetadataRef(entry.branchName).frozen !== true)
     )
       assertBranchEditable(entry.branchName);
+  // Git may publish its active ref before the final HEAD transaction; Git owns that ref's CAS.
   for (const expected of operation.expected)
     if (
-      getSha(`refs/heads/${expected.branchName}`) !== expected.head ||
-      !sameGetMetadata(
+      (expected.branchName !== hookBranch &&
+        getSha(`refs/heads/${expected.branchName}`) !== expected.head) ||
+      !sameMetadataExceptFrozen(
         getSha(`refs/branch-metadata/${expected.branchName}`),
         expected.metadata
       )
@@ -243,7 +277,9 @@ function assertGetParticipantsAvailable(
     ? operation.maintenance.filter(
         (entry) =>
           !entry.frozen &&
-          !operation.completedMaintenance.includes(entry.branchName)
+          !operation.completedMaintenance.includes(entry.branchName) &&
+          (operation.active ||
+            readMetadataRef(entry.branchName).frozen !== true)
       )
     : [];
   assertBranchesAvailableInWorktrees([

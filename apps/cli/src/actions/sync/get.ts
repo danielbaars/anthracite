@@ -9,6 +9,7 @@ import { execFileSync } from 'child_process';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
 import { getSha } from '../../lib/git/get_sha';
+import { FetchedBranchSource } from '../../lib/git/fetch_branch';
 import {
   ExitFailedError,
   KilledError,
@@ -266,7 +267,7 @@ export async function getBranchesFromRemote(
         if (
           args.force ||
           !context.engine.branchExists(branchName) ||
-          !context.engine.branchMatchesFetched(branchName)
+          !context.engine.branchMatchesFetched(branchName, node?.head)
         ) {
           uncommittedTrackedChangesPrecondition();
         }
@@ -275,7 +276,7 @@ export async function getBranchesFromRemote(
           context.engine.isBranchTracked(branchName) &&
           context.engine.getParentPrecondition(branchName) ===
             parentBranchName &&
-          context.engine.branchMatchesFetched(branchName)
+          context.engine.branchMatchesFetched(branchName, node?.head)
         ) {
           context.splog.info(`${chalk.cyan(branchName)} is up to date.`);
         } else if (
@@ -286,7 +287,7 @@ export async function getBranchesFromRemote(
           context.engine.checkoutBranchFromFetched(
             branchName,
             parentBranchName,
-            importFrozen
+            { importFrozen, source: node }
           );
           context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
         } else if (!context.engine.isBranchTracked(branchName)) {
@@ -305,7 +306,13 @@ export async function getBranchesFromRemote(
             branchName,
             parentBranchName,
             node
-              ? { number: node.pullRequestNumber, url: node.pullRequestUrl }
+              ? {
+                  prInfo: {
+                    number: node.pullRequestNumber,
+                    url: node.pullRequestUrl,
+                  },
+                  source: node,
+                }
               : undefined
           )
         ) {
@@ -323,6 +330,7 @@ export async function getBranchesFromRemote(
               importDecisions: args.importDecisions,
               fetchChoice: node?.resolution === 'REBASE' ? 'REBASE' : undefined,
               preserveOtherRefs: args.nodes !== undefined,
+              source: node,
             },
             context
           );
@@ -341,18 +349,26 @@ export async function getBranchesFromRemote(
       parentBranchName = branchName;
     }
   } catch (error) {
-    if (updatedBranches.length > 0) {
-      throw new ExitFailedError(
-        `Updated ${updatedBranches.join(', ')} before get stopped.\n${
-          incompleteBranch
-            ? `Metadata/status publication for ${incompleteBranch} may be incomplete.\n`
-            : ''
-        }${error instanceof Error ? error.message : String(error)}`
-      );
-    }
-    throw error;
+    reportRemoteUpdateFailure(updatedBranches, incompleteBranch, error);
   }
   return updatedBranches;
+}
+
+function reportRemoteUpdateFailure(
+  updatedBranches: readonly string[],
+  incompleteBranch: string | undefined,
+  error: unknown
+): never {
+  if (updatedBranches.length > 0) {
+    throw new ExitFailedError(
+      `Updated ${updatedBranches.join(', ')} before get stopped.\n${
+        incompleteBranch
+          ? `Metadata/status publication for ${incompleteBranch} may be incomplete.\n`
+          : ''
+      }${error instanceof Error ? error.message : String(error)}`
+    );
+  }
+  throw error;
 }
 
 function activateGuardedRemoteNode(
@@ -508,11 +524,9 @@ async function maybeOverwriteBranch(
   const { branchName, parentBranchName } = args;
   await confirmOverwriteBranch(branchName, context);
 
-  context.engine.checkoutBranchFromFetched(
-    branchName,
-    parentBranchName,
-    args.importFrozen
-  );
+  context.engine.checkoutBranchFromFetched(branchName, parentBranchName, {
+    importFrozen: args.importFrozen,
+  });
   context.splog.info(`Synced ${chalk.cyan(branchName)} from remote.`);
 }
 
@@ -610,6 +624,7 @@ async function handleSameParent(
     importDecisions?: GetImportDecision[];
     fetchChoice?: RemoteResolution;
     preserveOtherRefs?: boolean;
+    source?: FetchedBranchSource;
   },
   context: TContext
 ): Promise<void> {
@@ -619,10 +634,10 @@ async function handleSameParent(
 
   switch (fetchChoice) {
     case 'REBASE': {
-      const result = context.engine.rebaseBranchOntoFetched(
-        args.branchName,
-        args.preserveOtherRefs
-      );
+      const result = context.engine.rebaseBranchOntoFetched(args.branchName, {
+        preserveOtherRefs: args.preserveOtherRefs,
+        source: args.source,
+      });
       if (result.result === 'REBASE_CONFLICT') {
         persistContinuation(
           {
@@ -653,7 +668,8 @@ async function handleSameParent(
     case 'OVERWRITE':
       context.engine.checkoutBranchFromFetched(
         args.branchName,
-        args.parentBranchName
+        args.parentBranchName,
+        { source: args.source }
       );
       context.splog.info(`Synced ${chalk.cyan(args.branchName)} from remote.`);
       break;

@@ -1,6 +1,11 @@
 import { runGitCommand } from './runner';
 import { getShaOrThrow } from './get_sha';
 
+export type FetchedBranchSource = {
+  readonly head: string;
+  readonly base: string;
+};
+
 const FETCH_HEAD = 'refs/gt-metadata/FETCH_HEAD';
 const FETCH_BASE = 'refs/gt-metadata/FETCH_BASE';
 export function fetchBranch(remote: string, branchName: string): void {

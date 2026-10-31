@@ -11,6 +11,7 @@ import {
   fetchBranch,
   readFetchHead,
   writeFetchBase,
+  readFetchBase,
 } from '../../lib/git/fetch_branch';
 import { getSha, getShaOrThrow } from '../../lib/git/get_sha';
 import { getMergeBase } from '../../lib/git/merge_base';
@@ -18,6 +19,7 @@ import { runGitCommand } from '../../lib/git/runner';
 import { readMetadataRef } from '../../lib/engine/metadata_ref';
 import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { RemoteTrunkUpdate } from './remote_update_trunk';
+import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 
 const pullRequestSchema = z.object({
   headRefName: z.string().min(1),
@@ -280,7 +282,10 @@ export function assertRemoteUpdateNodeUnchanged(node: RemoteUpdateNode): void {
     assertBranchesAvailableInWorktrees([node.branchName]);
   if (
     getSha(`refs/heads/${node.branchName}`) !== node.previousHead ||
-    getSha(`refs/branch-metadata/${node.branchName}`) !== node.previousMetadata
+    !sameMetadataExceptFrozen(
+      getSha(`refs/branch-metadata/${node.branchName}`),
+      node.previousMetadata
+    )
   )
     throw new ExitFailedError(
       `${node.branchName} changed while getting the stack. Please retry.`
@@ -358,6 +363,14 @@ export function activateRemoteUpdateNode(node: RemoteUpdateNode): void {
     resource: 'activateGetSource',
   });
   writeFetchBase(node.base);
+  if (
+    readFetchHead() !== node.head ||
+    readFetchBase() !== node.base ||
+    getSha(node.sourceRef) !== node.head
+  )
+    throw new ExitFailedError(
+      `Activated remote source for ${node.branchName} changed. No unplanned source may be applied; inspect saved get intent.`
+    );
 }
 
 export function releaseRemoteUpdateGraph(

@@ -170,6 +170,7 @@ export async function continueGetOperation(
       true
     );
     if (result.result === 'REBASE_CONFLICT') {
+      validateGetRecovery(context.continueConfig.data);
       persistContinuation(
         {
           rebasedBranchBase: active.base,
