@@ -12,7 +12,7 @@ import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { assertUnreachable } from '../../lib/utils/assert_unreachable';
 import { persistContinuation } from '../persist_continuation';
 import { printConflictStatus } from '../print_conflict_status';
-import { getCurrentBranchName } from '../../lib/git/branch_ops';
+import { captureGetCheckout, finishGetCheckout } from './get_checkout';
 import { getMergeBase } from '../../lib/git/merge_base';
 import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
@@ -40,11 +40,15 @@ export async function getAction(
     force: boolean;
     unfrozen: boolean;
     downstack?: boolean;
+    checkout?: boolean;
   },
   context: TContext
 ): Promise<void> {
+  const original = captureGetCheckout();
   const trunk = context.engine.trunk;
-  let target = args.branchName ?? getCurrentBranchName();
+  let target =
+    args.branchName ??
+    ('branchName' in original ? original.branchName : undefined);
   if (!target) {
     throw new ExitFailedError(
       'No branch or PR specified, and no current branch to get.'
@@ -82,7 +86,18 @@ export async function getAction(
   try {
     nodes = snapshotRemoteUpdateGraph(selected, context, remoteTrunk);
     await prepareRemoteUpdates(
-      { nodes, force: args.force, target, trunk: remoteTrunk },
+      {
+        nodes,
+        force: args.force,
+        target,
+        trunk: remoteTrunk,
+        finalBranch:
+          args.checkout === false
+            ? 'branchName' in original
+              ? original.branchName
+              : undefined
+            : target,
+      },
       context
     );
   } catch (error) {
@@ -135,20 +150,10 @@ export async function getAction(
   releaseRemoteUpdateGraph(nodes);
   releaseRemoteTrunk(remoteTrunk);
 
-  try {
-    context.engine.checkoutBranch(target, { preserveIgnored: true });
-  } catch (error) {
-    if (updatedBranches.length > 0) {
-      throw new ExitFailedError(
-        `Updated ${updatedBranches.join(
-          ', '
-        )} before get stopped. Final checkout of ${target} failed.\n${
-          error instanceof Error ? error.message : String(error)
-        }`
-      );
-    }
-    throw error;
-  }
+  finishGetCheckout(
+    { target, original, shouldCheckout: args.checkout ?? true },
+    updatedBranches
+  );
 }
 
 export type GetImportDecision = {
@@ -392,6 +397,7 @@ async function prepareRemoteUpdates(
     force: boolean;
     target: string;
     trunk?: RemoteTrunkUpdate;
+    finalBranch: string | undefined;
   },
   context: TContext
 ): Promise<void> {
@@ -413,6 +419,7 @@ async function prepareRemoteUpdates(
   assertBranchesAvailableInWorktrees([
     ...changing.map((node) => node.branchName),
     args.target,
+    ...(args.finalBranch ? [args.finalBranch] : []),
   ]);
   assertRestackFilesAvailable({
     branches: [],
