@@ -45,4 +45,4 @@ All feature checks use public CLI/real stdio MCP processes, real temporary Git r
 
 The exact get/g modern-route filter excludes the independently public-0.5.1-confirmed stale unsupported-absorb sentinel. Its [original failure](evidence/get-updates-implementation-2026-10-31/baseline-modern-unsupported.json) is retained and **not** reported green. Explicit Mocha file/filter selection is used, never the known ineffective `an test` scope selectors.
 
-CI, the full validation matrix, live fixture writes, GitHub/owner-repository publication, package publication, standalone release assets and owner installation changes remain off. Independent Standards and Spec review follows this integration; any resulting fixes and affected rechecks must update this record before final approval/readiness.
+CI, the full validation matrix, live fixture writes, package publication, standalone release assets and owner installation changes remain off. Independent Standards and Spec review follows this integration; any resulting fixes and affected rechecks must update this record before final approval/readiness.
