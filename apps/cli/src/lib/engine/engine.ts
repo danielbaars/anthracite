@@ -11,6 +11,7 @@ import {
 import { TCommitOpts } from '../git/commit';
 import { TCommitFormat } from '../git/commit_range';
 import { TGit } from '../git/git';
+import { FetchedBranchSource } from '../git/fetch_branch';
 import { cuteString } from '../utils/cute_string';
 import { TSplog } from '../utils/splog';
 import {
@@ -34,6 +35,7 @@ import { TScopeSpec } from './scope_spec';
 import { publishFoldStackRefs } from '../git/fold_stack';
 import { FileSplitPublication, publishFileSplitRefs } from '../git/file_split';
 import { assertBranchEditable } from './frozen_branch';
+import { sameMetadataExceptFrozen } from './metadata_comparison';
 import { assertBranchesAvailableInWorktrees } from '../git/worktrees';
 
 export type TEngine = {
@@ -190,20 +192,23 @@ export type TEngine = {
   clean: () => void;
 
   fetchBranch: (branchName: string, parentBranchName: string) => void;
-  branchMatchesFetched: (branchName: string) => boolean;
+  branchMatchesFetched: (branchName: string, head?: string) => boolean;
   fastForwardBranchFromFetched: (
     branchName: string,
     parentBranchName: string,
-    prInfo?: Pick<TBranchPRInfo, 'number' | 'url'>
+    options?: {
+      prInfo?: Pick<TBranchPRInfo, 'number' | 'url'>;
+      source?: FetchedBranchSource;
+    }
   ) => boolean;
   checkoutBranchFromFetched: (
     branchName: string,
     parentBranchName: string,
-    importFrozen?: boolean
+    options?: { importFrozen?: boolean; source?: FetchedBranchSource }
   ) => void;
   rebaseBranchOntoFetched: (
     branchName: string,
-    preserveOtherRefs?: boolean
+    options?: { preserveOtherRefs?: boolean; source?: FetchedBranchSource }
   ) =>
     | {
         result: 'REBASE_CONFLICT';
@@ -211,6 +216,36 @@ export type TEngine = {
       }
     | { result: 'REBASE_DONE' };
 };
+
+function assertFetchedCheckout(branch: string, head: string, git: TGit): void {
+  assertBranchesAvailableInWorktrees([branch]);
+  if (
+    git.getCurrentBranchName() !== branch ||
+    git.getShaOrThrow('HEAD') !== head ||
+    git.getShaOrThrow(`refs/heads/${branch}`) !== head
+  )
+    throw new PreconditionsFailedError(
+      `Physical checkout changed while getting ${branch}. Actual checkout: ${
+        git.getCurrentBranchName() ?? 'detached HEAD'
+      }. Inspect reached work before retrying.`
+    );
+}
+
+function assertFetchedMetadata(
+  branch: string,
+  expected: string,
+  git: TGit
+): void {
+  if (
+    !sameMetadataExceptFrozen(
+      git.getSha(`refs/branch-metadata/${branch}`),
+      expected
+    )
+  )
+    throw new PreconditionsFailedError(
+      `${branch} tracking changed while getting the stack. Concurrent parent or PR metadata was preserved; inspect reached work before retrying.`
+    );
+}
 
 // eslint-disable-next-line max-lines-per-function
 export function composeEngine({
@@ -1213,6 +1248,7 @@ export function composeEngine({
       git.switchBranch(branchToSplit, { force: true });
     },
     restackBranch: (branchName: string, participants, preserveOtherRefs) => {
+      const previousMetadata = git.getSha(`refs/branch-metadata/${branchName}`);
       const cachedMeta = assertBranchIsValidOrTrunkAndGetMeta(branchName);
       if (isBranchFixed(branchName)) {
         return { result: 'REBASE_UNNEEDED' };
@@ -1238,6 +1274,8 @@ export function composeEngine({
           rebasedBranchBase: newBase,
         };
       }
+      if (preserveOtherRefs)
+        assertFetchedMetadata(branchName, previousMetadata, git);
       handleSuccessfulRebase(branchName, newBase, participants);
       return { result: 'REBASE_DONE' };
     },
@@ -1267,6 +1305,9 @@ export function composeEngine({
       preserveOtherRefs
     ) => {
       const activeBranch = git.getRebaseHead();
+      const previousMetadata = activeBranch
+        ? git.getSha(`refs/branch-metadata/${activeBranch}`)
+        : '';
       if (activeBranch) assertBranchEditable(activeBranch);
       const result = git.rebaseContinue(
         activeBranch,
@@ -1285,6 +1326,13 @@ export function composeEngine({
         );
       }
       assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
+      if (preserveOtherRefs && activeBranch) {
+        if (branchName !== activeBranch)
+          throw new PreconditionsFailedError(
+            `Physical checkout changed after continuing ${activeBranch}. Inspect reached work.`
+          );
+        assertFetchedMetadata(branchName, previousMetadata, git);
+      }
       handleSuccessfulRebase(branchName, parentBranchRevision, participants);
       return { result, branchName };
     },
@@ -1417,15 +1465,19 @@ export function composeEngine({
         git.fetchBranch(remote, branchName);
       }
     },
-    branchMatchesFetched: (branchName: string) => {
+    branchMatchesFetched: (branchName: string, head) => {
       assertBranch(branchName);
-      return git.getShaOrThrow(branchName) === git.readFetchHead();
+      return git.getShaOrThrow(branchName) === (head ?? git.readFetchHead());
     },
-    fastForwardBranchFromFetched: (branchName, parentBranchName, prInfo) => {
+    fastForwardBranchFromFetched: (branchName, parentBranchName, options) => {
+      const prInfo = options?.prInfo;
+      const previousMetadata = git.getSha(`refs/branch-metadata/${branchName}`);
       validateNewParent(branchName, parentBranchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
-      const head = git.readFetchHead();
-      const base = git.readFetchBase();
+      const { head, base } = options?.source ?? {
+        head: git.readFetchHead(),
+        base: git.readFetchBase(),
+      };
       if (git.getShaOrThrow(branchName) !== cachedMeta.branchRevision) {
         throw new PreconditionsFailedError(
           `${branchName} changed while getting the stack. Please retry.`
@@ -1438,13 +1490,19 @@ export function composeEngine({
         return false;
       }
       checkoutBranch(branchName, { preserveIgnored: true });
+      assertFetchedCheckout(branchName, cachedMeta.branchRevision, git);
+      assertFetchedMetadata(branchName, previousMetadata, git);
       git.fastForward(head);
+      assertFetchedCheckout(branchName, head, git);
+      assertFetchedMetadata(branchName, previousMetadata, git);
       if (git.getShaOrThrow(branchName) !== head) {
         throw new PreconditionsFailedError(
           `${branchName} changed while getting the stack. Please retry.`
         );
       }
       git.setRemoteTracking({ remote, branchName, sha: head });
+      assertFetchedCheckout(branchName, head, git);
+      assertFetchedMetadata(branchName, previousMetadata, git);
       updateMeta(branchName, {
         ...cachedMeta,
         ...readMetadataRef(branchName),
@@ -1464,25 +1522,30 @@ export function composeEngine({
     checkoutBranchFromFetched: (
       branchName: string,
       parentBranchName: string,
-      importFrozen?: boolean
+      options
     ) => {
+      const previousMetadata = git.getSha(`refs/branch-metadata/${branchName}`);
       validateNewParent(branchName, parentBranchName);
       assertBranch(parentBranchName);
-      const { head, base } = {
+      const { head, base } = options?.source ?? {
         head: git.readFetchHead(),
         base: git.readFetchBase(),
       };
       git.forceCheckoutNewBranch(branchName, head, { preserveIgnored: true });
+      assertFetchedCheckout(branchName, head, git);
+      assertFetchedMetadata(branchName, previousMetadata, git);
       if (git.getShaOrThrow(branchName) !== head) {
         throw new PreconditionsFailedError(
           `${branchName} changed while getting the stack. Please retry.`
         );
       }
       git.setRemoteTracking({ remote, branchName, sha: head });
+      assertFetchedCheckout(branchName, head, git);
+      assertFetchedMetadata(branchName, previousMetadata, git);
 
       updateMeta(branchName, {
         ...readMetadataRef(branchName),
-        frozen: readMetadataRef(branchName).frozen ?? importFrozen,
+        frozen: readMetadataRef(branchName).frozen ?? options?.importFrozen,
         validationResult: 'VALID',
         parentBranchName,
         parentBranchRevision: base,
@@ -1491,15 +1554,18 @@ export function composeEngine({
       });
       cache.currentBranch = branchName;
     },
-    rebaseBranchOntoFetched: (branchName: string, preserveOtherRefs) => {
+    rebaseBranchOntoFetched: (branchName: string, options) => {
+      const previousMetadata = git.getSha(`refs/branch-metadata/${branchName}`);
       assertBranchEditable(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
-      const { head, base } = {
+      const { head, base } = options?.source ?? {
         head: git.readFetchHead(),
         base: git.readFetchBase(),
       };
       git.setRemoteTracking({ remote, branchName, sha: head });
+      if (options?.source)
+        assertFetchedMetadata(branchName, previousMetadata, git);
       assertBranchEditable(branchName);
 
       // setting the current branch to this branch is correct in either case
@@ -1512,7 +1578,7 @@ export function composeEngine({
           from: cachedMeta.parentBranchRevision,
           branchName,
           restackCommitterDateIsAuthorDate,
-          preserveOtherRefs,
+          preserveOtherRefs: options?.preserveOtherRefs,
         }) === 'REBASE_CONFLICT'
       ) {
         return {
@@ -1520,6 +1586,8 @@ export function composeEngine({
           rebasedBranchBase: base,
         };
       }
+      if (options?.source)
+        assertFetchedMetadata(branchName, previousMetadata, git);
       handleSuccessfulRebase(branchName, base);
       return { result: 'REBASE_DONE' };
     },

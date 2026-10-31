@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { assertGetHookParticipants } from '../actions/sync/get_recovery';
 import {
   checkAbsorbGuard,
   recordAbsorbHookFailure,
@@ -84,6 +85,7 @@ export const handler = (
   try {
     for (const branch of [args.branch, ...(args.participant ?? [])])
       assertBranchEditable(branch);
+    assertGetHookParticipants(args.branch);
   } catch (error: unknown) {
     process.stderr.write(
       `ERROR: ${error instanceof Error ? error.message : String(error)}\n`

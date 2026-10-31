@@ -214,6 +214,10 @@ function assertGetMaintenanceUnchanged(
   context: TContext
 ): void {
   for (const entry of plan) {
+    if (entry.frozen && !context.engine.isBranchFrozen(entry.branchName))
+      throw new ExitFailedError(
+        `${entry.branchName} was planned as a frozen anchor and became editable. Inspect reached updates and replan before expanding replay authority.`
+      );
     const metadata = readMetadataRef(entry.branchName);
     if (
       getSha(`refs/heads/${entry.branchName}`) !==
