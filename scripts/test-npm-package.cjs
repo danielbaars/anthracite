@@ -117,8 +117,9 @@ try {
       "apps/cli/dist/test/commands/mcp_execution_cli.test.js",
       "apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
       "apps/cli/dist/test/commands/frozen_submit_cli.test.js",
+      "apps/cli/dist/test/commands/get_delivery_cli.test.js",
       "--grep",
-      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base",
+      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base|installed get workflow learns explicit options",
     ],
     {
       cwd: root,
@@ -138,7 +139,7 @@ try {
     scenarios.stderr || scenarios.error?.message
   );
   console.log(
-    "PASS installed package real Git stacks, same-build MCP and numeric-zero cancellation"
+    "PASS installed package real Git stacks, scoped get/MCP, same-build execution and numeric-zero cancellation"
   );
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

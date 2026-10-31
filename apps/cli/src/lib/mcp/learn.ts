@@ -21,6 +21,40 @@ before editing: follow the repository's workflow and inspect current state.
 Use an <command> --help for supported selectors and options; supply required
 choices explicitly because MCP execution is non-interactive.
 
+Use an get [branch] (alias g) for authorized feature-head refresh. A branch or
+numeric PR argument selects the target; omission uses the original physical
+current branch. Detached HEAD requires an explicit target. Trunk itself remains
+a no-op, not an all-stacks selector. By default, get refreshes the required PR
+ancestor chain and eligible tracked local descendants of the target, then
+restacks affected local work and selects the target on complete success.
+--downstack limits remote refresh to the required chain; necessary local sibling
+maintenance can still fall outside that refresh selection. Independent trunk
+stacks remain outside get, and remote-only descendants are not discovered.
+For explicit old-selection/no-replay behavior, use an get target --downstack
+--no-restack. This still permits safe trunk fast-forward and is not a promise of
+identical old execution. --no-checkout independently restores the original
+physical branch identity at its current authorized head, or the exact detached
+OID, only after all enabled phases finish. Intermediate checkouts can occur.
+For example, a literal MCP request is:
+{"args": ["get", "target", "--downstack", "--no-restack", "--no-checkout"], "cwd": "/absolute/project", "why": "Refresh the authorized chain and retain checkout"}
+Trunk advances by fast-forward only; feature --force never resets trunk. Feature
+force is bounded to eligible selected incoming sources and preserves frozen
+status plus local-file/worktree protections. Local-only descendants retain their
+own work; missing required sources and service failures are errors, not skips.
+New imports use per-PR ownership verification: verified own imports are editable,
+other or unknown authors are frozen, and --unfrozen/-U overrides new imports only.
+Automatic maintenance retains frozen anchors and names skipped or deferred work.
+Get performs no cleanup, pushes or PR writes; sync retains its separate defaults.
+A saved get conflict returns cli_error with reached updates and actual checkout.
+Resolve deliberately in the printed original worktree, stage intended resolutions
+and call an continue (or cont). The owned operation retains pinned sources,
+parents, import decisions and saved get replay/checkout policy across processes;
+remaining protections are checked before --all stages or advances. Raw Git abort
+cancels only its active rebase, not earlier updates. Missing, foreign, changed or
+aborted intent and ambiguous metadata/final-checkout failures require inspection;
+never clear records or reset/recreate refs to pretend restoration succeeded.
+Finish a pending graph-aware get before downgrading to an older release.
+
 To insert a prerequisite below selected direct children, use an create shared
 --insert --onto parent --insert-child left --insert-child right -m "Prerequisite".
 The c alias and -i also work. Each --insert-child consumes one exact literal
