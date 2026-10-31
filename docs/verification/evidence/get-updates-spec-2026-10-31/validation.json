@@ -1,0 +1,50 @@
+{
+  "status": "document/source/evidence verification only",
+  "date": "2026-10-31",
+  "specSections": 7,
+  "userStories": 54,
+  "implementationDecisions": 18,
+  "acceptanceGroups": 13,
+  "unchangedSourceModules": 10,
+  "historicalArtifactHashesVerified": 69,
+  "supportingArtifactHashesVerified": 5,
+  "localMarkdownLinksAndAnchorsVerified": 45,
+  "immutableGithubFilePathsVerifiedAgainstGit": 11,
+  "newProductAcceptanceScenariosRun": 0,
+  "ciStarted": false,
+  "fullMatrixStarted": false,
+  "inventory": [
+    {
+      "path": "docs/specs/get-updates.md",
+      "sha256": "b639509e74928b6e270e8a41aaefa8e6f46a5e934cb4ee3fbb2967a6eb1af3a9"
+    },
+    {
+      "path": "docs/verification/get-updates-spec-2026-10-31.md",
+      "sha256": "8e9e5c5f3839b913b8f770c2c5cb690a529900f9cc329960d1301ebebdfe0741"
+    },
+    {
+      "path": "docs/graphite-parity.md",
+      "sha256": "f9a2598d6239e3e58b7e273539a46892b536c1c592c653f8a478f71ca016f93d"
+    },
+    {
+      "path": "docs/verification/evidence/get-updates-spec-2026-10-31/README.md",
+      "sha256": "c7f765fd5b12ff3ff35b54fa9d9fa9e87955a956dc3f5354f401e02dec7a5415"
+    },
+    {
+      "path": "docs/verification/evidence/get-updates-spec-2026-10-31/approved-boundary.json",
+      "sha256": "61374cc5f7ddcb864bb9bef4439a3c40e66771f25d0f9187e375ca22ed7796b2"
+    },
+    {
+      "path": "docs/verification/evidence/get-updates-spec-2026-10-31/historical-evidence-index.json",
+      "sha256": "5cc9af7d982cca64b65b3cc601460af668fe3e4717346d28bf3cf7b4e34a2153"
+    },
+    {
+      "path": "docs/verification/evidence/get-updates-spec-2026-10-31/source-bridge.json",
+      "sha256": "3a123ed9758c2185f168ceb13cd17e5f319864b0a87c04c0639449d2d7a2152e"
+    },
+    {
+      "path": "docs/verification/evidence/get-updates-spec-2026-10-31/supporting-evidence-index.json",
+      "sha256": "d88af055fbb5a2359a4a91cdc03a08e51cce5cb0a7264b2867002b1a544633fe"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-31",
+  "status": "owner-approved scope and test boundary; implementation not authorized by this document",
+  "scope": [
+    "Default local tracked descendant refresh; downstack narrows remote refresh",
+    "Default restack with no-restack control and separately disclosed maintenance",
+    "Default target checkout; no-checkout restores original physical checkout on success",
+    "Fast-forward-only trunk; safe validated PR-base changes",
+    "Existing guards, import/frozen policy and real conflict continuation",
+    "Shared explicit update operation for a later separately specified sync round"
+  ],
+  "primarySeam": "Public CLI process with real local Git and bare remotes; only external gh responses controlled",
+  "additionalSmoke": "One existing real stdio MCP route",
+  "runtimesForLaterImplementation": [
+    "Node",
+    "independently compiled native"
+  ],
+  "excluded": [
+    "Remote-only discovery",
+    "Get cleanup/delete-all",
+    "Multiple trunks",
+    "Broader dirty-worktree support",
+    "Sync feature implementation"
+  ],
+  "ciAllowed": false,
+  "fullMatrixAllowed": false,
+  "newRuntimeAcceptanceClaimed": false
+}
