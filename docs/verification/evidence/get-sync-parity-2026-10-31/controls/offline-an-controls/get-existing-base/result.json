@@ -1,0 +1,271 @@
+{
+  "id": "AN01",
+  "authority": "CONTROLLED-GH; actual public npm CLI + real Git/local bare remote",
+  "before": {
+    "head": "9b565b3a1cede4745e73af153ad02c917594211b",
+    "checkout": "tip",
+    "localHeads": "refs/heads/base 00d8c0fc7d8bd36b8469605854999856850627ec\nrefs/heads/child 559131aad1078c7cdfd0572ff56c98d5e415b142\nrefs/heads/main 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/heads/sibling 21bb9acbc40f8af00d8c485f069e519fbea448ed\nrefs/heads/tip 9b565b3a1cede4745e73af153ad02c917594211b",
+    "allRefs": "refs/branch-metadata/base d87c6800e25ca06bf8a4e9704143c2215435dfbb\nrefs/branch-metadata/child 5ef061e95bd420445544a27544c4718d49d2f857\nrefs/branch-metadata/sibling 5ef061e95bd420445544a27544c4718d49d2f857\nrefs/branch-metadata/tip 65f536115d3a91f2d19f41dba3e38091ca9603c8\nrefs/gt-metadata/FETCH_BASE 00d8c0fc7d8bd36b8469605854999856850627ec\nrefs/gt-metadata/FETCH_HEAD 21bb9acbc40f8af00d8c485f069e519fbea448ed\nrefs/heads/base 00d8c0fc7d8bd36b8469605854999856850627ec\nrefs/heads/child 559131aad1078c7cdfd0572ff56c98d5e415b142\nrefs/heads/main 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/heads/sibling 21bb9acbc40f8af00d8c485f069e519fbea448ed\nrefs/heads/tip 9b565b3a1cede4745e73af153ad02c917594211b\nrefs/remotes/origin/base 00d8c0fc7d8bd36b8469605854999856850627ec\nrefs/remotes/origin/child 559131aad1078c7cdfd0572ff56c98d5e415b142\nrefs/remotes/origin/main 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/remotes/origin/sibling 21bb9acbc40f8af00d8c485f069e519fbea448ed\nrefs/remotes/origin/tip 9b565b3a1cede4745e73af153ad02c917594211b",
+    "parents": {
+      "base": {
+        "oid": "d87c6800e25ca06bf8a4e9704143c2215435dfbb",
+        "value": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "6cac5724e9b3e8c8d8938cabd8c377da5cffbe06",
+          "frozen": false
+        }
+      },
+      "child": {
+        "oid": "5ef061e95bd420445544a27544c4718d49d2f857",
+        "value": {
+          "parentBranchName": "base",
+          "parentBranchRevision": "00d8c0fc7d8bd36b8469605854999856850627ec",
+          "frozen": false
+        }
+      },
+      "tip": {
+        "oid": "65f536115d3a91f2d19f41dba3e38091ca9603c8",
+        "value": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "559131aad1078c7cdfd0572ff56c98d5e415b142",
+          "frozen": false
+        }
+      },
+      "sibling": {
+        "oid": "5ef061e95bd420445544a27544c4718d49d2f857",
+        "value": {
+          "parentBranchName": "base",
+          "parentBranchRevision": "00d8c0fc7d8bd36b8469605854999856850627ec",
+          "frozen": false
+        }
+      }
+    },
+    "indexBase64": "RElSQwAAAAIAAAAEauWhsC7leStq5aGwLuV5KwEAABALphbDAACBpAAAAfUAAAAAAAAACdnvtR4ApGwUGZ68C8dhEpmt9lz+AAhiYXNlLnR4dAAAauWhsiTfrvRq5aGyJN+u9AEAABALphhmAACBpAAAAfUAAAAAAAAACiAC58pGMiUGcFdCP8Accrai34lVAAljaGlsZC50eHQAauWhrwYxGJlq5aGvBjEYmQEAABALpha7AACBpAAAAfUAAAAAAAAABbopBtBmbPcmx+qt0s09thXe3986AAhtYWluLnR4dAAAauWhsiTjJIhq5aGyJOMkiAEAABALphhnAACBpAAAAfUAAAAAAAAACLdgfXOJZrBqspGA+PN2rlnX0OMDAAd0aXAudHh0AAAAVFJFRQAAABkANCAwCsaalbX5qdTe0KZmkYdxJ5VvGRwgWiLV7Vmkl1maMPL7fHWIQJ1bBa0=",
+    "staging": "",
+    "status": "",
+    "files": {
+      "base.txt": "YmFzZSBvbGQK",
+      "child.txt": "Y2hpbGQgb2xkCg==",
+      "main.txt": "bWFpbgo=",
+      "tip.txt": "dGlwIG9sZAo="
+    },
+    "remoteRefs": "refs/heads/base 77f9d653c313462f390d9b33423d35890177ecdb\nrefs/heads/child c012b903eb2f1607f1b829ff887f56b847e58c46\nrefs/heads/main 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/heads/new-child dde46b7b4cd1418b2a9c9e9957c8fffeec72213d\nrefs/heads/sibling 2df956044d9d7d0a5e6c0c7a434c3aa2a989edd8\nrefs/heads/tip fb873d9d8c033fd1e31894c6cc1c8f4a730824db",
+    "prs": [
+      {
+        "number": 1,
+        "headRefName": "base",
+        "baseRefName": "main",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/1",
+        "title": "base",
+        "body": "Controlled offline fixture base",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      },
+      {
+        "number": 2,
+        "headRefName": "child",
+        "baseRefName": "base",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/2",
+        "title": "child",
+        "body": "Controlled offline fixture child",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      },
+      {
+        "number": 3,
+        "headRefName": "tip",
+        "baseRefName": "child",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/3",
+        "title": "tip",
+        "body": "Controlled offline fixture tip",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      },
+      {
+        "number": 4,
+        "headRefName": "sibling",
+        "baseRefName": "base",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/4",
+        "title": "sibling",
+        "body": "Controlled offline fixture sibling",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      },
+      {
+        "number": 5,
+        "headRefName": "new-child",
+        "baseRefName": "base",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/5",
+        "title": "new-child",
+        "body": "Controlled offline fixture new-child",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      }
+    ]
+  },
+  "execution": {
+    "argv": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+      "get",
+      "base",
+      "--no-interactive"
+    ],
+    "cwd": "/private/tmp/anthracite-get-sync-research-20261031/offline-an-controls/get-existing-base/consumer",
+    "status": 0,
+    "signal": null,
+    "stdout": "Synced base from remote.\nLocal children may need to be restacked.\n",
+    "stderr": ""
+  },
+  "after": {
+    "head": "77f9d653c313462f390d9b33423d35890177ecdb",
+    "checkout": "base",
+    "localHeads": "refs/heads/base 77f9d653c313462f390d9b33423d35890177ecdb\nrefs/heads/child 559131aad1078c7cdfd0572ff56c98d5e415b142\nrefs/heads/main 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/heads/sibling 21bb9acbc40f8af00d8c485f069e519fbea448ed\nrefs/heads/tip 9b565b3a1cede4745e73af153ad02c917594211b",
+    "allRefs": "refs/branch-metadata/base d87c6800e25ca06bf8a4e9704143c2215435dfbb\nrefs/branch-metadata/child 5ef061e95bd420445544a27544c4718d49d2f857\nrefs/branch-metadata/sibling 5ef061e95bd420445544a27544c4718d49d2f857\nrefs/branch-metadata/tip 65f536115d3a91f2d19f41dba3e38091ca9603c8\nrefs/gt-metadata/FETCH_BASE 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/gt-metadata/FETCH_HEAD 77f9d653c313462f390d9b33423d35890177ecdb\nrefs/heads/base 77f9d653c313462f390d9b33423d35890177ecdb\nrefs/heads/child 559131aad1078c7cdfd0572ff56c98d5e415b142\nrefs/heads/main 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/heads/sibling 21bb9acbc40f8af00d8c485f069e519fbea448ed\nrefs/heads/tip 9b565b3a1cede4745e73af153ad02c917594211b\nrefs/remotes/origin/base 77f9d653c313462f390d9b33423d35890177ecdb\nrefs/remotes/origin/child 559131aad1078c7cdfd0572ff56c98d5e415b142\nrefs/remotes/origin/main 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/remotes/origin/sibling 21bb9acbc40f8af00d8c485f069e519fbea448ed\nrefs/remotes/origin/tip 9b565b3a1cede4745e73af153ad02c917594211b",
+    "parents": {
+      "base": {
+        "oid": "d87c6800e25ca06bf8a4e9704143c2215435dfbb",
+        "value": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "6cac5724e9b3e8c8d8938cabd8c377da5cffbe06",
+          "frozen": false
+        }
+      },
+      "child": {
+        "oid": "5ef061e95bd420445544a27544c4718d49d2f857",
+        "value": {
+          "parentBranchName": "base",
+          "parentBranchRevision": "00d8c0fc7d8bd36b8469605854999856850627ec",
+          "frozen": false
+        }
+      },
+      "tip": {
+        "oid": "65f536115d3a91f2d19f41dba3e38091ca9603c8",
+        "value": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "559131aad1078c7cdfd0572ff56c98d5e415b142",
+          "frozen": false
+        }
+      },
+      "sibling": {
+        "oid": "5ef061e95bd420445544a27544c4718d49d2f857",
+        "value": {
+          "parentBranchName": "base",
+          "parentBranchRevision": "00d8c0fc7d8bd36b8469605854999856850627ec",
+          "frozen": false
+        }
+      }
+    },
+    "indexBase64": "RElSQwAAAAIAAAACauWhsxJKL0Rq5aGzEkovRAEAABALphiJAACBpAAAAfUAAAAAAAAACd6gHFH953GAJU6JY/0K6ASZhT17AAhiYXNlLnR4dAAAauWhrwYxGJlq5aGvBjEYmQEAABALpha7AACBpAAAAfUAAAAAAAAABbopBtBmbPcmx+qt0s09thXe3986AAhtYWluLnR4dAAAVFJFRQAAABkAMiAwCrg6wAlYWaERueP9pu7AxmoSiXO9ykiFmlny8s5NNp61bGM9qdtS4Lk=",
+    "staging": "",
+    "status": "",
+    "files": {
+      "base.txt": "YmFzZSBuZXcK",
+      "main.txt": "bWFpbgo="
+    },
+    "remoteRefs": "refs/heads/base 77f9d653c313462f390d9b33423d35890177ecdb\nrefs/heads/child c012b903eb2f1607f1b829ff887f56b847e58c46\nrefs/heads/main 6cac5724e9b3e8c8d8938cabd8c377da5cffbe06\nrefs/heads/new-child dde46b7b4cd1418b2a9c9e9957c8fffeec72213d\nrefs/heads/sibling 2df956044d9d7d0a5e6c0c7a434c3aa2a989edd8\nrefs/heads/tip fb873d9d8c033fd1e31894c6cc1c8f4a730824db",
+    "prs": [
+      {
+        "number": 1,
+        "headRefName": "base",
+        "baseRefName": "main",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/1",
+        "title": "base",
+        "body": "Controlled offline fixture base",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      },
+      {
+        "number": 2,
+        "headRefName": "child",
+        "baseRefName": "base",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/2",
+        "title": "child",
+        "body": "Controlled offline fixture child",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      },
+      {
+        "number": 3,
+        "headRefName": "tip",
+        "baseRefName": "child",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/3",
+        "title": "tip",
+        "body": "Controlled offline fixture tip",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      },
+      {
+        "number": 4,
+        "headRefName": "sibling",
+        "baseRefName": "base",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/4",
+        "title": "sibling",
+        "body": "Controlled offline fixture sibling",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      },
+      {
+        "number": 5,
+        "headRefName": "new-child",
+        "baseRefName": "base",
+        "state": "OPEN",
+        "url": "https://github.com/offline-get-sync/repo/pull/5",
+        "title": "new-child",
+        "body": "Controlled offline fixture new-child",
+        "reviewDecision": "",
+        "isDraft": false,
+        "author": {
+          "login": "offline-researcher"
+        }
+      }
+    ]
+  },
+  "ghCalls": [
+    [
+      "pr",
+      "view",
+      "base",
+      "--repo",
+      "offline-get-sync/repo",
+      "--json",
+      "baseRefName"
+    ]
+  ]
+}

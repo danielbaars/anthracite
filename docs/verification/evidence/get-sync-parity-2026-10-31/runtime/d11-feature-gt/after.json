@@ -1,0 +1,47 @@
+{
+  "head": "62397efcd870603a0b94cacf7f24d19d91373fa7",
+  "branch": "get-sync-20261031-child",
+  "refs": {
+    "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "refs/heads/get-sync-20261031-child": "62397efcd870603a0b94cacf7f24d19d91373fa7",
+    "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+    "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+    "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+  },
+  "status": "",
+  "indexSHA256": "b2bf5b9071bfd7f26520e5f7a0a3cf8d3846b60e486c58410421bfd18efeef22",
+  "trees": {
+    "base": "2af6fc7379a063b32bfafdf70801575b3c58d7bd",
+    "child": "2ab8089ec15c8d7d9926c7e4365f591a5324553d",
+    "tip": "e08aede3bf647c8fcde38c95506a4d2def165031",
+    "sibling": "74f878c219fd33611beb06706882e3bf09739ca0"
+  },
+  "parents": {
+    "get-sync-20261031-base": {
+      "parent": "main",
+      "state": null
+    },
+    "get-sync-20261031-child": {
+      "parent": "get-sync-20261031-base",
+      "state": null
+    },
+    "get-sync-20261031-sibling": {
+      "parent": "get-sync-20261031-base",
+      "state": null
+    },
+    "get-sync-20261031-tip": {
+      "parent": "get-sync-20261031-child",
+      "state": null
+    },
+    "main": {
+      "parent": null,
+      "state": null
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6",
+    "local-only.txt": "012339e872124ddf11cb12a7928ef25e10f9b28c873c5c793e0fbdeec6094589",
+    "fixtures/get-sync-20261031/child.txt": "2a2abb0c3f4adebb0a435c96d4ae49099f276e368c8423340f7c703e2d7066ac",
+    "fixtures/get-sync-20261031/base.txt": "6e730b492b8867d4d498cf2e7a579e4a70b4e7bd80ca6f185d7b2815a7a863f3"
+  }
+}

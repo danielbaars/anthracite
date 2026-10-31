@@ -1,0 +1,11 @@
+{
+  "repository": "danielbaars/graphite-charcoal-e2e-2026-10-21",
+  "heads": {
+    "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+    "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+    "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+    "refs/heads/main": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+  },
+  "allFourFixtureBranchesRetained": true
+}

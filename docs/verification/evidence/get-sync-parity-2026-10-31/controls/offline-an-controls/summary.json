@@ -1,0 +1,118 @@
+{
+  "authority": "CONTROLLED-GH, not live or paired Graphite acceptance",
+  "version": "0.5.0",
+  "node": "v24.19.0",
+  "bundle": "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+  "bundleSha256": "da14fac871faab60336d4fd541821f85d9b99a98a13e9d159a3a3aaf2c98ee1a",
+  "controllerContract": "Only exact configured repo pr view GET-style requests and api user allowed; no live gh network or write route. Real Git remotes are local bare repositories. Isolated HOME/GH/user/Git configs.",
+  "results": [
+    {
+      "id": "AN01",
+      "status": "observed",
+      "exitCode": 0,
+      "result": "base fast-forwarded; updated remote child/tip/sibling and new remote-only child not imported/updated; final checkout base",
+      "receipt": "get-existing-base/result.json",
+      "sha256": "e1d5a7439802674c8279aef38dfa2ce85366d9afda935babae3729491ba8ad32",
+      "checkoutBefore": "tip",
+      "checkoutAfter": "base",
+      "rawIndexBytesEqual": false,
+      "changedRefs": [
+        "refs/gt-metadata/FETCH_BASE",
+        "refs/gt-metadata/FETCH_HEAD",
+        "refs/heads/base",
+        "refs/remotes/origin/base"
+      ]
+    },
+    {
+      "id": "AN02",
+      "status": "observed",
+      "exitCode": 0,
+      "result": "sync retained existing local child despite advanced bare-remote child; only PR metadata refs changed in this observation",
+      "receipt": "sync-existing-feature/result.json",
+      "sha256": "e6c76e2daba50392404d047f1cfcb4dc4e4d099e0e2a8b5b28773709fd215063",
+      "checkoutBefore": "child",
+      "checkoutAfter": "child",
+      "rawIndexBytesEqual": false,
+      "changedRefs": [
+        "refs/branch-metadata/base",
+        "refs/branch-metadata/child",
+        "refs/branch-metadata/sibling",
+        "refs/branch-metadata/tip"
+      ]
+    },
+    {
+      "id": "AN03A",
+      "status": "observed",
+      "exitCode": 1,
+      "result": "without force, divergent trunk refused and retained its local-only commit",
+      "receipt": "sync-divergent-default/AN03A.json",
+      "sha256": "13fabdae8dccb78c87b0b978ce6654157490ff8fad63c19631b4959ac3e0f752",
+      "checkoutBefore": "child",
+      "checkoutAfter": "child",
+      "rawIndexBytesEqual": false,
+      "changedRefs": [
+        "refs/remotes/origin/main"
+      ]
+    },
+    {
+      "id": "AN03C",
+      "status": "observed",
+      "exitCode": 1,
+      "result": "narrow --delete-all spelling rejected; divergent local trunk retained",
+      "receipt": "sync-divergent-default/AN03C.json",
+      "sha256": "9a754676a9fb6805fa1b89798a2d3eb6f804d8f3aaf90917e4ba47c2d36bd6cb",
+      "checkoutBefore": "child",
+      "checkoutAfter": "child",
+      "rawIndexBytesEqual": true,
+      "changedRefs": []
+    },
+    {
+      "id": "AN03B",
+      "status": "observed",
+      "exitCode": 0,
+      "result": "--force reset divergent local trunk to remote, removing local-only commit from main ancestry; object/reflog retained",
+      "localOnlyTrunkCommit": "739874e084c2c0df1523fe86e18adaa19e3c0274",
+      "remoteTrunkCommit": "f3961767aae1bae30c35efd7db15f4d77ae9fba1",
+      "receipt": "sync-divergent-force/AN03B.json",
+      "sha256": "c5c424e99d614d519fb404f1819da3b605739d754893f50bce010eac9dbe97e0",
+      "checkoutBefore": "child",
+      "checkoutAfter": "child",
+      "rawIndexBytesEqual": false,
+      "changedRefs": [
+        "refs/branch-metadata/base",
+        "refs/branch-metadata/child",
+        "refs/branch-metadata/sibling",
+        "refs/branch-metadata/tip",
+        "refs/heads/main",
+        "refs/remotes/origin/main"
+      ]
+    },
+    {
+      "id": "AN04",
+      "status": "observed",
+      "exitCode": 0,
+      "result": "eligible independent closed root deleted; closed child above open base retained",
+      "receipt": "sync-closed-child/AN04.json",
+      "sha256": "0c7a0d528e86899dc754aaf20b6119dd028a44d8f189b90f49125fb12992aa4d",
+      "checkoutBefore": "base",
+      "checkoutAfter": "base",
+      "rawIndexBytesEqual": true,
+      "changedRefs": [
+        "refs/branch-metadata/child",
+        "refs/branch-metadata/closed-root",
+        "refs/heads/closed-root"
+      ]
+    }
+  ],
+  "harnessInterruptions": [
+    "AN01 post-observation assertion initially read a nonpersisted metadata field; actual successful CLI receipt retained unchanged and revalidated from captured branch refs.",
+    "Before AN03A execution, setup assertion tried to resolve a producer-only remote object in consumer; corrected to independently compare each commit parent to shared base without altering command inputs.",
+    "AN03C validator expected singular Unknown argument; actual parser returned plural/camelCase alias. Actual preserving CLI result retained and validated against its exact recorded output."
+  ],
+  "limits": [
+    "Synthetic PR responses do not establish live GitHub eligibility/auth or Graphite behavior.",
+    "No terminal-interactive consent branch tested.",
+    "Index bytes recorded, not assumed unchanged during checkout/pull.",
+    "Local Git objects/reflogs retained in temporary fixtures."
+  ]
+}

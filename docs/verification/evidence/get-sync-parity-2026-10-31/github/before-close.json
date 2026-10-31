@@ -1,0 +1,78 @@
+[
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjU5NTA5NTg=",
+        "login": "danielbaars",
+        "name": "Daniel Baars",
+        "databaseId": 5950958
+      }
+    ],
+    "baseRefName": "get-sync-20261031-base",
+    "body": "Adds fixtures/get-sync-20261031/sibling.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+    "headRefName": "get-sync-20261031-sibling",
+    "headRefOid": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+    "isDraft": true,
+    "number": 16,
+    "reviewRequests": [],
+    "state": "OPEN",
+    "title": "Get/sync parity: sibling fixture"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjU5NTA5NTg=",
+        "login": "danielbaars",
+        "name": "Daniel Baars",
+        "databaseId": 5950958
+      }
+    ],
+    "baseRefName": "get-sync-20261031-child",
+    "body": "Adds fixtures/get-sync-20261031/tip.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+    "headRefName": "get-sync-20261031-tip",
+    "headRefOid": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+    "isDraft": true,
+    "number": 15,
+    "reviewRequests": [],
+    "state": "OPEN",
+    "title": "Get/sync parity: tip fixture"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjU5NTA5NTg=",
+        "login": "danielbaars",
+        "name": "Daniel Baars",
+        "databaseId": 5950958
+      }
+    ],
+    "baseRefName": "get-sync-20261031-base",
+    "body": "Adds fixtures/get-sync-20261031/child.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+    "headRefName": "get-sync-20261031-child",
+    "headRefOid": "df5b85e83f4336c7be04531c936086466239200b",
+    "isDraft": true,
+    "number": 14,
+    "reviewRequests": [],
+    "state": "OPEN",
+    "title": "Get/sync parity: child fixture"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjU5NTA5NTg=",
+        "login": "danielbaars",
+        "name": "Daniel Baars",
+        "databaseId": 5950958
+      }
+    ],
+    "baseRefName": "main",
+    "body": "Adds fixtures/get-sync-20261031/base.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+    "headRefName": "get-sync-20261031-base",
+    "headRefOid": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "isDraft": true,
+    "number": 13,
+    "reviewRequests": [],
+    "state": "OPEN",
+    "title": "Get/sync parity: base fixture"
+  }
+]

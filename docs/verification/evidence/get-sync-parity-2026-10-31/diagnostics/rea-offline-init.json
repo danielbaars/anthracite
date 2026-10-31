@@ -1,0 +1,3806 @@
+{
+  "evidence_id": "ev_1b201c3126a046b4310cc06eb4d5145438e2d7ceba8fa56f23ca5ebdbedcfcdb",
+  "subject": null,
+  "provider": {
+    "id": "rea-process",
+    "name": "REA process capture",
+    "version": "3"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.process-capture",
+  "operation": "capture_process_scenario",
+  "parameters": {
+    "executable_name": "gt",
+    "argument_count": 4,
+    "event_count": 0,
+    "filesystem_observation_path_count": 1,
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    }
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "manifest": {
+      "rea_version": "6.7.0",
+      "provider_version": "3",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "pty_backend": "node-pty",
+      "started_at": "2026-10-31T07:57:32.094Z",
+      "completed_at": "2026-10-31T07:57:32.637Z",
+      "scenario": {
+        "executable": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+        "arguments": [
+          "init",
+          "--trunk",
+          "main",
+          "--no-interactive"
+        ],
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/offline/seed",
+        "environment": {
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/offline/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/offline/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/offline/home/cache",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0"
+        },
+        "filesystem_observation_paths": [
+          "/private/tmp/anthracite-get-sync-research-20261031/offline/seed/.git"
+        ],
+        "terminal": {
+          "columns": 130,
+          "rows": 30,
+          "scrollback": 100
+        },
+        "events": [],
+        "timeout_ms": 15000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 100,
+        "limits": {
+          "output_bytes": 15000,
+          "files": 150,
+          "file_bytes": 1000000,
+          "processes": 30,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f"
+      },
+      "comparison_contract": {
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/offline/seed",
+        "environment": {
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/offline/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/offline/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/offline/home/cache",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0"
+        },
+        "ambient_environment": "unknown",
+        "filesystem_observation_paths": [
+          "/private/tmp/anthracite-get-sync-research-20261031/offline/seed/.git"
+        ],
+        "terminal": {
+          "columns": 130,
+          "rows": 30,
+          "scrollback": 100
+        },
+        "events": [],
+        "timeout_ms": 15000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 100,
+        "limits": {
+          "output_bytes": 15000,
+          "files": 150,
+          "file_bytes": 1000000,
+          "processes": 30,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "port_normalization_version": "contextual-endpoints-v2",
+        "rendered_line_format": "trailing-spaces-trimmed-v1"
+      },
+      "full_scenario_sha256": "d60730dfef370fc5fdcebf01d7e8f7f3bfbad31276180434bf4753f0346bc01e",
+      "comparison_contract_sha256": "2223d17843e220af827e4225fad23ea140f2596dd26a3ddd9705d787239af7a3",
+      "selected_executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_identity": {
+        "state": "path_metadata_unchanged",
+        "reason": null
+      },
+      "normalization_sha256": "5c58aa1aa890197f15f9c59ef755d01120e6e07f356fa1ef2f20787e63b6fa87"
+    },
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    },
+    "frames": [
+      {
+        "sequence": 0,
+        "at_ms": 330,
+        "data": "Welcome to Graphite!\r\n"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 330,
+        "data": "\r\n"
+      },
+      {
+        "sequence": 2,
+        "at_ms": 330,
+        "data": "Trunk set to \u001b[32mmain\u001b[39m\r\n"
+      },
+      {
+        "sequence": 3,
+        "at_ms": 350,
+        "data": "\r\n"
+      },
+      {
+        "sequence": 4,
+        "at_ms": 350,
+        "data": "\u001b[2m\u001b[22m\r\n\u001b[2m\u001b[33mtip\u001b[39m: If you have an existing branch or stack that you'd like to start working on with Graphite, you can begin tracking it now!\u001b[22m\r\n\u001b[2mTo add other non-Graphite branches to Graphite later, check out `gt track`.\u001b[22m\r\n\u001b[2mIf you only want to use Graphite for new branches, feel free to exit now and use `gt create`. [\u001b[2minit.welcome\u001b[22m\u001b[2m \u001b[2m●○○\u001b[22m\u001b[2m]\u001b[22m\r\n\u001b[2m\u001b[22m\r\n"
+      },
+      {
+        "sequence": 5,
+        "at_ms": 350,
+        "data": "\u001b[2m\u001b[22m\r\n\u001b[2m\u001b[33mtip\u001b[39m: Feeling like an expert? Disable tips in \u001b[36mgt config\u001b[39m [\u001b[2mtip.expert-message\u001b[22m\u001b[2m \u001b[2m●\u001b[22m\u001b[2m]\u001b[22m\r\n\u001b[2m\u001b[22m\r\n"
+      }
+    ],
+    "rendered_frames": [
+      {
+        "sequence": 0,
+        "at_ms": 330,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 1,
+        "active_buffer": "normal",
+        "lines": [
+          "Welcome to Graphite!",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "Welcome to Graphite!\u001b[1B\u001b[20D"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 330,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 2,
+        "active_buffer": "normal",
+        "lines": [
+          "Welcome to Graphite!",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "Welcome to Graphite!\u001b[2B\u001b[20D"
+      },
+      {
+        "sequence": 2,
+        "at_ms": 330,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 3,
+        "active_buffer": "normal",
+        "lines": [
+          "Welcome to Graphite!",
+          "",
+          "Trunk set to main",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "Welcome to Graphite!\r\n\r\nTrunk set to \u001b[32mmain\u001b[1B\u001b[17D\u001b[0m"
+      },
+      {
+        "sequence": 3,
+        "at_ms": 350,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 4,
+        "active_buffer": "normal",
+        "lines": [
+          "Welcome to Graphite!",
+          "",
+          "Trunk set to main",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "Welcome to Graphite!\r\n\r\nTrunk set to \u001b[32mmain\u001b[2B\u001b[17D\u001b[0m"
+      },
+      {
+        "sequence": 4,
+        "at_ms": 350,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 9,
+        "active_buffer": "normal",
+        "lines": [
+          "Welcome to Graphite!",
+          "",
+          "Trunk set to main",
+          "",
+          "",
+          "tip: If you have an existing branch or stack that you'd like to start working on with Graphite, you can begin tracking it now!",
+          "To add other non-Graphite branches to Graphite later, check out `gt track`.",
+          "If you only want to use Graphite for new branches, feel free to exit now and use `gt create`. [init.welcome ●○○]",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "Welcome to Graphite!\r\n\r\nTrunk set to \u001b[32mmain\r\n\r\n\r\n\u001b[33;2mtip\u001b[39m: If you have an existing branch or stack that you'd like to start working on with Graphite, you can begin tracking it now!\r\nTo add other non-Graphite branches to Graphite later, check out `gt track`.\r\nIf you only want to use Graphite for new branches, feel free to exit now and use `gt create`. [init.welcome ●○○]\u001b[2B\u001b[112D\u001b[0m"
+      },
+      {
+        "sequence": 5,
+        "at_ms": 350,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 12,
+        "active_buffer": "normal",
+        "lines": [
+          "Welcome to Graphite!",
+          "",
+          "Trunk set to main",
+          "",
+          "",
+          "tip: If you have an existing branch or stack that you'd like to start working on with Graphite, you can begin tracking it now!",
+          "To add other non-Graphite branches to Graphite later, check out `gt track`.",
+          "If you only want to use Graphite for new branches, feel free to exit now and use `gt create`. [init.welcome ●○○]",
+          "",
+          "",
+          "tip: Feeling like an expert? Disable tips in gt config [tip.expert-message ●]",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "Welcome to Graphite!\r\n\r\nTrunk set to \u001b[32mmain\r\n\r\n\r\n\u001b[33;2mtip\u001b[39m: If you have an existing branch or stack that you'd like to start working on with Graphite, you can begin tracking it now!\r\nTo add other non-Graphite branches to Graphite later, check out `gt track`.\r\nIf you only want to use Graphite for new branches, feel free to exit now and use `gt create`. [init.welcome ●○○]\r\n\r\n\r\n\u001b[33mtip\u001b[39m: Feeling like an expert? Disable tips in \u001b[36mgt config\u001b[39m [tip.expert-message ●]\u001b[2B\u001b[77D\u001b[0m"
+      }
+    ],
+    "interaction_events": [],
+    "exit": {
+      "code": 0,
+      "signal": 0,
+      "reason": "exited"
+    },
+    "settlement": {
+      "state": "quiesced",
+      "elapsed_ms": 149,
+      "cleanup_outcome": "not_required"
+    },
+    "process_samples": [
+      {
+        "at_ms": 150,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt init --trunk main --no-interactive",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 350,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "(gt)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 350,
+        "pid": 3,
+        "parent_pid": 1,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt /snapshot/dist/graphite.js background cleanup-debug-logs",
+        "process_group_id": 3,
+        "session_id": null
+      }
+    ],
+    "filesystem_checkpoints": [
+      {
+        "name": "before",
+        "at_ms": 0,
+        "files": [
+          {
+            "path": "root_0:.",
+            "mode": 16877,
+            "size": 448,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:COMMIT_EDITMSG",
+            "mode": 33188,
+            "size": 36,
+            "type": "file",
+            "sha256": "80ad66edbc151d5b9e4f7e2515a8c16555b3c1fd778829f6133d527efb8e519e",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:HEAD",
+            "mode": 33188,
+            "size": 21,
+            "type": "file",
+            "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:MERGE_RR",
+            "mode": 33188,
+            "size": 0,
+            "type": "file",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:config",
+            "mode": 33188,
+            "size": 339,
+            "type": "file",
+            "sha256": "fd53d88a6e58e1174a9f38624b0aa0be4d5c4124891982ddb211b2903edaa0c7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:description",
+            "mode": 33188,
+            "size": 73,
+            "type": "file",
+            "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks",
+            "mode": 16877,
+            "size": 512,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/applypatch-msg.sample",
+            "mode": 33261,
+            "size": 478,
+            "type": "file",
+            "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/commit-msg.sample",
+            "mode": 33261,
+            "size": 1972,
+            "type": "file",
+            "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/fsmonitor-watchman.sample",
+            "mode": 33261,
+            "size": 4611,
+            "type": "file",
+            "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/post-update.sample",
+            "mode": 33261,
+            "size": 189,
+            "type": "file",
+            "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-applypatch.sample",
+            "mode": 33261,
+            "size": 424,
+            "type": "file",
+            "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-commit.sample",
+            "mode": 33261,
+            "size": 1649,
+            "type": "file",
+            "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-merge-commit.sample",
+            "mode": 33261,
+            "size": 416,
+            "type": "file",
+            "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-push.sample",
+            "mode": 33261,
+            "size": 1374,
+            "type": "file",
+            "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-rebase.sample",
+            "mode": 33261,
+            "size": 4898,
+            "type": "file",
+            "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-receive.sample",
+            "mode": 33261,
+            "size": 544,
+            "type": "file",
+            "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/prepare-commit-msg.sample",
+            "mode": 33261,
+            "size": 1492,
+            "type": "file",
+            "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/push-to-checkout.sample",
+            "mode": 33261,
+            "size": 2783,
+            "type": "file",
+            "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/sendemail-validate.sample",
+            "mode": 33261,
+            "size": 2308,
+            "type": "file",
+            "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/update.sample",
+            "mode": 33261,
+            "size": 3650,
+            "type": "file",
+            "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:index",
+            "mode": 33188,
+            "size": 65,
+            "type": "file",
+            "sha256": "8a99f56bd3599f16165eb30aa3c8c626923a7d63855907a5b97b98b5c6cdea2b",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:info",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:info/exclude",
+            "mode": 33188,
+            "size": 240,
+            "type": "file",
+            "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs",
+            "mode": 16877,
+            "size": 128,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs/HEAD",
+            "mode": 33188,
+            "size": 193,
+            "type": "file",
+            "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs/refs",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs/refs/heads",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs/refs/heads/main",
+            "mode": 33188,
+            "size": 193,
+            "type": "file",
+            "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects",
+            "mode": 16877,
+            "size": 192,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/4b",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+            "mode": 33060,
+            "size": 15,
+            "type": "file",
+            "sha256": "e72602cad67ed061ec84b13e92568f873172efac19a512a1b561dbf54e2c8426",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/a8",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+            "mode": 33060,
+            "size": 149,
+            "type": "file",
+            "sha256": "d434c033b3b6c147e82a82ba945192bc331dc0bbf4448b5c9e0cad65bba60da8",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/info",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/pack",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:refs",
+            "mode": 16877,
+            "size": 128,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:refs/heads",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:refs/heads/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:refs/tags",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:rr-cache",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          }
+        ],
+        "effects": [],
+        "truncated": false
+      },
+      {
+        "name": "after_settlement",
+        "at_ms": 542,
+        "files": [
+          {
+            "path": "root_0:.",
+            "mode": 16877,
+            "size": 576,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:.graphite_metadata.db",
+            "mode": 33188,
+            "size": 32768,
+            "type": "file",
+            "sha256": "b97354e84f8ce366eb78daf05b7ff13b6663357187543e992f486e89b3632fb4",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:.graphite_pr_info",
+            "mode": 33152,
+            "size": 49,
+            "type": "file",
+            "sha256": "4f464d5a1d8353eab6b01400d17a5d539dd5d7eeddae48bdbd435e8991a222a3",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:.graphite_repo_config",
+            "mode": 33152,
+            "size": 73,
+            "type": "file",
+            "sha256": "bf4d7c0728b8160474338e5d96fc6f0d4b32c74ad67d2e968f6c4fe9173aa926",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:.gtlocalprinfo",
+            "mode": 33152,
+            "size": 23,
+            "type": "file",
+            "sha256": "c85fbc4c6f44f06ee1f687e9e20d9346fad4e54fbf1fdd0a02d49d2dfef38c72",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:COMMIT_EDITMSG",
+            "mode": 33188,
+            "size": 36,
+            "type": "file",
+            "sha256": "80ad66edbc151d5b9e4f7e2515a8c16555b3c1fd778829f6133d527efb8e519e",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:HEAD",
+            "mode": 33188,
+            "size": 21,
+            "type": "file",
+            "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:MERGE_RR",
+            "mode": 33188,
+            "size": 0,
+            "type": "file",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:config",
+            "mode": 33188,
+            "size": 339,
+            "type": "file",
+            "sha256": "fd53d88a6e58e1174a9f38624b0aa0be4d5c4124891982ddb211b2903edaa0c7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:description",
+            "mode": 33188,
+            "size": 73,
+            "type": "file",
+            "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks",
+            "mode": 16877,
+            "size": 512,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/applypatch-msg.sample",
+            "mode": 33261,
+            "size": 478,
+            "type": "file",
+            "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/commit-msg.sample",
+            "mode": 33261,
+            "size": 1972,
+            "type": "file",
+            "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/fsmonitor-watchman.sample",
+            "mode": 33261,
+            "size": 4611,
+            "type": "file",
+            "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/post-update.sample",
+            "mode": 33261,
+            "size": 189,
+            "type": "file",
+            "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-applypatch.sample",
+            "mode": 33261,
+            "size": 424,
+            "type": "file",
+            "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-commit.sample",
+            "mode": 33261,
+            "size": 1649,
+            "type": "file",
+            "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-merge-commit.sample",
+            "mode": 33261,
+            "size": 416,
+            "type": "file",
+            "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-push.sample",
+            "mode": 33261,
+            "size": 1374,
+            "type": "file",
+            "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-rebase.sample",
+            "mode": 33261,
+            "size": 4898,
+            "type": "file",
+            "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/pre-receive.sample",
+            "mode": 33261,
+            "size": 544,
+            "type": "file",
+            "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/prepare-commit-msg.sample",
+            "mode": 33261,
+            "size": 1492,
+            "type": "file",
+            "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/push-to-checkout.sample",
+            "mode": 33261,
+            "size": 2783,
+            "type": "file",
+            "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/sendemail-validate.sample",
+            "mode": 33261,
+            "size": 2308,
+            "type": "file",
+            "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:hooks/update.sample",
+            "mode": 33261,
+            "size": 3650,
+            "type": "file",
+            "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:index",
+            "mode": 33188,
+            "size": 65,
+            "type": "file",
+            "sha256": "8a99f56bd3599f16165eb30aa3c8c626923a7d63855907a5b97b98b5c6cdea2b",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:info",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:info/exclude",
+            "mode": 33188,
+            "size": 240,
+            "type": "file",
+            "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs",
+            "mode": 16877,
+            "size": 128,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs/HEAD",
+            "mode": 33188,
+            "size": 193,
+            "type": "file",
+            "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs/refs",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs/refs/heads",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:logs/refs/heads/main",
+            "mode": 33188,
+            "size": 193,
+            "type": "file",
+            "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects",
+            "mode": 16877,
+            "size": 192,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/4b",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+            "mode": 33060,
+            "size": 15,
+            "type": "file",
+            "sha256": "e72602cad67ed061ec84b13e92568f873172efac19a512a1b561dbf54e2c8426",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/a8",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+            "mode": 33060,
+            "size": 149,
+            "type": "file",
+            "sha256": "d434c033b3b6c147e82a82ba945192bc331dc0bbf4448b5c9e0cad65bba60da8",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/info",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:objects/pack",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:refs",
+            "mode": 16877,
+            "size": 128,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:refs/heads",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:refs/heads/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:refs/tags",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:rr-cache",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          }
+        ],
+        "effects": [
+          {
+            "path": "root_0:.",
+            "status": "modified",
+            "before": {
+              "path": "root_0:.",
+              "mode": 16877,
+              "size": 448,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:.",
+              "mode": 16877,
+              "size": 576,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:.graphite_metadata.db",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:.graphite_metadata.db",
+              "mode": 33188,
+              "size": 32768,
+              "type": "file",
+              "sha256": "b97354e84f8ce366eb78daf05b7ff13b6663357187543e992f486e89b3632fb4",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:.graphite_pr_info",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:.graphite_pr_info",
+              "mode": 33152,
+              "size": 49,
+              "type": "file",
+              "sha256": "4f464d5a1d8353eab6b01400d17a5d539dd5d7eeddae48bdbd435e8991a222a3",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:.graphite_repo_config",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:.graphite_repo_config",
+              "mode": 33152,
+              "size": 73,
+              "type": "file",
+              "sha256": "bf4d7c0728b8160474338e5d96fc6f0d4b32c74ad67d2e968f6c4fe9173aa926",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:.gtlocalprinfo",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:.gtlocalprinfo",
+              "mode": 33152,
+              "size": 23,
+              "type": "file",
+              "sha256": "c85fbc4c6f44f06ee1f687e9e20d9346fad4e54fbf1fdd0a02d49d2dfef38c72",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:COMMIT_EDITMSG",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:COMMIT_EDITMSG",
+              "mode": 33188,
+              "size": 36,
+              "type": "file",
+              "sha256": "80ad66edbc151d5b9e4f7e2515a8c16555b3c1fd778829f6133d527efb8e519e",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:COMMIT_EDITMSG",
+              "mode": 33188,
+              "size": 36,
+              "type": "file",
+              "sha256": "80ad66edbc151d5b9e4f7e2515a8c16555b3c1fd778829f6133d527efb8e519e",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:HEAD",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:HEAD",
+              "mode": 33188,
+              "size": 21,
+              "type": "file",
+              "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:HEAD",
+              "mode": 33188,
+              "size": 21,
+              "type": "file",
+              "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:MERGE_RR",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:MERGE_RR",
+              "mode": 33188,
+              "size": 0,
+              "type": "file",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:MERGE_RR",
+              "mode": 33188,
+              "size": 0,
+              "type": "file",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:config",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:config",
+              "mode": 33188,
+              "size": 339,
+              "type": "file",
+              "sha256": "fd53d88a6e58e1174a9f38624b0aa0be4d5c4124891982ddb211b2903edaa0c7",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:config",
+              "mode": 33188,
+              "size": 339,
+              "type": "file",
+              "sha256": "fd53d88a6e58e1174a9f38624b0aa0be4d5c4124891982ddb211b2903edaa0c7",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:description",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:description",
+              "mode": 33188,
+              "size": 73,
+              "type": "file",
+              "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:description",
+              "mode": 33188,
+              "size": 73,
+              "type": "file",
+              "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks",
+              "mode": 16877,
+              "size": 512,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks",
+              "mode": 16877,
+              "size": 512,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/applypatch-msg.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/applypatch-msg.sample",
+              "mode": 33261,
+              "size": 478,
+              "type": "file",
+              "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/applypatch-msg.sample",
+              "mode": 33261,
+              "size": 478,
+              "type": "file",
+              "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/commit-msg.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/commit-msg.sample",
+              "mode": 33261,
+              "size": 1972,
+              "type": "file",
+              "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/commit-msg.sample",
+              "mode": 33261,
+              "size": 1972,
+              "type": "file",
+              "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/fsmonitor-watchman.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/fsmonitor-watchman.sample",
+              "mode": 33261,
+              "size": 4611,
+              "type": "file",
+              "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/fsmonitor-watchman.sample",
+              "mode": 33261,
+              "size": 4611,
+              "type": "file",
+              "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/post-update.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/post-update.sample",
+              "mode": 33261,
+              "size": 189,
+              "type": "file",
+              "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/post-update.sample",
+              "mode": 33261,
+              "size": 189,
+              "type": "file",
+              "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/pre-applypatch.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/pre-applypatch.sample",
+              "mode": 33261,
+              "size": 424,
+              "type": "file",
+              "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/pre-applypatch.sample",
+              "mode": 33261,
+              "size": 424,
+              "type": "file",
+              "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/pre-commit.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/pre-commit.sample",
+              "mode": 33261,
+              "size": 1649,
+              "type": "file",
+              "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/pre-commit.sample",
+              "mode": 33261,
+              "size": 1649,
+              "type": "file",
+              "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/pre-merge-commit.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/pre-merge-commit.sample",
+              "mode": 33261,
+              "size": 416,
+              "type": "file",
+              "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/pre-merge-commit.sample",
+              "mode": 33261,
+              "size": 416,
+              "type": "file",
+              "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/pre-push.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/pre-push.sample",
+              "mode": 33261,
+              "size": 1374,
+              "type": "file",
+              "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/pre-push.sample",
+              "mode": 33261,
+              "size": 1374,
+              "type": "file",
+              "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/pre-rebase.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/pre-rebase.sample",
+              "mode": 33261,
+              "size": 4898,
+              "type": "file",
+              "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/pre-rebase.sample",
+              "mode": 33261,
+              "size": 4898,
+              "type": "file",
+              "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/pre-receive.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/pre-receive.sample",
+              "mode": 33261,
+              "size": 544,
+              "type": "file",
+              "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/pre-receive.sample",
+              "mode": 33261,
+              "size": 544,
+              "type": "file",
+              "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/prepare-commit-msg.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/prepare-commit-msg.sample",
+              "mode": 33261,
+              "size": 1492,
+              "type": "file",
+              "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/prepare-commit-msg.sample",
+              "mode": 33261,
+              "size": 1492,
+              "type": "file",
+              "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/push-to-checkout.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/push-to-checkout.sample",
+              "mode": 33261,
+              "size": 2783,
+              "type": "file",
+              "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/push-to-checkout.sample",
+              "mode": 33261,
+              "size": 2783,
+              "type": "file",
+              "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/sendemail-validate.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/sendemail-validate.sample",
+              "mode": 33261,
+              "size": 2308,
+              "type": "file",
+              "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/sendemail-validate.sample",
+              "mode": 33261,
+              "size": 2308,
+              "type": "file",
+              "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:hooks/update.sample",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:hooks/update.sample",
+              "mode": 33261,
+              "size": 3650,
+              "type": "file",
+              "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:hooks/update.sample",
+              "mode": 33261,
+              "size": 3650,
+              "type": "file",
+              "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:index",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:index",
+              "mode": 33188,
+              "size": 65,
+              "type": "file",
+              "sha256": "8a99f56bd3599f16165eb30aa3c8c626923a7d63855907a5b97b98b5c6cdea2b",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:index",
+              "mode": 33188,
+              "size": 65,
+              "type": "file",
+              "sha256": "8a99f56bd3599f16165eb30aa3c8c626923a7d63855907a5b97b98b5c6cdea2b",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:info",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:info",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:info",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:info/exclude",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:info/exclude",
+              "mode": 33188,
+              "size": 240,
+              "type": "file",
+              "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:info/exclude",
+              "mode": 33188,
+              "size": 240,
+              "type": "file",
+              "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:logs",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:logs",
+              "mode": 16877,
+              "size": 128,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:logs",
+              "mode": 16877,
+              "size": 128,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:logs/HEAD",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:logs/HEAD",
+              "mode": 33188,
+              "size": 193,
+              "type": "file",
+              "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:logs/HEAD",
+              "mode": 33188,
+              "size": 193,
+              "type": "file",
+              "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:logs/refs",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:logs/refs",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:logs/refs",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:logs/refs/heads",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:logs/refs/heads",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:logs/refs/heads",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:logs/refs/heads/main",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:logs/refs/heads/main",
+              "mode": 33188,
+              "size": 193,
+              "type": "file",
+              "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:logs/refs/heads/main",
+              "mode": 33188,
+              "size": 193,
+              "type": "file",
+              "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:objects",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:objects",
+              "mode": 16877,
+              "size": 192,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:objects",
+              "mode": 16877,
+              "size": 192,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:objects/4b",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:objects/4b",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:objects/4b",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+              "mode": 33060,
+              "size": 15,
+              "type": "file",
+              "sha256": "e72602cad67ed061ec84b13e92568f873172efac19a512a1b561dbf54e2c8426",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+              "mode": 33060,
+              "size": 15,
+              "type": "file",
+              "sha256": "e72602cad67ed061ec84b13e92568f873172efac19a512a1b561dbf54e2c8426",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:objects/a8",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:objects/a8",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:objects/a8",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+              "mode": 33060,
+              "size": 149,
+              "type": "file",
+              "sha256": "d434c033b3b6c147e82a82ba945192bc331dc0bbf4448b5c9e0cad65bba60da8",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+              "mode": 33060,
+              "size": 149,
+              "type": "file",
+              "sha256": "d434c033b3b6c147e82a82ba945192bc331dc0bbf4448b5c9e0cad65bba60da8",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:objects/info",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:objects/info",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:objects/info",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:objects/pack",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:objects/pack",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:objects/pack",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:refs",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:refs",
+              "mode": 16877,
+              "size": 128,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:refs",
+              "mode": 16877,
+              "size": 128,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:refs/heads",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:refs/heads",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:refs/heads",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:refs/heads/main",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:refs/heads/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:refs/heads/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:refs/tags",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:refs/tags",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:refs/tags",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:rr-cache",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:rr-cache",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:rr-cache",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          }
+        ],
+        "truncated": false
+      }
+    ],
+    "event_journal": [
+      {
+        "capture_order": 0,
+        "collection": "filesystem_checkpoints",
+        "index": 0
+      },
+      {
+        "capture_order": 1,
+        "collection": "process_samples",
+        "index": 0
+      },
+      {
+        "capture_order": 2,
+        "collection": "frames",
+        "index": 0
+      },
+      {
+        "capture_order": 3,
+        "collection": "frames",
+        "index": 1
+      },
+      {
+        "capture_order": 4,
+        "collection": "rendered_frames",
+        "index": 0
+      },
+      {
+        "capture_order": 5,
+        "collection": "frames",
+        "index": 2
+      },
+      {
+        "capture_order": 6,
+        "collection": "rendered_frames",
+        "index": 1
+      },
+      {
+        "capture_order": 7,
+        "collection": "rendered_frames",
+        "index": 2
+      },
+      {
+        "capture_order": 8,
+        "collection": "frames",
+        "index": 3
+      },
+      {
+        "capture_order": 9,
+        "collection": "frames",
+        "index": 4
+      },
+      {
+        "capture_order": 10,
+        "collection": "rendered_frames",
+        "index": 3
+      },
+      {
+        "capture_order": 11,
+        "collection": "rendered_frames",
+        "index": 4
+      },
+      {
+        "capture_order": 12,
+        "collection": "frames",
+        "index": 5
+      },
+      {
+        "capture_order": 13,
+        "collection": "rendered_frames",
+        "index": 5
+      },
+      {
+        "capture_order": 14,
+        "collection": "lifecycle",
+        "index": 0
+      },
+      {
+        "capture_order": 15,
+        "collection": "process_samples",
+        "index": 1
+      },
+      {
+        "capture_order": 16,
+        "collection": "process_samples",
+        "index": 2
+      },
+      {
+        "capture_order": 17,
+        "collection": "lifecycle",
+        "index": 1
+      },
+      {
+        "capture_order": 18,
+        "collection": "filesystem_checkpoints",
+        "index": 1
+      }
+    ],
+    "files_before": [
+      {
+        "path": "root_0:.",
+        "mode": 16877,
+        "size": 448,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:COMMIT_EDITMSG",
+        "mode": 33188,
+        "size": 36,
+        "type": "file",
+        "sha256": "80ad66edbc151d5b9e4f7e2515a8c16555b3c1fd778829f6133d527efb8e519e",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:HEAD",
+        "mode": 33188,
+        "size": 21,
+        "type": "file",
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:MERGE_RR",
+        "mode": 33188,
+        "size": 0,
+        "type": "file",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:config",
+        "mode": 33188,
+        "size": 339,
+        "type": "file",
+        "sha256": "fd53d88a6e58e1174a9f38624b0aa0be4d5c4124891982ddb211b2903edaa0c7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:description",
+        "mode": 33188,
+        "size": 73,
+        "type": "file",
+        "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks",
+        "mode": 16877,
+        "size": 512,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/applypatch-msg.sample",
+        "mode": 33261,
+        "size": 478,
+        "type": "file",
+        "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/commit-msg.sample",
+        "mode": 33261,
+        "size": 1972,
+        "type": "file",
+        "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/fsmonitor-watchman.sample",
+        "mode": 33261,
+        "size": 4611,
+        "type": "file",
+        "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/post-update.sample",
+        "mode": 33261,
+        "size": 189,
+        "type": "file",
+        "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-applypatch.sample",
+        "mode": 33261,
+        "size": 424,
+        "type": "file",
+        "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-commit.sample",
+        "mode": 33261,
+        "size": 1649,
+        "type": "file",
+        "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-merge-commit.sample",
+        "mode": 33261,
+        "size": 416,
+        "type": "file",
+        "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-push.sample",
+        "mode": 33261,
+        "size": 1374,
+        "type": "file",
+        "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-rebase.sample",
+        "mode": 33261,
+        "size": 4898,
+        "type": "file",
+        "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-receive.sample",
+        "mode": 33261,
+        "size": 544,
+        "type": "file",
+        "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/prepare-commit-msg.sample",
+        "mode": 33261,
+        "size": 1492,
+        "type": "file",
+        "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/push-to-checkout.sample",
+        "mode": 33261,
+        "size": 2783,
+        "type": "file",
+        "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/sendemail-validate.sample",
+        "mode": 33261,
+        "size": 2308,
+        "type": "file",
+        "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/update.sample",
+        "mode": 33261,
+        "size": 3650,
+        "type": "file",
+        "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:index",
+        "mode": 33188,
+        "size": 65,
+        "type": "file",
+        "sha256": "8a99f56bd3599f16165eb30aa3c8c626923a7d63855907a5b97b98b5c6cdea2b",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:info",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:info/exclude",
+        "mode": 33188,
+        "size": 240,
+        "type": "file",
+        "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs",
+        "mode": 16877,
+        "size": 128,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs/HEAD",
+        "mode": 33188,
+        "size": 193,
+        "type": "file",
+        "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs/refs",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs/refs/heads",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs/refs/heads/main",
+        "mode": 33188,
+        "size": 193,
+        "type": "file",
+        "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects",
+        "mode": 16877,
+        "size": 192,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/4b",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "mode": 33060,
+        "size": 15,
+        "type": "file",
+        "sha256": "e72602cad67ed061ec84b13e92568f873172efac19a512a1b561dbf54e2c8426",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/a8",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+        "mode": 33060,
+        "size": 149,
+        "type": "file",
+        "sha256": "d434c033b3b6c147e82a82ba945192bc331dc0bbf4448b5c9e0cad65bba60da8",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/info",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/pack",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:refs",
+        "mode": 16877,
+        "size": 128,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:refs/heads",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:refs/heads/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:refs/tags",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:rr-cache",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      }
+    ],
+    "files_after": [
+      {
+        "path": "root_0:.",
+        "mode": 16877,
+        "size": 576,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:.graphite_metadata.db",
+        "mode": 33188,
+        "size": 32768,
+        "type": "file",
+        "sha256": "b97354e84f8ce366eb78daf05b7ff13b6663357187543e992f486e89b3632fb4",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:.graphite_pr_info",
+        "mode": 33152,
+        "size": 49,
+        "type": "file",
+        "sha256": "4f464d5a1d8353eab6b01400d17a5d539dd5d7eeddae48bdbd435e8991a222a3",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:.graphite_repo_config",
+        "mode": 33152,
+        "size": 73,
+        "type": "file",
+        "sha256": "bf4d7c0728b8160474338e5d96fc6f0d4b32c74ad67d2e968f6c4fe9173aa926",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:.gtlocalprinfo",
+        "mode": 33152,
+        "size": 23,
+        "type": "file",
+        "sha256": "c85fbc4c6f44f06ee1f687e9e20d9346fad4e54fbf1fdd0a02d49d2dfef38c72",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:COMMIT_EDITMSG",
+        "mode": 33188,
+        "size": 36,
+        "type": "file",
+        "sha256": "80ad66edbc151d5b9e4f7e2515a8c16555b3c1fd778829f6133d527efb8e519e",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:HEAD",
+        "mode": 33188,
+        "size": 21,
+        "type": "file",
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:MERGE_RR",
+        "mode": 33188,
+        "size": 0,
+        "type": "file",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:config",
+        "mode": 33188,
+        "size": 339,
+        "type": "file",
+        "sha256": "fd53d88a6e58e1174a9f38624b0aa0be4d5c4124891982ddb211b2903edaa0c7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:description",
+        "mode": 33188,
+        "size": 73,
+        "type": "file",
+        "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks",
+        "mode": 16877,
+        "size": 512,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/applypatch-msg.sample",
+        "mode": 33261,
+        "size": 478,
+        "type": "file",
+        "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/commit-msg.sample",
+        "mode": 33261,
+        "size": 1972,
+        "type": "file",
+        "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/fsmonitor-watchman.sample",
+        "mode": 33261,
+        "size": 4611,
+        "type": "file",
+        "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/post-update.sample",
+        "mode": 33261,
+        "size": 189,
+        "type": "file",
+        "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-applypatch.sample",
+        "mode": 33261,
+        "size": 424,
+        "type": "file",
+        "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-commit.sample",
+        "mode": 33261,
+        "size": 1649,
+        "type": "file",
+        "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-merge-commit.sample",
+        "mode": 33261,
+        "size": 416,
+        "type": "file",
+        "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-push.sample",
+        "mode": 33261,
+        "size": 1374,
+        "type": "file",
+        "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-rebase.sample",
+        "mode": 33261,
+        "size": 4898,
+        "type": "file",
+        "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/pre-receive.sample",
+        "mode": 33261,
+        "size": 544,
+        "type": "file",
+        "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/prepare-commit-msg.sample",
+        "mode": 33261,
+        "size": 1492,
+        "type": "file",
+        "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/push-to-checkout.sample",
+        "mode": 33261,
+        "size": 2783,
+        "type": "file",
+        "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/sendemail-validate.sample",
+        "mode": 33261,
+        "size": 2308,
+        "type": "file",
+        "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:hooks/update.sample",
+        "mode": 33261,
+        "size": 3650,
+        "type": "file",
+        "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:index",
+        "mode": 33188,
+        "size": 65,
+        "type": "file",
+        "sha256": "8a99f56bd3599f16165eb30aa3c8c626923a7d63855907a5b97b98b5c6cdea2b",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:info",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:info/exclude",
+        "mode": 33188,
+        "size": 240,
+        "type": "file",
+        "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs",
+        "mode": 16877,
+        "size": 128,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs/HEAD",
+        "mode": 33188,
+        "size": 193,
+        "type": "file",
+        "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs/refs",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs/refs/heads",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:logs/refs/heads/main",
+        "mode": 33188,
+        "size": 193,
+        "type": "file",
+        "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects",
+        "mode": 16877,
+        "size": 192,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/4b",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "mode": 33060,
+        "size": 15,
+        "type": "file",
+        "sha256": "e72602cad67ed061ec84b13e92568f873172efac19a512a1b561dbf54e2c8426",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/a8",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+        "mode": 33060,
+        "size": 149,
+        "type": "file",
+        "sha256": "d434c033b3b6c147e82a82ba945192bc331dc0bbf4448b5c9e0cad65bba60da8",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/info",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:objects/pack",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:refs",
+        "mode": 16877,
+        "size": 128,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:refs/heads",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:refs/heads/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:refs/tags",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:rr-cache",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      }
+    ],
+    "filesystem_effects": [
+      {
+        "path": "root_0:.",
+        "status": "modified",
+        "before": {
+          "path": "root_0:.",
+          "mode": 16877,
+          "size": 448,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:.",
+          "mode": 16877,
+          "size": 576,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:.graphite_metadata.db",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:.graphite_metadata.db",
+          "mode": 33188,
+          "size": 32768,
+          "type": "file",
+          "sha256": "b97354e84f8ce366eb78daf05b7ff13b6663357187543e992f486e89b3632fb4",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:.graphite_pr_info",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:.graphite_pr_info",
+          "mode": 33152,
+          "size": 49,
+          "type": "file",
+          "sha256": "4f464d5a1d8353eab6b01400d17a5d539dd5d7eeddae48bdbd435e8991a222a3",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:.graphite_repo_config",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:.graphite_repo_config",
+          "mode": 33152,
+          "size": 73,
+          "type": "file",
+          "sha256": "bf4d7c0728b8160474338e5d96fc6f0d4b32c74ad67d2e968f6c4fe9173aa926",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:.gtlocalprinfo",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:.gtlocalprinfo",
+          "mode": 33152,
+          "size": 23,
+          "type": "file",
+          "sha256": "c85fbc4c6f44f06ee1f687e9e20d9346fad4e54fbf1fdd0a02d49d2dfef38c72",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:COMMIT_EDITMSG",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:COMMIT_EDITMSG",
+          "mode": 33188,
+          "size": 36,
+          "type": "file",
+          "sha256": "80ad66edbc151d5b9e4f7e2515a8c16555b3c1fd778829f6133d527efb8e519e",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:COMMIT_EDITMSG",
+          "mode": 33188,
+          "size": 36,
+          "type": "file",
+          "sha256": "80ad66edbc151d5b9e4f7e2515a8c16555b3c1fd778829f6133d527efb8e519e",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:HEAD",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:HEAD",
+          "mode": 33188,
+          "size": 21,
+          "type": "file",
+          "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:HEAD",
+          "mode": 33188,
+          "size": 21,
+          "type": "file",
+          "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:MERGE_RR",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:MERGE_RR",
+          "mode": 33188,
+          "size": 0,
+          "type": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:MERGE_RR",
+          "mode": 33188,
+          "size": 0,
+          "type": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:config",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:config",
+          "mode": 33188,
+          "size": 339,
+          "type": "file",
+          "sha256": "fd53d88a6e58e1174a9f38624b0aa0be4d5c4124891982ddb211b2903edaa0c7",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:config",
+          "mode": 33188,
+          "size": 339,
+          "type": "file",
+          "sha256": "fd53d88a6e58e1174a9f38624b0aa0be4d5c4124891982ddb211b2903edaa0c7",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:description",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:description",
+          "mode": 33188,
+          "size": 73,
+          "type": "file",
+          "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:description",
+          "mode": 33188,
+          "size": 73,
+          "type": "file",
+          "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks",
+          "mode": 16877,
+          "size": 512,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks",
+          "mode": 16877,
+          "size": 512,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/applypatch-msg.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/applypatch-msg.sample",
+          "mode": 33261,
+          "size": 478,
+          "type": "file",
+          "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/applypatch-msg.sample",
+          "mode": 33261,
+          "size": 478,
+          "type": "file",
+          "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/commit-msg.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/commit-msg.sample",
+          "mode": 33261,
+          "size": 1972,
+          "type": "file",
+          "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/commit-msg.sample",
+          "mode": 33261,
+          "size": 1972,
+          "type": "file",
+          "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/fsmonitor-watchman.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/fsmonitor-watchman.sample",
+          "mode": 33261,
+          "size": 4611,
+          "type": "file",
+          "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/fsmonitor-watchman.sample",
+          "mode": 33261,
+          "size": 4611,
+          "type": "file",
+          "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/post-update.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/post-update.sample",
+          "mode": 33261,
+          "size": 189,
+          "type": "file",
+          "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/post-update.sample",
+          "mode": 33261,
+          "size": 189,
+          "type": "file",
+          "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/pre-applypatch.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/pre-applypatch.sample",
+          "mode": 33261,
+          "size": 424,
+          "type": "file",
+          "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/pre-applypatch.sample",
+          "mode": 33261,
+          "size": 424,
+          "type": "file",
+          "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/pre-commit.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/pre-commit.sample",
+          "mode": 33261,
+          "size": 1649,
+          "type": "file",
+          "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/pre-commit.sample",
+          "mode": 33261,
+          "size": 1649,
+          "type": "file",
+          "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/pre-merge-commit.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/pre-merge-commit.sample",
+          "mode": 33261,
+          "size": 416,
+          "type": "file",
+          "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/pre-merge-commit.sample",
+          "mode": 33261,
+          "size": 416,
+          "type": "file",
+          "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/pre-push.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/pre-push.sample",
+          "mode": 33261,
+          "size": 1374,
+          "type": "file",
+          "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/pre-push.sample",
+          "mode": 33261,
+          "size": 1374,
+          "type": "file",
+          "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/pre-rebase.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/pre-rebase.sample",
+          "mode": 33261,
+          "size": 4898,
+          "type": "file",
+          "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/pre-rebase.sample",
+          "mode": 33261,
+          "size": 4898,
+          "type": "file",
+          "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/pre-receive.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/pre-receive.sample",
+          "mode": 33261,
+          "size": 544,
+          "type": "file",
+          "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/pre-receive.sample",
+          "mode": 33261,
+          "size": 544,
+          "type": "file",
+          "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/prepare-commit-msg.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/prepare-commit-msg.sample",
+          "mode": 33261,
+          "size": 1492,
+          "type": "file",
+          "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/prepare-commit-msg.sample",
+          "mode": 33261,
+          "size": 1492,
+          "type": "file",
+          "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/push-to-checkout.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/push-to-checkout.sample",
+          "mode": 33261,
+          "size": 2783,
+          "type": "file",
+          "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/push-to-checkout.sample",
+          "mode": 33261,
+          "size": 2783,
+          "type": "file",
+          "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/sendemail-validate.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/sendemail-validate.sample",
+          "mode": 33261,
+          "size": 2308,
+          "type": "file",
+          "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/sendemail-validate.sample",
+          "mode": 33261,
+          "size": 2308,
+          "type": "file",
+          "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:hooks/update.sample",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:hooks/update.sample",
+          "mode": 33261,
+          "size": 3650,
+          "type": "file",
+          "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:hooks/update.sample",
+          "mode": 33261,
+          "size": 3650,
+          "type": "file",
+          "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:index",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:index",
+          "mode": 33188,
+          "size": 65,
+          "type": "file",
+          "sha256": "8a99f56bd3599f16165eb30aa3c8c626923a7d63855907a5b97b98b5c6cdea2b",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:index",
+          "mode": 33188,
+          "size": 65,
+          "type": "file",
+          "sha256": "8a99f56bd3599f16165eb30aa3c8c626923a7d63855907a5b97b98b5c6cdea2b",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:info",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:info",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:info",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:info/exclude",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:info/exclude",
+          "mode": 33188,
+          "size": 240,
+          "type": "file",
+          "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:info/exclude",
+          "mode": 33188,
+          "size": 240,
+          "type": "file",
+          "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:logs",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:logs",
+          "mode": 16877,
+          "size": 128,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:logs",
+          "mode": 16877,
+          "size": 128,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:logs/HEAD",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:logs/HEAD",
+          "mode": 33188,
+          "size": 193,
+          "type": "file",
+          "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:logs/HEAD",
+          "mode": 33188,
+          "size": 193,
+          "type": "file",
+          "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:logs/refs",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:logs/refs",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:logs/refs",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:logs/refs/heads",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:logs/refs/heads",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:logs/refs/heads",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:logs/refs/heads/main",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:logs/refs/heads/main",
+          "mode": 33188,
+          "size": 193,
+          "type": "file",
+          "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:logs/refs/heads/main",
+          "mode": 33188,
+          "size": 193,
+          "type": "file",
+          "sha256": "cd2bfae158e87f954c9d95aed89253aa2b38ad350cb92997461f77737d3e16a9",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:objects",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:objects",
+          "mode": 16877,
+          "size": 192,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:objects",
+          "mode": 16877,
+          "size": 192,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:objects/4b",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:objects/4b",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:objects/4b",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "mode": 33060,
+          "size": 15,
+          "type": "file",
+          "sha256": "e72602cad67ed061ec84b13e92568f873172efac19a512a1b561dbf54e2c8426",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "mode": 33060,
+          "size": 15,
+          "type": "file",
+          "sha256": "e72602cad67ed061ec84b13e92568f873172efac19a512a1b561dbf54e2c8426",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:objects/a8",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:objects/a8",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:objects/a8",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+          "mode": 33060,
+          "size": 149,
+          "type": "file",
+          "sha256": "d434c033b3b6c147e82a82ba945192bc331dc0bbf4448b5c9e0cad65bba60da8",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:objects/a8/58b9de7c4c9e76d5ea32c654f28ba53f6b4f7a",
+          "mode": 33060,
+          "size": 149,
+          "type": "file",
+          "sha256": "d434c033b3b6c147e82a82ba945192bc331dc0bbf4448b5c9e0cad65bba60da8",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:objects/info",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:objects/info",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:objects/info",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:objects/pack",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:objects/pack",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:objects/pack",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:refs",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:refs",
+          "mode": 16877,
+          "size": 128,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:refs",
+          "mode": 16877,
+          "size": 128,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:refs/heads",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:refs/heads",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:refs/heads",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:refs/heads/main",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:refs/heads/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:refs/heads/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:refs/tags",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:refs/tags",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:refs/tags",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:rr-cache",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:rr-cache",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:rr-cache",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      }
+    ],
+    "truncated": false,
+    "truncation_details": {
+      "raw_terminal": {
+        "budget_bytes": 15000,
+        "observed_bytes": 623,
+        "retained_bytes": 623,
+        "observed_frames": 6,
+        "retained_frames": 6
+      },
+      "rendered_terminal": {
+        "budget_bytes": 15000,
+        "observed_bytes": 1987,
+        "retained_bytes": 1987,
+        "observed_frames": 6,
+        "retained_frames": 6
+      },
+      "normalized_terminal": {
+        "budget_bytes": 15000,
+        "retained_bytes": 623,
+        "omitted_frames": 0
+      },
+      "filesystem_before": {
+        "files_limit": 150,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 1000000,
+        "hashed_bytes": 28153,
+        "hash_omissions": []
+      },
+      "filesystem_after": {
+        "files_limit": 150,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 1000000,
+        "hashed_bytes": 61066,
+        "hash_omissions": []
+      },
+      "process": {
+        "sample_limit": 30,
+        "sampling_partial": false,
+        "retained_samples": 3,
+        "sample_limit_reached": false,
+        "sampling_failures": 0,
+        "first_sampling_failure": null,
+        "coverage": "sampled"
+      }
+    },
+    "limitations": [
+      "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+      "Process trees are sampled and may omit short-lived descendants.",
+      "Filesystem observations are before/after snapshots, not syscall traces.",
+      "Inherited host environment variables are not recorded and may affect results."
+    ],
+    "residual_unknowns": [
+      {
+        "scope": "process",
+        "reason": "Process trees are sampled and may omit short-lived descendants."
+      },
+      {
+        "scope": "process",
+        "reason": "The executable digest is a prelaunch file sample; operating-system image binding is not atomically observed."
+      },
+      {
+        "scope": "environment",
+        "reason": "Inherited host environment variables are not recorded."
+      },
+      {
+        "scope": "network",
+        "reason": "Network activity is not observed by this capture."
+      }
+    ],
+    "cleanup": {
+      "owned_process_group": "verified",
+      "temporary_root": "removed"
+    }
+  },
+  "confidence": "observed",
+  "authority": "controlled-replay",
+  "environment": {
+    "id": "darwin-arm64",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "isolation": "process"
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+    "Process trees are sampled and may omit short-lived descendants.",
+    "Filesystem observations are before/after snapshots, not syscall traces.",
+    "Inherited host environment variables are not recorded and may affect results."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

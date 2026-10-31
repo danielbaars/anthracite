@@ -1,0 +1,33 @@
+{
+  "head": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+  "branch": "get-sync-20261031-base",
+  "refs": {
+    "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+    "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+  },
+  "status": "",
+  "indexSHA256": "1ff45c61f228aa6d19c85de5e53dead1c8d5ab1955ce4f5a3e294ed9ac63b194",
+  "trees": {
+    "base": "2af6fc7379a063b32bfafdf70801575b3c58d7bd",
+    "child": "c5c156f35caf6d02b3d2e59864129908f05f3ee0"
+  },
+  "parents": {
+    "get-sync-20261031-base": {
+      "parent": "main",
+      "state": null
+    },
+    "get-sync-20261031-child": {
+      "parent": "get-sync-20261031-base",
+      "state": null
+    },
+    "main": {
+      "parent": null,
+      "state": null
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6",
+    "fixtures/get-sync-20261031/base.txt": "6e730b492b8867d4d498cf2e7a579e4a70b4e7bd80ca6f185d7b2815a7a863f3"
+  }
+}

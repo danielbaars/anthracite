@@ -1,0 +1,81 @@
+{
+  "head": "33e8ae0897280d0b77eb95b967e2a41e2584e1f7",
+  "branch": "main",
+  "refs": {
+    "refs/branch-metadata/get-sync-20261031-base": "2d2462587bafc29995b4a4bec5cfa5d66f7afb8a",
+    "refs/branch-metadata/get-sync-20261031-child": "26bcea50d8d9862108d7301a0c326ff5b29bfc6d",
+    "refs/branch-metadata/get-sync-20261031-sibling": "7535557a5c90b5538f1aeb3e7bcbc0ca9e9cd60e",
+    "refs/branch-metadata/get-sync-20261031-tip": "4fb5a9163360a90c53d72175d9ab603298d51bf7",
+    "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+    "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+    "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+    "refs/heads/main": "33e8ae0897280d0b77eb95b967e2a41e2584e1f7"
+  },
+  "status": "",
+  "indexSHA256": "359d3d22f23cf7b2e92e110dcd58bf2d8e3522d04fd5ab50f75c11d2807ee3dd",
+  "trees": {
+    "base": "2af6fc7379a063b32bfafdf70801575b3c58d7bd",
+    "child": "02025da38df9b9200951369f581884ed47f8a925",
+    "tip": "e08aede3bf647c8fcde38c95506a4d2def165031",
+    "sibling": "74f878c219fd33611beb06706882e3bf09739ca0"
+  },
+  "parents": {
+    "get-sync-20261031-base": {
+      "parentBranchName": "main",
+      "parentBranchRevision": "690c12f1986207222fb3541c972001c93b258791",
+      "prInfo": {
+        "number": 13,
+        "title": "Get/sync parity: base fixture",
+        "body": "Adds fixtures/get-sync-20261031/base.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "state": "OPEN",
+        "base": "main",
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/13",
+        "isDraft": true
+      }
+    },
+    "get-sync-20261031-child": {
+      "parentBranchName": "get-sync-20261031-base",
+      "parentBranchRevision": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+      "prInfo": {
+        "number": 14,
+        "title": "Get/sync parity: child fixture",
+        "body": "Adds fixtures/get-sync-20261031/child.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "state": "OPEN",
+        "base": "get-sync-20261031-base",
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/14",
+        "isDraft": true
+      }
+    },
+    "get-sync-20261031-sibling": {
+      "parentBranchName": "get-sync-20261031-base",
+      "parentBranchRevision": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+      "prInfo": {
+        "number": 16,
+        "title": "Get/sync parity: sibling fixture",
+        "body": "Adds fixtures/get-sync-20261031/sibling.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "state": "OPEN",
+        "base": "get-sync-20261031-base",
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/16",
+        "isDraft": true
+      }
+    },
+    "get-sync-20261031-tip": {
+      "parentBranchName": "get-sync-20261031-child",
+      "parentBranchRevision": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+      "prInfo": {
+        "number": 15,
+        "title": "Get/sync parity: tip fixture",
+        "body": "Adds fixtures/get-sync-20261031/tip.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "state": "OPEN",
+        "base": "get-sync-20261031-child",
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/15",
+        "isDraft": true
+      }
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6",
+    "local-only.txt": "982ea6eeadf55dee1e8c36acc749b6d2dd6c8eabd28320917fe02b3c6767b829"
+  }
+}

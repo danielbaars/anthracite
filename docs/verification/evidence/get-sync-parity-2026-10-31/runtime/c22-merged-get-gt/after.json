@@ -1,0 +1,40 @@
+{
+  "head": "df5b85e83f4336c7be04531c936086466239200b",
+  "branch": "get-sync-20261031-child",
+  "refs": {
+    "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+    "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+    "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+    "refs/heads/main": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+  },
+  "status": "",
+  "indexSHA256": "dbca7e0f7e63356dbbc46163c3bac54a3f382106a892728695c5911c4a8e0001",
+  "trees": {
+    "child": "c5c156f35caf6d02b3d2e59864129908f05f3ee0",
+    "tip": "e08aede3bf647c8fcde38c95506a4d2def165031",
+    "sibling": "74f878c219fd33611beb06706882e3bf09739ca0"
+  },
+  "parents": {
+    "get-sync-20261031-child": {
+      "parent": "main",
+      "state": null
+    },
+    "get-sync-20261031-sibling": {
+      "parent": "main",
+      "state": null
+    },
+    "get-sync-20261031-tip": {
+      "parent": "get-sync-20261031-child",
+      "state": null
+    },
+    "main": {
+      "parent": null,
+      "state": null
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6",
+    "fixtures/get-sync-20261031/child.txt": "998db23e33ad99dfbd6d53f7c70aed1850fb235119c3ec2a98d511ed3d3c2e0a",
+    "fixtures/get-sync-20261031/base.txt": "6e730b492b8867d4d498cf2e7a579e4a70b4e7bd80ca6f185d7b2815a7a863f3"
+  }
+}

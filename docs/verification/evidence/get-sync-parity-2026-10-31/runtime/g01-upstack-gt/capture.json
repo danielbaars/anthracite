@@ -1,0 +1,2309 @@
+{
+  "evidence_id": "ev_69f57b04f70c133cf7f8e68d52ee98fe135c3496bef5606aa04f01d29f8cb3d1",
+  "subject": null,
+  "provider": {
+    "id": "rea-process",
+    "name": "REA process capture",
+    "version": "3"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.process-capture",
+  "operation": "capture_process_scenario",
+  "parameters": {
+    "executable_name": "gt",
+    "argument_count": 4,
+    "event_count": 0,
+    "filesystem_observation_path_count": 2,
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    }
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "manifest": {
+      "rea_version": "6.7.0",
+      "provider_version": "3",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "pty_backend": "node-pty",
+      "started_at": "2026-10-31T08:18:03.844Z",
+      "completed_at": "2026-10-31T08:18:06.259Z",
+      "scenario": {
+        "executable": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+        "arguments": [
+          "get",
+          "get-sync-20261031-base",
+          "--no-restack",
+          "--no-interactive"
+        ],
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/cases/g01-upstack-gt",
+        "environment": {
+          "PATH": "/private/tmp/anthracite-get-sync-research-20261031/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/cache",
+          "GH_CONFIG_DIR": "/Users/danielbaars/.config/gh",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0",
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_EDITOR": "true",
+          "GIT_SEQUENCE_EDITOR": "true"
+        },
+        "filesystem_observation_paths": [
+          "/private/tmp/anthracite-get-sync-research-20261031/cases/g01-upstack-gt/.git/refs",
+          "/private/tmp/anthracite-get-sync-research-20261031/cases/g01-upstack-gt/.git/HEAD"
+        ],
+        "terminal": {
+          "columns": 140,
+          "rows": 30,
+          "scrollback": 150
+        },
+        "events": [],
+        "timeout_ms": 45000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 150,
+        "limits": {
+          "output_bytes": 24000,
+          "files": 160,
+          "file_bytes": 1000000,
+          "processes": 60,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "finalization_ms": 1000,
+        "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f"
+      },
+      "comparison_contract": {
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/cases/g01-upstack-gt",
+        "environment": {
+          "PATH": "/private/tmp/anthracite-get-sync-research-20261031/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/cache",
+          "GH_CONFIG_DIR": "/Users/danielbaars/.config/gh",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0",
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_EDITOR": "true",
+          "GIT_SEQUENCE_EDITOR": "true"
+        },
+        "ambient_environment": "unknown",
+        "filesystem_observation_paths": [
+          "/private/tmp/anthracite-get-sync-research-20261031/cases/g01-upstack-gt/.git/refs",
+          "/private/tmp/anthracite-get-sync-research-20261031/cases/g01-upstack-gt/.git/HEAD"
+        ],
+        "terminal": {
+          "columns": 140,
+          "rows": 30,
+          "scrollback": 150
+        },
+        "events": [],
+        "timeout_ms": 45000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 150,
+        "finalization_ms": 1000,
+        "limits": {
+          "output_bytes": 24000,
+          "files": 160,
+          "file_bytes": 1000000,
+          "processes": 60,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "port_normalization_version": "contextual-endpoints-v2",
+        "rendered_line_format": "trailing-spaces-trimmed-v1"
+      },
+      "full_scenario_sha256": "15d032da59a87f98c412c689cab682c9f438da04624a6745ab31e85c37f533d2",
+      "comparison_contract_sha256": "b9aa7d7625c42afb6b6583a147e10c06c2d578739de974698d235b38a502095d",
+      "selected_executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_identity": {
+        "state": "path_metadata_unchanged",
+        "reason": null
+      },
+      "normalization_sha256": "5c58aa1aa890197f15f9c59ef755d01120e6e07f356fa1ef2f20787e63b6fa87"
+    },
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    },
+    "frames": [
+      {
+        "sequence": 0,
+        "at_ms": 1180,
+        "data": "\u001b[94m🌲 Fetching branches from remote...\u001b[39m\r\n"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 1950,
+        "data": "\u001b[32mmain\u001b[39m is up to date.\r\n"
+      },
+      {
+        "sequence": 2,
+        "at_ms": 1950,
+        "data": "\r\n"
+      },
+      {
+        "sequence": 3,
+        "at_ms": 1950,
+        "data": "\u001b[94m🔄 Syncing branches...\u001b[39m\r\n"
+      },
+      {
+        "sequence": 4,
+        "at_ms": 2010,
+        "data": "Branch \u001b[32mget-sync-20261031-base\u001b[39m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n"
+      },
+      {
+        "sequence": 5,
+        "at_ms": 2060,
+        "data": "\u001b[33mWARNING: Non-interactive mode: skipping \u001b[33mget-sync-20261031-child\u001b[39m\u001b[33m as it has never been submitted or synced with Graphite and \u001b[36m--force\u001b[39m\u001b[33m was not provided.\u001b[39m\r\n"
+      },
+      {
+        "sequence": 6,
+        "at_ms": 2100,
+        "data": "Branch \u001b[32mget-sync-20261031-tip\u001b[39m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n"
+      },
+      {
+        "sequence": 7,
+        "at_ms": 2150,
+        "data": "Branch \u001b[32mget-sync-20261031-sibling\u001b[39m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n"
+      },
+      {
+        "sequence": 8,
+        "at_ms": 2150,
+        "data": "\r\n"
+      },
+      {
+        "sequence": 9,
+        "at_ms": 2160,
+        "data": "Checked out \u001b[36mget-sync-20261031-base\u001b[39m.\r\n"
+      },
+      {
+        "sequence": 10,
+        "at_ms": 2220,
+        "data": "\u001b[2m\u001b[22m\r\n\u001b[2m\u001b[33mtip\u001b[39m: If you need to undo the operation you just ran, you can do so with \u001b[36mgt undo\u001b[39m. [\u001b[2mrunner.undo\u001b[22m\u001b[2m \u001b[2m●●○\u001b[22m\u001b[2m]\u001b[22m\r\n\u001b[2m\u001b[22m\r\n"
+      }
+    ],
+    "rendered_frames": [
+      {
+        "sequence": 0,
+        "at_ms": 1180,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 1,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\u001b[1B\u001b[34D\u001b[0m"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 1950,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 2,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\u001b[1B\u001b[19D"
+      },
+      {
+        "sequence": 2,
+        "at_ms": 1950,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 3,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\u001b[2B\u001b[19D"
+      },
+      {
+        "sequence": 3,
+        "at_ms": 1950,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 4,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\u001b[1B\u001b[21D\u001b[0m"
+      },
+      {
+        "sequence": 4,
+        "at_ms": 2010,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 5,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\u001b[1B\u001b[117D"
+      },
+      {
+        "sequence": 5,
+        "at_ms": 2060,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 7,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "WARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and --force was not p",
+          "rovided.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\u001b[33mWARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and \u001b[36m--force\u001b[33m was not provided.\u001b[1B\u001b[8D\u001b[0m"
+      },
+      {
+        "sequence": 6,
+        "at_ms": 2100,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 8,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "WARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and --force was not p",
+          "rovided.",
+          "Branch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\u001b[33mWARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and \u001b[36m--force\u001b[33m was not provided.\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-tip\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\u001b[1B\u001b[116D"
+      },
+      {
+        "sequence": 7,
+        "at_ms": 2150,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 9,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "WARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and --force was not p",
+          "rovided.",
+          "Branch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "Branch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\u001b[33mWARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and \u001b[36m--force\u001b[33m was not provided.\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-tip\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch \u001b[32mget-sync-20261031-sibling\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\u001b[1B\u001b[120D"
+      },
+      {
+        "sequence": 8,
+        "at_ms": 2150,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 10,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "WARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and --force was not p",
+          "rovided.",
+          "Branch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "Branch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\u001b[33mWARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and \u001b[36m--force\u001b[33m was not provided.\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-tip\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch \u001b[32mget-sync-20261031-sibling\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\u001b[2B\u001b[120D"
+      },
+      {
+        "sequence": 9,
+        "at_ms": 2160,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 11,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "WARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and --force was not p",
+          "rovided.",
+          "Branch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "Branch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "",
+          "Checked out get-sync-20261031-base.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\u001b[33mWARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and \u001b[36m--force\u001b[33m was not provided.\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-tip\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch \u001b[32mget-sync-20261031-sibling\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\nChecked out \u001b[36mget-sync-20261031-base\u001b[0m.\u001b[1B\u001b[35D"
+      },
+      {
+        "sequence": 10,
+        "at_ms": 2220,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 14,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "WARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and --force was not p",
+          "rovided.",
+          "Branch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "Branch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "",
+          "Checked out get-sync-20261031-base.",
+          "",
+          "tip: If you need to undo the operation you just ran, you can do so with gt undo. [runner.undo ●●○]",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\u001b[33mWARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and \u001b[36m--force\u001b[33m was not provided.\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-tip\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch \u001b[32mget-sync-20261031-sibling\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\nChecked out \u001b[36mget-sync-20261031-base\u001b[0m.\r\n\r\n\u001b[33;2mtip\u001b[39m: If you need to undo the operation you just ran, you can do so with \u001b[36mgt undo\u001b[39m. [runner.undo ●●○]\u001b[2B\u001b[98D\u001b[0m"
+      }
+    ],
+    "interaction_events": [],
+    "exit": {
+      "code": 0,
+      "signal": 0,
+      "reason": "exited"
+    },
+    "settlement": {
+      "state": "quiesced",
+      "elapsed_ms": 155,
+      "cleanup_outcome": "not_required"
+    },
+    "process_samples": [
+      {
+        "at_ms": 160,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt get get-sync-20261031-base --no-restack --no-interactive",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 350,
+        "pid": 3,
+        "parent_pid": 1,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt /snapshot/dist/graphite.js background cleanup-debug-logs",
+        "process_group_id": 3,
+        "session_id": null
+      },
+      {
+        "at_ms": 400,
+        "pid": 3,
+        "parent_pid": 1,
+        "command": "(gt)",
+        "process_group_id": 3,
+        "session_id": null
+      },
+      {
+        "at_ms": 1220,
+        "pid": 4,
+        "parent_pid": 1,
+        "command": "/Library/Developer/CommandLineTools/usr/bin/git fetch --no-write-fetch-head --progress --no-tags -f origin refs/heads/main:refs/gt-fetch-head/main refs/heads/get-sync-20261031-base:refs/gt-fetch-head/get-sync-20261031-base refs/heads/get-sync-20261031-child:refs/gt-fetch-head/get-sync-20261031-child refs/heads/get-sync-20261031-tip:refs/gt-fetch-head/get-sync-20261031-tip refs/heads/get-sync-20261031-sibling:refs/gt-fetch-head/get-sync-20261031-sibling",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1220,
+        "pid": 5,
+        "parent_pid": 4,
+        "command": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git remote-https origin https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21.git",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1220,
+        "pid": 6,
+        "parent_pid": 5,
+        "command": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git-remote-https origin https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21.git",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1420,
+        "pid": 7,
+        "parent_pid": 6,
+        "command": "/opt/homebrew/bin/gh auth git-credential get",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1470,
+        "pid": 7,
+        "parent_pid": 6,
+        "command": "(gh)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1720,
+        "pid": 8,
+        "parent_pid": 6,
+        "command": "(gh)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1880,
+        "pid": 4,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1880,
+        "pid": 5,
+        "parent_pid": 4,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1880,
+        "pid": 6,
+        "parent_pid": 5,
+        "command": "(git-remote-http)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1930,
+        "pid": 9,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1980,
+        "pid": 10,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2030,
+        "pid": 11,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2080,
+        "pid": 12,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2130,
+        "pid": 13,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2180,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "(gt)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2180,
+        "pid": 14,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      }
+    ],
+    "filesystem_checkpoints": [
+      {
+        "name": "before",
+        "at_ms": 0,
+        "files": [
+          {
+            "path": "root_0:.",
+            "mode": 16877,
+            "size": 160,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads",
+            "mode": 16877,
+            "size": 224,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-base",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-child",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-sibling",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-tip",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes/origin",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes/origin/HEAD",
+            "mode": 33188,
+            "size": 49,
+            "type": "file",
+            "sha256": "0814d905159e8b2f5d4be1607afb01159de8cf46a6ac9dbb76da9bc40e373bd2",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:tags",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_1:.",
+            "mode": 33188,
+            "size": 21,
+            "type": "file",
+            "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+            "symlink_target": null
+          }
+        ],
+        "effects": [],
+        "truncated": false
+      },
+      {
+        "name": "after_settlement",
+        "at_ms": 2415,
+        "files": [
+          {
+            "path": "root_0:.",
+            "mode": 16877,
+            "size": 192,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:gt-fetch-head",
+            "mode": 16877,
+            "size": 224,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:gt-fetch-head/get-sync-20261031-base",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:gt-fetch-head/get-sync-20261031-child",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "650a8d6852b0bd0e9814b0b4aba053e87f6a907d95634b1743faeeea4e7dfca5",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:gt-fetch-head/get-sync-20261031-sibling",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:gt-fetch-head/get-sync-20261031-tip",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:gt-fetch-head/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads",
+            "mode": 16877,
+            "size": 224,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-base",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-child",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-sibling",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-tip",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes/origin",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes/origin/HEAD",
+            "mode": 33188,
+            "size": 49,
+            "type": "file",
+            "sha256": "0814d905159e8b2f5d4be1607afb01159de8cf46a6ac9dbb76da9bc40e373bd2",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:tags",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_1:.",
+            "mode": 33188,
+            "size": 39,
+            "type": "file",
+            "sha256": "71c01ea2ec64499f6f89aceef1f1f9769fb2866a551d848b573c4c3b2f834a6d",
+            "symlink_target": null
+          }
+        ],
+        "effects": [
+          {
+            "path": "root_0:.",
+            "status": "modified",
+            "before": {
+              "path": "root_0:.",
+              "mode": 16877,
+              "size": 160,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:.",
+              "mode": 16877,
+              "size": 192,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:gt-fetch-head",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:gt-fetch-head",
+              "mode": 16877,
+              "size": 224,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:gt-fetch-head/get-sync-20261031-base",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:gt-fetch-head/get-sync-20261031-base",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:gt-fetch-head/get-sync-20261031-child",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:gt-fetch-head/get-sync-20261031-child",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "650a8d6852b0bd0e9814b0b4aba053e87f6a907d95634b1743faeeea4e7dfca5",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:gt-fetch-head/get-sync-20261031-sibling",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:gt-fetch-head/get-sync-20261031-sibling",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:gt-fetch-head/get-sync-20261031-tip",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:gt-fetch-head/get-sync-20261031-tip",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:gt-fetch-head/main",
+            "status": "created",
+            "before": null,
+            "after": {
+              "path": "root_0:gt-fetch-head/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads",
+              "mode": 16877,
+              "size": 224,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads",
+              "mode": 16877,
+              "size": 224,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-base",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/get-sync-20261031-base",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/get-sync-20261031-base",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-child",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/get-sync-20261031-child",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/get-sync-20261031-child",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-sibling",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/get-sync-20261031-sibling",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/get-sync-20261031-sibling",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-tip",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/get-sync-20261031-tip",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/get-sync-20261031-tip",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/main",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:remotes",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:remotes",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:remotes",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:remotes/origin",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:remotes/origin",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:remotes/origin",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:remotes/origin/HEAD",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:remotes/origin/HEAD",
+              "mode": 33188,
+              "size": 49,
+              "type": "file",
+              "sha256": "0814d905159e8b2f5d4be1607afb01159de8cf46a6ac9dbb76da9bc40e373bd2",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:remotes/origin/HEAD",
+              "mode": 33188,
+              "size": 49,
+              "type": "file",
+              "sha256": "0814d905159e8b2f5d4be1607afb01159de8cf46a6ac9dbb76da9bc40e373bd2",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:tags",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:tags",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:tags",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_1:.",
+            "status": "modified",
+            "before": {
+              "path": "root_1:.",
+              "mode": 33188,
+              "size": 21,
+              "type": "file",
+              "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_1:.",
+              "mode": 33188,
+              "size": 39,
+              "type": "file",
+              "sha256": "71c01ea2ec64499f6f89aceef1f1f9769fb2866a551d848b573c4c3b2f834a6d",
+              "symlink_target": null
+            }
+          }
+        ],
+        "truncated": false
+      }
+    ],
+    "event_journal": [
+      {
+        "capture_order": 0,
+        "collection": "filesystem_checkpoints",
+        "index": 0
+      },
+      {
+        "capture_order": 1,
+        "collection": "process_samples",
+        "index": 0
+      },
+      {
+        "capture_order": 2,
+        "collection": "process_samples",
+        "index": 1
+      },
+      {
+        "capture_order": 3,
+        "collection": "process_samples",
+        "index": 2
+      },
+      {
+        "capture_order": 4,
+        "collection": "frames",
+        "index": 0
+      },
+      {
+        "capture_order": 5,
+        "collection": "rendered_frames",
+        "index": 0
+      },
+      {
+        "capture_order": 6,
+        "collection": "process_samples",
+        "index": 3
+      },
+      {
+        "capture_order": 7,
+        "collection": "process_samples",
+        "index": 4
+      },
+      {
+        "capture_order": 8,
+        "collection": "process_samples",
+        "index": 5
+      },
+      {
+        "capture_order": 9,
+        "collection": "process_samples",
+        "index": 6
+      },
+      {
+        "capture_order": 10,
+        "collection": "process_samples",
+        "index": 7
+      },
+      {
+        "capture_order": 11,
+        "collection": "process_samples",
+        "index": 8
+      },
+      {
+        "capture_order": 12,
+        "collection": "process_samples",
+        "index": 9
+      },
+      {
+        "capture_order": 13,
+        "collection": "process_samples",
+        "index": 10
+      },
+      {
+        "capture_order": 14,
+        "collection": "process_samples",
+        "index": 11
+      },
+      {
+        "capture_order": 15,
+        "collection": "frames",
+        "index": 1
+      },
+      {
+        "capture_order": 16,
+        "collection": "frames",
+        "index": 2
+      },
+      {
+        "capture_order": 17,
+        "collection": "frames",
+        "index": 3
+      },
+      {
+        "capture_order": 18,
+        "collection": "rendered_frames",
+        "index": 1
+      },
+      {
+        "capture_order": 19,
+        "collection": "rendered_frames",
+        "index": 2
+      },
+      {
+        "capture_order": 20,
+        "collection": "rendered_frames",
+        "index": 3
+      },
+      {
+        "capture_order": 21,
+        "collection": "process_samples",
+        "index": 12
+      },
+      {
+        "capture_order": 22,
+        "collection": "frames",
+        "index": 4
+      },
+      {
+        "capture_order": 23,
+        "collection": "rendered_frames",
+        "index": 4
+      },
+      {
+        "capture_order": 24,
+        "collection": "process_samples",
+        "index": 13
+      },
+      {
+        "capture_order": 25,
+        "collection": "frames",
+        "index": 5
+      },
+      {
+        "capture_order": 26,
+        "collection": "rendered_frames",
+        "index": 5
+      },
+      {
+        "capture_order": 27,
+        "collection": "process_samples",
+        "index": 14
+      },
+      {
+        "capture_order": 28,
+        "collection": "frames",
+        "index": 6
+      },
+      {
+        "capture_order": 29,
+        "collection": "rendered_frames",
+        "index": 6
+      },
+      {
+        "capture_order": 30,
+        "collection": "process_samples",
+        "index": 15
+      },
+      {
+        "capture_order": 31,
+        "collection": "frames",
+        "index": 7
+      },
+      {
+        "capture_order": 32,
+        "collection": "frames",
+        "index": 8
+      },
+      {
+        "capture_order": 33,
+        "collection": "rendered_frames",
+        "index": 7
+      },
+      {
+        "capture_order": 34,
+        "collection": "rendered_frames",
+        "index": 8
+      },
+      {
+        "capture_order": 35,
+        "collection": "frames",
+        "index": 9
+      },
+      {
+        "capture_order": 36,
+        "collection": "rendered_frames",
+        "index": 9
+      },
+      {
+        "capture_order": 37,
+        "collection": "process_samples",
+        "index": 16
+      },
+      {
+        "capture_order": 38,
+        "collection": "frames",
+        "index": 10
+      },
+      {
+        "capture_order": 39,
+        "collection": "rendered_frames",
+        "index": 10
+      },
+      {
+        "capture_order": 40,
+        "collection": "process_samples",
+        "index": 17
+      },
+      {
+        "capture_order": 41,
+        "collection": "process_samples",
+        "index": 18
+      },
+      {
+        "capture_order": 42,
+        "collection": "lifecycle",
+        "index": 0
+      },
+      {
+        "capture_order": 43,
+        "collection": "lifecycle",
+        "index": 1
+      },
+      {
+        "capture_order": 44,
+        "collection": "filesystem_checkpoints",
+        "index": 1
+      }
+    ],
+    "files_before": [
+      {
+        "path": "root_0:.",
+        "mode": 16877,
+        "size": 160,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads",
+        "mode": 16877,
+        "size": 224,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-base",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-child",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-sibling",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-tip",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes/origin",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes/origin/HEAD",
+        "mode": 33188,
+        "size": 49,
+        "type": "file",
+        "sha256": "0814d905159e8b2f5d4be1607afb01159de8cf46a6ac9dbb76da9bc40e373bd2",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:tags",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_1:.",
+        "mode": 33188,
+        "size": 21,
+        "type": "file",
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+        "symlink_target": null
+      }
+    ],
+    "files_after": [
+      {
+        "path": "root_0:.",
+        "mode": 16877,
+        "size": 192,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:gt-fetch-head",
+        "mode": 16877,
+        "size": 224,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:gt-fetch-head/get-sync-20261031-base",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:gt-fetch-head/get-sync-20261031-child",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "650a8d6852b0bd0e9814b0b4aba053e87f6a907d95634b1743faeeea4e7dfca5",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:gt-fetch-head/get-sync-20261031-sibling",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:gt-fetch-head/get-sync-20261031-tip",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:gt-fetch-head/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads",
+        "mode": 16877,
+        "size": 224,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-base",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-child",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-sibling",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-tip",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes/origin",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes/origin/HEAD",
+        "mode": 33188,
+        "size": 49,
+        "type": "file",
+        "sha256": "0814d905159e8b2f5d4be1607afb01159de8cf46a6ac9dbb76da9bc40e373bd2",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:tags",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_1:.",
+        "mode": 33188,
+        "size": 39,
+        "type": "file",
+        "sha256": "71c01ea2ec64499f6f89aceef1f1f9769fb2866a551d848b573c4c3b2f834a6d",
+        "symlink_target": null
+      }
+    ],
+    "filesystem_effects": [
+      {
+        "path": "root_0:.",
+        "status": "modified",
+        "before": {
+          "path": "root_0:.",
+          "mode": 16877,
+          "size": 160,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:.",
+          "mode": 16877,
+          "size": 192,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:gt-fetch-head",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:gt-fetch-head",
+          "mode": 16877,
+          "size": 224,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:gt-fetch-head/get-sync-20261031-base",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:gt-fetch-head/get-sync-20261031-base",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:gt-fetch-head/get-sync-20261031-child",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:gt-fetch-head/get-sync-20261031-child",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "650a8d6852b0bd0e9814b0b4aba053e87f6a907d95634b1743faeeea4e7dfca5",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:gt-fetch-head/get-sync-20261031-sibling",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:gt-fetch-head/get-sync-20261031-sibling",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:gt-fetch-head/get-sync-20261031-tip",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:gt-fetch-head/get-sync-20261031-tip",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:gt-fetch-head/main",
+        "status": "created",
+        "before": null,
+        "after": {
+          "path": "root_0:gt-fetch-head/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads",
+          "mode": 16877,
+          "size": 224,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads",
+          "mode": 16877,
+          "size": 224,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-base",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/get-sync-20261031-base",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/get-sync-20261031-base",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-child",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/get-sync-20261031-child",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/get-sync-20261031-child",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-sibling",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/get-sync-20261031-sibling",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/get-sync-20261031-sibling",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-tip",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/get-sync-20261031-tip",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/get-sync-20261031-tip",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/main",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:remotes",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:remotes",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:remotes",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:remotes/origin",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:remotes/origin",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:remotes/origin",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:remotes/origin/HEAD",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:remotes/origin/HEAD",
+          "mode": 33188,
+          "size": 49,
+          "type": "file",
+          "sha256": "0814d905159e8b2f5d4be1607afb01159de8cf46a6ac9dbb76da9bc40e373bd2",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:remotes/origin/HEAD",
+          "mode": 33188,
+          "size": 49,
+          "type": "file",
+          "sha256": "0814d905159e8b2f5d4be1607afb01159de8cf46a6ac9dbb76da9bc40e373bd2",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:tags",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:tags",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:tags",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_1:.",
+        "status": "modified",
+        "before": {
+          "path": "root_1:.",
+          "mode": 33188,
+          "size": 21,
+          "type": "file",
+          "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_1:.",
+          "mode": 33188,
+          "size": 39,
+          "type": "file",
+          "sha256": "71c01ea2ec64499f6f89aceef1f1f9769fb2866a551d848b573c4c3b2f834a6d",
+          "symlink_target": null
+        }
+      }
+    ],
+    "truncated": false,
+    "truncation_details": {
+      "raw_terminal": {
+        "budget_bytes": 24000,
+        "observed_bytes": 929,
+        "retained_bytes": 929,
+        "observed_frames": 11,
+        "retained_frames": 11
+      },
+      "rendered_terminal": {
+        "budget_bytes": 24000,
+        "observed_bytes": 8193,
+        "retained_bytes": 8193,
+        "observed_frames": 11,
+        "retained_frames": 11
+      },
+      "normalized_terminal": {
+        "budget_bytes": 24000,
+        "retained_bytes": 929,
+        "omitted_frames": 0
+      },
+      "filesystem_before": {
+        "files_limit": 160,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 1000000,
+        "hashed_bytes": 275,
+        "hash_omissions": []
+      },
+      "filesystem_after": {
+        "files_limit": 160,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 1000000,
+        "hashed_bytes": 498,
+        "hash_omissions": []
+      },
+      "process": {
+        "sample_limit": 60,
+        "sampling_partial": false,
+        "retained_samples": 19,
+        "sample_limit_reached": false,
+        "sampling_failures": 0,
+        "first_sampling_failure": null,
+        "coverage": "sampled"
+      }
+    },
+    "limitations": [
+      "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+      "Process trees are sampled and may omit short-lived descendants.",
+      "Filesystem observations are before/after snapshots, not syscall traces.",
+      "Inherited host environment variables are not recorded and may affect results."
+    ],
+    "residual_unknowns": [
+      {
+        "scope": "process",
+        "reason": "Process trees are sampled and may omit short-lived descendants."
+      },
+      {
+        "scope": "process",
+        "reason": "The executable digest is a prelaunch file sample; operating-system image binding is not atomically observed."
+      },
+      {
+        "scope": "environment",
+        "reason": "Inherited host environment variables are not recorded."
+      },
+      {
+        "scope": "network",
+        "reason": "Network activity is not observed by this capture."
+      }
+    ],
+    "cleanup": {
+      "owned_process_group": "verified",
+      "temporary_root": "removed"
+    }
+  },
+  "confidence": "observed",
+  "authority": "controlled-replay",
+  "environment": {
+    "id": "darwin-arm64",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "isolation": "process"
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+    "Process trees are sampled and may omit short-lived descendants.",
+    "Filesystem observations are before/after snapshots, not syscall traces.",
+    "Inherited host environment variables are not recorded and may affect results."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

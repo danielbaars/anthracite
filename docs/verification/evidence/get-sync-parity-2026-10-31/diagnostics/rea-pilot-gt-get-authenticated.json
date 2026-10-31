@@ -1,0 +1,1387 @@
+{
+  "evidence_id": "ev_8827f5e58869a4184566da1188f752da7fa0d013340f158dd8d78befe75e981d",
+  "subject": null,
+  "provider": {
+    "id": "rea-process",
+    "name": "REA process capture",
+    "version": "3"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.process-capture",
+  "operation": "capture_process_scenario",
+  "parameters": {
+    "executable_name": "gt",
+    "argument_count": 4,
+    "event_count": 0,
+    "filesystem_observation_path_count": 2,
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    }
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "manifest": {
+      "rea_version": "6.7.0",
+      "provider_version": "3",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "pty_backend": "node-pty",
+      "started_at": "2026-10-31T08:11:33.090Z",
+      "completed_at": "2026-10-31T08:12:03.354Z",
+      "scenario": {
+        "executable": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+        "arguments": [
+          "get",
+          "get-sync-20261031-base",
+          "--no-restack",
+          "--no-interactive"
+        ],
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/cases/pilot-gt",
+        "environment": {
+          "PATH": "/private/tmp/anthracite-get-sync-research-20261031/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/cache",
+          "GH_CONFIG_DIR": "/Users/danielbaars/.config/gh",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0",
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_EDITOR": "true",
+          "GIT_SEQUENCE_EDITOR": "true"
+        },
+        "filesystem_observation_paths": [
+          "/private/tmp/anthracite-get-sync-research-20261031/cases/pilot-gt/.git/refs",
+          "/private/tmp/anthracite-get-sync-research-20261031/cases/pilot-gt/.git/HEAD"
+        ],
+        "terminal": {
+          "columns": 130,
+          "rows": 30,
+          "scrollback": 150
+        },
+        "events": [],
+        "timeout_ms": 30000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 150,
+        "limits": {
+          "output_bytes": 20000,
+          "files": 150,
+          "file_bytes": 1000000,
+          "processes": 60,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "finalization_ms": 1000,
+        "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f"
+      },
+      "comparison_contract": {
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/cases/pilot-gt",
+        "environment": {
+          "PATH": "/private/tmp/anthracite-get-sync-research-20261031/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/cache",
+          "GH_CONFIG_DIR": "/Users/danielbaars/.config/gh",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0",
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_EDITOR": "true",
+          "GIT_SEQUENCE_EDITOR": "true"
+        },
+        "ambient_environment": "unknown",
+        "filesystem_observation_paths": [
+          "/private/tmp/anthracite-get-sync-research-20261031/cases/pilot-gt/.git/refs",
+          "/private/tmp/anthracite-get-sync-research-20261031/cases/pilot-gt/.git/HEAD"
+        ],
+        "terminal": {
+          "columns": 130,
+          "rows": 30,
+          "scrollback": 150
+        },
+        "events": [],
+        "timeout_ms": 30000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 150,
+        "finalization_ms": 1000,
+        "limits": {
+          "output_bytes": 20000,
+          "files": 150,
+          "file_bytes": 1000000,
+          "processes": 60,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "port_normalization_version": "contextual-endpoints-v2",
+        "rendered_line_format": "trailing-spaces-trimmed-v1"
+      },
+      "full_scenario_sha256": "383bfb760c1f8dd70ec222e99d3f184e798ca1dfe319eb4ca678536aa9ffdf12",
+      "comparison_contract_sha256": "3759c12fa6cc335a4efee1dfc1adef2df7918f727431a47efde43b7d1565d39d",
+      "selected_executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_identity": {
+        "state": "path_metadata_unchanged",
+        "reason": null
+      },
+      "normalization_sha256": "5c58aa1aa890197f15f9c59ef755d01120e6e07f356fa1ef2f20787e63b6fa87"
+    },
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    },
+    "frames": [
+      {
+        "sequence": 0,
+        "at_ms": 1600,
+        "data": "\u001b[94m🌲 Fetching branches from remote...\u001b[39m\r\n"
+      }
+    ],
+    "rendered_frames": [
+      {
+        "sequence": 0,
+        "at_ms": 1600,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 1,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\u001b[1B\u001b[34D\u001b[0m"
+      }
+    ],
+    "interaction_events": [],
+    "exit": {
+      "code": null,
+      "signal": 15,
+      "reason": "timeout",
+      "finalization": {
+        "requested_ms": 1000,
+        "elapsed_ms": 57,
+        "exit_code": null,
+        "signals": [
+          {
+            "signal": "SIGTERM",
+            "sent_at_ms": 0,
+            "delivery": "signaled"
+          }
+        ]
+      }
+    },
+    "settlement": {
+      "state": "quiesced",
+      "elapsed_ms": 155,
+      "cleanup_outcome": "not_required"
+    },
+    "process_samples": [
+      {
+        "at_ms": 160,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt get get-sync-20261031-base --no-restack --no-interactive",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 250,
+        "pid": 3,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 300,
+        "pid": 4,
+        "parent_pid": 1,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt /snapshot/dist/graphite.js background cleanup-debug-logs",
+        "process_group_id": 4,
+        "session_id": null
+      },
+      {
+        "at_ms": 300,
+        "pid": 5,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1620,
+        "pid": 6,
+        "parent_pid": 1,
+        "command": "/Library/Developer/CommandLineTools/usr/bin/git fetch --no-write-fetch-head --progress --no-tags -f origin refs/heads/main:refs/gt-fetch-head/main refs/heads/get-sync-20261031-base:refs/gt-fetch-head/get-sync-20261031-base refs/heads/get-sync-20261031-child:refs/gt-fetch-head/get-sync-20261031-child refs/heads/get-sync-20261031-tip:refs/gt-fetch-head/get-sync-20261031-tip refs/heads/get-sync-20261031-sibling:refs/gt-fetch-head/get-sync-20261031-sibling",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1620,
+        "pid": 7,
+        "parent_pid": 6,
+        "command": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git remote-https origin https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21.git",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1620,
+        "pid": 8,
+        "parent_pid": 7,
+        "command": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git-remote-https origin https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21.git",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1820,
+        "pid": 9,
+        "parent_pid": 8,
+        "command": "git credential-osxkeychain get",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1820,
+        "pid": 10,
+        "parent_pid": 9,
+        "command": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git-credential-osxkeychain get",
+        "process_group_id": 1,
+        "session_id": null
+      }
+    ],
+    "filesystem_checkpoints": [
+      {
+        "name": "before",
+        "at_ms": 0,
+        "files": [
+          {
+            "path": "root_0:.",
+            "mode": 16877,
+            "size": 160,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads",
+            "mode": 16877,
+            "size": 224,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-base",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-child",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-sibling",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-tip",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes/origin",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes/origin/HEAD",
+            "mode": 33188,
+            "size": 51,
+            "type": "file",
+            "sha256": "f115f1e78473174318391da0d48deaa435e09951a3bba8ae0b8b9a7454ee7079",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:tags",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_1:.",
+            "mode": 33188,
+            "size": 21,
+            "type": "file",
+            "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+            "symlink_target": null
+          }
+        ],
+        "effects": [],
+        "truncated": false
+      },
+      {
+        "name": "after_settlement",
+        "at_ms": 30264,
+        "files": [
+          {
+            "path": "root_0:.",
+            "mode": 16877,
+            "size": 160,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads",
+            "mode": 16877,
+            "size": 224,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-base",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-child",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-sibling",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-tip",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes/origin",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:remotes/origin/HEAD",
+            "mode": 33188,
+            "size": 51,
+            "type": "file",
+            "sha256": "f115f1e78473174318391da0d48deaa435e09951a3bba8ae0b8b9a7454ee7079",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:tags",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_1:.",
+            "mode": 33188,
+            "size": 21,
+            "type": "file",
+            "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+            "symlink_target": null
+          }
+        ],
+        "effects": [
+          {
+            "path": "root_0:.",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:.",
+              "mode": 16877,
+              "size": 160,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:.",
+              "mode": 16877,
+              "size": 160,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads",
+              "mode": 16877,
+              "size": 224,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads",
+              "mode": 16877,
+              "size": 224,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-base",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/get-sync-20261031-base",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/get-sync-20261031-base",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-child",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/get-sync-20261031-child",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/get-sync-20261031-child",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-sibling",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/get-sync-20261031-sibling",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/get-sync-20261031-sibling",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/get-sync-20261031-tip",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/get-sync-20261031-tip",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/get-sync-20261031-tip",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/main",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:remotes",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:remotes",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:remotes",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:remotes/origin",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:remotes/origin",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:remotes/origin",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:remotes/origin/HEAD",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:remotes/origin/HEAD",
+              "mode": 33188,
+              "size": 51,
+              "type": "file",
+              "sha256": "f115f1e78473174318391da0d48deaa435e09951a3bba8ae0b8b9a7454ee7079",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:remotes/origin/HEAD",
+              "mode": 33188,
+              "size": 51,
+              "type": "file",
+              "sha256": "f115f1e78473174318391da0d48deaa435e09951a3bba8ae0b8b9a7454ee7079",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:tags",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:tags",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:tags",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_1:.",
+            "status": "unchanged",
+            "before": {
+              "path": "root_1:.",
+              "mode": 33188,
+              "size": 21,
+              "type": "file",
+              "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_1:.",
+              "mode": 33188,
+              "size": 21,
+              "type": "file",
+              "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+              "symlink_target": null
+            }
+          }
+        ],
+        "truncated": false
+      }
+    ],
+    "event_journal": [
+      {
+        "capture_order": 0,
+        "collection": "filesystem_checkpoints",
+        "index": 0
+      },
+      {
+        "capture_order": 1,
+        "collection": "process_samples",
+        "index": 0
+      },
+      {
+        "capture_order": 2,
+        "collection": "process_samples",
+        "index": 1
+      },
+      {
+        "capture_order": 3,
+        "collection": "process_samples",
+        "index": 2
+      },
+      {
+        "capture_order": 4,
+        "collection": "process_samples",
+        "index": 3
+      },
+      {
+        "capture_order": 5,
+        "collection": "frames",
+        "index": 0
+      },
+      {
+        "capture_order": 6,
+        "collection": "rendered_frames",
+        "index": 0
+      },
+      {
+        "capture_order": 7,
+        "collection": "process_samples",
+        "index": 4
+      },
+      {
+        "capture_order": 8,
+        "collection": "process_samples",
+        "index": 5
+      },
+      {
+        "capture_order": 9,
+        "collection": "process_samples",
+        "index": 6
+      },
+      {
+        "capture_order": 10,
+        "collection": "process_samples",
+        "index": 7
+      },
+      {
+        "capture_order": 11,
+        "collection": "process_samples",
+        "index": 8
+      },
+      {
+        "capture_order": 12,
+        "collection": "lifecycle",
+        "index": 0
+      },
+      {
+        "capture_order": 13,
+        "collection": "lifecycle",
+        "index": 1
+      },
+      {
+        "capture_order": 14,
+        "collection": "filesystem_checkpoints",
+        "index": 1
+      }
+    ],
+    "files_before": [
+      {
+        "path": "root_0:.",
+        "mode": 16877,
+        "size": 160,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads",
+        "mode": 16877,
+        "size": 224,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-base",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-child",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-sibling",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-tip",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes/origin",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes/origin/HEAD",
+        "mode": 33188,
+        "size": 51,
+        "type": "file",
+        "sha256": "f115f1e78473174318391da0d48deaa435e09951a3bba8ae0b8b9a7454ee7079",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:tags",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_1:.",
+        "mode": 33188,
+        "size": 21,
+        "type": "file",
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+        "symlink_target": null
+      }
+    ],
+    "files_after": [
+      {
+        "path": "root_0:.",
+        "mode": 16877,
+        "size": 160,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads",
+        "mode": 16877,
+        "size": 224,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-base",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-child",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-sibling",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-tip",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes/origin",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:remotes/origin/HEAD",
+        "mode": 33188,
+        "size": 51,
+        "type": "file",
+        "sha256": "f115f1e78473174318391da0d48deaa435e09951a3bba8ae0b8b9a7454ee7079",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:tags",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_1:.",
+        "mode": 33188,
+        "size": 21,
+        "type": "file",
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+        "symlink_target": null
+      }
+    ],
+    "filesystem_effects": [
+      {
+        "path": "root_0:.",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:.",
+          "mode": 16877,
+          "size": 160,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:.",
+          "mode": 16877,
+          "size": 160,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads",
+          "mode": 16877,
+          "size": 224,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads",
+          "mode": 16877,
+          "size": 224,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-base",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/get-sync-20261031-base",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/get-sync-20261031-base",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "369ecf92de4ace00cb4d347b1fa18cc44e4c1fc6af9b2fe86f7408eb6ba93c0a",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-child",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/get-sync-20261031-child",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/get-sync-20261031-child",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "31c15f1a24ae583c17c59cba44e746d391fcb0223e0380c6da9160189da86629",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-sibling",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/get-sync-20261031-sibling",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/get-sync-20261031-sibling",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "2e0aa22fc561d42efb0ea3f53509600afd733bce672e21eb7984a466c23ba0f4",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/get-sync-20261031-tip",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/get-sync-20261031-tip",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/get-sync-20261031-tip",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "ae47c4d0358d6c9092acb0606e556eecae1f4d95aadfc5946008ab9e1f070eda",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/main",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "4940f08f81f919aedd228b6b8c724ae63acb35d54f69773e2320a55529ec98b7",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:remotes",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:remotes",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:remotes",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:remotes/origin",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:remotes/origin",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:remotes/origin",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:remotes/origin/HEAD",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:remotes/origin/HEAD",
+          "mode": 33188,
+          "size": 51,
+          "type": "file",
+          "sha256": "f115f1e78473174318391da0d48deaa435e09951a3bba8ae0b8b9a7454ee7079",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:remotes/origin/HEAD",
+          "mode": 33188,
+          "size": 51,
+          "type": "file",
+          "sha256": "f115f1e78473174318391da0d48deaa435e09951a3bba8ae0b8b9a7454ee7079",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:tags",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:tags",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:tags",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_1:.",
+        "status": "unchanged",
+        "before": {
+          "path": "root_1:.",
+          "mode": 33188,
+          "size": 21,
+          "type": "file",
+          "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_1:.",
+          "mode": 33188,
+          "size": 21,
+          "type": "file",
+          "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "symlink_target": null
+        }
+      }
+    ],
+    "truncated": false,
+    "truncation_details": {
+      "raw_terminal": {
+        "budget_bytes": 20000,
+        "observed_bytes": 49,
+        "retained_bytes": 49,
+        "observed_frames": 1,
+        "retained_frames": 1
+      },
+      "rendered_terminal": {
+        "budget_bytes": 20000,
+        "observed_bytes": 92,
+        "retained_bytes": 92,
+        "observed_frames": 1,
+        "retained_frames": 1
+      },
+      "normalized_terminal": {
+        "budget_bytes": 20000,
+        "retained_bytes": 49,
+        "omitted_frames": 0
+      },
+      "filesystem_before": {
+        "files_limit": 150,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 1000000,
+        "hashed_bytes": 277,
+        "hash_omissions": []
+      },
+      "filesystem_after": {
+        "files_limit": 150,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 1000000,
+        "hashed_bytes": 277,
+        "hash_omissions": []
+      },
+      "process": {
+        "sample_limit": 60,
+        "sampling_partial": false,
+        "retained_samples": 9,
+        "sample_limit_reached": false,
+        "sampling_failures": 0,
+        "first_sampling_failure": null,
+        "coverage": "sampled"
+      }
+    },
+    "limitations": [
+      "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+      "Process trees are sampled and may omit short-lived descendants.",
+      "Filesystem observations are before/after snapshots, not syscall traces.",
+      "Inherited host environment variables are not recorded and may affect results."
+    ],
+    "residual_unknowns": [
+      {
+        "scope": "process",
+        "reason": "Process trees are sampled and may omit short-lived descendants."
+      },
+      {
+        "scope": "process",
+        "reason": "The executable digest is a prelaunch file sample; operating-system image binding is not atomically observed."
+      },
+      {
+        "scope": "environment",
+        "reason": "Inherited host environment variables are not recorded."
+      },
+      {
+        "scope": "network",
+        "reason": "Network activity is not observed by this capture."
+      },
+      {
+        "scope": "process",
+        "reason": "Ownership of unrelated process 61689 could not be verified; it was left untouched: restricted_process_environment_withheld"
+      },
+      {
+        "scope": "process",
+        "reason": "Ownership of unrelated process 61690 could not be verified; it was left untouched: restricted_process_environment_withheld"
+      }
+    ],
+    "cleanup": {
+      "owned_process_group": "verified",
+      "temporary_root": "removed",
+      "unverified_processes": [
+        {
+          "pid": 61689,
+          "reason": "restricted_process_environment_withheld"
+        },
+        {
+          "pid": 61690,
+          "reason": "restricted_process_environment_withheld"
+        }
+      ]
+    }
+  },
+  "confidence": "observed",
+  "authority": "controlled-replay",
+  "environment": {
+    "id": "darwin-arm64",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "isolation": "process"
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+    "Process trees are sampled and may omit short-lived descendants.",
+    "Filesystem observations are before/after snapshots, not syscall traces.",
+    "Inherited host environment variables are not recorded and may affect results."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

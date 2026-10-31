@@ -1,0 +1,904 @@
+{
+  "evidence_id": "ev_957380463a7f6cb38a8ac8f6f72b14adabaf555f572b0edea7470293b9f4bc29",
+  "subject": null,
+  "provider": {
+    "id": "rea-process",
+    "name": "REA process capture",
+    "version": "3"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.process-capture",
+  "operation": "capture_process_scenario",
+  "parameters": {
+    "executable_name": "gt",
+    "argument_count": 3,
+    "event_count": 0,
+    "filesystem_observation_path_count": 2,
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    }
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "manifest": {
+      "rea_version": "6.7.0",
+      "provider_version": "3",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "pty_backend": "node-pty",
+      "started_at": "2026-10-31T08:00:35.859Z",
+      "completed_at": "2026-10-31T08:00:36.774Z",
+      "scenario": {
+        "executable": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+        "arguments": [
+          "sync",
+          "--no-restack",
+          "--no-interactive"
+        ],
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/offline/seed",
+        "environment": {
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/cache",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0"
+        },
+        "filesystem_observation_paths": [
+          "/private/tmp/anthracite-get-sync-research-20261031/offline/seed/.git/refs",
+          "/private/tmp/anthracite-get-sync-research-20261031/offline/seed/.git/HEAD"
+        ],
+        "terminal": {
+          "columns": 130,
+          "rows": 30,
+          "scrollback": 100
+        },
+        "events": [],
+        "timeout_ms": 25000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 100,
+        "limits": {
+          "output_bytes": 15000,
+          "files": 150,
+          "file_bytes": 1000000,
+          "processes": 30,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "finalization_ms": 1000,
+        "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f"
+      },
+      "comparison_contract": {
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/offline/seed",
+        "environment": {
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/cache",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0"
+        },
+        "ambient_environment": "unknown",
+        "filesystem_observation_paths": [
+          "/private/tmp/anthracite-get-sync-research-20261031/offline/seed/.git/refs",
+          "/private/tmp/anthracite-get-sync-research-20261031/offline/seed/.git/HEAD"
+        ],
+        "terminal": {
+          "columns": 130,
+          "rows": 30,
+          "scrollback": 100
+        },
+        "events": [],
+        "timeout_ms": 25000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 100,
+        "finalization_ms": 1000,
+        "limits": {
+          "output_bytes": 15000,
+          "files": 150,
+          "file_bytes": 1000000,
+          "processes": 30,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "port_normalization_version": "contextual-endpoints-v2",
+        "rendered_line_format": "trailing-spaces-trimmed-v1"
+      },
+      "full_scenario_sha256": "7ee40e06db22b15c022ed2786978a4e77b326a8e9421f7db03bdee3d23d1aab5",
+      "comparison_contract_sha256": "93cb68b1e4a570a5ea01ea45ffed6a3143fe684779979cedb0b6db51e6d92054",
+      "selected_executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_identity": {
+        "state": "path_metadata_unchanged",
+        "reason": null
+      },
+      "normalization_sha256": "5c58aa1aa890197f15f9c59ef755d01120e6e07f356fa1ef2f20787e63b6fa87"
+    },
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    },
+    "frames": [
+      {
+        "sequence": 0,
+        "at_ms": 390,
+        "data": "\u001b[2m\u001b[22m\r\n\u001b[2m\u001b[33mtip\u001b[39m: \u001b[36mgt sync\u001b[39m is a core command that keeps your branches in sync with the latest changes to the remote repository. It:\u001b[22m\r\n\u001b[2m▸ pulls the latest changes to the trunk branch\u001b[22m\r\n\u001b[2m▸ prompts to delete any branches whose PRs have been merged or closed\u001b[22m\r\n\u001b[2m▸ syncs any remote changes to branches with open PRs\u001b[22m\r\n\u001b[2m▸ restacks all branches to incorporate the latest changes from trunk\u001b[22m\r\n\u001b[2m\u001b[22m\r\n\u001b[2mYou can use \u001b[36mgt get\u001b[39m to sync only the stack of the checked out branch. [\u001b[2msync.explanation\u001b[22m\u001b[2m \u001b[2m●○○\u001b[22m\u001b[2m]\u001b[22m\r\n\u001b[2m\u001b[22m\r\n"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 390,
+        "data": "\u001b[2m\u001b[22m\r\n\u001b[2m\u001b[33mtip\u001b[39m: Feeling like an expert? Disable tips in \u001b[36mgt config\u001b[39m [\u001b[2mtip.expert-message\u001b[22m\u001b[2m \u001b[2m●\u001b[22m\u001b[2m]\u001b[22m\r\n\u001b[2m\u001b[22m\r\n"
+      },
+      {
+        "sequence": 2,
+        "at_ms": 730,
+        "data": "\u001b[91mERROR: Your Graphite auth token is invalid/expired.\u001b[39m\r\n\u001b[91m\u001b[39m\r\n\u001b[91mPlease obtain a new auth token by visiting https://app.graphite.com/activate \u001b[39m\r\n"
+      }
+    ],
+    "rendered_frames": [
+      {
+        "sequence": 0,
+        "at_ms": 390,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 9,
+        "active_buffer": "normal",
+        "lines": [
+          "",
+          "tip: gt sync is a core command that keeps your branches in sync with the latest changes to the remote repository. It:",
+          "▸ pulls the latest changes to the trunk branch",
+          "▸ prompts to delete any branches whose PRs have been merged or closed",
+          "▸ syncs any remote changes to branches with open PRs",
+          "▸ restacks all branches to incorporate the latest changes from trunk",
+          "",
+          "You can use gt get to sync only the stack of the checked out branch. [sync.explanation ●○○]",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\r\n\u001b[33;2mtip\u001b[39m: \u001b[36mgt sync\u001b[39m is a core command that keeps your branches in sync with the latest changes to the remote repository. It:\r\n▸ pulls the latest changes to the trunk branch\r\n▸ prompts to delete any branches whose PRs have been merged or closed\r\n▸ syncs any remote changes to branches with open PRs\r\n▸ restacks all branches to incorporate the latest changes from trunk\r\n\r\nYou can use \u001b[36mgt get\u001b[39m to sync only the stack of the checked out branch. [sync.explanation ●○○]\u001b[2B\u001b[91D\u001b[0m"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 390,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 12,
+        "active_buffer": "normal",
+        "lines": [
+          "",
+          "tip: gt sync is a core command that keeps your branches in sync with the latest changes to the remote repository. It:",
+          "▸ pulls the latest changes to the trunk branch",
+          "▸ prompts to delete any branches whose PRs have been merged or closed",
+          "▸ syncs any remote changes to branches with open PRs",
+          "▸ restacks all branches to incorporate the latest changes from trunk",
+          "",
+          "You can use gt get to sync only the stack of the checked out branch. [sync.explanation ●○○]",
+          "",
+          "",
+          "tip: Feeling like an expert? Disable tips in gt config [tip.expert-message ●]",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\r\n\u001b[33;2mtip\u001b[39m: \u001b[36mgt sync\u001b[39m is a core command that keeps your branches in sync with the latest changes to the remote repository. It:\r\n▸ pulls the latest changes to the trunk branch\r\n▸ prompts to delete any branches whose PRs have been merged or closed\r\n▸ syncs any remote changes to branches with open PRs\r\n▸ restacks all branches to incorporate the latest changes from trunk\r\n\r\nYou can use \u001b[36mgt get\u001b[39m to sync only the stack of the checked out branch. [sync.explanation ●○○]\r\n\r\n\r\n\u001b[33mtip\u001b[39m: Feeling like an expert? Disable tips in \u001b[36mgt config\u001b[39m [tip.expert-message ●]\u001b[2B\u001b[77D\u001b[0m"
+      },
+      {
+        "sequence": 2,
+        "at_ms": 730,
+        "columns": 130,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 15,
+        "active_buffer": "normal",
+        "lines": [
+          "",
+          "tip: gt sync is a core command that keeps your branches in sync with the latest changes to the remote repository. It:",
+          "▸ pulls the latest changes to the trunk branch",
+          "▸ prompts to delete any branches whose PRs have been merged or closed",
+          "▸ syncs any remote changes to branches with open PRs",
+          "▸ restacks all branches to incorporate the latest changes from trunk",
+          "",
+          "You can use gt get to sync only the stack of the checked out branch. [sync.explanation ●○○]",
+          "",
+          "",
+          "tip: Feeling like an expert? Disable tips in gt config [tip.expert-message ●]",
+          "",
+          "ERROR: Your Graphite auth token is invalid/expired.",
+          "",
+          "Please obtain a new auth token by visiting https://app.graphite.com/activate",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\r\n\u001b[33;2mtip\u001b[39m: \u001b[36mgt sync\u001b[39m is a core command that keeps your branches in sync with the latest changes to the remote repository. It:\r\n▸ pulls the latest changes to the trunk branch\r\n▸ prompts to delete any branches whose PRs have been merged or closed\r\n▸ syncs any remote changes to branches with open PRs\r\n▸ restacks all branches to incorporate the latest changes from trunk\r\n\r\nYou can use \u001b[36mgt get\u001b[39m to sync only the stack of the checked out branch. [sync.explanation ●○○]\r\n\r\n\r\n\u001b[33mtip\u001b[39m: Feeling like an expert? Disable tips in \u001b[36mgt config\u001b[39m [tip.expert-message ●]\r\n\r\n\u001b[91;22mERROR: Your Graphite auth token is invalid/expired.\r\n\r\nPlease obtain a new auth token by visiting https://app.graphite.com/activate \u001b[1B\u001b[77D\u001b[0m"
+      }
+    ],
+    "interaction_events": [],
+    "exit": {
+      "code": 1,
+      "signal": 0,
+      "reason": "exited"
+    },
+    "settlement": {
+      "state": "quiesced",
+      "elapsed_ms": 148,
+      "cleanup_outcome": "not_required"
+    },
+    "process_samples": [
+      {
+        "at_ms": 160,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt sync --no-restack --no-interactive",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 300,
+        "pid": 3,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 350,
+        "pid": 4,
+        "parent_pid": 1,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt /snapshot/dist/graphite.js background cleanup-debug-logs",
+        "process_group_id": 4,
+        "session_id": null
+      },
+      {
+        "at_ms": 350,
+        "pid": 5,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 700,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "(gt)",
+        "process_group_id": 1,
+        "session_id": null
+      }
+    ],
+    "filesystem_checkpoints": [
+      {
+        "name": "before",
+        "at_ms": 0,
+        "files": [
+          {
+            "path": "root_0:.",
+            "mode": 16877,
+            "size": 128,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:tags",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_1:.",
+            "mode": 33188,
+            "size": 21,
+            "type": "file",
+            "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+            "symlink_target": null
+          }
+        ],
+        "effects": [],
+        "truncated": false
+      },
+      {
+        "name": "after_settlement",
+        "at_ms": 914,
+        "files": [
+          {
+            "path": "root_0:.",
+            "mode": 16877,
+            "size": 128,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads",
+            "mode": 16877,
+            "size": 96,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:heads/main",
+            "mode": 33188,
+            "size": 41,
+            "type": "file",
+            "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+            "symlink_target": null
+          },
+          {
+            "path": "root_0:tags",
+            "mode": 16877,
+            "size": 64,
+            "type": "directory",
+            "sha256": null,
+            "symlink_target": null
+          },
+          {
+            "path": "root_1:.",
+            "mode": 33188,
+            "size": 21,
+            "type": "file",
+            "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+            "symlink_target": null
+          }
+        ],
+        "effects": [
+          {
+            "path": "root_0:.",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:.",
+              "mode": 16877,
+              "size": 128,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:.",
+              "mode": 16877,
+              "size": 128,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads",
+              "mode": 16877,
+              "size": 96,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:heads/main",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:heads/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:heads/main",
+              "mode": 33188,
+              "size": 41,
+              "type": "file",
+              "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_0:tags",
+            "status": "unchanged",
+            "before": {
+              "path": "root_0:tags",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_0:tags",
+              "mode": 16877,
+              "size": 64,
+              "type": "directory",
+              "sha256": null,
+              "symlink_target": null
+            }
+          },
+          {
+            "path": "root_1:.",
+            "status": "unchanged",
+            "before": {
+              "path": "root_1:.",
+              "mode": 33188,
+              "size": 21,
+              "type": "file",
+              "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+              "symlink_target": null
+            },
+            "after": {
+              "path": "root_1:.",
+              "mode": 33188,
+              "size": 21,
+              "type": "file",
+              "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+              "symlink_target": null
+            }
+          }
+        ],
+        "truncated": false
+      }
+    ],
+    "event_journal": [
+      {
+        "capture_order": 0,
+        "collection": "filesystem_checkpoints",
+        "index": 0
+      },
+      {
+        "capture_order": 1,
+        "collection": "process_samples",
+        "index": 0
+      },
+      {
+        "capture_order": 2,
+        "collection": "process_samples",
+        "index": 1
+      },
+      {
+        "capture_order": 3,
+        "collection": "frames",
+        "index": 0
+      },
+      {
+        "capture_order": 4,
+        "collection": "rendered_frames",
+        "index": 0
+      },
+      {
+        "capture_order": 5,
+        "collection": "frames",
+        "index": 1
+      },
+      {
+        "capture_order": 6,
+        "collection": "rendered_frames",
+        "index": 1
+      },
+      {
+        "capture_order": 7,
+        "collection": "process_samples",
+        "index": 2
+      },
+      {
+        "capture_order": 8,
+        "collection": "process_samples",
+        "index": 3
+      },
+      {
+        "capture_order": 9,
+        "collection": "frames",
+        "index": 2
+      },
+      {
+        "capture_order": 10,
+        "collection": "rendered_frames",
+        "index": 2
+      },
+      {
+        "capture_order": 11,
+        "collection": "lifecycle",
+        "index": 0
+      },
+      {
+        "capture_order": 12,
+        "collection": "process_samples",
+        "index": 4
+      },
+      {
+        "capture_order": 13,
+        "collection": "lifecycle",
+        "index": 1
+      },
+      {
+        "capture_order": 14,
+        "collection": "filesystem_checkpoints",
+        "index": 1
+      }
+    ],
+    "files_before": [
+      {
+        "path": "root_0:.",
+        "mode": 16877,
+        "size": 128,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:tags",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_1:.",
+        "mode": 33188,
+        "size": 21,
+        "type": "file",
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+        "symlink_target": null
+      }
+    ],
+    "files_after": [
+      {
+        "path": "root_0:.",
+        "mode": 16877,
+        "size": 128,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads",
+        "mode": 16877,
+        "size": 96,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:heads/main",
+        "mode": 33188,
+        "size": 41,
+        "type": "file",
+        "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+        "symlink_target": null
+      },
+      {
+        "path": "root_0:tags",
+        "mode": 16877,
+        "size": 64,
+        "type": "directory",
+        "sha256": null,
+        "symlink_target": null
+      },
+      {
+        "path": "root_1:.",
+        "mode": 33188,
+        "size": 21,
+        "type": "file",
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+        "symlink_target": null
+      }
+    ],
+    "filesystem_effects": [
+      {
+        "path": "root_0:.",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:.",
+          "mode": 16877,
+          "size": 128,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:.",
+          "mode": 16877,
+          "size": 128,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads",
+          "mode": 16877,
+          "size": 96,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:heads/main",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:heads/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:heads/main",
+          "mode": 33188,
+          "size": 41,
+          "type": "file",
+          "sha256": "65adc937d4c0d74c9754d028e1dcbcc31c02e934ce19fb9255d5976bdc0eccff",
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_0:tags",
+        "status": "unchanged",
+        "before": {
+          "path": "root_0:tags",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_0:tags",
+          "mode": 16877,
+          "size": 64,
+          "type": "directory",
+          "sha256": null,
+          "symlink_target": null
+        }
+      },
+      {
+        "path": "root_1:.",
+        "status": "unchanged",
+        "before": {
+          "path": "root_1:.",
+          "mode": 33188,
+          "size": 21,
+          "type": "file",
+          "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "symlink_target": null
+        },
+        "after": {
+          "path": "root_1:.",
+          "mode": 33188,
+          "size": 21,
+          "type": "file",
+          "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "symlink_target": null
+        }
+      }
+    ],
+    "truncated": false,
+    "truncation_details": {
+      "raw_terminal": {
+        "budget_bytes": 15000,
+        "observed_bytes": 934,
+        "retained_bytes": 934,
+        "observed_frames": 3,
+        "retained_frames": 3
+      },
+      "rendered_terminal": {
+        "budget_bytes": 15000,
+        "observed_bytes": 3558,
+        "retained_bytes": 3558,
+        "observed_frames": 3,
+        "retained_frames": 3
+      },
+      "normalized_terminal": {
+        "budget_bytes": 15000,
+        "retained_bytes": 934,
+        "omitted_frames": 0
+      },
+      "filesystem_before": {
+        "files_limit": 150,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 1000000,
+        "hashed_bytes": 62,
+        "hash_omissions": []
+      },
+      "filesystem_after": {
+        "files_limit": 150,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 1000000,
+        "hashed_bytes": 62,
+        "hash_omissions": []
+      },
+      "process": {
+        "sample_limit": 30,
+        "sampling_partial": false,
+        "retained_samples": 5,
+        "sample_limit_reached": false,
+        "sampling_failures": 0,
+        "first_sampling_failure": null,
+        "coverage": "sampled"
+      }
+    },
+    "limitations": [
+      "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+      "Process trees are sampled and may omit short-lived descendants.",
+      "Filesystem observations are before/after snapshots, not syscall traces.",
+      "Inherited host environment variables are not recorded and may affect results."
+    ],
+    "residual_unknowns": [
+      {
+        "scope": "process",
+        "reason": "Process trees are sampled and may omit short-lived descendants."
+      },
+      {
+        "scope": "process",
+        "reason": "The executable digest is a prelaunch file sample; operating-system image binding is not atomically observed."
+      },
+      {
+        "scope": "environment",
+        "reason": "Inherited host environment variables are not recorded."
+      },
+      {
+        "scope": "network",
+        "reason": "Network activity is not observed by this capture."
+      }
+    ],
+    "cleanup": {
+      "owned_process_group": "verified",
+      "temporary_root": "removed"
+    }
+  },
+  "confidence": "observed",
+  "authority": "controlled-replay",
+  "environment": {
+    "id": "darwin-arm64",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "isolation": "process"
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+    "Process trees are sampled and may omit short-lived descendants.",
+    "Filesystem observations are before/after snapshots, not syscall traces.",
+    "Inherited host environment variables are not recorded and may affect results."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

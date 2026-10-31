@@ -1,0 +1,30 @@
+{
+  "head": "690c12f1986207222fb3541c972001c93b258791",
+  "branch": "main",
+  "refs": {
+    "refs/branch-metadata/get-sync-20261031-base": "3c3ed4ce09084ee798c2c3a74e76cdfecaf1e4ed",
+    "refs/branch-metadata/get-sync-20261031-child": "0dd9f621405b37117c65152a0e6f3731034b01b0",
+    "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+    "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+  },
+  "status": "",
+  "indexSHA256": "fe8fc5232f6834e96b73aff742b7e1372e59db30ba9f6ecafecbe577b435de8c",
+  "trees": {
+    "base": "2af6fc7379a063b32bfafdf70801575b3c58d7bd",
+    "child": "02025da38df9b9200951369f581884ed47f8a925"
+  },
+  "parents": {
+    "get-sync-20261031-base": {
+      "parentBranchName": "main",
+      "parentBranchRevision": "690c12f1986207222fb3541c972001c93b258791"
+    },
+    "get-sync-20261031-child": {
+      "parentBranchName": "get-sync-20261031-base",
+      "parentBranchRevision": "7f7b701608c6d927927ca0bca4a18ae81594b7a0"
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6"
+  }
+}

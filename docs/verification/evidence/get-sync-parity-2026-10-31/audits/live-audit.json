@@ -1,0 +1,1365 @@
+{
+  "scope": "Bounded read-only audit through D11; all C* cleanup cases excluded",
+  "counts": {
+    "reaCommandObservations": 22,
+    "initialUnsubmittedObservations": 3,
+    "normalizedMainObservations": 19,
+    "pairedBeforeStateComparisons": 8,
+    "acceptancePassCount": null
+  },
+  "countsExplanation": "Observation counts are not passed-feature counts. Initial G01/G02 observations retain native-unsubmitted state; baseline synchronization is separate setup.",
+  "authority": "Actual CLI/live-service capture evidence reviewed; no remote requests or mutations performed by this audit",
+  "rows": [
+    {
+      "name": "g01-upstack-gt",
+      "evidenceId": "ev_69f57b04f70c133cf7f8e68d52ee98fe135c3496bef5606aa04f01d29f8cb3d1",
+      "sourceSHA256": {
+        "capture": "dd1b0c0edf0fcd39a789aac00ddd2fdf0f6e13c46304f754c634c4d0e73d6cdf",
+        "before": "1f03284a9c3ba0381bc056bec5d936a78060751267671af38a0bfdae1845c08a",
+        "after": "748b45b26e843436884b25a06d8f68db26ce9384118fbdd43e38e597b5522366"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nWARNING: Non-interactive mode: skipping get-sync-20261031-child as it has never been submitted or synced with Graphite and --force was not provided.\r\nBranch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\nChecked out get-sync-20261031-base.\r\n\r\ntip: If you need to undo the operation you just ran, you can do so with gt undo. [runner.undo ●●○]\r\n\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g01-upstack-an",
+      "evidenceId": "ev_00314381110586ee1486dbaf000860a0793af0db9c8d24930bbbe4960d5cddca",
+      "sourceSHA256": {
+        "capture": "1625a093a168822d9bc7f9d412c583ae41cb0cbaaf081b5b0e51b71d0e2e8e3e",
+        "before": "10d607b9205a0c41a80b45a8d8ccd051e6cfab0cba56102dfea4325ef0e607fd",
+        "after": "94385402c5a2eef5712142601dc1469f5ef9408fc5be940bf9706f3734c07045"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-base",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "get-sync-20261031-base is up to date.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g02-downstack-gt",
+      "evidenceId": "ev_8f4b2f1c36c60803a16a8461c936f1946af68eeba609a33fc8f62686fa0a782c",
+      "sourceSHA256": {
+        "capture": "792192642f6c6e6d411b8478496a5a853c72d3b0f8a3591598073881ffc90491",
+        "before": "c515c880946c8b3c28d50fb3feee0a4a21b14cb8f1f17aacab97b5c18d5c83e3",
+        "after": "10e253dbedf6907029123a6fa16318c6c336b8c53d03242dbae6dad865da2b40"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\nChecked out get-sync-20261031-base.\r\n\r\ntip: If you need to undo the operation you just ran, you can do so with gt undo. [runner.undo ●●●]\r\n\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g11-known-upstack-gt",
+      "evidenceId": "ev_074feda6306b39d70b9809fd54755cceb3af150d4fdcdc106adb0c4e563b9b49",
+      "sourceSHA256": {
+        "capture": "eb9df56b164fb1ac5ef7861ea102a6ce6e6352261d02aae2d8822df9f716a423",
+        "before": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6",
+        "after": "6ef2c1ace6a6bc749825fa86f9d94520b327a3472b390f9bf475006fb9dd4c61"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced get-sync-20261031-child (PR #14 v3) from remote (previously at 67a223e6c85bbf39779af6d2ed58c1bbd840cebc).\r\nBranch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\nChecked out get-sync-20261031-base.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g11-known-upstack-an",
+      "evidenceId": "ev_75f6cbb4a37d6ddb1ec7d81cc3db76a7361f9f433550db0d1b3b862151f80392",
+      "sourceSHA256": {
+        "capture": "81f53a4ec199e4bbca6bcedaa1818afb1807f5ad6ba3651ccb9cd191e0e846bc",
+        "before": "899bf19670d8963403f35f3096e2699b6b0c99619111d0d1570512ce693a9f97",
+        "after": "cc3347c053dbb3ef7a02439728564f097a84d07bf8443793d1dbea3bffdb7615"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-base",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "get-sync-20261031-base is up to date.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g12-known-downstack-gt",
+      "evidenceId": "ev_d1abd7656135767acab9753f48235f00bb1d9dbf79fa745348e38239c875bcf5",
+      "sourceSHA256": {
+        "capture": "2a60576ac5ad13d1cfc9ca91042448b98671831de8726d131e6b5f9273c8c045",
+        "before": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6",
+        "after": "971fd6a1c2261a3ff28907338092e686bc348668352f5c4a52ad2c520b5a5255"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\nChecked out get-sync-20261031-base.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g13-remote-gt",
+      "evidenceId": "ev_9871a5a934c75aa92457398b3d207cf906cedcf01ee711bf7276e188f6c674e8",
+      "sourceSHA256": {
+        "capture": "766c635d020401bef40ebcca5ae0425ccc801897dbcbe35d19b70bfe05a7df8a",
+        "before": "b07152ba170fe2730ede21b1520a5f520c9425648f34a3fed33ceb36aeb0cc01",
+        "after": "ef9b9720e83a29fee4b283edee652bc15f9e6cc762d72cbe4f368d4a137fd01e"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--remote-upstack",
+        "--no-restack",
+        "--unfrozen",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced get-sync-20261031-child (PR #14 v3) from remote (previously at 67a223e6c85bbf39779af6d2ed58c1bbd840cebc).\r\n\r\nChecked out get-sync-20261031-base.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g13-remote-an",
+      "evidenceId": "ev_55a42c858a8059c13d7537cc4fe4fff599569c29877e33f3ba0fe66e088f057f",
+      "sourceSHA256": {
+        "capture": "5bef3297eb9f686b7b081d4fd96cde479a77a56646926d7dd636b63a30f7af1a",
+        "before": "da980867970bbf30ee99e5bf158ead9540dabed6f5e1c73002803f51b217b6d5",
+        "after": "c1cd018d79b1647a52afea0c14825c4d8cb9148230b48526ad406520c24e68c2"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-base",
+        "--unfrozen",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "get-sync-20261031-base is up to date.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g14-checkout-gt",
+      "evidenceId": "ev_58a523c74909a16d05007f5f15c8b71ef62106ccadf1e2b162428f72a2d2af7f",
+      "sourceSHA256": {
+        "capture": "aa31bbe701af2a5e9423de951ba1a226f875db8335e16b14a40596cb80f00854",
+        "before": "fca004eb049c043cd3d1a197c7f3522533255c2066531b930e3cd2d4b4d8063f",
+        "after": "5227b5ee6824c19927777cdf2b290497cb70b7ee5412c8230ee60cdf90f15ec6"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-checkout",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child"
+      ],
+      "checkoutBefore": "get-sync-20261031-base",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": true,
+      "workingFilesEqual": true,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced get-sync-20261031-child (PR #14 v3) from remote (previously at 67a223e6c85bbf39779af6d2ed58c1bbd840cebc).\r\n\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g14-checkout-an",
+      "evidenceId": "ev_26cd4b19e10f540892cb97945e64b3149abc71ace24ee6bd71b9be070962f383",
+      "sourceSHA256": {
+        "capture": "0d23e60c5280dab09f6f95bf081b83da18bc3c4c12e4cc6eae8e7c01f0063638",
+        "before": "f805de67863b0910bf15364fcf3b2d4e8934d9ac2170c86f50dce2abd49db6d9",
+        "after": "5147495a4feacadbb260d12ecf76ba649d455921cf1fe667b1920bbe2d5ecf9d"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child"
+      ],
+      "checkoutBefore": "get-sync-20261031-base",
+      "checkoutAfter": "get-sync-20261031-child",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "get-sync-20261031-base is up to date.\r\nSynced get-sync-20261031-child from remote.\r\nLocal children may need to be restacked.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "g15-restack-gt",
+      "evidenceId": "ev_e916955bb6579ad5dc0b787c91a7ccbda4e87e1627d9b00156f793d56f0ce7b7",
+      "sourceSHA256": {
+        "capture": "c77f663fc88475e604d8e90a14d529f2471b7428f5a0a332881478076ac867d9",
+        "before": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6",
+        "after": "019ec69ee999b6e371fd7ad91fe1c823ace0a3c8ce292c434e2e3cc9f451a1dd"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "ce781654364b5e5a57eba3414663674633ecda26",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child",
+        "refs/heads/get-sync-20261031-tip"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-base",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced get-sync-20261031-child (PR #14 v3) from remote (previously at 67a223e6c85bbf39779af6d2ed58c1bbd840cebc).\r\nBranch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\n🥞 Restacking branches...\r\nget-sync-20261031-base does not need to be restacked on main.\r\nget-sync-20261031-child does not need to be restacked on get-sync-20261031-base.\r\nget-sync-20261031-sibling does not need to be restacked on get-sync-20261031-base.\r\nRestacked get-sync-20261031-tip on get-sync-20261031-child.\r\n\r\nChecked out get-sync-20261031-base.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "s11-refresh-gt",
+      "evidenceId": "ev_9e9b7e91f87dbf6af1f0eb8e058e22861568693b994882a4082bed824b64d2c2",
+      "sourceSHA256": {
+        "capture": "5f2b23c3ee662870310b36fb499adeaff9cca7313e9756d520217d020474d298",
+        "before": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6",
+        "after": "9d138ed110a5b2d276acb6fd61acd649a04300e54aec1cdda256ec129602807e"
+      },
+      "argv": [
+        "sync",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "main",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": true,
+      "readmeBytesPreserved": true,
+      "terminal": "\r\ntip: gt sync is a core command that keeps your branches in sync with the latest changes to the remote repository. It:\r\n▸ pulls the latest changes to the trunk branch\r\n▸ prompts to delete any branches whose PRs have been merged or closed\r\n▸ syncs any remote changes to branches with open PRs\r\n▸ restacks all branches to incorporate the latest changes from trunk\r\n\r\nYou can use gt get to sync only the stack of the checked out branch. [sync.explanation ●●●]\r\n\r\n🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced get-sync-20261031-child (PR #14 v3) from remote (previously at 67a223e6c85bbf39779af6d2ed58c1bbd840cebc).\r\nBranch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "s11-refresh-an",
+      "evidenceId": "ev_760f24ed4306b0b807a46c20a55c3b21178b373da4ba98bb9cab260dbeb015a0",
+      "sourceSHA256": {
+        "capture": "124e00fe9f9781bf915c96db0e8f16fe8d00cdd35eeb4575583e1438716a945e",
+        "before": "899bf19670d8963403f35f3096e2699b6b0c99619111d0d1570512ce693a9f97",
+        "after": "624b50b25d59c696db5dd9bb93b558469e3e6cfc421bff3002fbb6687734e715"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/branch-metadata/get-sync-20261031-base",
+        "refs/branch-metadata/get-sync-20261031-child",
+        "refs/branch-metadata/get-sync-20261031-sibling",
+        "refs/branch-metadata/get-sync-20261031-tip"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "main",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": true,
+      "readmeBytesPreserved": true,
+      "terminal": "Sync updates trunk and PR info; use an get to refresh feature heads from remote.\r\n🌲 Pulling main from remote...\r\nmain is up to date.\r\n🧹 Checking if any branches have been merged/closed and can be deleted...\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "s12-restack-gt",
+      "evidenceId": "ev_cdb376324e08ab5cc42c8598df54b3f0914e72c8479944acc1f124aa3a69e4a8",
+      "sourceSHA256": {
+        "capture": "68ea303ad7d5bc663f41c03158064e43be80617b91f8476b985d2ee331066ea8",
+        "before": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6",
+        "after": "5b6f17d55cb2137478122e4c9ddd021f598f9db4b7cc8135878306f760fa3be6"
+      },
+      "argv": [
+        "sync",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "5e2af2e918e602e950d832a83316c8bdc793d553",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child",
+        "refs/heads/get-sync-20261031-tip"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "main",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": true,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced get-sync-20261031-child (PR #14 v3) from remote (previously at 67a223e6c85bbf39779af6d2ed58c1bbd840cebc).\r\nBranch get-sync-20261031-tip is up to date with remote, but the current remote version was not pushed with Graphite.\r\nBranch get-sync-20261031-sibling is up to date with remote, but the current remote version was not pushed with Graphite.\r\n\r\n🥞 Restacking branches...\r\nget-sync-20261031-base does not need to be restacked on main.\r\nget-sync-20261031-child does not need to be restacked on get-sync-20261031-base.\r\nget-sync-20261031-sibling does not need to be restacked on get-sync-20261031-base.\r\nRestacked get-sync-20261031-tip on get-sync-20261031-child.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "p11-dirty-gt",
+      "evidenceId": "ev_f8be8b165097d6c58e9e3a67bd422135d1f2d8d1c4d50e3c5f47d2b3238b7083",
+      "sourceSHA256": {
+        "capture": "c03abd1d28276d8fac08985186d1354eb13896438a0cdb57f2278f5b1b9f5f20",
+        "before": "28596aced084a7d54431dd699e6296035006967d3eb9364c9e5e814d19cf5516",
+        "after": "278b5acaa0f91e14e7c5175efc8a0366c217f96d76e75416c94e856a5e6103a1"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-child",
+      "statusBefore": "M README.md",
+      "statusAfter": "M README.md",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced get-sync-20261031-child (PR #14 v3) from remote (previously at 67a223e6c85bbf39779af6d2ed58c1bbd840cebc).\r\n\r\nChecked out get-sync-20261031-child.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "p11-dirty-an",
+      "evidenceId": "ev_fe7c2f04969d2f506f58df23da6dacdb6c37007a58c67a54051e89490e1833e9",
+      "sourceSHA256": {
+        "capture": "c0e63c1a442a12d539f43b8fd779a6fcdb6361e6346d3c28af431adef020055c",
+        "before": "e9ba7c32cd8cc67c3186abf5eb8124c05483472ed7f1195a35634af7535d6ce3",
+        "after": "e9ba7c32cd8cc67c3186abf5eb8124c05483472ed7f1195a35634af7535d6ce3"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "main",
+      "statusBefore": "M README.md",
+      "statusAfter": "M README.md",
+      "rawIndexBytesEqual": true,
+      "workingFilesEqual": true,
+      "readmeBytesPreserved": true,
+      "terminal": "get-sync-20261031-base is up to date.\r\nERROR: There are tracked changes that have not been committed. Please resolve and then retry.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "p12-frozen-gt",
+      "evidenceId": "ev_a6142d10ee757c7a09b458e0a2ea4e29292611c13a2b022496f4855d9a12031d",
+      "sourceSHA256": {
+        "capture": "ec7507479e0ed92e8882c60218bc75f207496781e509ee89baa6f0a90f548259",
+        "before": "8d8d97d9eefe3caf1d3a0e6c2c46aa25e6b0057d17b4423b3ffea4ecd756b736",
+        "after": "892f1960a3195ad6e9ef4913e33f39bf13b92c2974dff4e811d68e469bf6aadd"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-child",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced get-sync-20261031-child (PR #14 v3) from remote (previously at 67a223e6c85bbf39779af6d2ed58c1bbd840cebc).\r\n\r\nChecked out get-sync-20261031-child.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "p12-frozen-an",
+      "evidenceId": "ev_2773ccc2ae25fabcb347cb7b2110145e91fe05348f9b7ea9ab0fc18ca5a9a034",
+      "sourceSHA256": {
+        "capture": "218ca5bef3eef069c1262eaa435460a88d62d4f87c0d064c0e315684c38f30d3",
+        "before": "9beaaab5d9c5b8cb040183cc6a737a7d80da61cbea63029f734b987296a155d8",
+        "after": "178b7edf2ff01777c924b187728e07fd1de8b81bacf0d7306ac67975a43ebc62"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [
+        "refs/heads/get-sync-20261031-child"
+      ],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-child",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "get-sync-20261031-base is up to date.\r\nSynced get-sync-20261031-child from remote.\r\nLocal children may need to be restacked.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "p13-occupied-gt",
+      "evidenceId": "ev_fb4d487c778def314429a943b2f07f5d7a3c9cd40eff2fbfb1fea666ad31e6e5",
+      "sourceSHA256": {
+        "capture": "1dab895b3c8da312c1a93124f808c419a59aae18668955011ec8ed0abb23739c",
+        "before": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6",
+        "after": "7627106fd35a7c5e309bc50be34d678271ff0aceda2a9df153818ecfb790ca81"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "main",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": true,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSkipped syncing branch get-sync-20261031-child because it is checked out in another worktree.\r\n\r\nfatal: 'get-sync-20261031-child' is already used by worktree at '/private/tmp/anthracite-get-sync-research-20261031/occupied/p13-occupied-gt'\r\nERROR: Command failed with error exit code 128:\r\ngit switch -q get-sync-20261031-child\r\n\r\nfatal: 'get-sync-20261031-child' is already used by worktree at '/private/tmp/anthracite-get-sync-research-20261031/occupied/p13-occupied-gt'\r\n \r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "p13-occupied-an",
+      "evidenceId": "ev_464459b1a43c15b22ca4e26c04a5719ae295a9007d490bdb093a26595018888b",
+      "sourceSHA256": {
+        "capture": "c793e4616908e3d4772f8f6e2f8e433ae33f2ea6a563003a1b46ed5bd184188a",
+        "before": "899bf19670d8963403f35f3096e2699b6b0c99619111d0d1570512ce693a9f97",
+        "after": "899bf19670d8963403f35f3096e2699b6b0c99619111d0d1570512ce693a9f97"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "main",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": true,
+      "workingFilesEqual": true,
+      "readmeBytesPreserved": true,
+      "terminal": "get-sync-20261031-base is up to date.\r\nERROR: Command failed with error exit code 128:\r\ngit switch --no-overwrite-ignore get-sync-20261031-child\r\n\r\nfatal: 'get-sync-20261031-child' is already used by worktree at '/private/tmp/anthracite-get-sync-research-20261031/occupied/p13-occupied-an'\r\n\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "d11-feature-gt",
+      "evidenceId": "ev_80c0ac5d13f3561c1dc448c3414783786546e77f7c6b789697ae80fb0cf0209d",
+      "sourceSHA256": {
+        "capture": "1add811d84a762e0088c16aabe27bb8946e3251ae0f8ec89316b8d7024bf9480",
+        "before": "f3cd116867661794aa3c8b9ff0765ca6d72ed2efdffb7f1eee6ec1a05d21a263",
+        "after": "55bc681abac1b990e26d7c3749bf9eed1544694fa6d065f7169df952d4602225"
+      },
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "62397efcd870603a0b94cacf7f24d19d91373fa7",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "62397efcd870603a0b94cacf7f24d19d91373fa7",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "get-sync-20261031-child",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": false,
+      "workingFilesEqual": false,
+      "readmeBytesPreserved": true,
+      "terminal": "🌲 Fetching branches from remote...\r\n\u001b7Running git fetch: [----------------------------------------] 0% | InitializingRunning git fetch: [========================================] 100% | Done\u001b8\r\nmain is up to date.\r\n\r\n🔄 Syncing branches...\r\nBranch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.\r\nWARNING: Non-interactive mode: skipping get-sync-20261031-child as it is out of date with remote but --force was not provided.\r\n\r\nChecked out get-sync-20261031-child.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    },
+    {
+      "name": "d11-feature-an",
+      "evidenceId": "ev_3e46b0c890f889e863487fea92c9d5cef9e2f594ed06485873359f6573eb7b86",
+      "sourceSHA256": {
+        "capture": "7771c03c3ca18c16c2f204a9aa81b9d4ca466f0f93f0aaf43659d2da85d2b9fe",
+        "before": "8babd81d466f5d79bec151812b045a0eca36335bf62a7bdc777168aebe787208",
+        "after": "8babd81d466f5d79bec151812b045a0eca36335bf62a7bdc777168aebe787208"
+      },
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "selectedExecutableSha256": "27db838bb204ef7c21df2931f5656e4c8fb32e6e947f363a402b49714d32b5b1",
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "localHeadsBefore": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "08d70aa519351c3907dd39ac3581312fc9cb9a73",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "localHeadsAfter": {
+        "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "refs/heads/get-sync-20261031-child": "08d70aa519351c3907dd39ac3581312fc9cb9a73",
+        "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+      },
+      "changedRecordedRefs": [],
+      "checkoutBefore": "main",
+      "checkoutAfter": "main",
+      "statusBefore": "",
+      "statusAfter": "",
+      "rawIndexBytesEqual": true,
+      "workingFilesEqual": true,
+      "readmeBytesPreserved": true,
+      "terminal": "get-sync-20261031-base is up to date.\r\nget-sync-20261031-child shares a name with a local branch, and they have the same parent.\r\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\r\nYou can also abort the command entirely and keep your local state as is.\r\nERROR: Local branch get-sync-20261031-child has diverged from remote. Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.\r\n",
+      "truncated": false,
+      "limitations": [
+        "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+        "Process trees are sampled and may omit short-lived descendants.",
+        "Filesystem observations are before/after snapshots, not syscall traces.",
+        "Inherited host environment variables are not recorded and may affect results."
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "left": "g11-known-upstack-gt",
+      "right": "g11-known-upstack-an",
+      "localHeadsEqual": true,
+      "parentRelationsEqual": true,
+      "treesEqual": true,
+      "checkoutEqual": true,
+      "statusEqual": true,
+      "workingFileHashesEqual": true,
+      "rawIndexBytesEqual": false
+    },
+    {
+      "left": "g13-remote-gt",
+      "right": "g13-remote-an",
+      "localHeadsEqual": true,
+      "parentRelationsEqual": true,
+      "treesEqual": true,
+      "checkoutEqual": true,
+      "statusEqual": true,
+      "workingFileHashesEqual": true,
+      "rawIndexBytesEqual": false
+    },
+    {
+      "left": "g14-checkout-gt",
+      "right": "g14-checkout-an",
+      "localHeadsEqual": true,
+      "parentRelationsEqual": true,
+      "treesEqual": true,
+      "checkoutEqual": true,
+      "statusEqual": true,
+      "workingFileHashesEqual": true,
+      "rawIndexBytesEqual": false
+    },
+    {
+      "left": "s11-refresh-gt",
+      "right": "s11-refresh-an",
+      "localHeadsEqual": true,
+      "parentRelationsEqual": true,
+      "treesEqual": true,
+      "checkoutEqual": true,
+      "statusEqual": true,
+      "workingFileHashesEqual": true,
+      "rawIndexBytesEqual": false
+    },
+    {
+      "left": "p11-dirty-gt",
+      "right": "p11-dirty-an",
+      "localHeadsEqual": true,
+      "parentRelationsEqual": true,
+      "treesEqual": true,
+      "checkoutEqual": true,
+      "statusEqual": true,
+      "workingFileHashesEqual": true,
+      "rawIndexBytesEqual": false
+    },
+    {
+      "left": "p12-frozen-gt",
+      "right": "p12-frozen-an",
+      "localHeadsEqual": true,
+      "parentRelationsEqual": true,
+      "treesEqual": true,
+      "checkoutEqual": true,
+      "statusEqual": true,
+      "workingFileHashesEqual": true,
+      "rawIndexBytesEqual": false
+    },
+    {
+      "left": "p13-occupied-gt",
+      "right": "p13-occupied-an",
+      "localHeadsEqual": true,
+      "parentRelationsEqual": true,
+      "treesEqual": true,
+      "checkoutEqual": true,
+      "statusEqual": true,
+      "workingFileHashesEqual": true,
+      "rawIndexBytesEqual": false
+    },
+    {
+      "left": "d11-feature-gt",
+      "right": "d11-feature-an",
+      "localHeadsEqual": false,
+      "parentRelationsEqual": true,
+      "treesEqual": false,
+      "checkoutEqual": true,
+      "statusEqual": true,
+      "workingFileHashesEqual": true,
+      "rawIndexBytesEqual": false
+    }
+  ],
+  "nativeFrozenAfter": {
+    "scope": "Independent AFTER-state read only; no invented BEFORE columns",
+    "sqlitePath": "/private/tmp/anthracite-get-sync-research-20261031/cases/p12-frozen-gt/.git/.graphite_metadata.db",
+    "openMode": "ro",
+    "schema": "CREATE TABLE \"branch_metadata\" (\"branch_name\" text not null primary key, \"parent_branch_name\" text, \"parent_branch_revision\" text, \"last_submitted_version\" text, \"state\" text, \"children\" text, \"branch_revision\" text, \"validation_result\" text, \"parent_head_revision\" text)",
+    "rows": [
+      {
+        "branch_name": "get-sync-20261031-base",
+        "parent_branch_name": "main",
+        "state": "frozen",
+        "branch_revision": "7f7b701608c6d927927ca0bca4a18ae81594b7a0"
+      },
+      {
+        "branch_name": "get-sync-20261031-child",
+        "parent_branch_name": "get-sync-20261031-base",
+        "state": "frozen",
+        "branch_revision": "df5b85e83f4336c7be04531c936086466239200b"
+      }
+    ],
+    "databaseSha256Before": "c51de0297077df3ea2761dc4697387f948ba8cc93e87c7fc8db27607c96775e9",
+    "databaseSha256After": "c51de0297077df3ea2761dc4697387f948ba8cc93e87c7fc8db27607c96775e9",
+    "databaseBytesUnchanged": true,
+    "beforeFrozenEvidence": "p12-frozen-gt-before.json already records state=frozen for base and child",
+    "afterSnapshot": "p12-frozen-gt-after.json"
+  },
+  "localContentProofs": {
+    "restack": [
+      {
+        "case": "g15-restack-gt",
+        "oldTip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "newTip": "ce781654364b5e5a57eba3414663674633ecda26",
+        "treeAfter": "854f56c23dec5bce9bae3d87994b3b77a25e7f25",
+        "tipFileBlobPreserved": true,
+        "childFileBlobMatchesUpdatedChild": true,
+        "changedPaths": "M\tfixtures/get-sync-20261031/child.txt"
+      },
+      {
+        "case": "s12-restack-gt",
+        "oldTip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "newTip": "5e2af2e918e602e950d832a83316c8bdc793d553",
+        "treeAfter": "854f56c23dec5bce9bae3d87994b3b77a25e7f25",
+        "tipFileBlobPreserved": true,
+        "childFileBlobMatchesUpdatedChild": true,
+        "changedPaths": "M\tfixtures/get-sync-20261031/child.txt"
+      }
+    ],
+    "divergence": [
+      {
+        "case": "d11-feature-gt",
+        "localChild": "62397efcd870603a0b94cacf7f24d19d91373fa7",
+        "parent": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "subject": "test: retain local-only parity input [skip ci]",
+        "changedPaths": "A\tlocal-only.txt",
+        "localCommitAndTreePreserved": true
+      },
+      {
+        "case": "d11-feature-an",
+        "localChild": "08d70aa519351c3907dd39ac3581312fc9cb9a73",
+        "parent": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+        "subject": "test: retain local-only parity input [skip ci]",
+        "changedPaths": "A\tlocal-only.txt",
+        "localCommitAndTreePreserved": true
+      }
+    ],
+    "frozenAn": {
+      "base": {
+        "frozen": true,
+        "parent": "main"
+      },
+      "child": {
+        "frozen": true,
+        "parent": "get-sync-20261031-base"
+      }
+    },
+    "remoteChildAdvance": {
+      "old": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+      "next": "df5b85e83f4336c7be04531c936086466239200b",
+      "oldIsAncestorOfNext": true
+    }
+  },
+  "s11AuthenticOpenAssociations": {
+    "get-sync-20261031-base": {
+      "number": 13,
+      "state": "OPEN",
+      "base": "main"
+    },
+    "get-sync-20261031-child": {
+      "number": 14,
+      "state": "OPEN",
+      "base": "get-sync-20261031-base"
+    },
+    "get-sync-20261031-sibling": {
+      "number": 16,
+      "state": "OPEN",
+      "base": "get-sync-20261031-base"
+    },
+    "get-sync-20261031-tip": {
+      "number": 15,
+      "state": "OPEN",
+      "base": "get-sync-20261031-child"
+    }
+  },
+  "realGhShimSha256": "4ee8f5c363b9eeca76600565270a158b3f564fa46240355a3b01c3f64e379e10",
+  "realGhShimInterpretation": "Shell wrapper directly execs real /opt/homebrew/bin/gh and restores real HOME/GH_CONFIG_DIR for existing credentials; it contains no API response substitution.",
+  "scopeLimits": [
+    "Snapshots record local heads plus Anthracite metadata refs, not every Git ref or every recovery/cache/config file.",
+    "Only the requesting worktree has captured file/index snapshots in P13; other-worktree whole-state preservation is not established.",
+    "Raw indexes differ between tools before every comparison; compare within each case only.",
+    "S11 Anthracite explicitly disables restack; S12 is not a paired default-v-default runtime comparison.",
+    "D11 local-only commits/trees differ intentionally while sharing parent67a and adding local-only.txt.",
+    "Current frozen database inspection establishes AFTER state only; BEFORE frozen values come from the retained before snapshot.",
+    "GH-seeded unsubmitted remote-only discovery remains unknown, not a Graphite defect."
+  ]
+}

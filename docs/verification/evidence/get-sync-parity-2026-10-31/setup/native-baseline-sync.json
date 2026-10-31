@@ -1,0 +1,1018 @@
+{
+  "evidence_id": "ev_07d749ca496199e7869a1240e39d5e09f49934255ae8ff20760ebc37b8d44d01",
+  "subject": null,
+  "provider": {
+    "id": "rea-process",
+    "name": "REA process capture",
+    "version": "3"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.process-capture",
+  "operation": "capture_process_scenario",
+  "parameters": {
+    "executable_name": "gt",
+    "argument_count": 6,
+    "event_count": 0,
+    "filesystem_observation_path_count": 0,
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    }
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "manifest": {
+      "rea_version": "6.7.0",
+      "provider_version": "3",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "pty_backend": "node-pty",
+      "started_at": "2026-10-31T08:20:40.464Z",
+      "completed_at": "2026-10-31T08:20:42.902Z",
+      "scenario": {
+        "executable": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+        "arguments": [
+          "get",
+          "get-sync-20261031-child",
+          "--force",
+          "--downstack",
+          "--no-restack",
+          "--no-interactive"
+        ],
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/baselines/gt",
+        "environment": {
+          "PATH": "/private/tmp/anthracite-get-sync-research-20261031/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/cache",
+          "GH_CONFIG_DIR": "/Users/danielbaars/.config/gh",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0",
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_EDITOR": "true",
+          "GIT_SEQUENCE_EDITOR": "true"
+        },
+        "filesystem_observation_paths": [],
+        "terminal": {
+          "columns": 140,
+          "rows": 30,
+          "scrollback": 150
+        },
+        "events": [],
+        "timeout_ms": 45000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 150,
+        "limits": {
+          "output_bytes": 24000,
+          "files": 10000,
+          "file_bytes": 10000000,
+          "processes": 60,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "finalization_ms": 1000,
+        "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f"
+      },
+      "comparison_contract": {
+        "working_directory": "/private/tmp/anthracite-get-sync-research-20261031/baselines/gt",
+        "environment": {
+          "PATH": "/private/tmp/anthracite-get-sync-research-20261031/bin:/Users/danielbaars/.nvm/versions/node/v24.19.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+          "HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home",
+          "XDG_CONFIG_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/config",
+          "XDG_CACHE_HOME": "/private/tmp/anthracite-get-sync-research-20261031/private-runtime/home/cache",
+          "GH_CONFIG_DIR": "/Users/danielbaars/.config/gh",
+          "TERM": "dumb",
+          "NO_COLOR": "1",
+          "GRAPHITE_DISABLE_TELEMETRY": "1",
+          "GRAPHITE_DISABLE_UPGRADE_PROMPT": "1",
+          "GRAPHITE_DISABLE_SURVEY": "1",
+          "GIT_TERMINAL_PROMPT": "0",
+          "GIT_OPTIONAL_LOCKS": "0",
+          "GIT_EDITOR": "true",
+          "GIT_SEQUENCE_EDITOR": "true"
+        },
+        "ambient_environment": "unknown",
+        "filesystem_observation_paths": [],
+        "terminal": {
+          "columns": 140,
+          "rows": 30,
+          "scrollback": 150
+        },
+        "events": [],
+        "timeout_ms": 45000,
+        "idle_timeout_ms": 30000,
+        "settle_ms": 150,
+        "finalization_ms": 1000,
+        "limits": {
+          "output_bytes": 24000,
+          "files": 10000,
+          "file_bytes": 10000000,
+          "processes": 60,
+          "filesystem_depth": 16
+        },
+        "normalization": {
+          "paths": false,
+          "pids": true,
+          "ports": true,
+          "time_bucket_ms": 10,
+          "patterns": []
+        },
+        "port_normalization_version": "contextual-endpoints-v2",
+        "rendered_line_format": "trailing-spaces-trimmed-v1"
+      },
+      "full_scenario_sha256": "ca3a70662e50717a1ec2f995b65b748f96c455ab67166e3aef90d1303e658f77",
+      "comparison_contract_sha256": "5f54c973393778599daf6dff3a2404c3973b9ca84d0419d3162523967585979b",
+      "selected_executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+      "executable_identity": {
+        "state": "path_metadata_unchanged",
+        "reason": null
+      },
+      "normalization_sha256": "5c58aa1aa890197f15f9c59ef755d01120e6e07f356fa1ef2f20787e63b6fa87"
+    },
+    "normalization": {
+      "paths": false,
+      "pids": true,
+      "ports": true,
+      "time_bucket_ms": 10,
+      "patterns": []
+    },
+    "frames": [
+      {
+        "sequence": 0,
+        "at_ms": 1310,
+        "data": "\u001b[94m🌲 Fetching branches from remote...\u001b[39m\r\n"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 2030,
+        "data": "\u001b[32mmain\u001b[39m is up to date.\r\n"
+      },
+      {
+        "sequence": 2,
+        "at_ms": 2030,
+        "data": "\r\n"
+      },
+      {
+        "sequence": 3,
+        "at_ms": 2030,
+        "data": "\u001b[94m🔄 Syncing branches...\u001b[39m\r\n"
+      },
+      {
+        "sequence": 4,
+        "at_ms": 2090,
+        "data": "Branch \u001b[32mget-sync-20261031-base\u001b[39m is up to date with remote, but the current remote version was not pushed with Graphite.\r\n"
+      },
+      {
+        "sequence": 5,
+        "at_ms": 2190,
+        "data": "Synced \u001b[32mget-sync-20261031-child\u001b[39m (\u001b[36mPR #14 v2\u001b[39m) from remote (previously at \u001b[33m0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f\u001b[39m).\r\n"
+      },
+      {
+        "sequence": 6,
+        "at_ms": 2190,
+        "data": "\r\n"
+      },
+      {
+        "sequence": 7,
+        "at_ms": 2200,
+        "data": "Checked out \u001b[36mget-sync-20261031-child\u001b[39m.\r\n"
+      }
+    ],
+    "rendered_frames": [
+      {
+        "sequence": 0,
+        "at_ms": 1310,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 1,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\u001b[1B\u001b[34D\u001b[0m"
+      },
+      {
+        "sequence": 1,
+        "at_ms": 2030,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 2,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\u001b[1B\u001b[19D"
+      },
+      {
+        "sequence": 2,
+        "at_ms": 2030,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 3,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\u001b[2B\u001b[19D"
+      },
+      {
+        "sequence": 3,
+        "at_ms": 2030,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 4,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\u001b[1B\u001b[21D\u001b[0m"
+      },
+      {
+        "sequence": 4,
+        "at_ms": 2090,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 5,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\u001b[1B\u001b[117D"
+      },
+      {
+        "sequence": 5,
+        "at_ms": 2190,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 6,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "Synced get-sync-20261031-child (PR #14 v2) from remote (previously at 0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f).",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced \u001b[32mget-sync-20261031-child\u001b[0m (\u001b[36mPR #14 v2\u001b[0m) from remote (previously at \u001b[33m0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f\u001b[0m).\u001b[1B\u001b[112D"
+      },
+      {
+        "sequence": 6,
+        "at_ms": 2190,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 7,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "Synced get-sync-20261031-child (PR #14 v2) from remote (previously at 0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f).",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced \u001b[32mget-sync-20261031-child\u001b[0m (\u001b[36mPR #14 v2\u001b[0m) from remote (previously at \u001b[33m0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f\u001b[0m).\u001b[2B\u001b[112D"
+      },
+      {
+        "sequence": 7,
+        "at_ms": 2200,
+        "columns": 140,
+        "rows": 30,
+        "cursor_x": 0,
+        "cursor_y": 8,
+        "active_buffer": "normal",
+        "lines": [
+          "🌲 Fetching branches from remote...",
+          "main is up to date.",
+          "",
+          "🔄 Syncing branches...",
+          "Branch get-sync-20261031-base is up to date with remote, but the current remote version was not pushed with Graphite.",
+          "Synced get-sync-20261031-child (PR #14 v2) from remote (previously at 0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f).",
+          "",
+          "Checked out get-sync-20261031-child.",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "serialized_state": "\u001b[94m🌲 Fetching branches from remote...\r\n\u001b[32mmain\u001b[0m is up to date.\r\n\r\n\u001b[94m🔄 Syncing branches...\r\n\u001b[0mBranch \u001b[32mget-sync-20261031-base\u001b[0m is up to date with remote, but the current remote version was not pushed with Graphite.\r\nSynced \u001b[32mget-sync-20261031-child\u001b[0m (\u001b[36mPR #14 v2\u001b[0m) from remote (previously at \u001b[33m0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f\u001b[0m).\r\n\r\nChecked out \u001b[36mget-sync-20261031-child\u001b[0m.\u001b[1B\u001b[36D"
+      }
+    ],
+    "interaction_events": [],
+    "exit": {
+      "code": 0,
+      "signal": 0,
+      "reason": "exited"
+    },
+    "settlement": {
+      "state": "quiesced",
+      "elapsed_ms": 144,
+      "cleanup_outcome": "not_required"
+    },
+    "process_samples": [
+      {
+        "at_ms": 160,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt get get-sync-20261031-child --force --downstack --no-restack --no-interactive",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 350,
+        "pid": 3,
+        "parent_pid": 1,
+        "command": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt /snapshot/dist/graphite.js background cleanup-debug-logs",
+        "process_group_id": 3,
+        "session_id": null
+      },
+      {
+        "at_ms": 400,
+        "pid": 3,
+        "parent_pid": 1,
+        "command": "(gt)",
+        "process_group_id": 3,
+        "session_id": null
+      },
+      {
+        "at_ms": 1340,
+        "pid": 4,
+        "parent_pid": 1,
+        "command": "/Library/Developer/CommandLineTools/usr/bin/git fetch --no-write-fetch-head --progress --no-tags -f origin refs/heads/main:refs/gt-fetch-head/main refs/heads/get-sync-20261031-base:refs/gt-fetch-head/get-sync-20261031-base refs/heads/get-sync-20261031-child:refs/gt-fetch-head/get-sync-20261031-child",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1340,
+        "pid": 5,
+        "parent_pid": 4,
+        "command": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git remote-https origin https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21.git",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1340,
+        "pid": 6,
+        "parent_pid": 5,
+        "command": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git-remote-https origin https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21.git",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1540,
+        "pid": 7,
+        "parent_pid": 6,
+        "command": "/opt/homebrew/bin/gh auth git-credential get",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1590,
+        "pid": 7,
+        "parent_pid": 6,
+        "command": "(gh)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1590,
+        "pid": 8,
+        "parent_pid": 7,
+        "command": "(security)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1800,
+        "pid": 9,
+        "parent_pid": 6,
+        "command": "(bash)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1950,
+        "pid": 4,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1950,
+        "pid": 5,
+        "parent_pid": 4,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 1950,
+        "pid": 6,
+        "parent_pid": 5,
+        "command": "(git-remote-http)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2000,
+        "pid": 10,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2050,
+        "pid": 11,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2100,
+        "pid": 12,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2150,
+        "pid": 13,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2200,
+        "pid": 14,
+        "parent_pid": 1,
+        "command": "(git)",
+        "process_group_id": 1,
+        "session_id": null
+      },
+      {
+        "at_ms": 2250,
+        "pid": 1,
+        "parent_pid": 2,
+        "command": "(gt)",
+        "process_group_id": 1,
+        "session_id": null
+      }
+    ],
+    "filesystem_checkpoints": [
+      {
+        "name": "before",
+        "at_ms": 0,
+        "files": [],
+        "effects": [],
+        "truncated": false
+      },
+      {
+        "name": "after_settlement",
+        "at_ms": 2438,
+        "files": [],
+        "effects": [],
+        "truncated": false
+      }
+    ],
+    "event_journal": [
+      {
+        "capture_order": 0,
+        "collection": "filesystem_checkpoints",
+        "index": 0
+      },
+      {
+        "capture_order": 1,
+        "collection": "process_samples",
+        "index": 0
+      },
+      {
+        "capture_order": 2,
+        "collection": "process_samples",
+        "index": 1
+      },
+      {
+        "capture_order": 3,
+        "collection": "process_samples",
+        "index": 2
+      },
+      {
+        "capture_order": 4,
+        "collection": "frames",
+        "index": 0
+      },
+      {
+        "capture_order": 5,
+        "collection": "rendered_frames",
+        "index": 0
+      },
+      {
+        "capture_order": 6,
+        "collection": "process_samples",
+        "index": 3
+      },
+      {
+        "capture_order": 7,
+        "collection": "process_samples",
+        "index": 4
+      },
+      {
+        "capture_order": 8,
+        "collection": "process_samples",
+        "index": 5
+      },
+      {
+        "capture_order": 9,
+        "collection": "process_samples",
+        "index": 6
+      },
+      {
+        "capture_order": 10,
+        "collection": "process_samples",
+        "index": 7
+      },
+      {
+        "capture_order": 11,
+        "collection": "process_samples",
+        "index": 8
+      },
+      {
+        "capture_order": 12,
+        "collection": "process_samples",
+        "index": 9
+      },
+      {
+        "capture_order": 13,
+        "collection": "process_samples",
+        "index": 10
+      },
+      {
+        "capture_order": 14,
+        "collection": "process_samples",
+        "index": 11
+      },
+      {
+        "capture_order": 15,
+        "collection": "process_samples",
+        "index": 12
+      },
+      {
+        "capture_order": 16,
+        "collection": "frames",
+        "index": 1
+      },
+      {
+        "capture_order": 17,
+        "collection": "frames",
+        "index": 2
+      },
+      {
+        "capture_order": 18,
+        "collection": "frames",
+        "index": 3
+      },
+      {
+        "capture_order": 19,
+        "collection": "rendered_frames",
+        "index": 1
+      },
+      {
+        "capture_order": 20,
+        "collection": "rendered_frames",
+        "index": 2
+      },
+      {
+        "capture_order": 21,
+        "collection": "rendered_frames",
+        "index": 3
+      },
+      {
+        "capture_order": 22,
+        "collection": "process_samples",
+        "index": 13
+      },
+      {
+        "capture_order": 23,
+        "collection": "frames",
+        "index": 4
+      },
+      {
+        "capture_order": 24,
+        "collection": "rendered_frames",
+        "index": 4
+      },
+      {
+        "capture_order": 25,
+        "collection": "process_samples",
+        "index": 14
+      },
+      {
+        "capture_order": 26,
+        "collection": "process_samples",
+        "index": 15
+      },
+      {
+        "capture_order": 27,
+        "collection": "frames",
+        "index": 5
+      },
+      {
+        "capture_order": 28,
+        "collection": "frames",
+        "index": 6
+      },
+      {
+        "capture_order": 29,
+        "collection": "rendered_frames",
+        "index": 5
+      },
+      {
+        "capture_order": 30,
+        "collection": "rendered_frames",
+        "index": 6
+      },
+      {
+        "capture_order": 31,
+        "collection": "process_samples",
+        "index": 16
+      },
+      {
+        "capture_order": 32,
+        "collection": "frames",
+        "index": 7
+      },
+      {
+        "capture_order": 33,
+        "collection": "rendered_frames",
+        "index": 7
+      },
+      {
+        "capture_order": 34,
+        "collection": "process_samples",
+        "index": 17
+      },
+      {
+        "capture_order": 35,
+        "collection": "lifecycle",
+        "index": 0
+      },
+      {
+        "capture_order": 36,
+        "collection": "process_samples",
+        "index": 18
+      },
+      {
+        "capture_order": 37,
+        "collection": "lifecycle",
+        "index": 1
+      },
+      {
+        "capture_order": 38,
+        "collection": "filesystem_checkpoints",
+        "index": 1
+      }
+    ],
+    "files_before": [],
+    "files_after": [],
+    "filesystem_effects": [],
+    "truncated": false,
+    "truncation_details": {
+      "raw_terminal": {
+        "budget_bytes": 24000,
+        "observed_bytes": 441,
+        "retained_bytes": 441,
+        "observed_frames": 8,
+        "retained_frames": 8
+      },
+      "rendered_terminal": {
+        "budget_bytes": 24000,
+        "observed_bytes": 3183,
+        "retained_bytes": 3183,
+        "observed_frames": 8,
+        "retained_frames": 8
+      },
+      "normalized_terminal": {
+        "budget_bytes": 24000,
+        "retained_bytes": 441,
+        "omitted_frames": 0
+      },
+      "filesystem_before": {
+        "files_limit": 10000,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 10000000,
+        "hashed_bytes": 0,
+        "hash_omissions": []
+      },
+      "filesystem_after": {
+        "files_limit": 10000,
+        "depth_limit": 16,
+        "enumeration_truncated": false,
+        "enumeration_reasons": [],
+        "enumeration_omissions": [],
+        "hash_budget_bytes": 10000000,
+        "hashed_bytes": 0,
+        "hash_omissions": []
+      },
+      "process": {
+        "sample_limit": 60,
+        "sampling_partial": false,
+        "retained_samples": 19,
+        "sample_limit_reached": false,
+        "sampling_failures": 0,
+        "first_sampling_failure": null,
+        "coverage": "sampled"
+      }
+    },
+    "limitations": [
+      "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+      "Process trees are sampled and may omit short-lived descendants.",
+      "Filesystem observations are before/after snapshots, not syscall traces.",
+      "Inherited host environment variables are not recorded and may affect results.",
+      "No filesystem observation paths were selected; filesystem effects remain unknown."
+    ],
+    "residual_unknowns": [
+      {
+        "scope": "process",
+        "reason": "Process trees are sampled and may omit short-lived descendants."
+      },
+      {
+        "scope": "process",
+        "reason": "The executable digest is a prelaunch file sample; operating-system image binding is not atomically observed."
+      },
+      {
+        "scope": "environment",
+        "reason": "Inherited host environment variables are not recorded."
+      },
+      {
+        "scope": "network",
+        "reason": "Network activity is not observed by this capture."
+      },
+      {
+        "scope": "filesystem",
+        "reason": "No filesystem observation paths were selected; filesystem effects remain unknown."
+      }
+    ],
+    "cleanup": {
+      "owned_process_group": "verified",
+      "temporary_root": "removed"
+    }
+  },
+  "confidence": "observed",
+  "authority": "controlled-replay",
+  "environment": {
+    "id": "darwin-arm64",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "isolation": "process"
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "The executable digest is a prelaunch file sample; matching path metadata immediately after spawn does not prove an atomic operating-system image binding.",
+    "Process trees are sampled and may omit short-lived descendants.",
+    "Filesystem observations are before/after snapshots, not syscall traces.",
+    "Inherited host environment variables are not recorded and may affect results.",
+    "No filesystem observation paths were selected; filesystem effects remain unknown."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

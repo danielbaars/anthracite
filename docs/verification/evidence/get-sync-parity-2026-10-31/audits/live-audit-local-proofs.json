@@ -1,0 +1,55 @@
+{
+  "restack": [
+    {
+      "case": "g15-restack-gt",
+      "oldTip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+      "newTip": "ce781654364b5e5a57eba3414663674633ecda26",
+      "treeAfter": "854f56c23dec5bce9bae3d87994b3b77a25e7f25",
+      "tipFileBlobPreserved": true,
+      "childFileBlobMatchesUpdatedChild": true,
+      "changedPaths": "M\tfixtures/get-sync-20261031/child.txt"
+    },
+    {
+      "case": "s12-restack-gt",
+      "oldTip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+      "newTip": "5e2af2e918e602e950d832a83316c8bdc793d553",
+      "treeAfter": "854f56c23dec5bce9bae3d87994b3b77a25e7f25",
+      "tipFileBlobPreserved": true,
+      "childFileBlobMatchesUpdatedChild": true,
+      "changedPaths": "M\tfixtures/get-sync-20261031/child.txt"
+    }
+  ],
+  "divergence": [
+    {
+      "case": "d11-feature-gt",
+      "localChild": "62397efcd870603a0b94cacf7f24d19d91373fa7",
+      "parent": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+      "subject": "test: retain local-only parity input [skip ci]",
+      "changedPaths": "A\tlocal-only.txt",
+      "localCommitAndTreePreserved": true
+    },
+    {
+      "case": "d11-feature-an",
+      "localChild": "08d70aa519351c3907dd39ac3581312fc9cb9a73",
+      "parent": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+      "subject": "test: retain local-only parity input [skip ci]",
+      "changedPaths": "A\tlocal-only.txt",
+      "localCommitAndTreePreserved": true
+    }
+  ],
+  "frozenAn": {
+    "base": {
+      "frozen": true,
+      "parent": "main"
+    },
+    "child": {
+      "frozen": true,
+      "parent": "get-sync-20261031-base"
+    }
+  },
+  "remoteChildAdvance": {
+    "old": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+    "next": "df5b85e83f4336c7be04531c936086466239200b",
+    "oldIsAncestorOfNext": true
+  }
+}

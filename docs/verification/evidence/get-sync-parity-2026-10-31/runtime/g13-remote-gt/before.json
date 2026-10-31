@@ -1,0 +1,32 @@
+{
+  "head": "690c12f1986207222fb3541c972001c93b258791",
+  "branch": "main",
+  "refs": {
+    "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+    "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+  },
+  "status": "",
+  "indexSHA256": "57f07dec3b6c63832f5bdcfc635839faed928021ccd6a1caf3e2ac82a4692c56",
+  "trees": {
+    "base": "2af6fc7379a063b32bfafdf70801575b3c58d7bd",
+    "child": "02025da38df9b9200951369f581884ed47f8a925"
+  },
+  "parents": {
+    "get-sync-20261031-base": {
+      "parent": "main",
+      "state": null
+    },
+    "get-sync-20261031-child": {
+      "parent": "get-sync-20261031-base",
+      "state": null
+    },
+    "main": {
+      "parent": null,
+      "state": null
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "repository": "danielbaars/graphite-charcoal-e2e-2026-10-21",
+  "approved": true,
+  "created": [
+    {
+      "branch": "get-sync-20261031-base",
+      "parent": "main",
+      "file": "fixtures/get-sync-20261031/base.txt",
+      "title": "Get/sync parity: base fixture",
+      "body": "Adds fixtures/get-sync-20261031/base.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.",
+      "head": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+      "diff": "fixtures/get-sync-20261031/base.txt | 1 +\n 1 file changed, 1 insertion(+)",
+      "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/13",
+      "number": 13
+    },
+    {
+      "branch": "get-sync-20261031-child",
+      "parent": "get-sync-20261031-base",
+      "file": "fixtures/get-sync-20261031/child.txt",
+      "title": "Get/sync parity: child fixture",
+      "body": "Adds fixtures/get-sync-20261031/child.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.",
+      "head": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+      "diff": "fixtures/get-sync-20261031/child.txt | 1 +\n 1 file changed, 1 insertion(+)",
+      "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/14",
+      "number": 14
+    },
+    {
+      "branch": "get-sync-20261031-tip",
+      "parent": "get-sync-20261031-child",
+      "file": "fixtures/get-sync-20261031/tip.txt",
+      "title": "Get/sync parity: tip fixture",
+      "body": "Adds fixtures/get-sync-20261031/tip.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.",
+      "head": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+      "diff": "fixtures/get-sync-20261031/tip.txt | 1 +\n 1 file changed, 1 insertion(+)",
+      "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/15",
+      "number": 15
+    },
+    {
+      "branch": "get-sync-20261031-sibling",
+      "parent": "get-sync-20261031-base",
+      "file": "fixtures/get-sync-20261031/sibling.txt",
+      "title": "Get/sync parity: sibling fixture",
+      "body": "Adds fixtures/get-sync-20261031/sibling.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.",
+      "head": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+      "diff": "fixtures/get-sync-20261031/sibling.txt | 1 +\n 1 file changed, 1 insertion(+)",
+      "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/16",
+      "number": 16
+    }
+  ]
+}

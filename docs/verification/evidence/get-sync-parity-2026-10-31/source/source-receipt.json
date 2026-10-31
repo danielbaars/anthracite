@@ -1,0 +1,81 @@
+{
+  "status": "source/documentation draft complete; no runtime claim",
+  "sourceCommit": "609fb557d4b6a429d91f500169c596592139d9d1",
+  "report": "docs/verification/get-sync-parity-2026-10-31.md",
+  "words": 1099,
+  "checkedLocalOrImmutableSourceLinks": 16,
+  "sourceFiles": [
+    {
+      "path": "apps/cli/src/commands/get.ts",
+      "sha256": "616134f0b7555f41a6b42a9c6c6745c256a57fe5c1fc5662065f5ac68698065e"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/get.ts",
+      "sha256": "cc2cb6969fbfc5b316a996615fb24c516473c8ff67de51cca06d5afe2bf65ab4"
+    },
+    {
+      "path": "apps/cli/src/commands/repo-commands/repo_sync.ts",
+      "sha256": "7d768d385e1786a7f19750427ca1957c5fd1ceac9e27f79af46ce503d01d13c4"
+    },
+    {
+      "path": "apps/cli/src/lib/spiffy/repo_config_spf.ts",
+      "sha256": "f6b91e34123670d8d2cca72a3b56848d7c165ff14df514042561e8e4aa36140b"
+    },
+    {
+      "path": "apps/cli/src/lib/api/github_repo.ts",
+      "sha256": "2e80d46419d9f373befae3535a90a57cb95805513fff4ec448606c5b035a7634"
+    },
+    {
+      "path": "apps/cli/src/lib/engine/engine.ts",
+      "sha256": "533bc8d64e9065ff76ec0d62b314ed8247b1dbb1d19e69ef0f42faf765c7bfff"
+    },
+    {
+      "path": "apps/cli/src/lib/git/fetch_branch.ts",
+      "sha256": "d1ee9c2ba3e86ab975a3bb3f8f8baf3b174e7b3e1f6264997daf77cc26941752"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/sync.ts",
+      "sha256": "0d91915c0c537d8823617e2195191086821e33aaf9c7255f72d6b0f0d61a537a"
+    },
+    {
+      "path": "apps/cli/src/actions/sync_pr_info.ts",
+      "sha256": "fbf59315647383fd4f3ff7987bb939cec394f3d26f731f58d2a08d7b4cf9c287"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/clean_branches.ts",
+      "sha256": "117fbb82ad2aca822996cd22e15e3b044eba10afa32ea7e7e6160bb786541e04"
+    },
+    {
+      "path": "apps/cli/src/actions/delete_branch.ts",
+      "sha256": "37fd5252d8bc62f3fba32dcc5c89ff04ce38bb61823aacebf22e94c40d18a8ff"
+    }
+  ],
+  "officialSources": [
+    {
+      "url": "https://graphite.com/docs/command-reference",
+      "kind": "current unversioned command reference"
+    },
+    {
+      "url": "https://graphite.com/docs/collaborate-on-a-stack",
+      "kind": "current unversioned workflow guide"
+    },
+    {
+      "url": "https://graphite.com/docs/sync-with-a-remote-repo",
+      "kind": "current unversioned workflow guide"
+    },
+    {
+      "url": "https://graphite.com/docs/multiple-trunks",
+      "kind": "current unversioned scope guide"
+    },
+    {
+      "url": "https://graphite.com/docs/configure-cli",
+      "kind": "current unversioned config guide"
+    },
+    {
+      "url": "https://graphite.com/docs/multiple-worktrees",
+      "kind": "current guide explicitly describing 1.8.4+"
+    }
+  ],
+  "accessed": "2026-10-31",
+  "noRuntimeOrLiveEffects": true
+}

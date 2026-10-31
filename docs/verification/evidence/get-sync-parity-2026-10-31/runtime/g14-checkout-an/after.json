@@ -1,0 +1,46 @@
+{
+  "head": "df5b85e83f4336c7be04531c936086466239200b",
+  "branch": "get-sync-20261031-child",
+  "refs": {
+    "refs/branch-metadata/get-sync-20261031-base": "3c3ed4ce09084ee798c2c3a74e76cdfecaf1e4ed",
+    "refs/branch-metadata/get-sync-20261031-child": "0dd9f621405b37117c65152a0e6f3731034b01b0",
+    "refs/branch-metadata/get-sync-20261031-sibling": "0dd9f621405b37117c65152a0e6f3731034b01b0",
+    "refs/branch-metadata/get-sync-20261031-tip": "23467992463b58f0f7b1efb3906dff2ecd5dedd0",
+    "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+    "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+    "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+    "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+  },
+  "status": "",
+  "indexSHA256": "5f9e405dc8169e5c5d2f75d67dcdc0b4a82155cbf0935791d2e5e8c4684fad86",
+  "trees": {
+    "base": "2af6fc7379a063b32bfafdf70801575b3c58d7bd",
+    "child": "c5c156f35caf6d02b3d2e59864129908f05f3ee0",
+    "tip": "e08aede3bf647c8fcde38c95506a4d2def165031",
+    "sibling": "74f878c219fd33611beb06706882e3bf09739ca0"
+  },
+  "parents": {
+    "get-sync-20261031-base": {
+      "parentBranchName": "main",
+      "parentBranchRevision": "690c12f1986207222fb3541c972001c93b258791"
+    },
+    "get-sync-20261031-child": {
+      "parentBranchName": "get-sync-20261031-base",
+      "parentBranchRevision": "7f7b701608c6d927927ca0bca4a18ae81594b7a0"
+    },
+    "get-sync-20261031-sibling": {
+      "parentBranchName": "get-sync-20261031-base",
+      "parentBranchRevision": "7f7b701608c6d927927ca0bca4a18ae81594b7a0"
+    },
+    "get-sync-20261031-tip": {
+      "parentBranchName": "get-sync-20261031-child",
+      "parentBranchRevision": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f"
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6",
+    "fixtures/get-sync-20261031/child.txt": "998db23e33ad99dfbd6d53f7c70aed1850fb235119c3ec2a98d511ed3d3c2e0a",
+    "fixtures/get-sync-20261031/base.txt": "6e730b492b8867d4d498cf2e7a579e4a70b4e7bd80ca6f185d7b2815a7a863f3"
+  }
+}

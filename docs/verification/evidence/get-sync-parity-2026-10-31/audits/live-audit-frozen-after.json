@@ -1,0 +1,25 @@
+{
+  "scope": "Independent AFTER-state read only; no invented BEFORE columns",
+  "sqlitePath": "/private/tmp/anthracite-get-sync-research-20261031/cases/p12-frozen-gt/.git/.graphite_metadata.db",
+  "openMode": "ro",
+  "schema": "CREATE TABLE \"branch_metadata\" (\"branch_name\" text not null primary key, \"parent_branch_name\" text, \"parent_branch_revision\" text, \"last_submitted_version\" text, \"state\" text, \"children\" text, \"branch_revision\" text, \"validation_result\" text, \"parent_head_revision\" text)",
+  "rows": [
+    {
+      "branch_name": "get-sync-20261031-base",
+      "parent_branch_name": "main",
+      "state": "frozen",
+      "branch_revision": "7f7b701608c6d927927ca0bca4a18ae81594b7a0"
+    },
+    {
+      "branch_name": "get-sync-20261031-child",
+      "parent_branch_name": "get-sync-20261031-base",
+      "state": "frozen",
+      "branch_revision": "df5b85e83f4336c7be04531c936086466239200b"
+    }
+  ],
+  "databaseSha256Before": "c51de0297077df3ea2761dc4697387f948ba8cc93e87c7fc8db27607c96775e9",
+  "databaseSha256After": "c51de0297077df3ea2761dc4697387f948ba8cc93e87c7fc8db27607c96775e9",
+  "databaseBytesUnchanged": true,
+  "beforeFrozenEvidence": "p12-frozen-gt-before.json already records state=frozen for base and child",
+  "afterSnapshot": "p12-frozen-gt-after.json"
+}

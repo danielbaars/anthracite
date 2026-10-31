@@ -1,0 +1,49 @@
+{
+  "head": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0",
+  "branch": "main",
+  "refs": {
+    "refs/branch-metadata/get-sync-20261031-child": "290d8236683f34ecb9007e464f5a7511838ce635",
+    "refs/branch-metadata/get-sync-20261031-tip": "4fb5a9163360a90c53d72175d9ab603298d51bf7",
+    "refs/heads/get-sync-20261031-child": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+    "refs/heads/get-sync-20261031-tip": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+    "refs/heads/main": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+  },
+  "status": "",
+  "indexSHA256": "a4fb5e215765076a4c687c99803a254cae3ff2e370f12d194d31235708ac13dc",
+  "trees": {
+    "child": "02025da38df9b9200951369f581884ed47f8a925",
+    "tip": "e08aede3bf647c8fcde38c95506a4d2def165031"
+  },
+  "parents": {
+    "get-sync-20261031-child": {
+      "parentBranchName": "main",
+      "parentBranchRevision": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+      "prInfo": {
+        "number": 14,
+        "title": "Get/sync parity: child fixture",
+        "body": "Adds fixtures/get-sync-20261031/child.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "state": "OPEN",
+        "base": "main",
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/14",
+        "isDraft": true
+      }
+    },
+    "get-sync-20261031-tip": {
+      "parentBranchName": "get-sync-20261031-child",
+      "parentBranchRevision": "0dfbd2dbf1819a4eed43b40c323a7ebc8eff5a0f",
+      "prInfo": {
+        "number": 15,
+        "title": "Get/sync parity: tip fixture",
+        "body": "Adds fixtures/get-sync-20261031/tip.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "state": "OPEN",
+        "base": "get-sync-20261031-child",
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/15",
+        "isDraft": true
+      }
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6",
+    "fixtures/get-sync-20261031/base.txt": "6e730b492b8867d4d498cf2e7a579e4a70b4e7bd80ca6f185d7b2815a7a863f3"
+  }
+}

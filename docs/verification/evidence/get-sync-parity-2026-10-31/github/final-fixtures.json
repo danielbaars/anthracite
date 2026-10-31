@@ -1,0 +1,104 @@
+{
+  "data": {
+    "repository": {
+      "nameWithOwner": "danielbaars/graphite-charcoal-e2e-2026-10-21",
+      "isPrivate": true,
+      "p13": {
+        "number": 13,
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/13",
+        "state": "MERGED",
+        "isDraft": false,
+        "title": "Get/sync parity: base fixture",
+        "body": "Adds fixtures/get-sync-20261031/base.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "headRefName": "get-sync-20261031-base",
+        "headRefOid": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+        "baseRefName": "main",
+        "reviewRequests": {
+          "nodes": []
+        },
+        "closingIssuesReferences": {
+          "nodes": []
+        },
+        "assignees": {
+          "nodes": [
+            {
+              "login": "danielbaars"
+            }
+          ]
+        }
+      },
+      "p14": {
+        "number": 14,
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/14",
+        "state": "CLOSED",
+        "isDraft": true,
+        "title": "Get/sync parity: child fixture",
+        "body": "Adds fixtures/get-sync-20261031/child.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "headRefName": "get-sync-20261031-child",
+        "headRefOid": "df5b85e83f4336c7be04531c936086466239200b",
+        "baseRefName": "main",
+        "reviewRequests": {
+          "nodes": []
+        },
+        "closingIssuesReferences": {
+          "nodes": []
+        },
+        "assignees": {
+          "nodes": [
+            {
+              "login": "danielbaars"
+            }
+          ]
+        }
+      },
+      "p15": {
+        "number": 15,
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/15",
+        "state": "CLOSED",
+        "isDraft": true,
+        "title": "Get/sync parity: tip fixture",
+        "body": "Adds fixtures/get-sync-20261031/tip.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "headRefName": "get-sync-20261031-tip",
+        "headRefOid": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+        "baseRefName": "get-sync-20261031-child",
+        "reviewRequests": {
+          "nodes": []
+        },
+        "closingIssuesReferences": {
+          "nodes": []
+        },
+        "assignees": {
+          "nodes": [
+            {
+              "login": "danielbaars"
+            }
+          ]
+        }
+      },
+      "p16": {
+        "number": 16,
+        "url": "https://github.com/danielbaars/graphite-charcoal-e2e-2026-10-21/pull/16",
+        "state": "CLOSED",
+        "isDraft": true,
+        "title": "Get/sync parity: sibling fixture",
+        "body": "Adds fixtures/get-sync-20261031/sibling.txt for the paired Graphite 1.8.6 and Anthracite 0.5.0 get/sync comparison.\n",
+        "headRefName": "get-sync-20261031-sibling",
+        "headRefOid": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+        "baseRefName": "get-sync-20261031-base",
+        "reviewRequests": {
+          "nodes": []
+        },
+        "closingIssuesReferences": {
+          "nodes": []
+        },
+        "assignees": {
+          "nodes": [
+            {
+              "login": "danielbaars"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

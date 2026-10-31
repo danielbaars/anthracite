@@ -1,0 +1,44 @@
+{
+  "head": "690c12f1986207222fb3541c972001c93b258791",
+  "branch": "main",
+  "refs": {
+    "refs/heads/get-sync-20261031-base": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+    "refs/heads/get-sync-20261031-child": "df5b85e83f4336c7be04531c936086466239200b",
+    "refs/heads/get-sync-20261031-sibling": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+    "refs/heads/get-sync-20261031-tip": "5e2af2e918e602e950d832a83316c8bdc793d553",
+    "refs/heads/main": "690c12f1986207222fb3541c972001c93b258791"
+  },
+  "status": "",
+  "indexSHA256": "603920b1f12522a5dc35e5ff291814622de7717ce103c3976a28c1d3d121b3f6",
+  "trees": {
+    "base": "2af6fc7379a063b32bfafdf70801575b3c58d7bd",
+    "child": "c5c156f35caf6d02b3d2e59864129908f05f3ee0",
+    "tip": "854f56c23dec5bce9bae3d87994b3b77a25e7f25",
+    "sibling": "74f878c219fd33611beb06706882e3bf09739ca0"
+  },
+  "parents": {
+    "get-sync-20261031-base": {
+      "parent": "main",
+      "state": null
+    },
+    "get-sync-20261031-child": {
+      "parent": "get-sync-20261031-base",
+      "state": null
+    },
+    "get-sync-20261031-sibling": {
+      "parent": "get-sync-20261031-base",
+      "state": null
+    },
+    "get-sync-20261031-tip": {
+      "parent": "get-sync-20261031-child",
+      "state": null
+    },
+    "main": {
+      "parent": null,
+      "state": null
+    }
+  },
+  "files": {
+    "README.md": "de31683ecff1b1e43c64cdc6a5f110e9787beaf9f541286f30b026178ffeabd6"
+  }
+}
