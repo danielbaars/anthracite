@@ -1,0 +1,23 @@
+PASS npm offline installation, both commands, completion and curated contents
+
+
+  MCP command execution through stdio
+    ✔ scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels (1728ms)
+    ✔ scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments (1152ms)
+    ✔ scenario 17: discovers targeted insertion, preserves the unselected arm and refuses invalid children in one installed session (5589ms)
+    ✔ scenario 16: previews and continues a multi-target construction conflict with retained local work in one usable same-installation session (33771ms)
+
+  MCP cancellation and shutdown through stdio
+    ✔ scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work (5244ms)
+
+  frozen publication through the public CLI
+    ✔ publishes an editable child on an existing frozen base while preserving protected and outside-scope PRs (6378ms)
+    ✔ rechecks after the original configured pre-push hook freezes the branch before any remote ref publication (2296ms)
+
+  get CLI and installed MCP delivery
+    ✔ installed get workflow learns explicit options, matches direct Git state and preserves a protected failure (9554ms)
+
+
+  8 passing (1m)
+
+PASS installed package real Git stacks, scoped get/MCP, same-build execution and numeric-zero cancellation

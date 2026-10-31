@@ -1,0 +1,198 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 10,
+    "passes": 10,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-31T14:16:48.128Z",
+    "end": "2026-10-31T14:17:39.318Z",
+    "duration": 51190
+  },
+  "tests": [
+    {
+      "title": "get help and actual completion expose independent refresh, replay and checkout controls",
+      "fullTitle": "get CLI and installed MCP delivery get help and actual completion expose independent refresh, replay and checkout controls",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/get_delivery_cli.test.js",
+      "duration": 283,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g help and actual completion expose independent refresh, replay and checkout controls",
+      "fullTitle": "get CLI and installed MCP delivery g help and actual completion expose independent refresh, replay and checkout controls",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/get_delivery_cli.test.js",
+      "duration": 282,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "installed get workflow learns explicit options, matches direct Git state and preserves a protected failure",
+      "fullTitle": "get CLI and installed MCP delivery installed get workflow learns explicit options, matches direct Git state and preserves a protected failure",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/get_delivery_cli.test.js",
+      "duration": 9509,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "fullTitle": "modern completion through the public CLI offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 146,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "offers actual options for canonical and alias forms outside Git without tools",
+      "fullTitle": "modern completion through the public CLI offers actual options for canonical and alias forms outside Git without tools",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 5640,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "fullTitle": "modern completion through the public CLI completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 2068,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses invalid completion cwd and policy values before external tools",
+      "fullTitle": "modern completion through the public CLI refuses invalid completion cwd and policy values before external tools",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 505,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "fullTitle": "modern completion through the public CLI generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 1091,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "fullTitle": "modern completion through the public CLI prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 1586,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps nested completion local to its registered group",
+      "fullTitle": "modern completion through the public CLI keeps nested completion local to its registered group",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 274,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "get help and actual completion expose independent refresh, replay and checkout controls",
+      "fullTitle": "get CLI and installed MCP delivery get help and actual completion expose independent refresh, replay and checkout controls",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/get_delivery_cli.test.js",
+      "duration": 283,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g help and actual completion expose independent refresh, replay and checkout controls",
+      "fullTitle": "get CLI and installed MCP delivery g help and actual completion expose independent refresh, replay and checkout controls",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/get_delivery_cli.test.js",
+      "duration": 282,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "installed get workflow learns explicit options, matches direct Git state and preserves a protected failure",
+      "fullTitle": "get CLI and installed MCP delivery installed get workflow learns explicit options, matches direct Git state and preserves a protected failure",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/get_delivery_cli.test.js",
+      "duration": 9509,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "fullTitle": "modern completion through the public CLI offers all twenty standard aliases and preserved legacy root names outside Git without tools",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 146,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "offers actual options for canonical and alias forms outside Git without tools",
+      "fullTitle": "modern completion through the public CLI offers actual options for canonical and alias forms outside Git without tools",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 5640,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "fullTitle": "modern completion through the public CLI completes local branch arguments with cwd spaces and preserves inspection state under quiet",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 2068,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses invalid completion cwd and policy values before external tools",
+      "fullTitle": "modern completion through the public CLI refuses invalid completion cwd and policy values before external tools",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 505,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "fullTitle": "modern completion through the public CLI generates bash and zsh scripts executable without shell startup and preserves fish route content",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 1091,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "fullTitle": "modern completion through the public CLI prints truthful command help outside Git under quiet and cwd without tools or configuration changes",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 1586,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps nested completion local to its registered group",
+      "fullTitle": "modern completion through the public CLI keeps nested completion local to its registered group",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-final/test/commands/modern_completion_cli.test.js",
+      "duration": 274,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

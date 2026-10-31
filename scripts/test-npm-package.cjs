@@ -71,7 +71,12 @@ try {
   assert.equal(manifest.engines.node, ">=24");
   for (const name of ["an", "anthracite"]) {
     const executable = path.join(prefix, "bin", name);
-    for (const args of [["--version"], ["--help"], ["completion"]]) {
+    for (const args of [
+      ["--version"],
+      ["--help"],
+      ["completion"],
+      ["--get-yargs-completions", name, "get", "--"],
+    ]) {
       const result = spawnSync(executable, args, {
         cwd: home,
         env,
@@ -81,6 +86,15 @@ try {
       assert.equal(result.status, 0, result.stdout + result.stderr);
       assert.ok(result.stdout.trim());
       if (args[0] === "--version") assert.equal(result.stdout.trim(), version);
+      if (args[0] === "--get-yargs-completions")
+        for (const option of [
+          "--downstack",
+          "--restack",
+          "--checkout",
+          "--no-restack",
+          "--no-checkout",
+        ])
+          assert.ok(result.stdout.includes(option), option);
     }
   }
   const directory = path.join(
@@ -117,8 +131,9 @@ try {
       "apps/cli/dist/test/commands/mcp_execution_cli.test.js",
       "apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js",
       "apps/cli/dist/test/commands/frozen_submit_cli.test.js",
+      "apps/cli/dist/test/commands/get_delivery_cli.test.js",
       "--grep",
-      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base",
+      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base|installed get workflow learns explicit options",
     ],
     {
       cwd: root,
@@ -138,7 +153,7 @@ try {
     scenarios.stderr || scenarios.error?.message
   );
   console.log(
-    "PASS installed package real Git stacks, same-build MCP and numeric-zero cancellation"
+    "PASS installed package real Git stacks, scoped get/MCP, same-build execution and numeric-zero cancellation"
   );
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

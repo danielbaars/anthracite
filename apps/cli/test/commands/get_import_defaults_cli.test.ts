@@ -573,8 +573,11 @@ describe('get CLI new import defaults', function () {
     fs.removeSync(
       path.join(fixture.consumer, '.git', 'hooks', 'post-checkout')
     );
-    fixture.ok('get', 'child', '--force');
-    fixture.status();
+    const before = fixture.observe();
+    const retry = fixture.run(['get', 'child', '--force']);
+    expect(retry.status, retry.output).to.equal(1);
+    expect(retry.output).to.include('Get recovery preserved');
+    expect(fixture.observe()).to.deep.equal(before);
     const blocked = fixture.run([
       'modify',
       '--commit',
@@ -582,6 +585,8 @@ describe('get CLI new import defaults', function () {
       'must stay frozen',
     ]);
     expect(blocked.status, blocked.output).to.equal(1);
+    expect(blocked.output).to.include('Get recovery preserved');
+    expect(fixture.observe()).to.deep.equal(before);
   });
 
   it('retains stored frozen protection while repairing an invalid parent through force import and U', () => {

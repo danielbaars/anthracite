@@ -204,7 +204,7 @@ describe('modern preserved routes through the public CLI', function () {
         )},number:1,url:'https://github.com/fixture/compatibility/pull/1'}));`,
         { mode: 0o755 }
       );
-      fixture.ok([command, 'base', '--downstack']);
+      fixture.ok([command, 'base', '--downstack', '--no-restack']);
       expect(fixture.git(['rev-parse', 'base'])).to.equal(target);
       expect(fixture.git(['rev-parse', 'child'])).to.equal(child);
       expect(fixture.git(['branch', '--show-current'])).to.equal('base');

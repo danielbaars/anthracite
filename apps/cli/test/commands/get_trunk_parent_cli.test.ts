@@ -218,7 +218,7 @@ describe('get CLI safe trunk and changed parents', function () {
     expect(refused.output).to.include('different parents');
     fixture.assertTip('main', oldTrunk);
     fixture.assertTip('child', local);
-    fixture.ok('get', 'child', '--force');
+    fixture.ok('get', 'child', '--force', '--no-restack');
     fixture.assertTip('main', trunk);
     fixture.assertTip('child', remoteChild);
     fixture.assertTip('parent', fixture.oldParent);

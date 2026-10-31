@@ -1,0 +1,33 @@
+{
+  "packageVersion": "0.5.1",
+  "publication": "local candidate only",
+  "stages": {
+    "assembled": {
+      "revision": "4b44a3132968553613881f080591add7919b0cb0",
+      "manifest": "ticket-76-source-manifest.sha256",
+      "native": "ticket-76-an",
+      "tarball": "ticket-76-candidate.tgz",
+      "manifestSha256": "59969a6bc321ab6cbf62362b4ba2e79c0d850f578d7c0a3a1da322359cf7ceba",
+      "nativeSha256": "8e03065dd1ec5539c8855a43f255dbc16f73c678d4a63d51ed7b6e7efd1e48de",
+      "tarballSha256": "d2cf7bed04bcac7c8cce2cd50c3ea042422f4c022fbd7084be92c55c83c90db2"
+    },
+    "completionFollowUp": {
+      "revision": "4ae615737a9e3d3a69a3d9e5427175c4b48a3306",
+      "manifest": "ticket-76-final-source-manifest.sha256",
+      "native": "ticket-76-final-an",
+      "tarball": "ticket-76-final-candidate.tgz",
+      "manifestSha256": "86480ad383078b7dd8f46a3d5c53e973ae7a5a138bea4059044e2981c38f7637",
+      "nativeSha256": "ac583bb564ef7ce0eafdaaacc2d2582ff1968700164a280fe337f6c843532ad9",
+      "tarballSha256": "add15b23fb5ca775782310d9ccf963ea9fecae7bc86ece7133c35d6fceb8fabc"
+    },
+    "merged": {
+      "revision": "724e7d75228dbe7f9bd4b8f0a374c10cf3ff4098",
+      "manifest": "ticket-76-merged-source-manifest.sha256",
+      "native": "ticket-76-merged-an",
+      "tarball": "ticket-76-merged-candidate.tgz",
+      "manifestSha256": "aa39d08d92295dc4471e8775620c44a537a19a3f7683c5bc49d846355484ba05",
+      "nativeSha256": "7f9d3061fe08e7f7b12cd96610507428fa7b83b32472d6dce4c62602658e6c6f",
+      "tarballSha256": "ddb15307125688210f337db76449a3fac7b74099be82784fe03486393b2596ba"
+    }
+  }
+}

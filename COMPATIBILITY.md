@@ -57,6 +57,14 @@ Rows link existing public-boundary tests or acceptance records. Quoted scenario 
 | Bash/zsh/Fish completion | Actual public root/option/branch queries; generated Bash/zsh scripts and available shell smoke; Fish script content | [completion CLI](./apps/cli/test/commands/modern_completion_cli.test.ts). Fish uses local branches for move/track etc. and remote branches for get/g. No branch suggestions for mv. Full interactive Fish runtime certification remains unmeasured. |
 | Submit/get/sync PR workflows | Existing GitHub CLI integration and scoped local branch/PR behavior; additive reviewers/assignees with `--roles-branch` | [role guide](./docs/submit.md), [acceptance](./docs/verification/submit-pr-roles-implementation-2026-10-28.md), [review corrections](./docs/verification/submit-pr-roles-review-fixes-2026-10-28.md). Retained controlled/live evidence is bounded; additional modes and service combinations need their own comparison. |
 
+## Scoped get candidate
+
+The source candidate intentionally adds local-descendant remote refresh and automatic maintenance as defaults, plus independent `--downstack`, `--restack`/`--no-restack` and `--checkout`/`--no-checkout` controls on both get/g. Public 0.5.1 did not ship these controls. Use `an get target --downstack --no-restack` for the prior remote-selection/replay scope; safe trunk fast-forward and validated parent adoption still apply, so this is not byte-identical historical execution.
+
+Remote refresh and local maintenance are separate: affected siblings can need replay outside downstack refresh, while remote-only descendants and independent trunk stacks stay outside scope. Unpublished work remains unpublished; frozen inbound status and safe anchors remain protected and deferred work is named. Trunk never resets under get force. Get adds no cleanup, pushes or PR writes and leaves sync/B02 behavior unchanged.
+
+Successful no-checkout restores the original physical branch at its current authorized head or exact detached OID after all phases. Real conflicts retain saved graph sources/parents/import/replay/checkout policy through owned continuation. Stale/foreign/raw-aborted intent and uncertain publication/final-checkout failures require inspection; no rollback or ref recreation is promised. Finish pending owned get before downgrade. See the [get guide](docs/get.md) and [bounded candidate verification](docs/verification/get-updates-implementation-2026-10-31.md), which records independent review status and controlled-service limits.
+
 ## Deliberate differences and deferred functionality
 
 | Feature | Status / boundary |

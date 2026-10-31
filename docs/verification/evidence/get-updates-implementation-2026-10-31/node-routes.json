@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-31T14:09:30.460Z",
+    "end": "2026-10-31T14:09:43.249Z",
+    "duration": 12789
+  },
+  "tests": [
+    {
+      "title": "get fast-forwards from a real local remote through the existing PR boundary",
+      "fullTitle": "modern preserved routes through the public CLI get fast-forwards from a real local remote through the existing PR boundary",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 3851,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g fast-forwards from a real local remote through the existing PR boundary",
+      "fullTitle": "modern preserved routes through the public CLI g fast-forwards from a real local remote through the existing PR boundary",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 3868,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "get fast-forwards from a real local remote through the existing PR boundary",
+      "fullTitle": "modern preserved routes through the public CLI get fast-forwards from a real local remote through the existing PR boundary",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 3851,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "g fast-forwards from a real local remote through the existing PR boundary",
+      "fullTitle": "modern preserved routes through the public CLI g fast-forwards from a real local remote through the existing PR boundary",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 3868,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

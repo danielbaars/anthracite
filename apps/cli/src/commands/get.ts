@@ -18,7 +18,8 @@ const args = {
     alias: 'U',
   },
   downstack: {
-    describe: 'Refresh only the required PR chain, excluding local descendants',
+    describe:
+      'Limit remote refresh to the required PR chain; affected siblings may still need maintenance',
     type: 'boolean',
     default: false,
   },
@@ -30,12 +31,13 @@ const args = {
   },
   checkout: {
     describe:
-      'Select the target on success; --no-checkout restores the original checkout',
+      'Select the target after all phases; --no-checkout restores the original branch or detached OID',
     type: 'boolean',
     default: true,
   },
   force: {
-    describe: 'Overwrite all fetched branches with remote source of truth',
+    describe:
+      'Overwrite eligible selected feature heads; preserve frozen status and file/worktree guards',
     demandOption: false,
     type: 'boolean',
     default: false,
@@ -47,7 +49,7 @@ type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 export const command = 'get [branch]';
 export const canonical = 'get';
 export const description =
-  'Refresh the required PR chain and tracked local descendants of the target from remote. Use --downstack to exclude descendant refresh. If no branch is provided, use the physical current branch. New imports are frozen unless their PR author matches the current gh account, or --unfrozen is set. Existing branch status is preserved.';
+  'Refresh the target PR chain and eligible tracked local descendants; --downstack excludes descendant refresh. Restack affected local work by default, including necessary siblings outside refresh scope. Trunk advances by fast-forward only, even with --force. Final checkout runs after all phases. An omitted target uses the physical current branch; detached HEAD needs an explicit target. New imports retain ownership-based freeze defaults. Get performs no cleanup or publication.';
 export const builder = args;
 export const aliases = ['g'];
 export const handler = async (argv: argsT): Promise<void> =>

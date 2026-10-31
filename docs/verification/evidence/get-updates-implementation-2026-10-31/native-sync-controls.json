@@ -1,0 +1,648 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 35,
+    "passes": 35,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-31T14:09:59.298Z",
+    "end": "2026-10-31T14:13:36.156Z",
+    "duration": 216858
+  },
+  "tests": [
+    {
+      "title": "deletes a known closed leaf below an open parent without changing that parent",
+      "fullTitle": "sync cleanup of descendants through the public CLI deletes a known closed leaf below an open parent without changing that parent",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/sync_cleanup_descendants_cli.test.js",
+      "duration": 5626,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cleans separated closed branches once with frozen child false",
+      "fullTitle": "sync cleanup of descendants through the public CLI cleans separated closed branches once with frozen child false",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/sync_cleanup_descendants_cli.test.js",
+      "duration": 8799,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cleans separated closed branches once with frozen child true",
+      "fullTitle": "sync cleanup of descendants through the public CLI cleans separated closed branches once with frozen child true",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/sync_cleanup_descendants_cli.test.js",
+      "duration": 9991,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "fullTitle": "frozen sync through the public CLI skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 6317,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves frozen metadata and feature heads during default trunk FF and PR upserts via sync",
+      "fullTitle": "frozen sync through the public CLI preserves frozen metadata and feature heads during default trunk FF and PR upserts via sync",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3168,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains the limited sync scope in help and completion via sync",
+      "fullTitle": "frozen sync through the public CLI explains the limited sync scope in help and completion via sync",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 571,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves frozen metadata and feature heads during default trunk FF and PR upserts via repo sync",
+      "fullTitle": "frozen sync through the public CLI preserves frozen metadata and feature heads during default trunk FF and PR upserts via repo sync",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3171,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains the limited sync scope in help and completion via repo sync",
+      "fullTitle": "frozen sync through the public CLI explains the limited sync scope in help and completion via repo sync",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 587,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves frozen metadata and feature heads during default trunk FF and PR upserts via repo s",
+      "fullTitle": "frozen sync through the public CLI preserves frozen metadata and feature heads during default trunk FF and PR upserts via repo s",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3152,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains the limited sync scope in help and completion via repo s",
+      "fullTitle": "frozen sync through the public CLI explains the limited sync scope in help and completion via repo s",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 572,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "blocks indirect frozen survivor replays and dependent ancestor deletions while a safe sibling group progresses",
+      "fullTitle": "frozen sync through the public CLI blocks indirect frozen survivor replays and dependent ancestor deletions while a safe sibling group progresses",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 11414,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "deletes an entirely closed frozen chain without treating removed nodes as surviving participants",
+      "fullTitle": "frozen sync through the public CLI deletes an entirely closed frozen chain without treating removed nodes as surviving participants",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 5247,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps noninteractive confirmation defaults and no-delete selection for a closed frozen leaf",
+      "fullTitle": "frozen sync through the public CLI keeps noninteractive confirmation defaults and no-delete selection for a closed frozen leaf",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3967,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors real terminal cleanup confirmation n for a closed frozen leaf",
+      "fullTitle": "frozen sync through the public CLI honors real terminal cleanup confirmation n for a closed frozen leaf",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 2852,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors real terminal cleanup confirmation y for a closed frozen leaf",
+      "fullTitle": "frozen sync through the public CLI honors real terminal cleanup confirmation y for a closed frozen leaf",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 2883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses an unchanged frozen anchor and actually replays its editable descendant with optional restack",
+      "fullTitle": "frozen sync through the public CLI uses an unchanged frozen anchor and actually replays its editable descendant with optional restack",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3665,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps mandatory cleanup survivors and staged resolution through fresh frozen continue --all refusal",
+      "fullTitle": "frozen sync through the public CLI keeps mandatory cleanup survivors and staged resolution through fresh frozen continue --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 12273,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps mandatory cleanup survivors and staged resolution through fresh frozen cont --all refusal",
+      "fullTitle": "frozen sync through the public CLI keeps mandatory cleanup survivors and staged resolution through fresh frozen cont --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 13051,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains reached parent progress and reports a real late cleanup failure after a metadata hook freezes another survivor",
+      "fullTitle": "frozen sync through the public CLI retains reached parent progress and reports a real late cleanup failure after a metadata hook freezes another survivor",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 5177,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves dirty work and rejects deletion of a candidate checked out in another worktree",
+      "fullTitle": "frozen sync through the public CLI preserves dirty work and rejects deletion of a candidate checked out in another worktree",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3848,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors quiet and explicit cwd for normal protected skips while preserving unrelated files",
+      "fullTitle": "frozen sync through the public CLI honors quiet and explicit cwd for normal protected skips while preserving unrelated files",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 4701,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "treats a declined closed frozen child as a survivor before deleting its accepted ancestor",
+      "fullTitle": "frozen sync through the public CLI treats a declined closed frozen child as a survivor before deleting its accepted ancestor",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 6245,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "checks every mandatory cleanup survivor after the real pre-rebase hook before publishing the first replay",
+      "fullTitle": "frozen sync through the public CLI checks every mandatory cleanup survivor after the real pre-rebase hook before publishing the first replay",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 6219,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects local delete sibling survivors with the same managed replay hook participants",
+      "fullTitle": "frozen sync through the public CLI protects local delete sibling survivors with the same managed replay hook participants",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 6212,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks mandatory survivors inside prepared metadata hooks before the first parent publication",
+      "fullTitle": "frozen sync through the public CLI rechecks mandatory survivors inside prepared metadata hooks before the first parent publication",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 5625,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "blocks physical cleanup deletion after its prepared ref hook freezes a mandatory survivor",
+      "fullTitle": "frozen sync through the public CLI blocks physical cleanup deletion after its prepared ref hook freezes a mandatory survivor",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 7155,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a real eligible warm cache and raw index unchanged during an explained protected cleanup skip",
+      "fullTitle": "frozen sync through the public CLI keeps a real eligible warm cache and raw index unchanged during an explained protected cleanup skip",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 4855,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not overwrite unrelated saved continuation during zero-replay frozen leaf cleanup",
+      "fullTitle": "frozen sync through the public CLI does not overwrite unrelated saved continuation during zero-replay frozen leaf cleanup",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 8829,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required cleanup replays before parent or deletion effects during another active operation",
+      "fullTitle": "frozen sync through the public CLI refuses required cleanup replays before parent or deletion effects during another active operation",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 8888,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains optional trunk-stack work and skips an unrelated frozen anchor alongside mandatory cleanup replays",
+      "fullTitle": "frozen sync through the public CLI retains optional trunk-stack work and skips an unrelated frozen anchor alongside mandatory cleanup replays",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 9654,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "deletes a frozen leaf whose changes are actually merged into trunk without adding PR authority",
+      "fullTitle": "frozen sync through the public CLI deletes a frozen leaf whose changes are actually merged into trunk without adding PR authority",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 1499,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains staged, unstaged and untracked work and emits errors under quiet before sync writes",
+      "fullTitle": "frozen sync through the public CLI retains staged, unstaged and untracked work and emits errors under quiet before sync writes",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 1400,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cleans an independent metadata-only subgroup below a blocked ancestor using its retained actual parent",
+      "fullTitle": "frozen sync through the public CLI cleans an independent metadata-only subgroup below a blocked ancestor using its retained actual parent",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 8571,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects a different remaining mandatory survivor frozen by the real fresh continuation commit hook",
+      "fullTitle": "frozen sync through the public CLI protects a different remaining mandatory survivor frozen by the real fresh continuation commit hook",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 13362,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a newly frozen later generic sync queue item while actually continuing the editable active replay",
+      "fullTitle": "frozen sync through the public CLI skips a newly frozen later generic sync queue item while actually continuing the editable active replay",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 10883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "deletes a known closed leaf below an open parent without changing that parent",
+      "fullTitle": "sync cleanup of descendants through the public CLI deletes a known closed leaf below an open parent without changing that parent",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/sync_cleanup_descendants_cli.test.js",
+      "duration": 5626,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cleans separated closed branches once with frozen child false",
+      "fullTitle": "sync cleanup of descendants through the public CLI cleans separated closed branches once with frozen child false",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/sync_cleanup_descendants_cli.test.js",
+      "duration": 8799,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cleans separated closed branches once with frozen child true",
+      "fullTitle": "sync cleanup of descendants through the public CLI cleans separated closed branches once with frozen child true",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/sync_cleanup_descendants_cli.test.js",
+      "duration": 9991,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "fullTitle": "frozen sync through the public CLI skips a frozen surviving child before any cleanup parent change while an independent frozen leaf is deleted",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 6317,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves frozen metadata and feature heads during default trunk FF and PR upserts via sync",
+      "fullTitle": "frozen sync through the public CLI preserves frozen metadata and feature heads during default trunk FF and PR upserts via sync",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3168,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains the limited sync scope in help and completion via sync",
+      "fullTitle": "frozen sync through the public CLI explains the limited sync scope in help and completion via sync",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 571,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves frozen metadata and feature heads during default trunk FF and PR upserts via repo sync",
+      "fullTitle": "frozen sync through the public CLI preserves frozen metadata and feature heads during default trunk FF and PR upserts via repo sync",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3171,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains the limited sync scope in help and completion via repo sync",
+      "fullTitle": "frozen sync through the public CLI explains the limited sync scope in help and completion via repo sync",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 587,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves frozen metadata and feature heads during default trunk FF and PR upserts via repo s",
+      "fullTitle": "frozen sync through the public CLI preserves frozen metadata and feature heads during default trunk FF and PR upserts via repo s",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3152,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains the limited sync scope in help and completion via repo s",
+      "fullTitle": "frozen sync through the public CLI explains the limited sync scope in help and completion via repo s",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 572,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "blocks indirect frozen survivor replays and dependent ancestor deletions while a safe sibling group progresses",
+      "fullTitle": "frozen sync through the public CLI blocks indirect frozen survivor replays and dependent ancestor deletions while a safe sibling group progresses",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 11414,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "deletes an entirely closed frozen chain without treating removed nodes as surviving participants",
+      "fullTitle": "frozen sync through the public CLI deletes an entirely closed frozen chain without treating removed nodes as surviving participants",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 5247,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps noninteractive confirmation defaults and no-delete selection for a closed frozen leaf",
+      "fullTitle": "frozen sync through the public CLI keeps noninteractive confirmation defaults and no-delete selection for a closed frozen leaf",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3967,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors real terminal cleanup confirmation n for a closed frozen leaf",
+      "fullTitle": "frozen sync through the public CLI honors real terminal cleanup confirmation n for a closed frozen leaf",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 2852,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors real terminal cleanup confirmation y for a closed frozen leaf",
+      "fullTitle": "frozen sync through the public CLI honors real terminal cleanup confirmation y for a closed frozen leaf",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 2883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses an unchanged frozen anchor and actually replays its editable descendant with optional restack",
+      "fullTitle": "frozen sync through the public CLI uses an unchanged frozen anchor and actually replays its editable descendant with optional restack",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3665,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps mandatory cleanup survivors and staged resolution through fresh frozen continue --all refusal",
+      "fullTitle": "frozen sync through the public CLI keeps mandatory cleanup survivors and staged resolution through fresh frozen continue --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 12273,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps mandatory cleanup survivors and staged resolution through fresh frozen cont --all refusal",
+      "fullTitle": "frozen sync through the public CLI keeps mandatory cleanup survivors and staged resolution through fresh frozen cont --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 13051,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains reached parent progress and reports a real late cleanup failure after a metadata hook freezes another survivor",
+      "fullTitle": "frozen sync through the public CLI retains reached parent progress and reports a real late cleanup failure after a metadata hook freezes another survivor",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 5177,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves dirty work and rejects deletion of a candidate checked out in another worktree",
+      "fullTitle": "frozen sync through the public CLI preserves dirty work and rejects deletion of a candidate checked out in another worktree",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 3848,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors quiet and explicit cwd for normal protected skips while preserving unrelated files",
+      "fullTitle": "frozen sync through the public CLI honors quiet and explicit cwd for normal protected skips while preserving unrelated files",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 4701,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "treats a declined closed frozen child as a survivor before deleting its accepted ancestor",
+      "fullTitle": "frozen sync through the public CLI treats a declined closed frozen child as a survivor before deleting its accepted ancestor",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 6245,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "checks every mandatory cleanup survivor after the real pre-rebase hook before publishing the first replay",
+      "fullTitle": "frozen sync through the public CLI checks every mandatory cleanup survivor after the real pre-rebase hook before publishing the first replay",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 6219,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects local delete sibling survivors with the same managed replay hook participants",
+      "fullTitle": "frozen sync through the public CLI protects local delete sibling survivors with the same managed replay hook participants",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 6212,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks mandatory survivors inside prepared metadata hooks before the first parent publication",
+      "fullTitle": "frozen sync through the public CLI rechecks mandatory survivors inside prepared metadata hooks before the first parent publication",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 5625,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "blocks physical cleanup deletion after its prepared ref hook freezes a mandatory survivor",
+      "fullTitle": "frozen sync through the public CLI blocks physical cleanup deletion after its prepared ref hook freezes a mandatory survivor",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 7155,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a real eligible warm cache and raw index unchanged during an explained protected cleanup skip",
+      "fullTitle": "frozen sync through the public CLI keeps a real eligible warm cache and raw index unchanged during an explained protected cleanup skip",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 4855,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not overwrite unrelated saved continuation during zero-replay frozen leaf cleanup",
+      "fullTitle": "frozen sync through the public CLI does not overwrite unrelated saved continuation during zero-replay frozen leaf cleanup",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 8829,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses required cleanup replays before parent or deletion effects during another active operation",
+      "fullTitle": "frozen sync through the public CLI refuses required cleanup replays before parent or deletion effects during another active operation",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 8888,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains optional trunk-stack work and skips an unrelated frozen anchor alongside mandatory cleanup replays",
+      "fullTitle": "frozen sync through the public CLI retains optional trunk-stack work and skips an unrelated frozen anchor alongside mandatory cleanup replays",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 9654,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "deletes a frozen leaf whose changes are actually merged into trunk without adding PR authority",
+      "fullTitle": "frozen sync through the public CLI deletes a frozen leaf whose changes are actually merged into trunk without adding PR authority",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 1499,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains staged, unstaged and untracked work and emits errors under quiet before sync writes",
+      "fullTitle": "frozen sync through the public CLI retains staged, unstaged and untracked work and emits errors under quiet before sync writes",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 1400,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cleans an independent metadata-only subgroup below a blocked ancestor using its retained actual parent",
+      "fullTitle": "frozen sync through the public CLI cleans an independent metadata-only subgroup below a blocked ancestor using its retained actual parent",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 8571,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects a different remaining mandatory survivor frozen by the real fresh continuation commit hook",
+      "fullTitle": "frozen sync through the public CLI protects a different remaining mandatory survivor frozen by the real fresh continuation commit hook",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 13362,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "skips a newly frozen later generic sync queue item while actually continuing the editable active replay",
+      "fullTitle": "frozen sync through the public CLI skips a newly frozen later generic sync queue item while actually continuing the editable active replay",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/frozen_sync_cli.test.js",
+      "duration": 10883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
