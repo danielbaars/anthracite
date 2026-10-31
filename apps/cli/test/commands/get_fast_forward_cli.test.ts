@@ -38,7 +38,7 @@ class GetFixture {
       path.join(this.bin, 'gh'),
       `#!${process.execPath}\nconst args = process.argv.slice(2);
 if (args[0] !== 'pr' || args[1] !== 'view' || args[4] !== 'get-fixture/repo' || args[5] !== '--json') process.exit(2);
-const head = args[2] === '2' ? 'child' : args[2];
+const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : args[2];
 const base = head === 'parent' ? 'main' : head === 'child' ? 'parent' : undefined;
 if (!base) { console.error('no pull requests found'); process.exit(3); }
 const number = head === 'parent' ? 1 : 2;
@@ -85,6 +85,40 @@ console.log(JSON.stringify({headRefName: head, baseRefName: base, headRefOid, nu
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'pipe'],
     }).trim();
+  }
+
+  observe() {
+    const git = (...args: string[]): string =>
+      execFileSync('git', args, {
+        cwd: this.consumer,
+        env: { ...this.env, GIT_OPTIONAL_LOCKS: '0' },
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+      }).trim();
+    const index = path.resolve(
+      this.consumer,
+      git('rev-parse', '--git-path', 'index')
+    );
+    const recovery = path.resolve(
+      this.consumer,
+      git('rev-parse', '--git-path', '.gtcontinue')
+    );
+    return {
+      head: git('rev-parse', 'HEAD'),
+      branch: git('branch', '--show-current'),
+      refs: git('for-each-ref', '--format=%(refname) %(objectname)'),
+      status: git('status', '--porcelain'),
+      index: fs.readFileSync(index).toString('base64'),
+      recovery: fs.existsSync(recovery)
+        ? fs.readFileSync(recovery).toString('base64')
+        : null,
+      files: ['main.txt', 'parent.txt', 'child.txt'].map((name) => {
+        const file = path.join(this.consumer, name);
+        return fs.existsSync(file)
+          ? fs.readFileSync(file).toString('base64')
+          : null;
+      }),
+    };
   }
 
   commit(cwd: string, file: string, contents: string): string {
@@ -476,8 +510,14 @@ fi
     );
     fixture.assertTip('HEAD', local);
     fs.removeSync(path.resolve(fixture.consumer, hook));
-    fixture.ok('down');
-    fixture.ok('up');
+    const before = fixture.observe();
+    expect(before.recovery).not.to.equal(null);
+    for (const command of ['down', 'up']) {
+      const blocked = fixture.run([command]);
+      expect(blocked.status, blocked.output).to.equal(1);
+      expect(blocked.output).to.include('Get recovery preserved');
+      expect(fixture.observe()).to.deep.equal(before);
+    }
     fixture.assertTip('HEAD', local);
   });
 
@@ -523,15 +563,12 @@ fi
     fixture.assertTip('child', fixture.oldChild);
     expect(fixture.git(fixture.remote, 'rev-parse', 'child')).to.equal(head);
     fs.removeSync(path.resolve(fixture.consumer, lock));
+    const before = fixture.observe();
     const retry = fixture.run(['get', 'child']);
-    // Git may have updated the index/tree before discovering the ref lock.
-    if (fixture.git(fixture.consumer, 'status', '--porcelain')) {
-      expect(retry.status, retry.output).not.to.equal(0);
-      expect(retry.output).to.include('tracked changes');
-    } else {
-      expect(retry.status, retry.output).to.equal(0);
-      fixture.assertTip('child', head);
-    }
+    // A failed ref publication retains an owned manual-inspection boundary.
+    expect(retry.status, retry.output).to.equal(1);
+    expect(retry.output).to.include('Get recovery preserved');
+    expect(fixture.observe()).to.deep.equal(before);
   });
 
   it('keeps the explicit force path working on a separate OLD to NEW consumer', () => {

@@ -238,7 +238,8 @@ describe('get CLI remote graph selection', function () {
     const before = fixture.observe();
     const result = fixture.run(['get', 'child']);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('recovery operation');
+    expect(result.output).to.include('Malformed continuation JSON');
+    expect(result.output).to.include('Get recovery preserved');
     expect(fixture.observe()).to.deep.equal(before);
   });
 

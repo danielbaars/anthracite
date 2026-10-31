@@ -35,7 +35,7 @@ describe('get CLI existing frozen branches', function () {
     fixture.ok('track', '--parent', 'child');
     fixture.ok('freeze', 'child');
     const head = fixture.advanceChild();
-    fixture.ok('get', 'child', '--force');
+    fixture.ok('get', 'child', '--force', '--no-restack');
     fixture.assertTip('child', head);
     fixture.assertTip('descendant', descendant);
     fixture.status();
@@ -293,7 +293,9 @@ describe('get CLI existing frozen branches', function () {
     );
     const result = fixture.run(['get', 'child', '--force']);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('changed while getting the stack');
+    expect(result.output).to.include(
+      'Physical checkout changed while getting child'
+    );
     expect(result.output).to.include('Updated child before get stopped');
     expect(result.output).not.to.include('Synced child');
     const reached = fixture.git(fixture.consumer, 'rev-parse', 'child');
