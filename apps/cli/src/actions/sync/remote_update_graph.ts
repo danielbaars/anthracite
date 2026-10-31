@@ -15,6 +15,7 @@ import { getMergeBase } from '../../lib/git/merge_base';
 import { runGitCommand } from '../../lib/git/runner';
 import { readMetadataRef } from '../../lib/engine/metadata_ref';
 import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
+import { RemoteTrunkUpdate } from './remote_update_trunk';
 
 const pullRequestSchema = z.object({
   headRefName: z.string().min(1),
@@ -29,18 +30,18 @@ export type RemoteUpdateSelection = {
   readonly branchName: string;
   readonly parentBranchName: string;
   readonly expectedSourceHead: string;
+  readonly pullRequestNumber: number;
+  readonly pullRequestUrl: string;
   readonly previousHead: string;
   readonly previousMetadata: string;
+  readonly previousParentBranchName: string | undefined;
+  readonly previousBase: string | undefined;
 };
-export type RemoteUpdateNode = {
-  resolution?: 'REBASE' | 'OVERWRITE';
-  readonly branchName: string;
-  readonly parentBranchName: string;
+export type RemoteUpdateNode = RemoteUpdateSelection & {
+  resolution?: 'REBASE' | 'OVERWRITE' | 'UPDATE';
   readonly head: string;
   readonly base: string;
   readonly sourceRef: string;
-  readonly previousHead: string;
-  readonly previousMetadata: string;
 };
 
 function lookupPullRequest(
@@ -132,14 +133,14 @@ export function selectRemoteUpdateGraph(
         `Encountered a cycle while resolving the stack for ${target}.`
       );
     seen.add(branch);
-    const pr = getPullRequest(branch, context);
-    selected.unshift({
-      branchName: branch,
-      parentBranchName: pr.baseRefName,
-      expectedSourceHead: pr.headRefOid,
-      previousHead: getSha(`refs/heads/${branch}`),
-      previousMetadata: getSha(`refs/branch-metadata/${branch}`),
-    });
+    const association = readMetadataRef(branch).prInfo?.number;
+    const pr = getPullRequest(
+      association ? String(association) : branch,
+      context
+    );
+    if (pr.headRefName !== branch)
+      throw new ExitFailedError(`Invalid pull request identity for ${branch}.`);
+    selected.unshift(snapshotSelection(branch, pr));
     branch = pr.baseRefName;
   }
   if (
@@ -172,17 +173,29 @@ export function selectRemoteUpdateGraph(
         throw new ExitFailedError(
           `Invalid pull request identity for ${descendant}.`
         );
-      selected.push({
-        branchName: descendant,
-        parentBranchName: pr.baseRefName,
-        expectedSourceHead: pr.headRefOid,
-        previousHead: getSha(`refs/heads/${descendant}`),
-        previousMetadata: getSha(`refs/branch-metadata/${descendant}`),
-      });
+      selected.push(snapshotSelection(descendant, pr));
       queue.push(...context.engine.getChildren(descendant).sort());
     }
   }
   return orderRemoteUpdateGraph(selected, context);
+}
+
+function snapshotSelection(
+  branchName: string,
+  pr: PullRequest
+): RemoteUpdateSelection {
+  const metadata = readMetadataRef(branchName);
+  return {
+    branchName,
+    parentBranchName: pr.baseRefName,
+    expectedSourceHead: pr.headRefOid,
+    pullRequestNumber: pr.number,
+    pullRequestUrl: pr.url,
+    previousHead: getSha(`refs/heads/${branchName}`),
+    previousMetadata: getSha(`refs/branch-metadata/${branchName}`),
+    previousParentBranchName: metadata.parentBranchName,
+    previousBase: metadata.parentBranchRevision,
+  };
 }
 
 function orderRemoteUpdateGraph(
@@ -271,7 +284,8 @@ export function assertRemoteUpdateNodeUnchanged(node: RemoteUpdateNode): void {
 
 export function snapshotRemoteUpdateGraph(
   selected: readonly RemoteUpdateSelection[],
-  context: TContext
+  context: TContext,
+  trunk?: RemoteTrunkUpdate
 ): RemoteUpdateNode[] {
   const prefix = `refs/gt-metadata/get/${randomUUID()}`;
   const nodes: RemoteUpdateNode[] = [];
@@ -286,7 +300,10 @@ export function snapshotRemoteUpdateGraph(
       const sourceRef = `${prefix}/${index}`;
       const parent =
         nodes.find((node) => node.branchName === selection.parentBranchName)
-          ?.head ?? getShaOrThrow(`refs/heads/${selection.parentBranchName}`);
+          ?.head ??
+        (selection.parentBranchName === trunk?.branchName
+          ? trunk.head
+          : getShaOrThrow(`refs/heads/${selection.parentBranchName}`));
       const base = getRemoteBranchBase({ selection, head, parent });
       runGitCommand({
         args: ['update-ref', sourceRef, head],

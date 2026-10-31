@@ -347,26 +347,17 @@ describe('get CLI existing frozen branches', function () {
       });
 
   for (const frozen of [false, true])
-    it(`imports a valid changed remote parent with explicit ${
-      frozen ? 'force while frozen' : 'PTY confirmation while editable'
+    it(`adopts a valid changed remote parent without overwrite while ${
+      frozen ? 'frozen' : 'editable'
     }`, () => {
       if (frozen) fixture.ok('freeze', 'child');
       else fixture.ok('unfreeze', 'child');
       const parent = fixture.git(fixture.consumer, 'rev-parse', 'parent');
       const head = fixture.advanceChild();
       fs.writeJsonSync(fixture.prs, { parent: 'main', child: 'main' });
-      const before = fixture.observe();
-      const refused = fixture.run(['get', 'child']);
-      expect(refused.status, refused.output).to.equal(1);
-      expect(refused.output).to.include('different parents');
-      expect(refused.output).not.to.include('Rebase your changes');
-      expect(fixture.observe()).to.deep.equal(before);
-      const accepted = frozen
-        ? fixture.run(['get', 'child', '-f'])
-        : fixture.run(['get', 'child'], true, [
-            { prompt: 'Overwrite child', input: 'y\r' },
-          ]);
+      const accepted = fixture.run(['get', 'child']);
       expect(accepted.status, accepted.output).to.equal(0);
+      expect(accepted.output).not.to.include('Overwrite');
       fixture.assertTip('child', head);
       fixture.assertTip('parent', parent);
       fixture.status('child', frozen);

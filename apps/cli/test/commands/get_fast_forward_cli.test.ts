@@ -288,24 +288,25 @@ describe('get CLI safe fast-forward', function () {
   }
 
   for (const tracked of [false, true]) {
-    it(`refuses a ${
-      tracked ? 'different local parent' : 'local untracked namesake'
+    it(`${
+      tracked
+        ? 'adopts a verified different local parent without overwrite'
+        : 'refuses a local untracked namesake'
     }`, () => {
       fixture.advanceChild();
       if (tracked) fixture.ok('track', 'child', '--parent', 'main');
       else fixture.ok('untrack', 'child');
       const result = fixture.run(['get', 'child']);
-      expect(result.status, result.output).not.to.equal(0);
-      expect(result.output).to.include(
-        tracked ? 'different parents' : 'not tracked'
-      );
-      fixture.assertTip('child', fixture.oldChild);
-      fixture.assertTip('HEAD', fixture.oldChild);
+      expect(result.status, result.output).to.equal(tracked ? 0 : 1);
       if (tracked) {
-        fixture.ok('down');
-        expect(
-          fixture.git(fixture.consumer, 'branch', '--show-current')
-        ).to.equal('main');
+        expect(fixture.ok('info', 'child').output).to.include('Parent: parent');
+        expect(fixture.git(fixture.consumer, 'rev-parse', 'child')).to.equal(
+          fixture.git(fixture.remote, 'rev-parse', 'child')
+        );
+      } else {
+        expect(result.output).to.include('not tracked');
+        fixture.assertTip('child', fixture.oldChild);
+        fixture.assertTip('HEAD', fixture.oldChild);
       }
     });
   }

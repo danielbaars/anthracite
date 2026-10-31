@@ -34,6 +34,7 @@ import { TScopeSpec } from './scope_spec';
 import { publishFoldStackRefs } from '../git/fold_stack';
 import { FileSplitPublication, publishFileSplitRefs } from '../git/file_split';
 import { assertBranchEditable } from './frozen_branch';
+import { assertBranchesAvailableInWorktrees } from '../git/worktrees';
 
 export type TEngine = {
   debug: string;
@@ -178,6 +179,10 @@ export type TEngine = {
 
   pushBranch: (branchName: string, forcePush: boolean) => void;
   pullTrunk: () => 'PULL_DONE' | 'PULL_UNNEEDED' | 'PULL_CONFLICT';
+  fastForwardTrunk: (snapshot: {
+    readonly head: string;
+    readonly previousHead: string;
+  }) => void;
   hardReset: (sha?: string) => void;
   resetTrunkToRemote: () => void;
   clean: () => void;
@@ -186,7 +191,8 @@ export type TEngine = {
   branchMatchesFetched: (branchName: string) => boolean;
   fastForwardBranchFromFetched: (
     branchName: string,
-    parentBranchName: string
+    parentBranchName: string,
+    prInfo?: Pick<TBranchPRInfo, 'number' | 'url'>
   ) => boolean;
   checkoutBranchFromFetched: (
     branchName: string,
@@ -1319,6 +1325,37 @@ export function composeEngine({
         git.switchBranch(currentBranchName);
       }
     },
+    fastForwardTrunk: ({ head, previousHead }) => {
+      const trunk = assertTrunk();
+      const assertUnchanged = (): void => {
+        assertBranchesAvailableInWorktrees([trunk]);
+        if (git.getShaOrThrow(`refs/heads/${trunk}`) !== previousHead)
+          throw new PreconditionsFailedError(
+            `Trunk ${trunk} changed while getting the stack. Please retry.`
+          );
+      };
+      assertUnchanged();
+      if (git.getMergeBase(previousHead, head) !== previousHead)
+        throw new PreconditionsFailedError(
+          `Cannot fast-forward trunk ${trunk}. Get never resets trunk.`
+        );
+      checkoutBranch(trunk, { preserveIgnored: true });
+      assertUnchanged();
+      git.fastForward(head);
+      if (git.getShaOrThrow(`refs/heads/${trunk}`) !== head)
+        throw new PreconditionsFailedError(
+          `Trunk ${trunk} changed while getting the stack. Please retry.`
+        );
+      cache.branches[trunk] = {
+        ...cache.branches[trunk],
+        branchRevision: head,
+      };
+      git.setRemoteTracking({ remote, branchName: trunk, sha: head });
+      if (git.getShaOrThrow(`refs/heads/${trunk}`) !== head)
+        throw new PreconditionsFailedError(
+          `Trunk ${trunk} changed while getting the stack. Please retry.`
+        );
+    },
     hardReset: git.hardReset,
     resetTrunkToRemote: () => {
       const currentBranchName = getCurrentBranchOrThrow();
@@ -1356,7 +1393,8 @@ export function composeEngine({
       assertBranch(branchName);
       return git.getShaOrThrow(branchName) === git.readFetchHead();
     },
-    fastForwardBranchFromFetched: (branchName, parentBranchName) => {
+    fastForwardBranchFromFetched: (branchName, parentBranchName, prInfo) => {
+      validateNewParent(branchName, parentBranchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
       const head = git.readFetchHead();
       const base = git.readFetchBase();
@@ -1385,6 +1423,13 @@ export function composeEngine({
         parentBranchName,
         parentBranchRevision: base,
         branchRevision: head,
+        prInfo: prInfo
+          ? {
+              ...readMetadataRef(branchName).prInfo,
+              ...prInfo,
+              base: parentBranchName,
+            }
+          : readMetadataRef(branchName).prInfo,
       });
       return true;
     },
