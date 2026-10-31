@@ -1,0 +1,78 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2026-10-31T14:07:04.245Z",
+    "end": "2026-10-31T14:07:26.956Z",
+    "duration": 22711
+  },
+  "tests": [
+    {
+      "title": "get fast-forwards from a real local remote through the existing PR boundary",
+      "fullTitle": "modern preserved routes through the public CLI get fast-forwards from a real local remote through the existing PR boundary",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-node/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 8835,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected '82b8c34c8e6d94f9e93ee32f52386bd90ae09…' to equal '51593c4b82df8f67bdac261ae7eefc9bc0845…'",
+        "showDiff": true,
+        "actual": "82b8c34c8e6d94f9e93ee32f52386bd90ae09785",
+        "expected": "51593c4b82df8f67bdac261ae7eefc9bc0845e82",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected '82b8c34c8e6d94f9e93ee32f52386bd90ae09…' to equal '51593c4b82df8f67bdac261ae7eefc9bc0845…'\n    at Context.<anonymous> (/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-node/test/commands/modern_legacy_routes_cli.test.js:160:72)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "g fast-forwards from a real local remote through the existing PR boundary",
+      "fullTitle": "modern preserved routes through the public CLI g fast-forwards from a real local remote through the existing PR boundary",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-node/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 8782,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'b3258ed168e541350dbabf4e60d2bb3d90bb2…' to equal '04b61501a7dc4ad25585509617488920b475c…'",
+        "showDiff": true,
+        "actual": "b3258ed168e541350dbabf4e60d2bb3d90bb2792",
+        "expected": "04b61501a7dc4ad25585509617488920b475c04b",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'b3258ed168e541350dbabf4e60d2bb3d90bb2…' to equal '04b61501a7dc4ad25585509617488920b475c…'\n    at Context.<anonymous> (/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-node/test/commands/modern_legacy_routes_cli.test.js:160:72)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "get fast-forwards from a real local remote through the existing PR boundary",
+      "fullTitle": "modern preserved routes through the public CLI get fast-forwards from a real local remote through the existing PR boundary",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-node/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 8835,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected '82b8c34c8e6d94f9e93ee32f52386bd90ae09…' to equal '51593c4b82df8f67bdac261ae7eefc9bc0845…'",
+        "showDiff": true,
+        "actual": "82b8c34c8e6d94f9e93ee32f52386bd90ae09785",
+        "expected": "51593c4b82df8f67bdac261ae7eefc9bc0845e82",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected '82b8c34c8e6d94f9e93ee32f52386bd90ae09…' to equal '51593c4b82df8f67bdac261ae7eefc9bc0845…'\n    at Context.<anonymous> (/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-node/test/commands/modern_legacy_routes_cli.test.js:160:72)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "g fast-forwards from a real local remote through the existing PR boundary",
+      "fullTitle": "modern preserved routes through the public CLI g fast-forwards from a real local remote through the existing PR boundary",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-node/test/commands/modern_legacy_routes_cli.test.js",
+      "duration": 8782,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'b3258ed168e541350dbabf4e60d2bb3d90bb2…' to equal '04b61501a7dc4ad25585509617488920b475c…'",
+        "showDiff": true,
+        "actual": "b3258ed168e541350dbabf4e60d2bb3d90bb2792",
+        "expected": "04b61501a7dc4ad25585509617488920b475c04b",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'b3258ed168e541350dbabf4e60d2bb3d90bb2…' to equal '04b61501a7dc4ad25585509617488920b475c…'\n    at Context.<anonymous> (/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-node/test/commands/modern_legacy_routes_cli.test.js:160:72)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

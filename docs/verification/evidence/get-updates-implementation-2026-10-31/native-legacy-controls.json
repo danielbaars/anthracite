@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 12,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-31T14:11:25.976Z",
+    "end": "2026-10-31T14:12:32.819Z",
+    "duration": 66843
+  },
+  "tests": [
+    {
+      "title": "Stops during a rebase",
+      "fullTitle": "(${scene}): continue During a git initiated rebase Stops during a rebase",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Will not continue",
+      "fullTitle": "(${scene}): continue During a git initiated rebase Will not continue",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 463,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Will not continue",
+      "fullTitle": "(${scene}): continue During a git initiated rebase After resolving conflict Will not continue",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 448,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Stops during a rebase",
+      "fullTitle": "(${scene}): continue During a git initiated rebase Stops during a rebase",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Will not continue",
+      "fullTitle": "(${scene}): continue During a git initiated rebase Will not continue",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 459,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Will not continue",
+      "fullTitle": "(${scene}): continue During a git initiated rebase After resolving conflict Will not continue",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 464,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(BasicScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/stack/restack_continue.test.js",
+      "duration": 5100,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(TrailingProdScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/stack/restack_continue.test.js",
+      "duration": 5130,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a repo sync with one merge conflict",
+      "fullTitle": "(BasicScene): repo sync continue Can continue a repo sync with one merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/repo/sync_continue.test.js",
+      "duration": 9906,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a repo sync with one merge conflict",
+      "fullTitle": "(TrailingProdScene): repo sync continue Can continue a repo sync with one merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/repo/sync_continue.test.js",
+      "duration": 10276,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can restack a stack of three branches",
+      "fullTitle": "(BasicScene): stack restack Can restack a stack of three branches",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/stack/restack.test.js",
+      "duration": 9961,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can restack a stack of three branches",
+      "fullTitle": "(TrailingProdScene): stack restack Can restack a stack of three branches",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/stack/restack.test.js",
+      "duration": 10199,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "Stops during a rebase",
+      "fullTitle": "(${scene}): continue During a git initiated rebase Stops during a rebase",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Will not continue",
+      "fullTitle": "(${scene}): continue During a git initiated rebase Will not continue",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 463,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Will not continue",
+      "fullTitle": "(${scene}): continue During a git initiated rebase After resolving conflict Will not continue",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 448,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Stops during a rebase",
+      "fullTitle": "(${scene}): continue During a git initiated rebase Stops during a rebase",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Will not continue",
+      "fullTitle": "(${scene}): continue During a git initiated rebase Will not continue",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 459,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Will not continue",
+      "fullTitle": "(${scene}): continue During a git initiated rebase After resolving conflict Will not continue",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/continue/continue.test.js",
+      "duration": 464,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(BasicScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/stack/restack_continue.test.js",
+      "duration": 5100,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(TrailingProdScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/stack/restack_continue.test.js",
+      "duration": 5130,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a repo sync with one merge conflict",
+      "fullTitle": "(BasicScene): repo sync continue Can continue a repo sync with one merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/repo/sync_continue.test.js",
+      "duration": 9906,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a repo sync with one merge conflict",
+      "fullTitle": "(TrailingProdScene): repo sync continue Can continue a repo sync with one merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/repo/sync_continue.test.js",
+      "duration": 10276,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can restack a stack of three branches",
+      "fullTitle": "(BasicScene): stack restack Can restack a stack of three branches",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/stack/restack.test.js",
+      "duration": 9961,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can restack a stack of three branches",
+      "fullTitle": "(TrailingProdScene): stack restack Can restack a stack of three branches",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-compat/test/commands/stack/restack.test.js",
+      "duration": 10199,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

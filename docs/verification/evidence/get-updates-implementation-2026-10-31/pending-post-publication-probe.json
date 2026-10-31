@@ -1,0 +1,27 @@
+{
+  "build": "get-updates-75 at 1eac93a8d4922a7a923af921a535417f32394fc4",
+  "serviceBoundary": "real local Git and bare remote; controlled gh; no live writes",
+  "beforeOid": "d989b4b67d497b2203ec1578f523f5d455df439e",
+  "before": {
+    "parentBranchName": "parent",
+    "parentBranchRevision": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+    "frozen": true
+  },
+  "plannedParent": "main",
+  "incoming": "bbde264fb83522b4457b110962dac39ec2595d70",
+  "result": {
+    "status": 0,
+    "output": "Synced child from remote.\n",
+    "stdout": "Synced child from remote.\n",
+    "stderr": ""
+  },
+  "afterOid": "d989b4b67d497b2203ec1578f523f5d455df439e",
+  "after": {
+    "parentBranchName": "parent",
+    "parentBranchRevision": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+    "frozen": true
+  },
+  "hookExecuted": true,
+  "childHead": "bbde264fb83522b4457b110962dac39ec2595d70",
+  "successWithWrongParent": true
+}

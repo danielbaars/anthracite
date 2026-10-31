@@ -1,0 +1,142 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2026-10-31T14:15:46.704Z",
+    "end": "2026-10-31T14:15:54.930Z",
+    "duration": 8226
+  },
+  "tests": [
+    {
+      "title": "get help and actual completion expose independent refresh, replay and checkout controls",
+      "fullTitle": "get CLI and installed MCP delivery get help and actual completion expose independent refresh, replay and checkout controls",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/76/apps/cli/dist/test/commands/get_delivery_cli.test.js",
+      "duration": 289,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [ '--help', '--version', …(14) ] to include '--no-restack'",
+        "showDiff": false,
+        "actual": [
+          "--help",
+          "--version",
+          "--cwd",
+          "--interactive",
+          "--quiet",
+          "--q",
+          "--verify",
+          "--debug",
+          "--unfrozen",
+          "--U",
+          "--downstack",
+          "--restack",
+          "--checkout",
+          "--force",
+          "--f",
+          ""
+        ],
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected [ '--help', '--version', …(14) ] to include '--no-restack'\n    at Context.<anonymous> (apps/cli/dist/test/commands/get_delivery_cli.test.js:58:51)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "g help and actual completion expose independent refresh, replay and checkout controls",
+      "fullTitle": "get CLI and installed MCP delivery g help and actual completion expose independent refresh, replay and checkout controls",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/76/apps/cli/dist/test/commands/get_delivery_cli.test.js",
+      "duration": 281,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [ '--help', '--version', …(14) ] to include '--no-restack'",
+        "showDiff": false,
+        "actual": [
+          "--help",
+          "--version",
+          "--cwd",
+          "--interactive",
+          "--quiet",
+          "--q",
+          "--verify",
+          "--debug",
+          "--unfrozen",
+          "--U",
+          "--downstack",
+          "--restack",
+          "--checkout",
+          "--force",
+          "--f",
+          ""
+        ],
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected [ '--help', '--version', …(14) ] to include '--no-restack'\n    at Context.<anonymous> (apps/cli/dist/test/commands/get_delivery_cli.test.js:58:51)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "get help and actual completion expose independent refresh, replay and checkout controls",
+      "fullTitle": "get CLI and installed MCP delivery get help and actual completion expose independent refresh, replay and checkout controls",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/76/apps/cli/dist/test/commands/get_delivery_cli.test.js",
+      "duration": 289,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [ '--help', '--version', …(14) ] to include '--no-restack'",
+        "showDiff": false,
+        "actual": [
+          "--help",
+          "--version",
+          "--cwd",
+          "--interactive",
+          "--quiet",
+          "--q",
+          "--verify",
+          "--debug",
+          "--unfrozen",
+          "--U",
+          "--downstack",
+          "--restack",
+          "--checkout",
+          "--force",
+          "--f",
+          ""
+        ],
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected [ '--help', '--version', …(14) ] to include '--no-restack'\n    at Context.<anonymous> (apps/cli/dist/test/commands/get_delivery_cli.test.js:58:51)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "g help and actual completion expose independent refresh, replay and checkout controls",
+      "fullTitle": "get CLI and installed MCP delivery g help and actual completion expose independent refresh, replay and checkout controls",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/76/apps/cli/dist/test/commands/get_delivery_cli.test.js",
+      "duration": 281,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [ '--help', '--version', …(14) ] to include '--no-restack'",
+        "showDiff": false,
+        "actual": [
+          "--help",
+          "--version",
+          "--cwd",
+          "--interactive",
+          "--quiet",
+          "--q",
+          "--verify",
+          "--debug",
+          "--unfrozen",
+          "--U",
+          "--downstack",
+          "--restack",
+          "--checkout",
+          "--force",
+          "--f",
+          ""
+        ],
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected [ '--help', '--version', …(14) ] to include '--no-restack'\n    at Context.<anonymous> (apps/cli/dist/test/commands/get_delivery_cli.test.js:58:51)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

@@ -1,0 +1,648 @@
+{
+  "stats": {
+    "suites": 10,
+    "tests": 35,
+    "passes": 35,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-31T14:48:43.729Z",
+    "end": "2026-10-31T14:54:54.714Z",
+    "duration": 370985
+  },
+  "tests": [
+    {
+      "title": "preserves committed-hook topology and reached head after force import",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after force import",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2112,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2228,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an automatic replay with overwritten publication as pending manual work",
+      "fullTitle": "get CLI completed publication guards retains an automatic replay with overwritten publication as pending manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 5760,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "fullTitle": "get CLI completed publication guards keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 11296,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "fullTitle": "get CLI completed publication guards gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 10420,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unrelated ref when a feature checkout hook redirects physical HEAD",
+      "fullTitle": "get CLI late participant guards preserves an unrelated ref when a feature checkout hook redirects physical HEAD",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 1720,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a hook-written parent after an authorized force head update and reports incomplete publication",
+      "fullTitle": "get CLI late participant guards preserves a hook-written parent after an authorized force head update and reports incomplete publication",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2081,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a shared fetch source changed during activation without applying the injected object",
+      "fullTitle": "get CLI late participant guards refuses a shared fetch source changed during activation without applying the injected object",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 1677,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps planned frozen-anchor authority when an incoming hook unfreezes it beside ignored work",
+      "fullTitle": "get CLI late participant guards keeps planned frozen-anchor authority when an incoming hook unfreezes it beside ignored work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2006,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a disappeared original checkout before continue --all stages or advances",
+      "fullTitle": "get CLI late participant guards refuses a disappeared original checkout before continue --all stages or advances",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 8979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks pending topology after an original continue commit hook before advancing the active ref",
+      "fullTitle": "get CLI late participant guards rechecks pending topology after an original continue commit hook before advancing the active ref",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 12014,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves active topology changed by a post-rewrite hook after completed continuation replay",
+      "fullTitle": "get CLI late participant guards preserves active topology changed by a post-rewrite hook after completed continuation replay",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 11260,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops a force import whose checkout hook redirects physical HEAD before metadata publication",
+      "fullTitle": "get CLI late participant guards stops a force import whose checkout hook redirects physical HEAD before metadata publication",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2001,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a parent changed by a post-merge hook after the planned feature fast-forward",
+      "fullTitle": "get CLI late participant guards preserves a parent changed by a post-merge hook after the planned feature fast-forward",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2076,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a late concurrent selected head after earlier parent progress with force=false",
+      "fullTitle": "get CLI late participant guards retains a late concurrent selected head after earlier parent progress with force=false",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2353,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a late concurrent selected head after earlier parent progress with force=true",
+      "fullTitle": "get CLI late participant guards retains a late concurrent selected head after earlier parent progress with force=true",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2275,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects a maintenance worktree occupied by an incoming hook after remote progress",
+      "fullTitle": "get CLI late participant guards protects a maintenance worktree occupied by an incoming hook after remote progress",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 3680,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks a pending worktree occupied by an original continuation reference hook before ref advancement",
+      "fullTitle": "get CLI late participant guards rechecks a pending worktree occupied by an original continuation reference hook before ref advancement",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 18264,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a maintenance parent changed by the original pre-rebase hook before replay",
+      "fullTitle": "get CLI late participant guards preserves a maintenance parent changed by the original pre-rebase hook before replay",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 4068,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a concurrent active branch head introduced by an original continuation reference hook",
+      "fullTitle": "get CLI late participant guards preserves a concurrent active branch head introduced by an original continuation reference hook",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 10966,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a fresh freeze from a real post-merge hook through fast-forward publication and a later metadata write",
+      "fullTitle": "get CLI existing frozen branches retains a fresh freeze from a real post-merge hook through fast-forward publication and a later metadata write",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 4024,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a fresh freeze from a real post-checkout hook through fast-forward publication and a later metadata write",
+      "fullTitle": "get CLI existing frozen branches retains a fresh freeze from a real post-checkout hook through fast-forward publication and a later metadata write",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 4378,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a queued import through a repeated get conflict and fresh frozen continue --all refusal",
+      "fullTitle": "get CLI existing frozen branches preserves a queued import through a repeated get conflict and fresh frozen continue --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 11663,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a queued import through a repeated get conflict and fresh frozen cont --all refusal",
+      "fullTitle": "get CLI existing frozen branches preserves a queued import through a repeated get conflict and fresh frozen cont --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 11733,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains mixed queued decisions through real conflict, repeated unresolved continue, frozen all refusal and changed authors",
+      "fullTitle": "get CLI new import defaults retains mixed queued decisions through real conflict, repeated unresolved continue, frozen all refusal and changed authors",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_import_defaults_cli.test.js",
+      "duration": 17753,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains mixed queued decisions through real conflict, repeated unresolved cont, frozen all refusal and changed authors",
+      "fullTitle": "get CLI new import defaults retains mixed queued decisions through real conflict, repeated unresolved cont, frozen all refusal and changed authors",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_import_defaults_cli.test.js",
+      "duration": 17962,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a queued import newly tracked by another process while preserving editable content and recovery",
+      "fullTitle": "get CLI new import defaults refuses a queued import newly tracked by another process while preserving editable content and recovery",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_import_defaults_cli.test.js",
+      "duration": 7982,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes fanout from pinned sources with correct sibling parents and exact detached restoration",
+      "fullTitle": "get CLI owned graph recovery resumes fanout from pinned sources with correct sibling parents and exact detached restoration",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_recovery_cli.test.js",
+      "duration": 21356,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a newly frozen pending replay before --all stages resolutions or unrelated files",
+      "fullTitle": "get CLI owned graph recovery refuses a newly frozen pending replay before --all stages resolutions or unrelated files",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_recovery_cli.test.js",
+      "duration": 10856,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports reached trunk and the actual remaining feature when a later hook creates a ref lock",
+      "fullTitle": "get CLI safe trunk and changed parents reports reached trunk and the actual remaining feature when a later hook creates a ref lock",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 2588,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a reached trunk and refuses when a merge hook redirects the physical checkout",
+      "fullTitle": "get CLI safe trunk and changed parents reports a reached trunk and refuses when a merge hook redirects the physical checkout",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 1716,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(BasicScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/stack/restack_continue.test.js",
+      "duration": 5681,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(TrailingProdScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/stack/restack_continue.test.js",
+      "duration": 5608,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a repo sync with one merge conflict",
+      "fullTitle": "(BasicScene): repo sync continue Can continue a repo sync with one merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/repo/sync_continue.test.js",
+      "duration": 10070,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a repo sync with one merge conflict",
+      "fullTitle": "(TrailingProdScene): repo sync continue Can continue a repo sync with one merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/repo/sync_continue.test.js",
+      "duration": 10104,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves committed-hook topology and reached head after force import",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after force import",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2112,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 2228,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an automatic replay with overwritten publication as pending manual work",
+      "fullTitle": "get CLI completed publication guards retains an automatic replay with overwritten publication as pending manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 5760,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "fullTitle": "get CLI completed publication guards keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 11296,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "fullTitle": "get CLI completed publication guards gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_publication_cli.test.js",
+      "duration": 10420,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves an unrelated ref when a feature checkout hook redirects physical HEAD",
+      "fullTitle": "get CLI late participant guards preserves an unrelated ref when a feature checkout hook redirects physical HEAD",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 1720,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a hook-written parent after an authorized force head update and reports incomplete publication",
+      "fullTitle": "get CLI late participant guards preserves a hook-written parent after an authorized force head update and reports incomplete publication",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2081,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a shared fetch source changed during activation without applying the injected object",
+      "fullTitle": "get CLI late participant guards refuses a shared fetch source changed during activation without applying the injected object",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 1677,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps planned frozen-anchor authority when an incoming hook unfreezes it beside ignored work",
+      "fullTitle": "get CLI late participant guards keeps planned frozen-anchor authority when an incoming hook unfreezes it beside ignored work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2006,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a disappeared original checkout before continue --all stages or advances",
+      "fullTitle": "get CLI late participant guards refuses a disappeared original checkout before continue --all stages or advances",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 8979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks pending topology after an original continue commit hook before advancing the active ref",
+      "fullTitle": "get CLI late participant guards rechecks pending topology after an original continue commit hook before advancing the active ref",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 12014,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves active topology changed by a post-rewrite hook after completed continuation replay",
+      "fullTitle": "get CLI late participant guards preserves active topology changed by a post-rewrite hook after completed continuation replay",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 11260,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops a force import whose checkout hook redirects physical HEAD before metadata publication",
+      "fullTitle": "get CLI late participant guards stops a force import whose checkout hook redirects physical HEAD before metadata publication",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2001,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a parent changed by a post-merge hook after the planned feature fast-forward",
+      "fullTitle": "get CLI late participant guards preserves a parent changed by a post-merge hook after the planned feature fast-forward",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2076,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a late concurrent selected head after earlier parent progress with force=false",
+      "fullTitle": "get CLI late participant guards retains a late concurrent selected head after earlier parent progress with force=false",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2353,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a late concurrent selected head after earlier parent progress with force=true",
+      "fullTitle": "get CLI late participant guards retains a late concurrent selected head after earlier parent progress with force=true",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 2275,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects a maintenance worktree occupied by an incoming hook after remote progress",
+      "fullTitle": "get CLI late participant guards protects a maintenance worktree occupied by an incoming hook after remote progress",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 3680,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks a pending worktree occupied by an original continuation reference hook before ref advancement",
+      "fullTitle": "get CLI late participant guards rechecks a pending worktree occupied by an original continuation reference hook before ref advancement",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 18264,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a maintenance parent changed by the original pre-rebase hook before replay",
+      "fullTitle": "get CLI late participant guards preserves a maintenance parent changed by the original pre-rebase hook before replay",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 4068,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a concurrent active branch head introduced by an original continuation reference hook",
+      "fullTitle": "get CLI late participant guards preserves a concurrent active branch head introduced by an original continuation reference hook",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_late_guards_cli.test.js",
+      "duration": 10966,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a fresh freeze from a real post-merge hook through fast-forward publication and a later metadata write",
+      "fullTitle": "get CLI existing frozen branches retains a fresh freeze from a real post-merge hook through fast-forward publication and a later metadata write",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 4024,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a fresh freeze from a real post-checkout hook through fast-forward publication and a later metadata write",
+      "fullTitle": "get CLI existing frozen branches retains a fresh freeze from a real post-checkout hook through fast-forward publication and a later metadata write",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 4378,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a queued import through a repeated get conflict and fresh frozen continue --all refusal",
+      "fullTitle": "get CLI existing frozen branches preserves a queued import through a repeated get conflict and fresh frozen continue --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 11663,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a queued import through a repeated get conflict and fresh frozen cont --all refusal",
+      "fullTitle": "get CLI existing frozen branches preserves a queued import through a repeated get conflict and fresh frozen cont --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_frozen_cli.test.js",
+      "duration": 11733,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains mixed queued decisions through real conflict, repeated unresolved continue, frozen all refusal and changed authors",
+      "fullTitle": "get CLI new import defaults retains mixed queued decisions through real conflict, repeated unresolved continue, frozen all refusal and changed authors",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_import_defaults_cli.test.js",
+      "duration": 17753,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains mixed queued decisions through real conflict, repeated unresolved cont, frozen all refusal and changed authors",
+      "fullTitle": "get CLI new import defaults retains mixed queued decisions through real conflict, repeated unresolved cont, frozen all refusal and changed authors",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_import_defaults_cli.test.js",
+      "duration": 17962,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a queued import newly tracked by another process while preserving editable content and recovery",
+      "fullTitle": "get CLI new import defaults refuses a queued import newly tracked by another process while preserving editable content and recovery",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_import_defaults_cli.test.js",
+      "duration": 7982,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes fanout from pinned sources with correct sibling parents and exact detached restoration",
+      "fullTitle": "get CLI owned graph recovery resumes fanout from pinned sources with correct sibling parents and exact detached restoration",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_recovery_cli.test.js",
+      "duration": 21356,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a newly frozen pending replay before --all stages resolutions or unrelated files",
+      "fullTitle": "get CLI owned graph recovery refuses a newly frozen pending replay before --all stages resolutions or unrelated files",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_recovery_cli.test.js",
+      "duration": 10856,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports reached trunk and the actual remaining feature when a later hook creates a ref lock",
+      "fullTitle": "get CLI safe trunk and changed parents reports reached trunk and the actual remaining feature when a later hook creates a ref lock",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 2588,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a reached trunk and refuses when a merge hook redirects the physical checkout",
+      "fullTitle": "get CLI safe trunk and changed parents reports a reached trunk and refuses when a merge hook redirects the physical checkout",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 1716,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(BasicScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/stack/restack_continue.test.js",
+      "duration": 5681,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a stack restack with single merge conflict",
+      "fullTitle": "(TrailingProdScene): restack continue Can continue a stack restack with single merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/stack/restack_continue.test.js",
+      "duration": 5608,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a repo sync with one merge conflict",
+      "fullTitle": "(BasicScene): repo sync continue Can continue a repo sync with one merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/repo/sync_continue.test.js",
+      "duration": 10070,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Can continue a repo sync with one merge conflict",
+      "fullTitle": "(TrailingProdScene): repo sync continue Can continue a repo sync with one merge conflict",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/worktrees/review-fixes/apps/cli/dist/test/commands/repo/sync_continue.test.js",
+      "duration": 10104,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

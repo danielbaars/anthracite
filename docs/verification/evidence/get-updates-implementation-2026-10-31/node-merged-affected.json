@@ -1,0 +1,378 @@
+{
+  "stats": {
+    "suites": 6,
+    "tests": 20,
+    "passes": 20,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-10-31T15:04:05.709Z",
+    "end": "2026-10-31T15:07:44.408Z",
+    "duration": 218699
+  },
+  "tests": [
+    {
+      "title": "preserves unrelated recovery before context initialization",
+      "fullTitle": "get CLI remote graph selection preserves unrelated recovery before context initialization",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_graph_cli.test.js",
+      "duration": 499,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "updates both layers and preserves parent/child navigation across processes",
+      "fullTitle": "get CLI safe fast-forward updates both layers and preserves parent/child navigation across processes",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_fast_forward_cli.test.js",
+      "duration": 7031,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not claim success when a checkout hook advances the local tip beyond the fetched snapshot",
+      "fullTitle": "get CLI safe fast-forward does not claim success when a checkout hook advances the local tip beyond the fetched snapshot",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_fast_forward_cli.test.js",
+      "duration": 3382,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a refused Git update without claiming the branch was synced",
+      "fullTitle": "get CLI safe fast-forward reports a refused Git update without claiming the branch was synced",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_fast_forward_cli.test.js",
+      "duration": 2615,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps frozen status and local descendants after explicit force overwrite",
+      "fullTitle": "get CLI existing frozen branches keeps frozen status and local descendants after explicit force overwrite",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_frozen_cli.test.js",
+      "duration": 4944,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a queued import through a repeated get conflict and fresh frozen continue --all refusal",
+      "fullTitle": "get CLI existing frozen branches preserves a queued import through a repeated get conflict and fresh frozen continue --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_frozen_cli.test.js",
+      "duration": 13368,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a queued import through a repeated get conflict and fresh frozen cont --all refusal",
+      "fullTitle": "get CLI existing frozen branches preserves a queued import through a repeated get conflict and fresh frozen cont --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_frozen_cli.test.js",
+      "duration": 13287,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not report a force update as synced when a checkout hook advances its fetched tip",
+      "fullTitle": "get CLI existing frozen branches does not report a force update as synced when a checkout hook advances its fetched tip",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_frozen_cli.test.js",
+      "duration": 3051,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains mixed queued decisions through real conflict, repeated unresolved continue, frozen all refusal and changed authors",
+      "fullTitle": "get CLI new import defaults retains mixed queued decisions through real conflict, repeated unresolved continue, frozen all refusal and changed authors",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_import_defaults_cli.test.js",
+      "duration": 20496,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains mixed queued decisions through real conflict, repeated unresolved cont, frozen all refusal and changed authors",
+      "fullTitle": "get CLI new import defaults retains mixed queued decisions through real conflict, repeated unresolved cont, frozen all refusal and changed authors",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_import_defaults_cli.test.js",
+      "duration": 20298,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a queued import newly tracked by another process while preserving editable content and recovery",
+      "fullTitle": "get CLI new import defaults refuses a queued import newly tracked by another process while preserving editable content and recovery",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_import_defaults_cli.test.js",
+      "duration": 8856,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports reached new head and incomplete status when normal import metadata publication fails",
+      "fullTitle": "get CLI new import defaults reports reached new head and incomplete status when normal import metadata publication fails",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_import_defaults_cli.test.js",
+      "duration": 3696,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "requires explicit overwrite for a divergent retargeted feature and keeps force bounded to features",
+      "fullTitle": "get CLI safe trunk and changed parents requires explicit overwrite for a divergent retargeted feature and keeps force bounded to features",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 3966,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports reached trunk and the actual remaining feature when a later hook creates a ref lock",
+      "fullTitle": "get CLI safe trunk and changed parents reports reached trunk and the actual remaining feature when a later hook creates a ref lock",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 2772,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a reached trunk and refuses when a merge hook redirects the physical checkout",
+      "fullTitle": "get CLI safe trunk and changed parents reports a reached trunk and refuses when a merge hook redirects the physical checkout",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 1820,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves committed-hook topology and reached head after force import",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after force import",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 2388,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 2612,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an automatic replay with overwritten publication as pending manual work",
+      "fullTitle": "get CLI completed publication guards retains an automatic replay with overwritten publication as pending manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 6436,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "fullTitle": "get CLI completed publication guards keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 12505,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "fullTitle": "get CLI completed publication guards gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 11189,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves unrelated recovery before context initialization",
+      "fullTitle": "get CLI remote graph selection preserves unrelated recovery before context initialization",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_graph_cli.test.js",
+      "duration": 499,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "updates both layers and preserves parent/child navigation across processes",
+      "fullTitle": "get CLI safe fast-forward updates both layers and preserves parent/child navigation across processes",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_fast_forward_cli.test.js",
+      "duration": 7031,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not claim success when a checkout hook advances the local tip beyond the fetched snapshot",
+      "fullTitle": "get CLI safe fast-forward does not claim success when a checkout hook advances the local tip beyond the fetched snapshot",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_fast_forward_cli.test.js",
+      "duration": 3382,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a refused Git update without claiming the branch was synced",
+      "fullTitle": "get CLI safe fast-forward reports a refused Git update without claiming the branch was synced",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_fast_forward_cli.test.js",
+      "duration": 2615,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps frozen status and local descendants after explicit force overwrite",
+      "fullTitle": "get CLI existing frozen branches keeps frozen status and local descendants after explicit force overwrite",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_frozen_cli.test.js",
+      "duration": 4944,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a queued import through a repeated get conflict and fresh frozen continue --all refusal",
+      "fullTitle": "get CLI existing frozen branches preserves a queued import through a repeated get conflict and fresh frozen continue --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_frozen_cli.test.js",
+      "duration": 13368,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a queued import through a repeated get conflict and fresh frozen cont --all refusal",
+      "fullTitle": "get CLI existing frozen branches preserves a queued import through a repeated get conflict and fresh frozen cont --all refusal",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_frozen_cli.test.js",
+      "duration": 13287,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not report a force update as synced when a checkout hook advances its fetched tip",
+      "fullTitle": "get CLI existing frozen branches does not report a force update as synced when a checkout hook advances its fetched tip",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_frozen_cli.test.js",
+      "duration": 3051,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains mixed queued decisions through real conflict, repeated unresolved continue, frozen all refusal and changed authors",
+      "fullTitle": "get CLI new import defaults retains mixed queued decisions through real conflict, repeated unresolved continue, frozen all refusal and changed authors",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_import_defaults_cli.test.js",
+      "duration": 20496,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains mixed queued decisions through real conflict, repeated unresolved cont, frozen all refusal and changed authors",
+      "fullTitle": "get CLI new import defaults retains mixed queued decisions through real conflict, repeated unresolved cont, frozen all refusal and changed authors",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_import_defaults_cli.test.js",
+      "duration": 20298,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a queued import newly tracked by another process while preserving editable content and recovery",
+      "fullTitle": "get CLI new import defaults refuses a queued import newly tracked by another process while preserving editable content and recovery",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_import_defaults_cli.test.js",
+      "duration": 8856,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports reached new head and incomplete status when normal import metadata publication fails",
+      "fullTitle": "get CLI new import defaults reports reached new head and incomplete status when normal import metadata publication fails",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_import_defaults_cli.test.js",
+      "duration": 3696,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "requires explicit overwrite for a divergent retargeted feature and keeps force bounded to features",
+      "fullTitle": "get CLI safe trunk and changed parents requires explicit overwrite for a divergent retargeted feature and keeps force bounded to features",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 3966,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports reached trunk and the actual remaining feature when a later hook creates a ref lock",
+      "fullTitle": "get CLI safe trunk and changed parents reports reached trunk and the actual remaining feature when a later hook creates a ref lock",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 2772,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a reached trunk and refuses when a merge hook redirects the physical checkout",
+      "fullTitle": "get CLI safe trunk and changed parents reports a reached trunk and refuses when a merge hook redirects the physical checkout",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_trunk_parent_cli.test.js",
+      "duration": 1820,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves committed-hook topology and reached head after force import",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after force import",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 2388,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "fullTitle": "get CLI completed publication guards preserves committed-hook topology and reached head after fast-forward parent adoption",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 2612,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an automatic replay with overwritten publication as pending manual work",
+      "fullTitle": "get CLI completed publication guards retains an automatic replay with overwritten publication as pending manual work",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 6436,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "fullTitle": "get CLI completed publication guards keeps a completed continued replay pending when a committed metadata hook restores its old base",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 12505,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "fullTitle": "get CLI completed publication guards gives manual guidance when a hook changes the saved envelope while the old active token remains",
+      "file": "/private/tmp/anthracite-get-updates-implementation-20261031/ticket-76-frozen-merged/test/commands/get_publication_cli.test.js",
+      "duration": 11189,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
