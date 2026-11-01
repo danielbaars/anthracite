@@ -240,4 +240,17 @@ describe('sync CLI incoming and cleanup survivor plan', function () {
       .to.include('Updated child')
       .and.to.include('projected cleanup graph');
   });
+  it('shows optional progress while inspecting cleanup candidates', () => {
+    const result = fixture.ok(
+      'sync',
+      '--no-pull',
+      '--no-restack',
+      '--show-delete-progress'
+    );
+    expect(result.output).to.include(
+      '100% done searching for merged/closed branches to delete'
+    );
+    fixture.assertTip('parent', fixture.oldParent);
+    fixture.assertTip('child', fixture.oldChild);
+  });
 });

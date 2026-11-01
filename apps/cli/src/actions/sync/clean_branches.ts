@@ -65,7 +65,15 @@ export async function planSyncCleanup(
     context.splog.info(
       '🧹 Checking if any branches have been merged/closed and can be deleted...'
     );
+  let inspected = 0;
   for (const branch of opts.delete ? branches : []) {
+    inspected++;
+    if (opts.showDeleteProgress)
+      context.splog.info(
+        `${Math.round(
+          (inspected / branches.length) * 100
+        )}% done searching for merged/closed branches to delete...`
+      );
     const reason = cleanupReason(branch, trunk, context.engine.trunk);
     if (!reason) continue;
     const confirmed =
