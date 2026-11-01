@@ -2,8 +2,10 @@ import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { ExitFailedError } from '../../lib/errors';
+import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 import { readMetadataRef } from '../../lib/engine/metadata_ref';
 import { getCurrentBranchName } from '../../lib/git/branch_ops';
+import { rebaseInProgress } from '../../lib/git/rebase_in_progress';
 import { getSha } from '../../lib/git/get_sha';
 import { TContext } from '../../lib/context';
 import { restackBranches } from '../restack';
@@ -138,10 +140,12 @@ export function applyGetMaintenance(
     shouldRestack,
     updatedBranches,
     onComplete,
+    operation = 'get',
   }: {
     readonly shouldRestack: boolean;
     readonly updatedBranches: readonly string[];
     readonly onComplete?: (branchName: string) => void;
+    readonly operation?: 'get' | 'sync';
   },
   context: TContext
 ): string[] {
@@ -158,6 +162,12 @@ export function applyGetMaintenance(
       entry.head ?? context.engine.getRevision(entry.branchName),
     ])
   );
+  const expectedMetadata = new Map(
+    plan.map((entry) => [
+      entry.branchName,
+      getSha(`refs/branch-metadata/${entry.branchName}`),
+    ])
+  );
   const completed = new Set<string>();
   try {
     restackBranches([...names], context, {
@@ -166,7 +176,11 @@ export function applyGetMaintenance(
         const pending = plan.filter(
           (entry) => !completed.has(entry.branchName)
         );
-        assertGetMaintenanceUnchanged(pending, expectedHeads, context);
+        assertGetMaintenanceUnchanged(
+          pending,
+          { expectedHeads, expectedMetadata },
+          context
+        );
         assertGetMaintenanceAvailable(pending, context);
       },
       onComplete: (branch) => {
@@ -195,22 +209,30 @@ export function applyGetMaintenance(
     throw new ExitFailedError(
       `Updated ${
         updatedBranches.join(', ') || 'none'
-      } before get stopped during local maintenance.\nCompleted local maintenance: ${
+      } before ${operation} stopped during local maintenance.\nCompleted local maintenance: ${
         [...completed].join(', ') || 'none'
       }.\nPending local maintenance: ${
         names.filter((name) => !completed.has(name)).join(', ') || 'none'
       }.\nActual checkout: ${
         getCurrentBranchName() ?? 'detached HEAD'
       } (${getSha('HEAD')}).\n${
-        error instanceof Error ? error.message : String(error)
-      }`
+        operation === 'sync' && rebaseInProgress()
+          ? 'The active Git rebase and conflicts are preserved. Sync has no saved phase continuation at this stage. Resolve and inspect with Git; remaining maintenance and final checkout have not completed. Earlier updates are not rolled back.\n'
+          : ''
+      }${error instanceof Error ? error.message : String(error)}`
     );
   }
 }
 
 function assertGetMaintenanceUnchanged(
   plan: readonly GetMaintenanceEntry[],
-  expectedHeads: ReadonlyMap<string, string>,
+  {
+    expectedHeads,
+    expectedMetadata,
+  }: {
+    readonly expectedHeads: ReadonlyMap<string, string>;
+    readonly expectedMetadata: ReadonlyMap<string, string>;
+  },
   context: TContext
 ): void {
   for (const entry of plan) {
@@ -222,6 +244,10 @@ function assertGetMaintenanceUnchanged(
     if (
       getSha(`refs/heads/${entry.branchName}`) !==
         expectedHeads.get(entry.branchName) ||
+      !sameMetadataExceptFrozen(
+        getSha(`refs/branch-metadata/${entry.branchName}`),
+        expectedMetadata.get(entry.branchName) ?? ''
+      ) ||
       metadata.parentBranchName !== entry.parentBranchName ||
       metadata.parentBranchRevision !== entry.base ||
       getSha(`refs/heads/${entry.parentBranchName}`) !==

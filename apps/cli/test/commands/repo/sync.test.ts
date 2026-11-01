@@ -112,13 +112,14 @@ for (const scene of allScenes) {
       ]);
 
       expectBranches(scene.repo, 'b, main');
+      scene.repo.checkoutBranch('main');
       expectCommits(scene.repo, 'squash, 1');
 
       scene.repo.checkoutBranch('b');
       expectCommits(scene.repo, 'b, squash, 1');
     });
 
-    it('Can delete two branches off a three-stack', async () => {
+    it('Can defer replay explicitly while deleting two branches off a three-stack', async () => {
       scene.repo.createChange('2', 'a');
       scene.repo.runCliCommand([`create`, `a`, `-m`, `a`]);
 
@@ -129,16 +130,27 @@ for (const scene of allScenes) {
       scene.repo.runCliCommand([`create`, `c`, `-m`, `c`]);
 
       expectBranches(scene.repo, 'a, b, c, main');
+      const c = scene.repo.runGitCommandAndGetOutput(['rev-parse', 'c']);
 
       fakeGitSquashAndMerge(scene.repo, 'a', 'squash_a');
       fakeGitSquashAndMerge(scene.repo, 'b', 'squash_b');
-      scene.repo.runCliCommand([`repo`, `sync`, `-f`, `--no-pull`]);
+      scene.repo.runCliCommand([
+        `repo`,
+        `sync`,
+        `-f`,
+        `--no-pull`,
+        `--no-restack`,
+      ]);
 
       expectBranches(scene.repo, 'c, main');
+      expect(scene.repo.runGitCommandAndGetOutput(['rev-parse', 'c'])).to.equal(
+        c
+      );
+      scene.repo.checkoutBranch('main');
       expectCommits(scene.repo, 'squash_b, squash_a, 1');
     });
 
-    it('Can delete two branches, while syncing inbetween, off a three-stack', async () => {
+    it('Can defer replay explicitly across repeated cleanup of a three-stack', async () => {
       scene.repo.createChange('2', 'a');
       scene.repo.runCliCommand([`create`, `a`, `-m`, `a`]);
 
@@ -149,13 +161,30 @@ for (const scene of allScenes) {
       scene.repo.runCliCommand([`create`, `c`, `-m`, `c`]);
 
       expectBranches(scene.repo, 'a, b, c, main');
+      const c = scene.repo.runGitCommandAndGetOutput(['rev-parse', 'c']);
 
       fakeGitSquashAndMerge(scene.repo, 'a', 'squash_a');
-      scene.repo.runCliCommand([`repo`, `sync`, `-f`, `--no-pull`]);
+      scene.repo.runCliCommand([
+        `repo`,
+        `sync`,
+        `-f`,
+        `--no-pull`,
+        `--no-restack`,
+      ]);
       fakeGitSquashAndMerge(scene.repo, 'b', 'squash_b');
-      scene.repo.runCliCommand([`repo`, `sync`, `-f`, `--no-pull`]);
+      scene.repo.runCliCommand([
+        `repo`,
+        `sync`,
+        `-f`,
+        `--no-pull`,
+        `--no-restack`,
+      ]);
 
       expectBranches(scene.repo, 'c, main');
+      expect(scene.repo.runGitCommandAndGetOutput(['rev-parse', 'c'])).to.equal(
+        c
+      );
+      scene.repo.checkoutBranch('main');
       expectCommits(scene.repo, 'squash_b, squash_a, 1');
 
       const metadata = fs.readdirSync(
