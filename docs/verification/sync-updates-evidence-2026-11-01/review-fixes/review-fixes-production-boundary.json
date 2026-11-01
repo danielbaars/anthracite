@@ -1,0 +1,24 @@
+{
+  "baselineReviewedHead": "2dc0c3dfe27e83a9b8d3183600e542d7aef80e0f",
+  "baselineMap": "ticket-87-source-artifacts.json",
+  "correctedMap": "review-fixes-source-artifacts.json",
+  "changedPaths": {
+    "source": [
+      "apps/cli/src/actions/sync/remote_update_graph.ts",
+      "apps/cli/src/actions/sync/sync_maintenance.ts",
+      "apps/cli/src/actions/sync/sync_refresh.ts"
+    ],
+    "compiled": [
+      "apps/cli/dist/src/actions/sync/remote_update_graph.js",
+      "apps/cli/dist/src/actions/sync/sync_maintenance.js",
+      "apps/cli/dist/src/actions/sync/sync_refresh.js"
+    ],
+    "testSource": [
+      "apps/cli/test/commands/sync_numeric_branch_cli.test.ts"
+    ],
+    "testCompiled": [
+      "apps/cli/dist/test/commands/sync_numeric_branch_cli.test.js"
+    ]
+  },
+  "note": "All other mapped production/test source and compiled bytes remain identical to pre-review87. Earlier execution claims retain their original source epochs."
+}

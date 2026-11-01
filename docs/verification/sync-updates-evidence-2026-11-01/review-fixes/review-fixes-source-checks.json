@@ -1,0 +1,26 @@
+{
+  "base": "2dc0c3dfe27e83a9b8d3183600e542d7aef80e0f",
+  "commands": [
+    {
+      "command": "node node_modules/typescript/bin/tsc -p apps/cli/tsconfig.json",
+      "exitCode": 0,
+      "log": "review-fixes-build.log"
+    },
+    {
+      "command": "node node_modules/typescript/bin/tsc -p apps/cli/tsconfig.json --noEmit",
+      "exitCode": 0,
+      "log": "review-fixes-noemit.log"
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js apps/cli/src --quiet --ext .ts --no-cache",
+      "exitCode": 0,
+      "log": "review-fixes-eslint.log"
+    },
+    {
+      "command": "bun build --compile --target=bun-darwin-arm64 apps/cli/dist/src/index.js --outfile ROOT/review-fixes-an",
+      "exitCode": 0,
+      "log": "review-fixes-native-build.log"
+    }
+  ],
+  "note": "Builds completed before frozen final runtime acceptance. Pinned runtime paths and cwd are recorded in the report."
+}

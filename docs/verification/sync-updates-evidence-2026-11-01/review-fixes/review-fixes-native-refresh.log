@@ -1,0 +1,19 @@
+
+
+  sync CLI existing feature refresh
+    ✔ refreshes existing published heads without pulling, deleting or replaying (5347ms)
+    ✔ rejects a same-name source from another head repository before applying updates (765ms)
+    ✔ retains named local-only work and excludes untracked local branches (5140ms)
+    ✔ retains an associated CLOSED branch without requiring its deleted remote head (5879ms)
+    ✔ retains an associated MERGED branch without requiring its deleted remote head (5497ms)
+    ✔ refuses authentication before changing any selected head (3735ms)
+    ✔ refuses rate limit before changing any selected head (3638ms)
+    ✔ refuses transport before changing any selected head (3637ms)
+    ✔ refuses malformed response before changing any selected head (3664ms)
+    ✔ refuses missing associated PR before changing any selected head (3669ms)
+    ✔ resolves stored PR numbers even when a reused branch name would select another PR (7031ms)
+    ✔ does not associate an unpublished local branch with an old closed same-name PR (4445ms)
+
+
+  12 passing (2m)
+

@@ -124,7 +124,7 @@ function selectSyncFeatures(context: TContext) {
       continue;
     const association = context.engine.getPrInfo(branch)?.number;
     const pr = lookupPullRequest(
-      association ? String(association) : branch,
+      association ? String(association) : { branchName: branch },
       context,
       'sync'
     );

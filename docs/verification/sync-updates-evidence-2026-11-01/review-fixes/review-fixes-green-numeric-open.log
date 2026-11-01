@@ -1,0 +1,8 @@
+
+
+  sync CLI numeric branch identity
+    ✔ refreshes a tracked numeric branch from its open PR with a different number (2833ms)
+
+
+  1 passing (5s)
+
