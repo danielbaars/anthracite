@@ -261,6 +261,8 @@ async function preflightLifecycle(
   git: TGit
 ): Promise<void> {
   if (canonicalName === 'get') assertGetOperationAvailable();
+  if (canonicalName === 'repo sync' || canonicalName === 'sync')
+    assertGetOperationAvailable('Sync');
   const isInit = canonicalName === 'repo init' || canonicalName === 'init';
   if (!isInit && canonicalName !== 'delete') return;
   if (isInit && args.reset === true) return;

@@ -6,7 +6,7 @@ import { KilledError } from '../../lib/errors';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { restackBranches } from '../restack';
 import { cleanBranches } from './clean_branches';
-import { syncPrInfo } from '../sync_pr_info';
+import { refreshSyncFeatures } from './sync_refresh';
 
 export async function syncAction(
   opts: {
@@ -20,9 +20,7 @@ export async function syncAction(
   context: TContext
 ): Promise<void> {
   uncommittedTrackedChangesPrecondition();
-  context.splog.info(
-    'Sync updates trunk and PR info; use an get to refresh feature heads from remote.'
-  );
+  await refreshSyncFeatures(context);
 
   if (opts.pull) {
     await pullTrunk(opts.force, context);
@@ -31,8 +29,6 @@ export async function syncAction(
 
   const branchesToRestack: string[] = [];
   let mandatory: string[] = [];
-
-  await syncPrInfo(context.engine.allBranchNames, context);
 
   if (opts.delete) {
     context.splog.info(
