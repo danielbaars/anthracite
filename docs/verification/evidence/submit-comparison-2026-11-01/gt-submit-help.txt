@@ -1,0 +1,80 @@
+gt submit
+
+Idempotently force push all branches in the current stack from trunk to the current branch to GitHub, creating
+ or updating distinct pull requests for each. Validates that branches are properly restacked before submitting
+, and fails if there are conflicts. Blocks force pushes to branches that overwrite branches that have changed
+since you last submitted or got them. Opens an interactive prompt that allows you to input pull request metada
+ta. To change this default behavior, run `gt config` and select the `Submit settings` menu. `gt ss` is a defau
+lt alias for `gt submit --stack` to also submit descendants of the current branch. Pass `--no-stack` (or `--st
+ack=false`) to narrow the submit and skip the prompt to include branches above the current one that already ha
+ve open PRs.
+
+Global options:
+      --cwd          Working directory in which to perform operations.                                [string]
+      --debug        Write debug output to the terminal.                            [boolean] [default: false]
+      --interactive  Enable interactive features like prompts, pagers, and editors. Enabled by default. Disabl
+                     e with `--no-interactive`.                                     [boolean] [default: false]
+      --verify       Enable git hooks. Enabled by default. Disable with `--no-verify`.
+                                                                                     [boolean] [default: true]
+  -q, --quiet        Minimize output to the terminal. Implies `--no-interactive`.   [boolean] [default: false]
+
+Options:
+      --help                      Show help for a command.                          [boolean] [default: false]
+  -d, --draft                     If set, all new PRs will be created in draft mode.[boolean] [default: false]
+  -p, --publish                   If set, publishes all PRs being submitted.        [boolean] [default: false]
+      --restack                   Restack branches before submitting. If there are conflicts, output the branc
+                                  h names that could not be restacked               [boolean] [default: false]
+  -e, --edit                      Input metadata for all PRs interactively. If neither --edit nor --no-edit is
+                                   passed, only prompts for new PRs.                                 [boolean]
+  -n, --no-edit                   Don't edit any PR fields inline. Takes precedence over --edit.
+                                                                                    [boolean] [default: false]
+      --edit-title                Input the PR title interactively. Default only prompts for new PRs. Takes pr
+                                  ecedence over --no-edit.                                           [boolean]
+      --no-edit-title             Don't prompt for the PR title. Takes precedence over --edit-title and --edit
+                                  .                                                                  [boolean]
+      --edit-description          Input the PR description interactively. Default only prompts for new PRs. Ta
+                                  kes precedence over --no-edit.                                     [boolean]
+      --no-edit-description       Don't prompt for the PR description. Takes precedence over --edit-descriptio
+                                  n and --edit.                                                      [boolean]
+      --ai                        Automatically AI-generate title and description for all PRs. Only works when
+                                   creating new PRs. If --edit, use the generated metadata as starting points.
+                                                                                    [boolean] [default: false]
+      --no-ai                     Don't use AI to generate any PR fields. Takes precedence over --ai.
+                                                                                    [boolean] [default: false]
+  -r, --reviewers                 If set without an argument, prompt to manually set reviewers. Alternatively,
+                                   accepts a comma separated string of reviewers                      [string]
+  -t, --team-reviewers            Comma separated list of team slugs. You can either pass "slug" to this flag
+                                  or "org/slug" to the reviewers flag. Will enable the --reviewers prompt if s
+                                  et without arguments.                                               [string]
+      --dry-run                   Reports the PRs that would be submitted and terminates. No branches are rest
+                                  acked or pushed and no PRs are opened or updated. [boolean] [default: false]
+  -c, --confirm                   Reports the PRs that would be submitted and asks for confirmation before pus
+                                  hing branches and opening/updating PRs. If either of --no-interactive or --d
+                                  ry-run is passed, this flag is ignored.           [boolean] [default: false]
+  -u, --update-only               Only push branches and update PRs for branches that already have PRs open.
+                                                                                    [boolean] [default: false]
+  -f, --force                     Force push: overwrites the remote branch with your local branch. Otherwise d
+                                  efaults to --force-with-lease.                    [boolean] [default: false]
+      --always                    Always push updates, even if the branch has not changed. Can be helpful for
+                                  fixing an inconsistent Graphite stack view on Web/GitHub resulting from down
+                                  time/a bug.                                       [boolean] [default: false]
+      --branch                    Which branch to run this command from. Defaults to the current branch.
+                                                                                                      [string]
+  -m, --merge-when-ready          If set, marks all PRs being submitted as merge when ready, which will let th
+                                  em automatically merge as soon as all merge requirements are met.
+                                                                                    [boolean] [default: false]
+      --rerequest-review          Rerequest review from current reviewers.          [boolean] [default: false]
+  -v, --view                      Open the PR in your browser after submitting.     [boolean] [default: false]
+      --comment                   Add a comment on the PR with the given message.                     [string]
+      --cli                       Edit PR metadata via the CLI instead of on web.                    [boolean]
+  -w, --web                       Open a web browser to edit PR metadata, even if no new PRs are being created
+                                   or if configured to edit PR metadata via the CLI.                 [boolean]
+      --target-trunk              Which trunk to open PRs against on remote. Defaults to the target trunk for
+                                  the current local trunk (defined in `gt config`), or the current local trunk
+                                   if no target trunk is configured.                                  [string]
+      --ignore-out-of-sync-trunk  Perform the submit operation even if the trunk branch is out of sync with it
+                                  s upstream branch. This can lead to incorrect metadata being used during the
+                                   submit.                                          [boolean] [default: false]
+  -s, --stack                     Submit descendants of the current branch in addition to its ancestors. Pass
+                                  --no-stack to submit narrowly and skip the prompt to include branches above
+                                  the current one that already have open PRs.                        [boolean]

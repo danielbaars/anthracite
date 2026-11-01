@@ -1,0 +1,8 @@
+{
+  "repository": "danielbaars/graphite-charcoal-e2e-2026-10-21",
+  "branchPrefix": "submit-probe-20261101-",
+  "inspection": "gh pr list --state all --limit 100; filter exact head prefix",
+  "beforeMatchingPRs": [],
+  "afterMatchingPRs": [],
+  "note": "Read-only live PR inspections; no matching PR was published by these probes."
+}

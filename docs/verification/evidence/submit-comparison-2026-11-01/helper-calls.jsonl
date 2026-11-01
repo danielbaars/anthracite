@@ -1,0 +1,14 @@
+/private/tmp/anthracite-submit-comparison-20261101/bin/gh pr view child --repo private/tmp/anthracite-submit-comparison-20261101/pilot-an/origin --json state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft
+/private/tmp/anthracite-submit-comparison-20261101/bin/gh pr view tip --repo private/tmp/anthracite-submit-comparison-20261101/pilot-an/origin --json state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft
+/private/tmp/anthracite-submit-comparison-20261101/bin/gh pr view base --repo private/tmp/anthracite-submit-comparison-20261101/pilot-an/origin --json state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft
+{"tool":"gh","args":["pr","view","submit-probe-20261101-base","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-child","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-tip","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-tip","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-base","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-child","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-base","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-sibling","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-tip","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-child","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}
+{"tool":"gh","args":["pr","view","submit-probe-20261101-tip","--repo","danielbaars/graphite-charcoal-e2e-2026-10-21","--json","state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft"]}

@@ -1,0 +1,63 @@
+an submit
+
+Idempotently force push all branches from trunk to the current branch to GitHub,
+creating or updating distinct pull requests for each. Pass --stack to also
+submit descendants of the current branch. Frozen branches are skipped; editable
+descendants keep their frozen parent as an existing base.
+
+Options:
+      --help          Show help                                        [boolean]
+      --version       Show version number                              [boolean]
+      --cwd           Working directory. Use a direct --cwd prefix before the
+                      Git command for passthroughs; before or after the command
+                      for Anthracite commands.                          [string]
+      --interactive   Enable interactive features. Defaults to terminal input
+                      and output. Disable with --no-interactive; quiet also
+                      disables interaction.                            [boolean]
+  -q, --quiet         Minimize output to the terminal.[boolean] [default: false]
+      --verify        Run git hooks. Disable with --no-verify.
+                                                       [boolean] [default: true]
+      --debug         Display debug output.           [boolean] [default: false]
+  -s, --stack         Submit the current branch and all of its descendants, in
+                      addition to its ancestors.      [boolean] [default: false]
+  -d, --draft         Create draft PRs or mark existing PRs as draft. Conflicts
+                      with --publish.                 [boolean] [default: false]
+  -p, --publish       Create ready PRs or publish existing drafts, including
+                      without interaction. Without --draft/--publish, new
+                      non-interactive PRs default to draft.
+                                                      [boolean] [default: false]
+  -e, --edit          Edit PR fields inline. If --no-interactive is true, this
+                      is automatically set to false.                   [boolean]
+  -n, --no-edit       Don't edit PR fields inline. Takes precedence over --edit
+                                                      [boolean] [default: false]
+  -r, --reviewers     Add reviewers without removing existing requests, using
+                      comma-separated users or organization/team names. Applies
+                      to every selected PR unless --roles-branch is set. Without
+                      an argument, prompt per target PR.                [string]
+      --assignees     Add comma-separated GitHub users as assignees, including
+                      @me for the authenticated user. Applies to every selected
+                      PR unless --roles-branch is set.                  [string]
+      --roles-branch  Add reviewers and assignees only to this exact selected
+                      branch PR, without narrowing the submission scope.[string]
+      --dry-run       Reports the PRs that would be submitted and terminates. No
+                      branches are pushed and no PRs are opened or updated.
+                                                      [boolean] [default: false]
+  -c, --confirm       Reports the PRs that would be submitted and asks for
+                      confirmation before pushing branches and opening/updating
+                      PRs. If either of --no-interactive or --dry-run is passed,
+                      this flag is ignored.           [boolean] [default: false]
+      --select        Reports the PRs that would be submitted and asks the user
+                      to select which should be updated/created. If either of
+                      --no-interactive or --dry-run is passed, this flag is
+                      ignored.                        [boolean] [default: false]
+  -u, --update-only   Only update the PRs that have been already been submitted.
+                                                      [boolean] [default: false]
+  -f, --force         Force push: overwrites the remote branch with your local
+                      branch. Otherwise defaults to --force-with-lease.
+                                                      [boolean] [default: false]
+      --always        Always push updates, even if the branch has not changed.
+                      Can be helpful for fixing an inconsistent Anthracite stack
+                      view on Web/GitHub resulting from downtime/a bug.
+                                                      [boolean] [default: false]
+      --branch        Which branch to run this command from (default: current
+                      branch)                                           [string]

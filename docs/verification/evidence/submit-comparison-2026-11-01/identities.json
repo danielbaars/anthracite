@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-01",
+  "anthraciteVersion": "0.6.0",
+  "graphiteVersion": "1.8.6",
+  "nodeVersion": "v24.22.2",
+  "platform": "darwin",
+  "sourceReleaseCommit": "eb23e4f8e924da24e00ae06484799687adde66b1",
+  "artifacts": {
+    "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f",
+    "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs": "a0a46bef82437e9164ff04404c7781680ced572a343c46f1a5db1fa27760b134",
+    "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node": "b6fb419f0f43bb2fbca273700294dd2f3b685a64b60e8417c295f47646a70e4a"
+  }
+}

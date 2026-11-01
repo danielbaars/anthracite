@@ -6,6 +6,8 @@ Use [the command reference](../DOCUMENTATION.md) for supported arguments, [compa
 
 **31 October addendum:** the original shipped table remains pinned to 0.4.0. G01 shipped in [0.5.0](https://github.com/danielbaars/anthracite/releases/tag/v0.5.0); the new [get/sync comparison](https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/get-sync-parity-2026-10-31.md) measures 0.5.0 against Graphite 1.8.6 and updates G07/U01 below. B02 shipped in [0.5.1](https://github.com/danielbaars/anthracite/releases/tag/v0.5.1); the approved [get specification](specs/get-updates.md) now has an implemented source candidate with [bounded local verification](verification/get-updates-implementation-2026-10-31.md). Its independent reviews are resolved and [PR #77](https://github.com/danielbaars/anthracite/pull/77) merged at `26c8b643`; this is not functionality shipped in public 0.5.1. The next approved [sync specification](specs/sync-updates.md) separates existing-feature refresh, default restack and cleanup-only consent; [its evidence record](verification/sync-updates-spec-2026-10-31.md) retains source and research limits. The [implemented sync candidate](sync.md) has [bounded local acceptance](verification/sync-updates-implementation-2026-11-01.md); it is not a published npm update or new live Graphite comparison.
 
+**1 November addendum:** [0.6.0](https://github.com/danielbaars/anthracite/releases/tag/v0.6.0) ships the get/sync candidates discussed above; their 0.5.1/candidate labels retain the earlier historical boundary. The new [submit comparison](research/submit-comparison-2026-11-01.md) measures Graphite 1.8.6 against installed npm Anthracite 0.6.0. It establishes the explicit restack interface gap and Graphite dry-run rewrites with real local Git, while keeping metadata/review source findings and untested live publication separate. It neither resumes #12 nor certifies the rest of the old baseline.
+
 ## Scope and evidence
 
 The goal is a standalone local stacked-Git CLI, with optional direct GitHub workflows and local MCP. Graphite accounts and hosted services are not prerequisites. Existing Charcoal metadata and interrupted operations remain compatible; product names and retained legacy settings are deliberate choices.
@@ -47,7 +49,7 @@ These entries distinguish remaining interface gaps, open decisions and explicitl
 
 ### G07: source-checked option examples
 
-These examples reconcile advertised Graphite 1.8.6 interfaces with the released builders and globals, not fresh runtime comparisons. Similar flags, Git passthroughs and alternative commands can overlap their purpose. This is not an exhaustive option matrix.
+These examples reconcile advertised Graphite 1.8.6 interfaces with the released builders and globals. The submit row additionally links the bounded 1 November 0.6.0 runtime comparison; the other examples retain their original source/release boundary. Similar flags, Git passthroughs and alternative commands can overlap their purpose. This is not an exhaustive option matrix.
 
 | Command | Interface absent in the release baseline | Retained capability / candidate status |
 | --- | --- | --- |
@@ -58,7 +60,7 @@ These examples reconcile advertised Graphite 1.8.6 interfaces with the released 
 | `delete` | `--close`, `--downstack`, `--upstack` | Selected local deletion with force/protection rules. |
 | `sync` | Released baseline lacks `--all`, `--delete-all` | Candidate adds cleanup-only `--delete-all`, existing-feature refresh and default restack; see [sync guidance](sync.md). `--all` belongs to multi-trunk G05. [Measured get/sync results](https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/get-sync-parity-2026-10-31.md) distinguish narrow cleanup consent from force/reset and confirm missing feature-head refresh. |
 | `get` | Released baseline lacks `--downstack`, `--restack`, `--checkout`, `--remote-upstack`, `--delete-all`. | Candidate adds downstack/restack/checkout, local-descendant refresh and saved graph recovery; see [verification](verification/get-updates-implementation-2026-10-31.md). Remote-only discovery and get cleanup remain excluded. Target/force and `--unfrozen/-U` import defaults already shipped. |
-| `submit` | Automatic-restack and additional metadata/review modes beyond current registered options | Existing selection, draft/publish, previews, role targeting and safe repetition. Team reviewers and assignees are already supported, not new gaps. Backend-dependent proposals require a separate scope decision. |
+| `submit` | Explicit `--restack` absent in 0.6.0; granular metadata prompt and re-request-all modes remain interface findings | [Paired 0.6.0 comparison](research/submit-comparison-2026-11-01.md): both default stale-chain previews refuse; Graphite explicit restack repairs selected histories even during dry-run. Anthracite separate restack/preview controls succeed for clean chain/fanout. Keep its preview and participant protections. Team reviewers, assignees and role targeting already exist; existing-PR metadata propagation remains a source concern requiring a runtime reproduction. Hosted modes are separate scope. |
 
 ## Deliberate retained differences
 

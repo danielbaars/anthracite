@@ -1,0 +1,2096 @@
+{
+  "normal-gt": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+        "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+        "refs/heads/submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+        "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+        "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+        "refs/heads/submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "281eafdac6c7fe04c62cbba4334e0723c32fe68d",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+        "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+        "refs/heads/submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+        "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+        "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+        "refs/heads/submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "281eafdac6c7fe04c62cbba4334e0723c32fe68d",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+      "submit-probe-20261101-base": "3e700fab9a809765188da754f290fd12d128ef9c",
+      "submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+      "submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+      "submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+      "submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+    },
+    "afterBareRemoteRefs": {
+      "main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+      "submit-probe-20261101-base": "3e700fab9a809765188da754f290fd12d128ef9c",
+      "submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+      "submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+      "submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+      "submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+    }
+  },
+  "normal-an": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+        "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+        "refs/heads/submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+        "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+        "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+        "refs/heads/submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "281eafdac6c7fe04c62cbba4334e0723c32fe68d",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+        "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+        "refs/heads/submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+        "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+        "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+        "refs/heads/submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "281eafdac6c7fe04c62cbba4334e0723c32fe68d",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "capture": {
+      "argv": [
+        "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+        "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+        "submit",
+        "--dry-run",
+        "--no-interactive"
+      ],
+      "exit": 1,
+      "stdout": "Running submit in 'dry-run' mode. No branches will be pushed and no PRs will be opened or updated.\n\nRunning in non-interactive mode. Inline prompts to fill PR fields will be skipped and new PRs will be created in draft mode.\n\n\ud83e\udd5e Validating that this Anthracite stack is ready to submit...\n\n",
+      "stderr": "ERROR: You are trying to submit at least one branch that has not been restacked on its parent.\nTo resolve this, check out submit-probe-20261101-child and run an restack --upstack.\n"
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+      "submit-probe-20261101-base": "3e700fab9a809765188da754f290fd12d128ef9c",
+      "submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+      "submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+      "submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+      "submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+    },
+    "afterBareRemoteRefs": {
+      "main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+      "submit-probe-20261101-base": "3e700fab9a809765188da754f290fd12d128ef9c",
+      "submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+      "submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+      "submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+      "submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+    }
+  },
+  "preview-gt": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+        "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+        "refs/heads/submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+        "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+        "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+        "refs/heads/submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "281eafdac6c7fe04c62cbba4334e0723c32fe68d",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+        "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+        "refs/heads/submit-probe-20261101-child": "f55e56975cfb6fb464706c21298a74e4803a046d",
+        "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+        "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+        "refs/heads/submit-probe-20261101-tip": "10d60db35e182f76e49f496bdbd95062e8766f29"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "10d60db35e182f76e49f496bdbd95062e8766f29",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": true,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "a1b779ae20bcee1263724af77ec93e64146ec82b9559c1474f23fb464d6a16c3",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "d6058ea89b22e0c61d9bfa42a15f893e51c5deb7",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "332de668cc3a5ec6890ace07ceca8eb5f888c075"
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+      "submit-probe-20261101-base": "3e700fab9a809765188da754f290fd12d128ef9c",
+      "submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+      "submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+      "submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+      "submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+    },
+    "afterBareRemoteRefs": {
+      "main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+      "submit-probe-20261101-base": "3e700fab9a809765188da754f290fd12d128ef9c",
+      "submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+      "submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+      "submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+      "submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+    }
+  },
+  "preview-an": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+        "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+        "refs/heads/submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+        "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+        "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+        "refs/heads/submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "281eafdac6c7fe04c62cbba4334e0723c32fe68d",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+        "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+        "refs/heads/submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+        "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+        "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+        "refs/heads/submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "281eafdac6c7fe04c62cbba4334e0723c32fe68d",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "capture": {
+      "argv": [
+        "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+        "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+        "submit",
+        "--dry-run",
+        "--restack",
+        "--no-interactive"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Unknown argument: restack\n"
+    },
+    "manual": {
+      "before": {
+        "refs": {
+          "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+          "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+          "refs/heads/submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+          "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+          "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+          "refs/heads/submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+        },
+        "branch": "submit-probe-20261101-tip",
+        "head": "281eafdac6c7fe04c62cbba4334e0723c32fe68d",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": false,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+          "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+          "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+          "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+        }
+      },
+      "after": {
+        "refs": {
+          "refs/heads/main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+          "refs/heads/submit-probe-20261101-base": "778703c8246f79d9dd04b8413c7ea7b9fa6619bc",
+          "refs/heads/submit-probe-20261101-child": "176b0d4c3279fe09be4e09e2d24d2f587db62eea",
+          "refs/heads/submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+          "refs/heads/submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+          "refs/heads/submit-probe-20261101-tip": "0d49c532a49a74e619b16b790da0bbe8f9606d50"
+        },
+        "branch": "submit-probe-20261101-tip",
+        "head": "0d49c532a49a74e619b16b790da0bbe8f9606d50",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": true,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+          "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+          "base.txt": "a1b779ae20bcee1263724af77ec93e64146ec82b9559c1474f23fb464d6a16c3",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+          "refs/heads/submit-probe-20261101-child": "d6058ea89b22e0c61d9bfa42a15f893e51c5deb7",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "332de668cc3a5ec6890ace07ceca8eb5f888c075"
+        }
+      },
+      "capture": {
+        "restack": {
+          "argv": [
+            "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+            "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+            "restack",
+            "--downstack",
+            "--no-interactive"
+          ],
+          "exit": 0,
+          "stdout": "submit-probe-20261101-base does not need to be restacked on main.\nRestacked submit-probe-20261101-child on submit-probe-20261101-base.\nRestacked submit-probe-20261101-tip on submit-probe-20261101-child.\n",
+          "stderr": ""
+        },
+        "submit": {
+          "argv": [
+            "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+            "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+            "submit",
+            "--dry-run",
+            "--no-interactive"
+          ],
+          "exit": 0,
+          "stdout": "Running submit in 'dry-run' mode. No branches will be pushed and no PRs will be opened or updated.\n\nRunning in non-interactive mode. Inline prompts to fill PR fields will be skipped and new PRs will be created in draft mode.\n\n\ud83e\udd5e Validating that this Anthracite stack is ready to submit...\n\n\u270f\ufe0f  Preparing to submit PRs for the following branches...\n\u25b8 submit-probe-20261101-base (Create)\n\u25b8 submit-probe-20261101-child (Create)\n\u25b8 submit-probe-20261101-tip (Create)\n\n\u2705 Dry run complete.\n",
+          "stderr": ""
+        }
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+      "submit-probe-20261101-base": "3e700fab9a809765188da754f290fd12d128ef9c",
+      "submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+      "submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+      "submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+      "submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+    },
+    "afterBareRemoteRefs": {
+      "main": "840ec8865c74cc28101fad931eb0fe2bef681c1a",
+      "submit-probe-20261101-base": "3e700fab9a809765188da754f290fd12d128ef9c",
+      "submit-probe-20261101-child": "6ac79a6c940e7698344482d17156aac666d8c811",
+      "submit-probe-20261101-other": "9622489cca895ae2259a0bf15edb00bacc9c45c7",
+      "submit-probe-20261101-sibling": "26151b51a5ffecb93f916bb9c6eaa6c76226965f",
+      "submit-probe-20261101-tip": "281eafdac6c7fe04c62cbba4334e0723c32fe68d"
+    }
+  },
+  "apply-gt": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "acf1844c51aa91ee63d29f184521400c0e629b9a",
+        "refs/heads/submit-probe-20261101-base": "21c9d15b12f0fb85bb6b369115ce01b9493d19fe",
+        "refs/heads/submit-probe-20261101-child": "83899e96f31a220400d2bcb0307d35fbb1c09d4d",
+        "refs/heads/submit-probe-20261101-other": "869c2ba2c10f71a1c4f8269d7dfabde8c7f8e992",
+        "refs/heads/submit-probe-20261101-sibling": "4541c81f5f766a8425d80ffe2fcfd8aa9ddf2c29",
+        "refs/heads/submit-probe-20261101-tip": "9d204612545d0fcf7cfe3c349f689adda059b950"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "9d204612545d0fcf7cfe3c349f689adda059b950",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "acf1844c51aa91ee63d29f184521400c0e629b9a",
+        "refs/heads/submit-probe-20261101-base": "21c9d15b12f0fb85bb6b369115ce01b9493d19fe",
+        "refs/heads/submit-probe-20261101-child": "83899e96f31a220400d2bcb0307d35fbb1c09d4d",
+        "refs/heads/submit-probe-20261101-other": "869c2ba2c10f71a1c4f8269d7dfabde8c7f8e992",
+        "refs/heads/submit-probe-20261101-sibling": "4541c81f5f766a8425d80ffe2fcfd8aa9ddf2c29",
+        "refs/heads/submit-probe-20261101-tip": "9d204612545d0fcf7cfe3c349f689adda059b950"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "9d204612545d0fcf7cfe3c349f689adda059b950",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "acf1844c51aa91ee63d29f184521400c0e629b9a",
+      "submit-probe-20261101-base": "f416ee97b7e6203833294ebe78938851e99500cd",
+      "submit-probe-20261101-child": "83899e96f31a220400d2bcb0307d35fbb1c09d4d",
+      "submit-probe-20261101-other": "869c2ba2c10f71a1c4f8269d7dfabde8c7f8e992",
+      "submit-probe-20261101-sibling": "4541c81f5f766a8425d80ffe2fcfd8aa9ddf2c29",
+      "submit-probe-20261101-tip": "9d204612545d0fcf7cfe3c349f689adda059b950"
+    },
+    "afterBareRemoteRefs": {
+      "main": "acf1844c51aa91ee63d29f184521400c0e629b9a",
+      "submit-probe-20261101-base": "f416ee97b7e6203833294ebe78938851e99500cd",
+      "submit-probe-20261101-child": "83899e96f31a220400d2bcb0307d35fbb1c09d4d",
+      "submit-probe-20261101-other": "869c2ba2c10f71a1c4f8269d7dfabde8c7f8e992",
+      "submit-probe-20261101-sibling": "4541c81f5f766a8425d80ffe2fcfd8aa9ddf2c29",
+      "submit-probe-20261101-tip": "9d204612545d0fcf7cfe3c349f689adda059b950"
+    }
+  },
+  "apply-an": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "acf1844c51aa91ee63d29f184521400c0e629b9a",
+        "refs/heads/submit-probe-20261101-base": "3bbde93b6f43b75c9b1ee1e2aa2516fa5c5b4122",
+        "refs/heads/submit-probe-20261101-child": "83899e96f31a220400d2bcb0307d35fbb1c09d4d",
+        "refs/heads/submit-probe-20261101-other": "869c2ba2c10f71a1c4f8269d7dfabde8c7f8e992",
+        "refs/heads/submit-probe-20261101-sibling": "4541c81f5f766a8425d80ffe2fcfd8aa9ddf2c29",
+        "refs/heads/submit-probe-20261101-tip": "9d204612545d0fcf7cfe3c349f689adda059b950"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "9d204612545d0fcf7cfe3c349f689adda059b950",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "acf1844c51aa91ee63d29f184521400c0e629b9a",
+        "refs/heads/submit-probe-20261101-base": "3bbde93b6f43b75c9b1ee1e2aa2516fa5c5b4122",
+        "refs/heads/submit-probe-20261101-child": "83899e96f31a220400d2bcb0307d35fbb1c09d4d",
+        "refs/heads/submit-probe-20261101-other": "869c2ba2c10f71a1c4f8269d7dfabde8c7f8e992",
+        "refs/heads/submit-probe-20261101-sibling": "4541c81f5f766a8425d80ffe2fcfd8aa9ddf2c29",
+        "refs/heads/submit-probe-20261101-tip": "9d204612545d0fcf7cfe3c349f689adda059b950"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "9d204612545d0fcf7cfe3c349f689adda059b950",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "capture": {
+      "argv": [
+        "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+        "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+        "submit",
+        "--dry-run",
+        "--restack=false",
+        "--no-interactive"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Unknown argument: restack\n"
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "acf1844c51aa91ee63d29f184521400c0e629b9a",
+      "submit-probe-20261101-base": "f416ee97b7e6203833294ebe78938851e99500cd",
+      "submit-probe-20261101-child": "83899e96f31a220400d2bcb0307d35fbb1c09d4d",
+      "submit-probe-20261101-other": "869c2ba2c10f71a1c4f8269d7dfabde8c7f8e992",
+      "submit-probe-20261101-sibling": "4541c81f5f766a8425d80ffe2fcfd8aa9ddf2c29",
+      "submit-probe-20261101-tip": "9d204612545d0fcf7cfe3c349f689adda059b950"
+    },
+    "afterBareRemoteRefs": {
+      "main": "acf1844c51aa91ee63d29f184521400c0e629b9a",
+      "submit-probe-20261101-base": "f416ee97b7e6203833294ebe78938851e99500cd",
+      "submit-probe-20261101-child": "83899e96f31a220400d2bcb0307d35fbb1c09d4d",
+      "submit-probe-20261101-other": "869c2ba2c10f71a1c4f8269d7dfabde8c7f8e992",
+      "submit-probe-20261101-sibling": "4541c81f5f766a8425d80ffe2fcfd8aa9ddf2c29",
+      "submit-probe-20261101-tip": "9d204612545d0fcf7cfe3c349f689adda059b950"
+    }
+  },
+  "fanout-gt": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+        "refs/heads/submit-probe-20261101-base": "61056a7be23dc9dd4a96e612a488d658bd0a258c",
+        "refs/heads/submit-probe-20261101-child": "e1471fd8741d9ff83d9338b4a91a29e9cbbd6d6f",
+        "refs/heads/submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+        "refs/heads/submit-probe-20261101-sibling": "72516240b298281a43f84a40e38be5b4d15fdbe2",
+        "refs/heads/submit-probe-20261101-tip": "9903724c8a4aa540db2666f1e41aa2a7d172486e"
+      },
+      "branch": "submit-probe-20261101-base",
+      "head": "61056a7be23dc9dd4a96e612a488d658bd0a258c",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "base.txt": "a1b779ae20bcee1263724af77ec93e64146ec82b9559c1474f23fb464d6a16c3",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+        "refs/heads/submit-probe-20261101-base": "61056a7be23dc9dd4a96e612a488d658bd0a258c",
+        "refs/heads/submit-probe-20261101-child": "50b5e4e88a2a8bcebd9dd31706c811cf572d98dc",
+        "refs/heads/submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+        "refs/heads/submit-probe-20261101-sibling": "e948028b5d51e8125f268227e73600c21c9b0e21",
+        "refs/heads/submit-probe-20261101-tip": "42da8aaf151dc14277dfd8cc22176fdb89d7ba05"
+      },
+      "branch": "submit-probe-20261101-base",
+      "head": "61056a7be23dc9dd4a96e612a488d658bd0a258c",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": true,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": true,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "base.txt": "a1b779ae20bcee1263724af77ec93e64146ec82b9559c1474f23fb464d6a16c3",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "d6058ea89b22e0c61d9bfa42a15f893e51c5deb7",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "f68eadd64ff8f91004e84e53c68d646e143fe390",
+        "refs/heads/submit-probe-20261101-tip": "332de668cc3a5ec6890ace07ceca8eb5f888c075"
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+      "submit-probe-20261101-base": "6ec4f0a287af6deb6da626f97167774c36c26cff",
+      "submit-probe-20261101-child": "e1471fd8741d9ff83d9338b4a91a29e9cbbd6d6f",
+      "submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+      "submit-probe-20261101-sibling": "72516240b298281a43f84a40e38be5b4d15fdbe2",
+      "submit-probe-20261101-tip": "9903724c8a4aa540db2666f1e41aa2a7d172486e"
+    },
+    "afterBareRemoteRefs": {
+      "main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+      "submit-probe-20261101-base": "6ec4f0a287af6deb6da626f97167774c36c26cff",
+      "submit-probe-20261101-child": "e1471fd8741d9ff83d9338b4a91a29e9cbbd6d6f",
+      "submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+      "submit-probe-20261101-sibling": "72516240b298281a43f84a40e38be5b4d15fdbe2",
+      "submit-probe-20261101-tip": "9903724c8a4aa540db2666f1e41aa2a7d172486e"
+    }
+  },
+  "fanout-an": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+        "refs/heads/submit-probe-20261101-base": "9955b791f0f6e6c1c8daef1376d889341155eee3",
+        "refs/heads/submit-probe-20261101-child": "e1471fd8741d9ff83d9338b4a91a29e9cbbd6d6f",
+        "refs/heads/submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+        "refs/heads/submit-probe-20261101-sibling": "72516240b298281a43f84a40e38be5b4d15fdbe2",
+        "refs/heads/submit-probe-20261101-tip": "9903724c8a4aa540db2666f1e41aa2a7d172486e"
+      },
+      "branch": "submit-probe-20261101-base",
+      "head": "9955b791f0f6e6c1c8daef1376d889341155eee3",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "base.txt": "a1b779ae20bcee1263724af77ec93e64146ec82b9559c1474f23fb464d6a16c3",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+        "refs/heads/submit-probe-20261101-base": "9955b791f0f6e6c1c8daef1376d889341155eee3",
+        "refs/heads/submit-probe-20261101-child": "e1471fd8741d9ff83d9338b4a91a29e9cbbd6d6f",
+        "refs/heads/submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+        "refs/heads/submit-probe-20261101-sibling": "72516240b298281a43f84a40e38be5b4d15fdbe2",
+        "refs/heads/submit-probe-20261101-tip": "9903724c8a4aa540db2666f1e41aa2a7d172486e"
+      },
+      "branch": "submit-probe-20261101-base",
+      "head": "9955b791f0f6e6c1c8daef1376d889341155eee3",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "base.txt": "a1b779ae20bcee1263724af77ec93e64146ec82b9559c1474f23fb464d6a16c3",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "capture": {
+      "argv": [
+        "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+        "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+        "submit",
+        "--dry-run",
+        "--restack",
+        "--stack",
+        "--no-interactive"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Unknown argument: restack\n"
+    },
+    "manual": {
+      "before": {
+        "refs": {
+          "refs/heads/main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+          "refs/heads/submit-probe-20261101-base": "9955b791f0f6e6c1c8daef1376d889341155eee3",
+          "refs/heads/submit-probe-20261101-child": "e1471fd8741d9ff83d9338b4a91a29e9cbbd6d6f",
+          "refs/heads/submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+          "refs/heads/submit-probe-20261101-sibling": "72516240b298281a43f84a40e38be5b4d15fdbe2",
+          "refs/heads/submit-probe-20261101-tip": "9903724c8a4aa540db2666f1e41aa2a7d172486e"
+        },
+        "branch": "submit-probe-20261101-base",
+        "head": "9955b791f0f6e6c1c8daef1376d889341155eee3",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": false,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "base.txt": "a1b779ae20bcee1263724af77ec93e64146ec82b9559c1474f23fb464d6a16c3",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+          "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+        }
+      },
+      "after": {
+        "refs": {
+          "refs/heads/main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+          "refs/heads/submit-probe-20261101-base": "9955b791f0f6e6c1c8daef1376d889341155eee3",
+          "refs/heads/submit-probe-20261101-child": "c6ec78bd7590ea42a27f9e869cd4ea473c926b6c",
+          "refs/heads/submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+          "refs/heads/submit-probe-20261101-sibling": "e22911248d140c0e66fcb1680417df8cbf64fce1",
+          "refs/heads/submit-probe-20261101-tip": "ac683cdfee43224859526c9ecfa9070a153d20c7"
+        },
+        "branch": "submit-probe-20261101-base",
+        "head": "9955b791f0f6e6c1c8daef1376d889341155eee3",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": true,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": true,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "base.txt": "a1b779ae20bcee1263724af77ec93e64146ec82b9559c1474f23fb464d6a16c3",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+          "refs/heads/submit-probe-20261101-child": "d6058ea89b22e0c61d9bfa42a15f893e51c5deb7",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "f68eadd64ff8f91004e84e53c68d646e143fe390",
+          "refs/heads/submit-probe-20261101-tip": "332de668cc3a5ec6890ace07ceca8eb5f888c075"
+        }
+      },
+      "capture": {
+        "restack": {
+          "argv": [
+            "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+            "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+            "restack",
+            "--no-interactive"
+          ],
+          "exit": 0,
+          "stdout": "submit-probe-20261101-base does not need to be restacked on main.\nRestacked submit-probe-20261101-child on submit-probe-20261101-base.\nRestacked submit-probe-20261101-tip on submit-probe-20261101-child.\nRestacked submit-probe-20261101-sibling on submit-probe-20261101-base.\n",
+          "stderr": ""
+        },
+        "submit": {
+          "argv": [
+            "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+            "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+            "submit",
+            "--dry-run",
+            "--stack",
+            "--no-interactive"
+          ],
+          "exit": 0,
+          "stdout": "Running submit in 'dry-run' mode. No branches will be pushed and no PRs will be opened or updated.\n\nRunning in non-interactive mode. Inline prompts to fill PR fields will be skipped and new PRs will be created in draft mode.\n\n\ud83e\udd5e Validating that this Anthracite stack is ready to submit...\n\n\u270f\ufe0f  Preparing to submit PRs for the following branches...\n\u25b8 submit-probe-20261101-base (Create)\n\u25b8 submit-probe-20261101-child (Create)\n\u25b8 submit-probe-20261101-tip (Create)\n\u25b8 submit-probe-20261101-sibling (Create)\n\n\u2705 Dry run complete.\n",
+          "stderr": ""
+        }
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+      "submit-probe-20261101-base": "6ec4f0a287af6deb6da626f97167774c36c26cff",
+      "submit-probe-20261101-child": "e1471fd8741d9ff83d9338b4a91a29e9cbbd6d6f",
+      "submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+      "submit-probe-20261101-sibling": "72516240b298281a43f84a40e38be5b4d15fdbe2",
+      "submit-probe-20261101-tip": "9903724c8a4aa540db2666f1e41aa2a7d172486e"
+    },
+    "afterBareRemoteRefs": {
+      "main": "bc4d1bf900eebc6ea958293807ec9ae87532b525",
+      "submit-probe-20261101-base": "6ec4f0a287af6deb6da626f97167774c36c26cff",
+      "submit-probe-20261101-child": "e1471fd8741d9ff83d9338b4a91a29e9cbbd6d6f",
+      "submit-probe-20261101-other": "ce920c90031ad547d8a5e1f638308e83dabe979b",
+      "submit-probe-20261101-sibling": "72516240b298281a43f84a40e38be5b4d15fdbe2",
+      "submit-probe-20261101-tip": "9903724c8a4aa540db2666f1e41aa2a7d172486e"
+    }
+  },
+  "conflict-gt": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "d29960271fd1f49868153108af8fe3cb427243dd",
+        "refs/heads/submit-probe-20261101-base": "d1b86ea3abc70bbb2066004c9a7920753ea9b9f1",
+        "refs/heads/submit-probe-20261101-child": "bd8e113a75bf1e8fd3a32dcb38db9773dbf30269",
+        "refs/heads/submit-probe-20261101-other": "bf7aadf7ff427b80c003dfb57e9dd838f1a64a2e",
+        "refs/heads/submit-probe-20261101-sibling": "0a8a48700f560839e34789ae1d16b1ff49f966b1",
+        "refs/heads/submit-probe-20261101-tip": "a1dcf9b8eac72ef65ea12795e4e9976466380faa"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "a1dcf9b8eac72ef65ea12795e4e9976466380faa",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "f5913128600f0b97d5fd359188d7b572521655f9",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "d29960271fd1f49868153108af8fe3cb427243dd",
+        "refs/heads/submit-probe-20261101-base": "d1b86ea3abc70bbb2066004c9a7920753ea9b9f1",
+        "refs/heads/submit-probe-20261101-child": "bd8e113a75bf1e8fd3a32dcb38db9773dbf30269",
+        "refs/heads/submit-probe-20261101-other": "bf7aadf7ff427b80c003dfb57e9dd838f1a64a2e",
+        "refs/heads/submit-probe-20261101-sibling": "0a8a48700f560839e34789ae1d16b1ff49f966b1",
+        "refs/heads/submit-probe-20261101-tip": "a1dcf9b8eac72ef65ea12795e4e9976466380faa"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "a1dcf9b8eac72ef65ea12795e4e9976466380faa",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "f5913128600f0b97d5fd359188d7b572521655f9",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "d29960271fd1f49868153108af8fe3cb427243dd",
+      "submit-probe-20261101-base": "b27f9b5b93c210c69e6e061aaa596048b785f0d7",
+      "submit-probe-20261101-child": "bd8e113a75bf1e8fd3a32dcb38db9773dbf30269",
+      "submit-probe-20261101-other": "bf7aadf7ff427b80c003dfb57e9dd838f1a64a2e",
+      "submit-probe-20261101-sibling": "0a8a48700f560839e34789ae1d16b1ff49f966b1",
+      "submit-probe-20261101-tip": "a1dcf9b8eac72ef65ea12795e4e9976466380faa"
+    },
+    "afterBareRemoteRefs": {
+      "main": "d29960271fd1f49868153108af8fe3cb427243dd",
+      "submit-probe-20261101-base": "b27f9b5b93c210c69e6e061aaa596048b785f0d7",
+      "submit-probe-20261101-child": "bd8e113a75bf1e8fd3a32dcb38db9773dbf30269",
+      "submit-probe-20261101-other": "bf7aadf7ff427b80c003dfb57e9dd838f1a64a2e",
+      "submit-probe-20261101-sibling": "0a8a48700f560839e34789ae1d16b1ff49f966b1",
+      "submit-probe-20261101-tip": "a1dcf9b8eac72ef65ea12795e4e9976466380faa"
+    }
+  },
+  "conflict-an": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+        "refs/heads/submit-probe-20261101-base": "ce5048abfdbf874734a3b31137194334771263e2",
+        "refs/heads/submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+        "refs/heads/submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+        "refs/heads/submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+        "refs/heads/submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "6486256b633a59e62c18173d06d926277ebd76d7",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "f5913128600f0b97d5fd359188d7b572521655f9",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+        "refs/heads/submit-probe-20261101-base": "ce5048abfdbf874734a3b31137194334771263e2",
+        "refs/heads/submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+        "refs/heads/submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+        "refs/heads/submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+        "refs/heads/submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "6486256b633a59e62c18173d06d926277ebd76d7",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "f5913128600f0b97d5fd359188d7b572521655f9",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "capture": {
+      "argv": [
+        "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+        "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+        "submit",
+        "--dry-run",
+        "--restack",
+        "--no-interactive"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Unknown argument: restack\n"
+    },
+    "manual": {
+      "before": {
+        "refs": {
+          "refs/heads/main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+          "refs/heads/submit-probe-20261101-base": "ce5048abfdbf874734a3b31137194334771263e2",
+          "refs/heads/submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+          "refs/heads/submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+          "refs/heads/submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+          "refs/heads/submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+        },
+        "branch": "submit-probe-20261101-tip",
+        "head": "6486256b633a59e62c18173d06d926277ebd76d7",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": false,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+          "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+          "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "f5913128600f0b97d5fd359188d7b572521655f9",
+          "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+        }
+      },
+      "after": {
+        "refs": {
+          "refs/heads/main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+          "refs/heads/submit-probe-20261101-base": "ce5048abfdbf874734a3b31137194334771263e2",
+          "refs/heads/submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+          "refs/heads/submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+          "refs/heads/submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+          "refs/heads/submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+        },
+        "branch": "",
+        "head": "ce5048abfdbf874734a3b31137194334771263e2",
+        "status": "AA child.txt",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": false,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "child.txt",
+        "rebase": true,
+        "files": {
+          "child.txt": "ece22fefc3a646d15844cae7c1702138fbebefd7c92a57aef25fd9c2e5dddb85",
+          "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "f5913128600f0b97d5fd359188d7b572521655f9",
+          "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+        }
+      },
+      "capture": {
+        "restack": {
+          "argv": [
+            "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+            "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+            "restack",
+            "--downstack",
+            "--no-interactive"
+          ],
+          "exit": 1,
+          "stdout": "submit-probe-20261101-base does not need to be restacked on main.\n",
+          "stderr": "Hit conflict restacking submit-probe-20261101-child on submit-probe-20261101-base.\n\nUnmerged files:\nchild.txt\n\nYou are here (resolving submit-probe-20261101-child):\n\u25ef  submit-probe-20261101-tip\n\u25ef  submit-probe-20261101-child\n\u25ef  submit-probe-20261101-base\n\nTo fix and continue your previous Anthracite command:\n(1) resolve the listed merge conflicts\n(2) mark them as resolved with an add .\n(3) run an continue to continue executing your previous Anthracite command\nan rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.\n"
+        }
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+      "submit-probe-20261101-base": "cfff751282e11a54b87a5e27d84754766a56570d",
+      "submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+      "submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+      "submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+      "submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+    },
+    "afterBareRemoteRefs": {
+      "main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+      "submit-probe-20261101-base": "cfff751282e11a54b87a5e27d84754766a56570d",
+      "submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+      "submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+      "submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+      "submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+    }
+  },
+  "frozen-gt": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+        "refs/heads/submit-probe-20261101-base": "802d8cc29aa14b2c8cf814849444ce36719c4a79",
+        "refs/heads/submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+        "refs/heads/submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+        "refs/heads/submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+        "refs/heads/submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "6486256b633a59e62c18173d06d926277ebd76d7",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+        "refs/heads/submit-probe-20261101-base": "802d8cc29aa14b2c8cf814849444ce36719c4a79",
+        "refs/heads/submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+        "refs/heads/submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+        "refs/heads/submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+        "refs/heads/submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "6486256b633a59e62c18173d06d926277ebd76d7",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+      "submit-probe-20261101-base": "cfff751282e11a54b87a5e27d84754766a56570d",
+      "submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+      "submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+      "submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+      "submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+    },
+    "afterBareRemoteRefs": {
+      "main": "d859c23c79ecf9330e073fe6b3279ef1824792e5",
+      "submit-probe-20261101-base": "cfff751282e11a54b87a5e27d84754766a56570d",
+      "submit-probe-20261101-child": "652e1ae1200438492c33c912322178b47e4d0c1f",
+      "submit-probe-20261101-other": "810acd8f0bd5baa948d183d559e7ed2500626488",
+      "submit-probe-20261101-sibling": "931a96a507187b761333fd20b4906a1b9fd9a5a1",
+      "submit-probe-20261101-tip": "6486256b633a59e62c18173d06d926277ebd76d7"
+    }
+  },
+  "frozen-an": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "ded23c92471f4e87a300f91278c4fc4ba62660aa",
+        "refs/heads/submit-probe-20261101-base": "54fa214f5a9b2a813323ffb14c8381d752270957",
+        "refs/heads/submit-probe-20261101-child": "cd207d4960f4c920f92ff9cafc5f1823681dc0f2",
+        "refs/heads/submit-probe-20261101-other": "bc46bda492fa083d1036d3c1d97d51e19631beba",
+        "refs/heads/submit-probe-20261101-sibling": "0bec6d0f36d2997f3f5f879aa48b483002a84222",
+        "refs/heads/submit-probe-20261101-tip": "ca9f97a499149dbf73f667578a27b8a77b733c7a"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "ca9f97a499149dbf73f667578a27b8a77b733c7a",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "ded23c92471f4e87a300f91278c4fc4ba62660aa",
+        "refs/heads/submit-probe-20261101-base": "54fa214f5a9b2a813323ffb14c8381d752270957",
+        "refs/heads/submit-probe-20261101-child": "cd207d4960f4c920f92ff9cafc5f1823681dc0f2",
+        "refs/heads/submit-probe-20261101-other": "bc46bda492fa083d1036d3c1d97d51e19631beba",
+        "refs/heads/submit-probe-20261101-sibling": "0bec6d0f36d2997f3f5f879aa48b483002a84222",
+        "refs/heads/submit-probe-20261101-tip": "ca9f97a499149dbf73f667578a27b8a77b733c7a"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "ca9f97a499149dbf73f667578a27b8a77b733c7a",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "capture": {
+      "argv": [
+        "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+        "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+        "submit",
+        "--dry-run",
+        "--restack",
+        "--no-interactive"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Unknown argument: restack\n"
+    },
+    "manual": {
+      "before": {
+        "refs": {
+          "refs/heads/main": "ded23c92471f4e87a300f91278c4fc4ba62660aa",
+          "refs/heads/submit-probe-20261101-base": "54fa214f5a9b2a813323ffb14c8381d752270957",
+          "refs/heads/submit-probe-20261101-child": "cd207d4960f4c920f92ff9cafc5f1823681dc0f2",
+          "refs/heads/submit-probe-20261101-other": "bc46bda492fa083d1036d3c1d97d51e19631beba",
+          "refs/heads/submit-probe-20261101-sibling": "0bec6d0f36d2997f3f5f879aa48b483002a84222",
+          "refs/heads/submit-probe-20261101-tip": "ca9f97a499149dbf73f667578a27b8a77b733c7a"
+        },
+        "branch": "submit-probe-20261101-tip",
+        "head": "ca9f97a499149dbf73f667578a27b8a77b733c7a",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": false,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+          "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+          "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+          "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+        }
+      },
+      "after": {
+        "refs": {
+          "refs/heads/main": "ded23c92471f4e87a300f91278c4fc4ba62660aa",
+          "refs/heads/submit-probe-20261101-base": "54fa214f5a9b2a813323ffb14c8381d752270957",
+          "refs/heads/submit-probe-20261101-child": "cd207d4960f4c920f92ff9cafc5f1823681dc0f2",
+          "refs/heads/submit-probe-20261101-other": "bc46bda492fa083d1036d3c1d97d51e19631beba",
+          "refs/heads/submit-probe-20261101-sibling": "0bec6d0f36d2997f3f5f879aa48b483002a84222",
+          "refs/heads/submit-probe-20261101-tip": "ca9f97a499149dbf73f667578a27b8a77b733c7a"
+        },
+        "branch": "submit-probe-20261101-tip",
+        "head": "ca9f97a499149dbf73f667578a27b8a77b733c7a",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": false,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+          "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+          "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+          "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+        }
+      },
+      "capture": {
+        "restack": {
+          "argv": [
+            "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+            "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+            "restack",
+            "--downstack",
+            "--no-interactive"
+          ],
+          "exit": 0,
+          "stdout": "Skipping frozen branch submit-probe-20261101-base.\nSkipping frozen branch submit-probe-20261101-child.\nsubmit-probe-20261101-tip does not need to be restacked on submit-probe-20261101-child.\n",
+          "stderr": ""
+        },
+        "submit": {
+          "argv": [
+            "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+            "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+            "submit",
+            "--dry-run",
+            "--no-interactive"
+          ],
+          "exit": 0,
+          "stdout": "Running submit in 'dry-run' mode. No branches will be pushed and no PRs will be opened or updated.\n\nRunning in non-interactive mode. Inline prompts to fill PR fields will be skipped and new PRs will be created in draft mode.\n\nSkipping frozen branch submit-probe-20261101-base.\nSkipping frozen branch submit-probe-20261101-child.\n\ud83e\udd5e Validating that this Anthracite stack is ready to submit...\n\n\u270f\ufe0f  Preparing to submit PRs for the following branches...\n\u25b8 submit-probe-20261101-tip (Create)\n\n\u2705 Dry run complete.\n",
+          "stderr": ""
+        }
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "ded23c92471f4e87a300f91278c4fc4ba62660aa",
+      "submit-probe-20261101-base": "b32fb0cc88507fef418af46d77407c1deb324820",
+      "submit-probe-20261101-child": "cd207d4960f4c920f92ff9cafc5f1823681dc0f2",
+      "submit-probe-20261101-other": "bc46bda492fa083d1036d3c1d97d51e19631beba",
+      "submit-probe-20261101-sibling": "0bec6d0f36d2997f3f5f879aa48b483002a84222",
+      "submit-probe-20261101-tip": "ca9f97a499149dbf73f667578a27b8a77b733c7a"
+    },
+    "afterBareRemoteRefs": {
+      "main": "ded23c92471f4e87a300f91278c4fc4ba62660aa",
+      "submit-probe-20261101-base": "b32fb0cc88507fef418af46d77407c1deb324820",
+      "submit-probe-20261101-child": "cd207d4960f4c920f92ff9cafc5f1823681dc0f2",
+      "submit-probe-20261101-other": "bc46bda492fa083d1036d3c1d97d51e19631beba",
+      "submit-probe-20261101-sibling": "0bec6d0f36d2997f3f5f879aa48b483002a84222",
+      "submit-probe-20261101-tip": "ca9f97a499149dbf73f667578a27b8a77b733c7a"
+    }
+  },
+  "occupied-gt": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "04b2bdb0b152f52f7194e8acbe83280eaf00484a",
+        "refs/heads/submit-probe-20261101-base": "b137120c382d461a37212ad08ca41a7d53e51ef4",
+        "refs/heads/submit-probe-20261101-child": "6bf07a9b45bbdb57f65a23200e1280c764349594",
+        "refs/heads/submit-probe-20261101-other": "673b00801f8541a0c3496df7c4387c68b6c4c824",
+        "refs/heads/submit-probe-20261101-sibling": "125531e48c332335ae28aed810d208ed366e46f4",
+        "refs/heads/submit-probe-20261101-tip": "c977bb0153405999d82c172bd62a42e4641373cd"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "c977bb0153405999d82c172bd62a42e4641373cd",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "04b2bdb0b152f52f7194e8acbe83280eaf00484a",
+        "refs/heads/submit-probe-20261101-base": "b137120c382d461a37212ad08ca41a7d53e51ef4",
+        "refs/heads/submit-probe-20261101-child": "6bf07a9b45bbdb57f65a23200e1280c764349594",
+        "refs/heads/submit-probe-20261101-other": "673b00801f8541a0c3496df7c4387c68b6c4c824",
+        "refs/heads/submit-probe-20261101-sibling": "125531e48c332335ae28aed810d208ed366e46f4",
+        "refs/heads/submit-probe-20261101-tip": "c977bb0153405999d82c172bd62a42e4641373cd"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "c977bb0153405999d82c172bd62a42e4641373cd",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child",
+        "main": null
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "04b2bdb0b152f52f7194e8acbe83280eaf00484a",
+      "submit-probe-20261101-base": "91b96f198a835b1d00c35098818b07a4ca335cad",
+      "submit-probe-20261101-child": "6bf07a9b45bbdb57f65a23200e1280c764349594",
+      "submit-probe-20261101-other": "673b00801f8541a0c3496df7c4387c68b6c4c824",
+      "submit-probe-20261101-sibling": "125531e48c332335ae28aed810d208ed366e46f4",
+      "submit-probe-20261101-tip": "c977bb0153405999d82c172bd62a42e4641373cd"
+    },
+    "afterBareRemoteRefs": {
+      "main": "04b2bdb0b152f52f7194e8acbe83280eaf00484a",
+      "submit-probe-20261101-base": "91b96f198a835b1d00c35098818b07a4ca335cad",
+      "submit-probe-20261101-child": "6bf07a9b45bbdb57f65a23200e1280c764349594",
+      "submit-probe-20261101-other": "673b00801f8541a0c3496df7c4387c68b6c4c824",
+      "submit-probe-20261101-sibling": "125531e48c332335ae28aed810d208ed366e46f4",
+      "submit-probe-20261101-tip": "c977bb0153405999d82c172bd62a42e4641373cd"
+    }
+  },
+  "occupied-an": {
+    "before": {
+      "refs": {
+        "refs/heads/main": "6a2152471d4574116a40b0cf608b552ad990e225",
+        "refs/heads/submit-probe-20261101-base": "f8d6242bd4f7959b12bd627f998c43d25efd6f05",
+        "refs/heads/submit-probe-20261101-child": "ab792438c2cfc5c489042b28c38c7f33d3a36bf3",
+        "refs/heads/submit-probe-20261101-other": "8783a5cd28e64e8a7ce6a06e445ce89debeb8176",
+        "refs/heads/submit-probe-20261101-sibling": "533b12c1d8f9038d09e3398d41d63b40e50004ad",
+        "refs/heads/submit-probe-20261101-tip": "4145e1589df9538cd1201e919c33a26347de2221"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "4145e1589df9538cd1201e919c33a26347de2221",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "after": {
+      "refs": {
+        "refs/heads/main": "6a2152471d4574116a40b0cf608b552ad990e225",
+        "refs/heads/submit-probe-20261101-base": "f8d6242bd4f7959b12bd627f998c43d25efd6f05",
+        "refs/heads/submit-probe-20261101-child": "ab792438c2cfc5c489042b28c38c7f33d3a36bf3",
+        "refs/heads/submit-probe-20261101-other": "8783a5cd28e64e8a7ce6a06e445ce89debeb8176",
+        "refs/heads/submit-probe-20261101-sibling": "533b12c1d8f9038d09e3398d41d63b40e50004ad",
+        "refs/heads/submit-probe-20261101-tip": "4145e1589df9538cd1201e919c33a26347de2221"
+      },
+      "branch": "submit-probe-20261101-tip",
+      "head": "4145e1589df9538cd1201e919c33a26347de2221",
+      "status": "",
+      "parents": {
+        "submit-probe-20261101-base": "main",
+        "submit-probe-20261101-child": "submit-probe-20261101-base",
+        "submit-probe-20261101-other": "main",
+        "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+        "submit-probe-20261101-tip": "submit-probe-20261101-child"
+      },
+      "ancestor": {
+        "submit-probe-20261101-base": true,
+        "submit-probe-20261101-child": false,
+        "submit-probe-20261101-other": true,
+        "submit-probe-20261101-sibling": false,
+        "submit-probe-20261101-tip": true
+      },
+      "unmerged": "",
+      "rebase": false,
+      "files": {
+        "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+        "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+        "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+        "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+      },
+      "trees": {
+        "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+        "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+        "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+        "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+        "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+        "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+      }
+    },
+    "capture": {
+      "argv": [
+        "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+        "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+        "submit",
+        "--dry-run",
+        "--restack",
+        "--no-interactive"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Unknown argument: restack\n"
+    },
+    "manual": {
+      "before": {
+        "refs": {
+          "refs/heads/main": "6a2152471d4574116a40b0cf608b552ad990e225",
+          "refs/heads/submit-probe-20261101-base": "f8d6242bd4f7959b12bd627f998c43d25efd6f05",
+          "refs/heads/submit-probe-20261101-child": "ab792438c2cfc5c489042b28c38c7f33d3a36bf3",
+          "refs/heads/submit-probe-20261101-other": "8783a5cd28e64e8a7ce6a06e445ce89debeb8176",
+          "refs/heads/submit-probe-20261101-sibling": "533b12c1d8f9038d09e3398d41d63b40e50004ad",
+          "refs/heads/submit-probe-20261101-tip": "4145e1589df9538cd1201e919c33a26347de2221"
+        },
+        "branch": "submit-probe-20261101-tip",
+        "head": "4145e1589df9538cd1201e919c33a26347de2221",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": false,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+          "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+          "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+          "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+        }
+      },
+      "after": {
+        "refs": {
+          "refs/heads/main": "6a2152471d4574116a40b0cf608b552ad990e225",
+          "refs/heads/submit-probe-20261101-base": "f8d6242bd4f7959b12bd627f998c43d25efd6f05",
+          "refs/heads/submit-probe-20261101-child": "ab792438c2cfc5c489042b28c38c7f33d3a36bf3",
+          "refs/heads/submit-probe-20261101-other": "8783a5cd28e64e8a7ce6a06e445ce89debeb8176",
+          "refs/heads/submit-probe-20261101-sibling": "533b12c1d8f9038d09e3398d41d63b40e50004ad",
+          "refs/heads/submit-probe-20261101-tip": "4145e1589df9538cd1201e919c33a26347de2221"
+        },
+        "branch": "submit-probe-20261101-tip",
+        "head": "4145e1589df9538cd1201e919c33a26347de2221",
+        "status": "",
+        "parents": {
+          "submit-probe-20261101-base": "main",
+          "submit-probe-20261101-child": "submit-probe-20261101-base",
+          "submit-probe-20261101-other": "main",
+          "submit-probe-20261101-sibling": "submit-probe-20261101-base",
+          "submit-probe-20261101-tip": "submit-probe-20261101-child"
+        },
+        "ancestor": {
+          "submit-probe-20261101-base": true,
+          "submit-probe-20261101-child": false,
+          "submit-probe-20261101-other": true,
+          "submit-probe-20261101-sibling": false,
+          "submit-probe-20261101-tip": true
+        },
+        "unmerged": "",
+        "rebase": false,
+        "files": {
+          "tip.txt": "c35c53d33a671e41a01ce3e81a07ecba35341af1e3ffadfc2ae479d48a1d7e07",
+          "child.txt": "dab102570a9b3211b127cf4a557609198fa8dbe7e142000a36f1c75c8483dbaa",
+          "base.txt": "cd5dfcbf3ff7035cdb5ce44cf799b233c5b216caa72e900afacd01850ecea4c1",
+          "root.txt": "53175bcc0524f37b47062fafdda28e3f8eb91d519ca0a184ca71bbebe72f969a"
+        },
+        "trees": {
+          "refs/heads/main": "4cb744e46e859f54ad8fdde24cba455f583c4730",
+          "refs/heads/submit-probe-20261101-base": "8113adc93ed736d4ac43381af953d9ddc05bc88e",
+          "refs/heads/submit-probe-20261101-child": "26f8e1c19d020041bdbaa9369ce8f6fde6c5a075",
+          "refs/heads/submit-probe-20261101-other": "c6957252cbc8e49feeff38bedbe8c1bdbd007a14",
+          "refs/heads/submit-probe-20261101-sibling": "b96fd971abb60438433b9cf328b7bfa9966b37d2",
+          "refs/heads/submit-probe-20261101-tip": "3637b47b50b2fa9a0848956f0e261efe7741b1de"
+        }
+      },
+      "capture": {
+        "restack": {
+          "argv": [
+            "/Users/danielbaars/.local/share/mise/installs/node/24/bin/node",
+            "/Users/danielbaars/.local/share/mise/installs/npm-danielbaars-anthracite/0.6.0/node_modules/.mise/@danielbaars+anthracite@0.6.0/node_modules/@danielbaars/anthracite/cli.cjs",
+            "restack",
+            "--downstack",
+            "--no-interactive"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "ERROR: Cannot restack submit-probe-20261101-child: it is checked out in worktree /private/tmp/anthracite-submit-comparison-20261101/occupied-an/other-worktree. Switch that worktree to another branch or detach its HEAD, then retry.\n"
+        }
+      }
+    },
+    "setupRemoteTrackingRefs": {
+      "main": "6a2152471d4574116a40b0cf608b552ad990e225",
+      "submit-probe-20261101-base": "d53968cee1d2c4bb3e478ecccb565065f998c485",
+      "submit-probe-20261101-child": "ab792438c2cfc5c489042b28c38c7f33d3a36bf3",
+      "submit-probe-20261101-other": "8783a5cd28e64e8a7ce6a06e445ce89debeb8176",
+      "submit-probe-20261101-sibling": "533b12c1d8f9038d09e3398d41d63b40e50004ad",
+      "submit-probe-20261101-tip": "4145e1589df9538cd1201e919c33a26347de2221"
+    },
+    "afterBareRemoteRefs": {
+      "main": "6a2152471d4574116a40b0cf608b552ad990e225",
+      "submit-probe-20261101-base": "d53968cee1d2c4bb3e478ecccb565065f998c485",
+      "submit-probe-20261101-child": "ab792438c2cfc5c489042b28c38c7f33d3a36bf3",
+      "submit-probe-20261101-other": "8783a5cd28e64e8a7ce6a06e445ce89debeb8176",
+      "submit-probe-20261101-sibling": "533b12c1d8f9038d09e3398d41d63b40e50004ad",
+      "submit-probe-20261101-tip": "4145e1589df9538cd1201e919c33a26347de2221"
+    }
+  }
+}
