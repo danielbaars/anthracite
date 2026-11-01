@@ -1,10 +1,20 @@
 import { TContext } from '../../lib/context';
+import { ExitFailedError } from '../../lib/errors';
 import { clearContinuation } from '../persist_continuation';
 import { SCOPE } from '../../lib/engine/scope_spec';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { restackBranches } from '../restack';
-import { cleanBranches } from './clean_branches';
-import { refreshSyncFeatures } from './sync_refresh';
+import {
+  planSyncCleanup,
+  applySyncCleanup,
+  SyncCleanupProgress,
+  assertSyncCleanupSnapshot,
+} from './clean_branches';
+import {
+  prepareSyncRefresh,
+  applySyncRefresh,
+  releaseSyncRefresh,
+} from './sync_refresh';
 
 export async function syncAction(
   opts: {
@@ -18,8 +28,49 @@ export async function syncAction(
   context: TContext
 ): Promise<void> {
   uncommittedTrackedChangesPrecondition();
-  await refreshSyncFeatures(opts, context);
+  const refresh = await prepareSyncRefresh(opts, context);
+  try {
+    const cleanup = await planSyncCleanup(opts, refresh, context);
+    assertSyncCleanupSnapshot(cleanup);
+    const updated = await applySyncRefresh(refresh, context);
+    const progress: SyncCleanupProgress = {
+      changed: [],
+      deleted: [],
+      incomplete: [],
+    };
+    try {
+      applySyncCleanup(cleanup, context, progress);
+    } catch (error) {
+      throw new ExitFailedError(
+        `Updated ${
+          updated.join(', ') || 'none'
+        } before sync cleanup stopped.\n${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
+    await finishSync(
+      opts,
+      { changed: progress.changed, mandatory: [...cleanup.replay] },
+      context
+    );
+  } finally {
+    releaseSyncRefresh(refresh);
+  }
+}
 
+async function finishSync(
+  opts: {
+    pull: boolean;
+    force: boolean;
+    delete: boolean;
+    deleteAll: boolean;
+    showDeleteProgress: boolean;
+    restack: boolean;
+  },
+  branchesWithNewParents: { changed: string[]; mandatory: string[] },
+  context: TContext
+): Promise<void> {
   if (opts.pull) {
     context.splog.tip('You can skip pulling trunk with the `--no-pull` flag.');
   }
@@ -28,17 +79,6 @@ export async function syncAction(
   let mandatory: string[] = [];
 
   if (opts.delete) {
-    context.splog.info(
-      `🧹 Checking if any branches have been merged/closed and can be deleted...`
-    );
-    const branchesWithNewParents = await cleanBranches(
-      {
-        showDeleteProgress: opts.showDeleteProgress,
-        force: opts.force || opts.deleteAll,
-        restack: opts.restack,
-      },
-      context
-    );
     context.splog.tip(
       [
         'You can skip deleting branches with the `--no-delete` flag.',
