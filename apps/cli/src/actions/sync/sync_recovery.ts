@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { createHash } from 'crypto';
 import { TContext } from '../../lib/context';
 import { ExitFailedError } from '../../lib/errors';
 import { getRebaseDirectory } from '../../lib/git/rebase_in_progress';
@@ -26,6 +27,25 @@ import {
 } from './sync_recovery_guards';
 
 const records = new WeakMap<TContinueConfig, string>();
+// Carry verified writer bytes across hooks instead of adopting a fresh disk owner.
+let syncHookOwnership: string | undefined;
+export function getSyncHookOwnership(): string | undefined {
+  return syncHookOwnership;
+}
+
+export function assertSyncHookOwnership(expected?: string): void {
+  if (!expected) return;
+  const file = getRecoveryFile();
+  if (
+    !fs.existsSync(file) ||
+    createHash('sha256').update(fs.readFileSync(file)).digest('hex') !==
+      expected
+  )
+    refuseSync(
+      'Saved sync ownership changed during a Git hook; inspect foreign recovery.'
+    );
+}
+
 export function refuseSync(reason: string): never {
   throw new ExitFailedError(
     `${reason} Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted.`
@@ -59,6 +79,7 @@ export function recordSyncRecoveryWrite(context: TContext): void {
       'Saved sync owner differs from the current workflow; inspect foreign recovery.'
     );
   records.set(context.continueConfig, saved);
+  syncHookOwnership = createHash('sha256').update(saved).digest('hex');
 }
 
 /** Dispatch before context repair, legacy queue handling or incidental staging. */

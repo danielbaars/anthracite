@@ -4,6 +4,7 @@ import os from 'os';
 import path from 'path';
 import { runGitCommand } from './runner';
 import { getSelfCliCommand } from '../utils/self_cli_command';
+import { getSyncHookOwnership } from '../../actions/sync/sync_recovery';
 
 const quote = (value: string): string => `'${value.replace(/'/g, `'"'"'`)}'`;
 
@@ -20,6 +21,8 @@ export function withFrozenCommitGuard(
 ): void {
   const absorbGuard = getAbsorbGuard();
   const absorbArgs = absorbGuard ? ['--absorb-guard', absorbGuard] : [];
+  const syncOwner = getSyncHookOwnership();
+  const syncArgs = syncOwner ? ['--sync-owner', syncOwner] : [];
   const hooks = runGitCommand({
     args: ['rev-parse', '--path-format=absolute', '--git-path', 'hooks'],
     onError: 'throw',
@@ -65,6 +68,7 @@ export function withFrozenCommitGuard(
       path.join(proxy, 'absent'),
       'before-mutation',
       ...absorbArgs,
+      ...syncArgs,
       ...(opts.participants ?? []).map((name) => `--participant=${name}`),
     ]
       .map(quote)
@@ -110,6 +114,7 @@ exec ${[
         branch,
         originalReferenceHook,
         ...absorbArgs,
+        ...syncArgs,
         ...(opts.allRefs ? ['--all-refs'] : []),
         ...(opts.participants ?? []).map((name) => `--participant=${name}`),
       ]

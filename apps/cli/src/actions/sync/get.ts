@@ -20,6 +20,7 @@ import { assertUnreachable } from '../../lib/utils/assert_unreachable';
 import { persistContinuation } from '../persist_continuation';
 import { printConflictStatus } from '../print_conflict_status';
 import { GetCheckoutIdentity, captureGetCheckout } from './get_checkout';
+import { assertSyncRecoveryWrite } from './sync_recovery';
 import { getMergeBase } from '../../lib/git/merge_base';
 import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
@@ -387,6 +388,7 @@ function activateGuardedRemoteNode(
   assertRemoteUpdateNodeUnchanged(node);
   activateRemoteUpdateNode(node);
   assertRemoteUpdateNodeUnchanged(node);
+  if (context.continueConfig.data.sync) assertSyncRecoveryWrite(context);
 }
 
 function getImportFrozen(
