@@ -37,9 +37,9 @@ const args = {
     alias: 'f',
   },
   restack: {
-    describe: `Restack the current stack and any stacks with deleted branches.`,
+    describe: `Repair affected tracked branches across the configured trunk. Use --no-restack to defer local maintenance.`,
     demandOption: false,
-    default: false,
+    default: true,
     type: 'boolean',
     alias: 'r',
   },
@@ -50,7 +50,7 @@ export const command = 'sync';
 export const canonical = 'repo sync';
 export const aliases = ['s'];
 export const description =
-  'Refresh existing tracked open-PR feature heads across the configured trunk, pull trunk and clean eligible merged/closed branches. No-pull skips only trunk; no-delete suppresses cleanup. Explicit force may reset a divergent trunk, but never authorizes feature overwrite.';
+  'Refresh existing tracked open-PR feature heads across the configured trunk, pull trunk, clean eligible merged/closed branches and repair affected tracked stacks by default. No-pull skips only trunk; no-delete suppresses cleanup. Explicit force may reset a divergent trunk, but never authorizes feature overwrite.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {
