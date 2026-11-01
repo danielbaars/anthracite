@@ -131,7 +131,12 @@ export type TEngine = {
   deleteBranch: (
     branchName: string,
     beforeDelete?: () => void,
-    participants?: readonly string[]
+    participants?:
+      | readonly string[]
+      | {
+          readonly participants: readonly string[];
+          readonly onHeadDeleted: () => void;
+        }
   ) => void;
   commit: (opts: TCommitOpts) => void;
   squashCurrentBranch: (opts: { message?: string; noEdit?: boolean }) => void;
@@ -555,7 +560,10 @@ export function composeEngine({
   const deleteAllBranchData = (
     branchName: string,
     participants?: readonly string[],
-    frozenGuardBranch?: string
+    opts: {
+      readonly frozenGuardBranch?: string;
+      readonly onHeadDeleted?: () => void;
+    } = {}
   ) => {
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
@@ -564,8 +572,8 @@ export function composeEngine({
     try {
       git.deleteBranch(
         branchName,
-        participants?.length ? frozenGuardBranch ?? branchName : undefined,
-        participants
+        participants?.length ? opts.frozenGuardBranch ?? branchName : undefined,
+        { participants, onDeleted: opts.onHeadDeleted }
       );
       for (const name of participants ?? []) assertBranchEditable(name);
       deleteMetadataRef(branchName);
@@ -1085,8 +1093,19 @@ export function composeEngine({
     deleteBranch: (
       branchName: string,
       beforeDelete?: () => void,
-      participants?: readonly string[]
+      options?:
+        | readonly string[]
+        | {
+            readonly participants: readonly string[];
+            readonly onHeadDeleted: () => void;
+          }
     ) => {
+      const participants =
+        options && 'participants' in options ? options.participants : options;
+      const onHeadDeleted =
+        options && 'onHeadDeleted' in options
+          ? options.onHeadDeleted
+          : undefined;
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
       if (branchName === cache.currentBranch) {
@@ -1099,7 +1118,10 @@ export function composeEngine({
         setParent(childBranchName, cachedMeta.parentBranchName, participants);
       }
       beforeDelete?.();
-      deleteAllBranchData(branchName, participants, participants?.[0]);
+      deleteAllBranchData(branchName, participants, {
+        frozenGuardBranch: participants?.[0],
+        onHeadDeleted,
+      });
     },
     commit: (opts: TCommitOpts) => {
       const branchName = getCurrentBranchOrThrow();

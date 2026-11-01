@@ -24,7 +24,10 @@ export function moveBranch(newName: string): void {
 export function deleteBranch(
   branchName: string,
   frozenGuardBranch?: string,
-  participants?: readonly string[]
+  opts: {
+    readonly participants?: readonly string[];
+    readonly onDeleted?: () => void;
+  } = {}
 ): void {
   const run = (prefix: readonly string[]): void => {
     runGitCommand({
@@ -33,10 +36,11 @@ export function deleteBranch(
       onError: 'throw',
       resource: 'deleteBranch',
     });
+    opts.onDeleted?.();
   };
   if (frozenGuardBranch)
     withFrozenCommitGuard(frozenGuardBranch, run, {
-      participants,
+      participants: opts.participants,
       allRefs: true,
     });
   else run([]);

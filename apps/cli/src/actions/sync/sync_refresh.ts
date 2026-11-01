@@ -1,3 +1,4 @@
+import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
 import { getSha } from '../../lib/git/get_sha';
 import { TContext } from '../../lib/context';
 import { ExitFailedError, KilledError } from '../../lib/errors';
@@ -18,11 +19,18 @@ import {
   snapshotSelection,
 } from './remote_update_graph';
 
-/** Sync refreshes only the configured trunk's existing tracked graph. */
-export async function refreshSyncFeatures(
+export type SyncRefreshPlan = {
+  readonly original: ReturnType<typeof captureGetCheckout>;
+  readonly trunk?: RemoteTrunkUpdate;
+  readonly nodes: ReturnType<typeof snapshotRemoteUpdateGraph>;
+  readonly prs: ReturnType<typeof selectSyncFeatures>['prs'];
+};
+
+/** Snapshot sources and collect all reconciliation authority before application. */
+export async function prepareSyncRefresh(
   opts: { pull: boolean; force: boolean },
   context: TContext
-): Promise<void> {
+): Promise<SyncRefreshPlan> {
   const original = captureGetCheckout();
   const trunk = opts.pull ? snapshotRemoteTrunk(context, 'sync') : undefined;
   let nodes: ReturnType<typeof snapshotRemoteUpdateGraph> = [];
@@ -45,6 +53,20 @@ export async function refreshSyncFeatures(
       context
     );
     if (trunk?.reset) await confirmSyncTrunkReset(trunk, opts.force, context);
+    return { original, trunk, nodes, prs };
+  } catch (error) {
+    releaseRemoteUpdateGraph(nodes);
+    if (trunk) releaseRemoteTrunk(trunk);
+    throw error;
+  }
+}
+
+export async function applySyncRefresh(
+  plan: SyncRefreshPlan,
+  context: TContext
+): Promise<string[]> {
+  const { original, trunk, nodes, prs } = plan;
+  try {
     if (trunk) applyRemoteTrunk(trunk, context);
     const updated = await getBranchesFromRemote(
       {
@@ -57,20 +79,15 @@ export async function refreshSyncFeatures(
       context
     );
     for (const pr of prs)
-      context.engine.upsertPrInfo(pr.headRefName, {
-        number: pr.number,
-        url: pr.url,
-        state: pr.state,
-        base: pr.baseRefName,
-        title: pr.title,
-        body: pr.body,
-        isDraft: pr.isDraft,
-        reviewDecision: pr.reviewDecision || undefined,
-      });
+      context.engine.upsertPrInfo(pr.headRefName, getSyncPullRequestInfo(pr));
     finishGetCheckout(
       { target: context.engine.trunk, original, shouldCheckout: false },
       updated
     );
+    return [
+      ...(trunk && trunk.head !== trunk.previousHead ? [trunk.branchName] : []),
+      ...updated,
+    ];
   } catch (error) {
     if (
       trunk &&
@@ -85,10 +102,27 @@ export async function refreshSyncFeatures(
         }`
       );
     throw error;
-  } finally {
-    releaseRemoteUpdateGraph(nodes);
-    if (trunk) releaseRemoteTrunk(trunk);
   }
+}
+
+export function getSyncPullRequestInfo(
+  pr: SyncRefreshPlan['prs'][number]
+): TBranchPRInfo {
+  return {
+    number: pr.number,
+    url: pr.url,
+    state: pr.state,
+    base: pr.baseRefName,
+    title: pr.title,
+    body: pr.body,
+    isDraft: pr.isDraft,
+    reviewDecision: pr.reviewDecision || undefined,
+  };
+}
+
+export function releaseSyncRefresh(plan: SyncRefreshPlan): void {
+  releaseRemoteUpdateGraph(plan.nodes);
+  if (plan.trunk) releaseRemoteTrunk(plan.trunk);
 }
 
 async function confirmSyncTrunkReset(
