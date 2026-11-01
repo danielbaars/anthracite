@@ -274,7 +274,7 @@ describe('frozen sync through the public CLI', function () {
     });
   }
 
-  it('uses an unchanged frozen anchor and actually replays its editable descendant with optional restack', () => {
+  it('uses an unchanged valid frozen anchor and selects only its stale editable descendant', () => {
     fixture.branch('anchor', 'main');
     fixture.succeed('freeze');
     fixture.branch('child', 'anchor');
@@ -298,7 +298,7 @@ describe('frozen sync through the public CLI', function () {
       '--no-interactive',
     ]);
     expect(result.status, result.stdout + result.stderr).to.equal(0);
-    expect(result.stdout).to.include('Skipping frozen branch anchor');
+    expect(result.stdout).to.include('Local maintenance: child.');
     expect(fixture.git('rev-parse', 'anchor')).to.equal(anchor);
     expect(fixture.git('rev-parse', 'refs/branch-metadata/anchor')).to.equal(
       metadata
