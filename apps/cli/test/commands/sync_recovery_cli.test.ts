@@ -696,6 +696,112 @@ describe('sync CLI owned recovery', function () {
     );
     expect(fixture.git(other, 'status', '--porcelain')).to.equal('');
   });
+  it('continues a later cleanup replay after a completed mandatory survivor is frozen', () => {
+    fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
+    fixture.ok('unfreeze', 'child');
+    fixture.ok('create', 'local-work');
+    fixture.commit(fixture.consumer, 'child.txt', 'later local-work conflict');
+    fixture.git(fixture.consumer, 'switch', 'main');
+    fixture.git(fixture.producer, 'switch', 'main');
+    fixture.commit(fixture.producer, 'child.txt', 'trunk conflict');
+    fixture.git(fixture.producer, 'push', 'origin', 'main');
+    fs.writeJsonSync(fixture.identities, {
+      prOverrides: { parent: { state: 'CLOSED' } },
+    });
+    const first = fixture.run(['sync', '--delete-all']);
+    expect(first.status, first.output).to.equal(1);
+    expect(first.output).to.include('Hit conflict restacking child');
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'child.txt'),
+      'first resolved survivor'
+    );
+    const second = fixture.run(['continue', '--all']);
+    expect(second.status, second.output).to.equal(1);
+    expect(second.output).to.include('Hit conflict restacking local-work');
+    fixture.ok('freeze', 'child');
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'child.txt'),
+      'second resolved descendant'
+    );
+    fixture.ok('cont', '--all');
+    fixture.status('child');
+    expect(
+      fixture.git(fixture.consumer, 'show', 'local-work:child.txt')
+    ).to.equal('second resolved descendant');
+    expect(
+      fixture.git(fixture.consumer, 'branch', '--list', 'parent')
+    ).to.equal('');
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'main'
+    );
+  });
+  for (const actor of ['freeze', 'foreign'])
+    it(`rechecks ${actor} ownership changes from pending PR reads before staging`, () => {
+      startIncomingCleanupConflict(fixture);
+      const metadata = fixture.git(
+        fixture.consumer,
+        'cat-file',
+        '-p',
+        'refs/branch-metadata/parent'
+      );
+      expect(metadata).to.include('"frozen": false');
+      const actorFile = path.join(fixture.root, 'lookup-actor.json');
+      fs.writeFileSync(
+        actorFile,
+        metadata.replace('"frozen": false', '"frozen": true')
+      );
+      const oid = fixture.git(fixture.consumer, 'hash-object', '-w', actorFile);
+      const foreign = '{"branchesToSync":["foreign"],"branchesToRestack":[]}';
+      const gh = path.join(fixture.bin, 'gh');
+      const script = fs.readFileSync(gh, 'utf8');
+      const entry = 'const args = process.argv.slice(2);';
+      const mutation =
+        actor === 'freeze'
+          ? `require('child_process').execFileSync('git', ['update-ref', 'refs/branch-metadata/parent', ${JSON.stringify(
+              oid
+            )}], {cwd: ${JSON.stringify(fixture.consumer)}, env: process.env});`
+          : `require('fs').writeFileSync(${JSON.stringify(
+              recoveryFile(fixture)
+            )}, ${JSON.stringify(foreign)});`;
+      fs.writeFileSync(
+        gh,
+        script.replace(
+          entry,
+          entry +
+            `\nif(args[0] === 'pr' && args[1] === 'view' && args[2] === '2') { ${mutation} }\n`
+        )
+      );
+      fs.writeFileSync(
+        path.join(fixture.consumer, 'conflict.txt'),
+        'resolved before lookup actor'
+      );
+      fs.writeFileSync(
+        path.join(fixture.consumer, 'unstaged.txt'),
+        'do not stage'
+      );
+      const index = path.join(fixture.consumer, '.git', 'index');
+      const before = fs.readFileSync(index).toString('base64');
+      const recovery = fs.readFileSync(recoveryFile(fixture), 'utf8');
+      const head = fixture.git(fixture.consumer, 'rev-parse', 'HEAD');
+      const result = fixture.run(['continue', '--all']);
+      expect(result.status, result.output).to.equal(1);
+      expect(fs.readFileSync(index).toString('base64')).to.equal(before);
+      fixture.assertTip('HEAD', head);
+      fixture.assertTip('child', fixture.oldChild);
+      expect(fs.readFileSync(recoveryFile(fixture), 'utf8')).to.equal(
+        actor === 'freeze' ? recovery : foreign
+      );
+      if (actor === 'freeze') {
+        expect(result.output).to.include('unfreeze parent');
+        expect(
+          fixture.git(
+            fixture.consumer,
+            'rev-parse',
+            'refs/branch-metadata/parent'
+          )
+        ).to.equal(oid);
+      } else expect(result.output).to.include('foreign recovery');
+    });
 });
 
 function recoveryFile(fixture: FrozenGetFixture): string {

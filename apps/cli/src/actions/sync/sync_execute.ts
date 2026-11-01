@@ -20,7 +20,11 @@ import {
 import { applyRemoteTrunk } from './remote_update_trunk';
 import { getBranchesFromRemote } from './get';
 import { lookupPullRequest } from './remote_update_graph';
-import { assertSyncExpected, assertSyncSources } from './sync_recovery_guards';
+import {
+  assertSyncExpected,
+  assertSyncSources,
+  getPendingSyncMandatory,
+} from './sync_recovery_guards';
 import {
   assertSyncRecoveryWrite,
   recordSyncRecoveryWrite,
@@ -275,10 +279,12 @@ export async function continueSyncOperation(
   if (!active) throw new Error('Validated sync has no active rebase.');
   try {
     verifyPendingSyncCleanup(operation, context);
+    assertSyncRecoveryWrite(context);
+    validateSyncRecovery(context.continueConfig.data);
     if (opts.addAll) context.engine.addAll();
     const participants = [
       ...new Set([
-        ...operation.cleanup.mandatory,
+        ...getPendingSyncMandatory(operation),
         ...(operation.cleanup.restack
           ? operation.maintenance
               .filter(

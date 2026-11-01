@@ -85,9 +85,8 @@ export function assertSyncParticipants(
         );
     } else assertBranchEditable(entry.branchName);
   }
-  for (const name of operation.cleanup.mandatory)
-    if (!operation.completedMaintenance.includes(name))
-      assertBranchEditable(name);
+  for (const name of getPendingSyncMandatory(operation))
+    assertBranchEditable(name);
   const cleanup = operation.cleanupCompleted
     ? []
     : [...operation.cleanup.accepted, ...operation.cleanup.mandatory];
@@ -127,4 +126,16 @@ export function assertSyncParticipants(
     skipTrackedPaths: true,
     operation: 'get',
   });
+}
+
+/** Completed cleanup publications stay expected state, not future edit participants. */
+export function getPendingSyncMandatory(operation: SyncOperation): string[] {
+  const mandatory = operation.cleanupCompleted
+    ? operation.cleanup.restack
+      ? operation.cleanup.replay
+      : []
+    : operation.cleanup.mandatory;
+  return mandatory.filter(
+    (name) => !operation.completedMaintenance.includes(name)
+  );
 }
