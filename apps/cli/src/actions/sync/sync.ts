@@ -1,3 +1,4 @@
+import { createSyncCompletion, finishSyncCompletion } from './sync_completion';
 import { TContext } from '../../lib/context';
 import { ExitFailedError } from '../../lib/errors';
 import { clearContinuation } from '../persist_continuation';
@@ -29,9 +30,11 @@ export async function syncAction(
 ): Promise<void> {
   uncommittedTrackedChangesPrecondition();
   const refresh = await prepareSyncRefresh(opts, context);
+  let applying = false;
   try {
     const cleanup = await planSyncCleanup(opts, refresh, context);
     assertSyncCleanupSnapshot(cleanup);
+    applying = true;
     const updated = await applySyncRefresh(refresh, context);
     const progress: SyncCleanupProgress = {
       changed: [],
@@ -49,13 +52,27 @@ export async function syncAction(
         }`
       );
     }
+    const completion = createSyncCompletion(
+      { refresh, cleanup, progress },
+      context
+    );
     await finishSync(
       opts,
       { changed: progress.changed, mandatory: [...cleanup.replay] },
       context
     );
+    finishSyncCompletion(
+      completion,
+      {
+        updated,
+        deleted: progress.deleted,
+        changedParents: progress.changed,
+        releaseSources: () => releaseSyncRefresh(refresh),
+      },
+      context
+    );
   } finally {
-    releaseSyncRefresh(refresh);
+    if (!applying) releaseSyncRefresh(refresh);
   }
 }
 

@@ -1108,8 +1108,11 @@ export function composeEngine({
           : undefined;
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
+      // Bounded sync cleanup follows physical checkout after remote application.
+      if (options && 'onHeadDeleted' in options)
+        cache.currentBranch = git.getCurrentBranchName();
       if (branchName === cache.currentBranch) {
-        checkoutBranch(cachedMeta.parentBranchName);
+        checkoutBranch(cachedMeta.parentBranchName, { preserveIgnored: true });
       }
 
       beforeDelete?.();
