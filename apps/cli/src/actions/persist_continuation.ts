@@ -1,4 +1,9 @@
 import {
+  assertSyncRecoveryWrite,
+  recordSyncRecoveryWrite,
+  recordSyncConflict,
+} from './sync/sync_recovery';
+import {
   recordLandingContinuation,
   assertLandingContinuationWritable,
 } from './land_replay';
@@ -39,6 +44,7 @@ export function persistContinuation(
   );
   assertLandingContinuationWritable();
   if (context.continueConfig.data.get) assertGetRecoveryWrite(context);
+  if (context.continueConfig.data.sync) assertSyncRecoveryWrite(context);
   context.continueConfig.update((data) => {
     data.getImportDecisions =
       args.getImportDecisions ?? data.getImportDecisions;
@@ -47,11 +53,13 @@ export function persistContinuation(
     data.currentBranchOverride = context.engine.currentBranch;
     data.rebasedBranchBase = args.rebasedBranchBase;
     recordGetConflict(data, args.rebasedBranchBase);
+    recordSyncConflict(data, args.rebasedBranchBase);
     data.rebaseOwnership = recordRebaseOwnership(
-      data.get ? getRecoveryDigest(data) : undefined
+      data.get || data.sync ? getRecoveryDigest(data) : undefined
     );
   });
   recordGetRecoveryWrite(context);
+  recordSyncRecoveryWrite(context);
   recordLandingContinuation();
 }
 

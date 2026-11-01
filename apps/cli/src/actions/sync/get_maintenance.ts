@@ -216,7 +216,9 @@ export function applyGetMaintenance(
       }.\nActual checkout: ${
         getCurrentBranchName() ?? 'detached HEAD'
       } (${getSha('HEAD')}).\n${
-        operation === 'sync' && rebaseInProgress()
+        operation === 'sync' &&
+        !context.continueConfig.data.sync &&
+        rebaseInProgress()
           ? 'The active Git rebase and conflicts are preserved. Sync has no saved phase continuation at this stage. Resolve and inspect with Git; remaining maintenance and final checkout have not completed. Earlier updates are not rolled back.\n'
           : ''
       }${error instanceof Error ? error.message : String(error)}`

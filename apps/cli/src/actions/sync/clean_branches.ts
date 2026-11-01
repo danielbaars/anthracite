@@ -337,7 +337,16 @@ export function assertSyncCleanupSnapshot(plan: SyncCleanupPlan): void {
 export function applySyncCleanup(
   plan: SyncCleanupPlan,
   context: TContext,
-  progress: SyncCleanupProgress
+  {
+    progress,
+    onProgress,
+  }: {
+    readonly progress: SyncCleanupProgress;
+    readonly onProgress?: (
+      branch: string,
+      boundary: 'parent' | 'deleted' | 'metadata' | 'incomplete'
+    ) => void;
+  }
 ): void {
   const expected = new Map(
     [
@@ -408,6 +417,7 @@ export function applySyncCleanup(
         );
       expected.set(entry.branchName, { head: previous.head, metadata });
       progress.changed.push(entry.branchName);
+      onProgress?.(entry.branchName, 'parent');
       context.splog.info(
         `Set parent of ${chalk.cyan(entry.branchName)} to ${chalk.blueBright(
           entry.parent
@@ -419,12 +429,19 @@ export function applySyncCleanup(
       try {
         context.engine.deleteBranch(name, check, {
           participants: plan.mandatory,
-          onHeadDeleted: () => progress.deleted.push(name),
+          onHeadDeleted: () => {
+            progress.deleted.push(name);
+            onProgress?.(name, 'deleted');
+          },
         });
       } catch (error) {
-        if (progress.deleted.includes(name)) progress.incomplete.push(name);
+        if (progress.deleted.includes(name)) {
+          progress.incomplete.push(name);
+          onProgress?.(name, 'incomplete');
+        }
         throw error;
       }
+      onProgress?.(name, 'metadata');
       context.splog.info(`Deleted branch ${chalk.red(name)}`);
     }
     check();
@@ -433,22 +450,30 @@ export function applySyncCleanup(
         `Pending restack: ${plan.replay.join(', ')} (--no-restack).`
       );
   } catch (error) {
-    throw new ExitFailedError(
-      `${
-        error instanceof Error ? error.message : String(error)
-      }\nConfirmed cleanup deletions: ${
-        progress.deleted.join(', ') || 'none'
-      }. Completed parent changes: ${
-        progress.changed.join(', ') || 'none'
-      }. Incomplete cleanup metadata: ${
-        progress.incomplete.join(', ') || 'none'
-      }. Remaining cleanup: ${
-        plan.accepted
-          .filter((name) => !progress.deleted.includes(name))
-          .join(', ') || 'none'
-      }. Completed cleanup changes are retained; inspect parents and remaining branches before retrying sync.`
-    );
+    reportSyncCleanupFailure(plan, progress, error);
   }
+}
+
+function reportSyncCleanupFailure(
+  plan: SyncCleanupPlan,
+  progress: SyncCleanupProgress,
+  error: unknown
+): never {
+  throw new ExitFailedError(
+    `${
+      error instanceof Error ? error.message : String(error)
+    }\nConfirmed cleanup deletions: ${
+      progress.deleted.join(', ') || 'none'
+    }. Completed parent changes: ${
+      progress.changed.join(', ') || 'none'
+    }. Incomplete cleanup metadata: ${
+      progress.incomplete.join(', ') || 'none'
+    }. Remaining cleanup: ${
+      plan.accepted
+        .filter((name) => !progress.deleted.includes(name))
+        .join(', ') || 'none'
+    }. Completed cleanup changes are retained; inspect parents and remaining branches before retrying sync.`
+  );
 }
 
 function cleanupDepth(
@@ -485,8 +510,7 @@ function assertProjectedCleanup(
       metadata.parentBranchRevision !== branch.base ||
       prFields.some(
         (field) => metadata.prInfo?.[field] !== branch.prInfo?.[field]
-      ) ||
-      (metadata.frozen === true) !== branch.frozen
+      )
     )
       throw new ExitFailedError(
         `${branch.branchName} differs from the projected cleanup graph. Inspect reached incoming updates before retrying sync.`

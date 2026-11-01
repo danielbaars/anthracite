@@ -85,8 +85,8 @@ export function preflightGetRecovery(command: string): boolean {
   const file = getRecoveryFile();
   if (!fs.existsSync(file)) {
     if (readRebaseIntentDigest())
-      refuseGet(
-        'Active get intent is missing; recover its original saved record before continuing.'
+      throw new ExitFailedError(
+        'Active owned intent is missing (get intent is missing or sync intent is missing). Owned recovery preserved. Recover its original saved .gtcontinue before continuing; do not advance an unverified legacy queue.'
       );
     return false;
   }
@@ -98,8 +98,8 @@ export function preflightGetRecovery(command: string): boolean {
   }
   if (typeof value !== 'object' || value === null || !('get' in value)) {
     if (readRebaseIntentDigest())
-      refuseGet(
-        'Active get intent is missing; recover its original saved record before continuing.'
+      throw new ExitFailedError(
+        'Active owned intent is missing (get intent is missing or sync intent is missing). Owned recovery preserved. Recover its original saved .gtcontinue before continuing; do not advance an unverified legacy queue.'
       );
     return false;
   }
@@ -205,6 +205,7 @@ export function assertGetHookParticipants(branch: string): void {
   const data = continueConfigFactory.load(undefined, {
     preserveInvalid: true,
   }).data;
+  if (data.sync) return;
   const operation = data.get;
   if (!operation) {
     if (readRebaseIntentDigest())

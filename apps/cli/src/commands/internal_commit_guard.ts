@@ -1,3 +1,4 @@
+import { assertSyncHookParticipants } from '../actions/sync/sync_recovery';
 import fs from 'fs';
 import { assertGetHookParticipants } from '../actions/sync/get_recovery';
 import {
@@ -85,6 +86,7 @@ export const handler = (
   try {
     for (const branch of [args.branch, ...(args.participant ?? [])])
       assertBranchEditable(branch);
+    assertSyncHookParticipants(args.branch);
     assertGetHookParticipants(args.branch);
   } catch (error: unknown) {
     process.stderr.write(

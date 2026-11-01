@@ -22,7 +22,8 @@ export function recordDeleteCompletion(
   branch: string,
   context: TContext
 ): void {
-  if (!context.continueConfig.data.delete) return;
+  if (!context.continueConfig.data.delete || context.continueConfig.data.sync)
+    return;
   context.continueConfig.update((data) => {
     if (data.delete)
       data.delete.mandatory = data.delete.mandatory.filter(

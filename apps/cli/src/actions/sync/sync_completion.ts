@@ -111,20 +111,26 @@ export function finishSyncCompletion(
     readonly deleted: readonly string[];
     readonly changedParents?: readonly string[];
     readonly releaseSources: () => void;
+    readonly assertOwnership?: () => void;
   },
   context: TContext
 ): void {
   try {
+    progress.assertOwnership?.();
     assertSyncCompletionGraph(completion);
     finishGetCheckout(completion.checkout, progress.updated, 'sync');
+    progress.assertOwnership?.();
     assertSyncCompletionGraph(completion);
     assertGetCheckout(completion.checkout);
     for (const source of completion.sources)
       if (getSha(source.sourceRef) !== source.head)
         throw new Error(`Pinned sync source ${source.sourceRef} changed.`);
+    progress.assertOwnership?.();
     progress.releaseSources();
+    progress.assertOwnership?.();
     assertSyncCompletionGraph(completion);
     assertGetCheckout(completion.checkout);
+    progress.assertOwnership?.();
     if (
       completion.checkout.shouldCheckout &&
       'branchName' in completion.checkout.original

@@ -1,5 +1,6 @@
 import * as t from '@withgraphite/retype';
 import { spiffy } from './spiffy';
+import { isSyncOperation } from '../../actions/sync/sync_operation';
 import { isGetOperation } from '../../actions/sync/get_operation';
 
 /**
@@ -17,6 +18,7 @@ import { isGetOperation } from '../../actions/sync/get_operation';
  */
 const ContinueSchema = t.shape({
   get: t.optional(isGetOperation),
+  sync: t.optional(isSyncOperation),
   getImportDecisions: t.optional(
     t.array(
       t.shape({

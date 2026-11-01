@@ -93,7 +93,10 @@ export type TEngine = {
   getCommitAuthor: (branchName: string) => Promise<string>;
 
   getPrInfo: (branchName: string) => TBranchPRInfo | undefined;
-  upsertPrInfo: (branchName: string, prInfo: Partial<TBranchPRInfo>) => void;
+  upsertPrInfo: (
+    branchName: string,
+    prInfo: Partial<TBranchPRInfo>
+  ) => string | undefined;
   clearPrInfo: (branchName: string) => void;
 
   getChildren: (branchName: string) => string[];
@@ -822,7 +825,7 @@ export function composeEngine({
       if (meta?.validationResult !== 'VALID') {
         return;
       }
-      updateMeta(branchName, {
+      return updateMeta(branchName, {
         ...meta,
         frozen: readMetadataRef(branchName).frozen,
         prInfo: { ...meta.prInfo, ...prInfo },

@@ -3,12 +3,11 @@ import { getSha } from '../../lib/git/get_sha';
 import { TContext } from '../../lib/context';
 import { ExitFailedError, KilledError } from '../../lib/errors';
 import {
-  applyRemoteTrunk,
   snapshotRemoteTrunk,
   releaseRemoteTrunk,
   RemoteTrunkUpdate,
 } from './remote_update_trunk';
-import { getBranchesFromRemote, prepareRemoteUpdates } from './get';
+import { prepareRemoteUpdates } from './get';
 import { captureGetCheckout } from './get_checkout';
 import {
   lookupPullRequest,
@@ -61,46 +60,6 @@ export async function prepareSyncRefresh(
   } catch (error) {
     releaseRemoteUpdateGraph(nodes);
     if (trunk) releaseRemoteTrunk(trunk);
-    throw error;
-  }
-}
-
-export async function applySyncRefresh(
-  plan: SyncRefreshPlan,
-  context: TContext
-): Promise<string[]> {
-  const { trunk, nodes, prs } = plan;
-  try {
-    if (trunk) applyRemoteTrunk(trunk, context);
-    const updated = await getBranchesFromRemote(
-      {
-        downstack: nodes.map((node) => node.branchName),
-        base: context.engine.trunk,
-        nodes,
-        force: false,
-        scope: 'sync',
-      },
-      context
-    );
-    for (const pr of prs)
-      context.engine.upsertPrInfo(pr.headRefName, getSyncPullRequestInfo(pr));
-    return [
-      ...(trunk && trunk.head !== trunk.previousHead ? [trunk.branchName] : []),
-      ...updated,
-    ];
-  } catch (error) {
-    if (
-      trunk &&
-      trunk.head !== trunk.previousHead &&
-      getSha(`refs/heads/${trunk.branchName}`) === trunk.head
-    )
-      throw new ExitFailedError(
-        `Updated trunk ${
-          trunk.branchName
-        } before sync stopped. Earlier updates are not rolled back.\n${
-          error instanceof Error ? error.message : String(error)
-        }`
-      );
     throw error;
   }
 }

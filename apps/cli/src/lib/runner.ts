@@ -1,3 +1,4 @@
+import { preflightSyncRecovery } from '../actions/sync/sync_recovery';
 import { preflightGetRecovery } from '../actions/sync/get_recovery';
 import { assertGetOperationAvailable } from '../actions/sync/remote_update_graph';
 import { withLandingLock } from '../actions/land_scoped';
@@ -143,7 +144,7 @@ async function graphiteInternal(
   });
   const git = composeGit();
   try {
-    if (handler.repo) preflightGetRecovery(canonicalName);
+    if (handler.repo) preflightOwnedRecovery(canonicalName);
     const landingContinuation =
       canonicalName === 'continue' && allowLandingContinuation();
     if (handler.repo && !isZeroDepthLog && !landingContinuation)
@@ -153,7 +154,7 @@ async function graphiteInternal(
       canonicalName === 'continue'
         ? continueConfigFactory.load(undefined, { preserveInvalid: true }).data
         : undefined;
-    const owned = Boolean(continueData?.get || continueData?.absorb);
+    const owned = hasOwnedContinuation(continueData);
     if (canonicalName === 'split' && args['by-file'] !== undefined)
       preflightFileSplit(args);
     if (isZeroDepthLog && !git.getCurrentBranchName())
@@ -376,3 +377,13 @@ type TGraphiteCommandHandlerWithCacheLock = {
   run: (context: TContext) => Promise<void>;
   cacheLock: TCacheLock;
 };
+
+function hasOwnedContinuation(
+  data: ReturnType<typeof continueConfigFactory.load>['data'] | undefined
+): boolean {
+  return Boolean(data?.get || data?.sync || data?.absorb);
+}
+
+function preflightOwnedRecovery(command: string): void {
+  if (!preflightSyncRecovery(command)) preflightGetRecovery(command);
+}
