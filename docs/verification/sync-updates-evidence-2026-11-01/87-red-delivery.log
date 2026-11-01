@@ -1,0 +1,38 @@
+
+
+  sync CLI and installed MCP delivery
+    1) sync help and completion expose repository refresh and independent cleanup/replay controls
+    2) repo sync help and completion expose repository refresh and independent cleanup/replay controls
+    3) repo s help and completion expose repository refresh and independent cleanup/replay controls
+    4) installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure
+
+
+  0 passing (20s)
+  4 failing
+
+  1) sync CLI and installed MCP delivery
+       sync help and completion expose repository refresh and independent cleanup/replay controls:
+     AssertionError: expected 'an sync\n\nRefresh existing tracked o…' to include 'by default'
+      at Context.<anonymous> (dist/test/commands/sync_delivery_cli.test.js:51:45)
+      at process.processImmediate (node:internal/timers:534:21)
+
+  2) sync CLI and installed MCP delivery
+       repo sync help and completion expose repository refresh and independent cleanup/replay controls:
+     AssertionError: expected [ '--help', '--version', …(17) ] to include '--no-pull'
+      at Context.<anonymous> (dist/test/commands/sync_delivery_cli.test.js:61:51)
+      at process.processImmediate (node:internal/timers:534:21)
+
+  3) sync CLI and installed MCP delivery
+       repo s help and completion expose repository refresh and independent cleanup/replay controls:
+     AssertionError: expected [ '--help', '--version', …(17) ] to include '--no-pull'
+      at Context.<anonymous> (dist/test/commands/sync_delivery_cli.test.js:61:51)
+      at process.processImmediate (node:internal/timers:534:21)
+
+  4) sync CLI and installed MCP delivery
+       installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure:
+     AssertionError: expected '[{"type":"text","text":"Anthracite wo…' to include 'repository-wide'
+      at Context.<anonymous> (dist/test/commands/sync_delivery_cli.test.js:82:42)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+
+

@@ -404,7 +404,33 @@ describe('sync CLI checked completion', function () {
     expect(
       fixture.git(fixture.consumer, 'rev-parse', 'refs/branch-metadata/child')
     ).to.equal(actor);
-    expect(result.output).to.include('child changed during cleanup');
+    expect(result.output)
+      .to.include('Sync stopped during prs')
+      .and.to.include('child changed outside the saved sync plan')
+      .and.to.include('No verified owned continuation');
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'parent'
+    );
+    expect(
+      fixture.git(fixture.consumer, 'diff', '--cached', 'parent')
+    ).to.equal('');
+    expect(fixture.git(fixture.consumer, 'diff')).to.equal('');
+    expect(
+      fs.readFileSync(path.join(fixture.consumer, 'parent.txt'), 'utf8')
+    ).to.equal('parent-new');
+    expect(fs.existsSync(path.join(fixture.consumer, 'child.txt'))).to.equal(
+      false
+    );
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', 'rebase-merge'))
+    ).to.equal(false);
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', '.gtcontinue'))
+    ).to.equal(true);
+    const stopped = fixture.observe();
+    const retry = fixture.run(['continue', '--all']);
+    expect(retry.status, retry.output).to.equal(1);
+    expect(fixture.observe()).to.deep.equal(stopped);
   });
 
   it('rejects a genuinely new tracked participant introduced during source cleanup', () => {

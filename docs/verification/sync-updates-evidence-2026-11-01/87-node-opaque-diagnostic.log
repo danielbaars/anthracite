@@ -1,0 +1,17 @@
+
+
+  sync CLI checked completion
+    1) rejects incoming-hook changes to original opaque out-of-graph metadata
+
+
+  0 passing (10s)
+  1 failing
+
+  1) sync CLI checked completion
+       rejects incoming-hook changes to original opaque out-of-graph metadata:
+     AssertionError: expected 'Synced parent from remote.\nERROR: Sy…' to include 'child changed during cleanup'
+      at Context.<anonymous> (dist/test/commands/sync_completion_cli.test.js:254:46)
+      at process.processImmediate (node:internal/timers:534:21)
+
+
+

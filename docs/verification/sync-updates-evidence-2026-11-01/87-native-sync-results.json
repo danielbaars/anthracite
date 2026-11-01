@@ -1,0 +1,152 @@
+[
+  {
+    "file": "sync_refresh_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_refresh_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_refresh_cli.log",
+    "started": "2026-11-01T10:31:15.749307+00:00",
+    "ended": "2026-11-01T10:34:58.980640+00:00",
+    "exitCode": 0,
+    "passing": 26,
+    "failing": 0
+  },
+  {
+    "file": "sync_authority_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_authority_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_authority_cli.log",
+    "started": "2026-11-01T10:34:58.981478+00:00",
+    "ended": "2026-11-01T10:37:56.671267+00:00",
+    "exitCode": 0,
+    "passing": 23,
+    "failing": 0
+  },
+  {
+    "file": "sync_delete_all_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_delete_all_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_delete_all_cli.log",
+    "started": "2026-11-01T10:37:56.671640+00:00",
+    "ended": "2026-11-01T10:39:25.126367+00:00",
+    "exitCode": 0,
+    "passing": 14,
+    "failing": 0
+  },
+  {
+    "file": "sync_cleanup_descendants_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_cleanup_descendants_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_cleanup_descendants_cli.log",
+    "started": "2026-11-01T10:39:25.126647+00:00",
+    "ended": "2026-11-01T10:41:03.299221+00:00",
+    "exitCode": 0,
+    "passing": 6,
+    "failing": 0
+  },
+  {
+    "file": "sync_survivor_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_survivor_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_survivor_cli.log",
+    "started": "2026-11-01T10:41:03.299622+00:00",
+    "ended": "2026-11-01T10:42:44.492330+00:00",
+    "exitCode": 0,
+    "passing": 9,
+    "failing": 0
+  },
+  {
+    "file": "sync_maintenance_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_maintenance_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_maintenance_cli.log",
+    "started": "2026-11-01T10:42:44.492603+00:00",
+    "ended": "2026-11-01T10:44:46.421317+00:00",
+    "exitCode": 0,
+    "passing": 8,
+    "failing": 0
+  },
+  {
+    "file": "sync_completion_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_completion_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_completion_cli.log",
+    "started": "2026-11-01T10:44:46.421564+00:00",
+    "ended": "2026-11-01T10:47:22.603621+00:00",
+    "exitCode": 0,
+    "passing": 18,
+    "failing": 0
+  },
+  {
+    "file": "sync_recovery_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_recovery_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_recovery_cli.log",
+    "started": "2026-11-01T10:47:22.604123+00:00",
+    "ended": "2026-11-01T10:59:00.773208+00:00",
+    "exitCode": 0,
+    "passing": 41,
+    "failing": 0
+  },
+  {
+    "file": "sync_late_guards_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_late_guards_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_late_guards_cli.log",
+    "started": "2026-11-01T10:59:00.773962+00:00",
+    "ended": "2026-11-01T11:02:33.855107+00:00",
+    "exitCode": 0,
+    "passing": 16,
+    "failing": 0
+  },
+  {
+    "file": "sync_delivery_cli",
+    "command": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_delivery_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/87/apps/cli",
+    "log": "87-native-sync_delivery_cli.log",
+    "started": "2026-11-01T11:02:33.856117+00:00",
+    "ended": "2026-11-01T11:03:11.118526+00:00",
+    "exitCode": 0,
+    "passing": 4,
+    "failing": 0
+  }
+]

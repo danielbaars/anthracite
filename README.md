@@ -29,6 +29,8 @@ an log short --stack
 an submit --stack --draft
 ```
 
+The source candidate after public 0.5.1 adds repository-wide existing-feature refresh and default maintenance with `an sync`; `--delete-all` supplies cleanup-only consent. Read [sync scope, changed automation defaults and recovery](docs/sync.md) before adopting the candidate. This does not describe a published npm update.
+
 For a shared prerequisite below selected branches, see [targeted insertion](docs/targeted-insertion.md).
 
 Stage changes with Git before `create` or `modify`, or choose the command's staging options deliberately. Use `an <command> --help` for details.

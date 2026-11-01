@@ -74,6 +74,27 @@ export function registerCompletion(
           }
         );
       }
+      if (
+        current.startsWith('-') &&
+        (argv['_'][1] === 'sync' ||
+          (argv['_'][1] === 'repo' &&
+            ['sync', 's'].includes('' + argv['_'][2])))
+      ) {
+        return defaultCompletion(
+          (error: Error | null, candidates: string[]) => {
+            if (error) throw error;
+            done([
+              ...candidates,
+              '--no-pull:Skip trunk fetching and application only',
+              '--no-delete:Suppress cleanup even with delete-all or force',
+              '--no-delete-all:Require separate cleanup consent',
+              '--no-force:Do not preauthorize cleanup or trunk reset',
+              '--no-restack:Defer automatic local maintenance',
+              '--no-show-delete-progress:Hide merged-branch progress',
+            ]);
+          }
+        );
+      }
       return defaultCompletion();
     }
   );

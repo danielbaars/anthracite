@@ -1,0 +1,30 @@
+
+
+  sync CLI planned update authority
+    ✔ refuses divergent trunk before applying planned feature updates (2529ms)
+    ✔ refuses ahead trunk with explicit force false (2144ms)
+    ✔ resets ahead trunk with explicit force true (4298ms)
+    ✔ refuses divergent trunk with explicit force false (2171ms)
+    ✔ resets divergent trunk with explicit force true (4515ms)
+    ✔ applies the pinned trunk source before features after multiple fetches (4834ms)
+    ✔ refuses a missing remote trunk before feature application (739ms)
+    ✔ skips a missing remote trunk before feature application (4384ms)
+    ✔ refuses an occupied trunk before applying feature updates (1476ms)
+    ✔ never resets an unrelated checkout selected by a real trunk checkout hook (2792ms)
+    ✔ declines a real terminal trunk reset before feature application (2266ms)
+    ✔ accepts a real terminal trunk reset before feature application (4615ms)
+    ✔ collects real terminal feature REBASE before applying trunk and feature updates (6465ms)
+    ✔ collects real terminal feature OVERWRITE before applying trunk and feature updates (4511ms)
+    ✔ collects real terminal feature ABORT before applying trunk and feature updates (2082ms)
+    ✔ gives truthful sync divergence guidance without offering force overwrite (1911ms)
+    ✔ continues a real reconciliation conflict through owned sync phases (8175ms)
+    ✔ offers frozen divergence overwrite and abort without local rebase (3413ms)
+    ✔ preserves local-ahead trunk with force when pull is explicitly disabled (4973ms)
+    ✔ preserves untracked file collisions despite reset force (2332ms)
+    ✔ preserves ignored file collisions despite reset force (2343ms)
+    ✔ preserves tracked staged and unstaged bytes despite reset force (1458ms)
+    ✔ refuses quiet forced feature divergence before a planned trunk fast-forward (2072ms)
+
+
+  23 passing (3m)
+

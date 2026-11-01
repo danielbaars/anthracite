@@ -1,0 +1,830 @@
+{
+  "kind": "case naming inventory only; not test execution",
+  "cases": [
+    {
+      "id": "sync-001",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refreshes existing published heads without pulling, deleting or replaying"
+    },
+    {
+      "id": "sync-002",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh rejects a same-name source from another head repository before applying updates"
+    },
+    {
+      "id": "sync-003",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refreshes independent roots and fanout once from main via sync"
+    },
+    {
+      "id": "sync-004",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refreshes independent roots and fanout once from main via repo sync"
+    },
+    {
+      "id": "sync-005",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refreshes independent roots and fanout once from main via repo s"
+    },
+    {
+      "id": "sync-006",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh retains named local-only work and excludes untracked local branches"
+    },
+    {
+      "id": "sync-007",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh retains an associated CLOSED branch without requiring its deleted remote head"
+    },
+    {
+      "id": "sync-008",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh retains an associated MERGED branch without requiring its deleted remote head"
+    },
+    {
+      "id": "sync-009",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh adopts an existing changed parent without replaying or losing PR/frozen identity"
+    },
+    {
+      "id": "sync-010",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses authentication before changing any selected head"
+    },
+    {
+      "id": "sync-011",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses rate limit before changing any selected head"
+    },
+    {
+      "id": "sync-012",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses transport before changing any selected head"
+    },
+    {
+      "id": "sync-013",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses malformed response before changing any selected head"
+    },
+    {
+      "id": "sync-014",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses missing associated PR before changing any selected head"
+    },
+    {
+      "id": "sync-015",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses untraceable or cyclic parent remote-only-parent without imports or application"
+    },
+    {
+      "id": "sync-016",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses untraceable or cyclic parent child without imports or application"
+    },
+    {
+      "id": "sync-017",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh fails a missing open source before applying another selected feature"
+    },
+    {
+      "id": "sync-018",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses divergent feature commits even with legacy sync force"
+    },
+    {
+      "id": "sync-019",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh makes no service calls when GitHub integration is explicitly disabled"
+    },
+    {
+      "id": "sync-020",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses tracked dirt without changing heads, index or user files"
+    },
+    {
+      "id": "sync-021",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh refuses an occupied affected head before updating any selected feature"
+    },
+    {
+      "id": "sync-022",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh protects untracked file collisions before the first selected update"
+    },
+    {
+      "id": "sync-023",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh preserves an active foreign Git operation before refreshing features"
+    },
+    {
+      "id": "sync-024",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh resolves stored PR numbers even when a reused branch name would select another PR"
+    },
+    {
+      "id": "sync-025",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh rejects a mismatched source OID before applying an earlier selected branch"
+    },
+    {
+      "id": "sync-026",
+      "source": "test/commands/sync_refresh_cli.test.ts",
+      "title": "sync CLI existing feature refresh does not associate an unpublished local branch with an old closed same-name PR"
+    },
+    {
+      "id": "sync-027",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority refuses divergent trunk before applying planned feature updates"
+    },
+    {
+      "id": "sync-028",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority refuses ahead trunk with explicit force false"
+    },
+    {
+      "id": "sync-029",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority resets ahead trunk with explicit force true"
+    },
+    {
+      "id": "sync-030",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority refuses divergent trunk with explicit force false"
+    },
+    {
+      "id": "sync-031",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority resets divergent trunk with explicit force true"
+    },
+    {
+      "id": "sync-032",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority applies the pinned trunk source before features after multiple fetches"
+    },
+    {
+      "id": "sync-033",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority refuses a missing remote trunk before feature application"
+    },
+    {
+      "id": "sync-034",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority skips a missing remote trunk before feature application"
+    },
+    {
+      "id": "sync-035",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority refuses an occupied trunk before applying feature updates"
+    },
+    {
+      "id": "sync-036",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority never resets an unrelated checkout selected by a real trunk checkout hook"
+    },
+    {
+      "id": "sync-037",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority declines a real terminal trunk reset before feature application"
+    },
+    {
+      "id": "sync-038",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority accepts a real terminal trunk reset before feature application"
+    },
+    {
+      "id": "sync-039",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority collects real terminal feature REBASE before applying trunk and feature updates"
+    },
+    {
+      "id": "sync-040",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority collects real terminal feature OVERWRITE before applying trunk and feature updates"
+    },
+    {
+      "id": "sync-041",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority collects real terminal feature ABORT before applying trunk and feature updates"
+    },
+    {
+      "id": "sync-042",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority gives truthful sync divergence guidance without offering force overwrite"
+    },
+    {
+      "id": "sync-043",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority continues a real reconciliation conflict through owned sync phases"
+    },
+    {
+      "id": "sync-044",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority offers frozen divergence overwrite and abort without local rebase"
+    },
+    {
+      "id": "sync-045",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority preserves local-ahead trunk with force when pull is explicitly disabled"
+    },
+    {
+      "id": "sync-046",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority preserves untracked file collisions despite reset force"
+    },
+    {
+      "id": "sync-047",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority preserves ignored file collisions despite reset force"
+    },
+    {
+      "id": "sync-048",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority preserves tracked staged and unstaged bytes despite reset force"
+    },
+    {
+      "id": "sync-049",
+      "source": "test/commands/sync_authority_cli.test.ts",
+      "title": "sync CLI planned update authority refuses quiet forced feature divergence before a planned trunk fast-forward"
+    },
+    {
+      "id": "sync-050",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI deletes an eligible closed local branch without changing the remote or PR"
+    },
+    {
+      "id": "sync-051",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI cleans a closed branch whose remote head was already deleted"
+    },
+    {
+      "id": "sync-052",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI honors boolean forms and no-delete precedence through sync"
+    },
+    {
+      "id": "sync-053",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI honors boolean forms and no-delete precedence through repo sync"
+    },
+    {
+      "id": "sync-054",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI honors boolean forms and no-delete precedence through repo s"
+    },
+    {
+      "id": "sync-055",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI refuses divergent trunk reset with delete-all while legacy force retains reset authority"
+    },
+    {
+      "id": "sync-056",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI keeps an empty unassociated branch and open local work outside cleanup consent"
+    },
+    {
+      "id": "sync-057",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI retains frozen mandatory survivors while cleaning an independent frozen leaf without replay"
+    },
+    {
+      "id": "sync-058",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI refuses an occupied cleanup target before deleting it"
+    },
+    {
+      "id": "sync-059",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI refuses an occupied mandatory survivor before changing parents or deleting candidates"
+    },
+    {
+      "id": "sync-060",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI still visits a closed child after a terminal user declines its closed ancestor"
+    },
+    {
+      "id": "sync-061",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI preserves staged and unstaged work before cleanup even with narrow consent"
+    },
+    {
+      "id": "sync-062",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI cleans locally merged work with GitHub disabled without making service calls"
+    },
+    {
+      "id": "sync-063",
+      "source": "test/commands/sync_delete_all_cli.test.ts",
+      "title": "sync cleanup-only consent through the public CLI advertises narrow cleanup permission in help and completion for every sync route"
+    },
+    {
+      "id": "sync-064",
+      "source": "test/commands/sync_cleanup_descendants_cli.test.ts",
+      "title": "sync cleanup of descendants through the public CLI (--force) deletes a known closed leaf below an open parent without changing that parent"
+    },
+    {
+      "id": "sync-065",
+      "source": "test/commands/sync_cleanup_descendants_cli.test.ts",
+      "title": "sync cleanup of descendants through the public CLI (--force) cleans separated closed branches once with frozen child false"
+    },
+    {
+      "id": "sync-066",
+      "source": "test/commands/sync_cleanup_descendants_cli.test.ts",
+      "title": "sync cleanup of descendants through the public CLI (--force) cleans separated closed branches once with frozen child true"
+    },
+    {
+      "id": "sync-067",
+      "source": "test/commands/sync_cleanup_descendants_cli.test.ts",
+      "title": "sync cleanup of descendants through the public CLI (--delete-all) deletes a known closed leaf below an open parent without changing that parent"
+    },
+    {
+      "id": "sync-068",
+      "source": "test/commands/sync_cleanup_descendants_cli.test.ts",
+      "title": "sync cleanup of descendants through the public CLI (--delete-all) cleans separated closed branches once with frozen child false"
+    },
+    {
+      "id": "sync-069",
+      "source": "test/commands/sync_cleanup_descendants_cli.test.ts",
+      "title": "sync cleanup of descendants through the public CLI (--delete-all) cleans separated closed branches once with frozen child true"
+    },
+    {
+      "id": "sync-070",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan refuses an occupied cleanup candidate before applying another incoming head"
+    },
+    {
+      "id": "sync-071",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan cleans a removed remote parent after its frozen incoming child retargets to trunk"
+    },
+    {
+      "id": "sync-072",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan abandons cleanup cancellation before applying an incoming head"
+    },
+    {
+      "id": "sync-073",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan reports a confirmed physical deletion when metadata removal subsequently fails"
+    },
+    {
+      "id": "sync-074",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan refreshes a survivor still naming a removed parent and keeps its PR base and unique content"
+    },
+    {
+      "id": "sync-075",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan retains new open incoming work even when the old local tip was merged into trunk"
+    },
+    {
+      "id": "sync-076",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan excludes cleanup when a frozen incoming child newly targets the removable parent"
+    },
+    {
+      "id": "sync-077",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan preserves final checkout hook PR metadata and reports reached cleanup"
+    },
+    {
+      "id": "sync-078",
+      "source": "test/commands/sync_survivor_cli.test.ts",
+      "title": "sync CLI incoming and cleanup survivor plan shows optional progress while inspecting cleanup candidates"
+    },
+    {
+      "id": "sync-079",
+      "source": "test/commands/sync_maintenance_cli.test.ts",
+      "title": "sync CLI repository-wide local maintenance repairs local-only independent roots and fanout by default with GitHub disabled"
+    },
+    {
+      "id": "sync-080",
+      "source": "test/commands/sync_maintenance_cli.test.ts",
+      "title": "sync CLI repository-wide local maintenance refuses a late PR metadata change before replaying the pending child"
+    },
+    {
+      "id": "sync-081",
+      "source": "test/commands/sync_maintenance_cli.test.ts",
+      "title": "sync CLI repository-wide local maintenance reports already-stale independent work with explicit no-restack even without incoming nodes"
+    },
+    {
+      "id": "sync-082",
+      "source": "test/commands/sync_maintenance_cli.test.ts",
+      "title": "sync CLI repository-wide local maintenance preflights an occupied local-only replay before incoming heads or trunk advance"
+    },
+    {
+      "id": "sync-083",
+      "source": "test/commands/sync_maintenance_cli.test.ts",
+      "title": "sync CLI repository-wide local maintenance keeps frozen anchors while repairing editable descendants and protects other refs with local updateRefs true"
+    },
+    {
+      "id": "sync-084",
+      "source": "test/commands/sync_maintenance_cli.test.ts",
+      "title": "sync CLI repository-wide local maintenance retains a real maintenance conflict and names completed and pending work"
+    },
+    {
+      "id": "sync-085",
+      "source": "test/commands/sync_maintenance_cli.test.ts",
+      "title": "sync CLI repository-wide local maintenance replays stale incoming children and unpublished descendants after feature refresh"
+    },
+    {
+      "id": "sync-086",
+      "source": "test/commands/sync_maintenance_cli.test.ts",
+      "title": "sync CLI repository-wide local maintenance retains explicit boolean forms on every sync route and describes default maintenance"
+    },
+    {
+      "id": "sync-087",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion falls back to trunk after confirmed cleanup removes the original checkout"
+    },
+    {
+      "id": "sync-088",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion refuses completion when source cleanup hooks change surviving PR metadata"
+    },
+    {
+      "id": "sync-089",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion restores the original surviving branch at its refreshed authorized head"
+    },
+    {
+      "id": "sync-090",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion restores the exact detached OID after incoming refresh"
+    },
+    {
+      "id": "sync-091",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion refuses a final checkout hook PR mutation and keeps reached cleanup and actual checkout"
+    },
+    {
+      "id": "sync-092",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion refuses source cleanup hooks that move a surviving head"
+    },
+    {
+      "id": "sync-093",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion refuses a source cleanup hook physical checkout change without switching it back"
+    },
+    {
+      "id": "sync-094",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion keeps a permitted freeze-only delta from a final checkout hook"
+    },
+    {
+      "id": "sync-095",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion refuses unexpected original-ref disappearance instead of recreating it or falling back"
+    },
+    {
+      "id": "sync-096",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion refuses a final checkout hook that redirects physical checkout"
+    },
+    {
+      "id": "sync-097",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion refuses final restoration when a hook occupies the original branch in another worktree"
+    },
+    {
+      "id": "sync-098",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion refuses a final checkout hook surviving head mutation"
+    },
+    {
+      "id": "sync-099",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion preserves unchanged pre-existing metadata outside the valid tracked graph"
+    },
+    {
+      "id": "sync-100",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion rejects source cleanup actor head changes outside the valid tracked graph"
+    },
+    {
+      "id": "sync-101",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion rejects incoming-hook changes to original opaque out-of-graph metadata"
+    },
+    {
+      "id": "sync-102",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion rejects a genuinely new tracked participant introduced during source cleanup"
+    },
+    {
+      "id": "sync-103",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion compares untouched opaque metadata exactly without adopting a changed freeze field"
+    },
+    {
+      "id": "sync-104",
+      "source": "test/commands/sync_completion_cli.test.ts",
+      "title": "sync CLI checked completion rejects a committed cleanup parent publication hook that restores the old parent"
+    },
+    {
+      "id": "sync-105",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery continues saved maintenance in a fresh process and restores the original checkout"
+    },
+    {
+      "id": "sync-106",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery continues incoming then maintenance conflicts with saved cleanup and trunk fallback"
+    },
+    {
+      "id": "sync-107",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery rejects PR publication actor replacement without blessing its readback"
+    },
+    {
+      "id": "sync-108",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery refuses pending cleanup reopened before continue-all stages resolutions"
+    },
+    {
+      "id": "sync-109",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery refuses pending cleanup merged before continue-all stages resolutions"
+    },
+    {
+      "id": "sync-110",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery refuses pending cleanup identity before continue-all stages resolutions"
+    },
+    {
+      "id": "sync-111",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery refuses pending cleanup lookup before continue-all stages resolutions"
+    },
+    {
+      "id": "sync-112",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery refuses pending cleanup disabled before continue-all stages resolutions"
+    },
+    {
+      "id": "sync-113",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid version before incidental staging"
+    },
+    {
+      "id": "sync-114",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid extra before incidental staging"
+    },
+    {
+      "id": "sync-115",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid mirrors before incidental staging"
+    },
+    {
+      "id": "sync-116",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid role before incidental staging"
+    },
+    {
+      "id": "sync-117",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid file before incidental staging"
+    },
+    {
+      "id": "sync-118",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid marker before incidental staging"
+    },
+    {
+      "id": "sync-119",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid source before incidental staging"
+    },
+    {
+      "id": "sync-120",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid abort before incidental staging"
+    },
+    {
+      "id": "sync-121",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid worktree before incidental staging"
+    },
+    {
+      "id": "sync-122",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid repository before incidental staging"
+    },
+    {
+      "id": "sync-123",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid remote before incidental staging"
+    },
+    {
+      "id": "sync-124",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid head before incidental staging"
+    },
+    {
+      "id": "sync-125",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid parent before incidental staging"
+    },
+    {
+      "id": "sync-126",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid active freeze before incidental staging"
+    },
+    {
+      "id": "sync-127",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid pending freeze before incidental staging"
+    },
+    {
+      "id": "sync-128",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves recovery, files and index for invalid occupied before incidental staging"
+    },
+    {
+      "id": "sync-129",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery resumes successive fanout and independent-root maintenance with the saved parents"
+    },
+    {
+      "id": "sync-130",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery keeps no-pull and no-restack choices through incoming recovery"
+    },
+    {
+      "id": "sync-131",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves opaque out-of-graph metadata through a saved conflict without importing it"
+    },
+    {
+      "id": "sync-132",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery keeps foreign recovery written by final checkout hooks"
+    },
+    {
+      "id": "sync-133",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery keeps foreign recovery written by final sources hooks"
+    },
+    {
+      "id": "sync-134",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery retains completed publication failure as manual inspection without a live retry"
+    },
+    {
+      "id": "sync-135",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery records physical cleanup deletion before metadata failure and refuses an uncertain retry"
+    },
+    {
+      "id": "sync-136",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery continues local-only maintenance without pins or GitHub access when integration is disabled"
+    },
+    {
+      "id": "sync-137",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves a freeze-only change on a completed anchor while continuing editable work"
+    },
+    {
+      "id": "sync-138",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery requires manual inspection when pending PR status changes after Git completes reconciliation"
+    },
+    {
+      "id": "sync-139",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery preserves a newly frozen completed incoming anchor through pending cleanup"
+    },
+    {
+      "id": "sync-140",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery does not adopt an actor-restored deleted head before creating a maintenance conflict"
+    },
+    {
+      "id": "sync-141",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery continues purely local sync without a remote or GitHub repository identity"
+    },
+    {
+      "id": "sync-142",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery refuses a newly occupied trunk fallback before staging or pending cleanup"
+    },
+    {
+      "id": "sync-143",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery continues a later cleanup replay after a completed mandatory survivor is frozen"
+    },
+    {
+      "id": "sync-144",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery rechecks freeze ownership changes from pending PR reads before staging"
+    },
+    {
+      "id": "sync-145",
+      "source": "test/commands/sync_recovery_cli.test.ts",
+      "title": "sync CLI owned recovery rechecks foreign ownership changes from pending PR reads before staging"
+    },
+    {
+      "id": "sync-146",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves a foreign recovery actor written by the original pre-rebase hook before replay"
+    },
+    {
+      "id": "sync-147",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards keeps the trusted owner when activation removes its role before the managed hook starts"
+    },
+    {
+      "id": "sync-148",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards refuses a missing owner removed by the original pre-rebase hook before replay"
+    },
+    {
+      "id": "sync-149",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves a changed full owner envelope from an original continuation ref hook before the active head advances"
+    },
+    {
+      "id": "sync-150",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards resumes the same bound conflict after a transient freeze clears without staging unrelated files"
+    },
+    {
+      "id": "sync-151",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards resumes after a late pending worktree blocker clears and preserves the other worktree files"
+    },
+    {
+      "id": "sync-152",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves a late pending head actor from the original continuation hook before active publication"
+    },
+    {
+      "id": "sync-153",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves a late pending parent actor from the original continuation hook before active publication"
+    },
+    {
+      "id": "sync-154",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves a late pending freeze actor from the original continuation hook before active publication"
+    },
+    {
+      "id": "sync-155",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves a late pending source actor from the original continuation hook before active publication"
+    },
+    {
+      "id": "sync-156",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves a selected head changed by an incoming hook after earlier refresh progress"
+    },
+    {
+      "id": "sync-157",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves selected PR metadata changed by an incoming hook before applying that participant"
+    },
+    {
+      "id": "sync-158",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards does not apply an injected shared source changed by its activation hook"
+    },
+    {
+      "id": "sync-159",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards preserves a checkout hook redirection without advancing its unrelated physical branch"
+    },
+    {
+      "id": "sync-160",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards refuses fresh unfreezing of a saved maintenance anchor without expanding replay authority"
+    },
+    {
+      "id": "sync-161",
+      "source": "test/commands/sync_late_guards_cli.test.ts",
+      "title": "sync CLI assembled late participant guards leaves harmless unrelated occupancy outside the sync writes and completion selection"
+    },
+    {
+      "id": "sync-162",
+      "source": "test/commands/sync_delivery_cli.test.ts",
+      "title": "sync CLI and installed MCP delivery sync help and completion expose repository refresh and independent cleanup/replay controls"
+    },
+    {
+      "id": "sync-163",
+      "source": "test/commands/sync_delivery_cli.test.ts",
+      "title": "sync CLI and installed MCP delivery repo sync help and completion expose repository refresh and independent cleanup/replay controls"
+    },
+    {
+      "id": "sync-164",
+      "source": "test/commands/sync_delivery_cli.test.ts",
+      "title": "sync CLI and installed MCP delivery repo s help and completion expose repository refresh and independent cleanup/replay controls"
+    },
+    {
+      "id": "sync-165",
+      "source": "test/commands/sync_delivery_cli.test.ts",
+      "title": "sync CLI and installed MCP delivery installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure"
+    }
+  ]
+}

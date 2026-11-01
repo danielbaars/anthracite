@@ -46,7 +46,10 @@ describe('sync CLI repository-wide local maintenance', function () {
       'new trunk bytes'
     );
     fixture.git(fixture.producer, 'push', 'origin', 'main');
+    // Four guarded replays exceed the default per-command fixture budget.
+    fixture.commandTimeoutMs = 30000;
     const result = fixture.ok('sync', '--no-delete');
+    fixture.commandTimeoutMs = 15000;
     for (const [branch, parent] of [
       ['parent', 'main'],
       ['child', 'parent'],

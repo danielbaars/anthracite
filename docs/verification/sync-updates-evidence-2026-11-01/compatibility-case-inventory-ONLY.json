@@ -1,0 +1,122 @@
+{
+  "kind": "case naming inventory only; not test execution",
+  "cases": [
+    {
+      "id": "compatibility-001",
+      "source": "test/commands/frozen_sync_cli.test.ts",
+      "title": "frozen sync through the public CLI checks every mandatory cleanup survivor after the real pre-rebase hook before publishing the first replay"
+    },
+    {
+      "id": "compatibility-002",
+      "source": "test/commands/get_graph_cli.test.ts",
+      "title": "get CLI remote graph selection does not add an ancestor sibling, independent stack or remote-only descendant"
+    },
+    {
+      "id": "compatibility-003",
+      "source": "test/commands/get_trunk_parent_cli.test.ts",
+      "title": "get CLI safe trunk and changed parents refuses divergent local trunk with force=true before feature changes"
+    },
+    {
+      "id": "compatibility-004",
+      "source": "test/commands/get_recovery_cli.test.ts",
+      "title": "get CLI owned graph recovery resumes fanout from pinned sources with correct sibling parents and exact detached restoration"
+    },
+    {
+      "id": "compatibility-005",
+      "source": "test/commands/get_recovery_cli.test.ts",
+      "title": "get CLI owned graph recovery keeps saved no-restack authority and default target checkout after reconciliation"
+    },
+    {
+      "id": "compatibility-006",
+      "source": "test/commands/get_publication_cli.test.ts",
+      "title": "get CLI completed publication guards preserves topology changed by a source cleanup hook and retains manual recovery"
+    },
+    {
+      "id": "compatibility-007",
+      "source": "test/commands/get_publication_cli.test.ts",
+      "title": "get CLI completed publication guards gives manual guidance when a hook changes the saved envelope while the old active token remains"
+    },
+    {
+      "id": "compatibility-008",
+      "source": "test/commands/create_insert_child_recovery_cli.test.ts",
+      "title": "selected insert recovery through fresh public CLI processes retains independently changed unselected metadata while continuing the saved selection"
+    },
+    {
+      "id": "compatibility-009",
+      "source": "test/commands/land_recovery_cli.test.ts",
+      "title": "public landing interruption recovery resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land"
+    },
+    {
+      "id": "compatibility-010",
+      "source": "test/commands/continue/continue.test.ts",
+      "title": "(${scene}): continue During a Grahite initiated rebase After resolving conflict and continuing Lands on the restacked branch",
+      "scene": "BasicScene"
+    },
+    {
+      "id": "compatibility-011",
+      "source": "test/commands/continue/continue.test.ts",
+      "title": "(${scene}): continue During a Grahite initiated rebase After resolving conflict and continuing Lands on the restacked branch",
+      "scene": "TrailingProdScene"
+    },
+    {
+      "id": "compatibility-012",
+      "source": "test/commands/repo/sync_continue.test.ts",
+      "title": "(BasicScene): repo sync continue Can continue a repo sync with multiple merge conflicts"
+    },
+    {
+      "id": "compatibility-013",
+      "source": "test/commands/repo/sync_continue.test.ts",
+      "title": "(TrailingProdScene): repo sync continue Can continue a repo sync with multiple merge conflicts"
+    },
+    {
+      "id": "compatibility-014",
+      "source": "test/commands/repo/sync.test.ts",
+      "title": "(BasicScene): repo sync Can noop sync if there are no stacks"
+    },
+    {
+      "id": "compatibility-015",
+      "source": "test/commands/repo/sync.test.ts",
+      "title": "(BasicScene): repo sync Can defer replay explicitly while deleting two branches off a three-stack"
+    },
+    {
+      "id": "compatibility-016",
+      "source": "test/commands/repo/sync.test.ts",
+      "title": "(BasicScene): repo sync Can defer replay explicitly across repeated cleanup of a three-stack"
+    },
+    {
+      "id": "compatibility-017",
+      "source": "test/commands/repo/sync.test.ts",
+      "title": "(TrailingProdScene): repo sync Can noop sync if there are no stacks"
+    },
+    {
+      "id": "compatibility-018",
+      "source": "test/commands/repo/sync.test.ts",
+      "title": "(TrailingProdScene): repo sync Can defer replay explicitly while deleting two branches off a three-stack"
+    },
+    {
+      "id": "compatibility-019",
+      "source": "test/commands/repo/sync.test.ts",
+      "title": "(TrailingProdScene): repo sync Can defer replay explicitly across repeated cleanup of a three-stack"
+    },
+    {
+      "id": "compatibility-020",
+      "source": "test/commands/modern_legacy_routes_cli.test.ts",
+      "title": "modern preserved routes through the public CLI get fast-forwards from a real local remote through the existing PR boundary"
+    },
+    {
+      "id": "compatibility-021",
+      "source": "test/commands/modern_legacy_routes_cli.test.ts",
+      "title": "modern preserved routes through the public CLI g fast-forwards from a real local remote through the existing PR boundary"
+    },
+    {
+      "id": "compatibility-022",
+      "source": "test/commands/get_reconciliation_cli.test.ts",
+      "title": "get CLI unique incoming reconciliation replays only unique local commits after both published parent and child advance"
+    },
+    {
+      "id": "compatibility-023",
+      "source": "test/commands/get_reconciliation_cli.test.ts",
+      "title": "get CLI unique incoming reconciliation never replays old parent commits when the pinned remote parent was rewritten"
+    }
+  ]
+}

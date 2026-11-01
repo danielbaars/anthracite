@@ -397,20 +397,26 @@ an ss --branch target --dry-run
 Role targeting does not change which branches are submitted or implicitly publish drafts. See [reviewers, assignees and role targeting](docs/submit.md) for validation and partial-progress behavior.
 
 ### `sync`
-Pull the trunk branch from remote and delete any branches that have been merged. If trunk can't be fast-forwarded, it is overwritten with the remote version.
+Refresh eligible existing tracked open-PR feature heads repository-wide within the configured trunk, update trunk, clean eligible merged/closed branches with separate consent and repair affected local stacks by default. The original surviving branch (or exact detached commit) is restored on complete success; actual approved deletion of that branch uses trunk as the reported fallback. Sync does not import remote-only branches, push or edit PRs. See [sync scope, authority and recovery](docs/sync.md).
 
 | Flag | Description |
 | --- | --- |
-| `-p`, `--pull` | Pull the trunk branch from remote (default on). |
-| `-d`, `--delete` | Delete branches that have been merged (default on). |
+| `-p`, `--pull` / `--no-pull` | Default true. Controls trunk fetching/application only; no-pull still permits PR lookup and feature refresh. |
+| `-d`, `--delete` / `--no-delete` | Default true. No-delete suppresses cleanup even with delete-all or force. |
+| `--delete-all` | Default false. Confirms already eligible local cleanup only; never authorizes trunk reset or feature overwrite. |
 | `--show-delete-progress` | Show progress through merged branches. |
-| `-f`, `--force` | Don't prompt before deleting a branch or resetting trunk to remote. |
-| `-r`, `--restack` | Restack the current stack and any stacks with deleted branches. |
+| `-f`, `--force` | Separate legacy cleanup consent and trunk-reset authority; never silently overwrites divergent feature work. |
+| `-r`, `--restack` / `--no-restack` | Default true. Repair affected tracked histories across the configured trunk; no-restack defers automatic replay but retains incoming updates and approved cleanup/parent changes. |
 
+All boolean options accept explicit true/false and negative forms. Without cleanup consent, noninteractive cleanup declines candidates; a terminal asks. Local-ahead or divergent trunk now refuses unless explicit force or affirmative terminal reset consent authorizes replacement. This deliberately replaces the former local-ahead no-op. Divergent features require an explicit terminal reconciliation choice; force and delete-all do not grant that permission. No-restack does not cancel a separately chosen reconciliation rebase.
+
+```sh
+an sync --no-delete
+an sync --no-pull --no-restack
+an sync --delete-all --no-interactive
 ```
-an sync
-an sync -fr
-```
+
+There is no exact old PR-information-only flag recipe and no new feature-refresh switch. Closed/merged and local-only branches skip service-head refresh; disabled GitHub integration retains local sync without service calls. Frozen inbound updates retain protection, frozen histories skip replay, and mandatory frozen survivors can block cleanup even with no-restack. Owned conflicts use fresh-process `an continue`/`cont`; pending PR-based cleanup may need GitHub read access. Missing/foreign/raw-aborted intent and no-active or uncertain completed states require manual inspection. Raw Git abort does not undo earlier phases. Finish new saved sync workflows before downgrading. Get retains its independent target scope, no cleanup and FF-only trunk authority.
 
 ### `auth`
 Authenticate with the GitHub CLI so Anthracite can create and manage PRs.
@@ -537,7 +543,7 @@ Read or write Anthracite's per-repo configuration. Sub-commands generally read t
 | Sub-command | Description |
 | --- | --- |
 | `repo init` (alias `i`) | Create or regenerate a `.graphite_repo_config` file. Flags: `--trunk <name>`, `--reset` (untrack all branches). |
-| `repo sync` (alias `s`) | Same as the top-level `sync` (pull trunk, delete merged branches). Flags: `-p`/`--pull`, `-d`/`--delete`, `--show-delete-progress`, `-f`/`--force`, `-r`/`--restack`. |
+| `repo sync` (alias `s`) | Same repository-wide refresh, default maintenance, cleanup consent and recovery as top-level [`sync`](#sync). Flags: `-p`/`--pull`, `-d`/`--delete`, `--delete-all`, `--show-delete-progress`, `-f`/`--force`, `-r`/`--restack`, including boolean negative forms. |
 | `repo name` | The repo's name in Anthracite (e.g. `anthracite` in `danielbaars/anthracite`). `-s`/`--set` to override. |
 | `repo owner` | The repo owner's name in Anthracite. `-s`/`--set` to override. |
 | `repo remote` | The remote Anthracite pushes to / pulls from (defaults to `origin`). `-s`/`--set` to override. |

@@ -1,0 +1,33 @@
+{
+  "kind": "curated public fixture observation; raw receipt retained outside repository",
+  "exitCode": 1,
+  "before": {
+    "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+    "branch": "main",
+    "refs": "refs/branch-metadata/child e6de53950ee49be58f04ae2277d775140273d309\nrefs/branch-metadata/parent 47550655bec040fb1b3deb195f3273746801759a\nrefs/heads/child 9f9ab5f2a7afbae613aa928ac788b3870a2c8131\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+    "status": "",
+    "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+    "rebase": false
+  },
+  "after": {
+    "head": "38679e901db91d4cf2acd51da3031a38a80b2d96",
+    "branch": "parent",
+    "refs": "refs/branch-metadata/child 96dc01c4188d3a4c3b7ad24a32fcc1bf711d74bc\nrefs/branch-metadata/parent 457298b08c6dc16f668d763b9aae2ac7aad4dd3c\nrefs/heads/child 9f9ab5f2a7afbae613aa928ac788b3870a2c8131\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 38679e901db91d4cf2acd51da3031a38a80b2d96",
+    "status": "",
+    "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt\n100644 373ab1ef1297d69f06f6e842c41655c11efb3eb1 0\tparent.txt",
+    "rebase": false
+  },
+  "filesAfter": {
+    "main.txt": "main",
+    "parent.txt": "parent-new"
+  },
+  "recovery": {
+    "present": true,
+    "phase": "prs",
+    "hasActive": false,
+    "sha256": "b777b9f97e4dad59bac450c1888de49fc871fc6898335658d887aad8b2b50c96"
+  },
+  "output": "Synced parent from remote.\nERROR: Sync stopped during prs. Updated: parent. Completed feature refresh: parent. Pending feature refresh: none. Confirmed cleanup deletions: none. Completed parent changes: none. Completed local maintenance: none. Pending local maintenance: none. Actual checkout: parent (38679e901db91d4cf2acd51da3031a38a80b2d96). Original project: /private$FIXTURE/consumer. No verified owned continuation; inspect reached work and saved sync intent manually. Some source refs may already have been removed; inspect remaining refs.\nchild changed outside the saved sync plan; refusing before staging or advancing. Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted. Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted.\n",
+  "indexBytesUnchanged": false,
+  "note": "Index/files changed with the reached authorized parent checkout; this is not a mutation-free initial failure. Final adapted test separately asserts index/worktree match parent and refused fresh continue-all preserves full snapshot."
+}

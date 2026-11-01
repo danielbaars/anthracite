@@ -1,0 +1,15 @@
+{
+  "mapSha256": {
+    "source": "1d4a9c22254e3ddd479a8ef561cae7a714e3a6c98a4f7ef55d76bf1a56e1836e",
+    "compiled": "f032d090e5574490e5c397d640c46f7e32bf0817f6a758e0351aa3f8ad870630",
+    "testSource": "ac29d07b2453833d366a6c16f9388ae2dd75bc5aa987badbe26567b656c4a01a",
+    "testCompiled": "e5a28816cd4627d20f7dc4fb38938d456f47bcf0c780d8b74cafb99a9aaa0fe0"
+  },
+  "nativeSha256": "96a6b04d1563a6b307d731de9655a06d07635ff4666d4af4f131f73454f87ebc",
+  "files": {
+    "source": 286,
+    "compiled": 286,
+    "testSource": 247,
+    "testCompiled": 250
+  }
+}

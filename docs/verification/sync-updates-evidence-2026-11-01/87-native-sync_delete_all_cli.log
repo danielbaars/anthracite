@@ -1,0 +1,21 @@
+
+
+  sync cleanup-only consent through the public CLI
+    ✔ deletes an eligible closed local branch without changing the remote or PR (4768ms)
+    ✔ cleans a closed branch whose remote head was already deleted (4149ms)
+    ✔ honors boolean forms and no-delete precedence through sync (13085ms)
+    ✔ honors boolean forms and no-delete precedence through repo sync (12617ms)
+    ✔ honors boolean forms and no-delete precedence through repo s (12919ms)
+    ✔ refuses divergent trunk reset with delete-all while legacy force retains reset authority (2702ms)
+    ✔ keeps an empty unassociated branch and open local work outside cleanup consent (3101ms)
+    ✔ retains frozen mandatory survivors while cleaning an independent frozen leaf without replay (9305ms)
+    ✔ refuses an occupied cleanup target before deleting it (4578ms)
+    ✔ refuses an occupied mandatory survivor before changing parents or deleting candidates (6058ms)
+    ✔ still visits a closed child after a terminal user declines its closed ancestor (5611ms)
+    ✔ preserves staged and unstaged work before cleanup even with narrow consent (2837ms)
+    ✔ cleans locally merged work with GitHub disabled without making service calls (2491ms)
+    ✔ advertises narrow cleanup permission in help and completion for every sync route (1462ms)
+
+
+  14 passing (1m)
+

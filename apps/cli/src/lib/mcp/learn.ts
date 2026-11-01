@@ -55,6 +55,51 @@ aborted intent and ambiguous metadata/final-checkout failures require inspection
 never clear records or reset/recreate refs to pretend restoration succeeded.
 Finish a pending graph-aware get before downgrading to an older release.
 
+Use an sync (also repo sync or repo s) for repository-wide refresh of existing
+tracked open-PR feature heads belonging to the single configured trunk, followed
+by separately authorized local cleanup and default maintenance. Independent local
+stacks are included; missing parents and remote-only branches are not imported.
+For example, literal args ["sync", "--no-pull", "--no-delete"] refresh features
+and repair affected histories while retaining trunk and cleanup candidates.
+--no-pull controls trunk fetching/application only: PR reads and feature refresh
+still occur. --no-delete suppresses cleanup even with --delete-all or --force.
+--delete-all confirms only already eligible local cleanup. Sync --force retains
+separate cleanup consent and trunk-reset authority; neither flag silently grants
+feature overwrite. Local-ahead/divergent trunk now refuses without explicit force
+or affirmative terminal reset consent, deliberately replacing the old local-ahead
+no-op. Get keeps its independent FF-only trunk and target-bounded, cleanup-free
+contract. --no-restack defers automatic replay, but not incoming updates, approved
+cleanup/parent changes or a separately chosen terminal reconciliation rebase.
+There is no exact old PR-information-only flag recipe or feature-refresh switch.
+Booleans accept true/false and negative forms on all three routes; -p/-d/-f/-r
+and --show-delete-progress remain supported.
+
+Local-only work stays unpublished; closed/merged branches skip incoming refresh
+and remain if cleanup is declined or protected. Disabled GitHub integration makes
+no service calls and retains local sync without treating cached PR status as fresh.
+Frozen inbound updates preserve status. Frozen histories skip local replay;
+mandatory frozen survivors can exclude cleanup even with --no-restack. Eligible
+survivors keep their PR identities and own commits/authors/full messages through
+parent-first incoming updates, approved cleanup and affected local maintenance.
+Full success restores the original surviving physical branch at its authorized
+head or exact detached OID. Only actual approved deletion of that branch permits
+the reported trunk fallback. File collisions, tracked dirt and affected worktrees
+remain protected; late failures retain reached work and concurrent actor state.
+
+A real owned sync conflict returns cli_error. Resolve deliberately in the printed
+original project and use an continue/cont in a fresh call. The saved sync intent
+retains pinned sources, graph, consent, remaining phases and checkout policy;
+protections are rechecked before --all stages or advances. PR-based pending cleanup
+requires fresh reads of the exact saved identities/states and may need GitHub read
+access; disabled integration, changed PRs or failed lookup refuse advancement.
+No new candidates or source heads are discovered on resume. Raw Git abort cancels
+only the active rebase, not earlier updates, cleanup or completed rewrites. Missing,
+foreign, changed, aborted or no-active intent and uncertain completed publication
+require manual inspection, not automatic retry or rollback. Some source refs may
+already have been removed. Finish a pending new sync workflow before downgrading.
+Sync never pushes or edits PRs. Existing MCP tools, literal cwd/args, supervision
+and publication approvals remain unchanged; cancellation does not promise undo.
+
 To insert a prerequisite below selected direct children, use an create shared
 --insert --onto parent --insert-child left --insert-child right -m "Prerequisite".
 The c alias and -i also work. Each --insert-child consumes one exact literal
