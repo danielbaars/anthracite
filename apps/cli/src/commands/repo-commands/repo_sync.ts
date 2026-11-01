@@ -17,6 +17,12 @@ const args = {
     type: 'boolean',
     alias: 'd',
   },
+  'delete-all': {
+    describe: `Confirm eligible local merged/closed branch cleanup only; does not authorize trunk reset or feature overwrite. Ignored with --no-delete.`,
+    demandOption: false,
+    default: false,
+    type: 'boolean',
+  },
   'show-delete-progress': {
     describe: `Show progress through merged branches.`,
     demandOption: false,
@@ -53,6 +59,7 @@ export const handler = async (argv: argsT): Promise<void> => {
         pull: argv.pull,
         force: argv.force,
         delete: argv.delete,
+        deleteAll: argv['delete-all'],
         showDeleteProgress: argv['show-delete-progress'],
         restack: argv.restack,
       },
