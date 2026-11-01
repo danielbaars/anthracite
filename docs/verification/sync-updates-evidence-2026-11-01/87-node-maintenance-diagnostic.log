@@ -1,0 +1,28 @@
+
+
+  sync CLI repository-wide local maintenance
+    1) repairs local-only independent roots and fanout by default with GitHub disabled
+    ✔ refuses a late PR metadata change before replaying the pending child (8356ms)
+    ✔ reports already-stale independent work with explicit no-restack even without incoming nodes (19594ms)
+    ✔ preflights an occupied local-only replay before incoming heads or trunk advance (4350ms)
+    ✔ keeps frozen anchors while repairing editable descendants and protects other refs with local updateRefs true (8812ms)
+    ✔ retains a real maintenance conflict and names completed and pending work (14199ms)
+    ✔ replays stale incoming children and unpublished descendants after feature refresh (13479ms)
+    ✔ retains explicit boolean forms on every sync route and describes default maintenance (17726ms)
+
+
+  7 passing (3m)
+  1 failing
+
+  1) sync CLI repository-wide local maintenance
+       repairs local-only independent roots and fanout by default with GitHub disabled:
+     Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at FrozenGetFixture.run (dist/test/lib/fixtures/frozen_get_cli.js:224:54)
+      at FrozenGetFixture.ok (dist/test/lib/fixtures/frozen_get_cli.js:268:29)
+      at Context.<anonymous> (dist/test/commands/sync_maintenance_cli.test.js:33:32)
+      at process.processImmediate (node:internal/timers:534:21)
+
+
+

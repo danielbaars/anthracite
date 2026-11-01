@@ -1,0 +1,7 @@
+{
+  "relativeMarkdownFiles": 18,
+  "missingTargets": [],
+  "unchangedSliceReports": 8,
+  "publicationScan": "No token-like credential literals or Dutch approval text found; no chat/STATE/config dumps included",
+  "runtimeByteCheck": "87-all-runtime-final-frozen-check.log"
+}

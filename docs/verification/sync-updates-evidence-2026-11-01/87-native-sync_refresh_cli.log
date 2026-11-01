@@ -1,0 +1,33 @@
+
+
+  sync CLI existing feature refresh
+    ✔ refreshes existing published heads without pulling, deleting or replaying (5230ms)
+    ✔ rejects a same-name source from another head repository before applying updates (754ms)
+    ✔ refreshes independent roots and fanout once from main via sync (13203ms)
+    ✔ refreshes independent roots and fanout once from main via repo sync (13697ms)
+    ✔ refreshes independent roots and fanout once from main via repo s (13502ms)
+    ✔ retains named local-only work and excludes untracked local branches (4992ms)
+    ✔ retains an associated CLOSED branch without requiring its deleted remote head (5513ms)
+    ✔ retains an associated MERGED branch without requiring its deleted remote head (5421ms)
+    ✔ adopts an existing changed parent without replaying or losing PR/frozen identity (4239ms)
+    ✔ refuses authentication before changing any selected head (3707ms)
+    ✔ refuses rate limit before changing any selected head (3949ms)
+    ✔ refuses transport before changing any selected head (3655ms)
+    ✔ refuses malformed response before changing any selected head (3772ms)
+    ✔ refuses missing associated PR before changing any selected head (3695ms)
+    ✔ refuses untraceable or cyclic parent remote-only-parent without imports or application (917ms)
+    ✔ refuses untraceable or cyclic parent child without imports or application (905ms)
+    ✔ fails a missing open source before applying another selected feature (1082ms)
+    ✔ refuses divergent feature commits even with legacy sync force (1834ms)
+    ✔ makes no service calls when GitHub integration is explicitly disabled (2147ms)
+    ✔ refuses tracked dirt without changing heads, index or user files (862ms)
+    ✔ refuses an occupied affected head before updating any selected feature (1588ms)
+    ✔ protects untracked file collisions before the first selected update (1401ms)
+    ✔ preserves an active foreign Git operation before refreshing features (654ms)
+    ✔ resolves stored PR numbers even when a reused branch name would select another PR (7349ms)
+    ✔ rejects a mismatched source OID before applying an earlier selected branch (1088ms)
+    ✔ does not associate an unpublished local branch with an old closed same-name PR (4395ms)
+
+
+  26 passing (4m)
+

@@ -41,6 +41,7 @@ export class FrozenGetFixture {
   readonly identities = path.join(this.root, 'identities.json');
   readonly ghCalls = path.join(this.root, 'gh-calls.jsonl');
   cwd = this.consumer;
+  commandTimeoutMs = 15000;
   readonly details = path.join(this.root, 'pr-details.json');
   readonly oldParent: string;
   readonly oldChild: string;
@@ -277,7 +278,7 @@ respond(JSON.stringify(selected) + '\\n');\n`,
       cwd,
       env: this.env,
       encoding: 'utf8',
-      timeout: 15000,
+      timeout: this.commandTimeoutMs,
     });
     const transcript = {
       status: result.status,
@@ -292,7 +293,7 @@ respond(JSON.stringify(selected) + '\\n');\n`,
         JSON.stringify({
           command,
           cwd,
-          timeoutMs: 15000,
+          timeoutMs: this.commandTimeoutMs,
           explicitEnvironment: this.evidenceEnvironment(),
           before,
           after: this.observe(),
