@@ -1,0 +1,128 @@
+{
+  "sourceHead": "e9779bbc61cee4852c28c89e389177d4f3ceeb76",
+  "previousSourceHead": "2dc0c3dfe27e83a9b8d3183600e542d7aef80e0f",
+  "binary": "/private/tmp/anthracite-sync-updates-implementation-20261101/review-fixes-an",
+  "nativeSha256": "51381b14a2690b51d7c44c798dfdef59ab0920f0866eaa80bb9f535135f0d1ac",
+  "compiledRefreshSha256": "1b7f68bf026928681ef3fe64e3c3b0c40137307000be76b9303196954883d255",
+  "fixtureRoot": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-Brpr5b",
+  "probes": [
+    {
+      "label": "literal-numeric-open-head",
+      "args": [
+        "sync",
+        "--no-pull",
+        "--no-delete",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "command": [
+        "/private/tmp/anthracite-sync-updates-implementation-20261101/review-fixes-an",
+        "sync",
+        "--no-pull",
+        "--no-delete",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "before": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/123 3245fed2a52325fc15fc7bbfe984f9a423bb9cff\nrefs/heads/123 43acec0ede2b32ffa93dcc74df118e2a2640f81c\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "commits": "43acec0ede2b32ffa93dcc74df118e2a2640f81c 01f6c88a17847dae93ffa5206d8ddfc8c618c764 a280dcd466b3e9a6eefbf628b260ed0ab012412c\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABaucp+yddLA5q5yn7J10sDgEAABALzWHLAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx634NA3x2ypvqef/rX35DEAN1F1WM=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "result": {
+        "status": 0,
+        "output": "Synced 123 from remote.\n",
+        "stdout": "Synced 123 from remote.\n",
+        "stderr": ""
+      },
+      "after": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/123 5a7fc3beeaae6e7bc8a6fc811fbcad527771aabf\nrefs/heads/123 68437d2355d921c84688ddccdba8c6a752bfe35e\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "commits": "68437d2355d921c84688ddccdba8c6a752bfe35e 43acec0ede2b32ffa93dcc74df118e2a2640f81c 0ccd2fc1d9881f8f4061f66ea00f8b1340b4e02d\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n43acec0ede2b32ffa93dcc74df118e2a2640f81c 01f6c88a17847dae93ffa5206d8ddfc8c618c764 a280dcd466b3e9a6eefbf628b260ed0ab012412c",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABaucp+yddLA5q5yn7J10sDgEAABALzWHLAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx634NA3x2ypvqef/rX35DEAN1F1WM=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "actual": "68437d2355d921c84688ddccdba8c6a752bfe35e",
+      "metadata": "{\n  \"parentBranchName\": \"main\",\n  \"parentBranchRevision\": \"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\n  \"prInfo\": {\n    \"number\": 3,\n    \"url\": \"https://github.com/get-fixture/repo/pull/3\",\n    \"base\": \"main\",\n    \"state\": \"OPEN\"\n  }\n}",
+      "calls": "[\"pr\",\"list\",\"--head\",\"123\",\"--state\",\"open\",\"--limit\",\"2\",\"--repo\",\"get-fixture/repo\",\"--json\",\"headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository\"]\n"
+    },
+    {
+      "label": "stored-number-repeat",
+      "args": [
+        "sync",
+        "--no-pull",
+        "--no-delete",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "command": [
+        "/private/tmp/anthracite-sync-updates-implementation-20261101/review-fixes-an",
+        "sync",
+        "--no-pull",
+        "--no-delete",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "before": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/123 5a7fc3beeaae6e7bc8a6fc811fbcad527771aabf\nrefs/heads/123 68437d2355d921c84688ddccdba8c6a752bfe35e\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "commits": "68437d2355d921c84688ddccdba8c6a752bfe35e 43acec0ede2b32ffa93dcc74df118e2a2640f81c 0ccd2fc1d9881f8f4061f66ea00f8b1340b4e02d\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n43acec0ede2b32ffa93dcc74df118e2a2640f81c 01f6c88a17847dae93ffa5206d8ddfc8c618c764 a280dcd466b3e9a6eefbf628b260ed0ab012412c",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABaucp+yddLA5q5yn7J10sDgEAABALzWHLAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx634NA3x2ypvqef/rX35DEAN1F1WM=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "result": {
+        "status": 0,
+        "output": "123 is up to date.\n",
+        "stdout": "123 is up to date.\n",
+        "stderr": ""
+      },
+      "after": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/123 5a7fc3beeaae6e7bc8a6fc811fbcad527771aabf\nrefs/heads/123 68437d2355d921c84688ddccdba8c6a752bfe35e\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "commits": "68437d2355d921c84688ddccdba8c6a752bfe35e 43acec0ede2b32ffa93dcc74df118e2a2640f81c 0ccd2fc1d9881f8f4061f66ea00f8b1340b4e02d\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n43acec0ede2b32ffa93dcc74df118e2a2640f81c 01f6c88a17847dae93ffa5206d8ddfc8c618c764 a280dcd466b3e9a6eefbf628b260ed0ab012412c",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABaucp+yddLA5q5yn7J10sDgEAABALzWHLAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx634NA3x2ypvqef/rX35DEAN1F1WM=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "actual": "68437d2355d921c84688ddccdba8c6a752bfe35e",
+      "metadata": "{\n  \"parentBranchName\": \"main\",\n  \"parentBranchRevision\": \"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\n  \"prInfo\": {\n    \"number\": 3,\n    \"url\": \"https://github.com/get-fixture/repo/pull/3\",\n    \"base\": \"main\",\n    \"state\": \"OPEN\"\n  }\n}",
+      "calls": "[\"pr\",\"list\",\"--head\",\"123\",\"--state\",\"open\",\"--limit\",\"2\",\"--repo\",\"get-fixture/repo\",\"--json\",\"headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository\"]\n[\"pr\",\"view\",\"3\",\"--repo\",\"get-fixture/repo\",\"--json\",\"headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository\"]\n"
+    }
+  ],
+  "old": "43acec0ede2b32ffa93dcc74df118e2a2640f81c",
+  "incoming": "68437d2355d921c84688ddccdba8c6a752bfe35e",
+  "calls": "[\"pr\",\"list\",\"--head\",\"123\",\"--state\",\"open\",\"--limit\",\"2\",\"--repo\",\"get-fixture/repo\",\"--json\",\"headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository\"]\n[\"pr\",\"view\",\"3\",\"--repo\",\"get-fixture/repo\",\"--json\",\"headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository\"]\n",
+  "passed": true
+}
