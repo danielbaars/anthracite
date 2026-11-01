@@ -13,6 +13,7 @@ export async function syncAction(
     pull: boolean;
     force: boolean;
     delete: boolean;
+    deleteAll: boolean;
     showDeleteProgress: boolean;
     restack: boolean;
   },
@@ -36,7 +37,7 @@ export async function syncAction(
     const branchesWithNewParents = await cleanBranches(
       {
         showDeleteProgress: opts.showDeleteProgress,
-        force: opts.force,
+        force: opts.force || opts.deleteAll,
         restack: opts.restack,
       },
       context
@@ -44,10 +45,10 @@ export async function syncAction(
     context.splog.tip(
       [
         'You can skip deleting branches with the `--no-delete` flag.',
-        ...(opts.force
+        ...(opts.force || opts.deleteAll
           ? []
           : [
-              'Try the `--force` flag to delete merged branches without prompting for each.',
+              'Try the `--delete-all` flag to delete eligible merged/closed branches without prompting for each.',
             ]),
         ...(opts.restack
           ? []
