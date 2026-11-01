@@ -1,28 +1,12 @@
-import { clearContinuation } from '../persist_continuation';
+import { createSyncOperation, executeSyncOperation } from './sync_execute';
 import { TContext } from '../../lib/context';
-import { ExitFailedError } from '../../lib/errors';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import {
   planSyncMaintenance,
-  applySyncMaintenance,
   assertSyncMaintenanceAvailable,
 } from './sync_maintenance';
-import {
-  createSyncCompletion,
-  finishSyncCompletion,
-  recordSyncCompletionBranch,
-} from './sync_completion';
-import {
-  planSyncCleanup,
-  applySyncCleanup,
-  SyncCleanupProgress,
-  assertSyncCleanupSnapshot,
-} from './clean_branches';
-import {
-  prepareSyncRefresh,
-  applySyncRefresh,
-  releaseSyncRefresh,
-} from './sync_refresh';
+import { planSyncCleanup, assertSyncCleanupSnapshot } from './clean_branches';
+import { prepareSyncRefresh, releaseSyncRefresh } from './sync_refresh';
 
 export async function syncAction(
   opts: {
@@ -43,58 +27,12 @@ export async function syncAction(
     const maintenance = planSyncMaintenance(cleanup, context);
     if (opts.restack) assertSyncMaintenanceAvailable(maintenance, context);
     assertSyncCleanupSnapshot(cleanup);
+    const operation = createSyncOperation(
+      { refresh, cleanup, maintenance },
+      context
+    );
     applying = true;
-    const updated = await applySyncRefresh(refresh, context);
-    const progress: SyncCleanupProgress = {
-      changed: [],
-      deleted: [],
-      incomplete: [],
-    };
-    try {
-      applySyncCleanup(cleanup, context, progress);
-    } catch (error) {
-      throw new ExitFailedError(
-        `Updated ${
-          updated.join(', ') || 'none'
-        } before sync cleanup stopped.\n${
-          error instanceof Error ? error.message : String(error)
-        }`
-      );
-    }
-    const completion = createSyncCompletion(
-      { refresh, cleanup, progress },
-      context
-    );
-    if (opts.restack && cleanup.replay.length) {
-      context.continueConfig.update((data) => {
-        data.delete = {
-          branch: 'Cleanup candidates',
-          mandatory: [...cleanup.replay],
-        };
-        data.branchesToRestack = maintenance.map((entry) => entry.branchName);
-        data.branchesToSync = [];
-      });
-    }
-    applySyncMaintenance(
-      maintenance,
-      {
-        shouldRestack: opts.restack,
-        updatedBranches: updated,
-        onComplete: (branch) => recordSyncCompletionBranch(completion, branch),
-      },
-      context
-    );
-    finishSyncCompletion(
-      completion,
-      {
-        updated,
-        deleted: progress.deleted,
-        changedParents: progress.changed,
-        releaseSources: () => releaseSyncRefresh(refresh),
-      },
-      context
-    );
-    if (opts.restack && cleanup.replay.length) clearContinuation(context);
+    await executeSyncOperation(operation, context);
   } finally {
     if (!applying) releaseSyncRefresh(refresh);
   }

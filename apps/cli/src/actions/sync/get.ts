@@ -662,7 +662,7 @@ async function handleSameParent(
         source: args.source,
       });
       if (result.result === 'REBASE_CONFLICT') {
-        if (args.scope === 'sync')
+        if (args.scope === 'sync' && !context.continueConfig.data.sync)
           throw new ExitFailedError(
             `Sync stopped rebasing ${args.branchName}; the active Git rebase and conflicts are preserved. Sync has no saved phase continuation at this stage. Resolve and inspect the active rebase with Git; remaining refresh, cleanup, maintenance and checkout phases have not completed. Earlier updates are not rolled back.`
           );

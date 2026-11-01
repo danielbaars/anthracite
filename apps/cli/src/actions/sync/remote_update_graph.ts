@@ -21,7 +21,7 @@ import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { RemoteTrunkUpdate } from './remote_update_trunk';
 import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 
-const pullRequestSchema = z.object({
+export const pullRequestSchema = z.object({
   headRefName: z.string().min(1),
   baseRefName: z.string().min(1),
   number: z.number().int().positive(),
