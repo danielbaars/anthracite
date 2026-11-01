@@ -1,4 +1,5 @@
 {
+  ".gitattributes": "e440347d9cbed8fa12408de59c3f1b375cc7b492d325802f96083ff7e7193317",
   "87-all-runtime-final-frozen-check.log": "d8ee2a569640956fd0875e2d66ea94fbe94b94c7ec44bbfb4ff2f37867c572c7",
   "87-build-adapted.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "87-compatibility-command.sh": "47df697ea92ea02d33325ab4e9428a257c5973eb6419ae486085d1860fb04c54",
@@ -37,7 +38,7 @@
   "87-vs86-production-boundary.json": "215676a7bbe31be04c5e53f61a182dff60ecc0054e5a4540b1f07accd9edff89",
   "compatibility-case-inventory-ONLY.json": "50bbe9598f533e16419f789945a3cdaafb4603d42eace4872e1dcb26b1f9e39f",
   "delivery-checks.json": "0941f492dac9e705b24ad126c87167a7352cfd3466870fb1107968e7c0b35e8c",
-  "index.md": "82c46377758c70406b46ac91852c30512ae74ac47fbbb30b62c46c092f7ad5f3",
+  "index.md": "876d34ea09f85869f4fa26bbcadbae9b228015b5b7b7a64347bbf7abd9ae6d47",
   "node-actual-case-coverage.json": "f48a3f35a40e48ec4266de7521f2c7a75512ca92c8666129b392df45121ecdec",
   "opaque-state-summary.json": "e489162b4f1d00a0c665f33aef35a11c340ed2d8db22f67a49b0c55d1f573587",
   "slice-report-sha256.json": "2149ca75147e145ce2286ef49589f6c2ab42ee53ac971e4a911e826e618cb309",
