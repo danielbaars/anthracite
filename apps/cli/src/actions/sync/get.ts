@@ -236,15 +236,18 @@ function decideImports(
   });
 }
 
+type RemoteUpdatesArgs = {
+  downstack: string[];
+  base: string;
+  force: boolean;
+  importDecisions?: GetImportDecision[];
+  nodes?: readonly RemoteUpdateNode[];
+  onComplete?: (branchName: string) => void;
+  scope?: 'get' | 'sync';
+};
+
 export async function getBranchesFromRemote(
-  args: {
-    downstack: string[];
-    base: string;
-    force: boolean;
-    importDecisions?: GetImportDecision[];
-    nodes?: readonly RemoteUpdateNode[];
-    onComplete?: (branchName: string) => void;
-  },
+  args: RemoteUpdatesArgs,
   context: TContext
 ): Promise<string[]> {
   const updatedBranches: string[] = [];
@@ -331,6 +334,7 @@ export async function getBranchesFromRemote(
               fetchChoice: node?.resolution === 'REBASE' ? 'REBASE' : undefined,
               preserveOtherRefs: args.nodes !== undefined,
               source: node,
+              scope: args.scope,
             },
             context
           );
@@ -349,7 +353,10 @@ export async function getBranchesFromRemote(
       parentBranchName = branchName;
     }
   } catch (error) {
-    reportRemoteUpdateFailure(updatedBranches, incompleteBranch, error);
+    reportRemoteUpdateFailure(updatedBranches, incompleteBranch, {
+      error,
+      scope: args.scope,
+    });
   }
   return updatedBranches;
 }
@@ -357,11 +364,11 @@ export async function getBranchesFromRemote(
 function reportRemoteUpdateFailure(
   updatedBranches: readonly string[],
   incompleteBranch: string | undefined,
-  error: unknown
+  { error, scope = 'get' }: { error: unknown; scope?: 'get' | 'sync' }
 ): never {
   if (updatedBranches.length > 0) {
     throw new ExitFailedError(
-      `Updated ${updatedBranches.join(', ')} before get stopped.\n${
+      `Updated ${updatedBranches.join(', ')} before ${scope} stopped.\n${
         incompleteBranch
           ? `Metadata/status publication for ${incompleteBranch} may be incomplete.\n`
           : ''
@@ -404,6 +411,7 @@ export async function prepareRemoteUpdates(
   args: {
     nodes: readonly RemoteUpdateNode[];
     force: boolean;
+    scope?: 'get' | 'sync';
     target?: string;
     trunk?: RemoteTrunkUpdate;
     finalBranch: string | undefined;
@@ -460,13 +468,17 @@ export async function prepareRemoteUpdates(
           ? `${node.branchName} and its remote source have different parents.`
           : `${node.branchName} is not tracked by Anthracite.`
       );
-      await confirmOverwriteBranch(node.branchName, context);
+      await confirmOverwriteBranch(node.branchName, context, args.scope);
       node.resolution = 'OVERWRITE';
     } else if (
       getMergeBase(node.branchName, node.head) !==
       getSha(`refs/heads/${node.branchName}`)
     ) {
-      node.resolution = await chooseRemoteResolution(node.branchName, context);
+      node.resolution = await chooseRemoteResolution(
+        node.branchName,
+        context,
+        args.scope
+      );
     }
   }
 }
@@ -532,11 +544,16 @@ async function maybeOverwriteBranch(
 
 async function confirmOverwriteBranch(
   branchName: string,
-  context: TContext
+  context: TContext,
+  scope: 'get' | 'sync' = 'get'
 ): Promise<void> {
   if (!context.interactive) {
     throw new ExitFailedError(
-      `Cannot overwrite local branch ${branchName} without confirmation in non-interactive mode. Retry interactively, or use --force to overwrite it with the remote version.`
+      `Cannot overwrite local branch ${branchName} without confirmation in non-interactive mode. ${
+        scope === 'sync'
+          ? 'Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.'
+          : 'Retry interactively, or use --force to overwrite it with the remote version.'
+      }`
     );
   }
   if (
@@ -559,7 +576,8 @@ type RemoteResolution = 'REBASE' | 'OVERWRITE';
 
 async function chooseRemoteResolution(
   branchName: string,
-  context: TContext
+  context: TContext,
+  scope: 'get' | 'sync' = 'get'
 ): Promise<RemoteResolution> {
   const frozen = context.engine.isBranchFrozen(branchName);
   context.splog.info(
@@ -606,7 +624,11 @@ async function chooseRemoteResolution(
           frozen
             ? ` It is frozen; use an unfreeze ${branchName} before rebasing local changes.`
             : ''
-        } Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.`
+        } ${
+          scope === 'sync'
+            ? 'Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.'
+            : 'Retry interactively to choose a resolution, or use --force to overwrite it with the remote version.'
+        }`
       );
     throw new KilledError();
   }
@@ -625,6 +647,7 @@ async function handleSameParent(
     fetchChoice?: RemoteResolution;
     preserveOtherRefs?: boolean;
     source?: FetchedBranchSource;
+    scope?: 'get' | 'sync';
   },
   context: TContext
 ): Promise<void> {
@@ -639,6 +662,10 @@ async function handleSameParent(
         source: args.source,
       });
       if (result.result === 'REBASE_CONFLICT') {
+        if (args.scope === 'sync')
+          throw new ExitFailedError(
+            `Sync stopped rebasing ${args.branchName}; the active Git rebase and conflicts are preserved. Sync has no saved phase continuation at this stage. Resolve and inspect the active rebase with Git; remaining refresh, cleanup, maintenance and checkout phases have not completed. Earlier updates are not rolled back.`
+          );
         persistContinuation(
           {
             branchesToSync: args.remainingBranchesToSync,
