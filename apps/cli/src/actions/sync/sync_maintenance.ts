@@ -1,4 +1,3 @@
-import { getSha } from '../../lib/git/get_sha';
 import { TContext } from '../../lib/context';
 import { SyncCleanupPlan } from './clean_branches';
 import {
@@ -53,22 +52,11 @@ export function planSyncMaintenance(
   return plan;
 }
 
-export type SyncMaintenanceProgress = {
-  readonly completed: string[];
-  readonly expected: {
-    readonly branchName: string;
-    readonly head: string;
-    readonly metadata: string;
-  }[];
-};
-
 export const assertSyncMaintenanceAvailable = assertGetMaintenanceAvailable;
 
 export function applySyncMaintenance(
   plan: readonly GetMaintenanceEntry[],
-  options: Parameters<typeof applyGetMaintenance>[1] & {
-    readonly progress?: SyncMaintenanceProgress;
-  },
+  options: Parameters<typeof applyGetMaintenance>[1],
   context: TContext
 ): string[] {
   return applyGetMaintenance(
@@ -76,15 +64,6 @@ export function applySyncMaintenance(
     {
       ...options,
       operation: 'sync',
-      onComplete: (branchName) => {
-        options.progress?.completed.push(branchName);
-        options.progress?.expected.push({
-          branchName,
-          head: getSha(`refs/heads/${branchName}`),
-          metadata: getSha(`refs/branch-metadata/${branchName}`),
-        });
-        options.onComplete?.(branchName);
-      },
     },
     context
   );

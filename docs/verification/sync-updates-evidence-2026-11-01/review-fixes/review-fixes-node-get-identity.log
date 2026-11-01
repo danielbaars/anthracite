@@ -1,0 +1,9 @@
+
+
+  get CLI safe trunk and changed parents
+    ✔ rejects a changed numeric PR identity before trunk or feature application (912ms)
+    ✔ does not replace a stored descendant PR association with a mismatched head (3951ms)
+
+
+  2 passing (14s)
+

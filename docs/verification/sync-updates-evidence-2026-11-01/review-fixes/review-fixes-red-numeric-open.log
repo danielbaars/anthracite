@@ -1,0 +1,27 @@
+
+
+  sync CLI numeric branch identity
+    1) refreshes a tracked numeric branch from its open PR with a different number
+
+
+  0 passing (3s)
+  1 failing
+
+  1) sync CLI numeric branch identity
+       refreshes a tracked numeric branch from its open PR with a different number:
+
+      AssertionError: ERROR: Pull request lookup failed for 123: Command failed: gh pr view 123 --repo get-fixture/repo --json headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository
+GraphQL: Could not resolve to a PullRequest with the number of 123. (repository.pullRequest)
+
+: expected 1 to equal +0
+      + expected - actual
+
+      -1
+      +0
+      
+      at FrozenGetFixture.ok (dist/test/lib/fixtures/frozen_get_cli.js:270:61)
+      at Context.<anonymous> (dist/test/commands/sync_numeric_branch_cli.test.js:53:17)
+      at process.processImmediate (node:internal/timers:534:21)
+
+
+

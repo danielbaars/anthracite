@@ -1,0 +1,9 @@
+
+
+  sync CLI repository-wide local maintenance
+    ✔ repairs local-only independent roots and fanout by default with GitHub disabled (23501ms)
+    ✔ refuses a late PR metadata change before replaying the pending child (7195ms)
+
+
+  2 passing (40s)
+

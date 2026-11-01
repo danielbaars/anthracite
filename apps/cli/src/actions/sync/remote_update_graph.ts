@@ -57,18 +57,22 @@ export type RemoteUpdateNode = RemoteUpdateSelection & {
 };
 
 export function lookupPullRequest(
-  branch: string,
+  target: string | { readonly branchName: string },
   context: TContext,
   scope: 'get' | 'sync' = 'get'
 ): PullRequest | undefined {
+  const branch = typeof target === 'string' ? target : target.branchName;
+  // gh pr view treats numeric branch names as PR numbers.
+  const lookupHead = typeof target !== 'string' && /^\d+$/.test(branch);
   let output: string;
   try {
     output = execFileSync(
       'gh',
       [
         'pr',
-        'view',
-        branch,
+        ...(lookupHead
+          ? ['list', '--head', branch, '--state', 'open', '--limit', '2']
+          : ['view', branch]),
         '--repo',
         githubRepoSlug(context),
         '--json',
@@ -82,6 +86,7 @@ export function lookupPullRequest(
     ).toString();
   } catch (error) {
     if (
+      !lookupHead &&
       error instanceof Error &&
       'stderr' in error &&
       Buffer.isBuffer(error.stderr) &&
@@ -102,6 +107,14 @@ export function lookupPullRequest(
   } catch {
     throw new ExitFailedError(`Malformed pull request response for ${branch}.`);
   }
+  if (lookupHead) {
+    if (!Array.isArray(value) || value.length > 1)
+      throw new ExitFailedError(
+        `Ambiguous or invalid pull request response for ${branch}.`
+      );
+    if (value.length === 0) return undefined;
+    value = value[0];
+  }
   const result = pullRequestSchema.safeParse(value);
   if (
     !result.success ||
@@ -109,8 +122,12 @@ export function lookupPullRequest(
       (result.data.state === undefined ||
         result.data.headRepository?.nameWithOwner !==
           githubRepoSlug(context))) ||
-    (!/^\d+$/.test(branch) && result.data.headRefName !== branch) ||
-    (/^\d+$/.test(branch) && result.data.number !== Number(branch)) ||
+    ((lookupHead || !/^\d+$/.test(branch)) &&
+      result.data.headRefName !== branch) ||
+    (lookupHead && result.data.state !== 'OPEN') ||
+    (!lookupHead &&
+      /^\d+$/.test(branch) &&
+      result.data.number !== Number(branch)) ||
     result.data.url !==
       `https://github.com/${githubRepoSlug(context)}/pull/${result.data.number}`
   ) {
