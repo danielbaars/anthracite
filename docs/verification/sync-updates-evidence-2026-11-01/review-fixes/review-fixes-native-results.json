@@ -1,0 +1,105 @@
+[
+  {
+    "name": "numeric",
+    "args": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_numeric_branch_cli.test.js"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/review-fixes/apps/cli",
+    "runtime": "native",
+    "exitCode": 0,
+    "seconds": 46.064975624962244,
+    "log": "review-fixes-native-numeric.log"
+  },
+  {
+    "name": "refresh",
+    "args": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_refresh_cli.test.js",
+      "--grep",
+      "refreshes existing published heads|rejects a same-name source|retains named local-only|retains an associated|resolves stored PR numbers|does not associate an unpublished|refuses authentication|refuses rate limit|refuses transport|refuses malformed response|refuses missing associated PR"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/review-fixes/apps/cli",
+    "runtime": "native",
+    "exitCode": 0,
+    "seconds": 104.30269920802675,
+    "log": "review-fixes-native-refresh.log"
+  },
+  {
+    "name": "get-number",
+    "args": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/get_fast_forward_cli.test.js",
+      "--grep",
+      "gets a fresh stack via PR number"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/review-fixes/apps/cli",
+    "runtime": "native",
+    "exitCode": 0,
+    "seconds": 11.21494154195534,
+    "log": "review-fixes-native-get-number.log"
+  },
+  {
+    "name": "get-identity",
+    "args": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/get_trunk_parent_cli.test.js",
+      "--grep",
+      "rejects a changed numeric PR identity|does not replace a stored descendant PR association"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/review-fixes/apps/cli",
+    "runtime": "native",
+    "exitCode": 0,
+    "seconds": 13.480572541011497,
+    "log": "review-fixes-native-get-identity.log"
+  },
+  {
+    "name": "get-stored",
+    "args": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/get_graph_cli.test.js",
+      "--grep",
+      "does not skip an absent stored PR association"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/review-fixes/apps/cli",
+    "runtime": "native",
+    "exitCode": 0,
+    "seconds": 5.315758667013142,
+    "log": "review-fixes-native-get-stored.log"
+  },
+  {
+    "name": "maintenance",
+    "args": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_maintenance_cli.test.js",
+      "--grep",
+      "repairs local-only independent roots and fanout|refuses a late PR metadata change"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/review-fixes/apps/cli",
+    "runtime": "native",
+    "exitCode": 0,
+    "seconds": 35.094040207972284,
+    "log": "review-fixes-native-maintenance.log"
+  },
+  {
+    "name": "owned",
+    "args": [
+      "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+      "../../node_modules/mocha/bin/mocha.js",
+      "dist/test/commands/sync_recovery_cli.test.js",
+      "--grep",
+      "continues saved maintenance in a fresh process|continues incoming then maintenance conflicts|resumes successive fanout and independent-root maintenance"
+    ],
+    "cwd": "/private/tmp/anthracite-sync-updates-implementation-20261101/worktrees/review-fixes/apps/cli",
+    "runtime": "native",
+    "exitCode": 0,
+    "seconds": 78.81091874995036,
+    "log": "review-fixes-native-owned.log"
+  }
+]

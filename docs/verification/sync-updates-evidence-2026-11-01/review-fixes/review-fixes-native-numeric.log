@@ -1,0 +1,20 @@
+
+
+  sync CLI numeric branch identity
+    ✔ refreshes a tracked numeric branch from its open PR with a different number (4528ms)
+    ✔ preserves a local-only numeric branch when the head lookup has no open PR (1679ms)
+    ✔ refuses numeric head wrong head before changing refs or files (815ms)
+    ✔ refuses numeric head wrong repository before changing refs or files (811ms)
+    ✔ refuses numeric head wrong URL before changing refs or files (825ms)
+    ✔ refuses numeric head closed PR before changing refs or files (825ms)
+    ✔ refuses numeric head missing state before changing refs or files (815ms)
+    ✔ refuses numeric head ambiguous matches before changing refs or files (821ms)
+    ✔ refuses numeric head malformed JSON before changing refs or files (799ms)
+    ✔ refuses numeric head non-array response before changing refs or files (945ms)
+    ✔ refuses numeric head service failure before changing refs or files (815ms)
+    ✔ refuses numeric head failed lookup claiming absence before changing refs or files (820ms)
+    ✔ keeps the exact stored PR number guard after associating a numeric branch (3549ms)
+
+
+  13 passing (46s)
+

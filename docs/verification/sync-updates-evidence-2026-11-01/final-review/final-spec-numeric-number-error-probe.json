@@ -1,0 +1,55 @@
+{
+  "sourceHead": "2dc0c3dfe27e83a9b8d3183600e542d7aef80e0f",
+  "artifactSha256": "d6d61d20f1ac58e81813e8ec134170fc55b5569972234bced502d09ed1ae2ba5",
+  "branch": "123",
+  "serviceFixture": {
+    "openPr": {
+      "number": 3,
+      "head": "123",
+      "base": "main",
+      "headOid": "e1c6e2d86979e77d9ba56dc021f1afd56696959c"
+    },
+    "missingPrNumber": 123
+  },
+  "old": "5bf4664bf34d589f29c746ea67267e982c84ca3b",
+  "incoming": "e1c6e2d86979e77d9ba56dc021f1afd56696959c",
+  "result": {
+    "status": 1,
+    "output": "ERROR: Pull request lookup failed for 123: Command failed: gh pr view 123 --repo get-fixture/repo --json headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository\nGraphQL: Could not resolve to a PullRequest with the number of 123. (repository.pullRequest)\n\n",
+    "stdout": "",
+    "stderr": "ERROR: Pull request lookup failed for 123: Command failed: gh pr view 123 --repo get-fixture/repo --json headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository\nGraphQL: Could not resolve to a PullRequest with the number of 123. (repository.pullRequest)\n\n"
+  },
+  "actual": "5bf4664bf34d589f29c746ea67267e982c84ca3b",
+  "calls": "[\"pr\",\"view\",\"123\",\"--repo\",\"get-fixture/repo\",\"--json\",\"headRefName,baseRefName,number,url,headRefOid,state,title,body,isDraft,reviewDecision,headRepository\"]\n",
+  "before": {
+    "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+    "branch": "main",
+    "refs": "refs/branch-metadata/123 3245fed2a52325fc15fc7bbfe984f9a423bb9cff\nrefs/heads/123 5bf4664bf34d589f29c746ea67267e982c84ca3b\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+    "commits": "5bf4664bf34d589f29c746ea67267e982c84ca3b 01f6c88a17847dae93ffa5206d8ddfc8c618c764 f488c7672ed24f2d8a0a7c172e38ccfe4031f977\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a",
+    "status": "",
+    "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+    "index": "RElSQwAAAAIAAAABauckFQ1Vm/1q5yQVDVWb/QEAABALzJg+AACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6KjQs5tk1WyDU2jDvWMFsH+kegFM=",
+    "recovery": null,
+    "rebase": false,
+    "rebaseFiles": null,
+    "files": {
+      "main.txt": "bWFpbg=="
+    }
+  },
+  "after": {
+    "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+    "branch": "main",
+    "refs": "refs/branch-metadata/123 3245fed2a52325fc15fc7bbfe984f9a423bb9cff\nrefs/heads/123 5bf4664bf34d589f29c746ea67267e982c84ca3b\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+    "commits": "5bf4664bf34d589f29c746ea67267e982c84ca3b 01f6c88a17847dae93ffa5206d8ddfc8c618c764 f488c7672ed24f2d8a0a7c172e38ccfe4031f977\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a",
+    "status": "",
+    "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+    "index": "RElSQwAAAAIAAAABauckFQ1Vm/1q5yQVDVWb/QEAABALzJg+AACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6KjQs5tk1WyDU2jDvWMFsH+kegFM=",
+    "recovery": null,
+    "rebase": false,
+    "rebaseFiles": null,
+    "files": {
+      "main.txt": "bWFpbg=="
+    }
+  },
+  "root": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-bPKAqr"
+}

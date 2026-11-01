@@ -1,0 +1,19 @@
+{
+  "status": "documentation checks passed; no new runtime acceptance",
+  "date": "2026-10-31",
+  "sourceBaseline": "26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd",
+  "templateSections": 7,
+  "userStories": 61,
+  "implementationDecisions": 18,
+  "acceptanceGroups": 14,
+  "relativeFileLinksChecked": 55,
+  "immutableGithubFileLinksChecked": 16,
+  "historicalObservationsRetained": 9,
+  "immutableRawArtifactsChecked": 27,
+  "duplicateRawCapturesAdded": 0,
+  "syncSurfaceModulesUnchangedSince051": 5,
+  "executableChanges": false,
+  "newRuntimeTests": false,
+  "ciStarted": false,
+  "fullMatrixStarted": false
+}

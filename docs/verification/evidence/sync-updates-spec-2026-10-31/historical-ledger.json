@@ -1,0 +1,1238 @@
+{
+  "status": "completed bounded research; observations are not test pass counts",
+  "identities": {
+    "sourceCommit": "609fb557d4b6a429d91f500169c596592139d9d1",
+    "graphite": {
+      "version": "1.8.6",
+      "path": "/opt/homebrew/Cellar/graphite/1.8.6/bin/gt",
+      "sha256": "9153b4b6d9ad8084ec700a1fb80dd8a4b35c08c3116bf41f1fcdd792b326781f"
+    },
+    "anthracite": {
+      "version": "0.5.0",
+      "path": "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+      "sha256": "da14fac871faab60336d4fd541821f85d9b99a98a13e9d159a3a3aaf2c98ee1a"
+    },
+    "node": "24.19.0",
+    "rea": "6.7.0",
+    "platform": "macOS ARM64"
+  },
+  "commandObservations": 35,
+  "normalizedObservations": 32,
+  "initialUnsubmittedObservations": 3,
+  "controlledGhObservations": 6,
+  "helpAndSetupNotAddedToScenarioCount": true,
+  "liveService": true,
+  "apiResponsesMocked": false,
+  "metadataSetup": "Native init/track and actual native get synchronization; preserved copies of initialized consumers, no private metadata injection",
+  "snapshotLimits": [
+    "Local head and Anthracite metadata refs, current worktree hashes/index/checkout and selected REA filesystem observations; not every ref/cache/recovery byte or syscall",
+    "Divergent local-only commits intentionally differ between tools; compare equivalent divergence patterns rather than identical OIDs",
+    "No new native-submitted/indexed remote-only discovery acceptance"
+  ],
+  "cases": [
+    {
+      "id": "c11-get-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_f1cbac17680a23f950cbfab22e7a36807cc136f2713baad246cc217f40177e6d",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-base",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c11-get-an/capture.json",
+        "before": "runtime/c11-get-an/before.json",
+        "after": "runtime/c11-get-an/after.json"
+      }
+    },
+    {
+      "id": "c11-get-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_462c840f9dcdd564cd4d70dd5522555e197156b283ec342f1a918d338e92d0f9",
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-sibling",
+          "before": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+          "after": null
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c11-get-gt/capture.json",
+        "before": "runtime/c11-get-gt/before.json",
+        "after": "runtime/c11-get-gt/after.json"
+      }
+    },
+    {
+      "id": "c12-sync-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_4c8e85eefb2effd517fe996071e28b35aee31b1341bd4d17e0fd56d49bbfa75c",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--force",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c12-sync-an/capture.json",
+        "before": "runtime/c12-sync-an/before.json",
+        "after": "runtime/c12-sync-an/after.json"
+      }
+    },
+    {
+      "id": "c12-sync-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_27aaf714b5a3535447fba4af4e903d8ee19753aab4ebbe7c278572332aac9536",
+      "argv": [
+        "sync",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-sibling",
+          "before": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+          "after": null
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c12-sync-gt/capture.json",
+        "before": "runtime/c12-sync-gt/before.json",
+        "after": "runtime/c12-sync-gt/after.json"
+      }
+    },
+    {
+      "id": "c21-merged-sync-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_a76fa6aa4fc84d931e01bc906c7331efb0c7cd30c9199d58737a97ac7f52f9bf",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--force",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-base",
+          "before": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-sibling",
+          "before": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/main",
+          "before": "690c12f1986207222fb3541c972001c93b258791",
+          "after": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c21-merged-sync-an/capture.json",
+        "before": "runtime/c21-merged-sync-an/before.json",
+        "after": "runtime/c21-merged-sync-an/after.json"
+      }
+    },
+    {
+      "id": "c21-merged-sync-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_976ff95d6f5f4bfdfc733ed9bb351655c0ddf170e69363a8c4eb535b3aaf25b4",
+      "argv": [
+        "sync",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-base",
+          "before": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-sibling",
+          "before": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/main",
+          "before": "690c12f1986207222fb3541c972001c93b258791",
+          "after": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c21-merged-sync-gt/capture.json",
+        "before": "runtime/c21-merged-sync-gt/before.json",
+        "after": "runtime/c21-merged-sync-gt/after.json"
+      }
+    },
+    {
+      "id": "c22-forced-get-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_414ea5b27f0880e251d88507c590f8fe26d53161bc30227bd226f34a404d2ade",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--force",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-child"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c22-forced-get-an/capture.json",
+        "before": "runtime/c22-forced-get-an/before.json",
+        "after": "runtime/c22-forced-get-an/after.json"
+      }
+    },
+    {
+      "id": "c22-merged-get-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_8bc555b3fc1cb47c47648a6c320eccebf18709d613aeef8396790deeee4012af",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": true,
+      "paths": {
+        "capture": "runtime/c22-merged-get-an/capture.json",
+        "before": "runtime/c22-merged-get-an/before.json",
+        "after": "runtime/c22-merged-get-an/after.json"
+      }
+    },
+    {
+      "id": "c22-merged-get-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_7218816b9d4efd613fe17704d4df688555d6c5d73bdd27a280091744cf286d19",
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-base",
+          "before": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        },
+        {
+          "branch": "refs/heads/main",
+          "before": "690c12f1986207222fb3541c972001c93b258791",
+          "after": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-child"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c22-merged-get-gt/capture.json",
+        "before": "runtime/c22-merged-get-gt/before.json",
+        "after": "runtime/c22-merged-get-gt/after.json"
+      }
+    },
+    {
+      "id": "c23-known-closed-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_ec3f11f485d99ee871d968c8232e6c05ab5504e1144ce051dd013ede825e5c27",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--force",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-base",
+          "before": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-sibling",
+          "before": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/main",
+          "before": "690c12f1986207222fb3541c972001c93b258791",
+          "after": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c23-known-closed-an/capture.json",
+        "before": "runtime/c23-known-closed-an/before.json",
+        "after": "runtime/c23-known-closed-an/after.json"
+      }
+    },
+    {
+      "id": "c23-known-closed-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_b14dc78423d9ddb916ae170f91d082204e37859154cc6706a03706f5cafbc7aa",
+      "argv": [
+        "sync",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-base",
+          "before": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-sibling",
+          "before": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-tip",
+          "before": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/main",
+          "before": "690c12f1986207222fb3541c972001c93b258791",
+          "after": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/c23-known-closed-gt/capture.json",
+        "before": "runtime/c23-known-closed-gt/before.json",
+        "after": "runtime/c23-known-closed-gt/after.json"
+      }
+    },
+    {
+      "id": "d11-feature-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_3e46b0c890f889e863487fea92c9d5cef9e2f594ed06485873359f6573eb7b86",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": true,
+      "paths": {
+        "capture": "runtime/d11-feature-an/capture.json",
+        "before": "runtime/d11-feature-an/before.json",
+        "after": "runtime/d11-feature-an/after.json"
+      }
+    },
+    {
+      "id": "d11-feature-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_80c0ac5d13f3561c1dc448c3414783786546e77f7c6b789697ae80fb0cf0209d",
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-child"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/d11-feature-gt/capture.json",
+        "before": "runtime/d11-feature-gt/before.json",
+        "after": "runtime/d11-feature-gt/after.json"
+      }
+    },
+    {
+      "id": "d21-trunk-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_d52c651033f028cb5f60c9b03c8c85799fe801e1ae104481802cd9a817a66853",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--force",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-base",
+          "before": "7f7b701608c6d927927ca0bca4a18ae81594b7a0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-sibling",
+          "before": "efb3a753f20f08882893a3b25f1ec74f9a800df0",
+          "after": null
+        },
+        {
+          "branch": "refs/heads/main",
+          "before": "33e8ae0897280d0b77eb95b967e2a41e2584e1f7",
+          "after": "6f6554980e60c12e6334e8c2989ad31d1a2f11a0"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/d21-trunk-an/capture.json",
+        "before": "runtime/d21-trunk-an/before.json",
+        "after": "runtime/d21-trunk-an/after.json"
+      }
+    },
+    {
+      "id": "d21-trunk-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_e0be2c6a7a582417099c47e4541a68882f7dbe6bd712f68ebe4467290cdb18a7",
+      "argv": [
+        "sync",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": true,
+      "paths": {
+        "capture": "runtime/d21-trunk-gt/capture.json",
+        "before": "runtime/d21-trunk-gt/before.json",
+        "after": "runtime/d21-trunk-gt/after.json"
+      }
+    },
+    {
+      "id": "g01-upstack-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": true,
+      "evidenceId": "ev_00314381110586ee1486dbaf000860a0793af0db9c8d24930bbbe4960d5cddca",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-base",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g01-upstack-an/capture.json",
+        "before": "runtime/g01-upstack-an/before.json",
+        "after": "runtime/g01-upstack-an/after.json"
+      }
+    },
+    {
+      "id": "g01-upstack-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": true,
+      "evidenceId": "ev_69f57b04f70c133cf7f8e68d52ee98fe135c3496bef5606aa04f01d29f8cb3d1",
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g01-upstack-gt/capture.json",
+        "before": "runtime/g01-upstack-gt/before.json",
+        "after": "runtime/g01-upstack-gt/after.json"
+      }
+    },
+    {
+      "id": "g02-downstack-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": true,
+      "evidenceId": "ev_8f4b2f1c36c60803a16a8461c936f1946af68eeba609a33fc8f62686fa0a782c",
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g02-downstack-gt/capture.json",
+        "before": "runtime/g02-downstack-gt/before.json",
+        "after": "runtime/g02-downstack-gt/after.json"
+      }
+    },
+    {
+      "id": "g11-known-upstack-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_75f6cbb4a37d6ddb1ec7d81cc3db76a7361f9f433550db0d1b3b862151f80392",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-base",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g11-known-upstack-an/capture.json",
+        "before": "runtime/g11-known-upstack-an/before.json",
+        "after": "runtime/g11-known-upstack-an/after.json"
+      }
+    },
+    {
+      "id": "g11-known-upstack-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_074feda6306b39d70b9809fd54755cceb3af150d4fdcdc106adb0c4e563b9b49",
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g11-known-upstack-gt/capture.json",
+        "before": "runtime/g11-known-upstack-gt/before.json",
+        "after": "runtime/g11-known-upstack-gt/after.json"
+      }
+    },
+    {
+      "id": "g12-known-downstack-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_d1abd7656135767acab9753f48235f00bb1d9dbf79fa745348e38239c875bcf5",
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g12-known-downstack-gt/capture.json",
+        "before": "runtime/g12-known-downstack-gt/before.json",
+        "after": "runtime/g12-known-downstack-gt/after.json"
+      }
+    },
+    {
+      "id": "g13-remote-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_55a42c858a8059c13d7537cc4fe4fff599569c29877e33f3ba0fe66e088f057f",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-base",
+        "--unfrozen",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g13-remote-an/capture.json",
+        "before": "runtime/g13-remote-an/before.json",
+        "after": "runtime/g13-remote-an/after.json"
+      }
+    },
+    {
+      "id": "g13-remote-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_9871a5a934c75aa92457398b3d207cf906cedcf01ee711bf7276e188f6c674e8",
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--remote-upstack",
+        "--no-restack",
+        "--unfrozen",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g13-remote-gt/capture.json",
+        "before": "runtime/g13-remote-gt/before.json",
+        "after": "runtime/g13-remote-gt/after.json"
+      }
+    },
+    {
+      "id": "g14-checkout-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_26cd4b19e10f540892cb97945e64b3149abc71ace24ee6bd71b9be070962f383",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "get-sync-20261031-base",
+        "after": "get-sync-20261031-child"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g14-checkout-an/capture.json",
+        "before": "runtime/g14-checkout-an/before.json",
+        "after": "runtime/g14-checkout-an/after.json"
+      }
+    },
+    {
+      "id": "g14-checkout-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_58a523c74909a16d05007f5f15c8b71ef62106ccadf1e2b162428f72a2d2af7f",
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-checkout",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "get-sync-20261031-base",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": true,
+      "paths": {
+        "capture": "runtime/g14-checkout-gt/capture.json",
+        "before": "runtime/g14-checkout-gt/before.json",
+        "after": "runtime/g14-checkout-gt/after.json"
+      }
+    },
+    {
+      "id": "g15-restack-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_e916955bb6579ad5dc0b787c91a7ccbda4e87e1627d9b00156f793d56f0ce7b7",
+      "argv": [
+        "get",
+        "get-sync-20261031-base",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-tip",
+          "before": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+          "after": "ce781654364b5e5a57eba3414663674633ecda26"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-base"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/g15-restack-gt/capture.json",
+        "before": "runtime/g15-restack-gt/before.json",
+        "after": "runtime/g15-restack-gt/after.json"
+      }
+    },
+    {
+      "id": "p11-dirty-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_fe7c2f04969d2f506f58df23da6dacdb6c37007a58c67a54051e89490e1833e9",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": true,
+      "paths": {
+        "capture": "runtime/p11-dirty-an/capture.json",
+        "before": "runtime/p11-dirty-an/before.json",
+        "after": "runtime/p11-dirty-an/after.json"
+      }
+    },
+    {
+      "id": "p11-dirty-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_f8be8b165097d6c58e9e3a67bd422135d1f2d8d1c4d50e3c5f47d2b3238b7083",
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-child"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/p11-dirty-gt/capture.json",
+        "before": "runtime/p11-dirty-gt/before.json",
+        "after": "runtime/p11-dirty-gt/after.json"
+      }
+    },
+    {
+      "id": "p12-frozen-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_2773ccc2ae25fabcb347cb7b2110145e91fe05348f9b7ea9ab0fc18ca5a9a034",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-child"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/p12-frozen-an/capture.json",
+        "before": "runtime/p12-frozen-an/before.json",
+        "after": "runtime/p12-frozen-an/after.json"
+      }
+    },
+    {
+      "id": "p12-frozen-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_a6142d10ee757c7a09b458e0a2ea4e29292611c13a2b022496f4855d9a12031d",
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "get-sync-20261031-child"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/p12-frozen-gt/capture.json",
+        "before": "runtime/p12-frozen-gt/before.json",
+        "after": "runtime/p12-frozen-gt/after.json"
+      }
+    },
+    {
+      "id": "p13-occupied-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_464459b1a43c15b22ca4e26c04a5719ae295a9007d490bdb093a26595018888b",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "get",
+        "get-sync-20261031-child",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": true,
+      "paths": {
+        "capture": "runtime/p13-occupied-an/capture.json",
+        "before": "runtime/p13-occupied-an/before.json",
+        "after": "runtime/p13-occupied-an/after.json"
+      }
+    },
+    {
+      "id": "p13-occupied-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_fb4d487c778def314429a943b2f07f5d7a3c9cd40eff2fbfb1fea666ad31e6e5",
+      "argv": [
+        "get",
+        "get-sync-20261031-child",
+        "--downstack",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/p13-occupied-gt/capture.json",
+        "before": "runtime/p13-occupied-gt/before.json",
+        "after": "runtime/p13-occupied-gt/after.json"
+      }
+    },
+    {
+      "id": "s11-refresh-an",
+      "tool": "Anthracite0.5.0",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_760f24ed4306b0b807a46c20a55c3b21178b373da4ba98bb9cab260dbeb015a0",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/s11-refresh-an/capture.json",
+        "before": "runtime/s11-refresh-an/before.json",
+        "after": "runtime/s11-refresh-an/after.json"
+      }
+    },
+    {
+      "id": "s11-refresh-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_9e9b7e91f87dbf6af1f0eb8e058e22861568693b994882a4082bed824b64d2c2",
+      "argv": [
+        "sync",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/s11-refresh-gt/capture.json",
+        "before": "runtime/s11-refresh-gt/before.json",
+        "after": "runtime/s11-refresh-gt/after.json"
+      }
+    },
+    {
+      "id": "s12-restack-gt",
+      "tool": "Graphite1.8.6",
+      "initialUnsubmitted": false,
+      "evidenceId": "ev_cdb376324e08ab5cc42c8598df54b3f0914e72c8479944acc1f124aa3a69e4a8",
+      "argv": [
+        "sync",
+        "--no-interactive"
+      ],
+      "exit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "changedLocalHeads": [
+        {
+          "branch": "refs/heads/get-sync-20261031-child",
+          "before": "67a223e6c85bbf39779af6d2ed58c1bbd840cebc",
+          "after": "df5b85e83f4336c7be04531c936086466239200b"
+        },
+        {
+          "branch": "refs/heads/get-sync-20261031-tip",
+          "before": "d6541e47c6ceda386d94ba8f0953e6b18c0f264b",
+          "after": "5e2af2e918e602e950d832a83316c8bdc793d553"
+        }
+      ],
+      "checkout": {
+        "before": "main",
+        "after": "main"
+      },
+      "indexHashEqual": false,
+      "paths": {
+        "capture": "runtime/s12-restack-gt/capture.json",
+        "before": "runtime/s12-restack-gt/before.json",
+        "after": "runtime/s12-restack-gt/after.json"
+      }
+    }
+  ]
+}

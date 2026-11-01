@@ -21,12 +21,20 @@ import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { RemoteTrunkUpdate } from './remote_update_trunk';
 import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 
-const pullRequestSchema = z.object({
+export const pullRequestSchema = z.object({
   headRefName: z.string().min(1),
   baseRefName: z.string().min(1),
   number: z.number().int().positive(),
   url: z.string().url(),
   headRefOid: z.string().regex(/^[a-f0-9]{40,64}$/),
+  state: z.enum(['OPEN', 'CLOSED', 'MERGED']).optional(),
+  headRepository: z.object({ nameWithOwner: z.string() }).nullable().optional(),
+  title: z.string().optional(),
+  body: z.string().optional(),
+  isDraft: z.boolean().optional(),
+  reviewDecision: z
+    .enum(['APPROVED', 'REVIEW_REQUIRED', 'CHANGES_REQUESTED', ''])
+    .optional(),
 });
 
 type PullRequest = z.infer<typeof pullRequestSchema>;
@@ -48,27 +56,37 @@ export type RemoteUpdateNode = RemoteUpdateSelection & {
   readonly sourceRef: string;
 };
 
-function lookupPullRequest(
-  branch: string,
-  context: TContext
+export function lookupPullRequest(
+  target: string | { readonly branchName: string },
+  context: TContext,
+  scope: 'get' | 'sync' = 'get'
 ): PullRequest | undefined {
+  const branch = typeof target === 'string' ? target : target.branchName;
+  // gh pr view treats numeric branch names as PR numbers.
+  const lookupHead = typeof target !== 'string' && /^\d+$/.test(branch);
   let output: string;
   try {
     output = execFileSync(
       'gh',
       [
         'pr',
-        'view',
-        branch,
+        ...(lookupHead
+          ? ['list', '--head', branch, '--state', 'open', '--limit', '2']
+          : ['view', branch]),
         '--repo',
         githubRepoSlug(context),
         '--json',
-        'headRefName,baseRefName,number,url,headRefOid',
+        `headRefName,baseRefName,number,url,headRefOid${
+          scope === 'sync'
+            ? ',state,title,body,isDraft,reviewDecision,headRepository'
+            : ''
+        }`,
       ],
       { stdio: ['ignore', 'pipe', 'pipe'] }
     ).toString();
   } catch (error) {
     if (
+      !lookupHead &&
       error instanceof Error &&
       'stderr' in error &&
       Buffer.isBuffer(error.stderr) &&
@@ -89,11 +107,27 @@ function lookupPullRequest(
   } catch {
     throw new ExitFailedError(`Malformed pull request response for ${branch}.`);
   }
+  if (lookupHead) {
+    if (!Array.isArray(value) || value.length > 1)
+      throw new ExitFailedError(
+        `Ambiguous or invalid pull request response for ${branch}.`
+      );
+    if (value.length === 0) return undefined;
+    value = value[0];
+  }
   const result = pullRequestSchema.safeParse(value);
   if (
     !result.success ||
-    (!/^\d+$/.test(branch) && result.data.headRefName !== branch) ||
-    (/^\d+$/.test(branch) && result.data.number !== Number(branch)) ||
+    (scope === 'sync' &&
+      (result.data.state === undefined ||
+        result.data.headRepository?.nameWithOwner !==
+          githubRepoSlug(context))) ||
+    ((lookupHead || !/^\d+$/.test(branch)) &&
+      result.data.headRefName !== branch) ||
+    (lookupHead && result.data.state !== 'OPEN') ||
+    (!lookupHead &&
+      /^\d+$/.test(branch) &&
+      result.data.number !== Number(branch)) ||
     result.data.url !==
       `https://github.com/${githubRepoSlug(context)}/pull/${result.data.number}`
   ) {
@@ -184,7 +218,7 @@ export function selectRemoteUpdateGraph(
   return orderRemoteUpdateGraph(selected, context);
 }
 
-function snapshotSelection(
+export function snapshotSelection(
   branchName: string,
   pr: PullRequest
 ): RemoteUpdateSelection {
@@ -202,7 +236,7 @@ function snapshotSelection(
   };
 }
 
-function orderRemoteUpdateGraph(
+export function orderRemoteUpdateGraph(
   selected: readonly RemoteUpdateSelection[],
   context: TContext
 ): RemoteUpdateSelection[] {
@@ -235,7 +269,7 @@ function orderRemoteUpdateGraph(
 }
 
 /** Run before context initialization can repair or remove recovery metadata. */
-export function assertGetOperationAvailable(): void {
+export function assertGetOperationAvailable(operation = 'Get'): void {
   for (const name of [
     'rebase-merge',
     'rebase-apply',
@@ -256,7 +290,7 @@ export function assertGetOperationAvailable(): void {
     if (name === '.gtcontinue' && isCompletedLegacyContinuation(file)) continue;
     if (fs.existsSync(file))
       throw new ExitFailedError(
-        'Get requires no active Git or Anthracite recovery operation. Finish or inspect the existing operation first.'
+        `${operation} requires no active Git or Anthracite recovery operation. Finish or inspect the existing operation first.`
       );
   }
 }

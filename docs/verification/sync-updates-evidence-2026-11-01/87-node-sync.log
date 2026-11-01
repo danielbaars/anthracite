@@ -1,0 +1,224 @@
+
+
+  sync CLI existing feature refresh
+    ✔ refreshes existing published heads without pulling, deleting or replaying (5514ms)
+    ✔ rejects a same-name source from another head repository before applying updates (900ms)
+    ✔ refreshes independent roots and fanout once from main via sync (14447ms)
+    ✔ refreshes independent roots and fanout once from main via repo sync (15190ms)
+    ✔ refreshes independent roots and fanout once from main via repo s (14403ms)
+    ✔ retains named local-only work and excludes untracked local branches (5296ms)
+    ✔ retains an associated CLOSED branch without requiring its deleted remote head (6336ms)
+    ✔ retains an associated MERGED branch without requiring its deleted remote head (5432ms)
+    ✔ adopts an existing changed parent without replaying or losing PR/frozen identity (4654ms)
+    ✔ refuses authentication before changing any selected head (4199ms)
+    ✔ refuses rate limit before changing any selected head (3912ms)
+    ✔ refuses transport before changing any selected head (4055ms)
+    ✔ refuses malformed response before changing any selected head (3958ms)
+    ✔ refuses missing associated PR before changing any selected head (3742ms)
+    ✔ refuses untraceable or cyclic parent remote-only-parent without imports or application (952ms)
+    ✔ refuses untraceable or cyclic parent child without imports or application (1024ms)
+    ✔ fails a missing open source before applying another selected feature (1424ms)
+    ✔ refuses divergent feature commits even with legacy sync force (2005ms)
+    ✔ makes no service calls when GitHub integration is explicitly disabled (2275ms)
+    ✔ refuses tracked dirt without changing heads, index or user files (1164ms)
+    ✔ refuses an occupied affected head before updating any selected feature (1935ms)
+    ✔ protects untracked file collisions before the first selected update (1585ms)
+    ✔ preserves an active foreign Git operation before refreshing features (709ms)
+    ✔ resolves stored PR numbers even when a reused branch name would select another PR (7863ms)
+    ✔ rejects a mismatched source OID before applying an earlier selected branch (1267ms)
+    ✔ does not associate an unpublished local branch with an old closed same-name PR (4722ms)
+
+  sync CLI planned update authority
+    ✔ refuses divergent trunk before applying planned feature updates (2694ms)
+    ✔ refuses ahead trunk with explicit force false (2318ms)
+    ✔ resets ahead trunk with explicit force true (4599ms)
+    ✔ refuses divergent trunk with explicit force false (2317ms)
+    ✔ resets divergent trunk with explicit force true (5341ms)
+    ✔ applies the pinned trunk source before features after multiple fetches (5658ms)
+    ✔ refuses a missing remote trunk before feature application (871ms)
+    ✔ skips a missing remote trunk before feature application (4893ms)
+    ✔ refuses an occupied trunk before applying feature updates (1498ms)
+    ✔ never resets an unrelated checkout selected by a real trunk checkout hook (3126ms)
+    ✔ declines a real terminal trunk reset before feature application (2723ms)
+    ✔ accepts a real terminal trunk reset before feature application (4865ms)
+    ✔ collects real terminal feature REBASE before applying trunk and feature updates (7677ms)
+    ✔ collects real terminal feature OVERWRITE before applying trunk and feature updates (4675ms)
+    ✔ collects real terminal feature ABORT before applying trunk and feature updates (2070ms)
+    ✔ gives truthful sync divergence guidance without offering force overwrite (2058ms)
+    ✔ continues a real reconciliation conflict through owned sync phases (8758ms)
+    ✔ offers frozen divergence overwrite and abort without local rebase (3620ms)
+    ✔ preserves local-ahead trunk with force when pull is explicitly disabled (5447ms)
+    ✔ preserves untracked file collisions despite reset force (2623ms)
+    ✔ preserves ignored file collisions despite reset force (2790ms)
+    ✔ preserves tracked staged and unstaged bytes despite reset force (1646ms)
+    ✔ refuses quiet forced feature divergence before a planned trunk fast-forward (2271ms)
+
+  sync cleanup-only consent through the public CLI
+    ✔ deletes an eligible closed local branch without changing the remote or PR (4574ms)
+    ✔ cleans a closed branch whose remote head was already deleted (4715ms)
+    ✔ honors boolean forms and no-delete precedence through sync (13627ms)
+    ✔ honors boolean forms and no-delete precedence through repo sync (14803ms)
+    ✔ honors boolean forms and no-delete precedence through repo s (15117ms)
+    ✔ refuses divergent trunk reset with delete-all while legacy force retains reset authority (3262ms)
+    ✔ keeps an empty unassociated branch and open local work outside cleanup consent (3403ms)
+    ✔ retains frozen mandatory survivors while cleaning an independent frozen leaf without replay (9818ms)
+    ✔ refuses an occupied cleanup target before deleting it (5231ms)
+    ✔ refuses an occupied mandatory survivor before changing parents or deleting candidates (6790ms)
+    ✔ still visits a closed child after a terminal user declines its closed ancestor (6041ms)
+    ✔ preserves staged and unstaged work before cleanup even with narrow consent (3040ms)
+    ✔ cleans locally merged work with GitHub disabled without making service calls (2728ms)
+    ✔ advertises narrow cleanup permission in help and completion for every sync route (1956ms)
+
+  sync cleanup of descendants through the public CLI (--force)
+    ✔ deletes a known closed leaf below an open parent without changing that parent (15619ms)
+    ✔ cleans separated closed branches once with frozen child false (17617ms)
+    ✔ cleans separated closed branches once with frozen child true (22380ms)
+
+  sync cleanup of descendants through the public CLI (--delete-all)
+    ✔ deletes a known closed leaf below an open parent without changing that parent (17314ms)
+    ✔ cleans separated closed branches once with frozen child false (17788ms)
+    ✔ cleans separated closed branches once with frozen child true (19378ms)
+
+  sync CLI incoming and cleanup survivor plan
+    ✔ refuses an occupied cleanup candidate before applying another incoming head (5621ms)
+    ✔ cleans a removed remote parent after its frozen incoming child retargets to trunk (8026ms)
+    ✔ abandons cleanup cancellation before applying an incoming head (5366ms)
+    ✔ reports a confirmed physical deletion when metadata removal subsequently fails (7675ms)
+    ✔ refreshes a survivor still naming a removed parent and keeps its PR base and unique content (9736ms)
+    ✔ retains new open incoming work even when the old local tip was merged into trunk (7344ms)
+    ✔ excludes cleanup when a frozen incoming child newly targets the removable parent (8548ms)
+    ✔ preserves final checkout hook PR metadata and reports reached cleanup (9757ms)
+    ✔ shows optional progress while inspecting cleanup candidates (3457ms)
+
+  sync CLI repository-wide local maintenance
+    1) repairs local-only independent roots and fanout by default with GitHub disabled
+    2) "after each" hook for "repairs local-only independent roots and fanout by default with GitHub disabled"
+
+  sync CLI checked completion
+    ✔ falls back to trunk after confirmed cleanup removes the original checkout (6309ms)
+    ✔ refuses completion when source cleanup hooks change surviving PR metadata (6621ms)
+    ✔ restores the original surviving branch at its refreshed authorized head (4888ms)
+    ✔ restores the exact detached OID after incoming refresh (4185ms)
+    ✔ refuses a final checkout hook PR mutation and keeps reached cleanup and actual checkout (9244ms)
+    ✔ refuses source cleanup hooks that move a surviving head (3301ms)
+    ✔ refuses a source cleanup hook physical checkout change without switching it back (4012ms)
+    ✔ keeps a permitted freeze-only delta from a final checkout hook (8300ms)
+    ✔ refuses unexpected original-ref disappearance instead of recreating it or falling back (3278ms)
+    ✔ refuses a final checkout hook that redirects physical checkout (4532ms)
+    ✔ refuses final restoration when a hook occupies the original branch in another worktree (4208ms)
+    ✔ refuses a final checkout hook surviving head mutation (4087ms)
+    ✔ preserves unchanged pre-existing metadata outside the valid tracked graph (2515ms)
+    ✔ rejects source cleanup actor head changes outside the valid tracked graph (2765ms)
+    3) rejects incoming-hook changes to original opaque out-of-graph metadata
+    ✔ rejects a genuinely new tracked participant introduced during source cleanup (2785ms)
+    ✔ compares untouched opaque metadata exactly without adopting a changed freeze field (2704ms)
+    ✔ rejects a committed cleanup parent publication hook that restores the old parent (7691ms)
+
+  sync CLI owned recovery
+    ✔ continues saved maintenance in a fresh process and restores the original checkout (16713ms)
+    ✔ continues incoming then maintenance conflicts with saved cleanup and trunk fallback (21487ms)
+    ✔ rejects PR publication actor replacement without blessing its readback (5859ms)
+    ✔ refuses pending cleanup reopened before continue-all stages resolutions (10233ms)
+    ✔ refuses pending cleanup merged before continue-all stages resolutions (11699ms)
+    ✔ refuses pending cleanup identity before continue-all stages resolutions (10975ms)
+    ✔ refuses pending cleanup lookup before continue-all stages resolutions (9683ms)
+    ✔ refuses pending cleanup disabled before continue-all stages resolutions (9719ms)
+    ✔ preserves recovery, files and index for invalid version before incidental staging (12323ms)
+    ✔ preserves recovery, files and index for invalid extra before incidental staging (12171ms)
+    ✔ preserves recovery, files and index for invalid mirrors before incidental staging (11937ms)
+    ✔ preserves recovery, files and index for invalid role before incidental staging (12196ms)
+    ✔ preserves recovery, files and index for invalid file before incidental staging (11911ms)
+    ✔ preserves recovery, files and index for invalid marker before incidental staging (13597ms)
+    ✔ preserves recovery, files and index for invalid source before incidental staging (12920ms)
+    ✔ preserves recovery, files and index for invalid abort before incidental staging (12676ms)
+    ✔ preserves recovery, files and index for invalid worktree before incidental staging (12983ms)
+    ✔ preserves recovery, files and index for invalid repository before incidental staging (12139ms)
+    ✔ preserves recovery, files and index for invalid remote before incidental staging (13050ms)
+    ✔ preserves recovery, files and index for invalid head before incidental staging (12470ms)
+    ✔ preserves recovery, files and index for invalid parent before incidental staging (13373ms)
+    ✔ preserves recovery, files and index for invalid active freeze before incidental staging (13803ms)
+    ✔ preserves recovery, files and index for invalid pending freeze before incidental staging (12909ms)
+    ✔ preserves recovery, files and index for invalid occupied before incidental staging (12818ms)
+    ✔ resumes successive fanout and independent-root maintenance with the saved parents (35586ms)
+    ✔ keeps no-pull and no-restack choices through incoming recovery (13243ms)
+    ✔ preserves opaque out-of-graph metadata through a saved conflict without importing it (15175ms)
+    ✔ keeps foreign recovery written by final checkout hooks (14770ms)
+    ✔ keeps foreign recovery written by final sources hooks (15632ms)
+    ✔ retains completed publication failure as manual inspection without a live retry (15184ms)
+    ✔ records physical cleanup deletion before metadata failure and refuses an uncertain retry (14409ms)
+    ✔ continues local-only maintenance without pins or GitHub access when integration is disabled (12264ms)
+    ✔ preserves a freeze-only change on a completed anchor while continuing editable work (15478ms)
+    ✔ requires manual inspection when pending PR status changes after Git completes reconciliation (13162ms)
+    ✔ preserves a newly frozen completed incoming anchor through pending cleanup (16358ms)
+    ✔ does not adopt an actor-restored deleted head before creating a maintenance conflict (13606ms)
+    ✔ continues purely local sync without a remote or GitHub repository identity (12435ms)
+    ✔ refuses a newly occupied trunk fallback before staging or pending cleanup (9166ms)
+    ✔ continues a later cleanup replay after a completed mandatory survivor is frozen (25001ms)
+    ✔ rechecks freeze ownership changes from pending PR reads before staging (10355ms)
+    ✔ rechecks foreign ownership changes from pending PR reads before staging (10201ms)
+
+  sync CLI assembled late participant guards
+    ✔ preserves a foreign recovery actor written by the original pre-rebase hook before replay (5647ms)
+    ✔ keeps the trusted owner when activation removes its role before the managed hook starts (2385ms)
+    ✔ refuses a missing owner removed by the original pre-rebase hook before replay (5622ms)
+    4) preserves a changed full owner envelope from an original continuation ref hook before the active head advances
+    ✔ resumes the same bound conflict after a transient freeze clears without staging unrelated files (20007ms)
+    ✔ resumes after a late pending worktree blocker clears and preserves the other worktree files (23156ms)
+    ✔ preserves a late pending head actor from the original continuation hook before active publication (15622ms)
+    ✔ preserves a late pending parent actor from the original continuation hook before active publication (15052ms)
+    ✔ preserves a late pending freeze actor from the original continuation hook before active publication (15133ms)
+    ✔ preserves a late pending source actor from the original continuation hook before active publication (15870ms)
+    ✔ preserves a selected head changed by an incoming hook after earlier refresh progress (2904ms)
+    ✔ preserves selected PR metadata changed by an incoming hook before applying that participant (2890ms)
+    ✔ does not apply an injected shared source changed by its activation hook (2591ms)
+    ✔ preserves a checkout hook redirection without advancing its unrelated physical branch (2970ms)
+    ✔ refuses fresh unfreezing of a saved maintenance anchor without expanding replay authority (5183ms)
+    ✔ leaves harmless unrelated occupancy outside the sync writes and completion selection (5564ms)
+
+  sync CLI and installed MCP delivery
+    ✔ sync help and completion expose repository refresh and independent cleanup/replay controls (285ms)
+    ✔ repo sync help and completion expose repository refresh and independent cleanup/replay controls (278ms)
+    ✔ repo s help and completion expose repository refresh and independent cleanup/replay controls (306ms)
+    ✔ installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure (22454ms)
+
+
+  155 passing (33m)
+  4 failing
+
+  1) sync CLI repository-wide local maintenance
+       repairs local-only independent roots and fanout by default with GitHub disabled:
+     Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at FrozenGetFixture.run (dist/test/lib/fixtures/frozen_get_cli.js:224:54)
+      at FrozenGetFixture.ok (dist/test/lib/fixtures/frozen_get_cli.js:268:29)
+      at Context.<anonymous> (dist/test/commands/sync_maintenance_cli.test.js:33:32)
+      at process.processImmediate (node:internal/timers:534:21)
+
+  2) sync CLI repository-wide local maintenance
+       "after each" hook for "repairs local-only independent roots and fanout by default with GitHub disabled":
+     Error: ENOTEMPTY, Directory not empty: /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-kYAb1i '/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-kYAb1i'
+      at Object.rmSync (node:fs:1283:18)
+      at Object.removeSync (/Users/danielbaars/Dev/anthracite/node_modules/fs-extra/lib/remove/index.js:15:28)
+      at FrozenGetFixture.cleanup (dist/test/lib/fixtures/frozen_get_cli.js:301:28)
+      at Context.<anonymous> (dist/test/commands/sync_maintenance_cli.test.js:16:30)
+      at process.processImmediate (node:internal/timers:534:21)
+
+  3) sync CLI checked completion
+       rejects incoming-hook changes to original opaque out-of-graph metadata:
+     AssertionError: expected 'Synced parent from remote.\nERROR: Sy…' to include 'child changed during cleanup'
+      at Context.<anonymous> (dist/test/commands/sync_completion_cli.test.js:254:46)
+      at process.processImmediate (node:internal/timers:534:21)
+
+  4) sync CLI assembled late participant guards
+       preserves a changed full owner envelope from an original continuation ref hook before the active head advances:
+     Error: spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at FrozenGetFixture.run (dist/test/lib/fixtures/frozen_get_cli.js:224:54)
+      at pauseMaintenance (dist/test/commands/sync_late_guards_cli.test.js:279:27)
+      at Context.<anonymous> (dist/test/commands/sync_late_guards_cli.test.js:60:9)
+      at process.processImmediate (node:internal/timers:534:21)
+
+
+

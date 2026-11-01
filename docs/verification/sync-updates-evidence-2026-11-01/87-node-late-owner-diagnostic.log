@@ -1,0 +1,8 @@
+
+
+  sync CLI assembled late participant guards
+    ✔ preserves a changed full owner envelope from an original continuation ref hook before the active head advances (14737ms)
+
+
+  1 passing (20s)
+

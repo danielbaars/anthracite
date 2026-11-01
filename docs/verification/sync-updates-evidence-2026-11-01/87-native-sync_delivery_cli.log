@@ -1,0 +1,11 @@
+
+
+  sync CLI and installed MCP delivery
+    ✔ sync help and completion expose repository refresh and independent cleanup/replay controls (196ms)
+    ✔ repo sync help and completion expose repository refresh and independent cleanup/replay controls (187ms)
+    ✔ repo s help and completion expose repository refresh and independent cleanup/replay controls (186ms)
+    ✔ installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure (19352ms)
+
+
+  4 passing (37s)
+

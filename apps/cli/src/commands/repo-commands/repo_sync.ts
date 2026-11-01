@@ -17,6 +17,12 @@ const args = {
     type: 'boolean',
     alias: 'd',
   },
+  'delete-all': {
+    describe: `Confirm eligible local merged/closed branch cleanup only; does not authorize trunk reset or feature overwrite. Ignored with --no-delete.`,
+    demandOption: false,
+    default: false,
+    type: 'boolean',
+  },
   'show-delete-progress': {
     describe: `Show progress through merged branches.`,
     demandOption: false,
@@ -31,9 +37,9 @@ const args = {
     alias: 'f',
   },
   restack: {
-    describe: `Restack the current stack and any stacks with deleted branches.`,
+    describe: `Repair affected tracked branches across the configured trunk. Use --no-restack to defer local maintenance.`,
     demandOption: false,
-    default: false,
+    default: true,
     type: 'boolean',
     alias: 'r',
   },
@@ -44,7 +50,7 @@ export const command = 'sync';
 export const canonical = 'repo sync';
 export const aliases = ['s'];
 export const description =
-  'Pull the trunk branch from remote and delete any branches that have been merged. If trunk cannot be fast-forwarded to match remote, overwrites trunk with the remote version. Sync does not refresh feature heads; use get for feature updates.';
+  'Refresh existing tracked open-PR feature heads across the configured trunk, pull trunk, clean eligible merged/closed branches and repair affected tracked stacks by default. No-pull skips only trunk; no-delete suppresses cleanup. Explicit force may reset a divergent trunk, but never authorizes feature overwrite.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {
@@ -53,6 +59,7 @@ export const handler = async (argv: argsT): Promise<void> => {
         pull: argv.pull,
         force: argv.force,
         delete: argv.delete,
+        deleteAll: argv['delete-all'],
         showDeleteProgress: argv['show-delete-progress'],
         restack: argv.restack,
       },

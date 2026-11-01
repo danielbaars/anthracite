@@ -1,0 +1,16 @@
+
+
+  sync CLI incoming and cleanup survivor plan
+    ✔ refuses an occupied cleanup candidate before applying another incoming head (5125ms)
+    ✔ cleans a removed remote parent after its frozen incoming child retargets to trunk (7578ms)
+    ✔ abandons cleanup cancellation before applying an incoming head (4705ms)
+    ✔ reports a confirmed physical deletion when metadata removal subsequently fails (7956ms)
+    ✔ refreshes a survivor still naming a removed parent and keeps its PR base and unique content (9490ms)
+    ✔ retains new open incoming work even when the old local tip was merged into trunk (7680ms)
+    ✔ excludes cleanup when a frozen incoming child newly targets the removable parent (7481ms)
+    ✔ preserves final checkout hook PR metadata and reports reached cleanup (8697ms)
+    ✔ shows optional progress while inspecting cleanup candidates (3115ms)
+
+
+  9 passing (2m)
+

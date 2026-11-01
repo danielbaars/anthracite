@@ -1,0 +1,10 @@
+
+
+  sync CLI owned recovery
+    ✔ continues saved maintenance in a fresh process and restores the original checkout (15444ms)
+    ✔ continues incoming then maintenance conflicts with saved cleanup and trunk fallback (21898ms)
+    ✔ resumes successive fanout and independent-root maintenance with the saved parents (37823ms)
+
+
+  3 passing (1m)
+

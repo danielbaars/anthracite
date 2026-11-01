@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-31",
+  "status": "owner approved scope and test seam; specification publication only",
+  "scope": [
+    "Existing tracked branches under one configured trunk",
+    "Default restack and no-restack",
+    "Cleanup-only delete-all separated from trunk reset",
+    "Existing safeguards and recovery, shared get update approach"
+  ],
+  "primarySeam": "Public CLI processes, real local Git and bare remotes, controlled external GitHub responses only",
+  "additionalSmoke": "One existing real stdio MCP workflow",
+  "futureRuntimes": [
+    "Node",
+    "independently compiled native",
+    "isolated exact npm artifact"
+  ],
+  "excluded": [
+    "Multi-trunk",
+    "Remote-only discovery",
+    "Live GitHub fixture writes",
+    "CI",
+    "Full matrix",
+    "Implementation in this delivery"
+  ],
+  "newRuntimeAcceptance": false
+}

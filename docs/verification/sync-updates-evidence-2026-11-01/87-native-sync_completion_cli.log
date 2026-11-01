@@ -1,0 +1,25 @@
+
+
+  sync CLI checked completion
+    ✔ falls back to trunk after confirmed cleanup removes the original checkout (6111ms)
+    ✔ refuses completion when source cleanup hooks change surviving PR metadata (7084ms)
+    ✔ restores the original surviving branch at its refreshed authorized head (4537ms)
+    ✔ restores the exact detached OID after incoming refresh (3461ms)
+    ✔ refuses a final checkout hook PR mutation and keeps reached cleanup and actual checkout (8932ms)
+    ✔ refuses source cleanup hooks that move a surviving head (3200ms)
+    ✔ refuses a source cleanup hook physical checkout change without switching it back (3287ms)
+    ✔ keeps a permitted freeze-only delta from a final checkout hook (7975ms)
+    ✔ refuses unexpected original-ref disappearance instead of recreating it or falling back (2862ms)
+    ✔ refuses a final checkout hook that redirects physical checkout (4008ms)
+    ✔ refuses final restoration when a hook occupies the original branch in another worktree (3704ms)
+    ✔ refuses a final checkout hook surviving head mutation (4122ms)
+    ✔ preserves unchanged pre-existing metadata outside the valid tracked graph (2289ms)
+    ✔ rejects source cleanup actor head changes outside the valid tracked graph (2544ms)
+    ✔ rejects incoming-hook changes to original opaque out-of-graph metadata (3274ms)
+    ✔ rejects a genuinely new tracked participant introduced during source cleanup (2594ms)
+    ✔ compares untouched opaque metadata exactly without adopting a changed freeze field (2578ms)
+    ✔ rejects a committed cleanup parent publication hook that restores the old parent (6520ms)
+
+
+  18 passing (3m)
+

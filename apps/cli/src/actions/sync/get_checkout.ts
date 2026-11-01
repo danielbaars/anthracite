@@ -20,7 +20,8 @@ export function captureGetCheckout(): GetCheckoutIdentity {
 
 export function finishGetCheckout(
   intent: GetCheckoutIntent,
-  updatedBranches: readonly string[]
+  updatedBranches: readonly string[],
+  operation: 'get' | 'sync' = 'get'
 ): void {
   const destination = intent.shouldCheckout
     ? { branchName: intent.target }
@@ -70,7 +71,9 @@ export function finishGetCheckout(
     throw new ExitFailedError(
       `${
         updatedBranches.length > 0
-          ? `Updated ${updatedBranches.join(', ')} before get stopped. `
+          ? `Updated ${updatedBranches.join(
+              ', '
+            )} before ${operation} stopped. `
           : ''
       }Final checkout of ${description} failed.\nActual checkout: ${actual} (${getShaOrThrow(
         'HEAD'

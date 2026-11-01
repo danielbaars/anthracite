@@ -1,0 +1,181 @@
+{
+  "node": {
+    "passing": 34,
+    "failing": 0,
+    "groups": [
+      {
+        "name": "numeric",
+        "passing": 13,
+        "log": "review-fixes-node-numeric.log",
+        "cases": [
+          "refreshes a tracked numeric branch from its open PR with a different number",
+          "preserves a local-only numeric branch when the head lookup has no open PR",
+          "refuses numeric head wrong head before changing refs or files",
+          "refuses numeric head wrong repository before changing refs or files",
+          "refuses numeric head wrong URL before changing refs or files",
+          "refuses numeric head closed PR before changing refs or files",
+          "refuses numeric head missing state before changing refs or files",
+          "refuses numeric head ambiguous matches before changing refs or files",
+          "refuses numeric head malformed JSON before changing refs or files",
+          "refuses numeric head non-array response before changing refs or files",
+          "refuses numeric head service failure before changing refs or files",
+          "refuses numeric head failed lookup claiming absence before changing refs or files",
+          "keeps the exact stored PR number guard after associating a numeric branch"
+        ]
+      },
+      {
+        "name": "refresh",
+        "passing": 12,
+        "log": "review-fixes-node-refresh.log",
+        "cases": [
+          "refreshes existing published heads without pulling, deleting or replaying",
+          "rejects a same-name source from another head repository before applying updates",
+          "retains named local-only work and excludes untracked local branches",
+          "retains an associated CLOSED branch without requiring its deleted remote head",
+          "retains an associated MERGED branch without requiring its deleted remote head",
+          "refuses authentication before changing any selected head",
+          "refuses rate limit before changing any selected head",
+          "refuses transport before changing any selected head",
+          "refuses malformed response before changing any selected head",
+          "refuses missing associated PR before changing any selected head",
+          "resolves stored PR numbers even when a reused branch name would select another PR",
+          "does not associate an unpublished local branch with an old closed same-name PR"
+        ]
+      },
+      {
+        "name": "get-number",
+        "passing": 1,
+        "log": "review-fixes-node-get-number.log",
+        "cases": [
+          "gets a fresh stack via PR number"
+        ]
+      },
+      {
+        "name": "get-identity",
+        "passing": 2,
+        "log": "review-fixes-node-get-identity.log",
+        "cases": [
+          "rejects a changed numeric PR identity before trunk or feature application",
+          "does not replace a stored descendant PR association with a mismatched head"
+        ]
+      },
+      {
+        "name": "get-stored",
+        "passing": 1,
+        "log": "review-fixes-node-get-stored.log",
+        "cases": [
+          "does not skip an absent stored PR association as unpublished work"
+        ]
+      },
+      {
+        "name": "maintenance",
+        "passing": 2,
+        "log": "review-fixes-node-maintenance.log",
+        "cases": [
+          "repairs local-only independent roots and fanout by default with GitHub disabled",
+          "refuses a late PR metadata change before replaying the pending child"
+        ]
+      },
+      {
+        "name": "owned",
+        "passing": 3,
+        "log": "review-fixes-node-owned.log",
+        "cases": [
+          "continues saved maintenance in a fresh process and restores the original checkout",
+          "continues incoming then maintenance conflicts with saved cleanup and trunk fallback",
+          "resumes successive fanout and independent-root maintenance with the saved parents"
+        ]
+      }
+    ]
+  },
+  "native": {
+    "passing": 34,
+    "failing": 0,
+    "groups": [
+      {
+        "name": "numeric",
+        "passing": 13,
+        "log": "review-fixes-native-numeric.log",
+        "cases": [
+          "refreshes a tracked numeric branch from its open PR with a different number",
+          "preserves a local-only numeric branch when the head lookup has no open PR",
+          "refuses numeric head wrong head before changing refs or files",
+          "refuses numeric head wrong repository before changing refs or files",
+          "refuses numeric head wrong URL before changing refs or files",
+          "refuses numeric head closed PR before changing refs or files",
+          "refuses numeric head missing state before changing refs or files",
+          "refuses numeric head ambiguous matches before changing refs or files",
+          "refuses numeric head malformed JSON before changing refs or files",
+          "refuses numeric head non-array response before changing refs or files",
+          "refuses numeric head service failure before changing refs or files",
+          "refuses numeric head failed lookup claiming absence before changing refs or files",
+          "keeps the exact stored PR number guard after associating a numeric branch"
+        ]
+      },
+      {
+        "name": "refresh",
+        "passing": 12,
+        "log": "review-fixes-native-refresh.log",
+        "cases": [
+          "refreshes existing published heads without pulling, deleting or replaying",
+          "rejects a same-name source from another head repository before applying updates",
+          "retains named local-only work and excludes untracked local branches",
+          "retains an associated CLOSED branch without requiring its deleted remote head",
+          "retains an associated MERGED branch without requiring its deleted remote head",
+          "refuses authentication before changing any selected head",
+          "refuses rate limit before changing any selected head",
+          "refuses transport before changing any selected head",
+          "refuses malformed response before changing any selected head",
+          "refuses missing associated PR before changing any selected head",
+          "resolves stored PR numbers even when a reused branch name would select another PR",
+          "does not associate an unpublished local branch with an old closed same-name PR"
+        ]
+      },
+      {
+        "name": "get-number",
+        "passing": 1,
+        "log": "review-fixes-native-get-number.log",
+        "cases": [
+          "gets a fresh stack via PR number"
+        ]
+      },
+      {
+        "name": "get-identity",
+        "passing": 2,
+        "log": "review-fixes-native-get-identity.log",
+        "cases": [
+          "rejects a changed numeric PR identity before trunk or feature application",
+          "does not replace a stored descendant PR association with a mismatched head"
+        ]
+      },
+      {
+        "name": "get-stored",
+        "passing": 1,
+        "log": "review-fixes-native-get-stored.log",
+        "cases": [
+          "does not skip an absent stored PR association as unpublished work"
+        ]
+      },
+      {
+        "name": "maintenance",
+        "passing": 2,
+        "log": "review-fixes-native-maintenance.log",
+        "cases": [
+          "repairs local-only independent roots and fanout by default with GitHub disabled",
+          "refuses a late PR metadata change before replaying the pending child"
+        ]
+      },
+      {
+        "name": "owned",
+        "passing": 3,
+        "log": "review-fixes-native-owned.log",
+        "cases": [
+          "continues saved maintenance in a fresh process and restores the original checkout",
+          "continues incoming then maintenance conflicts with saved cleanup and trunk fallback",
+          "resumes successive fanout and independent-root maintenance with the saved parents"
+        ]
+      }
+    ]
+  },
+  "qualification": "34 distinct focused identities, repeated on Node/native. Existing controls overlap prior receipts. Earlier165+23 acceptance retains its original source epochs; no full corrected-source matrix claim."
+}

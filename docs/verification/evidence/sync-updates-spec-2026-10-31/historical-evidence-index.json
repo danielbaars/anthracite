@@ -1,0 +1,353 @@
+{
+  "status": "historical observations only, not new test passes",
+  "commit": "78937d87424a331de34c2cf3cf95a8944c8d6ff5",
+  "originalTotalObservations": 35,
+  "ledgerSha256": "ee6bbfc797821305696e7a5d900a76cc160bac35d89ff85de577b228f74dc5e5",
+  "cases": [
+    {
+      "id": "c21-merged-sync-an",
+      "tool": "Anthracite0.5.0",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--force",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-an/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-an/capture.json",
+          "sha256": "4687ba7c5042e132d5cbc11d2b8dc92e41f1fdff5fb713c37b72f473a0dfe0d1"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-an/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-an/before.json",
+          "sha256": "624b50b25d59c696db5dd9bb93b558469e3e6cfc421bff3002fbb6687734e715"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-an/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-an/after.json",
+          "sha256": "9c98ac8dfe2919a2238361a50b24c9b5ea7849164fbd81232d891d4ac7c85847"
+        }
+      ]
+    },
+    {
+      "id": "c21-merged-sync-gt",
+      "tool": "Graphite1.8.6",
+      "argv": [
+        "sync",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-gt/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-gt/capture.json",
+          "sha256": "1195e2387927aa8b6c5a91dc3cb539cedfb7df25253a2b3c5b9fb6d327f96670"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-gt/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-gt/before.json",
+          "sha256": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-gt/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c21-merged-sync-gt/after.json",
+          "sha256": "d18870fb5d64c895d6b7f84e61dd08c65e21e04206219186dfb1241988c5564e"
+        }
+      ]
+    },
+    {
+      "id": "c23-known-closed-an",
+      "tool": "Anthracite0.5.0",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--force",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-an/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-an/capture.json",
+          "sha256": "29e4f9c13392f6b4a030110b89395b1e5c7e65209baa3c5ea90752b4a239b96e"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-an/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-an/before.json",
+          "sha256": "624b50b25d59c696db5dd9bb93b558469e3e6cfc421bff3002fbb6687734e715"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-an/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-an/after.json",
+          "sha256": "f65d17e72450e93ad39a610081777db1e2a193a9c6c559e19ee8b17894fed51d"
+        }
+      ]
+    },
+    {
+      "id": "c23-known-closed-gt",
+      "tool": "Graphite1.8.6",
+      "argv": [
+        "sync",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-gt/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-gt/capture.json",
+          "sha256": "004e5fecf4543efdc089bdda7d30b55883a604de24a1c064b6f230943b7b37aa"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-gt/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-gt/before.json",
+          "sha256": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-gt/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/c23-known-closed-gt/after.json",
+          "sha256": "3b77b9e432332a8c6e6e370b0df19acc04094f3f8725b906bab648d0c4dd22bd"
+        }
+      ]
+    },
+    {
+      "id": "d21-trunk-an",
+      "tool": "Anthracite0.5.0",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--force",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-an/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-an/capture.json",
+          "sha256": "b6702a20933e9d02b306dddd929134fb5f76a5dee3ae13ede4accbb395b15021"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-an/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-an/before.json",
+          "sha256": "533dff38cf310ab37dedf4259523527a0dd49bdd06ca61494e1a76106c951495"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-an/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-an/after.json",
+          "sha256": "9c8546162d40362a6eb869975180ff1f0e57e0602fa6ccfd0d4b53d75caeacbe"
+        }
+      ]
+    },
+    {
+      "id": "d21-trunk-gt",
+      "tool": "Graphite1.8.6",
+      "argv": [
+        "sync",
+        "--delete-all",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 1,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-gt/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-gt/capture.json",
+          "sha256": "7037b6c8a3531a874f6b621f4bef76db9a42e925d8e3a33e265657fb5e7714d5"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-gt/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-gt/before.json",
+          "sha256": "5b863e9666f820486ca1ba29b84dfaa571c32cb6a196d3b4d476cdb71417fb24"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-gt/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/d21-trunk-gt/after.json",
+          "sha256": "5b863e9666f820486ca1ba29b84dfaa571c32cb6a196d3b4d476cdb71417fb24"
+        }
+      ]
+    },
+    {
+      "id": "s11-refresh-an",
+      "tool": "Anthracite0.5.0",
+      "argv": [
+        "/private/tmp/anthracite-npm-0.5.0-20261030/public-install/node_modules/@danielbaars/anthracite/cli.cjs",
+        "sync",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-an/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-an/capture.json",
+          "sha256": "124e00fe9f9781bf915c96db0e8f16fe8d00cdd35eeb4575583e1438716a945e"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-an/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-an/before.json",
+          "sha256": "899bf19670d8963403f35f3096e2699b6b0c99619111d0d1570512ce693a9f97"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-an/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-an/after.json",
+          "sha256": "624b50b25d59c696db5dd9bb93b558469e3e6cfc421bff3002fbb6687734e715"
+        }
+      ]
+    },
+    {
+      "id": "s11-refresh-gt",
+      "tool": "Graphite1.8.6",
+      "argv": [
+        "sync",
+        "--no-restack",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-gt/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-gt/capture.json",
+          "sha256": "5f2b23c3ee662870310b36fb499adeaff9cca7313e9756d520217d020474d298"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-gt/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-gt/before.json",
+          "sha256": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-gt/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s11-refresh-gt/after.json",
+          "sha256": "9d138ed110a5b2d276acb6fd61acd649a04300e54aec1cdda256ec129602807e"
+        }
+      ]
+    },
+    {
+      "id": "s12-restack-gt",
+      "tool": "Graphite1.8.6",
+      "argv": [
+        "sync",
+        "--no-interactive"
+      ],
+      "recordedExit": {
+        "code": 0,
+        "signal": 0,
+        "reason": "exited"
+      },
+      "files": [
+        {
+          "role": "capture",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s12-restack-gt/capture.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s12-restack-gt/capture.json",
+          "sha256": "68ea303ad7d5bc663f41c03158064e43be80617b91f8476b985d2ee331066ea8"
+        },
+        {
+          "role": "before",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s12-restack-gt/before.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s12-restack-gt/before.json",
+          "sha256": "029216315b144d39f42ceb697cde03c885e199e849f58d0c3dde564c885183e6"
+        },
+        {
+          "role": "after",
+          "originalPath": "docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s12-restack-gt/after.json",
+          "sourceUrl": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/runtime/s12-restack-gt/after.json",
+          "sha256": "5b6f17d55cb2137478122e4c9ddd021f598f9db4b7cc8135878306f760fa3be6"
+        }
+      ]
+    }
+  ],
+  "supportingSources": [
+    {
+      "path": "docs/verification/get-sync-parity-2026-10-31.md",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/get-sync-parity-2026-10-31.md",
+      "sha256": "5742cf87f504ad3a153124266cf3f96a6e3629d123b8cdf3329aeb1232f095cd"
+    },
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/interface/graphite-sync.json",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/interface/graphite-sync.json",
+      "sha256": "c45ba320eaea278a3b8e038a943b51569a5d82d7993cf3c8bb2b786973b65128"
+    },
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/interface/anthracite-sync.json",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/interface/anthracite-sync.json",
+      "sha256": "6a109bbaf896256d033fb92220f0d5262bd469b5a76dd8092b5dd2fcb5447d2c"
+    },
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/audits/live-audit.md",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/audits/live-audit.md",
+      "sha256": "470854802edd22d93feef1bc1a37448eeea809cb0348df640e1d204ca123b8ae"
+    },
+    {
+      "path": "docs/verification/evidence/get-sync-parity-2026-10-31/audits/cleanup-live-audit.md",
+      "url": "https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/evidence/get-sync-parity-2026-10-31/audits/cleanup-live-audit.md",
+      "sha256": "baae03ebc5b1666495a8a00067d271055c9a8bd1c1dd70d0453d0328f2189499"
+    }
+  ],
+  "indexedObservationCount": 9,
+  "indexedRawFileCount": 27,
+  "retention": "Reuse original immutable Git blobs through exact commit/file URLs; no duplicate raw capture tree is added."
+}

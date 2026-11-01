@@ -1,0 +1,95 @@
+{
+  "baseline": "26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd",
+  "released": "5f76186bcfd2ee0952b9cb48bab1ddf94f00c3c5",
+  "historicalRuntimeSource": "609fb557d4b6a429d91f500169c596592139d9d1",
+  "syncModules": [
+    {
+      "path": "apps/cli/src/commands/sync.ts",
+      "baselineUrl": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/commands/sync.ts",
+      "baselineSha256": "80cc3dc84d1f3737ff1e7049eadc076e3d5e9a57600b8825df00302120adc4ce",
+      "release051Sha256": "80cc3dc84d1f3737ff1e7049eadc076e3d5e9a57600b8825df00302120adc4ce",
+      "research050Sha256": "80cc3dc84d1f3737ff1e7049eadc076e3d5e9a57600b8825df00302120adc4ce",
+      "unchangedSince051": true,
+      "unchangedSince050": true
+    },
+    {
+      "path": "apps/cli/src/commands/repo-commands/repo_sync.ts",
+      "baselineUrl": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/commands/repo-commands/repo_sync.ts",
+      "baselineSha256": "7d768d385e1786a7f19750427ca1957c5fd1ceac9e27f79af46ce503d01d13c4",
+      "release051Sha256": "7d768d385e1786a7f19750427ca1957c5fd1ceac9e27f79af46ce503d01d13c4",
+      "research050Sha256": "7d768d385e1786a7f19750427ca1957c5fd1ceac9e27f79af46ce503d01d13c4",
+      "unchangedSince051": true,
+      "unchangedSince050": true
+    },
+    {
+      "path": "apps/cli/src/actions/sync/sync.ts",
+      "baselineUrl": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync/sync.ts",
+      "baselineSha256": "0d91915c0c537d8823617e2195191086821e33aaf9c7255f72d6b0f0d61a537a",
+      "release051Sha256": "0d91915c0c537d8823617e2195191086821e33aaf9c7255f72d6b0f0d61a537a",
+      "research050Sha256": "0d91915c0c537d8823617e2195191086821e33aaf9c7255f72d6b0f0d61a537a",
+      "unchangedSince051": true,
+      "unchangedSince050": true
+    },
+    {
+      "path": "apps/cli/src/actions/sync/clean_branches.ts",
+      "baselineUrl": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync/clean_branches.ts",
+      "baselineSha256": "50a4acbef36e6b30b9338ec4231ce602e1c37e432a9b06ed2b4fd9ed986ac8ec",
+      "release051Sha256": "50a4acbef36e6b30b9338ec4231ce602e1c37e432a9b06ed2b4fd9ed986ac8ec",
+      "research050Sha256": "117fbb82ad2aca822996cd22e15e3b044eba10afa32ea7e7e6160bb786541e04",
+      "unchangedSince051": true,
+      "unchangedSince050": false
+    },
+    {
+      "path": "apps/cli/src/actions/sync_pr_info.ts",
+      "baselineUrl": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync_pr_info.ts",
+      "baselineSha256": "fbf59315647383fd4f3ff7987bb939cec394f3d26f731f58d2a08d7b4cf9c287",
+      "release051Sha256": "fbf59315647383fd4f3ff7987bb939cec394f3d26f731f58d2a08d7b4cf9c287",
+      "research050Sha256": "fbf59315647383fd4f3ff7987bb939cec394f3d26f731f58d2a08d7b4cf9c287",
+      "unchangedSince051": true,
+      "unchangedSince050": true
+    }
+  ],
+  "sharedGetBoundaries": [
+    {
+      "path": "apps/cli/src/actions/sync/remote_update_graph.ts",
+      "url": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync/remote_update_graph.ts",
+      "sha256": "d0480a9da931e3ce5696d935dad8ee3280809d5e9b7f38effdbec6df245c0894"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/remote_update_trunk.ts",
+      "url": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync/remote_update_trunk.ts",
+      "sha256": "00a77c5905f4807de8d77c5542f840946fffc735c452609cc235d93808891a4d"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/get_execute.ts",
+      "url": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync/get_execute.ts",
+      "sha256": "40a7bad5cee1f05d3728c23761e7bbe27054118fec8c83b7f62503dd115ae0b0"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/get_maintenance.ts",
+      "url": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync/get_maintenance.ts",
+      "sha256": "660a4b38be5f011b6e48db2c4dfb8701c7c489e17a02bcfecfad9caabcb90a59"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/get_recovery.ts",
+      "url": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync/get_recovery.ts",
+      "sha256": "903142617535cfee57b815f6700f8bb78b2628ad3296671ee63eac828f228725"
+    },
+    {
+      "path": "apps/cli/src/actions/sync/get_checkout.ts",
+      "url": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/actions/sync/get_checkout.ts",
+      "sha256": "51940bfdbef91aff5b5e2ad57d55922294025d80ce2be0486f0ac323ba228021"
+    },
+    {
+      "path": "apps/cli/src/lib/engine/engine.ts",
+      "url": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/lib/engine/engine.ts",
+      "sha256": "962a11a5530fc11a924a49e3975d6bf35e7cb8df0f917dc4902dea6eced1ca65"
+    },
+    {
+      "path": "apps/cli/src/lib/git/rebase.ts",
+      "url": "https://github.com/danielbaars/anthracite/blob/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd/apps/cli/src/lib/git/rebase.ts",
+      "sha256": "2f3298ce8abbc7ff37614b2dcc29aa242f0f3bf5aa8d784dc85a2fa3eb34883a"
+    }
+  ],
+  "limits": "Five sync surface modules remain unchanged since0.5.1; shared engine/get code changed in#77. This is source provenance, not new runtime equivalence acceptance."
+}

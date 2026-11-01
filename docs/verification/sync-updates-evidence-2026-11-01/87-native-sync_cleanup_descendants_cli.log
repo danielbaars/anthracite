@@ -1,0 +1,15 @@
+
+
+  sync cleanup of descendants through the public CLI (--force)
+    ✔ deletes a known closed leaf below an open parent without changing that parent (14748ms)
+    ✔ cleans separated closed branches once with frozen child false (16235ms)
+    ✔ cleans separated closed branches once with frozen child true (17710ms)
+
+  sync cleanup of descendants through the public CLI (--delete-all)
+    ✔ deletes a known closed leaf below an open parent without changing that parent (14723ms)
+    ✔ cleans separated closed branches once with frozen child false (16023ms)
+    ✔ cleans separated closed branches once with frozen child true (17380ms)
+
+
+  6 passing (2m)
+

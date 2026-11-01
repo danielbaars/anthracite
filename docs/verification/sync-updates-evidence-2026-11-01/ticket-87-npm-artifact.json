@@ -1,0 +1,58 @@
+{
+  "kind": "unpublished candidate; version metadata retained without version bump",
+  "tarball": "ticket-87-candidate.tgz",
+  "tarballSha256": "daab652428ad713c93f5134fe3a0ee32ac35dc27466a766276369f12306e79cf",
+  "files": {
+    "package/LICENSE": {
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+      "size": 34523
+    },
+    "package/cli.cjs": {
+      "sha256": "39feaeef35b4c42da87172d68f63d6d0cad9c8e155bd3f50da4f3ea3056f9e64",
+      "size": 3015366
+    },
+    "package/package.json": {
+      "sha256": "4032e017a306eea97d4729b0bdfde4e62f6b27763f41dc9e02d153c0cd7813cb",
+      "size": 690
+    },
+    "package/CREDITS.md": {
+      "sha256": "7874b424bc9e7f3205452e7713a68ce9fe6a8a3117c4c6792c061569f68e7a80",
+      "size": 1155
+    },
+    "package/README.md": {
+      "sha256": "a3227ea7cbe3544a9696a11061d208cc8474081e4320bd6470983253af412037",
+      "size": 5196
+    },
+    "package/THIRD_PARTY_NOTICES.md": {
+      "sha256": "cde2cb34b14a813c4e6ed86cc58bd025182326893b7f0afbe6cc58cca96e6a02",
+      "size": 53720
+    }
+  },
+  "buildSeconds": 0.8377851659897715,
+  "sourceArtifactMap": "ticket-87-source-artifacts.json",
+  "gateCommand": [
+    "/Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node",
+    "scripts/test-npm-package.cjs",
+    "/private/tmp/anthracite-sync-updates-implementation-20261101/ticket-87-candidate.tgz"
+  ],
+  "gateExitCode": 0,
+  "gateRuns": [
+    {
+      "receipt": "87-npm-gate-sandbox-failure.log",
+      "exitCode": 1,
+      "passing": 8,
+      "failing": 1,
+      "seconds": 127.54452941700583,
+      "boundary": "Sandbox denied ps required before cancellation fixture readiness"
+    },
+    {
+      "receipt": "87-npm-gate-permitted.log",
+      "exitCode": 0,
+      "passing": 9,
+      "failing": 0,
+      "boundary": "Identical tarball; local ps permitted; existing180000ms scenario runner unchanged"
+    }
+  ],
+  "gatePassing": 9,
+  "gateReceipt": "87-npm-gate-permitted.log"
+}

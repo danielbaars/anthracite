@@ -1,3 +1,7 @@
+import {
+  assertSyncHookOwnership,
+  assertSyncHookParticipants,
+} from '../actions/sync/sync_recovery';
 import fs from 'fs';
 import { assertGetHookParticipants } from '../actions/sync/get_recovery';
 import {
@@ -18,6 +22,7 @@ export const builder = (cli: yargs.Argv): yargs.Argv =>
     .positional('originalHook', { type: 'string', demandOption: true })
     .positional('phase', { type: 'string', demandOption: true })
     .option('absorb-guard', { type: 'string' })
+    .option('sync-owner', { type: 'string' })
     .option('all-refs', { type: 'boolean', default: false })
     .option('participant', { type: 'string', array: true, nargs: 1 });
 
@@ -30,6 +35,7 @@ export const handler = (
     readonly 'all-refs': boolean;
     readonly participant?: string[];
     readonly 'absorb-guard'?: string;
+    readonly 'sync-owner'?: string;
   }>
 ): void => {
   const input = fs.readFileSync(0);
@@ -83,8 +89,10 @@ export const handler = (
   if (!changesBranch && !args['all-refs'] && args.phase !== 'before-mutation')
     return;
   try {
+    assertSyncHookOwnership(args['sync-owner']);
     for (const branch of [args.branch, ...(args.participant ?? [])])
       assertBranchEditable(branch);
+    assertSyncHookParticipants(args.branch);
     assertGetHookParticipants(args.branch);
   } catch (error: unknown) {
     process.stderr.write(

@@ -1,0 +1,21 @@
+
+
+  sync CLI repository-wide local maintenance
+    ✔ repairs local-only independent roots and fanout by default with GitHub disabled (24376ms)
+    ✔ refuses a late PR metadata change before replaying the pending child (7447ms)
+    ✔ reports already-stale independent work with explicit no-restack even without incoming nodes (17706ms)
+    ✔ preflights an occupied local-only replay before incoming heads or trunk advance (3434ms)
+    ✔ keeps frozen anchors while repairing editable descendants and protects other refs with local updateRefs true (8083ms)
+    ✔ retains a real maintenance conflict and names completed and pending work (13356ms)
+    ✔ replays stale incoming children and unpublished descendants after feature refresh (12426ms)
+    ✔ retains explicit boolean forms on every sync route and describes default maintenance (15839ms)
+
+  sync CLI checked completion
+    ✔ rejects incoming-hook changes to original opaque out-of-graph metadata (3563ms)
+
+  sync CLI assembled late participant guards
+    ✔ preserves a changed full owner envelope from an original continuation ref hook before the active head advances (14324ms)
+
+
+  10 passing (3m)
+

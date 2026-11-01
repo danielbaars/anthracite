@@ -1,0 +1,84 @@
+
+
+  frozen sync through the public CLI
+    ✔ checks every mandatory cleanup survivor after the real pre-rebase hook before publishing the first replay (11194ms)
+
+  get CLI remote graph selection
+    ✔ does not add an ancestor sibling, independent stack or remote-only descendant (7634ms)
+
+  get CLI safe trunk and changed parents
+    ✔ refuses divergent local trunk with force=true before feature changes (1761ms)
+
+  get CLI owned graph recovery
+    ✔ resumes fanout from pinned sources with correct sibling parents and exact detached restoration (21030ms)
+    ✔ keeps saved no-restack authority and default target checkout after reconciliation (6119ms)
+
+  get CLI completed publication guards
+    ✔ preserves topology changed by a source cleanup hook and retains manual recovery (2945ms)
+    ✔ gives manual guidance when a hook changes the saved envelope while the old active token remains (10847ms)
+
+  selected insert recovery through fresh public CLI processes
+    ✔ retains independently changed unselected metadata while continuing the saved selection (16005ms)
+
+  public landing interruption recovery
+    ✔ resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land (40500ms)
+
+  (${scene}): continue
+    During a Grahite initiated rebase
+      After resolving conflict and continuing
+        ✔ Lands on the restacked branch
+
+  (${scene}): continue
+    During a Grahite initiated rebase
+      After resolving conflict and continuing
+        ✔ Lands on the restacked branch
+
+  (BasicScene): repo sync continue
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+    ✔ Can continue a repo sync with multiple merge conflicts (30903ms)
+
+  (TrailingProdScene): repo sync continue
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+    ✔ Can continue a repo sync with multiple merge conflicts (34830ms)
+
+  (BasicScene): repo sync
+    ✔ Can noop sync if there are no stacks (1085ms)
+warning: skipped previously applied commit 810560c
+hint: use --reapply-cherry-picks to include skipped commits
+hint: Disable this message with "git config set advice.skippedCherryPicks false"
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+    ✔ Can defer replay explicitly while deleting two branches off a three-stack (8174ms)
+warning: skipped previously applied commit 1da96ff
+hint: use --reapply-cherry-picks to include skipped commits
+hint: Disable this message with "git config set advice.skippedCherryPicks false"
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+    ✔ Can defer replay explicitly across repeated cleanup of a three-stack (10940ms)
+
+  (TrailingProdScene): repo sync
+    ✔ Can noop sync if there are no stacks (1119ms)
+warning: skipped previously applied commit 9bd8596
+hint: use --reapply-cherry-picks to include skipped commits
+hint: Disable this message with "git config set advice.skippedCherryPicks false"
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+    ✔ Can defer replay explicitly while deleting two branches off a three-stack (8524ms)
+warning: skipped previously applied commit 979eb59
+hint: use --reapply-cherry-picks to include skipped commits
+hint: Disable this message with "git config set advice.skippedCherryPicks false"
+Rebasing (1/1)Successfully rebased and updated refs/heads/temp.
+    ✔ Can defer replay explicitly across repeated cleanup of a three-stack (11399ms)
+
+  modern preserved routes through the public CLI
+    ✔ get fast-forwards from a real local remote through the existing PR boundary (4156ms)
+    ✔ g fast-forwards from a real local remote through the existing PR boundary (4100ms)
+
+  get CLI unique incoming reconciliation
+    ✔ replays only unique local commits after both published parent and child advance (5381ms)
+    ✔ never replays old parent commits when the pinned remote parent was rewritten (5982ms)
+
+
+  23 passing (5m)
+

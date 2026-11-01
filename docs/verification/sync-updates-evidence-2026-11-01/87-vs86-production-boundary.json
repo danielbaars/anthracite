@@ -1,0 +1,18 @@
+{
+  "source": {
+    "identical": 283,
+    "changed": [
+      "apps/cli/src/commands/completion.ts",
+      "apps/cli/src/commands/sync.ts",
+      "apps/cli/src/lib/mcp/learn.ts"
+    ]
+  },
+  "compiled": {
+    "identical": 283,
+    "changed": [
+      "apps/cli/dist/src/commands/completion.js",
+      "apps/cli/dist/src/commands/sync.js",
+      "apps/cli/dist/src/lib/mcp/learn.js"
+    ]
+  }
+}

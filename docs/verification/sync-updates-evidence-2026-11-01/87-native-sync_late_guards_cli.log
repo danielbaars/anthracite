@@ -1,0 +1,23 @@
+
+
+  sync CLI assembled late participant guards
+    ✔ preserves a foreign recovery actor written by the original pre-rebase hook before replay (5606ms)
+    ✔ keeps the trusted owner when activation removes its role before the managed hook starts (2503ms)
+    ✔ refuses a missing owner removed by the original pre-rebase hook before replay (5632ms)
+    ✔ preserves a changed full owner envelope from an original continuation ref hook before the active head advances (12530ms)
+    ✔ resumes the same bound conflict after a transient freeze clears without staging unrelated files (17590ms)
+    ✔ resumes after a late pending worktree blocker clears and preserves the other worktree files (23416ms)
+    ✔ preserves a late pending head actor from the original continuation hook before active publication (14386ms)
+    ✔ preserves a late pending parent actor from the original continuation hook before active publication (14359ms)
+    ✔ preserves a late pending freeze actor from the original continuation hook before active publication (13889ms)
+    ✔ preserves a late pending source actor from the original continuation hook before active publication (13539ms)
+    ✔ preserves a selected head changed by an incoming hook after earlier refresh progress (2889ms)
+    ✔ preserves selected PR metadata changed by an incoming hook before applying that participant (3062ms)
+    ✔ does not apply an injected shared source changed by its activation hook (2506ms)
+    ✔ preserves a checkout hook redirection without advancing its unrelated physical branch (2535ms)
+    ✔ refuses fresh unfreezing of a saved maintenance anchor without expanding replay authority (4855ms)
+    ✔ leaves harmless unrelated occupancy outside the sync writes and completion selection (4546ms)
+
+
+  16 passing (4m)
+

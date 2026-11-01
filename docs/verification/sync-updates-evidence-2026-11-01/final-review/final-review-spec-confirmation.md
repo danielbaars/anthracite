@@ -1,0 +1,11 @@
+## Spec confirmation
+
+**Original P2 resolved; zero remaining confirmed Spec findings.** Reviewed candidate `e9779bbc61cee4852c28c89e389177d4f3ceeb76`, correction delta from `2dc0c3dfe27e83a9b8d3183600e542d7aef80e0f`; original full-review baseline remains `26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd`. Candidate HEAD matches the pin, worktree/index are clean, and correction diff whitespace validation passes.
+
+The actual three-production-file delta distinguishes literal numeric branch lookup from stored PR numbers, validates a bounded OPEN head-list result, preserves ordinary view/get number guards, and removes unused maintenance-progress plumbing while forwarding the existing completion callback. The added public tests cover association/refresh, local-only absence, exact identity/state, ambiguity, malformed output, service failures and stored-number protection. No new confirmed scope or contract regression was found in this delta.
+
+Independent public confirmation used real temporary Git repositories/bare remote, the corrected native executable and only controlled external GitHub responses. Native SHA256: `51381b14a2690b51d7c44c798dfdef59ab0920f0866eaa80bb9f535135f0d1ac`. The service fixture supports both the old erroneous numeric-number request and the new literal-head list, plus subsequent stored-number lookup.
+
+`sync --no-pull --no-delete --no-restack --no-interactive` now exits0, advances tracked branch `123` from `43acec0ede2b32ffa93dcc74df118e2a2640f81c` to its actual PR#3 source `68437d2355d921c84688ddccdba8c6a752bfe35e`, saves association3 and retains incoming file content. A second fresh execution uses `pr view 3` and also succeeds. Both retain physical main checkout, clean index/files and no recovery. Actual calls show first `pr list --head 123 --state open --limit 2`, then stored-number view; neither uses `pr view 123`.
+
+Raw receipt and executable probe are `ROOT/final-spec-fix-confirmation-probe.json` and `.cjs`. The original report and both qualified original probes remain unchanged. Existing corrected 34-case Node/native and exact nine-case npm evidence was inspected, not rerun or inflated by these two probe executions. No source/test edits, emits, live GitHub operations, CI or broad gate runs occurred. This confirmation does not mark PR readiness or authorize merging/releasing.
