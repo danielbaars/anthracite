@@ -126,16 +126,23 @@ function main(): void {
       process.exitCode = 1;
       return;
     }
-    const headRefOid = execFileSync(
+    let headRefOid = execFileSync(
       'git',
       ['ls-remote', 'origin', `refs/heads/${pr.headRefName}`],
       { encoding: 'utf8' }
     ).split(/\s/)[0];
+    if (!headRefOid && pr.state !== 'OPEN')
+      headRefOid = execFileSync(
+        'git',
+        ['rev-parse', `refs/heads/${pr.headRefName}`],
+        { encoding: 'utf8' }
+      ).trim();
     const response: Record<string, unknown> = {
       ...pr,
       reviews: pr.reviews ?? [],
       assignees: pr.assignees ?? [],
       headRefOid,
+      headRepository: { nameWithOwner: 'fixture/submit' },
     };
     if (
       process.env.ANTHRACITE_TEST_GH_REVIEW_MODE === 'invalid' &&

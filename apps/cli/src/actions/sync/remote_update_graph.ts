@@ -27,6 +27,14 @@ const pullRequestSchema = z.object({
   number: z.number().int().positive(),
   url: z.string().url(),
   headRefOid: z.string().regex(/^[a-f0-9]{40,64}$/),
+  state: z.enum(['OPEN', 'CLOSED', 'MERGED']).optional(),
+  headRepository: z.object({ nameWithOwner: z.string() }).nullable().optional(),
+  title: z.string().optional(),
+  body: z.string().optional(),
+  isDraft: z.boolean().optional(),
+  reviewDecision: z
+    .enum(['APPROVED', 'REVIEW_REQUIRED', 'CHANGES_REQUESTED', ''])
+    .optional(),
 });
 
 type PullRequest = z.infer<typeof pullRequestSchema>;
@@ -48,9 +56,10 @@ export type RemoteUpdateNode = RemoteUpdateSelection & {
   readonly sourceRef: string;
 };
 
-function lookupPullRequest(
+export function lookupPullRequest(
   branch: string,
-  context: TContext
+  context: TContext,
+  scope: 'get' | 'sync' = 'get'
 ): PullRequest | undefined {
   let output: string;
   try {
@@ -63,7 +72,11 @@ function lookupPullRequest(
         '--repo',
         githubRepoSlug(context),
         '--json',
-        'headRefName,baseRefName,number,url,headRefOid',
+        `headRefName,baseRefName,number,url,headRefOid${
+          scope === 'sync'
+            ? ',state,title,body,isDraft,reviewDecision,headRepository'
+            : ''
+        }`,
       ],
       { stdio: ['ignore', 'pipe', 'pipe'] }
     ).toString();
@@ -92,6 +105,10 @@ function lookupPullRequest(
   const result = pullRequestSchema.safeParse(value);
   if (
     !result.success ||
+    (scope === 'sync' &&
+      (result.data.state === undefined ||
+        result.data.headRepository?.nameWithOwner !==
+          githubRepoSlug(context))) ||
     (!/^\d+$/.test(branch) && result.data.headRefName !== branch) ||
     (/^\d+$/.test(branch) && result.data.number !== Number(branch)) ||
     result.data.url !==
@@ -184,7 +201,7 @@ export function selectRemoteUpdateGraph(
   return orderRemoteUpdateGraph(selected, context);
 }
 
-function snapshotSelection(
+export function snapshotSelection(
   branchName: string,
   pr: PullRequest
 ): RemoteUpdateSelection {
@@ -202,7 +219,7 @@ function snapshotSelection(
   };
 }
 
-function orderRemoteUpdateGraph(
+export function orderRemoteUpdateGraph(
   selected: readonly RemoteUpdateSelection[],
   context: TContext
 ): RemoteUpdateSelection[] {
@@ -235,7 +252,7 @@ function orderRemoteUpdateGraph(
 }
 
 /** Run before context initialization can repair or remove recovery metadata. */
-export function assertGetOperationAvailable(): void {
+export function assertGetOperationAvailable(operation = 'Get'): void {
   for (const name of [
     'rebase-merge',
     'rebase-apply',
@@ -256,7 +273,7 @@ export function assertGetOperationAvailable(): void {
     if (name === '.gtcontinue' && isCompletedLegacyContinuation(file)) continue;
     if (fs.existsSync(file))
       throw new ExitFailedError(
-        'Get requires no active Git or Anthracite recovery operation. Finish or inspect the existing operation first.'
+        `${operation} requires no active Git or Anthracite recovery operation. Finish or inspect the existing operation first.`
       );
   }
 }

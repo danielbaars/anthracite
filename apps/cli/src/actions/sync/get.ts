@@ -400,11 +400,11 @@ function continuationBranches(
   return args.downstack.slice(index + 1);
 }
 
-async function prepareRemoteUpdates(
+export async function prepareRemoteUpdates(
   args: {
     nodes: readonly RemoteUpdateNode[];
     force: boolean;
-    target: string;
+    target?: string;
     trunk?: RemoteTrunkUpdate;
     finalBranch: string | undefined;
   },
@@ -427,7 +427,7 @@ async function prepareRemoteUpdates(
     uncommittedTrackedChangesPrecondition();
   assertBranchesAvailableInWorktrees([
     ...changing.map((node) => node.branchName),
-    args.target,
+    ...(args.target ? [args.target] : []),
     ...(args.finalBranch ? [args.finalBranch] : []),
   ]);
   assertRestackFilesAvailable({

@@ -44,7 +44,7 @@ export const command = 'sync';
 export const canonical = 'repo sync';
 export const aliases = ['s'];
 export const description =
-  'Pull the trunk branch from remote and delete any branches that have been merged. If trunk cannot be fast-forwarded to match remote, overwrites trunk with the remote version. Sync does not refresh feature heads; use get for feature updates.';
+  'Refresh existing tracked open-PR feature heads across the configured trunk, pull trunk and clean eligible merged/closed branches. No-pull skips only trunk; no-delete suppresses cleanup. Explicit force may reset a divergent trunk, but never authorizes feature overwrite.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   return graphite(argv, canonical, async (context) => {

@@ -75,7 +75,7 @@ describe('frozen sync through the public CLI', function () {
     ).to.equal(true);
   });
   for (const command of [['sync'], ['repo', 'sync'], ['repo', 's']]) {
-    it(`preserves frozen metadata and feature heads during default trunk FF and PR upserts via ${command.join(
+    it(`refreshes frozen feature heads during trunk FF and PR upserts via ${command.join(
       ' '
     )}`, () => {
       fixture.branch('feature', 'main');
@@ -113,11 +113,9 @@ describe('frozen sync through the public CLI', function () {
       fixture.clearCalls();
       const result = fixture.run([...command, '--no-interactive']);
       expect(result.status, result.stdout + result.stderr).to.equal(0);
-      expect(result.stdout)
-        .to.include('use an get')
-        .and.to.include('feature heads');
+      expect(result.stdout).to.include('Synced feature from remote.');
       expect(fixture.git('rev-parse', 'main')).to.equal(remoteTrunk);
-      expect(fixture.git('rev-parse', 'feature')).to.equal(feature);
+      expect(fixture.git('rev-parse', 'feature')).to.equal(remoteFeature);
       expect(fixture.git('rev-parse', 'feature^{tree}')).to.equal(tree);
       expect(fixture.remoteSha('feature')).to.equal(remoteFeature);
       const metadata = fixture.git(
@@ -136,12 +134,12 @@ describe('frozen sync through the public CLI', function () {
       ).to.equal(true);
     });
 
-    it(`explains the limited sync scope in help and completion via ${command.join(
+    it(`explains existing tracked feature refresh in help and completion via ${command.join(
       ' '
     )}`, () => {
       const help = fixture.run([...command, '--help']);
       expect(help.status).to.equal(0);
-      expect(help.stdout).to.include('feature heads').and.to.include('get');
+      expect(help.stdout).to.include('feature heads').and.to.include('tracked');
       fixture.env.SHELL = '/bin/zsh';
       const completion = fixture.run([
         '--get-yargs-completions',
@@ -152,7 +150,7 @@ describe('frozen sync through the public CLI', function () {
       expect(completion.status).to.equal(0);
       expect(completion.stdout)
         .to.include('feature heads')
-        .and.to.include('get');
+        .and.to.include('tracked');
     });
   }
 
@@ -766,7 +764,7 @@ fi
     expect(fixture.observe().rebase).to.equal(true);
   }
 
-  it('does not overwrite unrelated saved continuation during zero-replay frozen leaf cleanup', () => {
+  it('refuses zero-replay frozen leaf cleanup during unrelated saved continuation and preserves legacy continue', () => {
     fixture.branch('leaf', 'main');
     closed('leaf');
     fixture.succeed('freeze');
@@ -782,8 +780,9 @@ fi
       '--force',
       '--no-interactive',
     ]);
-    expect(result.status, result.stdout + result.stderr).to.equal(0);
-    expect(fixture.git('branch', '--format=%(refname:short)')).not.to.include(
+    expect(result.status, result.stdout + result.stderr).to.equal(1);
+    expect(result.stderr).to.include('Sync requires no active');
+    expect(fixture.git('branch', '--format=%(refname:short)')).to.include(
       'leaf'
     );
     expect(fixture.git('rev-parse', 'HEAD')).to.equal(activeHead);
@@ -815,7 +814,7 @@ fi
       '--no-interactive',
     ]);
     expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stderr).to.include('Git operation').and.to.include('active');
+    expect(result.stderr).to.include('Git').and.to.include('active');
     expect(fixture.observe()).to.deep.equal(before);
     expect(fs.readFileSync(recovery)).to.deep.equal(saved);
     fixture.succeed('continue');
