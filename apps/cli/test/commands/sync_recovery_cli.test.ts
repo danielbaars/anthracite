@@ -674,6 +674,28 @@ describe('sync CLI owned recovery', function () {
     expect(fs.readFileSync(fixture.ghCalls, 'utf8')).to.equal('');
     expect(fs.existsSync(recoveryFile(fixture))).to.equal(false);
   });
+  it('refuses a newly occupied trunk fallback before staging or pending cleanup', () => {
+    startIncomingCleanupConflict(fixture);
+    const other = path.join(fixture.root, 'occupied-trunk');
+    fixture.git(fixture.consumer, 'worktree', 'add', other, 'main');
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'conflict.txt'),
+      'resolved incoming'
+    );
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'unstaged.txt'),
+      'do not stage'
+    );
+    const before = fixture.observe();
+    const result = fixture.run(['continue', '--all']);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include(other);
+    expect(fixture.observe()).to.deep.equal(before);
+    expect(fixture.git(fixture.consumer, 'branch', '--list', 'child')).to.equal(
+      'child'
+    );
+    expect(fixture.git(other, 'status', '--porcelain')).to.equal('');
+  });
 });
 
 function recoveryFile(fixture: FrozenGetFixture): string {

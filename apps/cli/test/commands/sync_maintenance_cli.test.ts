@@ -254,7 +254,7 @@ if (!fs.existsSync(${JSON.stringify(
     expect(result.output)
       .to.include('Completed local maintenance: parent')
       .and.to.include('Pending local maintenance: child')
-      .and.to.include('no saved phase continuation');
+      .and.to.include('Resolve the conflict and run an continue.');
     fixture.assertTip('main', main);
     fixture.assertTip('child', fixture.oldChild);
     expect(
@@ -275,6 +275,20 @@ if (!fs.existsSync(${JSON.stringify(
     expect(
       fs.readFileSync(path.join(fixture.consumer, 'child.txt'), 'utf8')
     ).to.include('<<<<<<<');
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'child.txt'),
+      'resolved child addition'
+    );
+    fixture.ok('continue', '--all');
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'child'
+    );
+    expect(fixture.git(fixture.consumer, 'show', 'child:child.txt')).to.equal(
+      'resolved child addition'
+    );
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', '.gtcontinue'))
+    ).to.equal(false);
   });
 
   it('replays stale incoming children and unpublished descendants after feature refresh', () => {

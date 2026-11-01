@@ -94,7 +94,7 @@ export function assertSyncParticipants(
   const original = operation.refresh.original;
   const final =
     'branchName' in original
-      ? operation.progress.deleted.includes(original.branchName)
+      ? operation.cleanup.accepted.includes(original.branchName)
         ? operation.trunkName
         : original.branchName
       : undefined;

@@ -256,7 +256,7 @@ describe('sync CLI planned update authority', function () {
     fixture.assertTip('parent', fixture.oldParent);
   });
 
-  it('preserves a real reconciliation conflict with truthful manual phase guidance', () => {
+  it('continues a real reconciliation conflict through owned sync phases', () => {
     fixture.ok('unfreeze', 'child');
     fixture.commit(fixture.consumer, 'child.txt', 'conflicting local child');
     const remote = fixture.advanceChild();
@@ -266,8 +266,10 @@ describe('sync CLI planned update authority', function () {
       [{ prompt: 'How would you like to handle', input: '\r' }]
     );
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).to.include('Sync has no saved phase continuation');
-    expect(result.output).not.to.include(
+    expect(result.output).to.include(
+      'Resolve the conflict and run an continue.'
+    );
+    expect(result.output).to.include(
       'continue executing your previous Anthracite command'
     );
     expect(fixture.git(fixture.consumer, 'rev-parse', 'HEAD')).to.equal(remote);
@@ -277,6 +279,20 @@ describe('sync CLI planned update authority', function () {
     expect(
       fs.existsSync(path.join(fixture.consumer, '.git/rebase-merge'))
     ).to.equal(true);
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'child.txt'),
+      'resolved incoming child'
+    );
+    fixture.ok('cont', '--all');
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'child'
+    );
+    expect(fixture.git(fixture.consumer, 'show', 'child:child.txt')).to.equal(
+      'resolved incoming child'
+    );
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git', '.gtcontinue'))
+    ).to.equal(false);
   });
 
   it('offers frozen divergence overwrite and abort without local rebase', () => {
