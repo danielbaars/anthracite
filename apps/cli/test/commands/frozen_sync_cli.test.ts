@@ -901,6 +901,7 @@ fi
     closed('ancestor');
     fixture.git('checkout', '-b', 'empty', 'ancestor');
     fixture.succeed('track', 'empty', '--parent', 'ancestor');
+    fixture.git('push', 'origin', 'empty');
     fixture.setPrs([
       ...fixture.prs(),
       {
