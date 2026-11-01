@@ -1,3 +1,5 @@
+import { uncommittedTrackedChangesPrecondition } from '../preconditions';
+import { assertRestackFilesAvailable } from '../git/restack_files';
 import { deleteLandedLeafRefs } from '../git/land_cleanup';
 import { withFrozenCommitGuard } from '../git/frozen_commit';
 import chalk from 'chalk';
@@ -183,9 +185,11 @@ export type TEngine = {
 
   pushBranch: (branchName: string, forcePush: boolean) => void;
   pullTrunk: () => 'PULL_DONE' | 'PULL_UNNEEDED' | 'PULL_CONFLICT';
-  fastForwardTrunk: (snapshot: {
+  applyTrunkUpdate: (snapshot: {
     readonly head: string;
     readonly previousHead: string;
+    readonly sourceRef: string;
+    readonly reset?: boolean;
   }) => void;
   hardReset: (sha?: string) => void;
   resetTrunkToRemote: () => void;
@@ -1426,11 +1430,14 @@ export function composeEngine({
         git.switchBranch(currentBranchName);
       }
     },
-    fastForwardTrunk: ({ head, previousHead }) => {
+    applyTrunkUpdate: ({ head, previousHead, sourceRef, reset = false }) => {
       const trunk = assertTrunk();
       const assertUnchanged = (): void => {
         assertBranchesAvailableInWorktrees([trunk]);
-        if (git.getShaOrThrow(`refs/heads/${trunk}`) !== previousHead)
+        if (
+          git.getShaOrThrow(sourceRef) !== head ||
+          git.getShaOrThrow(`refs/heads/${trunk}`) !== previousHead
+        )
           throw new PreconditionsFailedError(
             `Trunk ${trunk} changed while getting the stack. Please retry.`
           );
@@ -1447,14 +1454,21 @@ export function composeEngine({
           );
       };
       assertUnchanged();
-      if (git.getMergeBase(previousHead, head) !== previousHead)
+      if (!reset && git.getMergeBase(previousHead, head) !== previousHead)
         throw new PreconditionsFailedError(
           `Cannot fast-forward trunk ${trunk}. Get never resets trunk.`
         );
       checkoutBranch(trunk, { preserveIgnored: true });
       assertUnchanged();
       assertPhysicalTrunk(previousHead);
-      git.fastForward(head);
+      uncommittedTrackedChangesPrecondition();
+      assertRestackFilesAvailable({
+        branches: [],
+        checkoutRevisions: [head],
+        operation: 'get',
+      });
+      if (reset) git.hardReset(head);
+      else git.fastForward(head);
       assertPhysicalTrunk(head);
       if (git.getShaOrThrow(`refs/heads/${trunk}`) !== head)
         throw new PreconditionsFailedError(
@@ -1617,6 +1631,13 @@ export function composeEngine({
         assertFetchedMetadata(branchName, previousMetadata, git);
       assertBranchEditable(branchName);
 
+      let from = cachedMeta.parentBranchRevision;
+      if (options?.source) {
+        const sharedHead = git.getMergeBase(cachedMeta.branchRevision, head);
+        // Reconcile unique commits without replaying a parent's old history.
+        if (git.getMergeBase(from, sharedHead) === from) from = sharedHead;
+      }
+
       // setting the current branch to this branch is correct in either case
       // failure case, we want it so that currentBranchOverride will be set
       // success case, it ends up as HEAD after the rebase.
@@ -1624,7 +1645,7 @@ export function composeEngine({
       if (
         git.rebase({
           onto: head,
-          from: cachedMeta.parentBranchRevision,
+          from,
           branchName,
           restackCommitterDateIsAuthorDate,
           preserveOtherRefs: options?.preserveOtherRefs,

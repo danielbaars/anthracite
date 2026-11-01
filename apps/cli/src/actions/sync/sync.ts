@@ -1,8 +1,6 @@
-import chalk from 'chalk';
 import { TContext } from '../../lib/context';
 import { clearContinuation } from '../persist_continuation';
 import { SCOPE } from '../../lib/engine/scope_spec';
-import { KilledError } from '../../lib/errors';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { restackBranches } from '../restack';
 import { cleanBranches } from './clean_branches';
@@ -20,10 +18,9 @@ export async function syncAction(
   context: TContext
 ): Promise<void> {
   uncommittedTrackedChangesPrecondition();
-  await refreshSyncFeatures(context);
+  await refreshSyncFeatures(opts, context);
 
   if (opts.pull) {
-    await pullTrunk(opts.force, context);
     context.splog.tip('You can skip pulling trunk with the `--no-pull` flag.');
   }
 
@@ -108,52 +105,4 @@ export async function syncAction(
   }
   restackBranches(branchesToRestack, context);
   if (mandatory.length) clearContinuation(context);
-}
-
-export async function pullTrunk(
-  force: boolean,
-  context: TContext
-): Promise<void> {
-  context.splog.info(
-    `🌲 Pulling ${chalk.cyan(context.engine.trunk)} from remote...`
-  );
-  const pullResult = context.engine.pullTrunk();
-  if (pullResult !== 'PULL_CONFLICT') {
-    context.splog.info(
-      pullResult === 'PULL_UNNEEDED'
-        ? `${chalk.green(context.engine.trunk)} is up to date.`
-        : `${chalk.green(context.engine.trunk)} fast-forwarded to ${chalk.gray(
-            context.engine.getRevision(context.engine.trunk)
-          )}.`
-    );
-    return;
-  }
-
-  // If trunk cannot be fast-forwarded, prompt the user to reset to remote
-  context.splog.warn(
-    `${chalk.blueBright(context.engine.trunk)} could not be fast-forwarded.`
-  );
-  if (
-    force ||
-    (context.interactive &&
-      (
-        await context.prompts({
-          type: 'confirm',
-          name: 'value',
-          message: `Overwrite ${chalk.yellow(
-            context.engine.trunk
-          )} with the version from remote?`,
-          initial: true,
-        })
-      ).value)
-  ) {
-    context.engine.resetTrunkToRemote();
-    context.splog.info(
-      `${chalk.green(context.engine.trunk)} set to ${chalk.gray(
-        context.engine.getRevision(context.engine.trunk)
-      )}.`
-    );
-  } else {
-    throw new KilledError();
-  }
 }

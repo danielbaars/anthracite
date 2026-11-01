@@ -12,9 +12,13 @@ export type RemoteTrunkUpdate = {
   readonly previousHead: string;
   readonly head: string;
   readonly sourceRef: string;
+  readonly reset?: boolean;
 };
 
-export function snapshotRemoteTrunk(context: TContext): RemoteTrunkUpdate {
+export function snapshotRemoteTrunk(
+  context: TContext,
+  policy: 'get' | 'sync' = 'get'
+): RemoteTrunkUpdate {
   const branchName = context.engine.trunk;
   const previousHead = getShaOrThrow(`refs/heads/${branchName}`);
   fetchBranch(context.repoConfig.getRemote(), branchName);
@@ -25,7 +29,7 @@ export function snapshotRemoteTrunk(context: TContext): RemoteTrunkUpdate {
   } catch {
     /* Unrelated histories cannot fast-forward. */
   }
-  if (!canFastForward)
+  if (!canFastForward && policy === 'get')
     throw new ExitFailedError(
       `Cannot advance trunk ${branchName}: local trunk is ahead of or diverged from its remote. Get never resets trunk, even with --force.`
     );
@@ -35,11 +39,20 @@ export function snapshotRemoteTrunk(context: TContext): RemoteTrunkUpdate {
     onError: 'throw',
     resource: 'pinGetTrunk',
   });
-  return { branchName, previousHead, head, sourceRef };
+  return {
+    branchName,
+    previousHead,
+    head,
+    sourceRef,
+    ...(policy === 'sync' ? { reset: !canFastForward } : {}),
+  };
 }
 
 export function assertRemoteTrunkUnchanged(trunk: RemoteTrunkUpdate): void {
-  if (getShaOrThrow(`refs/heads/${trunk.branchName}`) !== trunk.previousHead)
+  if (
+    getShaOrThrow(trunk.sourceRef) !== trunk.head ||
+    getShaOrThrow(`refs/heads/${trunk.branchName}`) !== trunk.previousHead
+  )
     throw new ExitFailedError(
       `Trunk ${trunk.branchName} changed while getting the stack. Please retry.`
     );
@@ -53,8 +66,12 @@ export function applyRemoteTrunk(
 ): void {
   assertRemoteTrunkUnchanged(trunk);
   if (trunk.head === trunk.previousHead) return;
-  context.engine.fastForwardTrunk(trunk);
-  context.splog.info(`Fast-forwarded trunk ${trunk.branchName} from remote.`);
+  context.engine.applyTrunkUpdate(trunk);
+  context.splog.info(
+    `${trunk.reset ? 'Reset' : 'Fast-forwarded'} trunk ${
+      trunk.branchName
+    } from remote.`
+  );
 }
 
 export function releaseRemoteTrunk(trunk: RemoteTrunkUpdate): void {
