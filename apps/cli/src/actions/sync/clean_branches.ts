@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { TContext } from '../../lib/context';
+import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 import {
   getMetadataRefList,
   readMetadataRef,
@@ -28,6 +29,11 @@ type CleanupBranch = {
 };
 export type SyncCleanupPlan = {
   readonly branches: readonly CleanupBranch[];
+  readonly untouched: readonly {
+    readonly branchName: string;
+    readonly head: string;
+    readonly metadata: string;
+  }[];
   readonly trunkHead: string;
   readonly accepted: readonly string[];
   readonly deletions: readonly string[];
@@ -57,6 +63,13 @@ export async function planSyncCleanup(
   context: TContext
 ): Promise<SyncCleanupPlan> {
   const branches = projectCleanupBranches(refresh, context);
+  const untouched = Object.entries(getMetadataRefList())
+    .filter(([name]) => !branches.some((branch) => branch.branchName === name))
+    .map(([branchName, metadata]) => ({
+      branchName,
+      head: getSha(`refs/heads/${branchName}`),
+      metadata,
+    }));
   const trunk =
     refresh.trunk?.head ?? context.engine.getRevision(context.engine.trunk);
   const accepted: string[] = [];
@@ -125,6 +138,7 @@ export async function planSyncCleanup(
   const closure = cleanupClosure(branches, allowed, projection);
   const plan = {
     branches,
+    untouched,
     trunkHead: trunk,
     accepted: allowed,
     deletions: [...allowed].sort(
@@ -301,11 +315,17 @@ export function assertSyncCleanupAvailable(
 }
 
 export function assertSyncCleanupSnapshot(plan: SyncCleanupPlan): void {
-  for (const branch of plan.branches) {
+  for (const branch of [
+    ...plan.branches.map((entry) => ({
+      branchName: entry.branchName,
+      head: entry.previousHead,
+      metadata: entry.previousMetadata,
+    })),
+    ...plan.untouched,
+  ]) {
     if (
-      getSha(`refs/heads/${branch.branchName}`) !== branch.previousHead ||
-      getSha(`refs/branch-metadata/${branch.branchName}`) !==
-        branch.previousMetadata
+      getSha(`refs/heads/${branch.branchName}`) !== branch.head ||
+      getSha(`refs/branch-metadata/${branch.branchName}`) !== branch.metadata
     )
       throw new ExitFailedError(
         `${branch.branchName} changed while collecting sync choices. Replan before applying incoming updates.`
@@ -320,12 +340,22 @@ export function applySyncCleanup(
   progress: SyncCleanupProgress
 ): void {
   const expected = new Map(
-    plan.branches.map((entry) => [
-      entry.branchName,
-      {
+    [
+      ...plan.branches.map((entry) => ({
+        branchName: entry.branchName,
         head: entry.head ?? getSha(`refs/heads/${entry.branchName}`),
         metadata: getSha(`refs/branch-metadata/${entry.branchName}`),
-      },
+      })),
+      ...plan.untouched.map((entry) => ({
+        ...entry,
+        head:
+          entry.branchName === context.engine.trunk
+            ? plan.trunkHead
+            : entry.head,
+      })),
+    ].map((entry) => [
+      entry.branchName,
+      { head: entry.head, metadata: entry.metadata },
     ])
   );
   const check = (): void => {
@@ -338,7 +368,7 @@ export function applySyncCleanup(
         throw new ExitFailedError(
           `Unexpected branch ${name} appeared during cleanup; replan sync.`
         );
-    for (const entry of plan.branches) {
+    for (const entry of [...plan.branches, ...plan.untouched]) {
       if (progress.deleted.includes(entry.branchName)) continue;
       const previous = expected.get(entry.branchName);
       if (
@@ -357,11 +387,26 @@ export function applySyncCleanup(
   try {
     for (const entry of plan.parents) {
       check();
-      context.engine.setParent(entry.branchName, entry.parent, plan.mandatory);
-      expected.set(entry.branchName, {
-        head: getSha(`refs/heads/${entry.branchName}`),
-        metadata: getSha(`refs/branch-metadata/${entry.branchName}`),
-      });
+      const previous = expected.get(entry.branchName);
+      if (!previous)
+        throw new Error(`Unknown cleanup participant ${entry.branchName}.`);
+      const metadata =
+        context.engine.setParent(
+          entry.branchName,
+          entry.parent,
+          plan.mandatory
+        ) ?? previous.metadata;
+      if (
+        getSha(`refs/heads/${entry.branchName}`) !== previous.head ||
+        !sameMetadataExceptFrozen(
+          getSha(`refs/branch-metadata/${entry.branchName}`),
+          metadata
+        )
+      )
+        throw new ExitFailedError(
+          `${entry.branchName} cleanup parent publication changed; reached work and concurrent changes are retained. Inspect manually before retrying.`
+        );
+      expected.set(entry.branchName, { head: previous.head, metadata });
       progress.changed.push(entry.branchName);
       context.splog.info(
         `Set parent of ${chalk.cyan(entry.branchName)} to ${chalk.blueBright(

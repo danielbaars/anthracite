@@ -8,6 +8,11 @@ import {
   assertSyncMaintenanceAvailable,
 } from './sync_maintenance';
 import {
+  createSyncCompletion,
+  finishSyncCompletion,
+  recordSyncCompletionBranch,
+} from './sync_completion';
+import {
   planSyncCleanup,
   applySyncCleanup,
   SyncCleanupProgress,
@@ -32,11 +37,13 @@ export async function syncAction(
 ): Promise<void> {
   uncommittedTrackedChangesPrecondition();
   const refresh = await prepareSyncRefresh(opts, context);
+  let applying = false;
   try {
     const cleanup = await planSyncCleanup(opts, refresh, context);
     const maintenance = planSyncMaintenance(cleanup, context);
     if (opts.restack) assertSyncMaintenanceAvailable(maintenance, context);
     assertSyncCleanupSnapshot(cleanup);
+    applying = true;
     const updated = await applySyncRefresh(refresh, context);
     const progress: SyncCleanupProgress = {
       changed: [],
@@ -54,6 +61,10 @@ export async function syncAction(
         }`
       );
     }
+    const completion = createSyncCompletion(
+      { refresh, cleanup, progress },
+      context
+    );
     if (opts.restack && cleanup.replay.length) {
       context.continueConfig.update((data) => {
         data.delete = {
@@ -69,11 +80,22 @@ export async function syncAction(
       {
         shouldRestack: opts.restack,
         updatedBranches: updated,
+        onComplete: (branch) => recordSyncCompletionBranch(completion, branch),
+      },
+      context
+    );
+    finishSyncCompletion(
+      completion,
+      {
+        updated,
+        deleted: progress.deleted,
+        changedParents: progress.changed,
+        releaseSources: () => releaseSyncRefresh(refresh),
       },
       context
     );
     if (opts.restack && cleanup.replay.length) clearContinuation(context);
   } finally {
-    releaseSyncRefresh(refresh);
+    if (!applying) releaseSyncRefresh(refresh);
   }
 }

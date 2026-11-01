@@ -103,7 +103,7 @@ export type TEngine = {
     branchName: string,
     parentBranchName: string,
     participants?: readonly string[]
-  ) => void;
+  ) => string | undefined;
   getParent: (branchName: string) => string | undefined;
   getParentPrecondition: (branchName: string) => string;
 
@@ -431,7 +431,11 @@ export function composeEngine({
     }
 
     assertBranchIsValidOrTrunkAndGetMeta(parentBranchName);
-    updateMeta(branchName, { ...cachedMeta, parentBranchName }, participants);
+    return updateMeta(
+      branchName,
+      { ...cachedMeta, parentBranchName },
+      participants
+    );
   };
 
   const getParent = (branchName: string) => {
@@ -1108,8 +1112,11 @@ export function composeEngine({
           : undefined;
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
+      // Bounded sync cleanup follows physical checkout after remote application.
+      if (options && 'onHeadDeleted' in options)
+        cache.currentBranch = git.getCurrentBranchName();
       if (branchName === cache.currentBranch) {
-        checkoutBranch(cachedMeta.parentBranchName);
+        checkoutBranch(cachedMeta.parentBranchName, { preserveIgnored: true });
       }
 
       beforeDelete?.();

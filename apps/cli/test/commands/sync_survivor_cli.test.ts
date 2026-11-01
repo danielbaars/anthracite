@@ -187,7 +187,7 @@ describe('sync CLI incoming and cleanup survivor plan', function () {
     expect(fixture.ok('info', 'child').output).to.include('Parent: parent');
     expect(result.output).to.include('Skipping cleanup of parent');
   });
-  it('preserves concurrent PR metadata from a checkout hook and refuses stale cleanup', () => {
+  it('preserves final checkout hook PR metadata and reports reached cleanup', () => {
     fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
     fixture.ok('unfreeze', 'child');
     fixture.ok('checkout', 'main');
@@ -225,7 +225,9 @@ describe('sync CLI incoming and cleanup survivor plan', function () {
     ]);
     expect(result.status, result.output).to.equal(1);
     fixture.assertTip('child', incoming);
-    fixture.assertTip('parent', fixture.oldParent);
+    expect(
+      fixture.git(fixture.consumer, 'branch', '--list', 'parent')
+    ).to.equal('');
     expect(
       fixture.git(
         fixture.consumer,
@@ -237,8 +239,9 @@ describe('sync CLI incoming and cleanup survivor plan', function () {
       .to.include('concurrent title')
       .and.to.include('"parentBranchName": "parent"');
     expect(result.output)
-      .to.include('Updated child')
-      .and.to.include('projected cleanup graph');
+      .to.include('Updated: child')
+      .and.to.include('Sync completion failed')
+      .and.to.include('Confirmed cleanup deletions: parent');
   });
   it('shows optional progress while inspecting cleanup candidates', () => {
     const result = fixture.ok(

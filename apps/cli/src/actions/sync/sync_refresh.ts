@@ -9,7 +9,7 @@ import {
   RemoteTrunkUpdate,
 } from './remote_update_trunk';
 import { getBranchesFromRemote, prepareRemoteUpdates } from './get';
-import { captureGetCheckout, finishGetCheckout } from './get_checkout';
+import { captureGetCheckout } from './get_checkout';
 import {
   lookupPullRequest,
   orderRemoteUpdateGraph,
@@ -20,6 +20,8 @@ import {
 } from './remote_update_graph';
 
 export type SyncRefreshPlan = {
+  readonly trunkHead: string;
+  readonly originalHead: string;
   readonly original: ReturnType<typeof captureGetCheckout>;
   readonly trunk?: RemoteTrunkUpdate;
   readonly nodes: ReturnType<typeof snapshotRemoteUpdateGraph>;
@@ -32,6 +34,8 @@ export async function prepareSyncRefresh(
   context: TContext
 ): Promise<SyncRefreshPlan> {
   const original = captureGetCheckout();
+  const originalHead = getSha('HEAD');
+  const trunkHead = getSha(`refs/heads/${context.engine.trunk}`);
   const trunk = opts.pull ? snapshotRemoteTrunk(context, 'sync') : undefined;
   let nodes: ReturnType<typeof snapshotRemoteUpdateGraph> = [];
   try {
@@ -53,7 +57,7 @@ export async function prepareSyncRefresh(
       context
     );
     if (trunk?.reset) await confirmSyncTrunkReset(trunk, opts.force, context);
-    return { original, trunk, nodes, prs };
+    return { original, originalHead, trunkHead, trunk, nodes, prs };
   } catch (error) {
     releaseRemoteUpdateGraph(nodes);
     if (trunk) releaseRemoteTrunk(trunk);
@@ -65,7 +69,7 @@ export async function applySyncRefresh(
   plan: SyncRefreshPlan,
   context: TContext
 ): Promise<string[]> {
-  const { original, trunk, nodes, prs } = plan;
+  const { trunk, nodes, prs } = plan;
   try {
     if (trunk) applyRemoteTrunk(trunk, context);
     const updated = await getBranchesFromRemote(
@@ -80,10 +84,6 @@ export async function applySyncRefresh(
     );
     for (const pr of prs)
       context.engine.upsertPrInfo(pr.headRefName, getSyncPullRequestInfo(pr));
-    finishGetCheckout(
-      { target: context.engine.trunk, original, shouldCheckout: false },
-      updated
-    );
     return [
       ...(trunk && trunk.head !== trunk.previousHead ? [trunk.branchName] : []),
       ...updated,
