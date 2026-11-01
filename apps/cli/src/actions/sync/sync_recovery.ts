@@ -6,7 +6,7 @@ import { getRebaseDirectory } from '../../lib/git/rebase_in_progress';
 import { getRebaseHead } from '../../lib/git/merge_conflict_help';
 import { ownsRebase } from '../../lib/git/rebase_ownership';
 import { gitEnvironmentOverrides } from '../../lib/git/environment_overrides';
-import { runGitCommand } from '../../lib/git/runner';
+import { getSyncRemoteUrl, getSyncRepository } from './sync_identity';
 import { getSha } from '../../lib/git/get_sha';
 import {
   continueConfigFactory,
@@ -110,12 +110,8 @@ export function validateSyncRecovery(
     identity.gitDirectory !== operation.gitDirectory ||
     repo.data.trunk !== operation.trunkName ||
     repo.getRemote() !== operation.remote ||
-    `${repo.getRepoOwner()}/${repo.getRepoName()}` !== operation.repository ||
-    runGitCommand({
-      args: ['remote', 'get-url', operation.remote],
-      onError: 'throw',
-      resource: 'syncIdentity',
-    }) !== operation.remoteUrl
+    getSyncRepository(repo) !== operation.repository ||
+    getSyncRemoteUrl(operation.remote) !== operation.remoteUrl
   )
     refuseSync(
       'Continue sync in its original worktree and configured repository.'

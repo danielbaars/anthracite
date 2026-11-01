@@ -1,7 +1,7 @@
 import { continueConfigFactory } from '../../lib/spiffy/continuation_spf';
 import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 import { TContext } from '../../lib/context';
-import { githubRepoSlug } from '../../lib/api/github_repo';
+import { getSyncRemoteUrl, getSyncRepository } from './sync_identity';
 import { getSha } from '../../lib/git/get_sha';
 import { getCurrentBranchName } from '../../lib/git/branch_ops';
 import { runGitCommand } from '../../lib/git/runner';
@@ -51,13 +51,9 @@ export function createSyncOperation(
     kind: 'sync',
     version: 1,
     ...getRecoveryIdentity(),
-    repository: githubRepoSlug(context),
+    repository: getSyncRepository(context.repoConfig),
     remote: context.repoConfig.getRemote(),
-    remoteUrl: runGitCommand({
-      args: ['remote', 'get-url', context.repoConfig.getRemote()],
-      onError: 'throw',
-      resource: 'syncIdentity',
-    }),
+    remoteUrl: getSyncRemoteUrl(context.repoConfig.getRemote()),
     trunkName: context.engine.trunk,
     refresh,
     cleanup,

@@ -187,6 +187,7 @@ describe('sync CLI owned recovery', function () {
     'abort',
     'worktree',
     'repository',
+    'remote',
     'head',
     'parent',
     'active freeze',
@@ -250,6 +251,14 @@ describe('sync CLI owned recovery', function () {
             .replace('get-fixture', 'foreign-owner')
         );
       }
+      if (change === 'remote')
+        fixture.git(
+          fixture.consumer,
+          'remote',
+          'set-url',
+          'origin',
+          path.join(fixture.root, 'changed-remote.git')
+        );
       if (change === 'head')
         fixture.git(
           fixture.consumer,
@@ -633,6 +642,37 @@ describe('sync CLI owned recovery', function () {
     ).to.equal(false);
     expect(result.output).to.include('Confirmed cleanup deletions: child');
     expect(fs.existsSync(recoveryFile(fixture))).to.equal(true);
+  });
+  it('continues purely local sync without a remote or GitHub repository identity', () => {
+    fixture.ok('unfreeze', 'parent');
+    fixture.ok('unfreeze', 'child');
+    fixture.ok('repo', 'github', '--no-enable');
+    fixture.git(fixture.consumer, 'remote', 'remove', 'origin');
+    const config = path.join(fixture.consumer, '.git', '.graphite_repo_config');
+    const value = readRecord(config);
+    Reflect.deleteProperty(value, 'owner');
+    Reflect.deleteProperty(value, 'name');
+    fs.writeJsonSync(config, value);
+    fixture.git(fixture.consumer, 'switch', 'main');
+    fixture.commit(fixture.consumer, 'parent.txt', 'local trunk collision');
+    fixture.git(fixture.consumer, 'switch', 'child');
+    fs.writeFileSync(fixture.ghCalls, '');
+    const start = fixture.run(['sync', '--no-pull', '--no-delete']);
+    expect(start.status, start.output).to.equal(1);
+    expect(start.output).to.include('Hit conflict restacking parent');
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'parent.txt'),
+      'resolved local identity'
+    );
+    fixture.ok('continue', '--all');
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'child'
+    );
+    expect(fixture.git(fixture.consumer, 'show', 'parent:parent.txt')).to.equal(
+      'resolved local identity'
+    );
+    expect(fs.readFileSync(fixture.ghCalls, 'utf8')).to.equal('');
+    expect(fs.existsSync(recoveryFile(fixture))).to.equal(false);
   });
 });
 

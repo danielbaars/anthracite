@@ -63,9 +63,9 @@ export const syncOperationSchema = z
     root: z.string(),
     commonDirectory: z.string(),
     gitDirectory: z.string(),
-    repository: z.string(),
+    repository: z.string().optional(),
     remote: z.string(),
-    remoteUrl: z.string(),
+    remoteUrl: z.string().optional(),
     trunkName: z.string(),
     refresh: z
       .object({
