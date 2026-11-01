@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.0](https://github.com/danielbaars/anthracite/compare/v0.5.1...v0.6.0) (2026-11-01)
+
+
+### Features
+
+* **cli:** add scoped get updates and restack controls ([#77](https://github.com/danielbaars/anthracite/issues/77)) [skip ci] ([26c8b64](https://github.com/danielbaars/anthracite/commit/26c8b64373e0c57bf2fd833a6a65bfeb827d8bfd))
+* **cli:** refresh sync branches with separate cleanup consent ([ac3a2fd](https://github.com/danielbaars/anthracite/commit/ac3a2fd638bf2376a0d8371f8b8f7d5e3cf4baf1))
+
 ## [0.5.1](https://github.com/danielbaars/anthracite/compare/v0.5.0...v0.5.1) (2026-10-31)
 
 
