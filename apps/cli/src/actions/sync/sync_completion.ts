@@ -14,6 +14,7 @@ import { SyncRefreshPlan } from './sync_refresh';
 
 export type SyncCompletion = {
   readonly checkout: GetCheckoutIntent;
+  readonly untouched: readonly string[];
   readonly expected: { branchName: string; head: string; metadata: string }[];
   readonly sources: readonly { sourceRef: string; head: string }[];
 };
@@ -34,6 +35,7 @@ export function createSyncCompletion(
   const names = new Set([
     context.engine.trunk,
     ...cleanup.branches.map((entry) => entry.branchName),
+    ...cleanup.untouched.map((entry) => entry.branchName),
     ...('branchName' in original ? [original.branchName] : []),
   ]);
   const completion: SyncCompletion = {
@@ -42,6 +44,7 @@ export function createSyncCompletion(
       original,
       shouldCheckout: removedOriginal,
     },
+    untouched: cleanup.untouched.map((entry) => entry.branchName),
     expected: [...names].map((branchName) => ({
       branchName,
       head: progress.deleted.includes(branchName)
@@ -52,10 +55,12 @@ export function createSyncCompletion(
           branchName === original.branchName &&
           !cleanup.branches.some((entry) => entry.branchName === branchName)
         ? refresh.originalHead
-        : getSha(`refs/heads/${branchName}`),
+        : cleanup.untouched.find((entry) => entry.branchName === branchName)
+            ?.head ?? getSha(`refs/heads/${branchName}`),
       metadata: progress.deleted.includes(branchName)
         ? ''
-        : getSha(`refs/branch-metadata/${branchName}`),
+        : cleanup.untouched.find((entry) => entry.branchName === branchName)
+            ?.metadata ?? getSha(`refs/branch-metadata/${branchName}`),
     })),
     sources: [...(refresh.trunk ? [refresh.trunk] : []), ...refresh.nodes],
   };
@@ -70,7 +75,8 @@ export function recordSyncCompletionBranch(
   const expected = completion.expected.find(
     (entry) => entry.branchName === branchName
   );
-  if (!expected) throw new Error(`Unexpected sync participant ${branchName}.`);
+  if (!expected || completion.untouched.includes(branchName))
+    throw new Error(`Unexpected sync participant ${branchName}.`);
   expected.head = getSha(`refs/heads/${branchName}`);
   expected.metadata = getSha(`refs/branch-metadata/${branchName}`);
 }
@@ -79,10 +85,13 @@ export function assertSyncCompletionGraph(completion: SyncCompletion): void {
   for (const expected of completion.expected)
     if (
       getSha(`refs/heads/${expected.branchName}`) !== expected.head ||
-      !sameMetadataExceptFrozen(
-        getSha(`refs/branch-metadata/${expected.branchName}`),
-        expected.metadata
-      )
+      (completion.untouched.includes(expected.branchName)
+        ? getSha(`refs/branch-metadata/${expected.branchName}`) !==
+          expected.metadata
+        : !sameMetadataExceptFrozen(
+            getSha(`refs/branch-metadata/${expected.branchName}`),
+            expected.metadata
+          ))
     )
       throw new Error(
         `${expected.branchName} changed outside the completed sync plan.`

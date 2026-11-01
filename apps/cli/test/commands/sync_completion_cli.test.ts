@@ -11,6 +11,31 @@ describe('sync CLI checked completion', function () {
   });
   afterEach(() => fixture?.cleanup());
 
+  const breakChildParent = (): string => {
+    const metadata = fixture.git(
+      fixture.consumer,
+      'cat-file',
+      '-p',
+      'refs/branch-metadata/child'
+    );
+    const file = path.join(fixture.root, 'invalid-parent.json');
+    fs.writeFileSync(
+      file,
+      metadata.replace(
+        '"parentBranchName": "parent"',
+        '"parentBranchName": "removed-parent"'
+      )
+    );
+    const oid = fixture.git(fixture.consumer, 'hash-object', '-w', file);
+    fixture.git(
+      fixture.consumer,
+      'update-ref',
+      'refs/branch-metadata/child',
+      oid
+    );
+    return oid;
+  };
+
   it('falls back to trunk after confirmed cleanup removes the original checkout', () => {
     fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
     fs.writeJsonSync(fixture.identities, {
@@ -322,5 +347,154 @@ describe('sync CLI checked completion', function () {
     expect(result.output)
       .to.include('parent changed outside')
       .and.to.include('Actual checkout: main');
+  });
+  it('preserves unchanged pre-existing metadata outside the valid tracked graph', () => {
+    const oid = breakChildParent();
+    fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
+    fixture.assertTip('child', fixture.oldChild);
+    expect(
+      fixture.git(fixture.consumer, 'rev-parse', 'refs/branch-metadata/child')
+    ).to.equal(oid);
+    expect(fixture.git(fixture.consumer, 'branch', '--show-current')).to.equal(
+      'child'
+    );
+  });
+  it('rejects source cleanup actor head changes outside the valid tracked graph', () => {
+    breakChildParent();
+    const trunk = fixture.git(fixture.consumer, 'rev-parse', 'main');
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'reference-transaction'),
+      `#!/bin/sh\nif [ "$1" = committed ]; then\n while read old new ref; do\n case "$ref:$new" in refs/gt-metadata/get/*:0000000000000000000000000000000000000000) git -c core.hooksPath=/dev/null update-ref refs/heads/child ${trunk};; esac\n done\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run([
+      'sync',
+      '--no-pull',
+      '--no-delete',
+      '--no-restack',
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    fixture.assertTip('child', trunk);
+    expect(result.output)
+      .to.include('child changed outside')
+      .and.to.include('Manual inspection');
+  });
+
+  it('rejects incoming-hook changes to original opaque out-of-graph metadata', () => {
+    breakChildParent();
+    const file = path.join(fixture.root, 'opaque.txt');
+    fs.writeFileSync(file, 'concurrent opaque metadata');
+    const actor = fixture.git(fixture.consumer, 'hash-object', '-w', file);
+    fixture.ok('checkout', 'main');
+    const heads = fixture.advanceBoth();
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'post-checkout'),
+      `#!/bin/sh\nif [ "$(git branch --show-current)" = parent ]; then git update-ref refs/branch-metadata/child ${actor}; fi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run([
+      'sync',
+      '--no-pull',
+      '--no-delete',
+      '--no-restack',
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    fixture.assertTip('parent', heads.parent);
+    fixture.assertTip('child', fixture.oldChild);
+    expect(
+      fixture.git(fixture.consumer, 'rev-parse', 'refs/branch-metadata/child')
+    ).to.equal(actor);
+    expect(result.output).to.include('child changed during cleanup');
+  });
+
+  it('rejects a genuinely new tracked participant introduced during source cleanup', () => {
+    const oid = breakChildParent();
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'reference-transaction'),
+      `#!/bin/sh\nif [ "$1" = committed ]; then\n while read old new ref; do\n case "$ref:$new" in refs/gt-metadata/get/*:0000000000000000000000000000000000000000) git -c core.hooksPath=/dev/null update-ref refs/branch-metadata/intruder ${oid};; esac\n done\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run([
+      'sync',
+      '--no-pull',
+      '--no-delete',
+      '--no-restack',
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    expect(
+      fixture.git(
+        fixture.consumer,
+        'rev-parse',
+        'refs/branch-metadata/intruder'
+      )
+    ).to.equal(oid);
+    expect(result.output).to.include('Unexpected tracked branch intruder');
+  });
+  it('compares untouched opaque metadata exactly without adopting a changed freeze field', () => {
+    breakChildParent();
+    const metadata = fixture.git(
+      fixture.consumer,
+      'cat-file',
+      '-p',
+      'refs/branch-metadata/child'
+    );
+    const file = path.join(fixture.root, 'actor-freeze.json');
+    fs.writeFileSync(
+      file,
+      metadata.replace('"frozen": true', '"frozen": false')
+    );
+    const actor = fixture.git(fixture.consumer, 'hash-object', '-w', file);
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'reference-transaction'),
+      `#!/bin/sh\nif [ "$1" = committed ]; then\n while read old new ref; do\n case "$ref:$new" in refs/gt-metadata/get/*:0000000000000000000000000000000000000000) git -c core.hooksPath=/dev/null update-ref refs/branch-metadata/child ${actor};; esac\n done\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run([
+      'sync',
+      '--no-pull',
+      '--no-delete',
+      '--no-restack',
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    expect(
+      fixture.git(fixture.consumer, 'rev-parse', 'refs/branch-metadata/child')
+    ).to.equal(actor);
+    expect(result.output).to.include('child changed outside');
+  });
+
+  it('rejects a committed cleanup parent publication hook that restores the old parent', () => {
+    fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
+    fixture.ok('unfreeze', 'child');
+    fixture.ok('checkout', 'main');
+    const oldMetadata = fixture.git(
+      fixture.consumer,
+      'rev-parse',
+      'refs/branch-metadata/child'
+    );
+    fs.writeJsonSync(fixture.identities, {
+      prOverrides: { parent: { state: 'CLOSED' } },
+    });
+    const marker = path.join(fixture.root, 'restored-parent');
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'reference-transaction'),
+      `#!/bin/sh\nif [ "$1" = committed ] && [ ! -e "${marker}" ]; then\n while read old new ref; do\n if [ "$ref" = refs/branch-metadata/child ] && git cat-file -p "$new" | grep -q '\"parentBranchName\": \"main\"'; then\n touch "${marker}"\n git -c core.hooksPath=/dev/null update-ref refs/branch-metadata/child ${oldMetadata}\n fi\n done\nfi\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.run([
+      'sync',
+      '--no-pull',
+      '--delete-all',
+      '--no-restack',
+    ]);
+    expect(fs.existsSync(marker), result.output).to.equal(true);
+    expect(result.status, result.output).to.equal(1);
+    fixture.assertTip('parent', fixture.oldParent);
+    fixture.assertTip('child', fixture.oldChild);
+    expect(
+      fixture.git(fixture.consumer, 'rev-parse', 'refs/branch-metadata/child')
+    ).to.equal(oldMetadata);
+    expect(result.output)
+      .to.include('cleanup parent publication')
+      .and.to.include('retained');
   });
 });

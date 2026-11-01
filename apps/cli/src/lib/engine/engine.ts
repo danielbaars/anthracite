@@ -103,7 +103,7 @@ export type TEngine = {
     branchName: string,
     parentBranchName: string,
     participants?: readonly string[]
-  ) => void;
+  ) => string | undefined;
   getParent: (branchName: string) => string | undefined;
   getParentPrecondition: (branchName: string) => string;
 
@@ -431,7 +431,11 @@ export function composeEngine({
     }
 
     assertBranchIsValidOrTrunkAndGetMeta(parentBranchName);
-    updateMeta(branchName, { ...cachedMeta, parentBranchName }, participants);
+    return updateMeta(
+      branchName,
+      { ...cachedMeta, parentBranchName },
+      participants
+    );
   };
 
   const getParent = (branchName: string) => {
