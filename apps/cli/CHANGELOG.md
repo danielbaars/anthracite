@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.5](https://github.com/danielbaars/anthracite/compare/v0.6.4...v0.6.5) (2026-11-02)
+
+
+### Bug Fixes
+
+* **cli:** resume landing after independent trunk advances ([e61d445](https://github.com/danielbaars/anthracite/commit/e61d4455e002f0cea21facdbc1fcab268912162f))
+
 ## [0.6.4](https://github.com/danielbaars/anthracite/compare/v0.6.3...v0.6.4) (2026-11-02)
 
 
