@@ -1,0 +1,23 @@
+⛔ Cannot resume landing yet:
+  - Cannot land while Git operation rebase-merge is active. Finish or abort it first.
+👉 Next: inspect the blockers in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-tTjk2K/repo, then preview again.
+
+Once resolved, this would resume:
+⏸ Pending landing: fixture/inspection
+Target: base -> main
+Local main: fast-forward after confirmed merges.
+Local replay incomplete: child, tip; inspect owned recovery before remote work.
+
+🔀 Remaining PRs (bottom to top):
+  Cleanup-only 1: base #17
+
+🔧 After merging #17: verify required branch maintenance.
+  Maintain: child #18 (not a merge target)
+    Verify replay; push existing branch; update existing PR #18 base/footer.
+  Maintain: tip #19 (not a merge target)
+    Verify replay; push existing branch; update existing PR #19 base/footer.
+
+🧹 Cleanup: base
+  Verify landed-only local and leased remote cleanup.
+Checkout after completion: main
+Use --debug for recovery phases, commit IDs and replay details.

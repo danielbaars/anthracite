@@ -1,0 +1,18 @@
+⏸ Pending landing: fixture/inspection
+Target: tip -> main
+Local main: fast-forward after confirmed merges.
+✅ Already merged: #17 base
+
+🔀 Remaining PRs (bottom to top):
+  Merge 1: child #18
+  Merge 2: tip #19
+
+🔧 After merging #18: verify required branch maintenance.
+  Maintain: tip #19 (also a merge target)
+    Verify replay; push existing branch; update existing PR #19 base/footer.
+
+🧹 Cleanup: child, tip
+  Verify landed-only local and leased remote cleanup.
+Checkout after completion: main
+✅ Readiness: READY for remaining work; checks repeat before every merge.
+Use --debug for recovery phases, commit IDs and replay details.
