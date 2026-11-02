@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/danielbaars/anthracite/compare/v0.6.1...v0.6.2) (2026-11-02)
+
+
+### Bug Fixes
+
+* **cli:** verify classic absence for ruleset-only landing ([f3ff5fa](https://github.com/danielbaars/anthracite/commit/f3ff5fa017fb14ed9695138bfa5152516f3c1f6c))
+
 ## [0.6.1](https://github.com/danielbaars/anthracite/compare/v0.6.0...v0.6.1) (2026-11-02)
 
 
