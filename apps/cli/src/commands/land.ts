@@ -10,7 +10,8 @@ const options = {
   'dry-run': {
     type: 'boolean',
     default: false,
-    description: 'Explain merge, maintenance and blockers without writes.',
+    description:
+      'Show PR order, maintenance and blockers without writes; add --debug for commit details.',
   },
   yes: {
     type: 'boolean',

@@ -258,15 +258,28 @@ async function inspectParticipant(
   };
 }
 
-export function printLandPlan(plan: LandPlan): void {
+export function printLandPlan(plan: LandPlan, context: TContext): void {
+  if (plan.blockers.length) {
+    process.stdout.write('Cannot land yet:\n');
+    for (const blocker of plan.blockers)
+      process.stdout.write(`  - ${blocker}\n`);
+    if (
+      plan.blockers.some((blocker) => blocker.includes('Clean index/worktree'))
+    )
+      process.stdout.write(
+        'Next: run git status --short to inspect local changes.\n'
+      );
+    process.stdout.write('\n');
+  }
+  process.stdout.write(
+    `Landing plan: ${plan.repo}\nTarget: ${plan.target} -> ${plan.trunk}\n`
+  );
   if (plan.policy.blockers.length)
     process.stdout.write(
-      'Policy: unsupported or blocked; no readiness assumed.\n'
+      'Policy: merge requirements are blocked or unknown.\n'
     );
   else if (plan.policy.reviews === 0 && plan.policy.checks.length === 0)
-    process.stdout.write(
-      'Policy: No required reviews or checks (complete rules and classic protection evidence).\n'
-    );
+    process.stdout.write('Policy: No required reviews or checks.\n');
   else
     process.stdout.write(
       `Policy: ${plan.policy.reviews} required approval(s); required checks: ${
@@ -274,6 +287,74 @@ export function printLandPlan(plan: LandPlan): void {
       }\n`
     );
   process.stdout.write(
+    `Local ${plan.trunk}: ${
+      !plan.remoteTrunk
+        ? 'remote tip unavailable'
+        : plan.trunkHead === plan.remoteTrunk
+        ? 'up to date'
+        : 'fast-forward required'
+    }.\n\nPR order (bottom to top):\n`
+  );
+  plan.merges.forEach((member, index) =>
+    process.stdout.write(
+      `  ${member.mergedResult ? 'Cleanup-only' : 'Merge'} ${index + 1}: ${
+        member.branch
+      } #${member.pr?.number ?? '?'}${
+        member.mergedResult ? ' (already merged)' : ''
+      }\n`
+    )
+  );
+  if (plan.merges.length > 1)
+    process.stdout.write(
+      'Between merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n'
+    );
+  if (plan.maintenance.length) {
+    process.stdout.write('\nOther branches to restack (not merge targets):\n');
+    for (const member of plan.maintenance) {
+      const parent = plan.merges.some((merge) => merge.branch === member.parent)
+        ? plan.trunk
+        : member.parent;
+      process.stdout.write(
+        `  Maintain: ${member.branch} -> ${parent}\n    ${
+          member.remoteHead ? 'Push existing branch' : 'Keep local; no push'
+        }; ${
+          member.pr
+            ? `update PR #${member.pr.number} base and dependency footer`
+            : 'no PR creation'
+        }.\n`
+      );
+    }
+  }
+  process.stdout.write(
+    `\nCleanup: ${plan.merges
+      .map((member) => member.branch)
+      .join(
+        ', '
+      )}\n  Delete landed branches locally and on GitHub after confirmed merges only.\n`
+  );
+  if (!plan.blockers.length)
+    process.stdout.write('Readiness: READY to merge this plan.\n');
+  process.stdout.write('Use --debug for commit IDs and technical details.\n');
+  printLandDetails(plan, (message) => context.splog.debug(message.trimEnd()));
+}
+
+function printLandDetails(
+  plan: LandPlan,
+  write: (message: string) => void
+): void {
+  if (plan.policy.blockers.length)
+    write('Policy: unsupported or blocked; no readiness assumed.\n');
+  else if (plan.policy.reviews === 0 && plan.policy.checks.length === 0)
+    write(
+      'Policy: No required reviews or checks (complete rules and classic protection evidence).\n'
+    );
+  else
+    write(
+      `Policy: ${plan.policy.reviews} required approval(s); required checks: ${
+        plan.policy.checks.join(', ') || 'none'
+      }\n`
+    );
+  write(
     `Landing plan: ${plan.repo} trunk ${plan.trunk} target ${
       plan.target
     }\nTrunk: ${plan.trunkHead} -> ${
@@ -281,7 +362,7 @@ export function printLandPlan(plan: LandPlan): void {
     } (fast-forward only)\n`
   );
   plan.merges.forEach((member, index) =>
-    process.stdout.write(
+    write(
       `${member.mergedResult ? 'Cleanup-only' : 'Merge'} ${index + 1}: ${
         member.branch
       } #${member.pr?.number ?? '?'} ${member.pr?.url ?? ''}\n  Head: ${
@@ -304,7 +385,7 @@ export function printLandPlan(plan: LandPlan): void {
     )
   );
   for (const member of plan.maintenance)
-    process.stdout.write(
+    write(
       `Maintain: ${member.branch}\n  Reparent to ${
         plan.merges.some((merge) => merge.branch === member.parent)
           ? plan.trunk
@@ -321,17 +402,15 @@ export function printLandPlan(plan: LandPlan): void {
           : 'No PR: do not create one'
       }\n`
     );
-  process.stdout.write(
+  write(
     `Cleanup: ${plan.merges
       .map((member) => member.branch)
       .join(
         ', '
       )} (confirmed landed local metadata/refs and unchanged remote heads only)\n`
   );
-  for (const blocker of plan.blockers)
-    process.stdout.write(`BLOCKED: ${blocker}\n`);
-  if (!plan.blockers.length)
-    process.stdout.write('Readiness: READY for disclosed plan.\n');
+  for (const blocker of plan.blockers) write(`BLOCKED: ${blocker}\n`);
+  if (!plan.blockers.length) write('Readiness: READY for disclosed plan.\n');
 }
 
 export async function land(
@@ -349,7 +428,7 @@ export async function land(
     return;
   }
   const plan = await planLand(target, context);
-  printLandPlan(plan);
+  printLandPlan(plan, context);
   if (plan.blockers.length)
     throw new ExitFailedError('Landing preflight blocked; no changes made.');
   if (args['dry-run']) return;
