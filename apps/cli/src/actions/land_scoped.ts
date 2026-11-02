@@ -471,6 +471,8 @@ async function previewPendingLanding(
           `${member.branch}: Fresh PR state/head/base differs from saved publication.`
         );
       if (isMerge && pr) {
+        if (member.branch === current(record).branch)
+          validateMergeTrunk(record, pr.baseRefOid);
         const readiness = await githubLandReadiness(pr, policy, record.repo);
         blockers.push(
           ...[...readiness.blockers, ...readiness.pending].map(
@@ -771,24 +773,30 @@ async function readyToMerge(
     throw new ExitFailedError(
       'Fresh merge identity/base/head or remote lease changed.'
     );
-  const trunk = remoteHead(record, record.trunk);
-  if (
-    !trunk ||
-    pr.baseRefOid !== trunk ||
-    !inspectLandAncestry(ref(`refs/heads/${record.trunk}`), trunk, {
-      name: record.remote,
-      trunk: record.trunk,
-    })
-  )
-    throw new ExitFailedError(
-      'Fresh trunk/base changed or fast-forward is unavailable.'
-    );
+  validateMergeTrunk(record, pr.baseRefOid);
   const readiness = await githubLandReadiness(pr, policy, record.repo);
   if (readiness.blockers.length)
     throw new ExitFailedError(
       `Fresh readiness blocked: ${readiness.blockers.join(' ')}`
     );
   return readiness.pending;
+}
+
+/** A PR base snapshot may precede the live trunk after an independent merge. */
+function validateMergeTrunk(record: LandingProgress, base: string): void {
+  const trunk = remoteHead(record, record.trunk);
+  const remote = { name: record.remote, trunk: record.trunk };
+  if (
+    !trunk ||
+    !inspectLandAncestry(ref(`refs/heads/${record.trunk}`), trunk, remote)
+  )
+    throw new ExitFailedError(
+      'Remote trunk unavailable or local trunk divergent; fast-forward required.'
+    );
+  if (!inspectLandAncestry(base, trunk, remote))
+    throw new ExitFailedError(
+      'PR base snapshot is not an ancestor of current remote trunk; inspect changed history.'
+    );
 }
 function remoteHead(
   record: LandingProgress,

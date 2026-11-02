@@ -347,7 +347,7 @@ if (
     const base = revision(pr.baseRefName);
     if (base && previous[pr.baseRefName] && base !== previous[pr.baseRefName]) {
       changed = true;
-      pr.baseRefOid = base;
+      if (!policy.preserveBaseSnapshot) pr.baseRefOid = base;
     }
   }
   if (changed) save();
