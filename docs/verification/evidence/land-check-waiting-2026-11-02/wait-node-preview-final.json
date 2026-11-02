@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T12:58:39.509Z",
+    "end": "2026-11-02T12:58:45.724Z",
+    "duration": 6215
+  },
+  "tests": [
+    {
+      "title": "leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1237,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1237,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

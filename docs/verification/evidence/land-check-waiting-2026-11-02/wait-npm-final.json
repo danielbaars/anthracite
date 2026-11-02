@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T12:59:26.725Z",
+    "end": "2026-11-02T13:01:02.443Z",
+    "duration": 95718
+  },
+  "tests": [
+    {
+      "title": "waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "fullTitle": "public landing check waiting waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 47009,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "fullTitle": "public landing check waiting preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 37904,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "fullTitle": "public landing check waiting waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 47009,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "fullTitle": "public landing check waiting preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 37904,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

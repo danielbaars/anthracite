@@ -1,0 +1,48 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-02T12:35:30.692Z",
+    "end": "2026-11-02T12:35:58.656Z",
+    "duration": 27964
+  },
+  "tests": [
+    {
+      "title": "waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "fullTitle": "public landing check waiting waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 23282,
+      "currentRetry": 0,
+      "err": {
+        "message": "Landing plan: fixture/inspection\nTarget: child -> main\nPolicy: No required reviews or checks.\nLocal main: up to date.\n\nPR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\nOther branches to restack (not merge targets):\n  Maintain: tip -> main\n    Push existing branch; update PR #19 base and dependency footer.\n\nCleanup: base, child\n  Delete landed branches locally and on GitHub after confirmed merges only.\nReadiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\nConfirmed merged #17: e8b9b8c2c06e5b776b98a99cff19e4fed886a65f.\nMaintained: child; head 9ae15188a656d98c98bea0892a58a002b65d6bc4; existing PR #18; existing remote head verified.\nMaintained: tip; head c219fa07dfb514e404daefe19c9397ab869d8e40; existing PR #19; existing remote head verified.\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-IP1FbI/remote.git\n - [deleted]         base\nERROR: Landing incomplete at merge request. Confirmed merged #17 (e8b9b8c2c06e5b776b98a99cff19e4fed886a65f); Merge unconfirmed or uncertain; later work unattempted. Fresh readiness blocked: Check unit: IN_PROGRESS. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-IP1FbI/repo; rerun an land child --yes.\n: expected 1 to equal +0",
+        "showDiff": true,
+        "actual": "1",
+        "expected": "0",
+        "operator": "strictEqual",
+        "stack": "AssertionError: Landing plan: fixture/inspection\nTarget: child -> main\nPolicy: No required reviews or checks.\nLocal main: up to date.\n\nPR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\nOther branches to restack (not merge targets):\n  Maintain: tip -> main\n    Push existing branch; update PR #19 base and dependency footer.\n\nCleanup: base, child\n  Delete landed branches locally and on GitHub after confirmed merges only.\nReadiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\nConfirmed merged #17: e8b9b8c2c06e5b776b98a99cff19e4fed886a65f.\nMaintained: child; head 9ae15188a656d98c98bea0892a58a002b65d6bc4; existing PR #18; existing remote head verified.\nMaintained: tip; head c219fa07dfb514e404daefe19c9397ab869d8e40; existing PR #19; existing remote head verified.\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-IP1FbI/remote.git\n - [deleted]         base\nERROR: Landing incomplete at merge request. Confirmed merged #17 (e8b9b8c2c06e5b776b98a99cff19e4fed886a65f); Merge unconfirmed or uncertain; later work unattempted. Fresh readiness blocked: Check unit: IN_PROGRESS. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-IP1FbI/repo; rerun an land child --yes.\n: expected 1 to equal +0\n    at Context.<anonymous> (dist/test/commands/land_wait_cli.test.js:76:77)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "fullTitle": "public landing check waiting waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 23282,
+      "currentRetry": 0,
+      "err": {
+        "message": "Landing plan: fixture/inspection\nTarget: child -> main\nPolicy: No required reviews or checks.\nLocal main: up to date.\n\nPR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\nOther branches to restack (not merge targets):\n  Maintain: tip -> main\n    Push existing branch; update PR #19 base and dependency footer.\n\nCleanup: base, child\n  Delete landed branches locally and on GitHub after confirmed merges only.\nReadiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\nConfirmed merged #17: e8b9b8c2c06e5b776b98a99cff19e4fed886a65f.\nMaintained: child; head 9ae15188a656d98c98bea0892a58a002b65d6bc4; existing PR #18; existing remote head verified.\nMaintained: tip; head c219fa07dfb514e404daefe19c9397ab869d8e40; existing PR #19; existing remote head verified.\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-IP1FbI/remote.git\n - [deleted]         base\nERROR: Landing incomplete at merge request. Confirmed merged #17 (e8b9b8c2c06e5b776b98a99cff19e4fed886a65f); Merge unconfirmed or uncertain; later work unattempted. Fresh readiness blocked: Check unit: IN_PROGRESS. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-IP1FbI/repo; rerun an land child --yes.\n: expected 1 to equal +0",
+        "showDiff": true,
+        "actual": "1",
+        "expected": "0",
+        "operator": "strictEqual",
+        "stack": "AssertionError: Landing plan: fixture/inspection\nTarget: child -> main\nPolicy: No required reviews or checks.\nLocal main: up to date.\n\nPR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\nOther branches to restack (not merge targets):\n  Maintain: tip -> main\n    Push existing branch; update PR #19 base and dependency footer.\n\nCleanup: base, child\n  Delete landed branches locally and on GitHub after confirmed merges only.\nReadiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\nConfirmed merged #17: e8b9b8c2c06e5b776b98a99cff19e4fed886a65f.\nMaintained: child; head 9ae15188a656d98c98bea0892a58a002b65d6bc4; existing PR #18; existing remote head verified.\nMaintained: tip; head c219fa07dfb514e404daefe19c9397ab869d8e40; existing PR #19; existing remote head verified.\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-IP1FbI/remote.git\n - [deleted]         base\nERROR: Landing incomplete at merge request. Confirmed merged #17 (e8b9b8c2c06e5b776b98a99cff19e4fed886a65f); Merge unconfirmed or uncertain; later work unattempted. Fresh readiness blocked: Check unit: IN_PROGRESS. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-IP1FbI/repo; rerun an land child --yes.\n: expected 1 to equal +0\n    at Context.<anonymous> (dist/test/commands/land_wait_cli.test.js:76:77)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+      }
+    }
+  ],
+  "passes": []
+}

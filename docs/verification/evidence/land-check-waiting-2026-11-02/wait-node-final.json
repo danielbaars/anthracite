@@ -1,0 +1,551 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 29,
+    "passes": 28,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-02T12:48:09.539Z",
+    "end": "2026-11-02T12:57:20.695Z",
+    "duration": 551156
+  },
+  "tests": [
+    {
+      "title": "waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "fullTitle": "public landing check waiting waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 41731,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "times out before sending the next merge request and resumes the saved heads without repeating completed work",
+      "fullTitle": "public landing check waiting times out before sending the next merge request and resumes the saved heads without repeating completed work",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 38682,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when failed check changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when failed check changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 30478,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when dismissed approval changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when dismissed approval changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 30538,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when local work changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when local work changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 29644,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when remote head changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when remote head changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 29758,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when policy changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when policy changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 30587,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when unknown readiness changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when unknown readiness changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 29946,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "fullTitle": "public landing check waiting preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 38414,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "waits for an exact-head app-bound required check and revalidates its publisher before resuming",
+      "fullTitle": "public landing check waiting waits for an exact-head app-bound required check and revalidates its publisher before resuming",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 43668,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports running checks immediately in a preserving dry-run and rejects invalid wait limits",
+      "fullTitle": "public landing check waiting reports running checks immediately in a preserving dry-run and rejects invalid wait limits",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 1795,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "puts dirty-worktree blockers and the next action before the planned merge scope",
+      "fullTitle": "public landing plan presentation puts dirty-worktree blockers and the next action before the planned merge scope",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1156,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the complete ordered PR scope without commit-level diagnostics by default",
+      "fullTitle": "public landing plan presentation shows the complete ordered PR scope without commit-level diagnostics by default",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1086,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains exact heads and replay boundaries through the existing debug option",
+      "fullTitle": "public landing plan presentation retains exact heads and replay boundaries through the existing debug option",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1105,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "separates mandatory fanout updates from merges and identifies work that remains unpublished",
+      "fullTitle": "public landing plan presentation separates mandatory fanout updates from merges and identifies work that remains unpublished",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 2883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews the exact prefix and full surviving fanout without persistent effects",
+      "fullTitle": "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1679,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "fullTitle": "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1866,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports all later readiness blockers before applying and accepts known empty requirements",
+      "fullTitle": "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1819,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses local dirt and recovery while preserving every byte",
+      "fullTitle": "public scoped landing preview refuses local dirt and recovery while preserving every byte",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2451,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "requires explicit application consent for fanout before any writes",
+      "fullTitle": "public scoped landing preview requires explicit application consent for fanout before any writes",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1706,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "supports literal selectors, help and completion and rejects unsupported routes",
+      "fullTitle": "public scoped landing preview supports literal selectors, help and completion and rejects unsupported routes",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 9398,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "fullTitle": "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1459,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1184,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'Landing plan: fixture/inspection\\nTar…' to include '1fb69e361bacbef79b95d55e4aafb56a61866…'",
+        "showDiff": false,
+        "actual": "Landing plan: fixture/inspection\nTarget: base -> main\nPolicy: No required reviews or checks.\nLocal main: fast-forward required.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n\n🔧 Other branches to restack (not merge targets):\n  Maintain: child -> main\n    Push existing branch; update PR #18 base and dependency footer.\n  Maintain: tip -> child\n    Push existing branch; update PR #19 base and dependency footer.\n\n🧹 Cleanup: base\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'Landing plan: fixture/inspection\\nTar…' to include '1fb69e361bacbef79b95d55e4aafb56a61866…'\n    at Context.<anonymous> (dist/test/commands/land_preview_cli.test.js:207:46)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "protects mandatory participants and ignores frozen or occupied independent stacks",
+      "fullTitle": "public scoped landing preview protects mandatory participants and ignores frozen or occupied independent stacks",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 4243,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "fullTitle": "public scoped landing preview reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 3257,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cancels terminal confirmation and revalidates changed participants before application",
+      "fullTitle": "public scoped landing preview cancels terminal confirmation and revalidates changed participants before application",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2368,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not accept malformed classic policy as known no-requirements",
+      "fullTitle": "public scoped landing preview does not accept malformed classic policy as known no-requirements",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1048,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "fullTitle": "public scoped landing preview fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 13536,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "fullTitle": "public scoped landing preview previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 3119,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1184,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'Landing plan: fixture/inspection\\nTar…' to include '1fb69e361bacbef79b95d55e4aafb56a61866…'",
+        "showDiff": false,
+        "actual": "Landing plan: fixture/inspection\nTarget: base -> main\nPolicy: No required reviews or checks.\nLocal main: fast-forward required.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n\n🔧 Other branches to restack (not merge targets):\n  Maintain: child -> main\n    Push existing branch; update PR #18 base and dependency footer.\n  Maintain: tip -> child\n    Push existing branch; update PR #19 base and dependency footer.\n\n🧹 Cleanup: base\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'Landing plan: fixture/inspection\\nTar…' to include '1fb69e361bacbef79b95d55e4aafb56a61866…'\n    at Context.<anonymous> (dist/test/commands/land_preview_cli.test.js:207:46)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "fullTitle": "public landing check waiting waits for checks after its own push and completes the approved chain without restarting or repeating a merge",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 41731,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "times out before sending the next merge request and resumes the saved heads without repeating completed work",
+      "fullTitle": "public landing check waiting times out before sending the next merge request and resumes the saved heads without repeating completed work",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 38682,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when failed check changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when failed check changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 30478,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when dismissed approval changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when dismissed approval changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 30538,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when local work changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when local work changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 29644,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when remote head changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when remote head changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 29758,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when policy changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when policy changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 30587,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops before the next merge when unknown readiness changes while checks are running",
+      "fullTitle": "public landing check waiting stops before the next merge when unknown readiness changes while checks are running",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 29946,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "fullTitle": "public landing check waiting preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 38414,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "waits for an exact-head app-bound required check and revalidates its publisher before resuming",
+      "fullTitle": "public landing check waiting waits for an exact-head app-bound required check and revalidates its publisher before resuming",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 43668,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports running checks immediately in a preserving dry-run and rejects invalid wait limits",
+      "fullTitle": "public landing check waiting reports running checks immediately in a preserving dry-run and rejects invalid wait limits",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 1795,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "puts dirty-worktree blockers and the next action before the planned merge scope",
+      "fullTitle": "public landing plan presentation puts dirty-worktree blockers and the next action before the planned merge scope",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1156,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the complete ordered PR scope without commit-level diagnostics by default",
+      "fullTitle": "public landing plan presentation shows the complete ordered PR scope without commit-level diagnostics by default",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1086,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains exact heads and replay boundaries through the existing debug option",
+      "fullTitle": "public landing plan presentation retains exact heads and replay boundaries through the existing debug option",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1105,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "separates mandatory fanout updates from merges and identifies work that remains unpublished",
+      "fullTitle": "public landing plan presentation separates mandatory fanout updates from merges and identifies work that remains unpublished",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 2883,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews the exact prefix and full surviving fanout without persistent effects",
+      "fullTitle": "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1679,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "fullTitle": "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1866,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports all later readiness blockers before applying and accepts known empty requirements",
+      "fullTitle": "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1819,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses local dirt and recovery while preserving every byte",
+      "fullTitle": "public scoped landing preview refuses local dirt and recovery while preserving every byte",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2451,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "requires explicit application consent for fanout before any writes",
+      "fullTitle": "public scoped landing preview requires explicit application consent for fanout before any writes",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1706,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "supports literal selectors, help and completion and rejects unsupported routes",
+      "fullTitle": "public scoped landing preview supports literal selectors, help and completion and rejects unsupported routes",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 9398,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "fullTitle": "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1459,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects mandatory participants and ignores frozen or occupied independent stacks",
+      "fullTitle": "public scoped landing preview protects mandatory participants and ignores frozen or occupied independent stacks",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 4243,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "fullTitle": "public scoped landing preview reports unpublished published-head commits, divergent trunk, staged changes and active Git operations",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 3257,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "cancels terminal confirmation and revalidates changed participants before application",
+      "fullTitle": "public scoped landing preview cancels terminal confirmation and revalidates changed participants before application",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 2368,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not accept malformed classic policy as known no-requirements",
+      "fullTitle": "public scoped landing preview does not accept malformed classic policy as known no-requirements",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 1048,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "fullTitle": "public scoped landing preview fails closed for readiness, policy, and PR identity blockers without remote writes",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 13536,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "fullTitle": "public scoped landing preview previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 3119,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
