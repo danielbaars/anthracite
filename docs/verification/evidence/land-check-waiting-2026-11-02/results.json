@@ -523,9 +523,9 @@
   },
   "nativeInitialSHA256": "0f59c26759bf1f0ff8fb68cd968f7747b541bf3d7e42095e6cd9066ff0c5f63c",
   "nativeFinalSHA256": "a9c6b7f21e1a8488a44137325f40d7613d7127e1e81d39c8db96ca305bd2ac20",
-  "newGitHubWrites": false,
   "ciStarted": false,
   "fullMatrixStarted": false,
   "applicationCheckoutAccessed": false,
-  "activeInstallationChanged": false
+  "activeInstallationChanged": false,
+  "liveWorkflowGitHubWrites": false
 }
