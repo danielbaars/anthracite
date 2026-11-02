@@ -1,0 +1,77 @@
+{
+  "formatVersion": 1,
+  "validatedAt": "2026-11-02T16:38:13.199Z",
+  "status": "passed",
+  "sourceCommit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+  "userStories": 36,
+  "requiredTemplateSections": [
+    "Problem Statement",
+    "Solution",
+    "User Stories",
+    "Implementation Decisions",
+    "Testing Decisions",
+    "Out of Scope",
+    "Further Notes"
+  ],
+  "sourceHashesVerified": 7,
+  "localLinksVerified": 18,
+  "externalReferencesIndexed": 14,
+  "implementationPathsAndCodeSnippets": "absent",
+  "changedFiles": [
+    "docs/npm-release.md",
+    "docs/specs/beta-release-channels.md",
+    "docs/verification/beta-release-spec-2026-11-02.md",
+    "docs/verification/evidence/beta-release-spec-2026-11-02/README.md",
+    "docs/verification/evidence/beta-release-spec-2026-11-02/approved-boundary.json",
+    "docs/verification/evidence/beta-release-spec-2026-11-02/registry-baseline.json",
+    "docs/verification/evidence/beta-release-spec-2026-11-02/source-basis.json",
+    "docs/verification/evidence/beta-release-spec-2026-11-02/validation.json"
+  ],
+  "documentationHashes": [
+    {
+      "path": "docs/npm-release.md",
+      "sha256": "5ebefcb26d41dfeeb1244c085138d4dc3c6a3e5753b3c74d50841433e13d730b"
+    },
+    {
+      "path": "docs/specs/beta-release-channels.md",
+      "sha256": "ef66c2052cbf2379993d9816746453df42a0987cbede61fe76e4859cb8ef934d"
+    },
+    {
+      "path": "docs/verification/beta-release-spec-2026-11-02.md",
+      "sha256": "cb33a0b4b913b32faeca7597f0cfec3433d36fe8b5cd320d0ecac05e142d0b27"
+    },
+    {
+      "path": "docs/verification/evidence/beta-release-spec-2026-11-02/README.md",
+      "sha256": "746a34249709191095038c84add84c50f3c6d90b36f8022c08253756c34f4404"
+    },
+    {
+      "path": "docs/verification/evidence/beta-release-spec-2026-11-02/approved-boundary.json",
+      "sha256": "1e5a2ce62d8fa3f868a9a10228b2a08ec47b6ac06b8e94258374aeb9202a2b9a"
+    },
+    {
+      "path": "docs/verification/evidence/beta-release-spec-2026-11-02/registry-baseline.json",
+      "sha256": "9a3d3c9e0f2ed49981ea4ac69c83a6ca68507b3649aea9b7efc7960e13e672d8"
+    },
+    {
+      "path": "docs/verification/evidence/beta-release-spec-2026-11-02/source-basis.json",
+      "sha256": "9c1c603dba4aa07ce4a05566167e4b08f205b9d6aa5c2e9314c9f850576dd404"
+    }
+  ],
+  "checks": [
+    "Exact seven-section to-spec template",
+    "36 consecutive actor/feature/benefit user stories",
+    "Seven baseline source identities and hashes",
+    "Approved boundary and read-only registry baseline",
+    "Local Markdown files and anchors",
+    "JSON parse validity",
+    "Documentation-only changed-file allowlist",
+    "git diff --check",
+    "Focused Dutch-language heuristic; final prose reviewed separately"
+  ],
+  "limits": [
+    "No release implementation or beta runtime tests were run.",
+    "No live publication, workflow dispatch or owner-installation change.",
+    "Local-link validation does not certify all external services.",
+    "This record does not hash itself."
+  ]
+}

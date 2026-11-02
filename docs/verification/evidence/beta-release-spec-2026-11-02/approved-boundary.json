@@ -1,0 +1,22 @@
+{
+  "formatVersion": 1,
+  "approvalDate": "2026-11-02",
+  "approvalKind": "Owner approval in the ongoing Anthracite conversation",
+  "languageNote": "English summary of the approved scope; not a verbatim conversation transcript",
+  "scope": [
+    "One existing OIDC workflow with deliberate beta and stable publication",
+    "Protect latest during beta publication",
+    "Bind source/artifact identity and practice evidence to stable approval",
+    "Require stable to match the exercised beta except narrowly allowed release metadata",
+    "Document channel switching, completion, MCP and safe recovery"
+  ],
+  "primarySeam": "Executable release process using real temporary Git repositories, real npm tarballs and isolated installs; controlled GitHub/npm publication boundaries only",
+  "localTestsMustNot": [
+    "Publish real npm versions",
+    "Mutate live GitHub fixtures",
+    "Change the owner installation or shell/MCP configuration",
+    "Start ordinary CI or the full validation matrix"
+  ],
+  "futureLiveAcceptance": "One exact OIDC beta publication requires separate explicit owner approval; it is not authorized or performed by this specification delivery",
+  "delivery": "English specification and supporting documentation published as a GitHub issue, ready-for-agent; one future implementation PR"
+}

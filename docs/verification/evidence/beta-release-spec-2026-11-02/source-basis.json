@@ -1,0 +1,74 @@
+{
+  "formatVersion": 1,
+  "date": "2026-11-02",
+  "repository": "danielbaars/anthracite",
+  "sourceCommit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+  "cliVersion": "0.6.5",
+  "sources": [
+    {
+      "path": ".github/workflows/release.yml",
+      "commit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+      "url": "https://github.com/danielbaars/anthracite/blob/64d82c8a00e7ba97f81ddda2f82f0cca2604606b/.github/workflows/release.yml",
+      "sha256": "f8c6fef7b42e5db33bd7d37a035ce99cae849e5469ed7222ef15f889d14359c9",
+      "bytes": 2947
+    },
+    {
+      "path": "release-please-config.json",
+      "commit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+      "url": "https://github.com/danielbaars/anthracite/blob/64d82c8a00e7ba97f81ddda2f82f0cca2604606b/release-please-config.json",
+      "sha256": "0094b7116be88122c5118bcf6ab297c1e3cdbcb1c9840abb452def40337ed856",
+      "bytes": 282
+    },
+    {
+      "path": ".release-please-manifest.json",
+      "commit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+      "url": "https://github.com/danielbaars/anthracite/blob/64d82c8a00e7ba97f81ddda2f82f0cca2604606b/.release-please-manifest.json",
+      "sha256": "30d1438b2f58f8a2fa1210dc673b920fc418ba46db740eea09d8da9ecb8e1ef0",
+      "bytes": 26
+    },
+    {
+      "path": "apps/cli/package.json",
+      "commit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+      "url": "https://github.com/danielbaars/anthracite/blob/64d82c8a00e7ba97f81ddda2f82f0cca2604606b/apps/cli/package.json",
+      "sha256": "5204306a7f03d6ec66ab3e304e6e2137169c14d063c39fb39a5af085646df38f",
+      "bytes": 2756
+    },
+    {
+      "path": "scripts/build-npm-package.cjs",
+      "commit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+      "url": "https://github.com/danielbaars/anthracite/blob/64d82c8a00e7ba97f81ddda2f82f0cca2604606b/scripts/build-npm-package.cjs",
+      "sha256": "61845bb73a9ba729f40c3009626dfb2e6db571ee40ddf42c4491ace977220ed1",
+      "bytes": 5144
+    },
+    {
+      "path": "scripts/test-npm-package.cjs",
+      "commit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+      "url": "https://github.com/danielbaars/anthracite/blob/64d82c8a00e7ba97f81ddda2f82f0cca2604606b/scripts/test-npm-package.cjs",
+      "sha256": "fc32b9987add0265612658272ef1738dd819144aa1587a5d0d133e68c043d48e",
+      "bytes": 5051
+    },
+    {
+      "path": "docs/npm-release.md",
+      "commit": "64d82c8a00e7ba97f81ddda2f82f0cca2604606b",
+      "url": "https://github.com/danielbaars/anthracite/blob/64d82c8a00e7ba97f81ddda2f82f0cca2604606b/docs/npm-release.md",
+      "sha256": "76bb517d4b3655d376222c1c1ab2a939486b6dd1569705f206e36c5f130a9f4c",
+      "bytes": 7779
+    }
+  ],
+  "observedContracts": {
+    "releaseEvents": ["push to main"],
+    "manualDispatch": false,
+    "defaultNpmPublication": "latest (implicit npm default; verified against official npm documentation)",
+    "publisherWorkflow": "release.yml",
+    "oidc": true,
+    "provenance": true,
+    "npmCli": "11.17.0",
+    "releasePleasePreparationMinutes": 5,
+    "publicationMinutes": 10,
+    "actionsArtifactRetentionDays": 7
+  },
+  "limits": [
+    "Static source observations only; no new release implementation or beta runtime acceptance.",
+    "Existing stable publication does not prove manual beta dispatch or source-equivalence gates."
+  ]
+}

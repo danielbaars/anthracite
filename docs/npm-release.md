@@ -32,6 +32,10 @@ GitHub must allow Actions to create pull requests. The workflow grants write per
 
 Normal pushes run the existing single cheap CI job, with the additional artifact check. `Release` has a five-minute preparation limit and a ten-minute publication limit. Neither workflow starts the full matrix or compiles native releases. Existing standalone asset release gates remain separate.
 
+## Planned beta and stable channels
+
+The [beta/stable release specification](specs/beta-release-channels.md) defines a proposed manual beta route, latest protection and explicit stable approval of the same practically tested release inputs. Its [basis and test boundary](verification/beta-release-spec-2026-11-02.md) distinguish the current 0.6.5 workflow from that intended behavior. This is a specification, not an available workflow: the existing release automation above remains in effect until implementation. Do not assume beta publication or stable approval gates already exist.
+
 ## One-time account bootstrap
 
 The scoped name is `@danielbaars/anthracite`; the unscoped `anthracite` name belongs to another project. npm trusted publishers require an existing package. Bootstrap the first release using the owner account; keep credentials and 2FA responses out of issues and chat.

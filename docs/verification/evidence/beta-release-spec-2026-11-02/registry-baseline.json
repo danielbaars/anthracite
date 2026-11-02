@@ -1,0 +1,33 @@
+{
+  "formatVersion": 1,
+  "observedAt": "2026-11-02T16:33:20.246Z",
+  "package": "@danielbaars/anthracite",
+  "distTags": {
+    "latest": "0.6.5"
+  },
+  "baselineVersion": "0.6.5",
+  "baselineDist": {
+    "shasum": "8ac001d69fbac9a4c32e773e795d1a1722a32960",
+    "tarball": "https://registry.npmjs.org/@danielbaars/anthracite/-/anthracite-0.6.5.tgz",
+    "fileCount": 6,
+    "integrity": "sha512-vLmfuvsVa2DsdzWZI0rSF15AHbC55K2tDDhbmAX9PjposGo4u/YjO5sWie0FwWdJOuk6VrM5l/cfT17up69ggw==",
+    "signatures": [
+      {
+        "sig": "MEYCIQCZ8hg7cizYwofmuduIP31BaMAONd4L2DUtj5w/4kp+GAIhANn1HtjEcKjIETX/tCC439cCwr8kLOYJNq1OCIhcSIkn",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+      },
+      {
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+        "sig": "MEQCIHSVqSsKmAQAvukDDGlGTgGHcjiglCav5TRlO9qzhPaIAiBtQC4ylvUZLgWmks3uJJkPHwq9jeN7BAaacj16iFcGyw=="
+      }
+    ],
+    "attestations": {
+      "url": "https://registry.npmjs.org/-/npm/v1/attestations/@danielbaars%2fanthracite@0.6.5",
+      "provenance": {
+        "predicateType": "https://slsa.dev/provenance/v1"
+      }
+    },
+    "unpackedSize": 3106155
+  },
+  "limits": "Read-only registry observation for the existing stable baseline; no beta publication or new runtime acceptance."
+}
