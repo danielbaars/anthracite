@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-11-02T12:20:23.554955+00:00",
+  "repository": "danielbaars/anthracite-land-smoke-2026-11-02",
+  "pullRequests": [
+    {
+      "assignees": [],
+      "baseRefName": "main",
+      "body": "Adds fixtures/preview-base.txt to compare Graphite 1.8.6 merge previews with Anthracite landing presentation. Synthetic test data only.",
+      "headRefName": "preview-base",
+      "headRefOid": "a6c7633b69525dc94b221856bb3ae17e2d207a82",
+      "isDraft": false,
+      "mergedAt": null,
+      "number": 5,
+      "state": "CLOSED",
+      "title": "Graphite merge preview: base fixture",
+      "url": "https://github.com/danielbaars/anthracite-land-smoke-2026-11-02/pull/5"
+    },
+    {
+      "assignees": [],
+      "baseRefName": "preview-base",
+      "body": "Adds fixtures/preview-child.txt to compare Graphite 1.8.6 merge previews with Anthracite landing presentation. Synthetic test data only.",
+      "headRefName": "preview-child",
+      "headRefOid": "784315bda22ad05184bbdbd4495b0d53cb734d3c",
+      "isDraft": false,
+      "mergedAt": null,
+      "number": 6,
+      "state": "CLOSED",
+      "title": "Graphite merge preview: child fixture",
+      "url": "https://github.com/danielbaars/anthracite-land-smoke-2026-11-02/pull/6"
+    },
+    {
+      "assignees": [],
+      "baseRefName": "preview-child",
+      "body": "Adds fixtures/preview-tip.txt to compare Graphite 1.8.6 merge previews with Anthracite landing presentation. Synthetic test data only.",
+      "headRefName": "preview-tip",
+      "headRefOid": "3dfb3724458020ce39d83d8ea8b37593fb1d811a",
+      "isDraft": false,
+      "mergedAt": null,
+      "number": 7,
+      "state": "CLOSED",
+      "title": "Graphite merge preview: tip fixture",
+      "url": "https://github.com/danielbaars/anthracite-land-smoke-2026-11-02/pull/7"
+    }
+  ],
+  "headsUnchanged": true,
+  "mainHead": "9ad3f46ffdddcdd48ac0a344cf7906db3d81b11d",
+  "mainUnchanged": true,
+  "actionsRuns": 0,
+  "graphiteSyncRestoredToOriginalTwo": true,
+  "noMergeExecuted": true
+}

@@ -1,0 +1,11 @@
+Running merge in 'dry-run' mode. No PRs will be merged.
+
+🥞 Validating that this Graphite stack is ready to merge...
+
+✅ Your stack is ready to merge.
+Preparing to merge:
+▸ preview-tip
+▸ preview-child
+▸ preview-base
+
+✅ Dry run complete.

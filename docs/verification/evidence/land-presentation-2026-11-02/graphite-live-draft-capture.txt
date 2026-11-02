@@ -1,0 +1,8 @@
+Running merge in 'dry-run' mode. No PRs will be merged.
+
+🥞 Validating that this Graphite stack is ready to merge...
+
+ERROR: Your stack is not ready to merge.
+▸ preview-tip: Draft
+▸ preview-child: Draft
+▸ preview-base: Draft
