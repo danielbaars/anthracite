@@ -1,0 +1,20 @@
+Policy: No required reviews or checks (complete rules and classic protection evidence).
+Landing plan: fixture/inspection trunk main target tip
+Trunk: 143b545a9c47cd9e18caf2887c8c350ebc6de86d -> 143b545a9c47cd9e18caf2887c8c350ebc6de86d (fast-forward only)
+Merge 1: base #17 https://github.com/fixture/inspection/pull/17
+  Head: acb844223f77daa346445d7337edeee4ce8c6c33
+  Base: main 143b545a9c47cd9e18caf2887c8c350ebc6de86d (tracked parent main; replay base 143b545a9c47cd9e18caf2887c8c350ebc6de86d)
+  State: OPEN; draft false; readiness CLEAN
+  Verify trunk base/head immediately before effect
+Merge 2: child #18 https://github.com/fixture/inspection/pull/18
+  Head: e4730d367a44d0f0722aea16bbeb951cded6bfe0
+  Base: base acb844223f77daa346445d7337edeee4ce8c6c33 (tracked parent base; replay base acb844223f77daa346445d7337edeee4ce8c6c33)
+  State: OPEN; draft false; readiness CLEAN
+  Before merge: replay own commits onto trunk; update existing remote head and PR base/footer; recheck readiness
+Merge 3: tip #19 https://github.com/fixture/inspection/pull/19
+  Head: 19606fd0ea4e4636a3b545f39e6b854459dadc15
+  Base: child e4730d367a44d0f0722aea16bbeb951cded6bfe0 (tracked parent child; replay base e4730d367a44d0f0722aea16bbeb951cded6bfe0)
+  State: OPEN; draft false; readiness CLEAN
+  Before merge: replay own commits onto trunk; update existing remote head and PR base/footer; recheck readiness
+Cleanup: base, child, tip (confirmed landed local metadata/refs and unchanged remote heads only)
+Readiness: READY for disclosed plan.

@@ -278,12 +278,24 @@ export async function getGithubLandPolicy(
   return { reviews, checks: [...checks], publishers, blockers };
 }
 
+type LandReadiness = {
+  readonly blockers: readonly string[];
+  readonly pending: readonly string[];
+};
+
+function pendingCheck(state: string): boolean {
+  return ['QUEUED', 'IN_PROGRESS', 'PENDING', 'WAITING', 'REQUESTED'].includes(
+    state
+  );
+}
+
 export async function githubLandReadiness(
   pr: GithubPr,
   policy: LandPolicy,
   repo: string
-): Promise<string[]> {
+): Promise<LandReadiness> {
   const blockers = [...policy.blockers];
+  const pending: string[] = [];
   if (pr.state !== 'OPEN') blockers.push(`PR is ${pr.state}, not open.`);
   if (pr.isDraft) blockers.push('PR is a draft.');
   if (pr.reviewDecision === 'CHANGES_REQUESTED')
@@ -295,10 +307,9 @@ export async function githubLandReadiness(
     blockers.push('Required approvals missing.');
   if (pr.mergeable !== 'MERGEABLE')
     blockers.push(`Mergeability is ${pr.mergeable ?? 'UNKNOWN'}.`);
-  if (pr.mergeStateStatus !== 'CLEAN')
-    blockers.push(`GitHub readiness is ${pr.mergeStateStatus || 'UNKNOWN'}.`);
   if (!pr.statusCheckRollup) blockers.push('Checks unavailable.');
   const successful = new Set<string>();
+  const running = new Set<string>();
   for (const check of pr.statusCheckRollup ?? []) {
     const name =
       (check.__typename === 'CheckRun' ? check.name : check.context) ??
@@ -315,23 +326,39 @@ export async function githubLandReadiness(
           ['SUCCESS', 'NEUTRAL', 'SKIPPED'].includes(state)
         : state === 'SUCCESS';
     if (passed) successful.add(name);
-    else blockers.push(`Check ${name}: ${state}.`);
+    else if (pendingCheck(state)) {
+      running.add(name);
+      pending.push(`Check ${name}: ${state}.`);
+    } else blockers.push(`Check ${name}: ${state}.`);
   }
   for (const name of policy.checks)
-    if (!successful.has(name))
+    if (!successful.has(name) && !running.has(name))
       blockers.push(`Required check missing or not successful: ${name}.`);
   if (policy.publishers.length) {
     try {
-      blockers.push(
-        ...(await verifyCheckPublishers(repo, pr.headRefOid, policy.publishers))
+      const publishers = await verifyCheckPublishers(
+        repo,
+        pr.headRefOid,
+        policy.publishers
       );
+      blockers.push(...publishers.blockers);
+      pending.push(...publishers.pending);
     } catch {
       blockers.push(
         'Required check publisher evidence unavailable or incomplete.'
       );
     }
   }
-  return blockers;
+  if (pr.mergeStateStatus !== 'CLEAN') {
+    const message = `GitHub readiness is ${pr.mergeStateStatus || 'UNKNOWN'}.`;
+    if (
+      pending.length &&
+      ['UNSTABLE', 'BLOCKED'].includes(pr.mergeStateStatus ?? '')
+    )
+      pending.unshift(message);
+    else blockers.unshift(message);
+  }
+  return { blockers, pending };
 }
 
 const checkRunSchema = z.object({
@@ -348,7 +375,7 @@ async function verifyCheckPublishers(
   repo: string,
   head: string,
   publishers: LandPolicy['publishers']
-): Promise<string[]> {
+): Promise<LandReadiness> {
   const runs: z.infer<typeof checkRunSchema>[] = [];
   let total: number | undefined;
   for (let page = 1; ; page++) {
@@ -380,6 +407,7 @@ async function verifyCheckPublishers(
   if (runs.some((run) => run.head_sha !== head))
     throw new ExitFailedError('Check-run evidence belongs to another head.');
   const blockers: string[] = [];
+  const pending: string[] = [];
   for (const publisher of publishers) {
     const matching = runs.filter(
       (run) => run.name === publisher.context && run.app.id === publisher.appId
@@ -387,6 +415,10 @@ async function verifyCheckPublishers(
     if (matching.length !== 1)
       blockers.push(
         `Required check publisher missing or ambiguous: ${publisher.context} (GitHub App ${publisher.appId}).`
+      );
+    else if (pendingCheck(matching[0].status.toUpperCase()))
+      pending.push(
+        `Required check publisher pending: ${publisher.context} (GitHub App ${publisher.appId}).`
       );
     else if (
       matching[0].status !== 'completed' ||
@@ -396,5 +428,5 @@ async function verifyCheckPublishers(
         `Required check publisher not successful: ${publisher.context} (GitHub App ${publisher.appId}).`
       );
   }
-  return blockers;
+  return { blockers, pending };
 }

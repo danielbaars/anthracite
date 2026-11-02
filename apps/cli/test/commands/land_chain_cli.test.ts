@@ -150,9 +150,19 @@ describe('public linear landing and prefixes', function () {
           ],
         })
       );
-      const stopped = fixture.run(['land', 'child', '--yes']);
+      const stopped = fixture.run([
+        'land',
+        'child',
+        '--yes',
+        '--wait-timeout',
+        '0',
+      ]);
       expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
-      expect(stopped.stderr).to.include('Fresh readiness blocked');
+      expect(stopped.stderr).to.include(
+        scenario === 'pendingAfterPush'
+          ? 'Check wait timed out'
+          : 'Fresh readiness blocked'
+      );
       const after = JSON.parse(fs.readFileSync(github.state, 'utf8'));
       expect(after.map((pr: { state: string }) => pr.state)).to.deep.equal([
         'MERGED',
@@ -168,6 +178,7 @@ describe('public linear landing and prefixes', function () {
       const firstHead = fixture.git(['rev-parse', 'child']);
       for (const pr of after) {
         pr.reviewDecision = 'APPROVED';
+        pr.mergeStateStatus = 'CLEAN';
         pr.statusCheckRollup = [];
       }
       fs.writeFileSync(github.state, JSON.stringify(after));

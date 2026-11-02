@@ -259,13 +259,18 @@ async function publishSurvivors(
         );
       await updateSurvivorPr(record, member, context);
       process.stdout.write(
-        `Maintained: ${member.branch}; head ${
-          owned(participant(record, member.branch)).head
-        }; ${member.number ? `existing PR #${member.number}` : 'no PR'}; ${
+        `🔧 Maintained: ${member.branch}; ${
+          member.number ? `existing PR #${member.number}` : 'no PR'
+        }; ${
           member.remoteHead
             ? 'existing remote head verified'
             : 'remains unpublished'
         }.\n`
+      );
+      context.splog.debug(
+        `Maintained head ${member.branch}: ${
+          owned(participant(record, member.branch)).head
+        }`
       );
     } catch (error: unknown) {
       throw new ExitFailedError(

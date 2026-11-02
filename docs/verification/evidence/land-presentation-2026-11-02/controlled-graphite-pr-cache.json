@@ -1,0 +1,71 @@
+{
+  "prInfos": [
+    {
+      "prNumber": 101,
+      "title": "Display fixture: preview-base",
+      "authorGithubHandle": "fixture",
+      "body": "Synthetic cached input; no remote PR exists.",
+      "state": "OPEN",
+      "reviewDecision": "APPROVED",
+      "headRefName": "preview-base",
+      "baseRefName": "main",
+      "isBaseRefGraphiteBase": false,
+      "url": "https://app.graphite.com/github/pr/danielbaars/anthracite-land-smoke-2026-11-02/101",
+      "isDraft": false,
+      "versions": [
+        {
+          "headSha": "a6c7633b69525dc94b221856bb3ae17e2d207a82",
+          "baseSha": "9ad3f46ffdddcdd48ac0a344cf7906db3d81b11d",
+          "baseName": "main",
+          "createdAt": "2026-11-02T00:00:00.000Z",
+          "isGraphiteGenerated": false
+        }
+      ]
+    },
+    {
+      "prNumber": 102,
+      "title": "Display fixture: preview-child",
+      "authorGithubHandle": "fixture",
+      "body": "Synthetic cached input; no remote PR exists.",
+      "state": "OPEN",
+      "reviewDecision": "APPROVED",
+      "headRefName": "preview-child",
+      "baseRefName": "preview-base",
+      "isBaseRefGraphiteBase": false,
+      "url": "https://app.graphite.com/github/pr/danielbaars/anthracite-land-smoke-2026-11-02/102",
+      "isDraft": false,
+      "versions": [
+        {
+          "headSha": "784315bda22ad05184bbdbd4495b0d53cb734d3c",
+          "baseSha": "a6c7633b69525dc94b221856bb3ae17e2d207a82",
+          "baseName": "preview-base",
+          "createdAt": "2026-11-02T00:00:00.000Z",
+          "isGraphiteGenerated": false
+        }
+      ]
+    },
+    {
+      "prNumber": 103,
+      "title": "Display fixture: preview-tip",
+      "authorGithubHandle": "fixture",
+      "body": "Synthetic cached input; no remote PR exists.",
+      "state": "OPEN",
+      "reviewDecision": "APPROVED",
+      "headRefName": "preview-tip",
+      "baseRefName": "preview-child",
+      "isBaseRefGraphiteBase": false,
+      "url": "https://app.graphite.com/github/pr/danielbaars/anthracite-land-smoke-2026-11-02/103",
+      "isDraft": false,
+      "versions": [
+        {
+          "headSha": "3dfb3724458020ce39d83d8ea8b37593fb1d811a",
+          "baseSha": "784315bda22ad05184bbdbd4495b0d53cb734d3c",
+          "baseName": "preview-child",
+          "createdAt": "2026-11-02T00:00:00.000Z",
+          "isGraphiteGenerated": false
+        }
+      ]
+    }
+  ],
+  "mergeabilityStatuses": []
+}

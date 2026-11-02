@@ -74,7 +74,7 @@ export async function withLandingLock(
   const interrupted = (): void => {
     releaseOwnedCacheLockFile(file, identity.pid, cacheLockBytes(identity));
     process.stderr.write(
-      'Landing interrupted; completed or uncertain effects are retained. Run an land to reconcile.\n'
+      '⏸ Landing interrupted; saved progress is retained. Inspect an land --dry-run before explicit resumption.\n'
     );
     // eslint-disable-next-line no-restricted-syntax
     process.exit(1);
@@ -112,7 +112,10 @@ function deadPid(pid: number): boolean {
 export async function startScopedLanding(
   plan: LandPlan,
   context: TContext,
-  cacheLock: NonNullable<LandingProgress['cacheLock']>
+  options: {
+    readonly cacheLock: NonNullable<LandingProgress['cacheLock']>;
+    readonly waitSeconds: number;
+  }
 ): Promise<void> {
   const member = plan.merges[0];
   if (!member.pr || (!member.remoteHead && !member.mergedResult))
@@ -134,7 +137,7 @@ export async function startScopedLanding(
     merges: plan.merges.map(capture),
     maintenance: plan.maintenance.map(capture),
     phase: 'prepared',
-    cacheLock,
+    cacheLock: options.cacheLock,
   };
   function capture(
     member: LandPlan['merges'][number]
@@ -155,12 +158,16 @@ export async function startScopedLanding(
   validateIdentity(record, context);
   validateLocal(record, context);
   saveLandingProgress(record);
-  await applyScopedLanding(record, context);
+  await applyScopedLanding(record, context, options.waitSeconds);
 }
 
 export async function resumeScopedLanding(
   record: LandingProgress,
-  args: { readonly 'dry-run': boolean; readonly yes: boolean },
+  args: {
+    readonly 'dry-run': boolean;
+    readonly yes: boolean;
+    readonly 'wait-timeout': number;
+  },
   context: TContext
 ): Promise<void> {
   validateIdentity(record, context);
@@ -195,7 +202,7 @@ export async function resumeScopedLanding(
       JSON.stringify(fresh) !== JSON.stringify({ ...record, cacheLock })
     )
       throw new ExitFailedError('Landing recovery changed; inspect again.');
-    await applyScopedLanding(fresh, context);
+    await applyScopedLanding(fresh, context, args['wait-timeout']);
   }, record);
 }
 
@@ -351,7 +358,9 @@ async function previewPendingLanding(
       if (isMerge && pr) {
         const readiness = await githubLandReadiness(pr, policy, record.repo);
         blockers.push(
-          ...readiness.map((message) => `${member.branch}: ${message}`)
+          ...[...readiness.blockers, ...readiness.pending].map(
+            (message) => `${member.branch}: ${message}`
+          )
         );
         if (published !== expected.head)
           blockers.push(
@@ -371,7 +380,8 @@ async function previewPendingLanding(
 
 async function applyScopedLanding(
   initial: LandingProgress,
-  context: TContext
+  context: TContext,
+  waitSeconds: number
 ): Promise<void> {
   let record = initial;
   let stage = 'reconciliation';
@@ -395,9 +405,10 @@ async function applyScopedLanding(
           throw new ExitFailedError(
             'Merge remains uncertain or unconfirmed. No merge is repeated; inspect GitHub and recovery.'
           );
-        stage = 'merge request';
-        await readyToMerge(record, context);
+        stage = 'readiness check';
+        await waitUntilReadyToMerge(record, context, waitSeconds);
         validateLocal(record, context);
+        stage = 'merge request';
         advance({ phase: 'merge-requested' });
         let response: string;
         try {
@@ -412,7 +423,10 @@ async function applyScopedLanding(
             advance({ phase: 'merged', result: reconciled });
             const number = current(record).number;
             process.stdout.write(
-              `Confirmed merged #${number} after uncertain response: ${reconciled}.\n`
+              `✅ Confirmed merged #${number} after uncertain response.\n`
+            );
+            context.splog.debug(
+              `Confirmed merge result #${number}: ${reconciled}`
             );
           } else record = retainRejectedMerge(record, error);
           throw error;
@@ -429,8 +443,9 @@ async function applyScopedLanding(
           'Saved merge result changed; inspect recovery.'
         );
       advance({ result, phase: 'merged' });
-      process.stdout.write(
-        `Confirmed merged #${current(record).number}: ${result}.\n`
+      process.stdout.write(`✅ Confirmed merged #${current(record).number}.\n`);
+      context.splog.debug(
+        `Confirmed merge result #${current(record).number}: ${result}`
       );
       stage = 'trunk advance';
       advanceTrunk(record, context);
@@ -468,26 +483,40 @@ async function applyScopedLanding(
     advance({ phase: 'checkout-restored' });
     clearLandingProgress(record);
     process.stdout.write(
-      `Landing complete: ${record.target}; trunk advanced and landed refs/metadata cleaned.\n`
+      `✅ Landing complete: ${record.target}; trunk advanced and landed refs/metadata cleaned.\n`
     );
   } catch (error: unknown) {
-    throw new ExitFailedError(
-      `Landing incomplete at ${stage}. ${record.merges
-        .filter((member) => member.result)
-        .map(
-          (member) => `Confirmed merged #${member.number} (${member.result}); `
-        )
-        .join('')}${
-        record.result
-          ? `Confirmed merged #${current(record).number} (${record.result});`
-          : 'Merge unconfirmed or uncertain;'
-      } later work unattempted. ${
-        error instanceof Error ? error.message : String(error)
-      } Recovery retained in ${record.directory}; rerun an land ${
-        record.target
-      } --yes.`
-    );
+    throw landingFailure(record, stage, error);
   }
+}
+
+function landingFailure(
+  record: LandingProgress,
+  stage: string,
+  error: unknown
+): ExitFailedError {
+  return new ExitFailedError(
+    `${
+      stage === 'readiness check'
+        ? `⏸ Landing paused before #${current(record).number}`
+        : `Landing incomplete at ${stage}`
+    }. ${record.merges
+      .filter((member) => member.result)
+      .map(
+        (member) => `Confirmed merged #${member.number} (${member.result}); `
+      )
+      .join('')}${
+      stage === 'readiness check'
+        ? `No merge request sent for #${current(record).number};`
+        : record.result
+        ? `Confirmed merged #${current(record).number} (${record.result});`
+        : 'Merge unconfirmed or uncertain;'
+    } later work unattempted. ${
+      error instanceof Error ? error.message : String(error)
+    } Recovery retained in ${record.directory}; rerun an land ${
+      record.target
+    } --yes.`
+  );
 }
 
 /** Fresh verified OPEN plus explicit rejection permits only a later authorized run. */
@@ -578,10 +607,43 @@ function advanceTrunk(record: LandingProgress, context: TContext): void {
     throw new ExitFailedError('Trunk fast-forward was not confirmed.');
 }
 
+async function waitUntilReadyToMerge(
+  record: LandingProgress,
+  context: TContext,
+  waitSeconds: number
+): Promise<void> {
+  const deadline = Date.now() + waitSeconds * 1000;
+  let pending = await readyToMerge(record, context);
+  const waiting = pending.length > 0;
+  while (pending.length) {
+    if (Date.now() >= deadline)
+      throw new ExitFailedError(
+        `Check wait timed out before #${current(record).number}: ${pending.join(
+          ' '
+        )}`
+      );
+    process.stdout.write(
+      `⏳ Waiting for #${current(record).number} ${
+        current(record).branch
+      }: ${pending.join(' ')}\n`
+    );
+    await new Promise<void>((resolve) =>
+      setTimeout(resolve, Math.min(5000, Math.max(0, deadline - Date.now())))
+    );
+    pending = await readyToMerge(record, context);
+  }
+  if (waiting)
+    process.stdout.write(
+      `✅ Checks passed for #${
+        current(record).number
+      }; readiness revalidated.\n`
+    );
+}
+
 async function readyToMerge(
   record: LandingProgress,
   context: TContext
-): Promise<void> {
+): Promise<readonly string[]> {
   const policy = await getGithubLandPolicy(record.repo, record.trunk);
   const pr = await getGithubPr(current(record).branch, context);
   validateLocal(record, context);
@@ -609,9 +671,12 @@ async function readyToMerge(
     throw new ExitFailedError(
       'Fresh trunk/base changed or fast-forward is unavailable.'
     );
-  const blockers = await githubLandReadiness(pr, policy, record.repo);
-  if (blockers.length)
-    throw new ExitFailedError(`Fresh readiness blocked: ${blockers.join(' ')}`);
+  const readiness = await githubLandReadiness(pr, policy, record.repo);
+  if (readiness.blockers.length)
+    throw new ExitFailedError(
+      `Fresh readiness blocked: ${readiness.blockers.join(' ')}`
+    );
+  return readiness.pending;
 }
 function remoteHead(
   record: LandingProgress,

@@ -1,0 +1,5 @@
+Running merge in 'dry-run' mode. No PRs will be merged.
+
+🥞 Validating that this Graphite stack is ready to merge...
+
+ERROR: Cannot determine if stack is ready to merge

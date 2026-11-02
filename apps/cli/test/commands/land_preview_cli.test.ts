@@ -233,9 +233,12 @@ describe('public scoped landing preview', function () {
     );
     fixture.git(['update-ref', 'refs/heads/main', fresh], github.remote);
     const before = fixture.inspectionSnapshot();
-    const result = fixture.run(['land', '--dry-run']);
+    const result = fixture.run(['land', '--dry-run', '--debug']);
     expect(result.status, result.stdout + result.stderr).to.equal(0);
-    expect(result.stdout).to.include(fresh).and.include('fast-forward only');
+    expect(result.stdout)
+      .to.include('fast-forward required')
+      .and.not.include(fresh);
+    expect(result.stderr).to.include(fresh).and.include('fast-forward only');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(
       fs.existsSync(path.join(fixture.repo, '.git', 'FETCH_HEAD'))

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T12:55:58.125Z",
+    "end": "2026-11-02T12:56:32.620Z",
+    "duration": 34495
+  },
+  "tests": [
+    {
+      "title": "previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "fullTitle": "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 28809,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "fullTitle": "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 28809,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

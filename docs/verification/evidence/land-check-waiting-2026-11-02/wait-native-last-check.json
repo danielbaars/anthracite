@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T12:58:50.839Z",
+    "end": "2026-11-02T12:59:57.824Z",
+    "duration": 66985
+  },
+  "tests": [
+    {
+      "title": "leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 3671,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "fullTitle": "public landing check waiting preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 41758,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "fullTitle": "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_preview_cli.test.js",
+      "duration": 3671,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "fullTitle": "public landing check waiting preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 41758,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

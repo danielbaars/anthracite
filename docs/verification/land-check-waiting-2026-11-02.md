@@ -1,0 +1,31 @@
+# Landing check waiting and readable progress
+
+Date: 2026-11-02. Status: local unreleased candidate after npm 0.6.2. No application checkout or active installation was accessed or changed. No CI or full matrix was started. No live PR creation, edit or merge was performed by these verification probes; documentation publication is separate.
+
+## Behavior
+
+After confirmation, `land` waits within the same process when the next selected PR has known queued/running checks, including checks caused by its own survivor pushes. Explicit resumption of existing landing recovery uses the same behavior. The default check-wait budget is 600 seconds per PR, with a fresh inspection every five seconds. `--wait-timeout` accepts integer seconds from 0 to 86400; 0 retains immediate-stop behavior. This is a check-wait budget, not a new timeout for individual network requests.
+
+Every inspection checks local state, configured repository, exact PR head/base, remote head lease, trunk ancestry, policy, approvals, check completion and required publisher evidence. Waiting sends no merge request and performs no maintenance. Only verified readiness permits the next merge. Failed checks, missing approvals, conflicts, unknown readiness, missing/ambiguous publisher evidence and changed identities still stop progress. `UNSTABLE` or `BLOCKED` may accompany concrete running checks; neither alone authorizes a merge.
+
+Dry-runs and initial preflight remain immediate and preserving. They report current blockers rather than waiting or authorizing application. A timeout names the next PR and says that no merge request was sent for it. Ctrl-C/SIGTERM retain progress and release only the owned lock. Existing version-1 landing records are used without migration. Client/MCP deadlines can interrupt sooner; explicit resumption remains necessary after interruption.
+
+Fresh previews use section icons, PR-number-prefixed blockers, a concrete next action and conditional wording for blocked plans. Successful merge and maintenance progress omit full commit IDs by default; exact identities remain available through `--debug`. Pending recovery previews retain their existing detailed phase/head layout. See the actual [ready preview](evidence/land-check-waiting-2026-11-02/land-ready-final.txt) and [blocked preview](evidence/land-check-waiting-2026-11-02/land-blocked-final.txt). Selection, merge method, approval authority, cleanup leases and recovery ownership remain unchanged.
+
+## Verification
+
+- The [first red public-CLI test](evidence/land-check-waiting-2026-11-02/wait-red.json) reproduced the released pattern: the first PR merged and surviving heads updated, then the CLI exited on a running check. The [timeout-message red test](evidence/land-check-waiting-2026-11-02/wait-timeout-red.json) retained the misleading uncertainty wording before correction.
+- **47 distinct public-CLI cases pass per runtime**, on Node 24.19.0 and macOS ARM64 Bun 1.3.14 native builds. Eleven waiting cases cover completion in one run, timeout/resumption, failed checks, changed approval/policy/remote head/local work, unknown readiness, Ctrl-C, exact-head app-bound publisher completion, immediate dry-runs and invalid limits. Existing presentation, preflight, policy, interruption and bounded maintenance controls also pass.
+- The main preview reports preserve one earlier expectation failure per runtime: an old test expected a full commit ID in normal output. Focused corrections check its presence under `--debug`, absence from normal output, and preservation of refs, index and `FETCH_HEAD`. The [aggregate results](evidence/land-check-waiting-2026-11-02/results.json) name the superseding reports. Final native cancellation/preview and installed-package probes cover the final interruption wording and learning guidance.
+- **Eleven installed npm scenarios pass**: nine existing offline installation/MCP/Git/guard controls and two direct waiting/cancellation cases on an isolated installation of the exact candidate tarball. The [package check](evidence/land-check-waiting-2026-11-02/npm-package-final.log) initially encountered a sandbox-only process-observation refusal in an existing MCP hook; the unchanged check passed with process inspection available. The [initial sandbox output](evidence/land-check-waiting-2026-11-02/npm-sandbox-initial.json) is retained. No dependency, cancellation implementation or test timeout was changed to obtain that pass.
+- Typecheck, changed-source lint, formatting and whitespace checks pass. Help and generated completion expose the wait option. The tarball's CLI matches the isolated installed CLI byte-for-byte. Source and executable checksums are retained in the aggregate results.
+
+CLI tests use real temporary Git repositories and bare remotes, with only external GitHub responses controlled. No live-service acceptance is claimed.
+
+## Recovery produced by published npm 0.6.2
+
+Two additional probes use the real published npm 0.6.2 CLI to create a stopped three-PR landing, then resume it through the candidate's Node and native executables. The released CLI merged the base PR and stopped before the child while checks were running. The candidate accepted the version-1 record, waited separately for both remaining PRs, and completed all three merges. The confirmed merge was not repeated, the reached child head was retained, and an unpublished survivor retained its tree and stayed unpublished.
+
+The [Node observation](evidence/land-check-waiting-2026-11-02/legacy-three-node.json), [native observation](evidence/land-check-waiting-2026-11-02/legacy-three-native.json) and [verification script](evidence/land-check-waiting-2026-11-02/verify-legacy-recovery.cjs) retain actual output and released recovery records. The script takes explicit source, released launcher, candidate launcher and output paths and uses only synthetic fixtures.
+
+These observations cover the interrupted-after-maintenance case. They do not certify every historical or foreign recovery record, live GitHub timing, or enterprise configuration. Existing uncertainty, ownership and preservation refusals remain authoritative. The candidate has not been installed, released or applied to the user's pending landing.
