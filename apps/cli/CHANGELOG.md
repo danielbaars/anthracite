@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.4](https://github.com/danielbaars/anthracite/compare/v0.6.3...v0.6.4) (2026-11-02)
+
+
+### Bug Fixes
+
+* **cli:** simplify resumed landing plans ([9e8d382](https://github.com/danielbaars/anthracite/commit/9e8d382d17b4f299fb72828f74f8a0e702c1f02b))
+
 ## [0.6.3](https://github.com/danielbaars/anthracite/compare/v0.6.2...v0.6.3) (2026-11-02)
 
 
