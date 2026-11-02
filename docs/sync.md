@@ -1,6 +1,6 @@
 # Sync existing stacks
 
-This source candidate changes sync defaults after public 0.5.1. It has not been released merely because its implementation PR exists.
+Existing-feature refresh and default restacking shipped in 0.6.0. The local-ahead merged-parent repair described below is an unreleased source fix.
 
 `an sync`, `an repo sync` and `an repo s` refresh the existing tracked feature graph belonging to the configured trunk. Independent stacks and local descendants are included. Sync does not discover remote-only branches, import missing parents, push branches or change GitHub PRs. Use scoped `an get` when repository-wide selection is unwanted.
 
@@ -9,6 +9,8 @@ This source candidate changes sync defaults after public 0.5.1. It has not been 
 Sync snapshots the graph and sources and collects required choices before applying local changes. It then updates trunk, refreshes eligible open-PR feature heads parent-first, performs separately approved cleanup, maintains affected local histories and restores the original checkout. Read-only GitHub lookups, fetches, PR information and owned source pins can occur during planning; this is not a write-free transaction.
 
 A closed or merged PR is a cleanup input rather than a feature-refresh source. Declining cleanup retains that branch without preventing inspection of its descendants. Local-only work stays unpublished. With GitHub integration disabled, sync makes no service calls and retains local trunk/cleanup/maintenance behavior; cached PR status is not fresh verification.
+
+When GitHub retargets an open child to trunk after its parent PR merges, sync preserves a strictly local-ahead child whose remote commits are already contained locally. It keeps the original local replay boundary for cleanup and maintenance instead of asking to replace the child with the older remote head. Cleanup still follows the selected delete options; no-restack still defers replay. This narrow case requires the old local parent to match the freshly verified merged PR head. Divergence, a closed/unmerged parent and other parent changes retain existing explicit reconciliation. See the [repair verification](verification/sync-merged-parent-local-commits-2026-11-02.md).
 
 ## Options and authority
 
