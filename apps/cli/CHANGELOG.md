@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/danielbaars/anthracite/compare/v0.6.0...v0.6.1) (2026-11-02)
+
+
+### Bug Fixes
+
+* **cli:** preserve local commits after a parent PR merges ([410a4bd](https://github.com/danielbaars/anthracite/commit/410a4bd4968857af33f05618eebe4954663772ea))
+
 ## [0.6.0](https://github.com/danielbaars/anthracite/compare/v0.5.1...v0.6.0) (2026-11-01)
 
 
