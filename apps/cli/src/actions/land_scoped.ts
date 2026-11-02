@@ -171,17 +171,11 @@ export async function resumeScopedLanding(
   context: TContext
 ): Promise<void> {
   validateIdentity(record, context);
-  process.stdout.write(
-    `Pending landing: ${record.repo} trunk ${record.trunk} target ${
-      record.target
-    }; phase ${record.phase}.\nMerge: #${current(record).number} head ${
-      owned(current(record)).head
-    }\nCleanup: ${record.target}; original project ${record.directory}\n`
-  );
   if (args['dry-run']) {
     await previewPendingLanding(record, context);
     return;
   }
+  printPendingLanding(record, context);
   if (!args.yes) {
     if (!context.canPrompt)
       throw new ExitFailedError(
@@ -206,27 +200,147 @@ export async function resumeScopedLanding(
   }, record);
 }
 
-function printPendingLanding(record: LandingProgress): void {
+function printPendingLanding(
+  record: LandingProgress,
+  context: TContext,
+  inspection?: {
+    readonly blockers: readonly string[];
+    readonly cleanupOnly: ReadonlySet<string>;
+  }
+): void {
+  const remaining = record.merges.slice(record.index ?? 0);
+  if (inspection?.blockers.length) {
+    process.stdout.write('⛔ Cannot resume landing yet:\n');
+    for (const blocker of inspection.blockers) {
+      const member = remaining.find((merge) =>
+        blocker.startsWith(`${merge.branch}: `)
+      );
+      process.stdout.write(
+        `  - ${member?.number ? `#${member.number} ` : ''}${blocker}\n`
+      );
+    }
+    process.stdout.write(
+      `👉 Next: inspect the blockers in ${record.directory}, then preview again.\n\nOnce resolved, this would resume:\n`
+    );
+  }
+  process.stdout.write(
+    `⏸ Pending landing: ${record.repo}\nTarget: ${record.target} -> ${record.trunk}\nLocal ${record.trunk}: fast-forward after confirmed merges.\n`
+  );
+  const completed = record.merges
+    .slice(0, record.index ?? 0)
+    .filter((member) => member.result);
+  if (completed.length)
+    process.stdout.write(
+      `✅ Already merged: ${completed
+        .map((member) => `#${member.number} ${member.branch}`)
+        .join(', ')}\n`
+    );
+  if (record.replay)
+    process.stdout.write(
+      `Local replay incomplete: ${record.replay.pending.join(
+        ', '
+      )}; inspect owned recovery before remote work.\n`
+    );
+  process.stdout.write('\n🔀 Remaining PRs (bottom to top):\n');
+  remaining.forEach((member, index) => {
+    const cleanupOnly =
+      member.cleanupResult ||
+      member.result ||
+      (index === 0 && record.result) ||
+      inspection?.cleanupOnly.has(member.branch);
+    process.stdout.write(
+      `  ${cleanupOnly ? 'Cleanup-only' : 'Merge'} ${index + 1}: ${
+        member.branch
+      } #${member.number}\n`
+    );
+  });
+  const survivors = landingSurvivors(record);
+  if (survivors.length) {
+    process.stdout.write(
+      `\n🔧 After merging #${
+        current(record).number
+      }: verify required branch maintenance.\n`
+    );
+    for (const member of survivors) {
+      const expected = owned(member);
+      const alsoMerges = remaining.some(
+        (merge) => merge.branch === member.branch
+      );
+      process.stdout.write(
+        `  Maintain: ${member.branch}${
+          member.number ? ` #${member.number}` : ''
+        } (${alsoMerges ? 'also a merge target' : 'not a merge target'})\n`
+      );
+      const effect = member.cleanupResult
+        ? 'Verify metadata only; already landed.'
+        : `Verify replay; ${
+            expected.remoteHead ? 'push existing branch' : 'keep local; no push'
+          }; ${
+            member.number
+              ? `update existing PR #${member.number} base/footer`
+              : 'no PR creation'
+          }.`;
+      process.stdout.write(`    ${effect}\n`);
+    }
+  }
+  const checkout = record.merges.some(
+    (member) => member.branch === record.checkout
+  )
+    ? record.trunk
+    : `${record.checkout} if it survives, otherwise ${record.trunk}`;
+  process.stdout.write(
+    `\n🧹 Cleanup: ${remaining
+      .map((member) => member.branch)
+      .join(
+        ', '
+      )}\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: ${checkout}\n`
+  );
+  if (inspection && !inspection.blockers.length)
+    process.stdout.write(
+      '✅ Readiness: READY for remaining work; checks repeat before every merge.\n'
+    );
+  else if (!inspection)
+    process.stdout.write('Fresh checks run before each merge.\n');
+  process.stdout.write(
+    'Use --debug for recovery phases, commit IDs and replay details.\n'
+  );
+  printPendingLandingDetails(record, context);
+}
+
+function printPendingLandingDetails(
+  record: LandingProgress,
+  context: TContext
+): void {
+  const write = (message: string): void =>
+    context.splog.debug(message.trimEnd());
+  write(
+    `Pending landing: ${record.repo} trunk ${record.trunk} target ${
+      record.target
+    }; phase ${record.phase}.\nMerge: #${current(record).number} head ${
+      owned(current(record)).head
+    }\nCleanup: ${record.target}; original project ${record.directory}\n`
+  );
+
   const remaining = record.merges.slice(record.index ?? 0);
   const survivors = landingSurvivors(record);
-  process.stdout.write(
+  write(
     `Remaining trunk maintenance: fast-forward ${record.trunk}; phase ${record.phase}.\n`
   );
   if (record.replay)
-    process.stdout.write(
+    write(
       `Local replay incomplete: ${record.replay.pending.join(
         ', '
       )}; resolve the owned local replay before remote work.\n`
     );
   for (const member of remaining)
-    process.stdout.write(
+    write(
       `${member.cleanupResult ? 'Cleanup-only' : 'Merge'}: ${member.branch} #${
         member.number
       }; reached head ${owned(member).head}; captured head ${member.head}\n`
     );
   for (const member of survivors) {
     const expected = owned(member);
-    process.stdout.write(
+    write(
       `Maintain: ${member.branch}; parent ${expected.parent} -> ${
         remaining.some((merge) => merge.branch === expected.parent)
           ? record.trunk
@@ -238,14 +352,14 @@ function printPendingLanding(record: LandingProgress): void {
       }\n`
     );
     if (!member.cleanupResult) {
-      process.stdout.write(
+      write(
         `Push: ${member.branch}; ${
           expected.remoteHead
             ? 'verify or update existing leased head'
             : 'remain unpublished'
         }\n`
       );
-      process.stdout.write(
+      write(
         `PR update: ${member.branch}; ${
           member.number
             ? `verify existing #${member.number} base/dependency footer`
@@ -254,7 +368,7 @@ function printPendingLanding(record: LandingProgress): void {
       );
     }
   }
-  process.stdout.write(
+  write(
     `Cleanup: ${remaining
       .map((member) => member.branch)
       .join(
@@ -280,7 +394,7 @@ async function previewPendingLanding(
   };
   const remaining = record.merges.slice(record.index ?? 0);
   const survivors = landingSurvivors(record);
-  printPendingLanding(record);
+  const cleanupOnly = new Set<string>();
   await inspect(() => validateLocal(record, context));
   await inspect(() => {
     const trunk = remoteHead(record, record.trunk);
@@ -328,8 +442,9 @@ async function previewPendingLanding(
           throw new ExitFailedError(
             `${member.branch}: Remote cleanup lease changed.`
           );
-        process.stdout.write(
-          `Confirmed cleanup-only: ${member.branch}; result ${result}.\n`
+        cleanupOnly.add(member.branch);
+        context.splog.debug(
+          `Confirmed cleanup-only: ${member.branch}; result ${result}.`
         );
         return;
       }
@@ -368,14 +483,11 @@ async function previewPendingLanding(
           );
       }
     });
-  for (const blocker of blockers) process.stdout.write(`BLOCKED: ${blocker}\n`);
+  printPendingLanding(record, context, { blockers, cleanupOnly });
   if (blockers.length)
     throw new ExitFailedError(
       'Pending landing preview blocked; recovery and repository preserved.'
     );
-  process.stdout.write(
-    'Readiness: READY for remaining disclosed work; revalidation required before every effect.\n'
-  );
 }
 
 async function applyScopedLanding(

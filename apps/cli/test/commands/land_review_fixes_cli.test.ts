@@ -315,10 +315,10 @@ describe('public landing review regressions', function () {
       .to.include('Clean index/worktree')
       .and.include('IN_PROGRESS');
     expect(preview.stdout)
-      .to.include('Merge: child')
+      .to.include('Merge 1: child #18')
       .and.include('Maintain: tip')
-      .and.include('Push: tip')
-      .and.include('PR update: tip')
+      .and.include('push existing branch')
+      .and.include('update existing PR #19 base/footer')
       .and.include('Cleanup: child');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(
@@ -353,11 +353,12 @@ describe('public landing review regressions', function () {
       path.join(fixture.repo, '.git/.anthracite_landing'),
       'utf8'
     );
-    const preview = fixture.run(['land', 'base', '--dry-run']);
+    const preview = fixture.run(['land', 'base', '--dry-run', '--debug']);
     expect(preview.status, preview.stdout + preview.stderr).to.equal(0);
     expect(preview.stdout)
-      .to.include(`reached head ${localChild}`)
-      .and.include('Push: child');
+      .to.include('push existing branch')
+      .and.not.to.include(localChild);
+    expect(preview.stderr).to.include(`reached head ${localChild}`);
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(
       fs.readFileSync(
@@ -378,14 +379,15 @@ describe('public landing review regressions', function () {
       fixture.git(['for-each-ref', '--format=%(objectname)', 'refs/heads/base'])
     ).to.equal('');
     const deletedBefore = fixture.inspectionSnapshot();
-    const deletedPreview = fixture.run(['land', '--dry-run']);
+    const deletedPreview = fixture.run(['land', '--dry-run', '--debug']);
     expect(
       deletedPreview.status,
       deletedPreview.stdout + deletedPreview.stderr
     ).to.equal(0);
     expect(deletedPreview.stdout)
       .to.include('Cleanup: base')
-      .and.include('phase local-deleted');
+      .and.not.to.include('phase local-deleted');
+    expect(deletedPreview.stderr).to.include('phase local-deleted');
     expect(fixture.inspectionSnapshot()).to.deep.equal(deletedBefore);
   });
 
