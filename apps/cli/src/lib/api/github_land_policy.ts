@@ -7,6 +7,29 @@ import { GithubPr } from './github_pr';
 
 const execFileAsync = promisify(execFile);
 
+class ClassicProtectionNotFound extends ExitFailedError {}
+
+function isClassicProtectionNotFound(error: unknown): boolean {
+  const failure = z
+    .object({ stdout: z.string(), stderr: z.string() })
+    .safeParse(error);
+  if (!failure.success) return false;
+  try {
+    const body = z
+      .object({
+        message: z.literal('Branch not protected'),
+        status: z.literal('404'),
+      })
+      .safeParse(JSON.parse(failure.data.stdout));
+    return (
+      body.success &&
+      /^gh: Branch not protected \(HTTP 404\)\r?\n?$/.test(failure.data.stderr)
+    );
+  } catch {
+    return false;
+  }
+}
+
 /** API endpoints carry repository identity; gh api does not accept --repo. */
 export async function readGithubLandApi(endpoint: string): Promise<unknown> {
   try {
@@ -27,7 +50,10 @@ export async function readGithubLandApi(endpoint: string): Promise<unknown> {
             network: 'network failure',
             request: 'request failed',
           }[githubFailureKind(error)];
-    throw new ExitFailedError(
+    const Failure = isClassicProtectionNotFound(error)
+      ? ClassicProtectionNotFound
+      : ExitFailedError;
+    throw new Failure(
       `GitHub identity or policy unavailable (${reason}): ${endpoint}. No readiness assumed.`
     );
   }
@@ -56,6 +82,76 @@ const ruleSchema = z.object({
   type: z.string(),
   parameters: z.unknown().optional(),
 });
+
+async function verifyClassicProtectionAbsent(
+  repo: string,
+  trunk: string
+): Promise<void> {
+  const [owner, name] = repo.split('/');
+  try {
+    const result = await execFileAsync(
+      'gh',
+      [
+        'api',
+        'graphql',
+        '--hostname',
+        'github.com',
+        '--method',
+        'POST',
+        '-f',
+        'query=query($owner: String!, $name: String!, $ref: String!) { repository(owner: $owner, name: $name) { nameWithOwner viewerPermission ref(qualifiedName: $ref) { name branchProtectionRule { id } } } }',
+        '-f',
+        `owner=${owner}`,
+        '-f',
+        `name=${name}`,
+        '-f',
+        `ref=refs/heads/${trunk}`,
+      ],
+      githubProcessOptions()
+    );
+    const evidence = z
+      .object({
+        errors: z.array(z.unknown()).max(0).optional(),
+        data: z.object({
+          repository: z.object({
+            nameWithOwner: z.string(),
+            viewerPermission: z.literal('ADMIN'),
+            ref: z.object({ name: z.string(), branchProtectionRule: z.null() }),
+          }),
+        }),
+      })
+      .parse(JSON.parse(result.stdout));
+    if (
+      evidence.data.repository.nameWithOwner.toLowerCase() !==
+        repo.toLowerCase() ||
+      evidence.data.repository.ref.name !== trunk
+    )
+      throw new Error('Classic protection evidence identity mismatch.');
+  } catch {
+    throw new ExitFailedError(
+      'Classic protection absence unverified: matching administrator-visible branch evidence required. No readiness assumed.'
+    );
+  }
+}
+
+async function readClassicLandPolicy(
+  repo: string,
+  trunk: string,
+  hasRules: boolean
+): Promise<z.infer<typeof classicSchema> | undefined> {
+  try {
+    return classicSchema.parse(
+      await readGithubLandApi(
+        `repos/${repo}/branches/${encodeURIComponent(trunk)}/protection`
+      )
+    );
+  } catch (error: unknown) {
+    // A REST 404 alone cannot distinguish absence from hidden protection.
+    if (!(error instanceof ClassicProtectionNotFound) || !hasRules) throw error;
+    await verifyClassicProtectionAbsent(repo, trunk);
+    return undefined;
+  }
+}
 export type LandPolicy = {
   readonly reviews: number;
   readonly checks: readonly string[];
@@ -103,11 +199,10 @@ export async function getGithubLandPolicy(
   let reviews = 0;
   const checks = new Set<string>();
   const publishers: { readonly context: string; readonly appId: number }[] = [];
-  if (protection.protected) {
-    // A 404 may mean insufficient Administration permission: it never proves absence.
-    const classic = classicSchema.parse(
-      await readGithubLandApi(`${prefix}/branches/${branch}/protection`)
-    );
+  const classic = protection.protected
+    ? await readClassicLandPolicy(repo, trunk, rules.length > 0)
+    : undefined;
+  if (classic) {
     if (
       classic.url !==
       `https://api.github.com/repos/${repository.full_name}/branches/${branch}/protection`

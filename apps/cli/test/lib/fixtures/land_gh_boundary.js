@@ -21,6 +21,7 @@ if (args[0] === 'api') {
   const method = args[args.indexOf('--method') + 1];
   if (
     method !== 'GET' &&
+    !(method === 'POST' && endpoint === 'graphql') &&
     !(
       method === 'PUT' &&
       /^repos\/fixture\/inspection\/pulls\/[1-9][0-9]*\/merge$/.test(endpoint)
@@ -184,6 +185,13 @@ if (args[0] === 'api') {
         fs.rmSync(temporary, { recursive: true, force: true });
       }
     }
+  } else if (endpoint === 'graphql') {
+    if (policy.classicAbsenceResponse) {
+      process.stdout.write(JSON.stringify(policy.classicAbsenceResponse));
+    } else {
+      process.stderr.write('gh: Resource not accessible (HTTP 403)');
+      process.exitCode = 1;
+    }
   } else if (policy.unavailable) {
     process.stderr.write('HTTP 403: unavailable policy');
     process.exitCode = 1;
@@ -205,6 +213,24 @@ if (args[0] === 'api') {
     process.stdout.write(
       JSON.stringify(policy.rules.slice((page - 1) * 100, page * 100))
     );
+  } else if (
+    endpoint === prefix + '/branches/main/protection' &&
+    policy.classicFailure
+  ) {
+    process.stdout.write(JSON.stringify(policy.classicFailure));
+    process.stderr.write(
+      `gh: ${policy.classicFailure.message} (HTTP ${policy.classicFailure.status})\n`
+    );
+    process.exitCode = 1;
+  } else if (
+    endpoint === prefix + '/branches/main/protection' &&
+    policy.classicNotFound
+  ) {
+    process.stdout.write(
+      JSON.stringify({ message: 'Branch not protected', status: '404' })
+    );
+    process.stderr.write('gh: Branch not protected (HTTP 404)\n');
+    process.exitCode = 1;
   } else if (
     endpoint === prefix + '/branches/main/protection' &&
     policy.protection

@@ -1,0 +1,135 @@
+{
+  "kind": "local unreleased source candidate; npm 0.6.1 does not contain this repair",
+  "baseCommit": "a598e3bbffb3a7e5512c8b185d9176f501e10141",
+  "redBeforeFix": {
+    "failures": 1,
+    "symptom": "GitHub identity or policy unavailable at the classic protection endpoint"
+  },
+  "runtimes": {
+    "node": "24.19.0",
+    "bunNative": "1.3.14"
+  },
+  "results": {
+    "node-new": {
+      "stats": {
+        "suites": 1,
+        "tests": 14,
+        "passes": 14,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-02T10:32:44.425Z",
+        "end": "2026-11-02T10:34:37.981Z",
+        "duration": 113556
+      },
+      "tests": [
+        "public landing with ruleset-only protection previews an approved ruleset-only PR when classic absence is independently verified",
+        "public landing with ruleset-only protection still refuses a ruleset-required approval after classic absence is verified",
+        "public landing with ruleset-only protection combines classic and ruleset requirements without dropping the stricter review or either check",
+        "public landing with ruleset-only protection refuses when the independent absence lookup is inaccessible",
+        "public landing with ruleset-only protection refuses non-administrator visibility as proof of classic absence",
+        "public landing with ruleset-only protection refuses a foreign repository as proof of classic absence",
+        "public landing with ruleset-only protection refuses a foreign branch as proof of classic absence",
+        "public landing with ruleset-only protection refuses a present classic rule as proof of classic absence",
+        "public landing with ruleset-only protection refuses an omitted classic rule field as proof of classic absence",
+        "public landing with ruleset-only protection refuses partial data with GraphQL errors as proof of classic absence",
+        "public landing with ruleset-only protection preserves refusal for an ambiguous 403: Resource not accessible by integration",
+        "public landing with ruleset-only protection preserves refusal for an ambiguous 404: Not Found",
+        "public landing with ruleset-only protection refuses unexplained protected status when no active rules apply",
+        "public landing with ruleset-only protection lands a ruleset-only PR while retaining its mandatory successors"
+      ]
+    },
+    "native-new": {
+      "stats": {
+        "suites": 1,
+        "tests": 14,
+        "passes": 14,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-02T10:33:39.622Z",
+        "end": "2026-11-02T10:35:13.943Z",
+        "duration": 94321
+      },
+      "tests": [
+        "public landing with ruleset-only protection previews an approved ruleset-only PR when classic absence is independently verified",
+        "public landing with ruleset-only protection still refuses a ruleset-required approval after classic absence is verified",
+        "public landing with ruleset-only protection combines classic and ruleset requirements without dropping the stricter review or either check",
+        "public landing with ruleset-only protection refuses when the independent absence lookup is inaccessible",
+        "public landing with ruleset-only protection refuses non-administrator visibility as proof of classic absence",
+        "public landing with ruleset-only protection refuses a foreign repository as proof of classic absence",
+        "public landing with ruleset-only protection refuses a foreign branch as proof of classic absence",
+        "public landing with ruleset-only protection refuses a present classic rule as proof of classic absence",
+        "public landing with ruleset-only protection refuses an omitted classic rule field as proof of classic absence",
+        "public landing with ruleset-only protection refuses partial data with GraphQL errors as proof of classic absence",
+        "public landing with ruleset-only protection preserves refusal for an ambiguous 403: Resource not accessible by integration",
+        "public landing with ruleset-only protection preserves refusal for an ambiguous 404: Not Found",
+        "public landing with ruleset-only protection refuses unexplained protected status when no active rules apply",
+        "public landing with ruleset-only protection lands a ruleset-only PR while retaining its mandatory successors"
+      ]
+    },
+    "node-existing": {
+      "stats": {
+        "suites": 2,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-02T10:35:00.589Z",
+        "end": "2026-11-02T10:35:37.143Z",
+        "duration": 36554
+      },
+      "tests": [
+        "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+        "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+        "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone",
+        "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+        "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+        "public scoped landing preview does not accept malformed classic policy as known no-requirements"
+      ]
+    },
+    "native-existing": {
+      "stats": {
+        "suites": 2,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-02T10:35:54.050Z",
+        "end": "2026-11-02T10:36:25.312Z",
+        "duration": 31262
+      },
+      "tests": [
+        "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+        "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+        "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone",
+        "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404",
+        "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+        "public scoped landing preview does not accept malformed classic policy as known no-requirements"
+      ]
+    }
+  },
+  "checks": {
+    "typescriptBuild": true,
+    "typecheck": true,
+    "changedFileLint": true,
+    "formatting": true,
+    "diffCheck": true
+  },
+  "readOnlyLivePolicy": {
+    "readOnlyPolicyLookup": true,
+    "projectDirectoryUsed": false,
+    "classic404Resolved": true,
+    "policy": {
+      "reviews": 1,
+      "checks": [],
+      "publishers": [],
+      "blockers": []
+    }
+  },
+  "productionFileSHA256": "fe2b2749f169be80c72e6557411c13c169e55028f524196b157e4ce70b99fc96",
+  "nativeCandidateSHA256": "ea513a5ccb09554b52d41a5cfee6b4605b85c200cd248f8f42b057e560ac3aae",
+  "userProjectDirectoryAccessed": false,
+  "githubWrites": false,
+  "CIRunsStarted": false,
+  "fullMatrixStarted": false,
+  "activeInstallationChanged": false
+}
