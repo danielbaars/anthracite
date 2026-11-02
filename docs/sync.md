@@ -1,6 +1,6 @@
 # Sync existing stacks
 
-Existing-feature refresh and default restacking shipped in 0.6.0. The local-ahead merged-parent repair described below is an unreleased source fix.
+Existing-feature refresh and default restacking shipped in 0.6.0. The local-ahead merged-parent repair described below targets 0.6.1 and is absent from 0.6.0.
 
 `an sync`, `an repo sync` and `an repo s` refresh the existing tracked feature graph belonging to the configured trunk. Independent stacks and local descendants are included. Sync does not discover remote-only branches, import missing parents, push branches or change GitHub PRs. Use scoped `an get` when repository-wide selection is unwanted.
 

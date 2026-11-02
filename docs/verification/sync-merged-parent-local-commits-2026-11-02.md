@@ -1,6 +1,6 @@
 # Preserve local sync survivors after their parent merges
 
-Date: 2 November 2026. Baseline: released Anthracite 0.6.0, main `eb23e4f8e924da24e00ae06484799687adde66b1`. This is an unreleased focused repair, not a version publication or a new Graphite comparison.
+Date: 2 November 2026. Baseline: released Anthracite 0.6.0, main `eb23e4f8e924da24e00ae06484799687adde66b1`. This records the focused repair and its pre-release checks, not a version publication or a new Graphite comparison.
 
 ## Reproduction and cause
 
@@ -30,4 +30,4 @@ All six new scenarios and eight selected existing refresh, survivor, authority a
 
 Typecheck, changed-source lint, formatting and diff checks pass. The exact temporary npm tarball passes offline installation, both commands/completion/content checks, all nine existing package scenarios, and the new merged-parent regression. Its initial sandboxed package run could not observe the numeric-zero cancellation hook; the same tarball passed the complete gate with local process observation outside the sandbox. No unrelated MCP or test-tooling production change was made.
 
-CI and the full matrix remain off. No live GitHub writes, active installation changes or application-project commands are part of the repair. The candidate retains 0.6.0 package metadata for local testing and must not be confused with the published 0.6.0 artifact. A release is still needed before the user's installed command receives this repair.
+CI and the full matrix remain off. No live GitHub writes, active installation changes or application-project commands are part of the repair. The candidate retains 0.6.0 package metadata for local testing and must not be confused with the published 0.6.0 artifact. Published 0.6.0 does not contain this repair.
