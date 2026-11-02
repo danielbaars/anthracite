@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.3](https://github.com/danielbaars/anthracite/compare/v0.6.2...v0.6.3) (2026-11-02)
+
+
+### Bug Fixes
+
+* **cli:** clarify landing plans and wait for running checks ([e854e89](https://github.com/danielbaars/anthracite/commit/e854e89edff1d9c3b2fc915d0ffc75e660282c9b))
+
 ## [0.6.2](https://github.com/danielbaars/anthracite/compare/v0.6.1...v0.6.2) (2026-11-02)
 
 
