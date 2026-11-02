@@ -239,8 +239,9 @@ async function inspectParticipant(
           blockers.push(`${name}: Published remote head missing.`);
         if (pr.baseRefName !== context.engine.getParentPrecondition(name))
           blockers.push(`${name}: PR base does not match tracked parent.`);
+        const readiness = await githubLandReadiness(pr, policy, repo);
         blockers.push(
-          ...(await githubLandReadiness(pr, policy, repo)).map(
+          ...[...readiness.blockers, ...readiness.pending].map(
             (message) => `${name}: ${message}`
           )
         );
@@ -260,16 +261,26 @@ async function inspectParticipant(
 
 export function printLandPlan(plan: LandPlan, context: TContext): void {
   if (plan.blockers.length) {
-    process.stdout.write('Cannot land yet:\n');
-    for (const blocker of plan.blockers)
-      process.stdout.write(`  - ${blocker}\n`);
+    process.stdout.write('⛔ Cannot land yet:\n');
+    for (const blocker of plan.blockers) {
+      const member = plan.merges.find((merge) =>
+        blocker.startsWith(`${merge.branch}: `)
+      );
+      process.stdout.write(
+        `  - ${member?.pr ? `#${member.pr.number} ` : ''}${blocker}\n`
+      );
+    }
     if (
       plan.blockers.some((blocker) => blocker.includes('Clean index/worktree'))
     )
       process.stdout.write(
-        'Next: run git status --short to inspect local changes.\n'
+        '👉 Next: run git status --short to inspect local changes.\n'
       );
-    process.stdout.write('\n');
+    else
+      process.stdout.write(
+        '👉 Next: resolve these blockers and run the preview again.\n'
+      );
+    process.stdout.write('\nOnce resolved, this would:\n');
   }
   process.stdout.write(
     `Landing plan: ${plan.repo}\nTarget: ${plan.target} -> ${plan.trunk}\n`
@@ -293,7 +304,7 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
         : plan.trunkHead === plan.remoteTrunk
         ? 'up to date'
         : 'fast-forward required'
-    }.\n\nPR order (bottom to top):\n`
+    }.\n\n🔀 PR order (bottom to top):\n`
   );
   plan.merges.forEach((member, index) =>
     process.stdout.write(
@@ -309,7 +320,9 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
       'Between merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n'
     );
   if (plan.maintenance.length) {
-    process.stdout.write('\nOther branches to restack (not merge targets):\n');
+    process.stdout.write(
+      '\n🔧 Other branches to restack (not merge targets):\n'
+    );
     for (const member of plan.maintenance) {
       const parent = plan.merges.some((merge) => merge.branch === member.parent)
         ? plan.trunk
@@ -326,14 +339,14 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
     }
   }
   process.stdout.write(
-    `\nCleanup: ${plan.merges
+    `\n🧹 Cleanup: ${plan.merges
       .map((member) => member.branch)
       .join(
         ', '
       )}\n  Delete landed branches locally and on GitHub after confirmed merges only.\n`
   );
   if (!plan.blockers.length)
-    process.stdout.write('Readiness: READY to merge this plan.\n');
+    process.stdout.write('✅ Readiness: READY to merge this plan.\n');
   process.stdout.write('Use --debug for commit IDs and technical details.\n');
   printLandDetails(plan, (message) => context.splog.debug(message.trimEnd()));
 }
@@ -415,7 +428,11 @@ function printLandDetails(
 
 export async function land(
   target: string | undefined,
-  args: { readonly 'dry-run': boolean; readonly yes: boolean },
+  args: {
+    readonly 'dry-run': boolean;
+    readonly yes: boolean;
+    readonly 'wait-timeout': number;
+  },
   context: TContext
 ): Promise<void> {
   const pending = loadLandingProgress();
@@ -466,6 +483,9 @@ export async function land(
       throw new ExitFailedError(
         'Landing scope/readiness changed under lock; preview again. No changes made.'
       );
-    await startScopedLanding(locked, lockedContext, cacheLock);
+    await startScopedLanding(locked, lockedContext, {
+      cacheLock,
+      waitSeconds: args['wait-timeout'],
+    });
   });
 }

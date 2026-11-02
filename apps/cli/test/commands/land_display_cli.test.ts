@@ -29,7 +29,7 @@ describe('public landing plan presentation', function () {
       '--no-interactive',
     ]);
     expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stdout).to.match(/^Cannot land yet:/);
+    expect(result.stdout).to.match(/^⛔ Cannot land yet:/);
     expect(result.stdout).to.include('git status --short');
     expect(result.stdout)
       .to.include('Merge 1: base #17')

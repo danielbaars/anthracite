@@ -157,8 +157,13 @@ Only user-authorized application with --yes can merge that chain, replay local
 survivors, push their existing heads, update existing PR bases/managed footers and
 clean confirmed landed refs. Missing survivor PRs stay missing and unpublished
 heads stay unpublished. Independent stacks stay outside scope. Every next merge
-requires fresh expected-head readiness after maintenance; dismissed approvals,
-pending checks, unreadable policy or missing publisher provenance stop progress.
+requires fresh expected-head readiness after maintenance. During confirmed
+application or resumption, known running checks are polled every five seconds
+for up to 600 seconds per PR (--wait-timeout changes seconds; 0 stops immediately).
+Dry-runs and initial preflight never wait. Failed checks, dismissed approvals,
+changed identities, unknown readiness, unreadable policy or missing publisher
+provenance stop progress. Client deadlines may interrupt a wait sooner; inspect
+preserved progress and explicitly resume rather than assuming rollback.
 There is no queue, bypass, automatic approval or implicit submit route.
 
 A landing conflict returns cli_error and retains completed merges and parents.

@@ -332,7 +332,8 @@ if (
       changed = true;
       pr.headRefOid = head;
       if (policy.dismissAfterPush) pr.reviewDecision = 'REVIEW_REQUIRED';
-      if (policy.pendingAfterPush)
+      if (policy.pendingAfterPush) {
+        pr.mergeStateStatus = 'UNSTABLE';
         pr.statusCheckRollup = [
           {
             __typename: 'CheckRun',
@@ -341,6 +342,7 @@ if (
             conclusion: null,
           },
         ];
+      }
     }
     const base = revision(pr.baseRefName);
     if (base && previous[pr.baseRefName] && base !== previous[pr.baseRefName]) {

@@ -292,9 +292,15 @@ describe('public landing review regressions', function () {
       github.policy,
       JSON.stringify({ ...policy, pendingAfterPush: true })
     );
-    const stopped = fixture.run(['land', 'child', '--yes']);
+    const stopped = fixture.run([
+      'land',
+      'child',
+      '--yes',
+      '--wait-timeout',
+      '0',
+    ]);
     expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
-    expect(stopped.stderr).to.include('readiness');
+    expect(stopped.stderr).to.include('Check wait timed out');
     fs.writeFileSync(path.join(fixture.repo, 'untracked-blocker'), 'dirty');
     const before = fixture.inspectionSnapshot();
     const journal = fs.readFileSync(
