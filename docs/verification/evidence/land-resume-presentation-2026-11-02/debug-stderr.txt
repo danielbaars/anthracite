@@ -1,0 +1,46 @@
+Reading cache seed data...
+Loading cache...
+Building cache from disk...
+Validating branches...
+trunk: main
+validated: child
+validated: other
+validated: sibling
+validated: local-only
+validated: tip
+Reading cache seed data...
+Loading cache...
+Building cache from disk...
+Validating branches...
+trunk: main
+validated: child
+validated: other
+validated: sibling
+validated: local-only
+validated: tip
+Reading cache seed data...
+Loading cache...
+Building cache from disk...
+Validating branches...
+trunk: main
+validated: child
+validated: other
+validated: sibling
+validated: local-only
+validated: tip
+Pending landing: fixture/inspection trunk main target tip; phase prepared.
+Merge: #18 head 3d1e78bcb815c5423ad1dde74e6a5f5462281482
+Cleanup: tip; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9iNpu4/repo
+Remaining trunk maintenance: fast-forward main; phase prepared.
+Merge: child #18; reached head 3d1e78bcb815c5423ad1dde74e6a5f5462281482; captured head 5e2a984260369db011cc42241492e36a021253a6
+Merge: tip #19; reached head f7ba6a59dee2a285ad2e24a2fe0ff78fb82bce66; captured head 51a5db975fb8719e35a1783d92793196436ac42c
+Maintain: tip; parent child -> main; replay base 3d1e78bcb815c5423ad1dde74e6a5f5462281482; reached head f7ba6a59dee2a285ad2e24a2fe0ff78fb82bce66; verify required replay
+Push: tip; verify or update existing leased head
+PR update: tip; verify existing #19 base/dependency footer
+Maintain: local-only; parent child -> main; replay base 3d1e78bcb815c5423ad1dde74e6a5f5462281482; reached head d82b0fa99fcc0fb8f4e2308323de14628d9c94a8; verify required replay
+Push: local-only; remain unpublished
+PR update: local-only; no PR creation
+Maintain: sibling; parent child -> main; replay base 3d1e78bcb815c5423ad1dde74e6a5f5462281482; reached head 5205abc72ddf769212c6e739b4b73dfe160a6f5a; verify required replay
+Push: sibling; verify or update existing leased head
+PR update: sibling; verify existing #20 base/dependency footer
+Cleanup: child, tip; verify merged results and leased remote/local deletion; restore local-only.

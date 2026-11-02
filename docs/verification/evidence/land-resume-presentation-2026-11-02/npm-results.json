@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T14:28:23.798Z",
+    "end": "2026-11-02T14:29:49.009Z",
+    "duration": 85211
+  },
+  "tests": [
+    {
+      "title": "previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "fullTitle": "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 28456,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "fullTitle": "public resumed landing presentation keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 45624,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "fullTitle": "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 28456,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "fullTitle": "public resumed landing presentation keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 45624,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
