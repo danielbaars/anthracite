@@ -1,0 +1,7 @@
+{
+  "baseline": "published npm 0.6.2",
+  "candidate": "local source",
+  "releasedLines": 20,
+  "candidateLines": 16,
+  "allStatePreserved": true
+}

@@ -1,0 +1,67 @@
+{
+  "status": "local unreleased presentation candidate after npm 0.6.2",
+  "baseCommit": "ce7e45a3fff4ccd512cac9ee7957d68c27450be7",
+  "tests": {
+    "node-results": {
+      "stats": {
+        "suites": 2,
+        "tests": 7,
+        "passes": 7,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-02T11:47:02.441Z",
+        "end": "2026-11-02T11:47:46.231Z",
+        "duration": 43790
+      },
+      "tests": [
+        "public landing plan presentation puts dirty-worktree blockers and the next action before the planned merge scope",
+        "public landing plan presentation shows the complete ordered PR scope without commit-level diagnostics by default",
+        "public landing plan presentation retains exact heads and replay boundaries through the existing debug option",
+        "public landing plan presentation separates mandatory fanout updates from merges and identifies work that remains unpublished",
+        "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects",
+        "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+        "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup"
+      ]
+    },
+    "native-results": {
+      "stats": {
+        "suites": 2,
+        "tests": 7,
+        "passes": 7,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-02T11:47:47.504Z",
+        "end": "2026-11-02T11:48:24.852Z",
+        "duration": 37348
+      },
+      "tests": [
+        "public landing plan presentation puts dirty-worktree blockers and the next action before the planned merge scope",
+        "public landing plan presentation shows the complete ordered PR scope without commit-level diagnostics by default",
+        "public landing plan presentation retains exact heads and replay boundaries through the existing debug option",
+        "public landing plan presentation separates mandatory fanout updates from merges and identifies work that remains unpublished",
+        "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects",
+        "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements",
+        "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup"
+      ]
+    }
+  },
+  "redBeforeFix": "Dirty-worktree preview began with Policy rather than its blocker and failed the blocker-first regression.",
+  "checks": {
+    "build": true,
+    "lint": true,
+    "typecheck": true,
+    "formatting": true
+  },
+  "sourceSHA256": "61a63fd6d2c0c063a3714f45ea88c4cd135ee35d80e239e196d7c4a636e57043",
+  "nativeSHA256": "7c7b15ac8a532469a3434307dea6fd09192e7c712439f00be0a071bd3a161898",
+  "comparisonBoundary": {
+    "graphiteVersion": "1.8.6",
+    "observedMissingAssociation": true,
+    "controlledCacheMergeabilityUnknown": true,
+    "successfulGraphitePlanObserved": false
+  },
+  "noApplicationCheckoutAccess": true,
+  "noGitHubPRMutations": true,
+  "noCIOrFullMatrix": true,
+  "activeAnthraciteInstallationChanged": false
+}
