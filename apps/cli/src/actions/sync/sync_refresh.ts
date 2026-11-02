@@ -1,5 +1,6 @@
 import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
 import { getSha } from '../../lib/git/get_sha';
+import { getMergeBase } from '../../lib/git/merge_base';
 import { TContext } from '../../lib/context';
 import { ExitFailedError, KilledError } from '../../lib/errors';
 import {
@@ -11,9 +12,11 @@ import { prepareRemoteUpdates } from './get';
 import { captureGetCheckout } from './get_checkout';
 import {
   lookupPullRequest,
+  assertRemoteUpdateNodeUnchanged,
   orderRemoteUpdateGraph,
   releaseRemoteUpdateGraph,
   RemoteUpdateSelection,
+  RemoteUpdateNode,
   snapshotRemoteUpdateGraph,
   snapshotSelection,
 } from './remote_update_graph';
@@ -44,6 +47,16 @@ export async function prepareSyncRefresh(
       context,
       trunk
     );
+    // Keep the local replay boundary until cleanup decides the merged parent.
+    for (const node of [...nodes]) {
+      if (!isLocalAheadMergeSurvivor(node, prs, context)) continue;
+      assertRemoteUpdateNodeUnchanged(node);
+      releaseRemoteUpdateGraph([node]);
+      nodes = nodes.filter((candidate) => candidate !== node);
+      context.splog.info(
+        `${node.branchName} is ahead of remote; keeping its local commits.`
+      );
+    }
     await prepareRemoteUpdates(
       {
         nodes,
@@ -62,6 +75,24 @@ export async function prepareSyncRefresh(
     if (trunk) releaseRemoteTrunk(trunk);
     throw error;
   }
+}
+
+function isLocalAheadMergeSurvivor(
+  node: RemoteUpdateNode,
+  prs: SyncRefreshPlan['prs'],
+  context: TContext
+): boolean {
+  const parent = prs.find(
+    (pr) => pr.headRefName === node.previousParentBranchName
+  );
+  return (
+    parent?.state === 'MERGED' &&
+    node.parentBranchName === context.engine.trunk &&
+    parent.baseRefName === node.parentBranchName &&
+    parent.headRefOid === getSha(`refs/heads/${parent.headRefName}`) &&
+    node.previousHead !== node.head &&
+    getMergeBase(node.head, node.previousHead) === node.head
+  );
 }
 
 export function getSyncPullRequestInfo(

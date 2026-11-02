@@ -1,0 +1,230 @@
+{
+  "baseline": "eb23e4f8e924da24e00ae06484799687adde66b1",
+  "scope": "Focused public CLI/real Git/controlled GitHub regression; all checks local",
+  "runtimes": {
+    "node": {
+      "passingDistinctScenarios": 14,
+      "scenarios": [
+        {
+          "title": "sync CLI local commits after a parent PR merges retains the local child correction while cleaning its merged and retargeted parent",
+          "passed": true,
+          "report": "new-node-results.json",
+          "durationMs": 10152
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges retains the exact local head when cleanup and replay are disabled",
+          "passed": true,
+          "report": "new-node-results.json",
+          "durationMs": 3064
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges keeps local commits while deferring replay after authorized cleanup",
+          "passed": true,
+          "report": "new-node-results.json",
+          "durationMs": 5043
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges maintains a published descendant above the preserved local correction",
+          "passed": true,
+          "report": "node-descendant-isolated.json",
+          "durationMs": 20805
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges keeps explicit reconciliation for remote divergence",
+          "passed": true,
+          "report": "final-node-focused.json",
+          "durationMs": 1441
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges keeps explicit reconciliation for closed parent",
+          "passed": true,
+          "report": "new-node-results.json",
+          "durationMs": 1220
+        },
+        {
+          "title": "sync CLI existing feature refresh refreshes existing published heads without pulling, deleting or replaying",
+          "passed": true,
+          "report": "node-selected.json",
+          "durationMs": 5030
+        },
+        {
+          "title": "sync CLI existing feature refresh adopts an existing changed parent without replaying or losing PR/frozen identity",
+          "passed": true,
+          "report": "node-selected.json",
+          "durationMs": 3653
+        },
+        {
+          "title": "sync CLI existing feature refresh refuses divergent feature commits even with legacy sync force",
+          "passed": true,
+          "report": "node-selected.json",
+          "durationMs": 1759
+        },
+        {
+          "title": "sync CLI incoming and cleanup survivor plan refuses an occupied cleanup candidate before applying another incoming head",
+          "passed": true,
+          "report": "node-selected.json",
+          "durationMs": 4672
+        },
+        {
+          "title": "sync CLI incoming and cleanup survivor plan cleans a removed remote parent after its frozen incoming child retargets to trunk",
+          "passed": true,
+          "report": "node-selected.json",
+          "durationMs": 7420
+        },
+        {
+          "title": "sync CLI incoming and cleanup survivor plan refreshes a survivor still naming a removed parent and keeps its PR base and unique content",
+          "passed": true,
+          "report": "node-selected.json",
+          "durationMs": 8445
+        },
+        {
+          "title": "sync CLI planned update authority gives truthful sync divergence guidance without offering force overwrite",
+          "passed": true,
+          "report": "node-selected.json",
+          "durationMs": 1772
+        },
+        {
+          "title": "sync CLI owned recovery continues saved maintenance in a fresh process and restores the original checkout",
+          "passed": true,
+          "report": "node-selected.json",
+          "durationMs": 14648
+        }
+      ]
+    },
+    "native": {
+      "passingDistinctScenarios": 14,
+      "scenarios": [
+        {
+          "title": "sync CLI local commits after a parent PR merges retains the local child correction while cleaning its merged and retargeted parent",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 9410
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges retains the exact local head when cleanup and replay are disabled",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 2950
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges keeps local commits while deferring replay after authorized cleanup",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 4493
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges maintains a published descendant above the preserved local correction",
+          "passed": true,
+          "report": "native-descendant-isolated.json",
+          "durationMs": 23258
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges keeps explicit reconciliation for remote divergence",
+          "passed": true,
+          "report": "final-native-focused.json",
+          "durationMs": 1382
+        },
+        {
+          "title": "sync CLI local commits after a parent PR merges keeps explicit reconciliation for closed parent",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 1145
+        },
+        {
+          "title": "sync CLI existing feature refresh refreshes existing published heads without pulling, deleting or replaying",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 4537
+        },
+        {
+          "title": "sync CLI existing feature refresh adopts an existing changed parent without replaying or losing PR/frozen identity",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 3433
+        },
+        {
+          "title": "sync CLI existing feature refresh refuses divergent feature commits even with legacy sync force",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 1601
+        },
+        {
+          "title": "sync CLI incoming and cleanup survivor plan refuses an occupied cleanup candidate before applying another incoming head",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 6317
+        },
+        {
+          "title": "sync CLI incoming and cleanup survivor plan cleans a removed remote parent after its frozen incoming child retargets to trunk",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 6818
+        },
+        {
+          "title": "sync CLI incoming and cleanup survivor plan refreshes a survivor still naming a removed parent and keeps its PR base and unique content",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 8235
+        },
+        {
+          "title": "sync CLI planned update authority gives truthful sync divergence guidance without offering force overwrite",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 1664
+        },
+        {
+          "title": "sync CLI owned recovery continues saved maintenance in a fresh process and restores the original checkout",
+          "passed": true,
+          "report": "native-selected.json",
+          "durationMs": 12904
+        }
+      ]
+    }
+  },
+  "supersededFailures": [
+    {
+      "runtime": "node",
+      "report": "new-node-results.json",
+      "title": "sync CLI local commits after a parent PR merges keeps explicit reconciliation for remote divergence",
+      "message": "expected '01f6c88a17847dae93ffa5206d8ddfc8c618c\u2026' to equal '9f9ab5f2a7afbae613aa928ac788b3870a2c8\u2026'",
+      "kind": "test producer setup"
+    },
+    {
+      "runtime": "node",
+      "report": "final-node-focused.json",
+      "title": "sync CLI local commits after a parent PR merges maintains a published descendant above the preserved local correction",
+      "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT",
+      "kind": "15-second multi-head fixture budget"
+    },
+    {
+      "runtime": "native",
+      "report": "native-selected.json",
+      "title": "sync CLI local commits after a parent PR merges keeps explicit reconciliation for remote divergence",
+      "message": "expected '01f6c88a17847dae93ffa5206d8ddfc8c618c\u2026' to equal '9f9ab5f2a7afbae613aa928ac788b3870a2c8\u2026'",
+      "kind": "test producer setup"
+    },
+    {
+      "runtime": "native",
+      "report": "final-native-focused.json",
+      "title": "sync CLI local commits after a parent PR merges maintains a published descendant above the preserved local correction",
+      "message": "spawnSync /private/tmp/anthracite-sync-local-commits-fix-20261102/an-candidate ETIMEDOUT",
+      "kind": "15-second multi-head fixture budget"
+    }
+  ],
+  "ciStarted": false,
+  "fullMatrixStarted": false,
+  "applicationProjectTouched": false,
+  "activeInstallationChanged": false,
+  "npmCandidate": {
+    "sha256": "027543378d81c985309ab1b620681a9f9a238bc68349d1de842eec6e4a42a562",
+    "versionMetadata": "0.6.0 (unpublished candidate, not the public 0.6.0 tarball)",
+    "packageGateScenarios": 9,
+    "newRegressionScenarios": 1,
+    "gatePassedWithLocalProcessObservationOutsideSandbox": true,
+    "initialSandboxGate": "8 passing, numeric-zero cancellation hook observation failed"
+  },
+  "sourceSHA256": {
+    "apps/cli/src/actions/sync/sync_refresh.ts": "1c63751811ae33c5ef22e95a08f15a473e90166647182ecd6d0fc539f4295432",
+    "apps/cli/test/commands/sync_merged_parent_local_cli.test.ts": "fc7aaf56457d0cf7d6208462abe361c1cd37233740e4dbdf9846bb8ea89a551e"
+  }
+}
