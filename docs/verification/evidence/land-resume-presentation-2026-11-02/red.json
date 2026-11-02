@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-02T14:16:56.423Z",
+    "end": "2026-11-02T14:17:30.022Z",
+    "duration": 33599
+  },
+  "tests": [
+    {
+      "title": "previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "fullTitle": "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 28788,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'Pending landing: fixture/inspection t…' to match /^⏸ Pending landing:/",
+        "showDiff": false,
+        "actual": "Pending landing: fixture/inspection trunk main target tip; phase prepared.\nMerge: #18 head 39df77e9cd24f74e54ca4cd59cd99536d71e9d69\nCleanup: tip; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-Uz591V/repo\nRemaining trunk maintenance: fast-forward main; phase prepared.\nMerge: child #18; reached head 39df77e9cd24f74e54ca4cd59cd99536d71e9d69; captured head 8e68d0db9948f78ad7c78f3f9c0add5ebd2eb6dd\nMerge: tip #19; reached head 17efe4b1c620c5015eb78f31475fbc90c3bf9c46; captured head 03a3d752201e9673796bd2ec172e117d0a86050d\nMaintain: tip; parent child -> main; replay base 39df77e9cd24f74e54ca4cd59cd99536d71e9d69; reached head 17efe4b1c620c5015eb78f31475fbc90c3bf9c46; verify required replay\nPush: tip; verify or update existing leased head\nPR update: tip; verify existing #19 base/dependency footer\nCleanup: child, tip; verify merged results and leased remote/local deletion; restore base.\nReadiness: READY for remaining disclosed work; revalidation required before every effect.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'Pending landing: fixture/inspection t…' to match /^⏸ Pending landing:/\n    at Context.<anonymous> (dist/test/commands/land_resume_display_cli.test.js:38:47)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "fullTitle": "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 28788,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'Pending landing: fixture/inspection t…' to match /^⏸ Pending landing:/",
+        "showDiff": false,
+        "actual": "Pending landing: fixture/inspection trunk main target tip; phase prepared.\nMerge: #18 head 39df77e9cd24f74e54ca4cd59cd99536d71e9d69\nCleanup: tip; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-Uz591V/repo\nRemaining trunk maintenance: fast-forward main; phase prepared.\nMerge: child #18; reached head 39df77e9cd24f74e54ca4cd59cd99536d71e9d69; captured head 8e68d0db9948f78ad7c78f3f9c0add5ebd2eb6dd\nMerge: tip #19; reached head 17efe4b1c620c5015eb78f31475fbc90c3bf9c46; captured head 03a3d752201e9673796bd2ec172e117d0a86050d\nMaintain: tip; parent child -> main; replay base 39df77e9cd24f74e54ca4cd59cd99536d71e9d69; reached head 17efe4b1c620c5015eb78f31475fbc90c3bf9c46; verify required replay\nPush: tip; verify or update existing leased head\nPR update: tip; verify existing #19 base/dependency footer\nCleanup: child, tip; verify merged results and leased remote/local deletion; restore base.\nReadiness: READY for remaining disclosed work; revalidation required before every effect.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'Pending landing: fixture/inspection t…' to match /^⏸ Pending landing:/\n    at Context.<anonymous> (dist/test/commands/land_resume_display_cli.test.js:38:47)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

@@ -1,0 +1,47 @@
+{
+  "base": "14ae776f870ad9182ca5da461027eac7d8362fc7",
+  "implementationCommit": "9fc5116d28cc98c975eb20973965d6bb1ab72160",
+  "node": {
+    "suites": 2,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T14:24:19.541Z",
+    "end": "2026-11-02T14:29:04.982Z",
+    "duration": 285441
+  },
+  "native": {
+    "suites": 2,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T14:26:10.629Z",
+    "end": "2026-11-02T14:30:26.771Z",
+    "duration": 256142
+  },
+  "npm": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T14:28:23.798Z",
+    "end": "2026-11-02T14:29:49.009Z",
+    "duration": 85211
+  },
+  "checks": {
+    "typecheck": true,
+    "changedSourceLint": true,
+    "formatting": true,
+    "whitespace": true
+  },
+  "sourceSHA256": "7b3eda63b54f35ffe723927ee6511c4415480693e0201da33bb228ee0df75911",
+  "nativeSHA256": "f64e31b9b7434f0dc03c69a269683f6635c5185064677d9f8c4d7e65a7f95824",
+  "previewPreservesRecoveryAndGitState": true,
+  "noWorkflowDecisionOrStoredFormatChanges": true,
+  "noApplicationCheckoutAccess": true,
+  "noCIOrFullMatrix": true,
+  "noLiveGitHubWorkflowMutations": true
+}

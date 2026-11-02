@@ -1,0 +1,144 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T14:26:10.629Z",
+    "end": "2026-11-02T14:30:26.771Z",
+    "duration": 256142
+  },
+  "tests": [
+    {
+      "title": "previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "fullTitle": "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 24768,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "fullTitle": "public resumed landing presentation keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 42785,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+      "fullTitle": "public resumed landing presentation puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 29565,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses the same compact remaining scope during real resumption before completing each remaining merge once",
+      "fullTitle": "public resumed landing presentation uses the same compact remaining scope during real resumption before completing each remaining merge once",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 45331,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "fullTitle": "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 25890,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "fullTitle": "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 36552,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "fullTitle": "public landing review regressions refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 13824,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "fullTitle": "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 24768,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "fullTitle": "public resumed landing presentation keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 42785,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+      "fullTitle": "public resumed landing presentation puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 29565,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses the same compact remaining scope during real resumption before completing each remaining merge once",
+      "fullTitle": "public resumed landing presentation uses the same compact remaining scope during real resumption before completing each remaining merge once",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 45331,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "fullTitle": "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 25890,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "fullTitle": "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 36552,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "fullTitle": "public landing review regressions refuses a preserving recovery preview with a genuine unresolved Git replay",
+      "file": "/private/tmp/anthracite-land-resume-display-20261102/source/apps/cli/dist/test/commands/land_review_fixes_cli.test.js",
+      "duration": 13824,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
