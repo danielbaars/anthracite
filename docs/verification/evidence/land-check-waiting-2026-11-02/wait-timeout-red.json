@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-02T12:38:58.116Z",
+    "end": "2026-11-02T12:39:26.343Z",
+    "duration": 28227
+  },
+  "tests": [
+    {
+      "title": "times out before sending the next merge request and resumes the saved heads without repeating completed work",
+      "fullTitle": "public landing check waiting times out before sending the next merge request and resumes the saved heads without repeating completed work",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 23722,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'To /var/folders/p8/b_05tm755b34yb9h11…' to include 'No merge request sent for #18'",
+        "showDiff": false,
+        "actual": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-dK18g7/remote.git\n - [deleted]         base\nERROR: Landing incomplete at readiness check. Confirmed merged #17 (c9bb7db3cada15bd8424c94eb841c82d950ca687); Merge unconfirmed or uncertain; later work unattempted. Check wait timed out before #18: Check unit: IN_PROGRESS. No merge request sent for this PR. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-dK18g7/repo; rerun an land child --yes.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'To /var/folders/p8/b_05tm755b34yb9h11…' to include 'No merge request sent for #18'\n    at Context.<anonymous> (dist/test/commands/land_wait_cli.test.js:90:47)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "times out before sending the next merge request and resumes the saved heads without repeating completed work",
+      "fullTitle": "public landing check waiting times out before sending the next merge request and resumes the saved heads without repeating completed work",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 23722,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'To /var/folders/p8/b_05tm755b34yb9h11…' to include 'No merge request sent for #18'",
+        "showDiff": false,
+        "actual": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-dK18g7/remote.git\n - [deleted]         base\nERROR: Landing incomplete at readiness check. Confirmed merged #17 (c9bb7db3cada15bd8424c94eb841c82d950ca687); Merge unconfirmed or uncertain; later work unattempted. Check wait timed out before #18: Check unit: IN_PROGRESS. No merge request sent for this PR. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-dK18g7/repo; rerun an land child --yes.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'To /var/folders/p8/b_05tm755b34yb9h11…' to include 'No merge request sent for #18'\n    at Context.<anonymous> (dist/test/commands/land_wait_cli.test.js:90:47)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

@@ -1,0 +1,21 @@
+⛔ Cannot land yet:
+  - Clean index/worktree required, including untracked files.
+👉 Next: run git status --short to inspect local changes.
+
+Once resolved, this would:
+Landing plan: fixture/inspection
+Target: tip -> main
+Policy: No required reviews or checks.
+Local main: up to date.
+
+🔀 PR order (bottom to top):
+  Merge 1: base #17
+  Merge 2: child #18
+  Merge 3: tip #19
+Between merges: restack and push affected published branches, update PR bases
+and dependency footers, and check readiness again.
+
+🧹 Cleanup: base, child, tip
+  Delete landed branches locally and on GitHub after confirmed merges only.
+Use --debug for commit IDs and technical details.
+ERROR: Landing preflight blocked; no changes made.

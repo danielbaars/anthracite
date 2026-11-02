@@ -1,0 +1,531 @@
+{
+  "status": "local unreleased candidate; no active installation changed",
+  "baseCommit": "ce7e45a3fff4ccd512cac9ee7957d68c27450be7",
+  "implementationCommit": "61a608a71d7cc1c5edfd00845dd4e873658d2785",
+  "node": {
+    "cases": 47,
+    "passes": 47,
+    "observations": {
+      "public landing check waiting waits for checks after its own push and completes the approved chain without restarting or repeating a merge": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 41731
+      },
+      "public landing check waiting times out before sending the next merge request and resumes the saved heads without repeating completed work": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 38682
+      },
+      "public landing check waiting stops before the next merge when failed check changes while checks are running": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 30478
+      },
+      "public landing check waiting stops before the next merge when dismissed approval changes while checks are running": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 30538
+      },
+      "public landing check waiting stops before the next merge when local work changes while checks are running": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 29644
+      },
+      "public landing check waiting stops before the next merge when remote head changes while checks are running": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 29758
+      },
+      "public landing check waiting stops before the next merge when policy changes while checks are running": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 30587
+      },
+      "public landing check waiting stops before the next merge when unknown readiness changes while checks are running": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 29946
+      },
+      "public landing check waiting preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 38414
+      },
+      "public landing check waiting waits for an exact-head app-bound required check and revalidates its publisher before resuming": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 43668
+      },
+      "public landing check waiting reports running checks immediately in a preserving dry-run and rejects invalid wait limits": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1795
+      },
+      "public landing plan presentation puts dirty-worktree blockers and the next action before the planned merge scope": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1156
+      },
+      "public landing plan presentation shows the complete ordered PR scope without commit-level diagnostics by default": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1086
+      },
+      "public landing plan presentation retains exact heads and replay boundaries through the existing debug option": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1105
+      },
+      "public landing plan presentation separates mandatory fanout updates from merges and identifies work that remains unpublished": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 2883
+      },
+      "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1679
+      },
+      "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1866
+      },
+      "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1819
+      },
+      "public scoped landing preview refuses local dirt and recovery while preserving every byte": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 2451
+      },
+      "public scoped landing preview requires explicit application consent for fanout before any writes": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1706
+      },
+      "public scoped landing preview supports literal selectors, help and completion and rejects unsupported routes": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 9398
+      },
+      "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1459
+      },
+      "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository": {
+        "passed": true,
+        "report": "wait-node-preview-final.json",
+        "durationMs": 1237
+      },
+      "public scoped landing preview protects mandatory participants and ignores frozen or occupied independent stacks": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 4243
+      },
+      "public scoped landing preview reports unpublished published-head commits, divergent trunk, staged changes and active Git operations": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 3257
+      },
+      "public scoped landing preview cancels terminal confirmation and revalidates changed participants before application": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 2368
+      },
+      "public scoped landing preview does not accept malformed classic policy as known no-requirements": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 1048
+      },
+      "public scoped landing preview fails closed for readiness, policy, and PR identity blockers without remote writes": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 13536
+      },
+      "public scoped landing preview previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals": {
+        "passed": true,
+        "report": "wait-node-final.json",
+        "durationMs": 3119
+      },
+      "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 36073
+      },
+      "public linear landing and prefixes stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 38546
+      },
+      "public linear landing and prefixes stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 38820
+      },
+      "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 32284
+      },
+      "public landing policy guards refuses a noncompleted check even when its conclusion says success": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 1058
+      },
+      "public landing policy guards binds classic policy identity to the exact configured repository and trunk": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 941
+      },
+      "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 1088
+      },
+      "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 1013
+      },
+      "public landing policy guards refuses missing or contradictory completion data and ignores unrelated union fields": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 13996
+      },
+      "public landing policy guards rejects classic URL host, branch, suffix, query, fragment and credential mismatches": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 5953
+      },
+      "public landing policy guards retains known no-requirements and successful unrestricted-check cases": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 5675
+      },
+      "public landing policy guards verifies an app-bound required check on the exact PR head": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 1097
+      },
+      "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 9890
+      },
+      "public landing policy guards reads complete check-run pagination and refuses a later-page read failure": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 1923
+      },
+      "public landing policy guards uses verified publisher readiness during leaf application and refuses a later unavailable read": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 12724
+      },
+      "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 25424
+      },
+      "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR": {
+        "passed": true,
+        "report": "wait-node-regression.json",
+        "durationMs": 26840
+      },
+      "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers": {
+        "passed": true,
+        "report": "wait-node-recovery-preview.json",
+        "durationMs": 28809
+      }
+    }
+  },
+  "native": {
+    "cases": 47,
+    "passes": 47,
+    "observations": {
+      "public landing check waiting waits for checks after its own push and completes the approved chain without restarting or repeating a merge": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 38200
+      },
+      "public landing check waiting times out before sending the next merge request and resumes the saved heads without repeating completed work": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 35481
+      },
+      "public landing check waiting stops before the next merge when failed check changes while checks are running": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 28010
+      },
+      "public landing check waiting stops before the next merge when dismissed approval changes while checks are running": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 28193
+      },
+      "public landing check waiting stops before the next merge when local work changes while checks are running": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 27798
+      },
+      "public landing check waiting stops before the next merge when remote head changes while checks are running": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 27766
+      },
+      "public landing check waiting stops before the next merge when policy changes while checks are running": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 28104
+      },
+      "public landing check waiting stops before the next merge when unknown readiness changes while checks are running": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 28064
+      },
+      "public landing check waiting preserves progress and releases its lock on Ctrl-C while waiting, then resumes with fresh checks": {
+        "passed": true,
+        "report": "wait-native-last-check.json",
+        "durationMs": 41758
+      },
+      "public landing check waiting waits for an exact-head app-bound required check and revalidates its publisher before resuming": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 40626
+      },
+      "public landing check waiting reports running checks immediately in a preserving dry-run and rejects invalid wait limits": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1425
+      },
+      "public landing plan presentation puts dirty-worktree blockers and the next action before the planned merge scope": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1023
+      },
+      "public landing plan presentation shows the complete ordered PR scope without commit-level diagnostics by default": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1268
+      },
+      "public landing plan presentation retains exact heads and replay boundaries through the existing debug option": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1031
+      },
+      "public landing plan presentation separates mandatory fanout updates from merges and identifies work that remains unpublished": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 2690
+      },
+      "public scoped landing preview previews the exact prefix and full surviving fanout without persistent effects": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1565
+      },
+      "public scoped landing preview reads every active rules page and refuses unavailable classic policy rather than trusting 404": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1695
+      },
+      "public scoped landing preview reports all later readiness blockers before applying and accepts known empty requirements": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1720
+      },
+      "public scoped landing preview refuses local dirt and recovery while preserving every byte": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 2296
+      },
+      "public scoped landing preview requires explicit application consent for fanout before any writes": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1636
+      },
+      "public scoped landing preview supports literal selectors, help and completion and rejects unsupported routes": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 6476
+      },
+      "public scoped landing preview inspects fresh remote trunk objects outside the source repository and recognizes verified merged cleanup": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 1071
+      },
+      "public scoped landing preview leaves unseen remote trunk objects and FETCH_HEAD outside the repository": {
+        "passed": true,
+        "report": "wait-native-last-check.json",
+        "durationMs": 3671
+      },
+      "public scoped landing preview protects mandatory participants and ignores frozen or occupied independent stacks": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 9297
+      },
+      "public scoped landing preview reports unpublished published-head commits, divergent trunk, staged changes and active Git operations": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 3665
+      },
+      "public scoped landing preview cancels terminal confirmation and revalidates changed participants before application": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 2447
+      },
+      "public scoped landing preview does not accept malformed classic policy as known no-requirements": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 982
+      },
+      "public scoped landing preview fails closed for readiness, policy, and PR identity blockers without remote writes": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 12257
+      },
+      "public scoped landing preview previews the full chain through quiet cwd selection and preserves detached or uninitialized refusals": {
+        "passed": true,
+        "report": "wait-native-final.json",
+        "durationMs": 2263
+      },
+      "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 35412
+      },
+      "public linear landing and prefixes stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 41504
+      },
+      "public linear landing and prefixes stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 36335
+      },
+      "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 31308
+      },
+      "public landing policy guards refuses a noncompleted check even when its conclusion says success": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 1126
+      },
+      "public landing policy guards binds classic policy identity to the exact configured repository and trunk": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 1307
+      },
+      "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 1209
+      },
+      "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 1641
+      },
+      "public landing policy guards refuses missing or contradictory completion data and ignores unrelated union fields": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 16026
+      },
+      "public landing policy guards rejects classic URL host, branch, suffix, query, fragment and credential mismatches": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 6214
+      },
+      "public landing policy guards retains known no-requirements and successful unrestricted-check cases": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 5664
+      },
+      "public landing policy guards verifies an app-bound required check on the exact PR head": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 1627
+      },
+      "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 9162
+      },
+      "public landing policy guards reads complete check-run pagination and refuses a later-page read failure": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 1942
+      },
+      "public landing policy guards uses verified publisher readiness during leaf application and refuses a later unavailable read": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 12088
+      },
+      "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 22897
+      },
+      "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 23208
+      },
+      "public landing review regressions previews all remaining recovery work freshly and preserves dirty and pending-check blockers": {
+        "passed": true,
+        "report": "wait-native-regression.json",
+        "durationMs": 22981
+      }
+    }
+  },
+  "corrections": "The main reports retain one earlier display expectation failure per runtime. The remote-trunk test was updated to inspect commit details through --debug; the focused final reports supersede that result. Other cases were not rerun without a reason.",
+  "npm": {
+    "offlineInstallation": true,
+    "existingCases": 9,
+    "newWaitCases": 2,
+    "tarballSHA256": "12961bde7fd434d96269ddd83b2b703f07ae9e716db164ee9c8faf8cc97533f6",
+    "installedBundleMatchesTarball": true
+  },
+  "releasedRecovery": {
+    "version": "0.6.2",
+    "recordVersion": 1,
+    "runtimes": [
+      "node",
+      "native"
+    ],
+    "threePRs": true,
+    "waitedForBothRemainingPRs": [
+      18,
+      19
+    ],
+    "noRepeatedMerge": true,
+    "unpublishedSurvivorPreserved": true
+  },
+  "checks": {
+    "typecheck": true,
+    "changedSourceLint": true,
+    "formatting": true,
+    "gitDiffCheck": true
+  },
+  "sourceSHA256": {
+    "apps/cli/src/actions/land.ts": "e4b65241c62c9dce1ad50fce3eb76c7063fbdc6d2035e4b346cb32cbdbbbd033",
+    "apps/cli/src/actions/land_maintenance.ts": "3714eea7b08a29d85bf2f6e2ac4a09e44e324e99e8197b169eedee887f7d78da",
+    "apps/cli/src/actions/land_scoped.ts": "43d3b73808d9fc2c920ed31dcdb013a757217d879835c400ce8d5b91502a63a7",
+    "apps/cli/src/commands/land.ts": "e8eea238550a47204a5f7d32c4dac4fdad208d8f0b6ea8c68bdfd0c1b7a24d5f",
+    "apps/cli/src/lib/api/github_land_policy.ts": "5dfba7abde6596bbc2a085af7343427a3ee24a99544dd745dffeccd358d03893",
+    "apps/cli/src/lib/mcp/learn.ts": "5665b2a273ce06aee7436bcbe6e437879a349d628e149ba776cbcaee8736b2a4"
+  },
+  "nativeInitialSHA256": "0f59c26759bf1f0ff8fb68cd968f7747b541bf3d7e42095e6cd9066ff0c5f63c",
+  "nativeFinalSHA256": "a9c6b7f21e1a8488a44137325f40d7613d7127e1e81d39c8db96ca305bd2ac20",
+  "newGitHubWrites": false,
+  "ciStarted": false,
+  "fullMatrixStarted": false,
+  "applicationCheckoutAccessed": false,
+  "activeInstallationChanged": false
+}

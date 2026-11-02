@@ -1,0 +1,324 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 17,
+    "passes": 17,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-02T12:48:24.849Z",
+    "end": "2026-11-02T12:54:00.054Z",
+    "duration": 335205
+  },
+  "tests": [
+    {
+      "title": "lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "fullTitle": "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 36073,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 38546,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 38820,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "fullTitle": "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 32284,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a noncompleted check even when its conclusion says success",
+      "fullTitle": "public landing policy guards refuses a noncompleted check even when its conclusion says success",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1058,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "binds classic policy identity to the exact configured repository and trunk",
+      "fullTitle": "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 941,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses app-bound classic requirements when the check publisher is unverified",
+      "fullTitle": "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1088,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "fullTitle": "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1013,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses missing or contradictory completion data and ignores unrelated union fields",
+      "fullTitle": "public landing policy guards refuses missing or contradictory completion data and ignores unrelated union fields",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 13996,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "fullTitle": "public landing policy guards rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 5953,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains known no-requirements and successful unrestricted-check cases",
+      "fullTitle": "public landing policy guards retains known no-requirements and successful unrestricted-check cases",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 5675,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "verifies an app-bound required check on the exact PR head",
+      "fullTitle": "public landing policy guards verifies an app-bound required check on the exact PR head",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1097,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "fullTitle": "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 9890,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reads complete check-run pagination and refuses a later-page read failure",
+      "fullTitle": "public landing policy guards reads complete check-run pagination and refuses a later-page read failure",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1923,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "fullTitle": "public landing policy guards uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 12724,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "fullTitle": "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 25424,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "fullTitle": "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 26840,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "fullTitle": "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 36073,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when dismissAfterPush and resumes the same target with fresh readiness",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 38546,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "fullTitle": "public linear landing and prefixes stops after required maintenance when pendingAfterPush and resumes the same target with fresh readiness",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 38820,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "fullTitle": "public linear landing and prefixes continues a genuine replay conflict locally and requires explicit land for the remaining remote work",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 32284,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a noncompleted check even when its conclusion says success",
+      "fullTitle": "public landing policy guards refuses a noncompleted check even when its conclusion says success",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1058,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "binds classic policy identity to the exact configured repository and trunk",
+      "fullTitle": "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 941,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses app-bound classic requirements when the check publisher is unverified",
+      "fullTitle": "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1088,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "fullTitle": "public landing policy guards refuses unavailable ruleset publisher evidence instead of matching names alone",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1013,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses missing or contradictory completion data and ignores unrelated union fields",
+      "fullTitle": "public landing policy guards refuses missing or contradictory completion data and ignores unrelated union fields",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 13996,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "fullTitle": "public landing policy guards rejects classic URL host, branch, suffix, query, fragment and credential mismatches",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 5953,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains known no-requirements and successful unrestricted-check cases",
+      "fullTitle": "public landing policy guards retains known no-requirements and successful unrestricted-check cases",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 5675,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "verifies an app-bound required check on the exact PR head",
+      "fullTitle": "public landing policy guards verifies an app-bound required check on the exact PR head",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1097,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "fullTitle": "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 9890,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reads complete check-run pagination and refuses a later-page read failure",
+      "fullTitle": "public landing policy guards reads complete check-run pagination and refuses a later-page read failure",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 1923,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "fullTitle": "public landing policy guards uses verified publisher readiness during leaf application and refuses a later unavailable read",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 12724,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "fullTitle": "public landing interruption recovery reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 25424,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "fullTitle": "public landing interruption recovery permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR",
+      "file": "/private/tmp/anthracite-land-display-20261102/source/apps/cli/dist/test/commands/land_recovery_cli.test.js",
+      "duration": 26840,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
