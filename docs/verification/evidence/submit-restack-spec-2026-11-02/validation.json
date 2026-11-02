@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-02",
+  "timezone": "Europe/Amsterdam",
+  "kind": "documentation validation only; no implementation acceptance",
+  "baseline": "eb23e4f8e924da24e00ae06484799687adde66b1",
+  "templateHeadings": [
+    "Problem Statement",
+    "Solution",
+    "User Stories",
+    "Implementation Decisions",
+    "Testing Decisions",
+    "Out of Scope",
+    "Further Notes"
+  ],
+  "numberedItems": {
+    "User Stories": 45,
+    "Implementation Decisions": 13,
+    "Testing Decisions": 9
+  },
+  "implementationDecisionsContainNoSpecificFilePathsOrCodeBlocks": true,
+  "localMarkdownLinksChecked": 55,
+  "documentSHA256": {
+    "docs/specs/submit-restack.md": "29756594533bd3201ee8c2057435298dd938748cb458d6525d8b1c8044642a7f",
+    "docs/verification/submit-restack-spec-2026-11-02.md": "957f7a0d3e30df5ec04fb79e23cf3d76d4debfa961c25818a122d79ed02c0287",
+    "docs/submit.md": "77603eaf72f8518cb7602cff2ac409e1f9e602f520ecdcbdf9b998a646814481",
+    "docs/graphite-parity.md": "8754076795a8562344837f783afcd580e2b2ebb8efa7b3c6107a54d859d10c79"
+  },
+  "historicalEvidenceCommit": "33768b3de6be9f9be9d42b5367b07440a5affeb3",
+  "historicalEvidenceSHA256": {
+    "identities.json": "ff72a65d62ecd766ae55e8ff9c44072e3160eaf36bc57e9d171b7a5b5b4f02ff",
+    "observations.json": "3e9e94667eb525a4e0068ebf211a2cc8bb3167f3dd3b0e210fe68e4fcc3aa24f",
+    "rea-captures.json": "67d728daae47695217cd2e86c2063f78f76276d419300680ca36ba6956c5ce1e",
+    "source-options.md": "10635be8c2dce10eeab59b2a57c016b57720921d812bb83299a26d7096c3b9d7",
+    "source-comparison.json": "d5aa012eab02ddc4cde851690b93258b3ebcbebf2ac5170dd964d56a9799dbc5"
+  },
+  "examinedSourceBlobsMatchBaseline": 6,
+  "newRuntimeProbes": 0,
+  "featureAcceptanceExecuted": false,
+  "liveFixtureMutations": false,
+  "ciRequested": false,
+  "fullMatrixRequested": false
+}

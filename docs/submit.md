@@ -25,3 +25,7 @@ Role options preserve draft status. Use the existing `--publish` or `--draft` op
 Submission stops at its first failure. Already pushed code, PR changes and confirmed role additions remain applied. Read the reported confirmed, failed and unattempted work before repeating; submission does not roll back reached work or store deferred role changes. Use `gh pr edit` for separate edits or removal of reviewers and assignees.
 
 The same literal arguments work through the existing MCP `run_an_cmd` tool. MCP execution is noninteractive and retains the owner's publication approval process; see [MCP configuration and authority](mcp.md).
+
+## Planned opt-in restacking
+
+The approved [submit restack specification](specs/submit-restack.md) defines scoped local repair before publication, a non-rewriting preview and local-only conflict continuation. It is planned functionality: released npm 0.6.0 does not accept the submit restack option. Continue using a separately scoped restack followed by a fresh submit preview until an implementation is released. See the [practice comparison](research/submit-comparison-2026-11-01.md) and [specification record](verification/submit-restack-spec-2026-11-02.md) for evidence and boundaries.
