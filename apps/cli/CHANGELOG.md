@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.6](https://github.com/danielbaars/anthracite/compare/v0.6.5...v0.6.6) (2026-11-03)
+
+
+### Bug Fixes
+
+* **cli:** inspect resumed landing plans before confirmation ([d036ac3](https://github.com/danielbaars/anthracite/commit/d036ac3130b7e26f865d33f3f9d9195f364837b1))
+
 ## [0.6.5](https://github.com/danielbaars/anthracite/compare/v0.6.4...v0.6.5) (2026-11-02)
 
 
