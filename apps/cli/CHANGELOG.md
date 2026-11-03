@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.7](https://github.com/danielbaars/anthracite/compare/v0.6.6...v0.6.7) (2026-11-03)
+
+
+### Bug Fixes
+
+* **cli:** verify landing policy when rules access is plan-restricted ([b9f9081](https://github.com/danielbaars/anthracite/commit/b9f9081d9271473d420ebe9ed0f38c42270d2fc8))
+
 ## [0.6.6](https://github.com/danielbaars/anthracite/compare/v0.6.5...v0.6.6) (2026-11-03)
 
 
