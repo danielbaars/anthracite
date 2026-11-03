@@ -413,8 +413,11 @@ async function inspectPendingLanding(
         'Remote trunk unavailable or local trunk divergent; fast-forward required.'
       );
   });
-  const policy = await getGithubLandPolicy(record.repo, record.trunk);
-  blockers.push(...policy.blockers);
+  let policy: LandPlan['policy'] | undefined;
+  await inspect(async () => {
+    policy = await getGithubLandPolicy(record.repo, record.trunk);
+    blockers.push(...policy.blockers);
+  });
   const fresh = initContext(context, composeGit(), { inspection: true });
   const participants = [current(record), ...survivors];
   for (const member of participants)
@@ -477,12 +480,14 @@ async function inspectPendingLanding(
       if (isMerge && pr) {
         if (member.branch === current(record).branch)
           validateMergeTrunk(record, pr.baseRefOid);
-        const readiness = await githubLandReadiness(pr, policy, record.repo);
-        blockers.push(
-          ...[...readiness.blockers, ...readiness.pending].map(
-            (message) => `${member.branch}: ${message}`
-          )
-        );
+        if (policy) {
+          const readiness = await githubLandReadiness(pr, policy, record.repo);
+          blockers.push(
+            ...[...readiness.blockers, ...readiness.pending].map(
+              (message) => `${member.branch}: ${message}`
+            )
+          );
+        }
         if (published !== expected.head)
           blockers.push(
             `${member.branch}: Readiness for the reached local head is unknown until its mandatory push and fresh checks.`
@@ -492,7 +497,7 @@ async function inspectPendingLanding(
   printPendingLanding(record, context, {
     blockers,
     cleanupOnly,
-    verification: policy.verification,
+    verification: policy?.verification,
   });
   return blockers;
 }

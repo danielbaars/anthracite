@@ -170,6 +170,11 @@ if (args[0] === 'api') {
           git(['commit', '-m', 'Concurrent trunk change'], cwd);
         }
         git(['push', 'origin', 'HEAD:refs/heads/main'], cwd);
+        if (policy.policyAfterMerge)
+          fs.writeFileSync(
+            process.env.ANTHRACITE_TEST_LAND_POLICY,
+            JSON.stringify({ ...policy, ...policy.policyAfterMerge })
+          );
         pr.state = 'MERGED';
         pr.mergeResult = result;
         fs.writeFileSync(state, JSON.stringify(prs));
