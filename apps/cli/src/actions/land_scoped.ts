@@ -209,6 +209,7 @@ function printPendingLanding(
   inspection: {
     readonly blockers: readonly string[];
     readonly cleanupOnly: ReadonlySet<string>;
+    readonly verification?: string;
   }
 ): void {
   const remaining = record.merges.slice(record.index ?? 0);
@@ -229,6 +230,8 @@ function printPendingLanding(
   process.stdout.write(
     `⏸ Pending landing: ${record.repo}\nTarget: ${record.target} -> ${record.trunk}\nLocal ${record.trunk}: fast-forward after confirmed merges.\n`
   );
+  if (inspection.verification)
+    process.stdout.write(`Policy: ${inspection.verification}\n`);
   const completed = record.merges
     .slice(0, record.index ?? 0)
     .filter((member) => member.result);
@@ -486,7 +489,11 @@ async function inspectPendingLanding(
           );
       }
     });
-  printPendingLanding(record, context, { blockers, cleanupOnly });
+  printPendingLanding(record, context, {
+    blockers,
+    cleanupOnly,
+    verification: policy.verification,
+  });
   return blockers;
 }
 
