@@ -8,6 +8,38 @@ import { GithubPr } from './github_pr';
 const execFileAsync = promisify(execFile);
 
 class ClassicProtectionNotFound extends ExitFailedError {}
+class RulesPlanRestricted extends ExitFailedError {}
+
+const PLAN_RESTRICTION =
+  'Upgrade to GitHub Pro or make this repository public to enable this feature.';
+
+function isRulesPlanRestricted(error: unknown): boolean {
+  const failure = z
+    .object({ code: z.literal(1), stdout: z.string(), stderr: z.string() })
+    .safeParse(error);
+  if (!failure.success) return false;
+  try {
+    const body = z
+      .object({
+        message: z.literal(PLAN_RESTRICTION),
+        documentation_url: z.literal(
+          'https://docs.github.com/rest/repos/rules#get-rules-for-a-branch'
+        ),
+        status: z.literal('403'),
+      })
+      .safeParse(JSON.parse(failure.data.stdout));
+    return (
+      body.success &&
+      [
+        `gh: ${PLAN_RESTRICTION} (HTTP 403)`,
+        `gh: ${PLAN_RESTRICTION} (HTTP 403)\n`,
+        `gh: ${PLAN_RESTRICTION} (HTTP 403)\r\n`,
+      ].includes(failure.data.stderr)
+    );
+  } catch {
+    return false;
+  }
+}
 
 function isClassicProtectionNotFound(error: unknown): boolean {
   const failure = z
@@ -40,6 +72,15 @@ export async function readGithubLandApi(endpoint: string): Promise<unknown> {
     );
     return JSON.parse(result.stdout);
   } catch (error: unknown) {
+    if (
+      /^repos\/[^/]+\/[^/]+\/rules\/branches\/[^/?]+\?per_page=100&page=1$/.test(
+        endpoint
+      ) &&
+      isRulesPlanRestricted(error)
+    )
+      throw new RulesPlanRestricted(
+        'GitHub applicable-rules REST access is restricted by subscription; independent policy verification is required. No readiness assumed.'
+      );
     const reason =
       error instanceof SyntaxError
         ? 'malformed JSON'
@@ -82,6 +123,189 @@ const ruleSchema = z.object({
   type: z.string(),
   parameters: z.unknown().optional(),
 });
+
+const privatePlanEvidenceSchema = z.object({
+  errors: z.array(z.unknown()).max(0).optional(),
+  data: z.object({
+    repository: z.object({
+      nameWithOwner: z.string(),
+      isPrivate: z.literal(true),
+      viewerPermission: z.literal('ADMIN'),
+      ref: z.object({
+        name: z.string(),
+        branchProtectionRule: z.null(),
+      }),
+      rulesets: z.object({
+        totalCount: z.number().int().nonnegative(),
+        nodes: z
+          .array(
+            z.object({
+              id: z
+                .string()
+                .min(1)
+                .refine((id) => id.trim().length > 0),
+              enforcement: z.string(),
+            })
+          )
+          .max(100),
+        pageInfo: z.object({
+          hasNextPage: z.boolean(),
+          endCursor: z.string().nullable(),
+        }),
+      }),
+    }),
+  }),
+});
+
+async function verifyDisabledPrivatePlanPolicy(
+  repo: string,
+  trunk: string
+): Promise<void> {
+  const [owner, name] = repo.split('/');
+  const ids = new Set<string>();
+  const cursors = new Set<string>();
+  let after: string | undefined;
+  let total: number | undefined;
+  try {
+    // Bound service traversal even when each page appears to make progress.
+    for (let page = 0; page < 100; page++) {
+      const result = await execFileAsync(
+        'gh',
+        [
+          'api',
+          'graphql',
+          '--hostname',
+          'github.com',
+          '--method',
+          'POST',
+          '-f',
+          'query=query($owner: String!, $name: String!, $ref: String!, $after: String) { repository(owner: $owner, name: $name) { nameWithOwner isPrivate viewerPermission ref(qualifiedName: $ref) { name branchProtectionRule { id } } rulesets(first: 100, after: $after, includeParents: true) { totalCount nodes { id enforcement } pageInfo { hasNextPage endCursor } } } }',
+          '-f',
+          `owner=${owner}`,
+          '-f',
+          `name=${name}`,
+          '-f',
+          `ref=refs/heads/${trunk}`,
+          ...(after === undefined ? [] : ['-f', `after=${after}`]),
+        ],
+        githubProcessOptions()
+      );
+      const evidence = privatePlanEvidenceSchema.parse(
+        JSON.parse(result.stdout)
+      );
+      const repository = evidence.data.repository;
+      if (
+        repository.nameWithOwner.toLowerCase() !== repo.toLowerCase() ||
+        repository.ref.name !== trunk
+      )
+        throw new ExitFailedError(
+          'Independent policy repository or trunk identity does not match.'
+        );
+      const inventory = repository.rulesets;
+      if (total !== undefined && total !== inventory.totalCount)
+        throw new ExitFailedError(
+          'Independent policy inventory total changed during pagination.'
+        );
+      total = inventory.totalCount;
+      for (const node of inventory.nodes) {
+        if (ids.has(node.id))
+          throw new ExitFailedError(
+            'Independent policy inventory contains duplicate ruleset IDs.'
+          );
+        ids.add(node.id);
+        if (node.enforcement !== 'DISABLED')
+          throw new ExitFailedError(
+            node.enforcement === 'EVALUATE'
+              ? 'Evaluate-mode rulesets are outside the supported disabled-only policy proof.'
+              : 'Independent policy inventory contains a non-disabled or unknown ruleset enforcement state.'
+          );
+      }
+      if (ids.size > total)
+        throw new ExitFailedError(
+          'Independent policy inventory exceeds its declared total.'
+        );
+      if (!inventory.pageInfo.hasNextPage) {
+        if (ids.size !== total)
+          throw new ExitFailedError(
+            'Independent policy inventory is incomplete.'
+          );
+        return;
+      }
+      const cursor = inventory.pageInfo.endCursor;
+      if (
+        !inventory.nodes.length ||
+        ids.size >= total ||
+        !cursor ||
+        !cursor.trim() ||
+        cursors.has(cursor)
+      )
+        throw new ExitFailedError(
+          'Independent policy pagination is incomplete or not advancing.'
+        );
+      cursors.add(cursor);
+      after = cursor;
+    }
+    throw new ExitFailedError('Independent policy pagination limit exceeded.');
+  } catch (error: unknown) {
+    const reason =
+      error instanceof ExitFailedError
+        ? error.message
+        : error instanceof z.ZodError
+        ? `Invalid independent policy evidence at ${[
+            ...new Set(
+              error.issues.map(
+                (issue) => issue.path.map(String).join('.') || 'response'
+              )
+            ),
+          ].join(', ')}.`
+        : 'Independent administrator-visible policy lookup is unavailable.';
+    throw new ExitFailedError(
+      `Plan-restricted GitHub policy unverified: ${reason} No readiness assumed.`
+    );
+  }
+}
+
+async function readApplicableLandRules(
+  repo: string,
+  trunk: string,
+  canVerifyPlanAbsence: boolean
+): Promise<{
+  readonly rules: readonly z.infer<typeof ruleSchema>[];
+  readonly verification?: string;
+}> {
+  const rules: z.infer<typeof ruleSchema>[] = [];
+  for (let page = 1; ; page++) {
+    let values: z.infer<typeof ruleSchema>[];
+    try {
+      values = z
+        .array(ruleSchema)
+        .parse(
+          await readGithubLandApi(
+            `repos/${repo}/rules/branches/${encodeURIComponent(
+              trunk
+            )}?per_page=100&page=${page}`
+          )
+        );
+    } catch (error: unknown) {
+      if (!(error instanceof RulesPlanRestricted) || page !== 1) throw error;
+      if (!canVerifyPlanAbsence)
+        throw new ExitFailedError(
+          'Plan-restricted GitHub policy unverified: matching private administrator access and an unprotected trunk REST response are required. No readiness assumed.'
+        );
+      await verifyDisabledPrivatePlanPolicy(repo, trunk);
+      return {
+        rules: [],
+        verification:
+          'Independently verified despite plan-restricted REST access.',
+      };
+    }
+    rules.push(...values);
+    // A full page is never evidence of completeness.
+    if (values.length < 100) return { rules };
+    if (page >= 1000)
+      throw new ExitFailedError('GitHub policy pagination incomplete.');
+  }
+}
 
 async function verifyClassicProtectionAbsent(
   repo: string,
@@ -160,6 +384,7 @@ export type LandPolicy = {
     readonly appId: number;
   }[];
   readonly blockers: readonly string[];
+  readonly verification?: string;
 };
 
 export async function getGithubLandPolicy(
@@ -168,7 +393,12 @@ export async function getGithubLandPolicy(
 ): Promise<LandPolicy> {
   const prefix = `repos/${repo}`;
   const repository = z
-    .object({ full_name: z.string(), allow_rebase_merge: z.boolean() })
+    .object({
+      full_name: z.string(),
+      allow_rebase_merge: z.boolean(),
+      private: z.boolean().optional(),
+      permissions: z.object({ admin: z.boolean().optional() }).optional(),
+    })
     .parse(await readGithubLandApi(prefix));
   if (repository.full_name.toLowerCase() !== repo.toLowerCase())
     throw new ExitFailedError('GitHub repository identity mismatch.');
@@ -181,21 +411,13 @@ export async function getGithubLandPolicy(
     .parse(await readGithubLandApi(`${prefix}/branches/${branch}`));
   if (protection.name !== trunk)
     throw new ExitFailedError('GitHub trunk identity mismatch.');
-  const rules: z.infer<typeof ruleSchema>[] = [];
-  // A full page is never evidence of completeness; keep reading until the short page.
-  for (let page = 1; ; page++) {
-    const values = z
-      .array(ruleSchema)
-      .parse(
-        await readGithubLandApi(
-          `${prefix}/rules/branches/${branch}?per_page=100&page=${page}`
-        )
-      );
-    rules.push(...values);
-    if (values.length < 100) break;
-    if (page >= 1000)
-      throw new ExitFailedError('GitHub policy pagination incomplete.');
-  }
+  const { rules, verification } = await readApplicableLandRules(
+    repo,
+    trunk,
+    repository.private === true &&
+      repository.permissions?.admin === true &&
+      !protection.protected
+  );
   let reviews = 0;
   const checks = new Set<string>();
   const publishers: { readonly context: string; readonly appId: number }[] = [];
@@ -275,7 +497,7 @@ export async function getGithubLandPolicy(
         blockers.push(`Unsupported active policy: ${rule.type}.`);
     }
   }
-  return { reviews, checks: [...checks], publishers, blockers };
+  return { reviews, checks: [...checks], publishers, blockers, verification };
 }
 
 type LandReadiness = {

@@ -170,6 +170,11 @@ if (args[0] === 'api') {
           git(['commit', '-m', 'Concurrent trunk change'], cwd);
         }
         git(['push', 'origin', 'HEAD:refs/heads/main'], cwd);
+        if (policy.policyAfterMerge)
+          fs.writeFileSync(
+            process.env.ANTHRACITE_TEST_LAND_POLICY,
+            JSON.stringify({ ...policy, ...policy.policyAfterMerge })
+          );
         pr.state = 'MERGED';
         pr.mergeResult = result;
         fs.writeFileSync(state, JSON.stringify(prs));
@@ -186,7 +191,26 @@ if (args[0] === 'api') {
       }
     }
   } else if (endpoint === 'graphql') {
-    if (policy.classicAbsenceResponse) {
+    const query = args.find((value) => value.startsWith('query=')) || '';
+    if (query.includes('rulesets(')) {
+      if (
+        !args.includes('owner=fixture') ||
+        !args.includes('name=inspection') ||
+        !args.includes('ref=refs/heads/main') ||
+        !query.includes('includeParents: true') ||
+        /(?:targets?|enforcement)\s*:/.test(query)
+      )
+        throw new Error('incorrect independent policy inventory scope');
+      const cursor = args.find((value) => value.startsWith('after='));
+      const response = policy.planAbsencePages
+        ? policy.planAbsencePages[cursor ? cursor.slice(6) : 'first']
+        : policy.planAbsenceResponse;
+      if (response) process.stdout.write(JSON.stringify(response));
+      else {
+        process.stderr.write('gh: Resource not accessible (HTTP 403)');
+        process.exitCode = 1;
+      }
+    } else if (policy.classicAbsenceResponse) {
       process.stdout.write(JSON.stringify(policy.classicAbsenceResponse));
     } else {
       process.stderr.write('gh: Resource not accessible (HTTP 403)');
@@ -200,19 +224,34 @@ if (args[0] === 'api') {
       JSON.stringify({
         full_name: 'fixture/inspection',
         allow_rebase_merge: policy.allow_rebase_merge,
+        ...policy.repository,
       })
     );
   else if (endpoint === prefix + '/branches/main')
     process.stdout.write(
-      JSON.stringify({ name: 'main', protected: policy.protected })
+      JSON.stringify({
+        name: 'main',
+        protected: policy.protected,
+        ...policy.branch,
+      })
     );
   else if (
     endpoint.startsWith(prefix + '/rules/branches/main?per_page=100&page=')
   ) {
     const page = Number(endpoint.split('page=').pop());
-    process.stdout.write(
-      JSON.stringify(policy.rules.slice((page - 1) * 100, page * 100))
-    );
+    if (policy.rulesFailure && page === (policy.rulesFailurePage || 1)) {
+      process.stdout.write(
+        policy.rulesFailureRaw ?? JSON.stringify(policy.rulesFailure)
+      );
+      process.stderr.write(
+        policy.rulesFailureStderr ??
+          `gh: ${policy.rulesFailure.message} (HTTP ${policy.rulesFailure.status})\n`
+      );
+      process.exitCode = policy.rulesFailureExitCode ?? 1;
+    } else
+      process.stdout.write(
+        JSON.stringify(policy.rules.slice((page - 1) * 100, page * 100))
+      );
   } else if (
     endpoint === prefix + '/branches/main/protection' &&
     policy.classicFailure

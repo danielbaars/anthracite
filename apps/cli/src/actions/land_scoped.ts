@@ -209,6 +209,7 @@ function printPendingLanding(
   inspection: {
     readonly blockers: readonly string[];
     readonly cleanupOnly: ReadonlySet<string>;
+    readonly verification?: string;
   }
 ): void {
   const remaining = record.merges.slice(record.index ?? 0);
@@ -229,6 +230,8 @@ function printPendingLanding(
   process.stdout.write(
     `⏸ Pending landing: ${record.repo}\nTarget: ${record.target} -> ${record.trunk}\nLocal ${record.trunk}: fast-forward after confirmed merges.\n`
   );
+  if (inspection.verification)
+    process.stdout.write(`Policy: ${inspection.verification}\n`);
   const completed = record.merges
     .slice(0, record.index ?? 0)
     .filter((member) => member.result);
@@ -410,8 +413,11 @@ async function inspectPendingLanding(
         'Remote trunk unavailable or local trunk divergent; fast-forward required.'
       );
   });
-  const policy = await getGithubLandPolicy(record.repo, record.trunk);
-  blockers.push(...policy.blockers);
+  let policy: LandPlan['policy'] | undefined;
+  await inspect(async () => {
+    policy = await getGithubLandPolicy(record.repo, record.trunk);
+    blockers.push(...policy.blockers);
+  });
   const fresh = initContext(context, composeGit(), { inspection: true });
   const participants = [current(record), ...survivors];
   for (const member of participants)
@@ -474,19 +480,25 @@ async function inspectPendingLanding(
       if (isMerge && pr) {
         if (member.branch === current(record).branch)
           validateMergeTrunk(record, pr.baseRefOid);
-        const readiness = await githubLandReadiness(pr, policy, record.repo);
-        blockers.push(
-          ...[...readiness.blockers, ...readiness.pending].map(
-            (message) => `${member.branch}: ${message}`
-          )
-        );
+        if (policy) {
+          const readiness = await githubLandReadiness(pr, policy, record.repo);
+          blockers.push(
+            ...[...readiness.blockers, ...readiness.pending].map(
+              (message) => `${member.branch}: ${message}`
+            )
+          );
+        }
         if (published !== expected.head)
           blockers.push(
             `${member.branch}: Readiness for the reached local head is unknown until its mandatory push and fresh checks.`
           );
       }
     });
-  printPendingLanding(record, context, { blockers, cleanupOnly });
+  printPendingLanding(record, context, {
+    blockers,
+    cleanupOnly,
+    verification: policy?.verification,
+  });
   return blockers;
 }
 

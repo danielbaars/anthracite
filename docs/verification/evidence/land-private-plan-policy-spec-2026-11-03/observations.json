@@ -1,0 +1,87 @@
+{
+  "recordedOn": "2026-11-03",
+  "baseline": {
+    "cliVersion": "0.6.6",
+    "sourceCommit": "f03adc7075519b3c623e72e24ab6d8ce64c223e4"
+  },
+  "kind": "anonymized transcription of live read-only observations",
+  "rawCapture": false,
+  "implementationAcceptance": false,
+  "redactions": [
+    "private repository and owner identity",
+    "private user-project path and feature branch names",
+    "ruleset node ID and pagination cursor"
+  ],
+  "restRepositoryProjection": {
+    "full_name": "fixture/private-policy",
+    "private": true,
+    "permissions": {
+      "admin": true
+    }
+  },
+  "restBranchProjection": {
+    "name": "main",
+    "protected": false
+  },
+  "restApplicableRulesFailure": {
+    "httpStatus": 403,
+    "body": {
+      "message": "Upgrade to GitHub Pro or make this repository public to enable this feature.",
+      "documentation_url": "https://docs.github.com/rest/repos/rules#get-rules-for-a-branch",
+      "status": "403"
+    }
+  },
+  "restClassicProtectionFailure": {
+    "httpStatus": 403,
+    "body": {
+      "message": "Upgrade to GitHub Pro or make this repository public to enable this feature.",
+      "documentation_url": "https://docs.github.com/rest/branches/branch-protection#get-branch-protection",
+      "status": "403"
+    }
+  },
+  "accountPlanNameObserved": null,
+  "graphqlRequestProperties": {
+    "qualifiedRef": "refs/heads/main",
+    "rulesetsFirst": 100,
+    "includeParents": true,
+    "targetFilter": null,
+    "enforcementFilter": null
+  },
+  "graphqlResponseTranscription": {
+    "data": {
+      "repository": {
+        "nameWithOwner": "fixture/private-policy",
+        "isPrivate": true,
+        "viewerPermission": "ADMIN",
+        "owner": {
+          "__typename": "User",
+          "login": "fixture"
+        },
+        "ref": {
+          "name": "main",
+          "branchProtectionRule": null
+        },
+        "rulesets": {
+          "totalCount": 1,
+          "pageInfo": {
+            "hasNextPage": false,
+            "endCursor": "sanitized-final-cursor"
+          },
+          "nodes": [
+            {
+              "id": "sanitized-disabled-ruleset",
+              "enforcement": "DISABLED",
+              "target": "BRANCH"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "limits": [
+    "No account-plan name was exposed by the inspected user response.",
+    "One real private repository was inspected; generalized behavior is proposed, not runtime accepted.",
+    "No successful landing or PR readiness is established by these observations.",
+    "No private source files, PR content, credentials or authentication output are included."
+  ]
+}

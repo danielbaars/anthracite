@@ -285,6 +285,8 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
   process.stdout.write(
     `Landing plan: ${plan.repo}\nTarget: ${plan.target} -> ${plan.trunk}\n`
   );
+  if (plan.policy.verification)
+    process.stdout.write(`Policy: ${plan.policy.verification}\n`);
   if (plan.policy.blockers.length)
     process.stdout.write(
       'Policy: merge requirements are blocked or unknown.\n'
