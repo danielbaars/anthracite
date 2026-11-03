@@ -133,8 +133,9 @@ try {
       "apps/cli/dist/test/commands/frozen_submit_cli.test.js",
       "apps/cli/dist/test/commands/get_delivery_cli.test.js",
       "apps/cli/dist/test/commands/sync_delivery_cli.test.js",
+      "apps/cli/dist/test/commands/land_private_delivery_cli.test.js",
       "--grep",
-      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base|installed get workflow learns explicit options|installed sync workflow learns explicit options",
+      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base|installed get workflow learns explicit options|installed sync workflow learns explicit options|private-plan delivery",
     ],
     {
       cwd: root,
@@ -153,8 +154,36 @@ try {
     0,
     scenarios.stderr || scenarios.error?.message
   );
+  const aliasLanding = spawnSync(
+    process.execPath,
+    [
+      path.join(root, "node_modules/mocha/bin/mocha.js"),
+      "apps/cli/dist/test/commands/land_private_delivery_cli.test.js",
+      "--grep",
+      "direct private-plan delivery",
+    ],
+    {
+      cwd: root,
+      env: {
+        ...env,
+        ANTHRACITE_TEST_BINARY: path.join(prefix, "bin/anthracite"),
+        CHARCOAL_TEST_BINARY: "",
+      },
+      encoding: "utf8",
+      timeout: 120000,
+    }
+  );
+  process.stdout.write(aliasLanding.stdout || "");
+  assert.equal(
+    aliasLanding.status,
+    0,
+    aliasLanding.stderr || aliasLanding.error?.message
+  );
   console.log(
-    "PASS installed package real Git stacks, scoped get/sync MCP, same-build execution and numeric-zero cancellation"
+    "PASS installed anthracite alias private-plan preview and preserving refusal"
+  );
+  console.log(
+    "PASS installed package real Git stacks, scoped get/sync MCP, private-plan preview/refusal, same-build execution and numeric-zero cancellation"
   );
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
