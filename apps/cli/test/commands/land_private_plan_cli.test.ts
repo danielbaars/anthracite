@@ -6,6 +6,7 @@ import {
   emptyPrivatePolicyEvidence,
   planRulesFailure,
   preparePrivatePlanLand,
+  updatePrivatePlanPolicy,
 } from '../lib/fixtures/land_private_policy';
 
 /* eslint-disable max-lines-per-function */
@@ -19,16 +20,6 @@ describe('public landing with independently verified private-plan policy', funct
     github = preparePrivatePlanLand(fixture);
   });
   afterEach(() => fixture?.cleanup());
-
-  function setPolicy(changes: Readonly<Record<string, unknown>>): void {
-    fs.writeFileSync(
-      github.policy,
-      JSON.stringify({
-        ...JSON.parse(fs.readFileSync(github.policy, 'utf8')),
-        ...changes,
-      })
-    );
-  }
 
   function preservingPreview(
     status: number,
@@ -82,7 +73,7 @@ describe('public landing with independently verified private-plan policy', funct
   });
 
   it('lands a disabled-rule private-plan prefix and preserves successor work and PR identities', () => {
-    setPolicy({ planAbsenceResponse: inventoryPage() });
+    updatePrivatePlanPolicy(github, { planAbsenceResponse: inventoryPage() });
     const childPatch = fixture.git(['diff', '--binary', 'base', 'child']);
     const tipPatch = fixture.git(['diff', '--binary', 'child', 'tip']);
     const unrelated = fixture.git(['rev-parse', 'other']);
@@ -125,7 +116,7 @@ describe('public landing with independently verified private-plan policy', funct
   });
 
   it('previews the reported single disabled branch ruleset without changing Git state', () => {
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       planAbsenceResponse: emptyPrivatePolicyEvidence({
         rulesets: {
           totalCount: 1,
@@ -138,7 +129,7 @@ describe('public landing with independently verified private-plan policy', funct
   });
 
   it('reads complete inherited disabled inventories through a full final nonempty page', () => {
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       planAbsencePages: {
         first: emptyPrivatePolicyEvidence({
           rulesets: {
@@ -292,7 +283,7 @@ describe('public landing with independently verified private-plan policy', funct
     },
   ]) {
     it(`preserves state when inherited inventory has ${invalid.name}`, () => {
-      setPolicy({
+      updatePrivatePlanPolicy(github, {
         planAbsencePages: {
           first: firstInventoryPage(),
           next: invalid.response,
@@ -352,13 +343,15 @@ describe('public landing with independently verified private-plan policy', funct
     },
   ]) {
     it(`refuses disabled inventory evidence with ${invalid.name}`, () => {
-      setPolicy({ planAbsenceResponse: inventoryPage(invalid.changes) });
+      updatePrivatePlanPolicy(github, {
+        planAbsenceResponse: inventoryPage(invalid.changes),
+      });
       preservingPreview(1, 'Plan-restricted GitHub policy unverified');
     });
   }
 
   it('accurately refuses evaluate mode without describing it as active enforcement', () => {
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       planAbsenceResponse: inventoryPage({
         nodes: [{ id: 'local', enforcement: 'EVALUATE' }],
       }),
@@ -370,7 +363,7 @@ describe('public landing with independently verified private-plan policy', funct
   });
 
   it('refuses an active inherited rule on a later page before any landing effect', () => {
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       planAbsencePages: {
         first: firstInventoryPage(),
         next: inventoryPage({
@@ -395,7 +388,7 @@ describe('public landing with independently verified private-plan policy', funct
         }),
       ])
     );
-    setPolicy({ planAbsencePages: pages });
+    updatePrivatePlanPolicy(github, { planAbsencePages: pages });
     preservingPreview(1, 'Independent policy pagination limit exceeded.');
   });
 
@@ -459,7 +452,9 @@ describe('public landing with independently verified private-plan policy', funct
     { name: 'a null repository', response: { data: { repository: null } } },
   ]) {
     it(`refuses ${evidence.name} as proof of absent private policy`, () => {
-      setPolicy({ planAbsenceResponse: evidence.response });
+      updatePrivatePlanPolicy(github, {
+        planAbsenceResponse: evidence.response,
+      });
       preservingPreview(1, 'Plan-restricted GitHub policy unverified');
     });
   }
@@ -484,7 +479,7 @@ describe('public landing with independently verified private-plan policy', funct
     { name: 'a protected REST trunk', changes: { protected: true } },
   ]) {
     it(`refuses ${prerequisites.name} before querying independent proof`, () => {
-      setPolicy(prerequisites.changes);
+      updatePrivatePlanPolicy(github, prerequisites.changes);
       preservingPreview(1, 'Plan-restricted GitHub policy unverified');
       expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"graphql"');
     });
@@ -546,14 +541,14 @@ describe('public landing with independently verified private-plan policy', funct
     },
   ]) {
     it(`does not substitute private absence evidence for ${failure.name}`, () => {
-      setPolicy(failure.changes);
+      updatePrivatePlanPolicy(github, failure.changes);
       preservingPreview(1, '');
       expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"graphql"');
     });
   }
 
   it('does not recognize a plan message from the classic-protection endpoint as rules evidence', () => {
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       rulesFailure: null,
       protected: true,
       classicFailure: planRulesFailure,
@@ -563,7 +558,7 @@ describe('public landing with independently verified private-plan policy', funct
   });
 
   it('retains a required check from a later normal REST rules page', () => {
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       rulesFailure: null,
       rules: [
         ...Array.from({ length: 100 }, () => ({
@@ -587,7 +582,7 @@ describe('public landing with independently verified private-plan policy', funct
   });
 
   it('retains disabled rebase merging as a blocker after policy absence is verified', () => {
-    setPolicy({ allow_rebase_merge: false });
+    updatePrivatePlanPolicy(github, { allow_rebase_merge: false });
     preservingPreview(1, 'Rebase merging is disabled');
   });
 

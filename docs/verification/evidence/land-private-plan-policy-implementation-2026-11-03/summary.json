@@ -3,7 +3,7 @@
   "source": {
     "baseline": "f03adc7075519b3c623e72e24ab6d8ce64c223e4",
     "productionIntegrationCommit": "9a52e8fe349791e9e3a7af1afe8fbf7b077d9334",
-    "deliverySource": "containing commit; delivery tests and documentation only",
+    "deliverySource": "8d5931276fef7d55a612b93e0eb4b09baa80dea1; historical delivery tests and documentation",
     "deliveryTestSha256": "44b0697e587dd2b771b5ea8646c7931ca88c295358561ffe7fdaa6e5fc76870b",
     "packageTestSha256": "60c05a953066fc5b00e2820c005d8f56780e575ee7fa52328d8dd6201da9c661",
     "productionSha256": {
@@ -271,7 +271,8 @@
         "public landing policy guards verifies an app-bound required check on the exact PR head",
         "public landing policy guards reads complete check-run pagination and refuses a later-page read failure"
       ]
-    }
+    },
+    "sourceCommit": "8d5931276fef7d55a612b93e0eb4b09baa80dea1"
   },
   "package": {
     "report": "109-package-test.log",
@@ -281,7 +282,8 @@
     "identityContentsCompletion": "pass",
     "privatePlan": "installed an direct+MCP and anthracite direct: disabled preview then confirmed EVALUATE refusal; state independently preserved",
     "captures": "109-npm-captures/",
-    "processObservationPermission": true
+    "processObservationPermission": true,
+    "sourceCommit": "8d5931276fef7d55a612b93e0eb4b09baa80dea1"
   },
   "static": {
     "typescriptBuild": "pass",
@@ -296,5 +298,165 @@
     "No live GitHub acceptance or claim of readiness for a real private PR.",
     "No CI, full suite/matrix, Release, publication or active installation/config changes.",
     "Artifacts and raw reports retained outside repository; public record excludes private identities, local user paths and raw response bodies."
-  ]
+  ],
+  "reviewFixes": {
+    "source": "containing review-fix commit; tests, shared test fixture and verification records only",
+    "baseCommit": "8d5931276fef7d55a612b93e0eb4b09baa80dea1",
+    "productionChanges": false,
+    "productionSourceTree": "9db27c33cb963769957b1dc026d1a516834cbb63",
+    "testSha256": {
+      "apps/cli/test/commands/land_private_plan_cli.test.ts": "97ab683976414a7f2391102eb2321b588295b4c4648eb0feb20f0f6afed59612",
+      "apps/cli/test/commands/land_private_recovery_cli.test.ts": "43e50194c95ea94b30404c855bdb934a042142c88aa23e285d8f03016f932648",
+      "apps/cli/test/commands/land_private_delivery_cli.test.ts": "7d721b225c0abda6904a6a545f2ee8ccb18a2b2b64918fe4d1a2cd0e03942b0a",
+      "apps/cli/test/lib/fixtures/land_private_policy.ts": "3d73c9515cf94ba9fca2547c02d7c88799e96451436c0b7a217924c0e9cc3849"
+    },
+    "node": {
+      "uniqueCasesPassed": 11,
+      "selectedReport": "review-fixes-accepted-node.json",
+      "selectedStats": {
+        "suites": 3,
+        "tests": 11,
+        "passes": 10,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-11-03T19:11:21.623Z",
+        "end": "2026-11-03T19:14:17.136Z",
+        "duration": 175513
+      },
+      "selectedRecoveryTestSha256": "307fb6c7800ec5b932f09e4cce579da10462c46d59cbcfb60ac623a8b3b791c3",
+      "selectedCasesPassed": [
+        "public private-plan landing recovery freshness shows the same fresh saved policy before terminal confirmation and preserves rejection",
+        "public private-plan landing recovery freshness refuses a changed PR head after successful private-plan proof and preserves reached work",
+        "public private-plan landing recovery freshness refuses a changed remote lease after successful private-plan proof and preserves reached work",
+        "public private-plan landing recovery freshness finishes saved mandatory maintenance despite newly blocked policy then refuses the next merge without replay or push repetition",
+        "public landing with independently verified private-plan policy previews the reported single disabled branch ruleset without changing Git state",
+        "public landing with independently verified private-plan policy retains disabled rebase merging as a blocker after policy absence is verified",
+        "public landing with independently verified private-plan policy retains required readiness when policy absence is verified",
+        "public landing with independently verified private-plan policy retains failed checks when policy absence is verified",
+        "private-plan landing delivery direct private-plan delivery previews disabled rules then preserves an invalid-evidence refusal",
+        "private-plan landing delivery MCP private-plan delivery previews disabled rules then preserves an invalid-evidence refusal"
+      ],
+      "supersededIdentityAssertion": "Cached original PR #18 lookup is unavailable after replacement by #118; expected fresh-identity diagnostic corrected to actual preserving bound-lookup refusal. No other scenario changed.",
+      "correctedIdentity": {
+        "report": "review-fixes-identity-accepted-node.json",
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-03T19:15:05.983Z",
+          "end": "2026-11-03T19:15:33.975Z",
+          "duration": 27992
+        },
+        "cases": [
+          "public private-plan landing recovery freshness refuses a changed PR identity after successful private-plan proof and preserves reached work"
+        ]
+      }
+    },
+    "native": {
+      "uniqueCasesPassed": 11,
+      "selectedReport": "review-fixes-accepted-native.json",
+      "selectedStats": {
+        "suites": 3,
+        "tests": 11,
+        "passes": 10,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-11-03T19:11:21.623Z",
+        "end": "2026-11-03T19:13:58.747Z",
+        "duration": 157124
+      },
+      "selectedRecoveryTestSha256": "307fb6c7800ec5b932f09e4cce579da10462c46d59cbcfb60ac623a8b3b791c3",
+      "selectedCasesPassed": [
+        "public private-plan landing recovery freshness shows the same fresh saved policy before terminal confirmation and preserves rejection",
+        "public private-plan landing recovery freshness refuses a changed PR head after successful private-plan proof and preserves reached work",
+        "public private-plan landing recovery freshness refuses a changed remote lease after successful private-plan proof and preserves reached work",
+        "public private-plan landing recovery freshness finishes saved mandatory maintenance despite newly blocked policy then refuses the next merge without replay or push repetition",
+        "public landing with independently verified private-plan policy previews the reported single disabled branch ruleset without changing Git state",
+        "public landing with independently verified private-plan policy retains disabled rebase merging as a blocker after policy absence is verified",
+        "public landing with independently verified private-plan policy retains required readiness when policy absence is verified",
+        "public landing with independently verified private-plan policy retains failed checks when policy absence is verified",
+        "private-plan landing delivery direct private-plan delivery previews disabled rules then preserves an invalid-evidence refusal",
+        "private-plan landing delivery MCP private-plan delivery previews disabled rules then preserves an invalid-evidence refusal"
+      ],
+      "supersededIdentityAssertion": "Cached original PR #18 lookup is unavailable after replacement by #118; expected fresh-identity diagnostic corrected to actual preserving bound-lookup refusal. No other scenario changed.",
+      "correctedIdentity": {
+        "report": "review-fixes-identity-accepted-native.json",
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-03T19:15:05.983Z",
+          "end": "2026-11-03T19:15:30.856Z",
+          "duration": 24873
+        },
+        "cases": [
+          "public private-plan landing recovery freshness refuses a changed PR identity after successful private-plan proof and preserves reached work"
+        ]
+      }
+    },
+    "installedAn": {
+      "report": "review-fixes-installed-an.json",
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-03T19:07:13.736Z",
+        "end": "2026-11-03T19:07:27.009Z",
+        "duration": 13273
+      },
+      "cases": [
+        "private-plan landing delivery direct private-plan delivery previews disabled rules then preserves an invalid-evidence refusal",
+        "private-plan landing delivery MCP private-plan delivery previews disabled rules then preserves an invalid-evidence refusal"
+      ]
+    },
+    "installedAnthracite": {
+      "report": "review-fixes-installed-anthracite.json",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-03T19:07:27.203Z",
+        "end": "2026-11-03T19:07:33.666Z",
+        "duration": 6463
+      },
+      "cases": [
+        "private-plan landing delivery direct private-plan delivery previews disabled rules then preserves an invalid-evidence refusal"
+      ]
+    },
+    "proofPlacement": "Every changed-input saved inspection successfully verifies current alternate proof. Confirmed resumption performs one pre-confirmation GraphQL lookup; changed head/replacement identity then refuse at result reconciliation (the replacement cannot re-associate the saved original PR) without another lookup, while the remote-lease case performs a second per-merge proof lookup before refusing.",
+    "preservation": "Separate head, replacement PR number/URL and bare remote lease changes preserve last confirmed base merge, successor work, pending PR and remote state, opaque local/index/cache/recovery snapshots (except owned lock refresh), and cause no later merge/push/PR-edit effect.",
+    "artifactReuse": {
+      "reason": "No production source or packaged production input changed from historical accepted build; native and tarball SHA256 identities rechecked. Artifacts were not rebuilt or relabelled as review-fix commit builds.",
+      "nativeSha256": "5a3c7d96f09566d075b3ccd7ddb5a797988a5b774bb96dd6b908cb447092bbc9",
+      "tarballSha256": "c231dcc4ab80b34942678e0e8d1da9f2a6b4a3b83f60e3516914df6964b4d213",
+      "installedDeliveryLog": "review-fixes-installed.log"
+    },
+    "exploratoryReports": {
+      "reports": [
+        "review-fixes-new-node.json",
+        "review-fixes-targeted-node.json",
+        "review-fixes-targeted-native.json",
+        "review-fixes-controls-final-node.json",
+        "review-fixes-controls-final-native.json"
+      ],
+      "classification": "Superseded assertion-only failures: first expected readiness-stage diagnostics despite earlier result reconciliation, then expected no resumed GraphQL calls despite the successful pre-confirmation inspection; finally expected fresh replacement identity diagnostic despite cached original PR lookup refusing earlier. Production guards unchanged."
+    },
+    "static": {
+      "typescriptBuild": "pass",
+      "typecheckNoEmit": "pass",
+      "changedTestEslint": "pass",
+      "prettier": "pass",
+      "whitespace": "pass",
+      "localDocumentationLinks": 12
+    },
+    "limits": "Bounded 11-case Node/native selection and installed delivery 2+1 only; historical assembled89 and package11+1 are not reruns of this commit."
+  }
 }

@@ -9,6 +9,7 @@ import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 import {
   emptyPrivatePolicyEvidence,
   preparePrivatePlanLand,
+  updatePrivatePlanPolicy,
 } from '../lib/fixtures/land_private_policy';
 
 /* eslint-disable max-lines-per-function */
@@ -23,15 +24,6 @@ describe('public private-plan landing recovery freshness', function () {
   });
   afterEach(() => fixture?.cleanup());
 
-  function setPolicy(changes: Readonly<Record<string, unknown>>): void {
-    fs.writeFileSync(
-      github.policy,
-      JSON.stringify({
-        ...JSON.parse(fs.readFileSync(github.policy, 'utf8')),
-        ...changes,
-      })
-    );
-  }
   function activeEvidence(): Record<string, unknown> {
     return emptyPrivatePolicyEvidence({
       rulesets: {
@@ -50,7 +42,7 @@ describe('public private-plan landing recovery freshness', function () {
     fs.writeFileSync(github.state, JSON.stringify(prs));
   }
   function pauseLanding(): void {
-    setPolicy({ pendingAfterPush: true });
+    updatePrivatePlanPolicy(github, { pendingAfterPush: true });
     const stopped = fixture.run([
       'land',
       'child',
@@ -62,7 +54,7 @@ describe('public private-plan landing recovery freshness', function () {
     expect(stopped.stderr)
       .to.include('No merge request sent for #18')
       .and.include('Check wait timed out');
-    setPolicy({ pendingAfterPush: false });
+    updatePrivatePlanPolicy(github, { pendingAfterPush: false });
   }
   function assertProgress(): void {
     const prs: ReadonlyArray<{ readonly state: string }> = JSON.parse(
@@ -75,7 +67,11 @@ describe('public private-plan landing recovery freshness', function () {
     expect(fixture.git(['show', 'main:base.txt'])).to.equal('base');
     expect(fixture.git(['rev-list', '--count', 'main..child'])).to.equal('1');
   }
-  function preservingInspection(status: number, terminal = false): string {
+  function preservingInspection(
+    status: number,
+    terminal = false,
+    refusal?: { readonly message: string; readonly reconciliation: boolean }
+  ): string {
     const marker = path.join(fixture.root, 'unexpected-resume-push');
     fs.writeFileSync(
       path.join(fixture.repo, '.git/hooks/pre-push'),
@@ -108,6 +104,7 @@ describe('public private-plan landing recovery freshness', function () {
         result.stdout.trimEnd()
       );
     } else if (status === 1) {
+      const beforeResume = fs.readFileSync(github.calls, 'utf8');
       const resumed = fixture.run([
         'land',
         'child',
@@ -116,7 +113,22 @@ describe('public private-plan landing recovery freshness', function () {
         '0',
       ]);
       expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(1);
-      expect(resumed.stderr).to.include('No merge request sent for #18');
+      expect(resumed.stderr, resumed.stdout + resumed.stderr).to.include(
+        refusal?.reconciliation
+          ? 'Landing incomplete at reconciliation'
+          : 'No merge request sent for #18'
+      );
+      if (refusal) {
+        expect(resumed.stderr, resumed.stdout + resumed.stderr).to.include(
+          refusal.message
+        );
+        const resumedCalls = fs
+          .readFileSync(github.calls, 'utf8')
+          .slice(beforeResume.length);
+        expect(resumedCalls.split('"graphql"').length - 1).to.equal(
+          refusal.reconciliation ? 1 : 2
+        );
+      }
       expect(resumed.stdout.startsWith(result.stdout)).to.equal(true);
     }
     // Confirmed resumption refreshes lock ownership, but no saved phase or participant.
@@ -161,7 +173,7 @@ describe('public private-plan landing recovery freshness', function () {
     expect(preservingInspection(0, true)).to.include(
       'Independently verified despite plan-restricted REST access.'
     );
-    setPolicy({ planAbsenceResponse: activeEvidence() });
+    updatePrivatePlanPolicy(github, { planAbsenceResponse: activeEvidence() });
     expect(preservingInspection(1, true)).to.include('non-disabled or unknown');
     assertProgress();
   });
@@ -190,7 +202,7 @@ describe('public private-plan landing recovery freshness', function () {
       { planAbsenceResponse: null },
     ];
     for (const changed of cases) {
-      setPolicy(changed);
+      updatePrivatePlanPolicy(github, changed);
       expect(preservingInspection(1)).not.to.include('Readiness: READY');
       assertProgress();
       fs.writeFileSync(github.policy, originalPolicy);
@@ -206,10 +218,66 @@ describe('public private-plan landing recovery freshness', function () {
       fs.readFileSync(github.calls, 'utf8').split('"PUT"').length - 1
     ).to.equal(2);
   });
+  for (const changed of ['PR head', 'PR identity', 'remote lease']) {
+    it(`refuses a changed ${changed} after successful private-plan proof and preserves reached work`, () => {
+      pauseLanding();
+      clearChecks();
+      expect(preservingInspection(0)).to.include(
+        'Policy: Independently verified despite plan-restricted REST access.'
+      );
+      const prs = JSON.parse(fs.readFileSync(github.state, 'utf8'));
+      let refusal: string;
+      if (changed === 'PR head') {
+        prs[1].headRefOid = fixture.git(['rev-parse', 'tip']);
+        fs.writeFileSync(github.state, JSON.stringify(prs));
+        refusal = 'Fresh PR state/head/base differs from saved publication.';
+      } else if (changed === 'PR identity') {
+        prs[1].number = 118;
+        prs[1].url = 'https://github.com/fixture/inspection/pull/118';
+        fs.writeFileSync(github.state, JSON.stringify(prs));
+        // The saved association remains bound to #18 after its replacement.
+        refusal = 'GitHub request failed; PR information is unavailable.';
+      } else {
+        const concurrent = fixture.git(['rev-parse', 'tip']);
+        fixture.git(
+          ['update-ref', 'refs/heads/child', concurrent],
+          github.remote
+        );
+        // Keep the external PR response unchanged to isolate the remote lease guard.
+        const observed = fixture.env.ANTHRACITE_TEST_LAND_OBSERVED;
+        if (!observed)
+          throw new Error('Missing observed remote heads fixture.');
+        fs.writeFileSync(
+          observed,
+          JSON.stringify({
+            ...JSON.parse(fs.readFileSync(observed, 'utf8')),
+            child: concurrent,
+          })
+        );
+        refusal = 'Remote head changed outside saved progress.';
+      }
+      const output = preservingInspection(1, false, {
+        message:
+          changed === 'PR head'
+            ? 'Merged PR identity does not match original target/head/repository.'
+            : changed === 'PR identity'
+            ? 'repos/fixture/inspection/pulls/18. No readiness assumed.'
+            : 'Fresh merge identity/base/head or remote lease changed.',
+        reconciliation: changed !== 'remote lease',
+      });
+      expect(output)
+        .to.include(
+          'Policy: Independently verified despite plan-restricted REST access.'
+        )
+        .and.include(refusal);
+      expect(output).not.to.include('Readiness: READY');
+      assertProgress();
+    });
+  }
   it('uses newly available REST reviews, checks and exact-head publishers instead of the old alternate proof', () => {
     pauseLanding();
     clearChecks();
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       rulesFailure: null,
       rules: [
         {
@@ -237,7 +305,7 @@ describe('public private-plan landing recovery freshness', function () {
       { __typename: 'StatusContext', context: 'unit', state: 'SUCCESS' },
     ];
     fs.writeFileSync(github.state, JSON.stringify(prs));
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       checkRuns: [
         {
           id: 1,
@@ -252,7 +320,7 @@ describe('public private-plan landing recovery freshness', function () {
     expect(preservingInspection(1))
       .to.include('GitHub App 42')
       .and.not.include('Independently verified');
-    setPolicy({
+    updatePrivatePlanPolicy(github, {
       checkRuns: [
         {
           id: 1,
@@ -271,7 +339,9 @@ describe('public private-plan landing recovery freshness', function () {
   });
 
   it('obtains new inherited policy evidence before each next merge after real maintenance', () => {
-    setPolicy({ policyAfterMerge: { planAbsenceResponse: activeEvidence() } });
+    updatePrivatePlanPolicy(github, {
+      policyAfterMerge: { planAbsenceResponse: activeEvidence() },
+    });
     const result = fixture.run(['land', 'child', '--yes']);
     expect(result.status, result.stdout + result.stderr).to.equal(1);
     expect(result.stderr)
@@ -298,7 +368,7 @@ describe('public private-plan landing recovery freshness', function () {
   });
 
   it('finishes saved mandatory maintenance despite newly blocked policy then refuses the next merge without replay or push repetition', () => {
-    setPolicy({ failPrEdit: true });
+    updatePrivatePlanPolicy(github, { failPrEdit: true });
     const stopped = fixture.run(['land', 'child', '--yes']);
     expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
     expect(stopped.stderr)
@@ -307,7 +377,10 @@ describe('public private-plan landing recovery freshness', function () {
     const child = fixture.git(['rev-parse', 'child']);
     const tip = fixture.git(['rev-parse', 'tip']);
     expect(fixture.git(['rev-parse', 'child'], github.remote)).to.equal(child);
-    setPolicy({ failPrEdit: false, planAbsenceResponse: activeEvidence() });
+    updatePrivatePlanPolicy(github, {
+      failPrEdit: false,
+      planAbsenceResponse: activeEvidence(),
+    });
     const pushed = path.join(fixture.root, 'maintenance-pushes');
     fs.writeFileSync(
       path.join(fixture.repo, '.git/hooks/pre-push'),
@@ -407,9 +480,11 @@ describe('public private-plan landing recovery freshness', function () {
         waitingRefs = fixture.inspectionSnapshot().refs;
         clearChecks();
         if (change === 'inherited rule activates')
-          setPolicy({ planAbsenceResponse: activeEvidence() });
+          updatePrivatePlanPolicy(github, {
+            planAbsenceResponse: activeEvidence(),
+          });
         if (change === 'REST becomes available')
-          setPolicy({
+          updatePrivatePlanPolicy(github, {
             rulesFailure: null,
             rules: [
               {

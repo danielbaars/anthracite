@@ -6,6 +6,7 @@ import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 import {
   emptyPrivatePolicyEvidence,
   preparePrivatePlanLand,
+  updatePrivatePlanPolicy,
 } from '../lib/fixtures/land_private_policy';
 import { McpCliClient } from '../lib/mcp_client';
 
@@ -46,21 +47,17 @@ describe('private-plan landing delivery', function () {
   });
 
   function setEvidence(enforcement: string): void {
-    fs.writeFileSync(
-      github.policy,
-      JSON.stringify({
-        ...JSON.parse(fs.readFileSync(github.policy, 'utf8')),
-        planAbsenceResponse: emptyPrivatePolicyEvidence({
-          rulesets: {
-            totalCount: 1,
-            nodes: [
-              { id: 'disabled-branch-rule', enforcement, target: 'BRANCH' },
-            ],
-            pageInfo: { hasNextPage: false, endCursor: 'final' },
-          },
-        }),
-      })
-    );
+    updatePrivatePlanPolicy(github, {
+      planAbsenceResponse: emptyPrivatePolicyEvidence({
+        rulesets: {
+          totalCount: 1,
+          nodes: [
+            { id: 'disabled-branch-rule', enforcement, target: 'BRANCH' },
+          ],
+          pageInfo: { hasNextPage: false, endCursor: 'final' },
+        },
+      }),
+    });
   }
 
   function observe(): Record<string, unknown> {

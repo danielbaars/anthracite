@@ -31,19 +31,27 @@ export function emptyPrivatePolicyEvidence(
   };
 }
 
+export function updatePrivatePlanPolicy(
+  github: { readonly policy: string },
+  changes: Readonly<Record<string, unknown>>
+): void {
+  fs.writeFileSync(
+    github.policy,
+    JSON.stringify({
+      ...JSON.parse(fs.readFileSync(github.policy, 'utf8')),
+      ...changes,
+    })
+  );
+}
+
 export function preparePrivatePlanLand(
   fixture: RelationCliFixture
 ): ReturnType<typeof prepareLand> {
   const github = prepareLand(fixture);
-  const policy = JSON.parse(fs.readFileSync(github.policy, 'utf8'));
-  fs.writeFileSync(
-    github.policy,
-    JSON.stringify({
-      ...policy,
-      repository: { private: true, permissions: { admin: true } },
-      rulesFailure: planRulesFailure,
-      planAbsenceResponse: emptyPrivatePolicyEvidence(),
-    })
-  );
+  updatePrivatePlanPolicy(github, {
+    repository: { private: true, permissions: { admin: true } },
+    rulesFailure: planRulesFailure,
+    planAbsenceResponse: emptyPrivatePolicyEvidence(),
+  });
   return github;
 }
