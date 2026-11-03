@@ -193,11 +193,14 @@ if (args[0] === 'api') {
         !args.includes('name=inspection') ||
         !args.includes('ref=refs/heads/main') ||
         !query.includes('includeParents: true') ||
-        query.includes('targets:')
+        /(?:targets?|enforcement)\s*:/.test(query)
       )
         throw new Error('incorrect independent policy inventory scope');
-      if (policy.planAbsenceResponse)
-        process.stdout.write(JSON.stringify(policy.planAbsenceResponse));
+      const cursor = args.find((value) => value.startsWith('after='));
+      const response = policy.planAbsencePages
+        ? policy.planAbsencePages[cursor ? cursor.slice(6) : 'first']
+        : policy.planAbsenceResponse;
+      if (response) process.stdout.write(JSON.stringify(response));
       else {
         process.stderr.write('gh: Resource not accessible (HTTP 403)');
         process.exitCode = 1;

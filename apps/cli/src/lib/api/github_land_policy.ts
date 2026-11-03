@@ -124,61 +124,128 @@ const ruleSchema = z.object({
   parameters: z.unknown().optional(),
 });
 
-async function verifyEmptyPrivatePlanPolicy(
+const privatePlanEvidenceSchema = z.object({
+  errors: z.array(z.unknown()).max(0).optional(),
+  data: z.object({
+    repository: z.object({
+      nameWithOwner: z.string(),
+      isPrivate: z.literal(true),
+      viewerPermission: z.literal('ADMIN'),
+      ref: z.object({
+        name: z.string(),
+        branchProtectionRule: z.null(),
+      }),
+      rulesets: z.object({
+        totalCount: z.number().int().nonnegative(),
+        nodes: z
+          .array(
+            z.object({
+              id: z
+                .string()
+                .min(1)
+                .refine((id) => id.trim().length > 0),
+              enforcement: z.string(),
+            })
+          )
+          .max(100),
+        pageInfo: z.object({
+          hasNextPage: z.boolean(),
+          endCursor: z.string().nullable(),
+        }),
+      }),
+    }),
+  }),
+});
+
+async function verifyDisabledPrivatePlanPolicy(
   repo: string,
   trunk: string
 ): Promise<void> {
   const [owner, name] = repo.split('/');
+  const ids = new Set<string>();
+  const cursors = new Set<string>();
+  let after: string | undefined;
+  let total: number | undefined;
   try {
-    const result = await execFileAsync(
-      'gh',
-      [
-        'api',
-        'graphql',
-        '--hostname',
-        'github.com',
-        '--method',
-        'POST',
-        '-f',
-        'query=query($owner: String!, $name: String!, $ref: String!) { repository(owner: $owner, name: $name) { nameWithOwner isPrivate viewerPermission ref(qualifiedName: $ref) { name branchProtectionRule { id } } rulesets(first: 100, includeParents: true) { totalCount nodes { id enforcement } pageInfo { hasNextPage endCursor } } } }',
-        '-f',
-        `owner=${owner}`,
-        '-f',
-        `name=${name}`,
-        '-f',
-        `ref=refs/heads/${trunk}`,
-      ],
-      githubProcessOptions()
-    );
-    const evidence = z
-      .object({
-        errors: z.array(z.unknown()).max(0).optional(),
-        data: z.object({
-          repository: z.object({
-            nameWithOwner: z.string(),
-            isPrivate: z.literal(true),
-            viewerPermission: z.literal('ADMIN'),
-            ref: z.object({ name: z.string(), branchProtectionRule: z.null() }),
-            rulesets: z.object({
-              totalCount: z.literal(0),
-              nodes: z.array(z.unknown()).max(0),
-              pageInfo: z.object({
-                hasNextPage: z.literal(false),
-                endCursor: z.null(),
-              }),
-            }),
-          }),
-        }),
-      })
-      .parse(JSON.parse(result.stdout));
-    if (
-      evidence.data.repository.nameWithOwner.toLowerCase() !==
-        repo.toLowerCase() ||
-      evidence.data.repository.ref.name !== trunk
-    )
-      throw new ExitFailedError(
-        'Independent policy repository or trunk identity does not match.'
+    // Bound service traversal even when each page appears to make progress.
+    for (let page = 0; page < 100; page++) {
+      const result = await execFileAsync(
+        'gh',
+        [
+          'api',
+          'graphql',
+          '--hostname',
+          'github.com',
+          '--method',
+          'POST',
+          '-f',
+          'query=query($owner: String!, $name: String!, $ref: String!, $after: String) { repository(owner: $owner, name: $name) { nameWithOwner isPrivate viewerPermission ref(qualifiedName: $ref) { name branchProtectionRule { id } } rulesets(first: 100, after: $after, includeParents: true) { totalCount nodes { id enforcement } pageInfo { hasNextPage endCursor } } } }',
+          '-f',
+          `owner=${owner}`,
+          '-f',
+          `name=${name}`,
+          '-f',
+          `ref=refs/heads/${trunk}`,
+          ...(after === undefined ? [] : ['-f', `after=${after}`]),
+        ],
+        githubProcessOptions()
       );
+      const evidence = privatePlanEvidenceSchema.parse(
+        JSON.parse(result.stdout)
+      );
+      const repository = evidence.data.repository;
+      if (
+        repository.nameWithOwner.toLowerCase() !== repo.toLowerCase() ||
+        repository.ref.name !== trunk
+      )
+        throw new ExitFailedError(
+          'Independent policy repository or trunk identity does not match.'
+        );
+      const inventory = repository.rulesets;
+      if (total !== undefined && total !== inventory.totalCount)
+        throw new ExitFailedError(
+          'Independent policy inventory total changed during pagination.'
+        );
+      total = inventory.totalCount;
+      for (const node of inventory.nodes) {
+        if (ids.has(node.id))
+          throw new ExitFailedError(
+            'Independent policy inventory contains duplicate ruleset IDs.'
+          );
+        ids.add(node.id);
+        if (node.enforcement !== 'DISABLED')
+          throw new ExitFailedError(
+            node.enforcement === 'EVALUATE'
+              ? 'Evaluate-mode rulesets are outside the supported disabled-only policy proof.'
+              : 'Independent policy inventory contains a non-disabled or unknown ruleset enforcement state.'
+          );
+      }
+      if (ids.size > total)
+        throw new ExitFailedError(
+          'Independent policy inventory exceeds its declared total.'
+        );
+      if (!inventory.pageInfo.hasNextPage) {
+        if (ids.size !== total)
+          throw new ExitFailedError(
+            'Independent policy inventory is incomplete.'
+          );
+        return;
+      }
+      const cursor = inventory.pageInfo.endCursor;
+      if (
+        !inventory.nodes.length ||
+        ids.size >= total ||
+        !cursor ||
+        !cursor.trim() ||
+        cursors.has(cursor)
+      )
+        throw new ExitFailedError(
+          'Independent policy pagination is incomplete or not advancing.'
+        );
+      cursors.add(cursor);
+      after = cursor;
+    }
+    throw new ExitFailedError('Independent policy pagination limit exceeded.');
   } catch (error: unknown) {
     const reason =
       error instanceof ExitFailedError
@@ -225,7 +292,7 @@ async function readApplicableLandRules(
         throw new ExitFailedError(
           'Plan-restricted GitHub policy unverified: matching private administrator access and an unprotected trunk REST response are required. No readiness assumed.'
         );
-      await verifyEmptyPrivatePlanPolicy(repo, trunk);
+      await verifyDisabledPrivatePlanPolicy(repo, trunk);
       return {
         rules: [],
         verification:

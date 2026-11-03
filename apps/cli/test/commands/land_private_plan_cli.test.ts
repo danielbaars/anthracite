@@ -30,15 +30,23 @@ describe('public landing with independently verified private-plan policy', funct
     );
   }
 
-  function preservingPreview(status: number, message: string): void {
+  function preservingPreview(
+    status: number,
+    message: string,
+    mode: readonly string[] = ['--dry-run']
+  ): void {
+    const pushed = path.join(fixture.root, 'unexpected-policy-push');
+    fs.writeFileSync(
+      path.join(fixture.repo, '.git/hooks/pre-push'),
+      `#!${process.execPath}\nrequire('fs').writeFileSync(${JSON.stringify(
+        pushed
+      )}, 'push');process.exitCode=1;`,
+      { mode: 0o755 }
+    );
     const before = fixture.inspectionSnapshot();
     const remote = fixture.git(['for-each-ref'], github.remote);
-    const result = fixture.run([
-      'land',
-      'base',
-      '--dry-run',
-      '--no-interactive',
-    ]);
+    const prs = fs.readFileSync(github.state, 'utf8');
+    const result = fixture.run(['land', 'base', ...mode, '--no-interactive']);
     expect(result.status, result.stdout + result.stderr).to.equal(status);
     expect(result.stdout + result.stderr).to.include(message);
     expect(result.stdout + result.stderr).not.to.include(
@@ -47,7 +55,11 @@ describe('public landing with independently verified private-plan policy', funct
     if (status !== 0) expect(result.stdout).not.to.include('Readiness: READY');
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
-    expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"PUT"');
+    expect(fs.readFileSync(github.state, 'utf8')).to.equal(prs);
+    const calls = fs.readFileSync(github.calls, 'utf8');
+    expect(calls).not.to.include('"PUT"');
+    expect(calls).not.to.include('"edit"');
+    expect(fs.existsSync(pushed)).to.equal(false);
   }
 
   it('previews a private trunk after plan denial only when independent empty protection evidence is complete', () => {
@@ -69,7 +81,8 @@ describe('public landing with independently verified private-plan policy', funct
     expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"PUT"');
   });
 
-  it('lands a verified private-plan prefix and preserves successor work and PR identities', () => {
+  it('lands a disabled-rule private-plan prefix and preserves successor work and PR identities', () => {
+    setPolicy({ planAbsenceResponse: inventoryPage() });
     const childPatch = fixture.git(['diff', '--binary', 'base', 'child']);
     const tipPatch = fixture.git(['diff', '--binary', 'child', 'tip']);
     const unrelated = fixture.git(['rev-parse', 'other']);
@@ -111,6 +124,281 @@ describe('public landing with independently verified private-plan policy', funct
     ).to.equal(false);
   });
 
+  it('previews the reported single disabled branch ruleset without changing Git state', () => {
+    setPolicy({
+      planAbsenceResponse: emptyPrivatePolicyEvidence({
+        rulesets: {
+          totalCount: 1,
+          nodes: [{ id: 'rule', enforcement: 'DISABLED', target: 'BRANCH' }],
+          pageInfo: { hasNextPage: false, endCursor: 'final' },
+        },
+      }),
+    });
+    preservingPreview(0, 'Readiness: READY');
+  });
+
+  it('reads complete inherited disabled inventories through a full final nonempty page', () => {
+    setPolicy({
+      planAbsencePages: {
+        first: emptyPrivatePolicyEvidence({
+          rulesets: {
+            totalCount: 101,
+            nodes: [{ id: 'local', enforcement: 'DISABLED' }],
+            pageInfo: { hasNextPage: true, endCursor: 'inherited' },
+          },
+        }),
+        inherited: emptyPrivatePolicyEvidence({
+          rulesets: {
+            totalCount: 101,
+            nodes: Array.from({ length: 100 }, (_, index) => ({
+              id: `inherited-${index}`,
+              enforcement: 'DISABLED',
+            })),
+            pageInfo: { hasNextPage: false, endCursor: 'final' },
+          },
+        }),
+      },
+    });
+    preservingPreview(0, 'Readiness: READY');
+    expect(fs.readFileSync(github.calls, 'utf8')).to.include('after=inherited');
+  });
+
+  function inventoryPage(
+    changes: Readonly<Record<string, unknown>> = {}
+  ): Record<string, unknown> {
+    return emptyPrivatePolicyEvidence({
+      rulesets: {
+        totalCount: 1,
+        nodes: [{ id: 'local', enforcement: 'DISABLED' }],
+        pageInfo: { hasNextPage: false, endCursor: 'final' },
+        ...changes,
+      },
+    });
+  }
+
+  function firstInventoryPage(): Record<string, unknown> {
+    return inventoryPage({
+      totalCount: 2,
+      pageInfo: { hasNextPage: true, endCursor: 'next' },
+    });
+  }
+
+  for (const invalid of [
+    { name: 'a missing later page', response: null },
+    {
+      name: 'a truncated later inventory',
+      response: inventoryPage({ totalCount: 2, nodes: [] }),
+    },
+    {
+      name: 'a changing total',
+      response: inventoryPage({
+        totalCount: 3,
+        nodes: [{ id: 'later', enforcement: 'DISABLED' }],
+      }),
+    },
+    {
+      name: 'duplicate IDs across pages',
+      response: inventoryPage({ totalCount: 2 }),
+    },
+    {
+      name: 'a repeated cursor',
+      response: inventoryPage({
+        totalCount: 3,
+        nodes: [{ id: 'later', enforcement: 'DISABLED' }],
+        pageInfo: { hasNextPage: true, endCursor: 'next' },
+      }),
+    },
+    {
+      name: 'a missing next cursor',
+      response: inventoryPage({
+        totalCount: 3,
+        nodes: [{ id: 'later', enforcement: 'DISABLED' }],
+        pageInfo: { hasNextPage: true },
+      }),
+    },
+    {
+      name: 'a null next cursor',
+      response: inventoryPage({
+        totalCount: 3,
+        nodes: [{ id: 'later', enforcement: 'DISABLED' }],
+        pageInfo: { hasNextPage: true, endCursor: null },
+      }),
+    },
+    {
+      name: 'an empty next cursor',
+      response: inventoryPage({
+        totalCount: 3,
+        nodes: [{ id: 'later', enforcement: 'DISABLED' }],
+        pageInfo: { hasNextPage: true, endCursor: ' ' },
+      }),
+    },
+    {
+      name: 'an empty nonterminal page',
+      response: inventoryPage({
+        totalCount: 2,
+        nodes: [],
+        pageInfo: { hasNextPage: true, endCursor: 'advancing' },
+      }),
+    },
+    {
+      name: 'omitted later nodes',
+      response: emptyPrivatePolicyEvidence({
+        rulesets: {
+          totalCount: 2,
+          pageInfo: { hasNextPage: false, endCursor: null },
+        },
+      }),
+    },
+    {
+      name: 'null later nodes',
+      response: inventoryPage({ totalCount: 2, nodes: null }),
+    },
+    {
+      name: 'a null later node',
+      response: inventoryPage({ totalCount: 2, nodes: [null] }),
+    },
+    {
+      name: 'later GraphQL errors',
+      response: {
+        ...inventoryPage({ totalCount: 2 }),
+        errors: [{ message: 'SENSITIVE_POLICY_DETAIL' }],
+      },
+    },
+    {
+      name: 'a foreign later repository',
+      response: emptyPrivatePolicyEvidence({
+        nameWithOwner: 'other/inspection',
+      }),
+    },
+    {
+      name: 'a foreign later trunk',
+      response: emptyPrivatePolicyEvidence({
+        ref: { name: 'other', branchProtectionRule: null },
+      }),
+    },
+    {
+      name: 'revoked later administrator access',
+      response: emptyPrivatePolicyEvidence({ viewerPermission: 'WRITE' }),
+    },
+    {
+      name: 'changed later private visibility',
+      response: emptyPrivatePolicyEvidence({ isPrivate: false }),
+    },
+    {
+      name: 'new later classic protection',
+      response: emptyPrivatePolicyEvidence({
+        ref: { name: 'main', branchProtectionRule: { id: 'classic' } },
+      }),
+    },
+  ]) {
+    it(`preserves state when inherited inventory has ${invalid.name}`, () => {
+      setPolicy({
+        planAbsencePages: {
+          first: firstInventoryPage(),
+          next: invalid.response,
+        },
+      });
+      preservingPreview(1, 'Plan-restricted GitHub policy unverified');
+      expect(fs.readFileSync(github.calls, 'utf8')).to.include('after=next');
+    });
+  }
+
+  for (const invalid of [
+    { name: 'negative totals', changes: { totalCount: -1 } },
+    { name: 'fractional totals', changes: { totalCount: 1.5 } },
+    { name: 'missing totals', changes: { totalCount: undefined } },
+    { name: 'more nodes than the total', changes: { totalCount: 0 } },
+    { name: 'a terminal count mismatch', changes: { totalCount: 2 } },
+    {
+      name: 'a duplicate ID on one page',
+      changes: {
+        totalCount: 2,
+        nodes: [
+          { id: 'local', enforcement: 'DISABLED' },
+          { id: 'local', enforcement: 'DISABLED' },
+        ],
+      },
+    },
+    {
+      name: 'an empty ID',
+      changes: { nodes: [{ id: '', enforcement: 'DISABLED' }] },
+    },
+    {
+      name: 'an omitted ID',
+      changes: { nodes: [{ enforcement: 'DISABLED' }] },
+    },
+    {
+      name: 'a blank ID',
+      changes: { nodes: [{ id: ' ', enforcement: 'DISABLED' }] },
+    },
+    {
+      name: 'a null ID',
+      changes: { nodes: [{ id: null, enforcement: 'DISABLED' }] },
+    },
+    { name: 'omitted enforcement', changes: { nodes: [{ id: 'local' }] } },
+    {
+      name: 'null enforcement',
+      changes: { nodes: [{ id: 'local', enforcement: null }] },
+    },
+    {
+      name: 'unknown enforcement',
+      changes: { nodes: [{ id: 'local', enforcement: 'UNKNOWN' }] },
+    },
+    {
+      name: 'active unrelated-target enforcement',
+      changes: {
+        nodes: [{ id: 'local', enforcement: 'ACTIVE', target: 'TAG' }],
+      },
+    },
+  ]) {
+    it(`refuses disabled inventory evidence with ${invalid.name}`, () => {
+      setPolicy({ planAbsenceResponse: inventoryPage(invalid.changes) });
+      preservingPreview(1, 'Plan-restricted GitHub policy unverified');
+    });
+  }
+
+  it('accurately refuses evaluate mode without describing it as active enforcement', () => {
+    setPolicy({
+      planAbsenceResponse: inventoryPage({
+        nodes: [{ id: 'local', enforcement: 'EVALUATE' }],
+      }),
+    });
+    preservingPreview(
+      1,
+      'Evaluate-mode rulesets are outside the supported disabled-only policy proof.'
+    );
+  });
+
+  it('refuses an active inherited rule on a later page before any landing effect', () => {
+    setPolicy({
+      planAbsencePages: {
+        first: firstInventoryPage(),
+        next: inventoryPage({
+          totalCount: 2,
+          nodes: [{ id: 'parent', enforcement: 'ACTIVE' }],
+        }),
+      },
+    });
+    preservingPreview(1, 'non-disabled or unknown ruleset enforcement state', [
+      '--yes',
+    ]);
+  });
+
+  it('refuses finite pagination exhaustion despite advancing unique disabled pages', () => {
+    const pages = Object.fromEntries(
+      Array.from({ length: 100 }, (_, index) => [
+        index === 0 ? 'first' : `cursor-${index}`,
+        inventoryPage({
+          totalCount: 101,
+          nodes: [{ id: `rule-${index}`, enforcement: 'DISABLED' }],
+          pageInfo: { hasNextPage: true, endCursor: `cursor-${index + 1}` },
+        }),
+      ])
+    );
+    setPolicy({ planAbsencePages: pages });
+    preservingPreview(1, 'Independent policy pagination limit exceeded.');
+  });
+
   for (const evidence of [
     { name: 'unavailable evidence', response: null },
     {
@@ -150,16 +438,6 @@ describe('public landing with independently verified private-plan policy', funct
     {
       name: 'an incomplete zero-count inventory',
       response: emptyPrivatePolicyEvidence({ rulesets: { totalCount: 0 } }),
-    },
-    {
-      name: 'a nonempty inventory in the empty-only slice',
-      response: emptyPrivatePolicyEvidence({
-        rulesets: {
-          totalCount: 1,
-          nodes: [{ id: 'rule', enforcement: 'DISABLED' }],
-          pageInfo: { hasNextPage: false, endCursor: 'final' },
-        },
-      }),
     },
     {
       name: 'an inconsistent terminal page',
@@ -282,6 +560,30 @@ describe('public landing with independently verified private-plan policy', funct
     });
     preservingPreview(1, 'GitHub identity or policy unavailable');
     expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"graphql"');
+  });
+
+  it('retains a required check from a later normal REST rules page', () => {
+    setPolicy({
+      rulesFailure: null,
+      rules: [
+        ...Array.from({ length: 100 }, () => ({
+          type: 'required_linear_history',
+        })),
+        {
+          type: 'required_status_checks',
+          parameters: {
+            required_status_checks: [{ context: 'later-required' }],
+          },
+        },
+      ],
+    });
+    preservingPreview(
+      1,
+      'Required check missing or not successful: later-required.'
+    );
+    const calls = fs.readFileSync(github.calls, 'utf8');
+    expect(calls).to.include('rules/branches/main?per_page=100&page=2');
+    expect(calls).not.to.include('"graphql"');
   });
 
   it('retains disabled rebase merging as a blocker after policy absence is verified', () => {
