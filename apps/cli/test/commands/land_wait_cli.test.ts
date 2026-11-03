@@ -91,7 +91,9 @@ describe('public landing check waiting', function () {
     ).to.equal(false);
   });
 
-  it('times out before sending the next merge request and resumes the saved heads without repeating completed work', () => {
+  it('times out before sending the next merge request and resumes the saved heads without repeating completed work', async function () {
+    this.timeout(300000);
+    fixture.commandTimeoutMs = 180000;
     pendingAfterPush();
     const stopped = fixture.run([
       'land',
@@ -117,13 +119,26 @@ describe('public landing check waiting', function () {
       'OPEN',
       'OPEN',
     ]);
-    for (const pr of after) {
-      pr.statusCheckRollup = [];
-      pr.mergeStateStatus = 'CLEAN';
-    }
-    fs.writeFileSync(github.state, JSON.stringify(after));
-    const resumed = fixture.run(['land', 'child', '--yes']);
+    const preview = fixture.run(['land', 'child', '--dry-run']);
+    expect(preview.status, preview.stdout + preview.stderr).to.equal(1);
+    expect(preview.stdout).to.include('unit: IN_PROGRESS');
+    const beforeWait = fixture.inspectionSnapshot();
+    let sawWaiting = false;
+    let waitingRefs: unknown;
+    const resumed = await runLanding(['land', 'child', '--yes'], (output) => {
+      if (sawWaiting || !output.includes('Waiting for #18')) return;
+      sawWaiting = true;
+      waitingRefs = fixture.inspectionSnapshot().refs;
+      for (const pr of after) {
+        pr.statusCheckRollup = [];
+        pr.mergeStateStatus = 'CLEAN';
+      }
+      fs.writeFileSync(github.state, JSON.stringify(after));
+    });
     expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(0);
+    expect(sawWaiting).to.equal(true);
+    expect(waitingRefs).to.equal(beforeWait.refs);
+    expect(resumed.stdout.startsWith(preview.stdout)).to.equal(true);
     const final = JSON.parse(fs.readFileSync(github.state, 'utf8'));
     expect(final[1].headRefOid).to.equal(head);
     expect(fixture.git(['rev-parse', 'tip^{tree}'])).to.equal(tipTree);
