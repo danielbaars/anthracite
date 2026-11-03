@@ -1,15 +1,20 @@
 import fs from 'fs';
 import path from 'path';
 import { expect } from 'chai';
+import stripAnsi from 'strip-ansi';
+import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
+import { runCliInPty } from '../lib/utils/run_cli_in_pty';
 import { RelationCliFixture } from '../lib/fixtures/relation_cli';
 import { prepareLand } from '../lib/fixtures/land_gh';
 
 describe('public resumed landing presentation', function () {
-  this.timeout(120000);
+  this.timeout(300000);
   let fixture: RelationCliFixture;
   let github: ReturnType<typeof prepareLand>;
   beforeEach(() => {
     fixture = new RelationCliFixture();
+    // Cold source processes and real survivor replay can exceed one minute.
+    fixture.commandTimeoutMs = 180000;
     github = prepareLand(fixture);
   });
   afterEach(() => fixture?.cleanup());
@@ -37,6 +42,81 @@ describe('public resumed landing presentation', function () {
     fs.writeFileSync(github.state, JSON.stringify(prs));
     fs.writeFileSync(github.policy, JSON.stringify(policy));
   }
+
+  function declineMatchingPlan(expectedStatus: number): string {
+    const before = fixture.inspectionSnapshot();
+    const remote = fixture.git(['for-each-ref'], github.remote);
+    const calls = fs.readFileSync(github.calls, 'utf8');
+    const preview = fixture.run(['land', 'tip', '--dry-run']);
+    expect(preview.status, preview.stdout + preview.stderr).to.equal(
+      expectedStatus
+    );
+    const application = runCliInPty(getTestCliCommand(['land', 'tip']), {
+      cwd: fixture.repo,
+      env: fixture.env,
+      timeoutMs: 60000,
+      responses: [{ prompt: 'Resume this landing plan?', input: 'n\n' }],
+    });
+    expect(application.status, application.output).to.equal(0);
+    const report = stripAnsi(application.output).replace(/\r\n/g, '\n');
+    const prompt = report.indexOf('? Resume this landing plan?');
+    expect(prompt, report).to.be.greaterThan(0);
+    expect(report.slice(0, prompt).trimEnd()).to.equal(
+      preview.stdout.trimEnd()
+    );
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
+    const addedCalls = fs
+      .readFileSync(github.calls, 'utf8')
+      .slice(calls.length);
+    expect(addedCalls).not.to.include('"PUT"').and.not.to.include('"edit"');
+    return preview.stdout;
+  }
+
+  it('shows the same freshly checked plan before confirmation as readiness and merge state change', () => {
+    pauseLanding();
+    expect(declineMatchingPlan(0)).to.include('✅ Readiness: READY');
+    const prs = JSON.parse(fs.readFileSync(github.state, 'utf8'));
+    prs[1].mergeStateStatus = 'UNSTABLE';
+    prs[1].statusCheckRollup = [
+      {
+        __typename: 'CheckRun',
+        name: 'unit',
+        status: 'COMPLETED',
+        conclusion: 'FAILURE',
+      },
+    ];
+    fs.writeFileSync(github.state, JSON.stringify(prs));
+    const notes = path.join(fixture.repo, 'local-notes.txt');
+    fs.writeFileSync(notes, 'Preserve these notes.\n');
+    expect(declineMatchingPlan(1))
+      .to.include('⛔ Cannot resume landing yet:')
+      .and.include('Clean index/worktree')
+      .and.include('unit: FAILURE')
+      .and.not.include('Readiness: READY');
+    fs.unlinkSync(notes);
+    const head = fixture.git(['rev-parse', 'child']);
+    prs[1].state = 'MERGED';
+    prs[1].mergeResult = head;
+    prs[1].mergeStateStatus = 'CLEAN';
+    prs[1].statusCheckRollup = [];
+    fs.writeFileSync(github.state, JSON.stringify(prs));
+    fixture.git(['update-ref', 'refs/heads/main', head], github.remote);
+    expect(declineMatchingPlan(0))
+      .to.include('Cleanup-only 1: child #18')
+      .and.not.include('Merge 1: child #18');
+    const resumed = fixture.run(['land', 'tip', '--yes']);
+    expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(0);
+    expect(resumed.stdout).to.include('Cleanup-only 1: child #18');
+    for (const name of ['child', 'tip'])
+      expect(fixture.git(['show', `main:${name}.txt`])).to.equal(name);
+    expect(
+      fs.readFileSync(github.calls, 'utf8').split('"PUT"').length - 1
+    ).to.equal(2);
+    expect(
+      fs.existsSync(path.join(fixture.repo, '.git', '.anthracite_landing'))
+    ).to.equal(false);
+  });
 
   it('previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work', () => {
     pauseLanding();

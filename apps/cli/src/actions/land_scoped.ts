@@ -171,11 +171,14 @@ export async function resumeScopedLanding(
   context: TContext
 ): Promise<void> {
   validateIdentity(record, context);
+  const blockers = await inspectPendingLanding(record, context);
   if (args['dry-run']) {
-    await previewPendingLanding(record, context);
+    if (blockers.length)
+      throw new ExitFailedError(
+        'Pending landing preview blocked; recovery and repository preserved.'
+      );
     return;
   }
-  printPendingLanding(record, context);
   if (!args.yes) {
     if (!context.canPrompt)
       throw new ExitFailedError(
@@ -203,13 +206,13 @@ export async function resumeScopedLanding(
 function printPendingLanding(
   record: LandingProgress,
   context: TContext,
-  inspection?: {
+  inspection: {
     readonly blockers: readonly string[];
     readonly cleanupOnly: ReadonlySet<string>;
   }
 ): void {
   const remaining = record.merges.slice(record.index ?? 0);
-  if (inspection?.blockers.length) {
+  if (inspection.blockers.length) {
     process.stdout.write('⛔ Cannot resume landing yet:\n');
     for (const blocker of inspection.blockers) {
       const member = remaining.find((merge) =>
@@ -247,7 +250,7 @@ function printPendingLanding(
       member.cleanupResult ||
       member.result ||
       (index === 0 && record.result) ||
-      inspection?.cleanupOnly.has(member.branch);
+      inspection.cleanupOnly.has(member.branch);
     process.stdout.write(
       `  ${cleanupOnly ? 'Cleanup-only' : 'Merge'} ${index + 1}: ${
         member.branch
@@ -295,12 +298,10 @@ function printPendingLanding(
         ', '
       )}\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: ${checkout}\n`
   );
-  if (inspection && !inspection.blockers.length)
+  if (!inspection.blockers.length)
     process.stdout.write(
       '✅ Readiness: READY for remaining work; checks repeat before every merge.\n'
     );
-  else if (!inspection)
-    process.stdout.write('Fresh checks run before each merge.\n');
   process.stdout.write(
     'Use --debug for recovery phases, commit IDs and replay details.\n'
   );
@@ -380,10 +381,10 @@ function printPendingLandingDetails(
 }
 
 /** Inspect the captured remaining scope through the same identity/readiness adapters. */
-async function previewPendingLanding(
+async function inspectPendingLanding(
   record: LandingProgress,
   context: TContext
-): Promise<void> {
+): Promise<readonly string[]> {
   const blockers: string[] = [];
   const inspect = async (action: () => void | Promise<void>): Promise<void> => {
     try {
@@ -486,10 +487,7 @@ async function previewPendingLanding(
       }
     });
   printPendingLanding(record, context, { blockers, cleanupOnly });
-  if (blockers.length)
-    throw new ExitFailedError(
-      'Pending landing preview blocked; recovery and repository preserved.'
-    );
+  return blockers;
 }
 
 async function applyScopedLanding(
