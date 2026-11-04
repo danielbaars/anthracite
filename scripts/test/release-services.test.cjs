@@ -4,24 +4,71 @@ const os = require("node:os");
 const path = require("node:path");
 const { spawnSync } = require("node:child_process");
 const { test } = require("node:test");
+const { createHash } = require("node:crypto");
 const root = path.resolve(__dirname, "../..");
-const shim = `#!${process.execPath}
-const fs=require('node:fs');const args=process.argv.slice(2);const state=JSON.parse(fs.readFileSync(process.env.RELEASE_SERVICE_STATE));
-state.calls.push(args);
-let response;
-if(args[0]==='api') {
- const route=args.find(value=>value.startsWith('repos/'));
- if(route.includes('matching-refs')) response=state.release ? [{ref:'refs/tags/v0.7.0-beta.1',object:{type:'commit',sha:'a'.repeat(40)}}] : [];
- else if(route.endsWith('/assets?per_page=100')) response=[Object.entries(state.assets).map(([name,bytes],index)=>({name,id:index+1}))];
- else if(route.includes('/releases/assets/')) {const id=Number(route.split('/').pop());response=Buffer.from(Object.values(state.assets)[id-1],'base64');}
- else if(route.includes('/releases?per_page=100')) response=[state.release ? [{id:1,tag_name:'v0.7.0-beta.1',prerelease:!state.changed,draft:false}] : []];
- else throw Error('Unexpected read '+route);
-} else if(args[0]==='release' && args[1]==='upload') {
- const file=args[3];state.uploads++;state.assets[require('node:path').basename(file)]=fs.readFileSync(file).toString('base64');if(state.changeAfterUpload)state.changed=true;
-} else throw Error('Forbidden mutation '+args.join(' '));
-fs.writeFileSync(process.env.RELEASE_SERVICE_STATE,JSON.stringify(state));
-if(Buffer.isBuffer(response))process.stdout.write(response);else if(response!==undefined)process.stdout.write(JSON.stringify(response));
-`;
+const shim = require("./fixtures/release-gh.cjs");
+function preparedAssets() {
+  const bytes = Buffer.from("Synthetic tested-artifact boundary fixture");
+  const sha256 = createHash("sha256").update(bytes).digest("hex");
+  const entries = Object.fromEntries(
+    ["scripts/release-services.cjs", ".github/workflows/release.yml"].map(
+      (name) => [name, { mode: "100644", type: "blob" }]
+    )
+  );
+  const intent = {
+    schema: 1,
+    package: "@danielbaars/anthracite",
+    repository: "danielbaars/anthracite",
+    channel: "beta",
+    version: "0.7.0-beta.1",
+    targetVersion: "0.7.0",
+    distTag: "beta",
+    source: {
+      commit: "a".repeat(40),
+      normalized: { rule: "anthracite-source-v1", sha256: "0".repeat(64) },
+    },
+    dispatcher: {
+      commit: "a".repeat(40),
+      entries,
+      files: Object.fromEntries(
+        Object.keys(entries).map((name) => [name, "0".repeat(64)])
+      ),
+    },
+    artifact: {
+      filename: "danielbaars-anthracite.tgz",
+      size: bytes.length,
+      sha256,
+      integrity:
+        "sha512-" + createHash("sha512").update(bytes).digest("base64"),
+    },
+    tests: {
+      passed: true,
+      checks: [
+        "locked-install",
+        "build-lint",
+        "typecheck",
+        "curated-tarball",
+        "isolated-install",
+        "commands-completion-MCP",
+      ],
+    },
+    run: { id: "1234", attempt: "1", actor: "release-test" },
+    tools: { node: "24.19.0", yarn: "3.2.1", bun: "1.3.14", npm: "11.17.0" },
+    platform: { platform: "linux", arch: "x64", runner: "test" },
+    transformation: {
+      path: "apps/cli/package.json",
+      from: "0.6.9",
+      to: "0.7.0-beta.1",
+    },
+    before: { latest: "0.6.9", beta: null, latestIntegrity: "sha512-stable" },
+  };
+  return {
+    "intent.json": JSON.stringify(intent),
+    "danielbaars-anthracite.tgz": bytes.toString(),
+    SHA256SUMS: `${sha256}  danielbaars-anthracite.tgz\n`,
+    "tests.json": JSON.stringify(intent.tests),
+  };
+}
 test("durable adapter never recreates missing releases on append and preserves conflicting assets", () => {
   const temporary = fs.mkdtempSync(
     path.join(os.tmpdir(), "anthracite-release-adapter-")
@@ -102,6 +149,74 @@ test("durable adapter never recreates missing releases on append and preserves c
         .filter((args) => args[0] !== "api")
         .every((args) => args[1] === "upload")
     );
+    const prepared = preparedAssets();
+    const created = invoke(
+      { staleList: true },
+      { ...request, initialRetention: true, assets: prepared }
+    );
+    assert.equal(created.result.status, 0, created.result.stderr);
+    assert.equal(created.state.creates, 1);
+    assert.equal(created.state.uploads, 4);
+    for (const [name, contents] of Object.entries(prepared))
+      assert.equal(
+        Buffer.from(created.state.assets[name], "base64").toString(),
+        contents
+      );
+    const delayed = invoke(
+      { staleList: true, directLag: 2 },
+      { ...request, initialRetention: true, assets: prepared }
+    );
+    assert.equal(delayed.result.status, 0, delayed.result.stderr);
+    assert.equal(delayed.state.creates, 1);
+    assert.equal(delayed.state.uploads, 4);
+    const assetsDelayed = invoke(
+      { staleList: true, assetLag: 2 },
+      { ...request, initialRetention: true, assets: prepared }
+    );
+    assert.equal(assetsDelayed.result.status, 0, assetsDelayed.result.stderr);
+    assert.equal(assetsDelayed.state.creates, 1);
+    assert.equal(assetsDelayed.state.uploads, 4);
+    for (const lag of [{ directLag: 100 }, { assetLag: 100 }]) {
+      const unavailable = invoke(
+        { staleList: true, ...lag },
+        { ...request, initialRetention: true, assets: prepared }
+      );
+      assert.notEqual(unavailable.result.status, 0);
+      assert.match(
+        unavailable.result.stderr,
+        /Release evidence is not yet readable/
+      );
+      assert.doesNotMatch(unavailable.result.stderr, /Cannot read properties/);
+      assert.equal(unavailable.state.creates, 1);
+      assert.equal(unavailable.state.uploads, lag.directLag ? 0 : 4);
+    }
+    for (const refusal of [{ forbidden: true }, { inventoryForbidden: true }]) {
+      const forbidden = invoke(refusal, {
+        ...request,
+        initialRetention: true,
+        assets: prepared,
+      });
+      assert.notEqual(forbidden.result.status, 0);
+      assert.match(forbidden.result.stderr, /HTTP 403/);
+      assert.equal(forbidden.state.creates || 0, 0);
+      assert.equal(forbidden.state.uploads, 0);
+    }
+    const foreign = invoke({ release: true, tag: "v9.0.0" }, request);
+    assert.notEqual(foreign.result.status, 0);
+    assert.match(foreign.result.stderr, /Release tag identity differs/);
+    assert.equal(foreign.state.uploads, 0);
+    const appendUncertain = invoke({ release: true, assetLag: 100 }, request);
+    assert.notEqual(appendUncertain.result.status, 0);
+    assert.match(
+      appendUncertain.result.stderr,
+      /Inspect release and npm state/
+    );
+    assert.doesNotMatch(
+      appendUncertain.result.stderr,
+      /publication was not attempted/
+    );
+    assert.equal(appendUncertain.state.creates || 0, 0);
+    assert.equal(appendUncertain.state.uploads, 1);
   } finally {
     fs.rmSync(temporary, { recursive: true, force: true });
   }

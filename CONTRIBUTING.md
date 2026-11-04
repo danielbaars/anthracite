@@ -37,6 +37,8 @@ Automatic `CI` runs on pull-request updates and pushes to `main`. It runs one Li
 
 Documentation-only changes (`**/*.md`, `docs/**` and `LICENSE`) skip automatic CI. Mixed code/documentation changes still run it. If required checks are introduced, account for GitHub leaving path-filtered workflows pending; do not require an absent check for documentation-only changes.
 
+The same job runs the fast release-service boundary regressions. Real release-process build campaigns remain separate local/manual checks; ordinary CI does not publish npm packages.
+
 Developers must run tests relevant to their changes locally on both runtimes. After building, the smoke selection can also be run locally with the same runner:
 
 ```sh
