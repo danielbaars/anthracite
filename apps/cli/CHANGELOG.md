@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.9](https://github.com/danielbaars/anthracite/compare/v0.6.8...v0.6.9) (2026-11-04)
+
+
+### Bug Fixes
+
+* **cli:** fall back to sh for executable shebangless hooks [skip ci] ([6c16918](https://github.com/danielbaars/anthracite/commit/6c16918f74a5a6a95c6cb8b5104df8ec86e5179c))
+* **cli:** parse userinfo in GitHub remote URLs [skip ci] ([b1e444a](https://github.com/danielbaars/anthracite/commit/b1e444aafee4f6a840cb092cc59a6d7bbfdd5984))
+
 ## [0.6.8](https://github.com/danielbaars/anthracite/compare/v0.6.7...v0.6.8) (2026-11-04)
 
 
