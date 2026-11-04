@@ -13,7 +13,7 @@ const git = (cwd, ...args) =>
     stdio: ["ignore", "pipe", "pipe"],
   }).trim();
 
-test("stable assessment requires its exact version confirmation before external effects", () => {
+test("stable publication requires its exact version confirmation before external effects", () => {
   const temporary = fs.mkdtempSync(
     path.join(os.tmpdir(), "anthracite-stable-input-")
   );
