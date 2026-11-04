@@ -814,6 +814,7 @@ async function publishPrepared(request, services, context) {
     : "no publication requested";
   let selected;
   let attempted;
+  let publicVersionVisible = existing;
   let lastMappings = {
     latest: current["dist-tags"].latest,
     beta: current["dist-tags"].beta || null,
@@ -969,13 +970,46 @@ async function publishPrepared(request, services, context) {
       lastObservation = "package or provenance not yet visible";
     while (Date.now() < deadline) {
       try {
+        after = await services.registry.snapshot({ deadline });
+        assert.equal(after.name, PACKAGE);
+        historicalLatest(after, intent);
+        lastMappings = {
+          latest: after["dist-tags"].latest,
+          beta: after["dist-tags"].beta || null,
+        };
+        publicVersionVisible = Boolean(after.versions[request.version]);
+        const expected = {
+          latest: isStable ? intent.version : intent.before.latest,
+          beta: isStable ? intent.before.beta : intent.version,
+        };
+        for (const channel of ["latest", "beta"])
+          assert.ok(
+            lastMappings[channel] === expected[channel] ||
+              (sent && lastMappings[channel] === intent.before[channel]),
+            `${
+              channel === "latest" ? "Latest" : "Beta"
+            } moved during publication; no tag repair attempted`
+          );
+        if (publicVersionVisible) {
+          const published = after.versions[request.version];
+          assert.equal(
+            published.name,
+            PACKAGE,
+            "Published package identity disagrees"
+          );
+          assert.equal(
+            published.version,
+            request.version,
+            "Published package version disagrees"
+          );
+          assert.equal(
+            published.dist?.integrity,
+            intent.artifact.integrity,
+            "Published version integrity changed"
+          );
+        }
         proof = await services.registry.inspect(request.version, { deadline });
         if (proof) {
-          after = await services.registry.snapshot({ deadline });
-          lastMappings = {
-            latest: after["dist-tags"].latest,
-            beta: after["dist-tags"].beta || null,
-          };
           selected = proofAttempt(proof, attempts, intent);
           assertChannels(after, intent);
           assert.equal(
@@ -1085,6 +1119,7 @@ async function publishPrepared(request, services, context) {
             npmWrites: sent ? 1 : 0,
             publishOutcome,
             tags: lastMappings,
+            publicVersionVisible,
             diagnostic: error.message,
           },
           null,
@@ -1110,7 +1145,7 @@ async function publishPrepared(request, services, context) {
           : "No publication requested"
       } for ${request.version}: ${publishOutcome}; ${
         error.message
-      }. Observed tags: ${JSON.stringify(
+      }. Public version visible: ${publicVersionVisible}; observed tags: ${JSON.stringify(
         lastMappings
       )}. Retained evidence preserved; inspect registry before retrying; no automatic republish or tag repair.`,
       { cause: error }
