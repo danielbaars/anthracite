@@ -339,13 +339,13 @@ an utr feature-x       # modern short form; an untrack and an ut remain availabl
 ### `test`
 Run a command on each branch in the current stack and aggregate the results.
 
-**Known 0.4.0 limitation:** `--upstack` and `--downstack` are parsed but currently ignored by the action, which runs the whole stack. Do not rely on them to bound command execution. See [B01 and its public marker evidence](docs/graphite-parity.md#anthracite-maintenance-separate-from-parity).
+**Source candidate for #112:** scope flags select the branches described below. `--trunk` explicitly adds trunk first, including with `--upstack`; without it trunk is excluded. From trunk, `--downstack` selects no branches unless `--trunk` is supplied. Published 0.6.7 and earlier ignore the direction flags and cannot use them as execution boundaries; see [B01](docs/graphite-parity.md#anthracite-maintenance-separate-from-parity).
 
 | Flag | Description |
 | --- | --- |
 | `<command>` | Positional: the command to run on each branch. |
-| `-d`, `--downstack` | Intended ancestor scope; ineffective in 0.4.0, as noted above. |
-| `-u`, `--upstack` | Intended current/descendant scope; ineffective in 0.4.0, as noted above. |
+| `-d`, `--downstack` | Run on ancestors and the current branch. |
+| `-u`, `--upstack` | Run on the current branch and its descendants. |
 | `-t`, `--trunk` | Also run on the trunk branch. |
 
 ```

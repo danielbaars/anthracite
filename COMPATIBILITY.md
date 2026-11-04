@@ -84,7 +84,7 @@ Successful no-checkout restores the original physical branch at its current auth
 
 Local MCP is implemented and included in 0.4.0; its [specification](./docs/specs/mcp-support.md), [protocol research](./docs/research/mcp-support-2026-10-27.md) and [implementation acceptance](./docs/verification/mcp-support-implementation-2026-10-27.md) describe different evidence stages. Its existing tools now also expose split, role targeting, absorb and selected insertion through the same CLI. Log-parity tracker [#12](https://github.com/danielbaars/anthracite/issues/12) remains deferred; MCP delivery does not close or resume that work.
 
-Separate Anthracite maintenance: `test --upstack/--downstack` currently executes the whole stack. The two public 0.4.0 probes and source cause are recorded as [B01](./docs/graphite-parity.md#anthracite-maintenance-separate-from-parity); do not treat the flags as effective execution boundaries.
+Separate Anthracite maintenance: published 0.6.7 and earlier execute the whole stack for `test --upstack/--downstack`. The two public 0.4.0 probes and source cause are recorded as [B01](./docs/graphite-parity.md#anthracite-maintenance-separate-from-parity); do not treat the flags as effective execution boundaries in those releases. The source candidate for #112 honors both scopes and aliases, explicitly adds trunk only with `--trunk`, and preserves the default branch selection. See the [command reference](DOCUMENTATION.md#test).
 
 ## Frozen branch compatibility
 
