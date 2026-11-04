@@ -88,11 +88,18 @@ function fixture() {
         intent,
       })
     );
-    const result = spawnSync(process.execPath, [driver, input], {
-      encoding: "utf8",
-      timeout: 420000,
-      env: process.env,
-    });
+    const result = spawnSync(
+      process.execPath,
+      [
+        path.join(checkout, "scripts/test/fixtures/release-stable-driver.cjs"),
+        input,
+      ],
+      {
+        encoding: "utf8",
+        timeout: 420000,
+        env: process.env,
+      }
+    );
     console.log(
       `Release process ${invocations} ${
         changes.operation || request.operation

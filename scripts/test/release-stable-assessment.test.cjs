@@ -122,11 +122,18 @@ function fixture() {
         intent,
       })
     );
-    return spawnSync(process.execPath, [driver, input], {
-      encoding: "utf8",
-      timeout: 420000,
-      env: process.env,
-    });
+    return spawnSync(
+      process.execPath,
+      [
+        path.join(checkout, "scripts/test/fixtures/release-stable-driver.cjs"),
+        input,
+      ],
+      {
+        encoding: "utf8",
+        timeout: 420000,
+        env: process.env,
+      }
+    );
   };
   return { temp, checkout, state, statePath, write, request, invoke, commit };
 }
