@@ -19,6 +19,42 @@ async function read(url) {
   );
   return response;
 }
+function isolatedNpm(operation) {
+  const temporary = fs.realpathSync(
+    fs.mkdtempSync(path.join(os.tmpdir(), "anthracite-registry-check-"))
+  );
+  const config = path.join(temporary, "npmrc");
+  const globalConfig = path.join(temporary, "global-npmrc");
+  fs.writeFileSync(config, "");
+  fs.writeFileSync(globalConfig, "");
+  const env = {
+    ...process.env,
+    NPM_CONFIG_USERCONFIG: config,
+    NPM_CONFIG_GLOBALCONFIG: globalConfig,
+    npm_config_cache: path.join(temporary, "cache"),
+  };
+  for (const key of Object.keys(env))
+    if (
+      ["NPM_TOKEN", "NODE_AUTH_TOKEN", "GH_TOKEN", "GITHUB_TOKEN"].includes(
+        key
+      ) ||
+      /^npm_config_.*(?:auth|token|password)/i.test(key)
+    )
+      delete env[key];
+  try {
+    return operation(temporary, env);
+  } finally {
+    fs.rmSync(temporary, { recursive: true, force: true });
+  }
+}
+function registryTarball(manifest) {
+  const url = new URL(manifest.dist.tarball);
+  assert.equal(url.origin, "https://registry.npmjs.org");
+  assert.ok(url.pathname.startsWith("/@danielbaars/anthracite/-/"));
+  assert.equal(url.username, "");
+  assert.equal(url.password, "");
+  return url.href;
+}
 function services() {
   const github = {
     repository: async () => api(BASE),
@@ -48,14 +84,19 @@ function services() {
         "Draft release evidence is unsupported"
       );
       const assets = {};
-      for (const asset of release.assets) {
+      const pages = JSON.parse(
+        gh([
+          "api",
+          "--paginate",
+          "--slurp",
+          `${BASE}/releases/${release.id}/assets?per_page=100`,
+        ])
+      );
+      for (const asset of pages.flat()) {
         if (
-          ![
-            "intent.json",
-            "danielbaars-anthracite.tgz",
-            "SHA256SUMS",
-            "tests.json",
-          ].includes(asset.name)
+          !/^(intent\.json|danielbaars-anthracite\.tgz|SHA256SUMS|tests\.json|verification-[0-9]+-[0-9]+\.json)$/.test(
+            asset.name
+          )
         )
           continue;
         assets[asset.name] = gh(
@@ -137,6 +178,144 @@ function services() {
   return {
     github,
     registry: {
+      publish: async ({ tarball, channel, version }) => {
+        assert.equal(
+          process.env.NPM_TRUSTED_PUBLISHING,
+          "true",
+          "Trusted publication is disabled"
+        );
+        assert.equal(
+          process.env.GITHUB_ACTIONS,
+          "true",
+          "Publication requires the approved GitHub workflow"
+        );
+        assert.equal(
+          process.env.GITHUB_EVENT_NAME,
+          "workflow_dispatch",
+          "Publication requires explicit manual dispatch"
+        );
+        assert.equal(process.env.GITHUB_REPOSITORY, REPO);
+        assert.equal(process.env.GITHUB_REF, "refs/heads/main");
+        assert.equal(channel, "beta");
+        assert.match(
+          version,
+          /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-beta\.([1-9]\d*)$/
+        );
+        isolatedNpm((temporary, env) =>
+          execFileSync(
+            "npm",
+            [
+              "publish",
+              tarball,
+              "--tag",
+              channel,
+              "--access",
+              "public",
+              "--provenance",
+              "--registry=https://registry.npmjs.org",
+            ],
+            {
+              cwd: temporary,
+              env,
+              encoding: "utf8",
+              timeout: 120000,
+              maxBuffer: 2 * 1024 * 1024,
+            }
+          )
+        );
+      },
+      inspect: async (version) => {
+        assert.match(
+          version,
+          /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-beta\.([1-9]\d*))?$/
+        );
+        const response = await fetch(
+          `https://registry.npmjs.org/@danielbaars%2fanthracite/${version}`,
+          { signal: AbortSignal.timeout(30000) }
+        );
+        if (response.status === 404) return null;
+        assert.equal(response.status, 200, "Cannot inspect published version");
+        const manifest = await response.json();
+        assert.equal(manifest.name, "@danielbaars/anthracite");
+        assert.equal(manifest.version, version);
+        const bytes = Buffer.from(
+          await (await read(registryTarball(manifest))).arrayBuffer()
+        );
+        assert.equal(
+          manifest.dist.integrity,
+          `sha512-${createHash("sha512").update(bytes).digest("base64")}`
+        );
+        const attestationUrl = new URL(manifest.dist.attestations.url);
+        assert.equal(attestationUrl.origin, "https://registry.npmjs.org");
+        const verified = isolatedNpm((temporary, env) => {
+          const prefix = path.join(temporary, "install");
+          const options = {
+            cwd: temporary,
+            env,
+            encoding: "utf8",
+            timeout: 120000,
+            maxBuffer: 20 * 1024 * 1024,
+          };
+          execFileSync(
+            "npm",
+            [
+              "install",
+              "--prefix",
+              prefix,
+              "--ignore-scripts",
+              "--no-audit",
+              "--no-fund",
+              "--registry=https://registry.npmjs.org",
+              `@danielbaars/anthracite@${version}`,
+            ],
+            options
+          );
+          const lock = JSON.parse(
+            fs.readFileSync(path.join(prefix, "package-lock.json"))
+          );
+          assert.equal(
+            lock.packages["node_modules/@danielbaars/anthracite"].integrity,
+            manifest.dist.integrity,
+            "Installed registry bytes disagree"
+          );
+          const audit = JSON.parse(
+            execFileSync(
+              "npm",
+              [
+                "audit",
+                "signatures",
+                "--prefix",
+                prefix,
+                "--json",
+                "--include-attestations",
+                "--registry=https://registry.npmjs.org",
+              ],
+              options
+            )
+          );
+          assert.deepEqual(audit.invalid, []);
+          assert.deepEqual(audit.missing, []);
+          const entry = audit.verified.find(
+            (item) =>
+              item.name === manifest.name &&
+              item.version === version &&
+              item.registry === "https://registry.npmjs.org/"
+          );
+          assert.ok(
+            entry,
+            "Missing cryptographically verified package attestation"
+          );
+          return entry.attestationBundles;
+        });
+        const bundle = verified.find(
+          (item) => item.predicateType === "https://slsa.dev/provenance/v1"
+        );
+        assert.ok(bundle, "Missing verified SLSA provenance");
+        const statement = JSON.parse(
+          Buffer.from(bundle.bundle.dsseEnvelope.payload, "base64").toString()
+        );
+        return { manifest, bytes, statement, signaturesVerified: true };
+      },
       snapshot: async () => {
         const metadata = await (
           await read("https://registry.npmjs.org/@danielbaars%2fanthracite")
