@@ -9,7 +9,8 @@ const BASE = `repos/${REPO}`;
 function gh(args, encoding = "utf8") {
   return execFileSync("gh", args, { encoding, maxBuffer: 20 * 1024 * 1024 });
 }
-const api = (route) => JSON.parse(gh(["api", route]));
+const api = (route) =>
+  JSON.parse(gh(["api", route, "-H", "Cache-Control: no-cache"]));
 function remaining(deadline, cap) {
   const value = Math.min(cap, deadline - Date.now());
   if (value <= 0) {
@@ -93,12 +94,53 @@ function services() {
       return object.sha;
     },
     release: async (tag) => {
-      // The exact tag lookup distinguishes absence from inaccessible releases.
-      const releases = JSON.parse(
-        gh(["api", "--paginate", "--slurp", `${BASE}/releases?per_page=100`])
+      let release;
+      try {
+        release = api(`${BASE}/releases/tags/${encodeURIComponent(tag)}`);
+      } catch (error) {
+        let response;
+        try {
+          response = JSON.parse(error.stdout?.toString() || "null");
+        } catch {
+          throw error;
+        }
+        if (
+          error.status !== 1 ||
+          response?.message !== "Not Found" ||
+          !/\(HTTP 404\)/.test(error.stderr?.toString() || "")
+        )
+          throw error;
+        // Confirm absence with a readable inventory; other access failures refuse.
+        const pages = JSON.parse(
+          gh([
+            "api",
+            "--paginate",
+            "--slurp",
+            `${BASE}/releases?per_page=100`,
+            "-H",
+            "Cache-Control: no-cache",
+          ])
+        );
+        assert.ok(
+          !pages.flat().some((item) => item.tag_name === tag),
+          "Release is listed but its exact tag lookup is unavailable"
+        );
+        return null;
+      }
+      assert.ok(
+        release && typeof release === "object" && !Array.isArray(release),
+        "Invalid release response"
       );
-      const release = releases.flat().find((item) => item.tag_name === tag);
-      if (!release) return null;
+      assert.equal(release.tag_name, tag, "Release tag identity differs");
+      assert.ok(
+        Number.isSafeInteger(release.id) && release.id > 0,
+        "Invalid release ID"
+      );
+      assert.equal(
+        typeof release.prerelease,
+        "boolean",
+        "Missing prerelease status"
+      );
       assert.equal(
         release.draft,
         false,
@@ -111,6 +153,8 @@ function services() {
           "--paginate",
           "--slurp",
           `${BASE}/releases/${release.id}/assets?per_page=100`,
+          "-H",
+          "Cache-Control: no-cache",
         ])
       );
       assert.ok(
@@ -199,6 +243,35 @@ function services() {
         existingTag === null || existingTag === source,
         "Refusing conflicting release tag"
       );
+      async function readBack(requiredAssets) {
+        for (let attempt = 0; attempt < 5; attempt++) {
+          const observed = await github.release(tag);
+          if (observed) {
+            assert.equal(
+              observed.source,
+              source,
+              "Release tag must bind the source commit"
+            );
+            assert.equal(observed.prerelease, prerelease);
+            for (const [name, bytes] of Object.entries(requiredAssets)) {
+              if (observed.assets[name])
+                assert.ok(
+                  Buffer.from(observed.assets[name]).equals(bytes),
+                  `Conflicting durable ${name}`
+                );
+            }
+            if (
+              Object.keys(requiredAssets).every((name) => observed.assets[name])
+            )
+              return observed;
+          }
+          if (attempt < 4)
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+        throw Error(
+          "Release evidence is not yet readable; readback retries did not repeat writes. Inspect release and npm state before retrying publication."
+        );
+      }
       let release = await github.release(tag);
       if (!prerelease)
         assert.ok(
@@ -252,7 +325,7 @@ function services() {
           "Prepared release evidence; npm publication is not yet verified.",
           ...(prerelease ? ["--prerelease"] : []),
         ]);
-        release = await github.release(tag);
+        release = await readBack({});
       }
       assert.equal(
         release.source,
@@ -277,15 +350,7 @@ function services() {
           fs.writeFileSync(filename, bytes, { flag: "wx" });
           gh(["release", "upload", tag, filename, "--repo", REPO]);
         }
-        const saved = await github.release(tag);
-        assert.equal(saved.source, source);
-        assert.equal(saved.tag, tag);
-        assert.equal(saved.prerelease, prerelease);
-        for (const [name, bytes] of Object.entries(assets))
-          assert.ok(
-            saved.assets[name] && Buffer.from(saved.assets[name]).equals(bytes),
-            `Durable evidence verification failed: ${name}`
-          );
+        await readBack(assets);
       } finally {
         fs.rmSync(temporary, { recursive: true, force: true });
       }

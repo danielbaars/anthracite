@@ -44,6 +44,8 @@ jobs:
           bun-version: 1.3.14
       - name: Install exact dependencies
         run: node .yarn/releases/yarn-3.2.1.cjs install --immutable
+      - name: Test release service boundary
+        run: node --test scripts/test/release-services.test.cjs
       - name: Build and lint
         run: node .yarn/releases/yarn-3.2.1.cjs turbo run build
       - name: Typecheck

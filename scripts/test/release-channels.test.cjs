@@ -14,7 +14,7 @@ const git = (cwd, ...args) =>
   }).trim();
 
 // The driver executes the real release process. Only remote services are controlled.
-const driver = `const fs=require('node:fs');const p=process.argv[2];const input=JSON.parse(fs.readFileSync(p));const remote=JSON.parse(fs.readFileSync(input.remote));const assets={};require(input.process).runRelease(input.request,{registry:{snapshot:async()=>remote.registry},github:{repository:async()=>({full_name:'danielbaars/anthracite',default_branch:'main'}),main:async()=>remote.main,tag:async()=>null,release:async()=>null,retain:async value=>{fs.mkdirSync(input.evidence,{recursive:true});fs.writeFileSync(input.evidence+'/release.json',JSON.stringify({...value,assets:Object.keys(value.assets)}));for(const [name,bytes]of Object.entries(value.assets))fs.writeFileSync(input.evidence+'/'+name,bytes);}}}).then(result=>console.log(JSON.stringify(result))).catch(error=>{console.error(error.message);process.exitCode=1});`;
+const driver = `const fs=require('node:fs');const p=process.argv[2];const input=JSON.parse(fs.readFileSync(p));const remote=JSON.parse(fs.readFileSync(input.remote));const assets={};require(input.process).runRelease(input.request,{registry:{snapshot:async()=>remote.registry},github:input.productionGithub ? require(input.adapter).services().github : {repository:async()=>({full_name:'danielbaars/anthracite',default_branch:'main'}),main:async()=>remote.main,tag:async()=>null,release:async()=>null,retain:async value=>{fs.mkdirSync(input.evidence,{recursive:true});fs.writeFileSync(input.evidence+'/release.json',JSON.stringify({...value,assets:Object.keys(value.assets)}));for(const [name,bytes]of Object.entries(value.assets))fs.writeFileSync(input.evidence+'/'+name,bytes);}}}).then(result=>console.log(JSON.stringify(result))).catch(error=>{console.error(error.message);process.exitCode=1});`;
 
 function fixture() {
   const temp = fs.mkdtempSync(
@@ -74,7 +74,7 @@ function fixture() {
     temp,
     checkout,
     request,
-    run(changes = {}) {
+    run(changes = {}, productionGithub = false) {
       fs.writeFileSync(
         path.join(temp, "input.json"),
         JSON.stringify({
@@ -82,6 +82,8 @@ function fixture() {
           process: path.join(checkout, "scripts/release-channels.cjs"),
           remote: path.join(temp, "remote.json"),
           evidence: path.join(temp, "evidence"),
+          adapter: path.join(checkout, "scripts/release-services.cjs"),
+          productionGithub,
         })
       );
       return spawnSync(
@@ -90,12 +92,89 @@ function fixture() {
         {
           encoding: "utf8",
           timeout: 240000,
-          env: process.env,
+          env: productionGithub
+            ? {
+                ...process.env,
+                PATH: temp + path.delimiter + process.env.PATH,
+                RELEASE_SERVICE_STATE: path.join(temp, "github.json"),
+              }
+            : process.env,
         }
       );
     },
   };
 }
+
+test(
+  "prepare beta retains real tested bytes through the production GitHub adapter despite stale inventory",
+  { timeout: 300000 },
+  () => {
+    const f = fixture();
+    try {
+      fs.writeFileSync(
+        path.join(f.temp, "gh"),
+        require("./fixtures/release-gh.cjs"),
+        { mode: 0o755 }
+      );
+      fs.writeFileSync(
+        path.join(f.temp, "github.json"),
+        JSON.stringify({
+          source: f.request.source,
+          calls: [],
+          uploads: 0,
+          assets: {},
+          staleList: true,
+          directLag: 2,
+        })
+      );
+      const before = git(f.checkout, "status", "--porcelain");
+      const result = f.run({}, true);
+      assert.equal(result.status, 0, result.stdout + result.stderr);
+      const outcome = JSON.parse(result.stdout);
+      assert.equal(outcome.status, "prepared");
+      assert.equal(outcome.npmWrites, 0);
+      const state = JSON.parse(
+        fs.readFileSync(path.join(f.temp, "github.json"))
+      );
+      assert.equal(state.creates, 1);
+      assert.equal(state.uploads, 4);
+      assert.deepEqual(Object.keys(state.assets).sort(), [
+        "SHA256SUMS",
+        "danielbaars-anthracite.tgz",
+        "intent.json",
+        "tests.json",
+      ]);
+      const intent = JSON.parse(
+        Buffer.from(state.assets["intent.json"], "base64")
+      );
+      assert.equal(intent.source.commit, f.request.source);
+      assert.equal(intent.dispatcher.commit, f.request.dispatcher);
+      assert.equal(intent.tests.passed, true);
+      assert.deepEqual(outcome.artifact, intent.artifact);
+      const bytes = Buffer.from(
+        state.assets["danielbaars-anthracite.tgz"],
+        "base64"
+      );
+      assert.ok(bytes.length > 100000);
+      assert.equal(
+        require("node:crypto").createHash("sha256").update(bytes).digest("hex"),
+        intent.artifact.sha256
+      );
+      assert.equal(git(f.checkout, "status", "--porcelain"), before);
+      console.log(
+        JSON.stringify({
+          source: f.request.source,
+          artifact: outcome.artifact,
+          creates: state.creates,
+          uploads: state.uploads,
+          npmWrites: 0,
+        })
+      );
+    } finally {
+      fs.rmSync(f.temp, { recursive: true, force: true });
+    }
+  }
+);
 
 test(
   "prepare beta retains a real tested artifact without changing the maintainer checkout",
