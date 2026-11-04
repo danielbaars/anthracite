@@ -241,6 +241,14 @@ function main(): void {
     return;
   }
   if (args[1] === 'edit' && pr) {
+    if (
+      option('--body') !== undefined &&
+      process.env.ANTHRACITE_TEST_GH_BODY_FAILURE_HEAD === pr.headRefName
+    ) {
+      process.stderr.write('net/http: TLS handshake timeout\n');
+      process.exitCode = 1;
+      return;
+    }
     if (option('--base')) pr.baseRefName = option('--base') ?? pr.baseRefName;
     if (option('--body') !== undefined) pr.body = option('--body') ?? '';
     const reviewMode = process.env.ANTHRACITE_TEST_GH_REVIEW_MODE;
