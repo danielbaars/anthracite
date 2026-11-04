@@ -25,7 +25,7 @@ test("stable assessment requires its exact version confirmation before external 
         process: path.join(root, "scripts/release-channels.cjs"),
         request: {
           repository: "danielbaars/anthracite",
-          operation: "assess-stable",
+          operation: "stable",
           version: "0.7.0",
         },
         state: path.join(temporary, "state.json"),

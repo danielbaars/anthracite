@@ -47,30 +47,57 @@ function sourceIdentity(checkout, commit) {
     .toString()
     .split("\0")
     .filter(Boolean);
+  // One Git process reads the captured objects; framing uses byte lengths, never
+  // line splitting, because tracked contents may contain arbitrary bytes.
+  const objects = command(checkout, "git", ["cat-file", "--batch"], {
+    encoding: "buffer",
+    input: Buffer.from(
+      entries
+        .map((entry) => entry.slice(0, entry.indexOf("\t")).split(" ")[2])
+        .join("\n") + "\n"
+    ),
+    maxBuffer: 256 * 1024 * 1024,
+  });
+  let offset = 0;
   const digest = createHash("sha256");
   for (const entry of entries) {
     const tab = entry.indexOf("\t");
     const [mode, type, oid] = entry.slice(0, tab).split(" ");
     const filename = entry.slice(tab + 1);
-    let contents = command(checkout, "git", ["cat-file", type, oid], {
-      encoding: "buffer",
-    });
-    if (filename === "apps/cli/package.json") {
+    const end = objects.indexOf(10, offset);
+    assert.ok(end >= offset, "Incomplete Git object header");
+    const [actualOid, actualType, length] = objects
+      .subarray(offset, end)
+      .toString()
+      .split(" ");
+    assert.equal(actualOid, oid);
+    assert.equal(actualType, type);
+    assert.match(length, /^\d+$/);
+    const size = Number(length);
+    assert.ok(Number.isSafeInteger(size));
+    offset = end + 1;
+    let contents = objects.subarray(offset, offset + size);
+    assert.equal(contents.length, size, "Incomplete Git object bytes");
+    offset += size;
+    assert.equal(objects[offset++], 10, "Incomplete Git object framing");
+    const regular = type === "blob" && ["100644", "100755"].includes(mode);
+    if (regular && filename === "apps/cli/package.json") {
       const value = json(contents);
       value.version = "<release-version>";
       contents = Buffer.from(JSON.stringify(value));
     }
-    if (filename === ".release-please-manifest.json") {
+    if (regular && filename === ".release-please-manifest.json") {
       const value = json(contents);
       value["apps/cli"] = "<release-version>";
       contents = Buffer.from(JSON.stringify(value));
     }
-    if (filename === "apps/cli/CHANGELOG.md")
+    if (regular && filename === "apps/cli/CHANGELOG.md")
       contents = Buffer.from("<generated-cli-changelog>");
     digest.update(
       JSON.stringify([mode, type, filename, hash(contents)]) + "\n"
     );
   }
+  assert.equal(offset, objects.length, "Unexpected Git object bytes");
   return { rule: NORMALIZATION, sha256: digest.digest("hex") };
 }
 function trackedDispatcher(checkout, commit) {
@@ -172,7 +199,11 @@ function validateRecord(record) {
     Number.isSafeInteger(record.artifact.size) && record.artifact.size > 0
   );
   assert.match(record.artifact.sha256, /^[a-f0-9]{64}$/);
-  assert.match(record.artifact.integrity, /^sha512-/);
+  assert.match(
+    record.artifact.integrity,
+    /^sha512-[A-Za-z0-9+/]{86}==$/,
+    "Invalid artifact integrity"
+  );
   assert.equal(record.tests.passed, true);
   assert.deepEqual(
     record.tests.checks,
@@ -187,15 +218,121 @@ function validateRecord(record) {
     "Required release gates are incomplete"
   );
   assert.equal(record.distTag, record.channel === "beta" ? "beta" : "latest");
-  assert.ok(record.run.id && record.run.attempt && record.run.actor);
-  assert.ok(
-    record.tools.node &&
-      record.tools.npm &&
-      record.tools.yarn &&
-      record.tools.bun
+  assert.match(record.run.id || "", /^[1-9]\d*$/, "Invalid run ID");
+  assert.match(record.run.attempt || "", /^[1-9]\d*$/, "Invalid run attempt");
+  assert.match(
+    record.run.actor || "",
+    /^[A-Za-z0-9][A-Za-z0-9-]*$/,
+    "Invalid run actor"
   );
-  version(record.before.latest, false);
+  assert.deepEqual(
+    record.tools,
+    { node: "24.19.0", yarn: "3.2.1", bun: "1.3.14", npm: "11.17.0" },
+    "Incomplete or unsupported release toolchain"
+  );
+  assert.ok(
+    ["linux", "darwin", "win32"].includes(record.platform?.platform),
+    "Invalid release platform"
+  );
+  assert.ok(
+    ["arm64", "x64"].includes(record.platform.arch),
+    "Invalid release architecture"
+  );
+  assert.ok(
+    record.platform.runner === null ||
+      (typeof record.platform.runner === "string" &&
+        record.platform.runner.trim().length > 0),
+    "Invalid runner context"
+  );
+  assert.equal(
+    record.transformation.path,
+    "apps/cli/package.json",
+    "Invalid version transformation path"
+  );
+  assert.equal(
+    record.transformation.to,
+    record.version,
+    "Version transformation target differs"
+  );
+  assert.match(
+    record.transformation.from || "",
+    /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-beta\.([1-9]\d*))?$/,
+    "Invalid version transformation source"
+  );
+  if (record.channel === "stable") {
+    assert.equal(
+      record.transformation.from,
+      record.version,
+      "Stable manifest must already match"
+    );
+    assert.equal(
+      record.assessment?.sourceEquivalent,
+      true,
+      "Missing stable source/approval assessment"
+    );
+    assert.equal(record.assessment.version, record.version);
+    assert.equal(record.assessment.approval.actor, record.run.actor);
+    assert.deepEqual(record.assessment.approval.run, record.run);
+    assert.deepEqual(record.assessment.source, record.source);
+    assert.deepEqual(record.assessment.dispatcher, record.dispatcher);
+    assert.deepEqual(record.assessment.tools, record.tools);
+    assert.deepEqual(record.assessment.before, record.before);
+  }
+  const latest = version(record.before.latest, false);
+  assert.ok(
+    newer(parsed.numbers, latest.numbers),
+    "Record target must be newer than latest"
+  );
+  assert.match(
+    record.before.latestIntegrity || "",
+    /^sha512-/,
+    "Missing latest integrity"
+  );
+  assert.ok(
+    record.before.beta === null || typeof record.before.beta === "string",
+    "Missing beta mapping"
+  );
+  if (record.before.beta !== null) version(record.before.beta, true);
   return record;
+}
+function verifyCapturedRecord(checkout, intent) {
+  assert.deepEqual(
+    sourceIdentity(checkout, intent.source.commit),
+    intent.source.normalized,
+    "Captured source identity differs"
+  );
+  assert.deepEqual(
+    trackedDispatcher(checkout, intent.dispatcher.commit),
+    intent.dispatcher,
+    "Captured dispatcher identity differs"
+  );
+  const [mode, type] = git(
+    checkout,
+    "ls-tree",
+    intent.source.commit,
+    "--",
+    "apps/cli/package.json"
+  ).split(" ");
+  assert.ok(
+    ["100644", "100755"].includes(mode) && type === "blob",
+    "CLI manifest must be a regular Git file"
+  );
+  const manifest = json(
+    command(checkout, "git", [
+      "show",
+      `${intent.source.commit}:apps/cli/package.json`,
+    ])
+  );
+  assert.equal(manifest.name, PACKAGE);
+  assert.deepEqual(
+    intent.transformation,
+    {
+      path: "apps/cli/package.json",
+      from: manifest.version,
+      to: intent.version,
+    },
+    "Unexpected staged-version transformation"
+  );
 }
 function verifyArtifact(bytes, intent) {
   assert.equal(
@@ -288,11 +425,12 @@ function verifyProvenance(proof, intent) {
     "Provenance publication attempt differs from retained intent"
   );
 }
-async function publishBeta(request, services, context) {
+async function publishPrepared(request, services, context) {
   const tag = `v${request.version}`;
   const localIntent = fs.readFileSync(path.join(request.output, "intent.json"));
   const intent = validateRecord(json(localIntent));
-  assert.equal(intent.channel, "beta");
+  const isStable = request.operation === "stable";
+  assert.equal(intent.channel, isStable ? "stable" : "beta");
   assert.equal(intent.version, request.version);
   assert.equal(intent.source.commit, request.source);
   assert.deepEqual(
@@ -310,31 +448,12 @@ async function publishBeta(request, services, context) {
     request.run,
     "Publication must use its retained run and attempt"
   );
-  assert.deepEqual(
-    intent.source.normalized,
-    sourceIdentity(request.checkout, request.source),
-    "Retained normalized source differs"
-  );
-  const sourceManifest = json(
-    command(request.checkout, "git", [
-      "show",
-      `${request.source}:apps/cli/package.json`,
-    ])
-  );
-  assert.deepEqual(
-    intent.transformation,
-    {
-      path: "apps/cli/package.json",
-      from: sourceManifest.version,
-      to: request.version,
-    },
-    "Unexpected staged-version transformation"
-  );
+  verifyCapturedRecord(request.checkout, intent);
   const release = await services.github.release(tag);
-  assert.ok(release, "Missing durable beta evidence");
+  assert.ok(release, "Missing durable release evidence");
   assert.equal(release.tag, tag);
   assert.equal(release.source, request.source);
-  assert.equal(release.prerelease, true);
+  assert.equal(release.prerelease, !isStable);
   assert.equal(
     await services.github.tag(tag),
     request.source,
@@ -345,6 +464,14 @@ async function publishBeta(request, services, context) {
     "danielbaars-anthracite.tgz",
     "SHA256SUMS",
     "tests.json",
+    ...(isStable
+      ? [
+          "assessment.json",
+          "practice.json",
+          "beta-intent.json",
+          "beta-verification.json",
+        ]
+      : []),
   ]) {
     assert.ok(release.assets[name], `Missing durable ${name}`);
     assert.ok(
@@ -382,6 +509,42 @@ async function publishBeta(request, services, context) {
     `${intent.artifact.sha256}  danielbaars-anthracite.tgz\n`
   );
   verifyPackage(filename, intent);
+  if (isStable) {
+    const temporaryAssessment = fs.mkdtempSync(
+      path.join(os.tmpdir(), "anthracite-stable-recheck-")
+    );
+    try {
+      const fresh = await assessStable(
+        { ...request, output: temporaryAssessment },
+        services,
+        {
+          metadata: await services.registry.snapshot(),
+          dispatcher: dispatcherIdentity(request.checkout, request.dispatcher),
+          tools: toolchain(request.checkout),
+          main: await services.github.main(),
+        }
+      );
+      assert.deepEqual(
+        fresh,
+        intent.assessment,
+        "Stable approval/source/beta/practice assessment changed before publication"
+      );
+      for (const name of [
+        "assessment.json",
+        "practice.json",
+        "beta-intent.json",
+        "beta-verification.json",
+      ])
+        assert.ok(
+          fs
+            .readFileSync(path.join(temporaryAssessment, name))
+            .equals(Buffer.from(release.assets[name])),
+          `Stable durable ${name} changed`
+        );
+    } finally {
+      fs.rmSync(temporaryAssessment, { recursive: true, force: true });
+    }
+  }
   const current = await services.registry.snapshot();
   assert.equal(current.name, PACKAGE);
   assert.equal(
@@ -416,6 +579,11 @@ async function publishBeta(request, services, context) {
     sourceIdentity(request.checkout, request.source),
     intent.source.normalized
   );
+  assert.deepEqual(
+    toolchain(request.checkout),
+    intent.tools,
+    "Release tools changed before publication"
+  );
   verifyArtifact(fs.readFileSync(filename), intent);
   const temporary = fs.mkdtempSync(
     path.join(os.tmpdir(), "anthracite-publish-")
@@ -427,7 +595,7 @@ async function publishBeta(request, services, context) {
     sent = true;
     await services.registry.publish({
       tarball: publishFile,
-      channel: "beta",
+      channel: intent.distTag,
       version: request.version,
     });
     const proof = await services.registry.inspect(request.version);
@@ -445,14 +613,14 @@ async function publishBeta(request, services, context) {
       "Prepared version tag moved after publication"
     );
     assert.equal(
-      after["dist-tags"].beta,
-      request.version,
-      "Published beta tag does not match intended version"
+      after["dist-tags"].beta || null,
+      isStable ? intent.before.beta : request.version,
+      "Beta moved during publication; no tag repair attempted"
     );
     assert.equal(
       after["dist-tags"].latest,
-      intent.before.latest,
-      "Latest moved during beta publication; no tag repair attempted"
+      isStable ? request.version : intent.before.latest,
+      "Latest moved during publication; no tag repair attempted"
     );
     assert.equal(
       after.versions[intent.before.latest]?.dist?.integrity,
@@ -462,7 +630,7 @@ async function publishBeta(request, services, context) {
     const verification = {
       schema: 1,
       status: "verified",
-      channel: "beta",
+      channel: intent.channel,
       package: PACKAGE,
       repository: REPOSITORY,
       version: request.version,
@@ -480,7 +648,7 @@ async function publishBeta(request, services, context) {
         latest: after["dist-tags"].latest,
         beta: after["dist-tags"].beta,
       },
-      confirmedWrites: ["npm beta publication"],
+      confirmedWrites: [`npm ${intent.channel} publication`],
     };
     const assetName = `verification-${request.run.id}-${request.run.attempt}.json`;
     const verificationBytes = Buffer.from(
@@ -489,7 +657,7 @@ async function publishBeta(request, services, context) {
     await services.github.retain({
       tag,
       source: request.source,
-      prerelease: true,
+      prerelease: !isStable,
       assets: { [assetName]: verificationBytes },
     });
     fs.writeFileSync(path.join(request.output, assetName), verificationBytes, {
@@ -498,7 +666,9 @@ async function publishBeta(request, services, context) {
     return {
       ...verification,
       npmWrites: 1,
-      next: "Exercise this exact beta and retain practice evidence before explicit stable approval",
+      next: isStable
+        ? "Stable publication verified; retained beta and practice evidence preserved"
+        : "Exercise this exact beta and retain practice evidence before explicit stable approval",
     };
   } catch (error) {
     throw new Error(
@@ -709,25 +879,7 @@ async function assessStable(request, services, context) {
     );
     git(request.checkout, "merge-base", "--is-ancestor", commit, context.main);
   }
-  assert.deepEqual(
-    sourceIdentity(request.checkout, intent.source.commit),
-    intent.source.normalized,
-    "Beta source identity differs from its captured Git tree"
-  );
-  const betaDispatcher = trackedDispatcher(
-    request.checkout,
-    intent.dispatcher.commit
-  );
-  assert.deepEqual(
-    intent.dispatcher.files,
-    betaDispatcher.files,
-    "Beta dispatcher record differs from captured Git objects"
-  );
-  assert.deepEqual(
-    intent.dispatcher.entries,
-    betaDispatcher.entries,
-    "Beta dispatcher entry identities differ"
-  );
+  verifyCapturedRecord(request.checkout, intent);
   assert.deepEqual(
     context.dispatcher.files,
     intent.dispatcher.files,
@@ -758,10 +910,20 @@ async function assessStable(request, services, context) {
     Buffer.from(release.assets.SHA256SUMS).toString(),
     `${intent.artifact.sha256}  danielbaars-anthracite.tgz\n`
   );
-  verifyArtifact(
-    Buffer.from(release.assets["danielbaars-anthracite.tgz"]),
-    intent
+  const betaArtifact = Buffer.from(
+    release.assets["danielbaars-anthracite.tgz"]
   );
+  verifyArtifact(betaArtifact, intent);
+  const betaPackage = fs.mkdtempSync(
+    path.join(os.tmpdir(), "anthracite-beta-proof-")
+  );
+  try {
+    const filename = path.join(betaPackage, "danielbaars-anthracite.tgz");
+    fs.writeFileSync(filename, betaArtifact, { flag: "wx" });
+    verifyPackage(filename, intent);
+  } finally {
+    fs.rmSync(betaPackage, { recursive: true, force: true });
+  }
   const verificationName = `verification-${intent.run.id}-${intent.run.attempt}.json`;
   const verificationBytes = release.assets[verificationName];
   assert.ok(verificationBytes, "Missing verified beta record");
@@ -777,6 +939,11 @@ async function assessStable(request, services, context) {
   assert.deepEqual(verification.artifact, intent.artifact);
   assert.deepEqual(verification.dispatcher, intent.dispatcher);
   assert.deepEqual(verification.run, intent.run);
+  assert.deepEqual(
+    verification.confirmedWrites,
+    ["npm beta publication"],
+    "Beta publication effects are incomplete"
+  );
   assert.deepEqual(verification.provenance, {
     verified: true,
     dispatcher: intent.dispatcher.commit,
@@ -887,11 +1054,17 @@ async function runRelease(
 ) {
   assert.equal(request.repository, REPOSITORY, "Wrong repository");
   assert.ok(
-    ["prepare-beta", "beta", "assess-stable"].includes(request.operation),
+    ["prepare-beta", "beta", "assess-stable", "stable"].includes(
+      request.operation
+    ),
     "Unsupported release operation"
   );
-  if (request.operation === "assess-stable") {
+  if (["assess-stable", "stable"].includes(request.operation)) {
     version(request.version, false);
+    assert.ok(
+      request.channel === undefined || request.channel === "stable",
+      "Wrong stable channel"
+    );
     assert.equal(
       request.confirmation,
       request.version,
@@ -912,7 +1085,7 @@ async function runRelease(
       "Wrong beta channel"
     );
   }
-  const isStable = request.operation === "assess-stable";
+  const isStable = ["assess-stable", "stable"].includes(request.operation);
   const parsed = version(request.version, !isStable);
   for (const field of ["source", "dispatcher"])
     assert.match(
@@ -924,7 +1097,7 @@ async function runRelease(
     path.isAbsolute(request.checkout) && path.isAbsolute(request.output),
     "Explicit absolute paths required"
   );
-  assert.match(request.run?.id || "", /^\d+$/);
+  assert.match(request.run?.id || "", /^[1-9]\d*$/);
   assert.match(request.run?.attempt || "", /^[1-9]\d*$/);
   assert.match(request.run?.actor || "", /^[A-Za-z0-9][A-Za-z0-9-]*$/);
   assert.equal(
@@ -979,25 +1152,27 @@ async function runRelease(
     existingTag === null || existingTag === request.source,
     "Existing version tag changed source"
   );
-  if (isStable)
-    return assessStable(request, services, {
-      metadata,
-      dispatcher,
-      tools,
-      main,
-    });
+  const context = { metadata, dispatcher, tools, main };
+  let assessment;
+  if (isStable) {
+    assessment = await assessStable(request, services, context);
+    if (request.operation === "assess-stable") return assessment;
+    if (fs.existsSync(path.join(request.output, "intent.json")))
+      return publishPrepared(request, services, context);
+  }
   if (request.operation === "beta")
-    return publishBeta(request, services, {
+    return publishPrepared(request, services, {
       metadata,
       dispatcher,
       tools,
       main,
     });
-  assert.equal(
-    await services.github.release(tag),
-    null,
-    "Release already exists; reconcile retained intent before retrying"
-  );
+  if (!isStable)
+    assert.equal(
+      await services.github.release(tag),
+      null,
+      "Release already exists; reconcile retained intent before retrying"
+    );
   const temporary = fs.mkdtempSync(
     path.join(os.tmpdir(), "anthracite-release-stage-")
   );
@@ -1012,11 +1187,32 @@ async function runRelease(
     ]);
     command(stage, "git", ["checkout", "--detach", request.source]);
     const manifestPath = path.join(stage, "apps/cli/package.json");
+    const [manifestMode, manifestType] = git(
+      stage,
+      "ls-tree",
+      request.source,
+      "--",
+      "apps/cli/package.json"
+    ).split(" ");
+    assert.ok(
+      ["100644", "100755"].includes(manifestMode) &&
+        manifestType === "blob" &&
+        fs.lstatSync(manifestPath).isFile(),
+      "CLI manifest must be a regular Git and filesystem file"
+    );
     const manifest = json(fs.readFileSync(manifestPath));
     assert.equal(manifest.name, PACKAGE);
     const previousVersion = manifest.version;
-    manifest.version = request.version;
-    fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+    if (isStable)
+      assert.equal(
+        manifest.version,
+        request.version,
+        "Stable source version must already match"
+      );
+    else {
+      manifest.version = request.version;
+      fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+    }
     const config = path.join(temporary, "npmrc");
     fs.writeFileSync(config, "");
     const globalConfig = path.join(temporary, "global-npmrc");
@@ -1091,12 +1287,12 @@ async function runRelease(
     };
     const intent = validateRecord({
       schema: 1,
-      channel: "beta",
+      channel: isStable ? "stable" : "beta",
       package: PACKAGE,
       repository: REPOSITORY,
       version: request.version,
       targetVersion: parsed.target,
-      distTag: "beta",
+      distTag: isStable ? "latest" : "beta",
       source: {
         commit: request.source,
         normalized: sourceIdentity(request.checkout, request.source),
@@ -1128,6 +1324,7 @@ async function runRelease(
         latestIntegrity: stablePackage.dist.integrity,
       },
       tests,
+      ...(isStable ? { assessment } : {}),
     });
     const assets = {
       "intent.json": Buffer.from(JSON.stringify(intent, null, 2) + "\n"),
@@ -1137,6 +1334,14 @@ async function runRelease(
       ),
       "tests.json": Buffer.from(JSON.stringify(tests, null, 2) + "\n"),
     };
+    if (isStable)
+      for (const name of [
+        "assessment.json",
+        "practice.json",
+        "beta-intent.json",
+        "beta-verification.json",
+      ])
+        assets[name] = fs.readFileSync(path.join(request.output, name));
     fs.mkdirSync(request.output, { recursive: true });
     for (const [name, contents] of Object.entries(assets)) {
       const target = path.join(request.output, name);
@@ -1151,9 +1356,10 @@ async function runRelease(
     await services.github.retain({
       tag,
       source: request.source,
-      prerelease: true,
+      prerelease: !isStable,
       assets,
     });
+    if (isStable) return publishPrepared(request, services, context);
     return {
       status: "prepared",
       channel: "beta",

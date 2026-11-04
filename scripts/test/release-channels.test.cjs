@@ -14,9 +14,7 @@ const git = (cwd, ...args) =>
   }).trim();
 
 // The driver executes the real release process. Only remote services are controlled.
-const driver = `const fs=require('node:fs');const p=process.argv[2];const input=JSON.parse(fs.readFileSync(p));const remote=JSON.parse(fs.readFileSync(input.remote));const assets={};require(${JSON.stringify(
-  path.join(root, "scripts/release-channels.cjs")
-)}).runRelease(input.request,{registry:{snapshot:async()=>remote.registry},github:{repository:async()=>({full_name:'danielbaars/anthracite',default_branch:'main'}),main:async()=>remote.main,tag:async()=>null,release:async()=>null,retain:async value=>{fs.mkdirSync(input.evidence,{recursive:true});fs.writeFileSync(input.evidence+'/release.json',JSON.stringify({...value,assets:Object.keys(value.assets)}));for(const [name,bytes]of Object.entries(value.assets))fs.writeFileSync(input.evidence+'/'+name,bytes);}}}).then(result=>console.log(JSON.stringify(result))).catch(error=>{console.error(error.message);process.exitCode=1});`;
+const driver = `const fs=require('node:fs');const p=process.argv[2];const input=JSON.parse(fs.readFileSync(p));const remote=JSON.parse(fs.readFileSync(input.remote));const assets={};require(input.process).runRelease(input.request,{registry:{snapshot:async()=>remote.registry},github:{repository:async()=>({full_name:'danielbaars/anthracite',default_branch:'main'}),main:async()=>remote.main,tag:async()=>null,release:async()=>null,retain:async value=>{fs.mkdirSync(input.evidence,{recursive:true});fs.writeFileSync(input.evidence+'/release.json',JSON.stringify({...value,assets:Object.keys(value.assets)}));for(const [name,bytes]of Object.entries(value.assets))fs.writeFileSync(input.evidence+'/'+name,bytes);}}}).then(result=>console.log(JSON.stringify(result))).catch(error=>{console.error(error.message);process.exitCode=1});`;
 
 function fixture() {
   const temp = fs.mkdtempSync(
@@ -81,6 +79,7 @@ function fixture() {
         path.join(temp, "input.json"),
         JSON.stringify({
           request: { ...request, ...changes },
+          process: path.join(checkout, "scripts/release-channels.cjs"),
           remote: path.join(temp, "remote.json"),
           evidence: path.join(temp, "evidence"),
         })
@@ -91,7 +90,7 @@ function fixture() {
         {
           encoding: "utf8",
           timeout: 240000,
-          env: { ...process.env, ANTHRACITE_RELEASE_TEST: "1" },
+          env: process.env,
         }
       );
     },
@@ -192,6 +191,41 @@ test("preparation rejects reused beta sequences and missing latest package ident
     assert.notEqual(f.run().status, 0);
     assert.equal(fs.existsSync(path.join(f.temp, "evidence")), false);
     assert.equal(git(f.checkout, "status", "--porcelain"), "");
+  } finally {
+    fs.rmSync(f.temp, { recursive: true, force: true });
+  }
+});
+
+test("beta staging refuses a captured manifest symlink without writing its target", () => {
+  const f = fixture();
+  try {
+    const manifestPath = path.join(f.checkout, "apps/cli/package.json");
+    const target = path.join(f.temp, "protected-package.json");
+    const original = fs.readFileSync(manifestPath);
+    fs.writeFileSync(target, original);
+    fs.unlinkSync(manifestPath);
+    fs.symlinkSync(target, manifestPath);
+    git(f.checkout, "add", "apps/cli/package.json");
+    git(
+      f.checkout,
+      "-c",
+      "user.name=Release test",
+      "-c",
+      "user.email=release@example.invalid",
+      "commit",
+      "-m",
+      "Capture manifest symlink"
+    );
+    const source = git(f.checkout, "rev-parse", "HEAD");
+    const remotePath = path.join(f.temp, "remote.json");
+    const remote = JSON.parse(fs.readFileSync(remotePath));
+    remote.main = source;
+    fs.writeFileSync(remotePath, JSON.stringify(remote));
+    const result = f.run({ source, dispatcher: source });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /CLI manifest must be a regular/);
+    assert.ok(fs.readFileSync(target).equals(original));
+    assert.equal(fs.existsSync(path.join(f.temp, "evidence")), false);
   } finally {
     fs.rmSync(f.temp, { recursive: true, force: true });
   }
