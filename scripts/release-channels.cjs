@@ -1010,13 +1010,20 @@ async function publishPrepared(request, services, context) {
         }
         proof = await services.registry.inspect(request.version, { deadline });
         if (proof) {
-          selected = proofAttempt(proof, attempts, intent);
+          const candidate = proofAttempt(proof, attempts, intent);
+          after = await services.registry.snapshot({ deadline });
+          lastMappings = {
+            latest: after["dist-tags"].latest,
+            beta: after["dist-tags"].beta || null,
+          };
+          publicVersionVisible = Boolean(after.versions[request.version]);
           assertChannels(after, intent);
           assert.equal(
             await services.github.tag(tag),
             request.source,
             "Prepared version tag moved after publication"
           );
+          selected = candidate;
           break;
         }
         lastObservation = "Published package or provenance is not yet visible";
@@ -1058,7 +1065,7 @@ async function publishPrepared(request, services, context) {
       },
       tags: {
         latest: after["dist-tags"].latest,
-        beta: after["dist-tags"].beta,
+        beta: after["dist-tags"].beta || null,
       },
       confirmedWrites: [`npm ${intent.channel} publication`],
     };

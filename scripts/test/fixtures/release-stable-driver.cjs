@@ -78,7 +78,7 @@ const services = {
             "changed"
           );
       }
-      return state.registry;
+      return structuredClone(state.registry);
     },
     publish: async ({ tarball, channel, version }) => {
       if (state.publishDelayMs) {
@@ -194,6 +194,15 @@ const services = {
           error.retryable = true;
           throw error;
         }
+      }
+      if (state.moveLatestDuringInspect && version === input.request.version) {
+        state.registry["dist-tags"].latest = "0.6.10";
+        state.registry.versions["0.6.10"] = {
+          name: "@danielbaars/anthracite",
+          version: "0.6.10",
+          dist: { integrity: "sha512-external-stable" },
+        };
+        save();
       }
       return state.registry.versions[version]
         ? {

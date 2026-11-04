@@ -217,6 +217,7 @@ test(
         ["changeDurableBeforeWrite", /Durable tests.json changed/, 1],
         ["moveBetaAfterWrite", /Beta moved/, 2],
         ["wrongLatestAfterWrite", /Latest moved/, 2],
+        ["moveLatestDuringInspect", /Latest moved/, 2],
       ]) {
         const remote = structuredClone(retained);
         remote[flag] = true;
@@ -233,6 +234,8 @@ test(
         const answer = f.invoke(input);
         assert.notEqual(answer.status, 0, answer.stdout);
         assert.match(answer.stderr, reason, flag);
+        if (flag === "moveLatestDuringInspect")
+          assert.match(answer.stderr, /observed tags:.*0.6.10/);
         assert.equal(
           JSON.parse(fs.readFileSync(f.statePath)).writes.length,
           writes,
