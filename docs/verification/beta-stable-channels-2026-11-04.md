@@ -21,16 +21,36 @@ node --test scripts/test/release-dispatch.test.cjs
 
 These are reproduction commands, not a claim that one final all-files run passed. The matrix below identifies the actual assembled-source replays and limitations. The primary seam is the captured executable Node release process with real Git/build/package gates and controlled external services. Literal Actions events and the production npm command adapter are supplemental process seams; no private-helper/YAML snapshot is primary acceptance.
 
-For delivery-only checks, provide a directory of retained **real** successful release-process artifacts, with `metadata.json` and `beta/` + `stable/` assets. Metadata identifies each exact artifact, source, original dispatcher, checksums, integrity and per-file hashes. The consumer test validates those hashes before installing. It never invents a package, CLI or MCP server.
+To reproduce the installed delivery checks from a fresh checkout, run the install/build commands above first, then this **one** focused manual-dispatch group. Choose an absolute output path outside the checkout that does not exist (or an empty directory). It builds/tests both genuine package versions, controls only external services, and exports the successful captured durable assets before deleting its temporary source fixture. Allow several minutes and local `ps` permission for the existing installed process checks. Failed process groups never export success artifacts.
 
 ```sh
-ANTHRACITE_DELIVERY_ARTIFACTS=/absolute/path/to/retained-artifacts \
-  node --test scripts/test/release-summary.test.cjs
-ANTHRACITE_DELIVERY_ARTIFACTS=/absolute/path/to/retained-artifacts \
-  node --test scripts/test/release-delivery.test.cjs
+export ANTHRACITE_DELIVERY_ARTIFACTS="$(mktemp -d)/delivery"
+ANTHRACITE_EXPORT_DELIVERY_ARTIFACTS="$ANTHRACITE_DELIVERY_ARTIFACTS" \
+  node --test --test-name-pattern='manual beta and stable use actual' \
+  scripts/test/release-dispatch.test.cjs
+node --test scripts/test/release-export.test.cjs
+node --test scripts/test/release-summary.test.cjs
+node --test scripts/test/release-delivery.test.cjs
+```
+
+Keep the printed output directory for later delivery-only replays by setting `ANTHRACITE_DELIVERY_ARTIFACTS` to it. The export contains `metadata.json` and unchanged `beta/` + `stable/` assets. It binds exact package versions, source normalization, original dispatcher/run/tool/platform identities, archive SHA256/SHA512 and per-file hashes. It describes the original captured test boundary; export does not rerun build gates, verify live signatures/OIDC, or establish personal-use approval.
+
+For an already retained complete pair of asset directories, the supported standalone command generates the same delivery layout without access to fixture state, its Git objects or old metadata:
+
+```sh
+node scripts/export-release-artifacts.cjs \
+  /absolute/path/to/beta-assets /absolute/path/to/stable-assets \
+  /absolute/path/to/new-delivery-output
+```
+
+Inputs must include the original `intent.json`, tarball, `SHA256SUMS`, `tests.json`, and matching attempt/verification records; stable also needs its original assessment, practice and beta snapshots. Missing records, mismatched archive versions/hashes or inconsistent snapshots refuse. Output must be absent, empty or contain only byte-identical export files; foreign/conflicting files are never overwritten. The command checks retained records and archive identities, not live registry state. A future pair downloaded from real GitHub releases can supply these same complete inputs; downloading or exporting them alone is not a new live-publication verification.
+
+```sh
 node --test --test-name-pattern='manual entry|literal manual|production npm' \
   scripts/test/release-dispatch.test.cjs
 ```
+
+The review-fix reproduction ran the focused successful group with opt-in export: beta real gates passed in 167096 ms, stable in 156982 ms, and both read-only reconciliations passed (2056/1770 ms). The temporary source fixture was deleted after export. The newly exported directory then passed the exporter, existing summary and existing single installed delivery scenario (3 tests, 5222 ms). Beta `0.7.0-beta.1` SHA256 was `4dddd8e3fe63344f6047e7493ad32d6ca1a21ec330610fd1a6a30db73009ac9b`, source/dispatcher `a6fd4969375a6b284d6c8c226126e80ebc44f904`, run 3456/2. Stable `0.7.0` SHA256 was `4639080fe8b13e5c23e2618be83b947a846c83d50f5313be0beef40861fb249b`, source `17d772b9c16f82e721e25c3ca0062d6544509562`, dispatcher `816afa0052bc3384dbbfca14bb7f53fd32b667b9`, run 4567/1. These are new local fixture identities with controlled external responses, not public release refs or live OIDC acceptance. Release core, CLI and publication behavior were unchanged; the tested fixture setup added only successful export.
 
 Without the explicit retained-artifact directory the two delivery tests report skipped, not passing artifact acceptance. The existing `McpCliClient` is compiled by the ordinary build. One new consumer scenario performs stable → beta → stable in one temporary prefix: verify archive hashes/integrity, offline npm install, exact manifest, both aliases/realpaths/version/help, native zsh completion after `compinit`/both-name `compdef`, then connect/discover/execute `run_an_cmd --version` and close before each installation change. The last connection launches `anthracite`; earlier connections launch `an`. HOME/npm cache/config/GitHub/Codex paths are isolated; host shell/npm/Anthracite/Codex sentinels are compared unchanged. No client registration is edited.
 

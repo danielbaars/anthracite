@@ -193,3 +193,18 @@ Local controlled release/install tests do not establish public beta availability
 The scoped package `@danielbaars/anthracite` and trusted publisher already exist; the unscoped `anthracite` name belongs to another project. Public 0.6.9 predates this channel workflow. Initial owner-account bootstrap used the generated tested tarball, local account/2FA and public access before configuring the `release.yml` trusted publisher. That initial manual publication had no GitHub OIDC provenance; later automated publications use OIDC. This history does not instruct a new bootstrap, login, token creation or repository-setting change for channel rollout. A read-only cryptographic inspection of the existing public package also does not constitute first live manual beta acceptance.
 
 References: [npm trusted publishers](https://docs.npmjs.com/trusted-publishers/), [npm provenance](https://docs.npmjs.com/generating-provenance-statements/), [release-please action](https://github.com/googleapis/release-please-action).
+
+## Retain local delivery-test artifacts
+
+For a fresh-checkout controlled manual beta/stable run, set
+`ANTHRACITE_EXPORT_DELIVERY_ARTIFACTS` to an explicit new absolute output directory
+when running the focused manual-dispatch test. The successful group exports the
+real built/tested archives and original durable records before fixture cleanup.
+The checked-in `scripts/export-release-artifacts.cjs BETA_ASSETS STABLE_ASSETS OUTPUT`
+command also accepts an existing complete retained pair and generates the delivery
+metadata without private fixture paths. It refuses missing, tampered or conflicting
+inputs/output; it never replaces foreign files. Follow the exact install/build,
+export and isolated consumer commands in the
+[reproduction procedure](verification/beta-stable-channels-2026-11-04.md#reproduction-and-public-seams).
+These local captured external-service records do not certify live npm/OIDC or
+personal-use acceptance. No publication or active installation is needed.
