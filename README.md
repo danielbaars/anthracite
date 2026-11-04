@@ -15,7 +15,7 @@ npm install --global @danielbaars/anthracite
 an --version
 ```
 
-Git is required; GitHub workflows also require an installed, authenticated [GitHub CLI](https://cli.github.com/). npm installs both `an` and `anthracite`. It does not modify shell configuration. See [completion and migration from the standalone installer](docs/installation.md).
+Git is required; GitHub workflows also require an installed, authenticated [GitHub CLI](https://cli.github.com/). npm installs both `an` and `anthracite`. It does not modify shell configuration. See [beta/latest and exact-version installation, completion and migration](docs/installation.md).
 
 Standalone binaries for macOS ARM64, macOS x64 and Linux x64 are also available from [GitHub Releases](https://github.com/danielbaars/anthracite/releases). They do not require Node.js or Bun. From a clone, run `sh scripts/install.sh 0.1.1` to install that standalone release with checksum verification and zsh completion.
 
@@ -29,7 +29,7 @@ an log short --stack
 an submit --stack --draft
 ```
 
-The source candidate after public 0.5.1 adds repository-wide existing-feature refresh and default maintenance with `an sync`; `--delete-all` supplies cleanup-only consent. Read [sync scope, changed automation defaults and recovery](docs/sync.md) before adopting the candidate. This does not describe a published npm update.
+Use `an sync` for repository-wide existing-feature refresh and default maintenance; `--delete-all` supplies cleanup-only consent. Read [sync scope, changed automation defaults and recovery](docs/sync.md). Historical source-candidate acceptance after public 0.5.1 preceded the npm releases that shipped these updates.
 
 For a shared prerequisite below selected branches, see [targeted insertion](docs/targeted-insertion.md).
 
