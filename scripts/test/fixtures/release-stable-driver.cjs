@@ -147,6 +147,9 @@ const services = {
             ),
             statement: state.statements?.[version] || state.statement,
             signaturesVerified: !state.invalidSignature,
+            signerIdentity: state.foreignSigner
+              ? "https://github.com/foreign/repository/.github/workflows/release.yml@refs/heads/main"
+              : "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main",
           }
         : null,
   },

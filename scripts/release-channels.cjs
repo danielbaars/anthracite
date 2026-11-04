@@ -390,6 +390,11 @@ function verifyProvenance(proof, intent) {
     true,
     "Registry signatures and attestations must verify"
   );
+  assert.equal(
+    proof.signerIdentity,
+    "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main",
+    "Provenance signer is not the trusted release workflow"
+  );
   assert.equal(proof.manifest.name, PACKAGE);
   assert.equal(proof.manifest.version, intent.version);
   assert.equal(proof.manifest.dist.integrity, intent.artifact.integrity);
