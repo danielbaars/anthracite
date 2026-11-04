@@ -233,12 +233,26 @@ test(
         ["foreignSigner", /signer is not the trusted release workflow/],
       ]) {
         const state = JSON.parse(JSON.stringify(before));
+        fs.rmSync(path.join(f.request.output, "verification-1234-1.json"), {
+          force: true,
+        });
         state[flag] = true;
         f.write(state);
         const uncertain = f.invoke({ operation: "beta" }, intent);
         assert.notEqual(uncertain.status, 0);
         assert.match(uncertain.stderr, reason);
-        assert.equal(JSON.parse(fs.readFileSync(f.statePath)).writes.length, 1);
+        const refusedState = JSON.parse(fs.readFileSync(f.statePath));
+        assert.equal(refusedState.writes.length, 1);
+        assert.equal(
+          refusedState.release.assets["verification-1234-1.json"],
+          undefined
+        );
+        assert.equal(
+          fs.existsSync(
+            path.join(f.request.output, "verification-1234-1.json")
+          ),
+          false
+        );
       }
       assert.equal(git(f.checkout, "status", "--porcelain"), "");
     } finally {
