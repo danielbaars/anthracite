@@ -185,9 +185,11 @@ export async function submitAction(
     context.engine.assertBranchEditable(args.rolesBranch);
   }
 
-  context.splog.info(
-    chalk.blueBright('📨 Pushing to remote and creating/updating PRs...')
-  );
+  if (submissionInfos.length) {
+    context.splog.info(
+      chalk.blueBright('📨 Pushing to remote and creating/updating PRs...')
+    );
+  }
 
   for (const [index, submissionInfo] of submissionInfos.entries()) {
     const remaining = submissionInfos.slice(index + 1).map((info) => info.head);
@@ -241,8 +243,8 @@ export async function submitAction(
   const repo = githubRepoSlug(context);
   const footerUpdates = getPrFooterUpdates(branchNames, context);
   for (const [index, update] of footerUpdates.entries()) {
-    context.engine.assertBranchEditable(update.branch);
     try {
+      context.engine.assertBranchEditable(update.branch);
       execFileSync('gh', [
         'pr',
         'edit',
@@ -271,10 +273,6 @@ export async function submitAction(
         'Updated'
       )})`
     );
-  }
-
-  if (!context.interactive) {
-    return;
   }
 }
 

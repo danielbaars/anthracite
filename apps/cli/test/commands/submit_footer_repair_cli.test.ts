@@ -1,4 +1,7 @@
 import { expect } from 'chai';
+import fs from 'fs';
+import path from 'path';
+import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { SubmitCliFixture } from '../lib/fixtures/submit_cli';
 
 // Independent public CLI scenarios, not one production operation.
@@ -71,7 +74,8 @@ describe('submit dependency footer repair through the public CLI', function () {
   it('repairs stale and missing footers without code changes, then makes no redundant PR edits', () => {
     fixture.branch('base', 'main');
     fixture.branch('child', 'base');
-    fixture.succeed('submit', '--stack');
+    const initial = fixture.succeed('submit', '--stack');
+    expect(initial).to.include('Pushing to remote');
     const expected = fixture.prs();
     fixture.setPrs(
       expected.map((pr) => ({
@@ -86,7 +90,8 @@ describe('submit dependency footer repair through the public CLI', function () {
     const remote = fixture.git('ls-remote', '--heads', 'origin');
     fixture.clearCalls();
 
-    fixture.succeed('submit', '--stack');
+    const output = fixture.succeed('submit', '--stack');
+    expect(output).not.to.include('Pushing to remote');
 
     expect(fixture.prs().map((pr) => pr.body)).to.deep.equal(
       expected.map((pr) => `Approved ${pr.headRefName} description${pr.body}`)
@@ -141,5 +146,53 @@ describe('submit dependency footer repair through the public CLI', function () {
         .filter((call) => call[1] === 'edit' && call.includes('--body'))
         .map((call) => call[2])
     ).to.deep.equal(['2', '3']);
+  });
+
+  it('reports pending footers when a later branch is frozen during an earlier footer edit', () => {
+    fixture.branch('base', 'main');
+    fixture.branch('child', 'base');
+    fixture.branch('tip', 'child');
+    fixture.succeed('submit', '--stack');
+    fixture.setPrs(
+      fixture.prs().map((pr) => ({ ...pr, body: 'Approved core' }))
+    );
+    const shim = path.join(fixture.root, 'bin', 'gh');
+    const original = shim + '-original';
+    fs.renameSync(shim, original);
+    const freeze = getTestCliCommand(['freeze', 'child', '--no-interactive']);
+    fs.writeFileSync(
+      shim,
+      `#!${process.execPath}
+const cp = require('child_process');
+const args = process.argv.slice(2);
+const result = cp.spawnSync(${JSON.stringify(
+        original
+      )}, args, {encoding: 'utf8'});
+process.stdout.write(result.stdout);
+process.stderr.write(result.stderr);
+if (result.status === 0 && args[0] === 'pr' && args[1] === 'edit' && args[2] === '1' && args.includes('--body')) {
+  const frozen = cp.spawnSync(${JSON.stringify(freeze[0])}, ${JSON.stringify(
+        freeze.slice(1)
+      )}, {encoding: 'utf8'});
+  if (frozen.status !== 0) throw new Error(frozen.stdout + frozen.stderr);
+}
+process.exitCode = result.status ?? 1;
+`
+    );
+    fs.chmodSync(shim, 0o755);
+
+    const result = fixture.cli('submit', '--stack');
+
+    expect(result.status).not.to.equal(0);
+    expect(result.stdout + result.stderr)
+      .to.include('Cannot modify frozen branch')
+      .and.include(
+        'Unconfirmed or stale dependency footers: child (#2), tip (#3)'
+      );
+    expect(fixture.prs().map((pr) => pr.body.includes('PR #3'))).to.deep.equal([
+      true,
+      false,
+      false,
+    ]);
   });
 });
