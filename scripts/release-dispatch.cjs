@@ -181,7 +181,23 @@ async function runDispatch(
   };
   if (inputs.operation === "beta")
     await runRelease({ ...request, operation: "prepare-beta" }, services);
-  return runRelease(request, services);
+  const result = await runRelease(request, services);
+  // Verification decisions remain in core; a display failure cannot undo a confirmed write.
+  try {
+    const { summarize } = require("./release-summary.cjs");
+    const display = summarize(
+      result,
+      fs.readFileSync(path.join(request.output, "intent.json"))
+    );
+    if (environment.GITHUB_STEP_SUMMARY)
+      fs.appendFileSync(environment.GITHUB_STEP_SUMMARY, display.markdown);
+    return { ...result, operatorSummary: display.operatorSummary };
+  } catch (error) {
+    console.error(
+      `Release summary unavailable: ${error.message}; inspect the verified result and retained records`
+    );
+    return result;
+  }
 }
 module.exports = { runDispatch };
 if (require.main === module) {
