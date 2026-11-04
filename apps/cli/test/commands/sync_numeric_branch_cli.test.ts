@@ -59,7 +59,8 @@ describe('sync CLI numeric branch identity', function () {
     number: 3,
     url: 'https://github.com/get-fixture/repo/pull/3',
     state: 'OPEN',
-    headRepository: { nameWithOwner: 'get-fixture/repo' },
+    headRepository: { name: 'repo', nameWithOwner: 'get-fixture/repo' },
+    headRepositoryOwner: { login: 'get-fixture' },
   });
 
   it('refreshes a tracked numeric branch from its open PR with a different number', () => {

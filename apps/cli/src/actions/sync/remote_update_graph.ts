@@ -28,7 +28,17 @@ export const pullRequestSchema = z.object({
   url: z.string().url(),
   headRefOid: z.string().regex(/^[a-f0-9]{40,64}$/),
   state: z.enum(['OPEN', 'CLOSED', 'MERGED']).optional(),
-  headRepository: z.object({ nameWithOwner: z.string() }).nullable().optional(),
+  headRepository: z
+    .object({
+      name: z.string().min(1).optional(),
+      nameWithOwner: z.string().optional(),
+    })
+    .nullable()
+    .optional(),
+  headRepositoryOwner: z
+    .object({ login: z.string().min(1) })
+    .nullable()
+    .optional(),
   title: z.string().optional(),
   body: z.string().optional(),
   isDraft: z.boolean().optional(),
@@ -78,7 +88,7 @@ export function lookupPullRequest(
         '--json',
         `headRefName,baseRefName,number,url,headRefOid${
           scope === 'sync'
-            ? ',state,title,body,isDraft,reviewDecision,headRepository'
+            ? ',state,title,body,isDraft,reviewDecision,headRepository,headRepositoryOwner'
             : ''
         }`,
       ],
@@ -120,8 +130,11 @@ export function lookupPullRequest(
     !result.success ||
     (scope === 'sync' &&
       (result.data.state === undefined ||
-        result.data.headRepository?.nameWithOwner !==
-          githubRepoSlug(context))) ||
+        `${result.data.headRepositoryOwner?.login}/${result.data.headRepository?.name}` !==
+          githubRepoSlug(context) ||
+        (Boolean(result.data.headRepository?.nameWithOwner) &&
+          result.data.headRepository?.nameWithOwner !==
+            githubRepoSlug(context)))) ||
     ((lookupHead || !/^\d+$/.test(branch)) &&
       result.data.headRefName !== branch) ||
     (lookupHead && result.data.state !== 'OPEN') ||
