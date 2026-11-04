@@ -49,7 +49,7 @@ node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-ci
 
 The optional `release_assets` input defaults to false. Enable it only for release validation; it adds a job to build the three platform binaries and test installation, with a 20-minute limit (approximately $0.12 additional runner cost at that rate). It does not publish a release.
 
-Both workflows cancel superseded runs on the same ref. The full matrix stops remaining jobs after a failure. Test and asset artifacts expire after seven days. No scheduled full runs are configured. The separate `Release` workflow builds only an npm artifact when release-please creates a version; it never starts the full matrix. Workflow syntax can be checked locally with `actionlint`.
+Both workflows cancel superseded runs on the same ref. The full matrix stops remaining jobs after a failure. Test and asset artifacts expire after seven days. No scheduled full runs are configured. The separate `Release` workflow automatically prepares release-please metadata on main pushes. Only an explicitly selected manual beta or stable operation builds/tests/publishes an npm artifact; release-PR merges do not publish npm. It never starts the full matrix and serializes release operations without cancelling active publication. Workflow syntax can be checked locally with `actionlint`.
 
 ## Run and install a development build
 
@@ -64,7 +64,7 @@ The development installer uses separate versioned `-dev.<timestamp>` directories
 
 Use conventional commit and squash-PR titles such as `feat(cli): ...` or `fix(cli): ...` so release-please can determine the version and changelog.
 
-See [npm release operations](docs/npm-release.md) for the generated artifact, exact-tarball tests, release-please, OIDC and the one-time npm account bootstrap. The development workspaces remain private. The cheap CI plus relevant local regression tests and the installed-artifact checks are the npm release gate; the native asset gate below does not apply to an npm-only release. Do not change the user's active installation during package verification.
+See [npm release operations](docs/npm-release.md) for the generated artifact, exact-tarball tests, release-please, OIDC, beta practice evidence and separate exact-version stable confirmation. The development workspaces remain private. Relevant local regression and exact installed-artifact checks remain required. Stable additionally requires approved practice for one immutable beta and verified source equivalence; a CI result or prepared release alone does not authorize publication. The native asset gate below does not apply to an npm-only release. Do not change the user's active installation during package verification.
 
 ## Prepare standalone release assets
 
