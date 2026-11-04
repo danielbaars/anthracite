@@ -116,6 +116,51 @@ function services() {
         assets,
       };
     },
+    evidence: async (reference) => {
+      const match =
+        typeof reference === "string" &&
+        reference.match(
+          /^release:(v(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)-beta\.[1-9]\d*)\/practice\.json$/
+        );
+      assert.ok(match, "Unsupported practice evidence reference");
+      const tag = match[1];
+      const pages = JSON.parse(
+        gh(["api", "--paginate", "--slurp", `${BASE}/releases?per_page=100`])
+      );
+      const release = pages.flat().find((value) => value.tag_name === tag);
+      assert.ok(
+        release && !release.draft && release.prerelease,
+        "Missing beta practice release"
+      );
+      const assetPages = JSON.parse(
+        gh([
+          "api",
+          "--paginate",
+          "--slurp",
+          `${BASE}/releases/${release.id}/assets?per_page=100`,
+        ])
+      );
+      const assets = assetPages
+        .flat()
+        .filter((value) => value.name === "practice.json");
+      assert.equal(
+        assets.length,
+        1,
+        "Missing or ambiguous practice evidence asset"
+      );
+      const asset = assets[0];
+      const bytes = gh(
+        [
+          "api",
+          `${BASE}/releases/assets/${asset.id}`,
+          "-H",
+          "Accept: application/octet-stream",
+        ],
+        "buffer"
+      );
+      assert.ok(bytes.length <= 1024 * 1024, "Practice evidence is too large");
+      return { reference, bytes, author: asset.uploader?.login };
+    },
     retain: async ({ tag, source, prerelease, assets }) => {
       const existingTag = await github.tag(tag);
       assert.ok(
