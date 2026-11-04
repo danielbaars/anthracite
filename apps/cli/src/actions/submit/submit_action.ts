@@ -7,7 +7,7 @@ import { ExitFailedError, KilledError } from '../../lib/errors';
 import { CommandFailedError, CommandKilledError } from '../../lib/git/runner';
 import { getPRInfoForBranches } from './prepare_branches';
 import { validateBranchesToSubmit } from './validate_branches';
-import { submitPullRequest } from './submit_prs';
+import { submitPullRequest, TPRSubmissionInfo } from './submit_prs';
 import {
   createPrBodyFooter,
   footerFooter,
@@ -15,6 +15,7 @@ import {
   footerTitle,
 } from '../create_pr_body_footer';
 import { execFileSync } from 'child_process';
+import { syncPrInfo } from '../sync_pr_info';
 
 // eslint-disable-next-line max-lines-per-function
 export async function submitAction(
@@ -160,7 +161,11 @@ export async function submitAction(
     context
   );
 
-  const pendingFooters = getPrFooterUpdates(branchNames, context);
+  const pendingFooters = await getPrFooterUpdates(
+    branchNames,
+    submissionInfos,
+    context
+  );
   if (pendingFooters.length) {
     context.splog.info(
       `Dependency footers to repair: ${pendingFooters
@@ -241,7 +246,11 @@ export async function submitAction(
   );
 
   const repo = githubRepoSlug(context);
-  const footerUpdates = getPrFooterUpdates(branchNames, context);
+  const footerUpdates = await getPrFooterUpdates(
+    branchNames,
+    submissionInfos,
+    context
+  );
   for (const [index, update] of footerUpdates.entries()) {
     try {
       context.engine.assertBranchEditable(update.branch);
@@ -276,10 +285,11 @@ export async function submitAction(
   }
 }
 
-function getPrFooterUpdates(
+async function getPrFooterUpdates(
   branchNames: readonly string[],
+  submissionInfos: Readonly<TPRSubmissionInfo>,
   context: TContext
-): { branch: string; number: number; url?: string; body: string }[] {
+): Promise<{ branch: string; number: number; url?: string; body: string }[]> {
   if (!context.repoConfig.getIsGithubIntegrationEnabled()) return [];
   // Submitting changes the dependency tree of the submitted branches and ancestors.
   const branchesToUpdate = new Set<string>(branchNames);
@@ -291,8 +301,23 @@ function getPrFooterUpdates(
     }
   }
 
+  const footerBranches = [...branchesToUpdate].filter(
+    (branch) =>
+      !context.engine.isBranchFrozen(branch) &&
+      Boolean(context.engine.getPrInfo(branch)?.number)
+  );
+  const editedBodies = submissionInfos.filter(
+    (info) => info.action === 'update' && info.body !== undefined
+  );
+  // Inline edits are current user input; all other bodies need a fresh read.
+  const freshPrs = await syncPrInfo(
+    footerBranches.filter(
+      (branch) => !editedBodies.some((info) => info.head === branch)
+    ),
+    context
+  );
   const updates = [];
-  for (const branch of branchesToUpdate) {
+  for (const branch of footerBranches) {
     if (context.engine.isBranchFrozen(branch)) continue;
     const prInfo = context.engine.getPrInfo(branch);
 
@@ -302,13 +327,23 @@ function getPrFooterUpdates(
       continue;
     }
 
+    const fresh = freshPrs.find(
+      (pr) => pr.headRefName === branch && pr.prNumber === prInfo.number
+    );
+    const body =
+      editedBodies.find((info) => info.head === branch)?.body ?? fresh?.body;
+    if (typeof body !== 'string') {
+      throw new ExitFailedError(
+        `Cannot read fresh PR body for ${branch} (#${prInfo.number}); cached text will not be used.`
+      );
+    }
     const footer = createPrBodyFooter(context, branch);
-    if (!prInfo.body?.includes(footer)) {
+    if (!body.includes(footer)) {
       updates.push({
         branch,
         number: prInfo.number,
         url: prInfo.url,
-        body: updatePrBodyFooter(prInfo.body, footer),
+        body: updatePrBodyFooter(body, footer),
       });
     }
   }
