@@ -3,6 +3,30 @@ name: Release
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Explicit publication operation
+        type: choice
+        required: true
+        default: select
+        options: [select, beta, stable]
+      beta_source:
+        description: Full 40-character main-history source commit (beta only)
+        type: string
+      beta_version:
+        description: Exact canonical beta version (required for either operation)
+        type: string
+        required: true
+      stable_tag:
+        description: Existing stable release tag (stable only)
+        type: string
+      practice:
+        description: "Exact beta evidence: release:v<VERSION>/practice.json (stable only)"
+        type: string
+      confirmation:
+        description: Exact intended stable version without v (stable only)
+        type: string
 
 permissions:
   contents: read
@@ -14,15 +38,12 @@ concurrency:
 jobs:
   release:
     name: Prepare version and changelog
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
       contents: write
       pull-requests: write
-    outputs:
-      created: ${{ steps.release.outputs['apps/cli--release_created'] }}
-      sha: ${{ steps.release.outputs['apps/cli--sha'] }}
-      tag: ${{ steps.release.outputs['apps/cli--tag_name'] }}
     steps:
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         id: release
@@ -31,21 +52,23 @@ jobs:
           manifest-file: .release-please-manifest.json
 
   publish:
-    name: Validate and publish npm release
-    needs: release
-    if: needs.release.outputs.created == 'true'
+    name: Validate and publish explicitly selected npm channel
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
-      contents: read
+      contents: write
       id-token: write
     env:
       TERM: dumb
       NO_COLOR: "1"
+      GH_TOKEN: ${{ github.token }}
+      NPM_TRUSTED_PUBLISHING: ${{ vars.NPM_TRUSTED_PUBLISHING }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ needs.release.outputs.sha }}
+          ref: ${{ github.sha }}
+          fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -56,29 +79,5 @@ jobs:
           bun-version: 1.3.14
       - name: Install OIDC-capable npm
         run: npm install --global npm@11.17.0
-      - name: Verify tag matches package version
-        env:
-          RELEASE_TAG: ${{ needs.release.outputs.tag }}
-        run: node -e 'require("node:assert/strict").equal(process.env.RELEASE_TAG, "v" + require("./apps/cli/package.json").version)'
-      - name: Install exact dependencies
-        run: node .yarn/releases/yarn-3.2.1.cjs install --immutable
-      - name: Build and typecheck
-        run: |
-          node .yarn/releases/yarn-3.2.1.cjs turbo run build
-          node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite check
-      - name: Build the npm tarball
-        run: node scripts/build-npm-package.cjs
-      - name: Test the exact tarball in an isolated installation
-        run: node scripts/test-npm-package.cjs
-      - name: Preserve the tested tarball for bootstrap and recovery
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: npm-release
-          path: |
-            release/npm/danielbaars-anthracite.tgz
-            release/npm/SHA256SUMS
-          retention-days: 7
-          if-no-files-found: error
-      - name: Publish the tested tarball with provenance
-        if: vars.NPM_TRUSTED_PUBLISHING == 'true'
-        run: npm publish release/npm/danielbaars-anthracite.tgz --access public --provenance
+      - name: Validate manual request, retain evidence and publish exact tested artifact
+        run: node scripts/release-dispatch.cjs
