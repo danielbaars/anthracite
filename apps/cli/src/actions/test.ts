@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import tmp from 'tmp';
 import { TContext } from '../lib/context';
-import { SCOPE, TScopeSpec } from '../lib/engine/scope_spec';
+import { TScopeSpec } from '../lib/engine/scope_spec';
 
 type TTestStatus =
   | '[pending]'
@@ -28,8 +28,9 @@ export function testStack(
   const currentBranch = context.engine.currentBranchPrecondition;
   // Get branches to test.
   const branches = context.engine
-    .getRelativeStack(currentBranch, SCOPE.STACK)
-    .filter((branch) => opts.includeTrunk || !context.engine.isTrunk(branch));
+    .getRelativeStack(currentBranch, opts.scope)
+    .filter((branch) => !context.engine.isTrunk(branch));
+  if (opts.includeTrunk) branches.unshift(context.engine.trunk);
 
   // Initialize state to print out.
   const state: TTestState = {};
