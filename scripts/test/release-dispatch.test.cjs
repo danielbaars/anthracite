@@ -394,6 +394,40 @@ test(
       console.log(
         `Captured beta source ${beta.source.commit}; stable source ${stable}; actual stable dispatcher ${dispatcher}`
       );
+      if (process.env.ANTHRACITE_EXPORT_DELIVERY_ARTIFACTS) {
+        // Export durable captured assets only after every real process assertion passes.
+        const inputs = path.join(f.temp, "delivery-export-inputs");
+        for (const [channel, version] of [
+          ["beta", beta.version],
+          ["stable", stableIntent.version],
+        ]) {
+          const directory = path.join(inputs, channel);
+          fs.mkdirSync(directory, { recursive: true });
+          for (const [name, bytes] of Object.entries(
+            state.releases[`v${version}`].assets
+          )) {
+            assert.equal(path.basename(name), name);
+            fs.writeFileSync(
+              path.join(directory, name),
+              Buffer.from(bytes, "base64")
+            );
+          }
+        }
+        const exported = spawnSync(
+          process.execPath,
+          [
+            path.join(root, "scripts/export-release-artifacts.cjs"),
+            path.join(inputs, "beta"),
+            path.join(inputs, "stable"),
+            process.env.ANTHRACITE_EXPORT_DELIVERY_ARTIFACTS,
+          ],
+          { encoding: "utf8" }
+        );
+        assert.equal(exported.status, 0, exported.stderr);
+        console.log(
+          `Exported successful controlled process artifacts: ${exported.stdout.trim()}`
+        );
+      }
       passed = true;
     } finally {
       if (passed) fs.rmSync(f.temp, { recursive: true, force: true });
