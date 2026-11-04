@@ -147,17 +147,31 @@ function inferRepoGitHubInfo(remote: string): {
 export function getOwnerAndNameFromURL(
   url: string
 ): { name: string; owner: string; hostname: string } | null {
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) {
+    try {
+      const parsed = new URL(url);
+      if (
+        !['https:', 'http:', 'ssh:', 'git+ssh:', 'git:'].includes(
+          parsed.protocol
+        ) ||
+        parsed.search ||
+        parsed.hash
+      )
+        return null;
+      const match = /^\/([^/]+)\/([^/]+?)(?:\.git)?$/.exec(parsed.pathname);
+      if (!match || !parsed.hostname) return null;
+      return { owner: match[1], name: match[2], hostname: parsed.hostname };
+    } catch {
+      return null;
+    }
+  }
+  // Preserve Git's scp-like and legacy SSH forms without scanning arbitrary prefixes.
   const match =
-    /(?:https:\/\/(.*)\/|(?:git\+ssh:\/\/|ssh:\/\/)?(?:git@)?([^:/]*)[:/])([^/]+)\/(.+?)(?:\.git)?$/.exec(
+    /^(?:(?:git\+ssh|ssh):)?(?:[^@/:\s]+@)?([^@/:\s]+)[:/]([^/]+)\/([^/]+?)(?:\.git)?$/.exec(
       url
     );
-
-  if (match == null) {
-    return null;
-  }
-
-  const [, hostname1, hostname2, owner, repo] = match;
-  return { owner, name: repo, hostname: hostname1 ?? hostname2 };
+  if (!match) return null;
+  return { owner: match[2], name: match[3], hostname: match[1] };
 }
 
 export type TRepoConfig = ReturnType<typeof repoConfigFactory.load>;

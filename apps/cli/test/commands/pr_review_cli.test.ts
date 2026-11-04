@@ -50,6 +50,12 @@ describe('public head-bound GitHub review', function () {
 
   it('displays only the actual selected base-to-head diff while preserving dirty local work', () => {
     const pr = github.pr('tip', 19);
+    fixture.git([
+      'remote',
+      'set-url',
+      'origin',
+      'https://synthetic-user@github.com/misleading/parent.git',
+    ]);
     fs.writeFileSync(github.state, JSON.stringify([pr]));
     fs.appendFileSync(path.join(fixture.repo, 'base.txt'), '\nLOCAL STAGED');
     fixture.git(['add', 'base.txt']);
