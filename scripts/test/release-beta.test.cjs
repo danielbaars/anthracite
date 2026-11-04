@@ -27,6 +27,10 @@ function fixture() {
       path.join(root, "scripts", name),
       path.join(checkout, "scripts", name)
     );
+  fs.copyFileSync(
+    driver,
+    path.join(checkout, "scripts/test/fixtures/release-beta-driver.cjs")
+  );
   git(checkout, "add", "scripts");
   git(
     checkout,
@@ -78,7 +82,10 @@ function fixture() {
     );
     return spawnSync(
       process.execPath,
-      [driver, path.join(temp, "input.json")],
+      [
+        path.join(checkout, "scripts/test/fixtures/release-beta-driver.cjs"),
+        path.join(temp, "input.json"),
+      ],
       { encoding: "utf8", timeout: 300000, env: process.env }
     );
   };
@@ -223,6 +230,7 @@ test(
         ["moveLatest", /Latest moved/],
         ["missingReadback", /not yet visible/],
         ["invalidSignature", /signatures and attestations/],
+        ["foreignSigner", /signer is not the trusted release workflow/],
       ]) {
         const state = JSON.parse(JSON.stringify(before));
         state[flag] = true;

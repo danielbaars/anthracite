@@ -47,30 +47,57 @@ function sourceIdentity(checkout, commit) {
     .toString()
     .split("\0")
     .filter(Boolean);
+  // One Git process reads the captured objects; framing uses byte lengths, never
+  // line splitting, because tracked contents may contain arbitrary bytes.
+  const objects = command(checkout, "git", ["cat-file", "--batch"], {
+    encoding: "buffer",
+    input: Buffer.from(
+      entries
+        .map((entry) => entry.slice(0, entry.indexOf("\t")).split(" ")[2])
+        .join("\n") + "\n"
+    ),
+    maxBuffer: 256 * 1024 * 1024,
+  });
+  let offset = 0;
   const digest = createHash("sha256");
   for (const entry of entries) {
     const tab = entry.indexOf("\t");
     const [mode, type, oid] = entry.slice(0, tab).split(" ");
     const filename = entry.slice(tab + 1);
-    let contents = command(checkout, "git", ["cat-file", type, oid], {
-      encoding: "buffer",
-    });
-    if (filename === "apps/cli/package.json") {
+    const end = objects.indexOf(10, offset);
+    assert.ok(end >= offset, "Incomplete Git object header");
+    const [actualOid, actualType, length] = objects
+      .subarray(offset, end)
+      .toString()
+      .split(" ");
+    assert.equal(actualOid, oid);
+    assert.equal(actualType, type);
+    assert.match(length, /^\d+$/);
+    const size = Number(length);
+    assert.ok(Number.isSafeInteger(size));
+    offset = end + 1;
+    let contents = objects.subarray(offset, offset + size);
+    assert.equal(contents.length, size, "Incomplete Git object bytes");
+    offset += size;
+    assert.equal(objects[offset++], 10, "Incomplete Git object framing");
+    const regular = type === "blob" && ["100644", "100755"].includes(mode);
+    if (regular && filename === "apps/cli/package.json") {
       const value = json(contents);
       value.version = "<release-version>";
       contents = Buffer.from(JSON.stringify(value));
     }
-    if (filename === ".release-please-manifest.json") {
+    if (regular && filename === ".release-please-manifest.json") {
       const value = json(contents);
       value["apps/cli"] = "<release-version>";
       contents = Buffer.from(JSON.stringify(value));
     }
-    if (filename === "apps/cli/CHANGELOG.md")
+    if (regular && filename === "apps/cli/CHANGELOG.md")
       contents = Buffer.from("<generated-cli-changelog>");
     digest.update(
       JSON.stringify([mode, type, filename, hash(contents)]) + "\n"
     );
   }
+  assert.equal(offset, objects.length, "Unexpected Git object bytes");
   return { rule: NORMALIZATION, sha256: digest.digest("hex") };
 }
 function trackedDispatcher(checkout, commit) {
@@ -252,6 +279,11 @@ function verifyProvenance(proof, intent) {
     proof.signaturesVerified,
     true,
     "Registry signatures and attestations must verify"
+  );
+  assert.equal(
+    proof.signerIdentity,
+    "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main",
+    "Provenance signer is not the trusted release workflow"
   );
   assert.equal(proof.manifest.name, PACKAGE);
   assert.equal(proof.manifest.version, intent.version);

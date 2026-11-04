@@ -2,7 +2,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
-const { createHash } = require("node:crypto");
+const { createHash, X509Certificate } = require("node:crypto");
 const { execFileSync } = require("node:child_process");
 const REPO = "danielbaars/anthracite";
 const BASE = `repos/${REPO}`;
@@ -356,10 +356,42 @@ function services() {
           (item) => item.predicateType === "https://slsa.dev/provenance/v1"
         );
         assert.ok(bundle, "Missing verified SLSA provenance");
+        const material = bundle.bundle.verificationMaterial;
+        const direct = material?.certificate;
+        const chain = material?.x509CertificateChain;
+        assert.ok(
+          material && !material.publicKey && Boolean(direct) !== Boolean(chain),
+          "Missing or unsupported verified provenance certificate"
+        );
+        assert.ok(
+          !chain ||
+            (Array.isArray(chain.certificates) &&
+              chain.certificates.length === 1),
+          "Unsupported verified provenance certificate chain"
+        );
+        const raw = direct?.rawBytes ?? chain?.certificates[0]?.rawBytes;
+        assert.ok(
+          typeof raw === "string" && raw.length > 0,
+          "Missing verified provenance certificate"
+        );
+        const certificate = new X509Certificate(Buffer.from(raw, "base64"));
+        const signerIdentity =
+          "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main";
+        assert.equal(
+          certificate.subjectAltName,
+          `URI:${signerIdentity}`,
+          "Provenance signer is not the trusted release workflow"
+        );
         const statement = JSON.parse(
           Buffer.from(bundle.bundle.dsseEnvelope.payload, "base64").toString()
         );
-        return { manifest, bytes, statement, signaturesVerified: true };
+        return {
+          manifest,
+          bytes,
+          statement,
+          signaturesVerified: true,
+          signerIdentity,
+        };
       },
       snapshot: async () => {
         const metadata = await (

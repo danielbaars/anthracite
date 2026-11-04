@@ -69,6 +69,9 @@ const services = {
         manifest: state.registry.versions[version],
         bytes: Buffer.from(state.writes[0].bytes, "base64"),
         signaturesVerified: !state.invalidSignature,
+        signerIdentity: state.foreignSigner
+          ? "https://github.com/foreign/repository/.github/workflows/release.yml@refs/heads/main"
+          : "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main",
         statement: state.statement,
       };
     },
