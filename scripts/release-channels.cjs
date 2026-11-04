@@ -571,6 +571,23 @@ async function publishPrepared(request, services, context) {
     request.source,
     "Prepared version tag moved"
   );
+  const finalRepository = await services.github.repository();
+  assert.equal(finalRepository.full_name, REPOSITORY);
+  assert.equal(finalRepository.default_branch, "main");
+  const finalMain = await services.github.main();
+  assert.match(finalMain, /^[a-f0-9]{40}$/);
+  for (const commit of [request.source, request.dispatcher])
+    git(request.checkout, "merge-base", "--is-ancestor", commit, finalMain);
+  assert.equal(
+    git(request.checkout, "rev-parse", "HEAD"),
+    request.dispatcher,
+    "Dispatcher checkout moved before publication"
+  );
+  assert.equal(
+    git(request.checkout, "status", "--porcelain", "--untracked-files=no"),
+    "",
+    "Dispatcher checkout changed before publication"
+  );
   assert.deepEqual(
     dispatcherIdentity(request.checkout, request.dispatcher),
     intent.dispatcher
