@@ -73,7 +73,7 @@ function sourceIdentity(checkout, commit) {
   }
   return { rule: NORMALIZATION, sha256: digest.digest("hex") };
 }
-function dispatcherIdentity(checkout, commit) {
+function trackedDispatcher(checkout, commit) {
   const files = git(checkout, "ls-tree", "-r", "--name-only", commit)
     .split("\n")
     .filter(
@@ -85,26 +85,47 @@ function dispatcherIdentity(checkout, commit) {
     files.includes("scripts/release-channels.cjs"),
     "Dispatcher has no release process"
   );
+  assert.ok(
+    files.includes(".github/workflows/release.yml"),
+    "Dispatcher workflow is missing"
+  );
   const digests = {};
+  const entries = {};
   for (const name of files) {
     const tracked = command(checkout, "git", ["show", `${commit}:${name}`], {
       encoding: "buffer",
     });
+    const [mode, type] = git(checkout, "ls-tree", commit, "--", name).split(
+      " "
+    );
+    assert.ok(
+      mode === "100644" || mode === "100755",
+      "Dispatcher inputs must be regular files"
+    );
+    assert.equal(type, "blob");
+    digests[name] = hash(tracked);
+    entries[name] = { mode, type };
+  }
+  return { commit, files: digests, entries };
+}
+function dispatcherIdentity(checkout, commit) {
+  const identity = trackedDispatcher(checkout, commit);
+  for (const [name, digest] of Object.entries(identity.files)) {
     assert.equal(
       hash(fs.readFileSync(path.join(checkout, name))),
-      hash(tracked),
+      digest,
       `Executing dispatcher differs from captured ${name}`
     );
     if (name.startsWith("scripts/"))
       assert.equal(
         hash(fs.readFileSync(path.join(__dirname, path.basename(name)))),
-        hash(tracked),
+        digest,
         `Running process differs from dispatcher ${name}`
       );
-    digests[name] = hash(tracked);
   }
-  return { commit, files: digests };
+  return identity;
 }
+
 function toolchain(checkout) {
   const tools = {
     node: process.versions.node,
@@ -136,6 +157,16 @@ function validateRecord(record) {
   assert.match(record.source.normalized.sha256, /^[a-f0-9]{64}$/);
   assert.match(record.dispatcher.commit, /^[a-f0-9]{40}$/);
   assert.ok(Object.keys(record.dispatcher.files).length >= 2);
+  assert.deepEqual(
+    Object.keys(record.dispatcher.entries).sort(),
+    Object.keys(record.dispatcher.files).sort(),
+    "Dispatcher entries are incomplete"
+  );
+  for (const [name, entry] of Object.entries(record.dispatcher.entries)) {
+    assert.ok(entry.mode === "100644" || entry.mode === "100755");
+    assert.equal(entry.type, "blob");
+    assert.match(record.dispatcher.files[name], /^[a-f0-9]{64}$/);
+  }
   assert.equal(record.artifact.filename, "danielbaars-anthracite.tgz");
   assert.ok(
     Number.isSafeInteger(record.artifact.size) && record.artifact.size > 0
@@ -143,6 +174,18 @@ function validateRecord(record) {
   assert.match(record.artifact.sha256, /^[a-f0-9]{64}$/);
   assert.match(record.artifact.integrity, /^sha512-/);
   assert.equal(record.tests.passed, true);
+  assert.deepEqual(
+    record.tests.checks,
+    [
+      "locked-install",
+      "build-lint",
+      "typecheck",
+      "curated-tarball",
+      "isolated-install",
+      "commands-completion-MCP",
+    ],
+    "Required release gates are incomplete"
+  );
   assert.equal(record.distTag, record.channel === "beta" ? "beta" : "latest");
   assert.ok(record.run.id && record.run.attempt && record.run.actor);
   assert.ok(
@@ -472,15 +515,389 @@ async function publishBeta(request, services, context) {
     fs.rmSync(temporary, { recursive: true, force: true });
   }
 }
+function practiceReference(reference, betaVersion) {
+  assert.equal(
+    reference,
+    `release:v${betaVersion}/practice.json`,
+    "Unsupported practice evidence reference; use the selected beta release practice.json asset"
+  );
+  return reference;
+}
+function validatePractice(value, intent, intentSha256, actor) {
+  assert.equal(value.schema, 1, "Unsupported practice record");
+  assert.equal(value.package, PACKAGE);
+  assert.equal(value.repository, REPOSITORY);
+  assert.equal(value.betaVersion, intent.version, "Practice candidate differs");
+  assert.equal(value.source, intent.source.commit, "Practice source differs");
+  assert.equal(
+    value.artifactIntegrity,
+    intent.artifact.integrity,
+    "Practice artifact differs"
+  );
+  assert.equal(value.intentSha256, intentSha256, "Practice intent differs");
+  const timestamp = (input) => {
+    assert.match(
+      input || "",
+      /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{3})?Z$/,
+      "Practice dates must be UTC ISO timestamps"
+    );
+    const result = Date.parse(input);
+    assert.ok(Number.isFinite(result), "Invalid practice date");
+    assert.equal(
+      new Date(result).toISOString().replace(".000Z", "Z"),
+      input.replace(".000Z", "Z"),
+      "Invalid practice date"
+    );
+    return result;
+  };
+  const started = timestamp(value.startedAt);
+  const ended = timestamp(value.endedAt);
+  assert.ok(
+    started <= ended && ended <= Date.now(),
+    "Practice dates are inconsistent or in the future"
+  );
+  assert.ok(
+    Number.isSafeInteger(value.workingDays) && value.workingDays >= 0,
+    "Practice workingDays must be recorded"
+  );
+  assert.ok(
+    value.workingDays <= Math.floor((ended - started) / 86400000) + 1,
+    "Practice workingDays contradict the recorded dates"
+  );
+  const text = (input, message) =>
+    assert.ok(typeof input === "string" && input.trim().length > 0, message);
+  if (value.workingDays < 2)
+    text(
+      value.shorterPeriodJustification,
+      "An explicitly justified shorter practice period is required"
+    );
+  for (const field of ["os", "arch", "node"])
+    text(value.platform?.[field], `Practice platform ${field} is required`);
+  assert.equal(
+    typeof value.rewritesChanged,
+    "boolean",
+    "Practice rewrite applicability must be explicit"
+  );
+  assert.ok(Array.isArray(value.scenarios), "Practice scenarios are required");
+  const required = [
+    "synthetic-stacks",
+    "daily-use",
+    "merged-parent-unpublished-work",
+    "trunk-advance",
+    "conflict-continuation",
+    "interruption-resumption",
+  ];
+  const scenarios = new Map();
+  for (const scenario of value.scenarios) {
+    text(scenario.id, "Practice scenario ID required");
+    assert.ok(!scenarios.has(scenario.id), "Duplicate practice scenario");
+    assert.ok(
+      ["passed", "failed", "not-applicable"].includes(scenario.outcome),
+      "Invalid practice scenario outcome"
+    );
+    assert.notEqual(
+      scenario.outcome,
+      "failed",
+      "Failed practice scenario blocks stable release"
+    );
+    if (scenario.outcome === "not-applicable")
+      text(scenario.reason, "Inapplicable scenario needs an explicit reason");
+    else {
+      text(scenario.notes, "Passed scenario needs retained outcome notes");
+      const performed = timestamp(scenario.performedAt);
+      assert.ok(
+        performed >= started && performed <= ended,
+        "Scenario date must lie within the practice period"
+      );
+    }
+    scenarios.set(scenario.id, scenario);
+  }
+  for (const id of required)
+    assert.ok(scenarios.has(id), `Missing practice scenario ${id}`);
+  for (const id of ["synthetic-stacks", "daily-use"])
+    assert.equal(scenarios.get(id).outcome, "passed", `${id} must pass`);
+  assert.ok(
+    timestamp(scenarios.get("synthetic-stacks").performedAt) <=
+      timestamp(scenarios.get("daily-use").performedAt),
+    "Synthetic practice must precede daily use"
+  );
+  assert.ok(
+    Array.isArray(value.findings),
+    "Practice findings must be recorded"
+  );
+  for (const finding of value.findings) {
+    text(finding.id, "Finding ID required");
+    assert.equal(typeof finding.blocking, "boolean");
+    assert.equal(typeof finding.resolved, "boolean");
+    text(finding.disposition, "Finding disposition required");
+    assert.ok(
+      !finding.blocking || finding.resolved,
+      "Unresolved release-blocking finding"
+    );
+  }
+  assert.equal(
+    value.maintainer?.login,
+    actor,
+    "Practice decision must identify the approving maintainer"
+  );
+  assert.equal(
+    value.maintainer.disposition,
+    "approved",
+    "Practice disposition is not approved"
+  );
+  text(value.maintainer.notes, "Maintainer practice disposition needs notes");
+  return value;
+}
+async function assessStable(request, services, context) {
+  const betaParsed = version(request.betaVersion, true);
+  assert.equal(
+    betaParsed.target,
+    request.version,
+    "Selected beta target differs from stable version"
+  );
+  assert.equal(
+    request.tag,
+    `v${request.version}`,
+    "Stable operation requires the exact stable release tag"
+  );
+  assert.equal(
+    await services.github.tag(request.tag),
+    request.source,
+    "Stable release tag moved or is missing"
+  );
+  const stableRelease = await services.github.release(request.tag);
+  assert.ok(
+    stableRelease &&
+      stableRelease.source === request.source &&
+      stableRelease.prerelease === false,
+    "Existing stable GitHub release required"
+  );
+  const manifest = json(
+    command(request.checkout, "git", [
+      "show",
+      `${request.source}:apps/cli/package.json`,
+    ])
+  );
+  assert.equal(manifest.name, PACKAGE);
+  assert.equal(
+    manifest.version,
+    request.version,
+    "Stable source manifest must already match its tag"
+  );
+  const betaTag = `v${request.betaVersion}`;
+  const release = await services.github.release(betaTag);
+  assert.ok(
+    release && release.prerelease === true && release.tag === betaTag,
+    "Missing durable beta release"
+  );
+  const intentBytes = release.assets["intent.json"];
+  assert.ok(intentBytes, "Missing beta intent record");
+  const intent = validateRecord(json(intentBytes));
+  assert.equal(intent.channel, "beta");
+  assert.equal(intent.version, request.betaVersion);
+  assert.equal(intent.targetVersion, request.version);
+  assert.equal(release.source, intent.source.commit);
+  assert.equal(
+    await services.github.tag(betaTag),
+    intent.source.commit,
+    "Selected beta tag moved"
+  );
+  for (const commit of [intent.source.commit, intent.dispatcher.commit]) {
+    assert.equal(
+      git(request.checkout, "rev-parse", `${commit}^{commit}`),
+      commit
+    );
+    git(request.checkout, "merge-base", "--is-ancestor", commit, context.main);
+  }
+  assert.deepEqual(
+    sourceIdentity(request.checkout, intent.source.commit),
+    intent.source.normalized,
+    "Beta source identity differs from its captured Git tree"
+  );
+  const betaDispatcher = trackedDispatcher(
+    request.checkout,
+    intent.dispatcher.commit
+  );
+  assert.deepEqual(
+    intent.dispatcher.files,
+    betaDispatcher.files,
+    "Beta dispatcher record differs from captured Git objects"
+  );
+  assert.deepEqual(
+    intent.dispatcher.entries,
+    betaDispatcher.entries,
+    "Beta dispatcher entry identities differ"
+  );
+  assert.deepEqual(
+    context.dispatcher.files,
+    intent.dispatcher.files,
+    "Executing dispatcher differs from tested beta; another beta is required"
+  );
+  assert.deepEqual(
+    context.dispatcher.entries,
+    intent.dispatcher.entries,
+    "Executing dispatcher entry modes/types differ from tested beta"
+  );
+  assert.deepEqual(
+    context.tools,
+    intent.tools,
+    "Executing tools differ from tested beta"
+  );
+  const normalized = sourceIdentity(request.checkout, request.source);
+  assert.deepEqual(
+    normalized,
+    intent.source.normalized,
+    "Source differs from tested beta; another beta is required"
+  );
+  assert.deepEqual(
+    json(release.assets["tests.json"]),
+    intent.tests,
+    "Beta retained tests disagree"
+  );
+  assert.equal(
+    Buffer.from(release.assets.SHA256SUMS).toString(),
+    `${intent.artifact.sha256}  danielbaars-anthracite.tgz\n`
+  );
+  verifyArtifact(
+    Buffer.from(release.assets["danielbaars-anthracite.tgz"]),
+    intent
+  );
+  const verificationName = `verification-${intent.run.id}-${intent.run.attempt}.json`;
+  const verificationBytes = release.assets[verificationName];
+  assert.ok(verificationBytes, "Missing verified beta record");
+  const verification = json(verificationBytes);
+  assert.equal(verification.schema, 1);
+  assert.equal(verification.status, "verified");
+  assert.equal(verification.channel, "beta");
+  assert.equal(verification.package, PACKAGE);
+  assert.equal(verification.repository, REPOSITORY);
+  assert.equal(verification.version, intent.version);
+  assert.equal(verification.source, intent.source.commit);
+  assert.equal(verification.intentSha256, hash(intentBytes));
+  assert.deepEqual(verification.artifact, intent.artifact);
+  assert.deepEqual(verification.dispatcher, intent.dispatcher);
+  assert.deepEqual(verification.run, intent.run);
+  assert.deepEqual(verification.provenance, {
+    verified: true,
+    dispatcher: intent.dispatcher.commit,
+    run: intent.run,
+  });
+  assert.equal(verification.tags.beta, intent.version);
+  assert.equal(verification.tags.latest, intent.before.latest);
+  assert.equal(
+    context.metadata.versions[intent.version]?.dist?.integrity,
+    intent.artifact.integrity,
+    "Published beta integrity disagrees"
+  );
+  verifyProvenance(await services.registry.inspect(intent.version), intent);
+  const reference = practiceReference(request.practice, intent.version);
+  const evidence = await services.github.evidence(reference);
+  assert.equal(
+    evidence.reference,
+    reference,
+    "Practice evidence identity differs"
+  );
+  assert.match(
+    evidence.author || "",
+    /^[A-Za-z0-9][A-Za-z0-9-]*$/,
+    "Practice evidence author is unavailable"
+  );
+  const practiceBytes = Buffer.from(evidence.bytes);
+  const practice = validatePractice(
+    json(practiceBytes),
+    intent,
+    hash(intentBytes),
+    request.run.actor
+  );
+  assert.equal(
+    await services.github.tag(request.tag),
+    request.source,
+    "Stable release tag moved during assessment"
+  );
+  assert.equal(
+    await services.github.tag(betaTag),
+    intent.source.commit,
+    "Selected beta tag moved during assessment"
+  );
+  const assessment = {
+    schema: 1,
+    status: "assessed",
+    package: PACKAGE,
+    repository: REPOSITORY,
+    channel: "stable",
+    version: request.version,
+    tag: request.tag,
+    source: { commit: request.source, normalized },
+    dispatcher: context.dispatcher,
+    tools: context.tools,
+    beta: {
+      version: intent.version,
+      source: intent.source.commit,
+      dispatcher: intent.dispatcher,
+      intentSha256: hash(intentBytes),
+      verificationAsset: verificationName,
+      verificationSha256: hash(verificationBytes),
+      artifact: intent.artifact,
+    },
+    practice: {
+      reference,
+      sha256: hash(practiceBytes),
+      author: evidence.author,
+      workingDays: practice.workingDays,
+      disposition: practice.maintainer.disposition,
+    },
+    approval: {
+      actor: request.run.actor,
+      version: request.version,
+      run: request.run,
+    },
+    sourceEquivalent: true,
+    before: {
+      latest: context.metadata["dist-tags"].latest,
+      latestIntegrity:
+        context.metadata.versions[context.metadata["dist-tags"].latest].dist
+          .integrity,
+      beta: context.metadata["dist-tags"].beta || null,
+    },
+    npmWrites: 0,
+    next: "Build and test the separately versioned stable artifact before explicitly authorized publication",
+  };
+  const assets = {
+    "assessment.json": Buffer.from(JSON.stringify(assessment, null, 2) + "\n"),
+    "practice.json": practiceBytes,
+    "beta-intent.json": Buffer.from(intentBytes),
+    "beta-verification.json": Buffer.from(verificationBytes),
+  };
+  fs.mkdirSync(request.output, { recursive: true });
+  for (const [name, bytes] of Object.entries(assets)) {
+    const filename = path.join(request.output, name);
+    if (fs.existsSync(filename))
+      assert.ok(
+        fs.readFileSync(filename).equals(bytes),
+        `Conflicting retained ${name}`
+      );
+    else fs.writeFileSync(filename, bytes, { flag: "wx" });
+  }
+  return assessment;
+}
+
 async function runRelease(
   request,
   services = require("./release-services.cjs").services()
 ) {
   assert.equal(request.repository, REPOSITORY, "Wrong repository");
   assert.ok(
-    ["prepare-beta", "beta"].includes(request.operation),
+    ["prepare-beta", "beta", "assess-stable"].includes(request.operation),
     "Unsupported release operation"
   );
+  if (request.operation === "assess-stable") {
+    version(request.version, false);
+    assert.equal(
+      request.confirmation,
+      request.version,
+      "Stable confirmation must equal the intended stable version"
+    );
+  }
   if (request.operation === "beta") {
     assert.ok(
       typeof request.output === "string" && path.isAbsolute(request.output),
@@ -495,7 +912,8 @@ async function runRelease(
       "Wrong beta channel"
     );
   }
-  const parsed = version(request.version, true);
+  const isStable = request.operation === "assess-stable";
+  const parsed = version(request.version, !isStable);
   for (const field of ["source", "dispatcher"])
     assert.match(
       request[field] || "",
@@ -549,7 +967,7 @@ async function runRelease(
     !metadata.versions[request.version],
     "Version already exists; reconcile retained intent before retrying"
   );
-  for (const existing of Object.keys(metadata.versions)) {
+  for (const existing of isStable ? [] : Object.keys(metadata.versions)) {
     if (!/^\d+\.\d+\.\d+-beta\.[1-9]\d*$/.test(existing)) continue;
     const previous = version(existing, true);
     if (previous.target === parsed.target)
@@ -561,6 +979,13 @@ async function runRelease(
     existingTag === null || existingTag === request.source,
     "Existing version tag changed source"
   );
+  if (isStable)
+    return assessStable(request, services, {
+      metadata,
+      dispatcher,
+      tools,
+      main,
+    });
   if (request.operation === "beta")
     return publishBeta(request, services, {
       metadata,
