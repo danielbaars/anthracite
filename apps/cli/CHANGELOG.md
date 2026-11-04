@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.8](https://github.com/danielbaars/anthracite/compare/v0.6.7...v0.6.8) (2026-11-04)
+
+
+### Bug Fixes
+
+* **cli:** honor test execution scope and trunk selection [skip ci] ([efc5c41](https://github.com/danielbaars/anthracite/commit/efc5c4137e9871006fc1a3a3a621cada6f95261e))
+* **cli:** identify sync PR repositories by owner and name [skip ci] ([5986699](https://github.com/danielbaars/anthracite/commit/59866997fb117c8020c12b14f84893b801306ea3))
+
 ## [0.6.7](https://github.com/danielbaars/anthracite/compare/v0.6.6...v0.6.7) (2026-11-03)
 
 
