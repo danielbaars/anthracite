@@ -91,7 +91,7 @@ const details = JSON.parse(require('fs').readFileSync(${JSON.stringify(
 const headRefOid = require('child_process').execFileSync('git', ['rev-parse', 'refs/heads/' + head], { cwd: ${JSON.stringify(
         this.producer
       )}, encoding: 'utf8' }).trim();
-const response = { headRepository: { nameWithOwner: 'get-fixture/repo' }, headRefName: head, baseRefName: parent, headRefOid, number: head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
+const response = { headRepository: { name: 'repo', nameWithOwner: 'get-fixture/repo' }, headRepositoryOwner: { login: 'get-fixture' }, headRefName: head, baseRefName: parent, headRefOid, number: head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
 if (args[6] === 'author') {
   if (identity.authorError) respond('', 8);
   respond((identity.authorRaw === undefined ? JSON.stringify({author: (identity.authors || {})[head]}) : identity.authorRaw) + '\\n');
