@@ -500,6 +500,23 @@ test(
         ]
       );
 
+      const exhaustedObservation = JSON.parse(
+        Buffer.from(
+          exhaustedState.releases["v0.7.0-beta.1"].assets[
+            "observation-6789-1.json"
+          ],
+          "base64"
+        )
+      );
+      assert.equal(exhaustedObservation.publicVersionVisible, true);
+      assert.deepEqual(exhaustedObservation.tags, {
+        latest: "0.6.9",
+        beta: intent.version,
+      });
+      assert.match(
+        exhausted.stderr,
+        /Public version visible: true; observed tags:.*0.7.0-beta.1/
+      );
       passed = true;
     } finally {
       if (passed) fs.rmSync(f.temp, { recursive: true, force: true });
