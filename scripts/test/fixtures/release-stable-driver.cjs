@@ -159,5 +159,14 @@ require(input.process)
   .then((result) => console.log(JSON.stringify(result)))
   .catch((error) => {
     console.error(error.message);
+    if (error.cause)
+      console.error(
+        "Release gate cause:",
+        JSON.stringify({
+          code: error.cause.code,
+          signal: error.cause.signal,
+          message: error.cause.message,
+        })
+      );
     process.exitCode = 1;
   });

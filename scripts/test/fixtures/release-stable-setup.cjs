@@ -96,6 +96,21 @@ function fixture() {
         env: process.env,
       }
     );
+    if (process.env.ANTHRACITE_RELEASE_PROCESS_EVIDENCE) {
+      const directory = process.env.ANTHRACITE_RELEASE_PROCESS_EVIDENCE;
+      fs.mkdirSync(directory, { recursive: true });
+      const stem = `${path.basename(temp)}-${invocations}-${
+        changes.operation || request.operation
+      }`;
+      fs.writeFileSync(
+        path.join(directory, `${stem}.stdout.log`),
+        result.stdout || ""
+      );
+      fs.writeFileSync(
+        path.join(directory, `${stem}.stderr.log`),
+        result.stderr || ""
+      );
+    }
     console.log(
       `Release process ${invocations} ${
         changes.operation || request.operation
