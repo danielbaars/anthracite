@@ -217,10 +217,21 @@ test(
         if (writes === 2)
           assert.match(
             answer.stderr,
-            /completion unconfirmed.*no automatic republish or tag repair/
+            /completion unconfirmed.*no automatic republish or tag repair/s
           );
       }
       assert.equal(git(f.checkout, "status", "--porcelain"), "");
+    } catch (error) {
+      if (process.env.ANTHRACITE_RELEASE_PROCESS_EVIDENCE)
+        fs.cpSync(
+          f.temp,
+          path.join(
+            process.env.ANTHRACITE_RELEASE_PROCESS_EVIDENCE,
+            `failed-${path.basename(f.temp)}`
+          ),
+          { recursive: true }
+        );
+      throw error;
     } finally {
       fs.rmSync(f.temp, { recursive: true, force: true });
     }
@@ -313,6 +324,17 @@ test(
       assert.equal(after.registry["dist-tags"].latest, "0.6.9");
       assert.equal(fs.existsSync(path.join(output, "intent.json")), false);
       assert.deepEqual(after.releases["v0.7.0"].assets, {});
+    } catch (error) {
+      if (process.env.ANTHRACITE_RELEASE_PROCESS_EVIDENCE)
+        fs.cpSync(
+          f.temp,
+          path.join(
+            process.env.ANTHRACITE_RELEASE_PROCESS_EVIDENCE,
+            `failed-${path.basename(f.temp)}`
+          ),
+          { recursive: true }
+        );
+      throw error;
     } finally {
       fs.rmSync(f.temp, { recursive: true, force: true });
     }
