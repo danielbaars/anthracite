@@ -94,7 +94,7 @@ function services() {
       );
       for (const asset of pages.flat()) {
         if (
-          !/^(intent\.json|danielbaars-anthracite\.tgz|SHA256SUMS|tests\.json|verification-[0-9]+-[0-9]+\.json)$/.test(
+          !/^(intent\.json|danielbaars-anthracite\.tgz|SHA256SUMS|tests\.json|assessment\.json|practice\.json|beta-intent\.json|beta-verification\.json|verification-[0-9]+-[0-9]+\.json)$/.test(
             asset.name
           )
         )
@@ -168,6 +168,11 @@ function services() {
         "Refusing conflicting release tag"
       );
       let release = await github.release(tag);
+      if (!prerelease)
+        assert.ok(
+          release,
+          "Existing stable GitHub release required; do not create it during publication"
+        );
       if (!release) {
         gh([
           "release",
@@ -241,10 +246,15 @@ function services() {
         );
         assert.equal(process.env.GITHUB_REPOSITORY, REPO);
         assert.equal(process.env.GITHUB_REF, "refs/heads/main");
-        assert.equal(channel, "beta");
+        assert.ok(
+          ["beta", "latest"].includes(channel),
+          "Explicit supported publication channel required"
+        );
         assert.match(
           version,
-          /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-beta\.([1-9]\d*)$/
+          channel === "beta"
+            ? /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-beta\.([1-9]\d*)$/
+            : /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
         );
         isolatedNpm((temporary, env) =>
           execFileSync(
