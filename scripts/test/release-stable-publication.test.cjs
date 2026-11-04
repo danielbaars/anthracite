@@ -5,7 +5,6 @@ const path = require("node:path");
 const { execFileSync, spawnSync } = require("node:child_process");
 const { test } = require("node:test");
 const root = path.resolve(__dirname, "../..");
-const driver = path.join(__dirname, "fixtures/release-stable-driver.cjs");
 const git = (cwd, ...args) =>
   execFileSync("git", args, {
     cwd,
