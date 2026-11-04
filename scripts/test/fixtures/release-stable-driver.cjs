@@ -117,6 +117,8 @@ const services = {
         ])
           if (!release.assets[name])
             throw Error(`Missing stable evidence before write: ${name}`);
+      }
+      if (channel === "latest" || input.dispatch) {
         state.statements ||= {};
         state.statements[version] = {
           predicateType: "https://slsa.dev/provenance/v1",
@@ -221,8 +223,10 @@ const services = {
     },
   },
 };
-require(input.process)
-  .runRelease(input.request, services)
+(input.dispatch
+  ? require(input.process).runDispatch(process.env, services)
+  : require(input.process).runRelease(input.request, services)
+)
   .then((result) => console.log(JSON.stringify(result)))
   .catch((error) => {
     console.error(error.message);
