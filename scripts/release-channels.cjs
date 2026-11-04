@@ -663,6 +663,7 @@ async function publishPrepared(request, services, context) {
       artifact: intent.artifact,
       provenance: {
         verified: true,
+        signerIdentity: proof.signerIdentity,
         dispatcher: intent.dispatcher.commit,
         run: intent.run,
       },
@@ -968,6 +969,8 @@ async function assessStable(request, services, context) {
   );
   assert.deepEqual(verification.provenance, {
     verified: true,
+    signerIdentity:
+      "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main",
     dispatcher: intent.dispatcher.commit,
     run: intent.run,
   });
