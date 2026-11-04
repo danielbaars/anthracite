@@ -136,6 +136,10 @@ function validateRecord(record) {
   assert.match(record.source.normalized.sha256, /^[a-f0-9]{64}$/);
   assert.match(record.dispatcher.commit, /^[a-f0-9]{40}$/);
   assert.ok(Object.keys(record.dispatcher.files).length >= 2);
+  assert.equal(record.artifact.filename, "danielbaars-anthracite.tgz");
+  assert.ok(
+    Number.isSafeInteger(record.artifact.size) && record.artifact.size > 0
+  );
   assert.match(record.artifact.sha256, /^[a-f0-9]{64}$/);
   assert.match(record.artifact.integrity, /^sha512-/);
   assert.equal(record.tests.passed, true);
@@ -150,16 +154,347 @@ function validateRecord(record) {
   version(record.before.latest, false);
   return record;
 }
+function verifyArtifact(bytes, intent) {
+  assert.equal(
+    hash(bytes),
+    intent.artifact.sha256,
+    "Retained artifact checksum changed"
+  );
+  assert.equal(
+    `sha512-${createHash("sha512").update(bytes).digest("base64")}`,
+    intent.artifact.integrity,
+    "Retained artifact integrity changed"
+  );
+  assert.equal(
+    bytes.length,
+    intent.artifact.size,
+    "Retained artifact size changed"
+  );
+}
+function verifyPackage(filename, intent) {
+  const entries = command(path.dirname(filename), "tar", ["-tzf", filename])
+    .trim()
+    .split("\n")
+    .sort();
+  assert.deepEqual(
+    entries,
+    [
+      "package/CREDITS.md",
+      "package/LICENSE",
+      "package/README.md",
+      "package/THIRD_PARTY_NOTICES.md",
+      "package/cli.cjs",
+      "package/package.json",
+    ],
+    "Unexpected retained package contents"
+  );
+  const manifest = json(
+    command(path.dirname(filename), "tar", [
+      "-xOf",
+      filename,
+      "package/package.json",
+    ])
+  );
+  assert.equal(manifest.name, PACKAGE);
+  assert.equal(manifest.version, intent.version);
+  assert.deepEqual(manifest.bin, { an: "cli.cjs", anthracite: "cli.cjs" });
+  assert.equal(manifest.engines.node, ">=24");
+  assert.deepEqual(manifest.scripts || {}, {});
+  assert.deepEqual(manifest.dependencies || {}, {});
+  assert.equal(manifest.private, undefined);
+}
+function verifyProvenance(proof, intent) {
+  assert.ok(proof, "Published package or provenance is not yet visible");
+  assert.equal(
+    proof.signaturesVerified,
+    true,
+    "Registry signatures and attestations must verify"
+  );
+  assert.equal(proof.manifest.name, PACKAGE);
+  assert.equal(proof.manifest.version, intent.version);
+  assert.equal(proof.manifest.dist.integrity, intent.artifact.integrity);
+  verifyArtifact(Buffer.from(proof.bytes), intent);
+  const statement = proof.statement;
+  assert.equal(statement.predicateType, "https://slsa.dev/provenance/v1");
+  assert.ok(
+    statement.subject.some(
+      (subject) =>
+        subject.name ===
+          `pkg:npm/%40danielbaars/anthracite@${intent.version}` &&
+        subject.digest.sha512 === hash(Buffer.from(proof.bytes), "sha512")
+    ),
+    "Provenance subject differs from tested artifact"
+  );
+  assert.deepEqual(
+    statement.predicate.buildDefinition.externalParameters.workflow,
+    {
+      ref: "refs/heads/main",
+      repository: `https://github.com/${REPOSITORY}`,
+      path: ".github/workflows/release.yml",
+    }
+  );
+  assert.ok(
+    statement.predicate.buildDefinition.resolvedDependencies.some(
+      (item) => item.digest?.gitCommit === intent.dispatcher.commit
+    ),
+    "Provenance dispatcher differs from retained intent"
+  );
+  assert.equal(
+    statement.predicate.runDetails.metadata.invocationId,
+    `https://github.com/${REPOSITORY}/actions/runs/${intent.run.id}/attempts/${intent.run.attempt}`,
+    "Provenance publication attempt differs from retained intent"
+  );
+}
+async function publishBeta(request, services, context) {
+  const tag = `v${request.version}`;
+  const localIntent = fs.readFileSync(path.join(request.output, "intent.json"));
+  const intent = validateRecord(json(localIntent));
+  assert.equal(intent.channel, "beta");
+  assert.equal(intent.version, request.version);
+  assert.equal(intent.source.commit, request.source);
+  assert.deepEqual(
+    intent.dispatcher,
+    context.dispatcher,
+    "Retained dispatcher differs from execution"
+  );
+  assert.deepEqual(
+    intent.tools,
+    context.tools,
+    "Retained tools differ from execution"
+  );
+  assert.deepEqual(
+    intent.run,
+    request.run,
+    "Publication must use its retained run and attempt"
+  );
+  assert.deepEqual(
+    intent.source.normalized,
+    sourceIdentity(request.checkout, request.source),
+    "Retained normalized source differs"
+  );
+  const sourceManifest = json(
+    command(request.checkout, "git", [
+      "show",
+      `${request.source}:apps/cli/package.json`,
+    ])
+  );
+  assert.deepEqual(
+    intent.transformation,
+    {
+      path: "apps/cli/package.json",
+      from: sourceManifest.version,
+      to: request.version,
+    },
+    "Unexpected staged-version transformation"
+  );
+  const release = await services.github.release(tag);
+  assert.ok(release, "Missing durable beta evidence");
+  assert.equal(release.tag, tag);
+  assert.equal(release.source, request.source);
+  assert.equal(release.prerelease, true);
+  assert.equal(
+    await services.github.tag(tag),
+    request.source,
+    "Prepared version tag moved"
+  );
+  for (const name of [
+    "intent.json",
+    "danielbaars-anthracite.tgz",
+    "SHA256SUMS",
+    "tests.json",
+  ]) {
+    assert.ok(release.assets[name], `Missing durable ${name}`);
+    assert.ok(
+      Buffer.from(release.assets[name]).equals(
+        fs.readFileSync(path.join(request.output, name))
+      ),
+      `Local and durable ${name} disagree`
+    );
+  }
+  assert.deepEqual(
+    json(release.assets["tests.json"]),
+    intent.tests,
+    "Retained test results disagree"
+  );
+  assert.deepEqual(
+    intent.tests,
+    {
+      passed: true,
+      checks: [
+        "locked-install",
+        "build-lint",
+        "typecheck",
+        "curated-tarball",
+        "isolated-install",
+        "commands-completion-MCP",
+      ],
+    },
+    "Missing required release test results"
+  );
+  const filename = path.join(request.output, "danielbaars-anthracite.tgz");
+  const bytes = fs.readFileSync(filename);
+  verifyArtifact(bytes, intent);
+  assert.equal(
+    Buffer.from(release.assets.SHA256SUMS).toString(),
+    `${intent.artifact.sha256}  danielbaars-anthracite.tgz\n`
+  );
+  verifyPackage(filename, intent);
+  const current = await services.registry.snapshot();
+  assert.equal(current.name, PACKAGE);
+  assert.equal(
+    current["dist-tags"].latest,
+    intent.before.latest,
+    "Latest moved before publication"
+  );
+  assert.equal(
+    current.versions[intent.before.latest]?.dist?.integrity,
+    intent.before.latestIntegrity,
+    "Latest stable integrity changed"
+  );
+  assert.ok(
+    !current.versions[request.version],
+    "Version already exists; do not publish again"
+  );
+  assert.equal(
+    current["dist-tags"].beta || null,
+    intent.before.beta,
+    "Beta moved before publication"
+  );
+  assert.equal(
+    await services.github.tag(tag),
+    request.source,
+    "Prepared version tag moved"
+  );
+  assert.deepEqual(
+    dispatcherIdentity(request.checkout, request.dispatcher),
+    intent.dispatcher
+  );
+  assert.deepEqual(
+    sourceIdentity(request.checkout, request.source),
+    intent.source.normalized
+  );
+  verifyArtifact(fs.readFileSync(filename), intent);
+  const temporary = fs.mkdtempSync(
+    path.join(os.tmpdir(), "anthracite-publish-")
+  );
+  let sent = false;
+  try {
+    const publishFile = path.join(temporary, "danielbaars-anthracite.tgz");
+    fs.writeFileSync(publishFile, bytes, { flag: "wx", mode: 0o444 });
+    sent = true;
+    await services.registry.publish({
+      tarball: publishFile,
+      channel: "beta",
+      version: request.version,
+    });
+    const proof = await services.registry.inspect(request.version);
+    verifyProvenance(proof, intent);
+    const after = await services.registry.snapshot();
+    assert.equal(after.name, PACKAGE);
+    assert.equal(
+      after.versions[request.version]?.dist?.integrity,
+      intent.artifact.integrity,
+      "Published version integrity changed"
+    );
+    assert.equal(
+      await services.github.tag(tag),
+      request.source,
+      "Prepared version tag moved after publication"
+    );
+    assert.equal(
+      after["dist-tags"].beta,
+      request.version,
+      "Published beta tag does not match intended version"
+    );
+    assert.equal(
+      after["dist-tags"].latest,
+      intent.before.latest,
+      "Latest moved during beta publication; no tag repair attempted"
+    );
+    assert.equal(
+      after.versions[intent.before.latest]?.dist?.integrity,
+      intent.before.latestIntegrity,
+      "Latest stable integrity changed"
+    );
+    const verification = {
+      schema: 1,
+      status: "verified",
+      channel: "beta",
+      package: PACKAGE,
+      repository: REPOSITORY,
+      version: request.version,
+      source: request.source,
+      dispatcher: intent.dispatcher,
+      run: intent.run,
+      intentSha256: hash(localIntent),
+      artifact: intent.artifact,
+      provenance: {
+        verified: true,
+        dispatcher: intent.dispatcher.commit,
+        run: intent.run,
+      },
+      tags: {
+        latest: after["dist-tags"].latest,
+        beta: after["dist-tags"].beta,
+      },
+      confirmedWrites: ["npm beta publication"],
+    };
+    const assetName = `verification-${request.run.id}-${request.run.attempt}.json`;
+    const verificationBytes = Buffer.from(
+      JSON.stringify(verification, null, 2) + "\n"
+    );
+    await services.github.retain({
+      tag,
+      source: request.source,
+      prerelease: true,
+      assets: { [assetName]: verificationBytes },
+    });
+    fs.writeFileSync(path.join(request.output, assetName), verificationBytes, {
+      flag: "wx",
+    });
+    return {
+      ...verification,
+      npmWrites: 1,
+      next: "Exercise this exact beta and retain practice evidence before explicit stable approval",
+    };
+  } catch (error) {
+    throw new Error(
+      `${
+        sent
+          ? "Publication requested; completion unconfirmed"
+          : "No publication requested"
+      } for ${request.version}: ${
+        error.message
+      }. Retained evidence preserved; inspect registry before retrying; no automatic republish or tag repair.`,
+      { cause: error }
+    );
+  } finally {
+    fs.rmSync(temporary, { recursive: true, force: true });
+  }
+}
 async function runRelease(
   request,
   services = require("./release-services.cjs").services()
 ) {
   assert.equal(request.repository, REPOSITORY, "Wrong repository");
-  assert.equal(
-    request.operation,
-    "prepare-beta",
+  assert.ok(
+    ["prepare-beta", "beta"].includes(request.operation),
     "Unsupported release operation"
   );
+  if (request.operation === "beta") {
+    assert.ok(
+      typeof request.output === "string" && path.isAbsolute(request.output),
+      "Explicit absolute output required"
+    );
+    assert.ok(
+      fs.existsSync(path.join(request.output, "intent.json")),
+      "Missing retained beta intent"
+    );
+    assert.ok(
+      request.channel === undefined || request.channel === "beta",
+      "Wrong beta channel"
+    );
+  }
   const parsed = version(request.version, true);
   for (const field of ["source", "dispatcher"])
     assert.match(
@@ -226,6 +561,13 @@ async function runRelease(
     existingTag === null || existingTag === request.source,
     "Existing version tag changed source"
   );
+  if (request.operation === "beta")
+    return publishBeta(request, services, {
+      metadata,
+      dispatcher,
+      tools,
+      main,
+    });
   assert.equal(
     await services.github.release(tag),
     null,
@@ -405,6 +747,7 @@ async function runRelease(
 module.exports = {
   runRelease,
   validateRecord,
+  verifyProvenance,
   sourceIdentity,
   dispatcherIdentity,
   toolchain,
