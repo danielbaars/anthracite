@@ -160,9 +160,21 @@ export async function submitAction(
     context
   );
 
+  const pendingFooters = getPrFooterUpdates(branchNames, context);
+  if (pendingFooters.length) {
+    context.splog.info(
+      `Dependency footers to repair: ${pendingFooters
+        .map((update) => `${update.branch} (#${update.number})`)
+        .join(', ')}`
+    );
+  }
+
   if (
     await shouldAbort(
-      { ...args, hasAnyPrs: submissionInfos.length > 0 },
+      {
+        ...args,
+        hasAnyPrs: submissionInfos.length > 0 || pendingFooters.length > 0,
+      },
       context
     )
   ) {
@@ -173,9 +185,11 @@ export async function submitAction(
     context.engine.assertBranchEditable(args.rolesBranch);
   }
 
-  context.splog.info(
-    chalk.blueBright('📨 Pushing to remote and creating/updating PRs...')
-  );
+  if (submissionInfos.length) {
+    context.splog.info(
+      chalk.blueBright('📨 Pushing to remote and creating/updating PRs...')
+    );
+  }
 
   for (const [index, submissionInfo] of submissionInfos.entries()) {
     const remaining = submissionInfos.slice(index + 1).map((info) => info.head);
@@ -226,9 +240,48 @@ export async function submitAction(
     chalk.blueBright('\n🌳 Updating dependency trees in PR bodies...')
   );
 
-  // Submitting changes the dependency tree of the submitted branches *and*
-  // their ancestors, so refresh footers for both (#85).
   const repo = githubRepoSlug(context);
+  const footerUpdates = getPrFooterUpdates(branchNames, context);
+  for (const [index, update] of footerUpdates.entries()) {
+    try {
+      context.engine.assertBranchEditable(update.branch);
+      execFileSync('gh', [
+        'pr',
+        'edit',
+        `${update.number}`,
+        '--repo',
+        repo,
+        '--body',
+        update.body,
+      ]);
+    } catch (error) {
+      const pending = footerUpdates
+        .slice(index)
+        .map((item) => `${item.branch} (#${item.number})`);
+      throw new ExitFailedError(
+        [
+          `Dependency footer update failed for ${update.branch} (#${update.number}).`,
+          'Earlier confirmed PR and footer updates remain applied.',
+          `Unconfirmed or stale dependency footers: ${pending.join(', ')}.`,
+          'Rerun submit with the same selection to repair these footers; no new commit is required.',
+          error instanceof Error ? error.message : String(error),
+        ].join('\n')
+      );
+    }
+    context.splog.info(
+      `${chalk.green(update.branch)}: ${update.url} (${chalk.yellow(
+        'Updated'
+      )})`
+    );
+  }
+}
+
+function getPrFooterUpdates(
+  branchNames: readonly string[],
+  context: TContext
+): { branch: string; number: number; url?: string; body: string }[] {
+  if (!context.repoConfig.getIsGithubIntegrationEnabled()) return [];
+  // Submitting changes the dependency tree of the submitted branches and ancestors.
   const branchesToUpdate = new Set<string>(branchNames);
   for (const branch of branchNames) {
     let ancestor = context.engine.getParent(branch);
@@ -238,6 +291,7 @@ export async function submitAction(
     }
   }
 
+  const updates = [];
   for (const branch of branchesToUpdate) {
     if (context.engine.isBranchFrozen(branch)) continue;
     const prInfo = context.engine.getPrInfo(branch);
@@ -249,28 +303,16 @@ export async function submitAction(
     }
 
     const footer = createPrBodyFooter(context, branch);
-    const prFooterChanged = !prInfo.body?.includes(footer);
-
-    if (prFooterChanged) {
-      execFileSync('gh', [
-        'pr',
-        'edit',
-        `${prInfo.number}`,
-        '--repo',
-        repo,
-        '--body',
-        updatePrBodyFooter(prInfo.body, footer),
-      ]);
-
-      context.splog.info(
-        `${chalk.green(branch)}: ${prInfo.url} (${chalk.yellow('Updated')})`
-      );
+    if (!prInfo.body?.includes(footer)) {
+      updates.push({
+        branch,
+        number: prInfo.number,
+        url: prInfo.url,
+        body: updatePrBodyFooter(prInfo.body, footer),
+      });
     }
   }
-
-  if (!context.interactive) {
-    return;
-  }
+  return updates;
 }
 
 export function updatePrBodyFooter(
