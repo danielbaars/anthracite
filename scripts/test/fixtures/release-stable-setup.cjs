@@ -24,6 +24,11 @@ function fixture() {
       path.join(root, "scripts", name),
       path.join(checkout, "scripts", name)
     );
+  for (const name of fs.readdirSync(path.join(root, "scripts/test/fixtures")))
+    fs.copyFileSync(
+      path.join(root, "scripts/test/fixtures", name),
+      path.join(checkout, "scripts/test/fixtures", name)
+    );
   const commit = (message) => {
     git(checkout, "add", "-A");
     git(

@@ -138,6 +138,24 @@ function trackedDispatcher(checkout, commit) {
 function dispatcherIdentity(checkout, commit) {
   const identity = trackedDispatcher(checkout, commit);
   for (const [name, digest] of Object.entries(identity.files)) {
+    const local = fs.lstatSync(path.join(checkout, name));
+    assert.ok(local.isFile(), `Executing dispatcher must be regular: ${name}`);
+    if (process.platform !== "win32")
+      assert.equal(
+        Boolean(local.mode & 0o111),
+        identity.entries[name].mode === "100755",
+        `Executing dispatcher mode differs: ${name}`
+      );
+    if (name.startsWith("scripts/")) {
+      const running = fs.lstatSync(path.join(__dirname, path.basename(name)));
+      assert.ok(running.isFile(), `Running process must be regular: ${name}`);
+      if (process.platform !== "win32")
+        assert.equal(
+          Boolean(running.mode & 0o111),
+          identity.entries[name].mode === "100755",
+          `Running process mode differs: ${name}`
+        );
+    }
     assert.equal(
       hash(fs.readFileSync(path.join(checkout, name))),
       digest,
@@ -383,7 +401,7 @@ function verifyPackage(filename, intent) {
   assert.deepEqual(manifest.dependencies || {}, {});
   assert.equal(manifest.private, undefined);
 }
-function verifyProvenance(proof, intent) {
+function verifyProvenance(proof, intent, attempt = intent) {
   assert.ok(proof, "Published package or provenance is not yet visible");
   assert.equal(
     proof.signaturesVerified,
@@ -397,7 +415,11 @@ function verifyProvenance(proof, intent) {
   );
   assert.equal(proof.manifest.name, PACKAGE);
   assert.equal(proof.manifest.version, intent.version);
-  assert.equal(proof.manifest.dist.integrity, intent.artifact.integrity);
+  assert.equal(
+    proof.manifest.dist.integrity,
+    intent.artifact.integrity,
+    "Published artifact integrity disagrees"
+  );
   verifyArtifact(Buffer.from(proof.bytes), intent);
   const statement = proof.statement;
   assert.equal(statement.predicateType, "https://slsa.dev/provenance/v1");
@@ -420,169 +442,342 @@ function verifyProvenance(proof, intent) {
   );
   assert.ok(
     statement.predicate.buildDefinition.resolvedDependencies.some(
-      (item) => item.digest?.gitCommit === intent.dispatcher.commit
+      (item) => item.digest?.gitCommit === attempt.dispatcher.commit
     ),
     "Provenance dispatcher differs from retained intent"
   );
   assert.equal(
     statement.predicate.runDetails.metadata.invocationId,
-    `https://github.com/${REPOSITORY}/actions/runs/${intent.run.id}/attempts/${intent.run.attempt}`,
+    `https://github.com/${REPOSITORY}/actions/runs/${attempt.run.id}/attempts/${attempt.run.attempt}`,
     "Provenance publication attempt differs from retained intent"
   );
 }
-async function publishPrepared(request, services, context) {
-  const tag = `v${request.version}`;
-  const localIntent = fs.readFileSync(path.join(request.output, "intent.json"));
-  const intent = validateRecord(json(localIntent));
-  const isStable = request.operation === "stable";
-  assert.equal(intent.channel, isStable ? "stable" : "beta");
+const retainedNames = (stable) => [
+  "intent.json",
+  "danielbaars-anthracite.tgz",
+  "SHA256SUMS",
+  "tests.json",
+  ...(stable
+    ? [
+        "assessment.json",
+        "practice.json",
+        "beta-intent.json",
+        "beta-verification.json",
+      ]
+    : []),
+];
+function equalFile(filename, bytes, label) {
+  if (fs.existsSync(filename))
+    assert.ok(
+      fs.readFileSync(filename).equals(bytes),
+      `Conflicting retained ${label}`
+    );
+  else fs.writeFileSync(filename, bytes, { flag: "wx" });
+}
+function historicalLatest(metadata, intent) {
+  const historical = metadata.versions?.[intent.before.latest];
+  assert.equal(
+    historical?.name,
+    PACKAGE,
+    "Historical latest package identity disagrees"
+  );
+  assert.equal(
+    historical?.version,
+    intent.before.latest,
+    "Historical latest version disagrees"
+  );
+  assert.equal(
+    historical?.dist?.integrity,
+    intent.before.latestIntegrity,
+    "Historical latest integrity disagrees"
+  );
+}
+function validateAttempt(bytes, name, intent, intentBytes, checkout) {
+  const attempt = json(bytes);
+  assert.equal(attempt.schema, 1);
+  assert.equal(attempt.status, "publication-intended");
+  assert.equal(attempt.intentSha256, hash(intentBytes));
+  assert.deepEqual(attempt.artifact, intent.artifact);
+  assert.deepEqual(attempt.source, intent.source);
+  assert.deepEqual(attempt.tools, intent.tools);
+  assert.deepEqual(
+    attempt.before,
+    { latest: intent.before.latest, beta: intent.before.beta },
+    "Retained attempt channel observations disagree"
+  );
+  assert.match(attempt.run?.id || "", /^[1-9]\d*$/);
+  assert.match(attempt.run?.attempt || "", /^[1-9]\d*$/);
+  assert.match(attempt.run?.actor || "", /^[A-Za-z0-9][A-Za-z0-9-]*$/);
+  assert.equal(name, `attempt-${attempt.run.id}-${attempt.run.attempt}.json`);
+  assert.deepEqual(
+    trackedDispatcher(checkout, attempt.dispatcher.commit),
+    attempt.dispatcher
+  );
+  assert.deepEqual(attempt.dispatcher.files, intent.dispatcher.files);
+  assert.deepEqual(attempt.dispatcher.entries, intent.dispatcher.entries);
+  if (intent.channel === "stable") {
+    assert.equal(attempt.approval?.actor, attempt.run.actor);
+    assert.equal(attempt.approval?.version, intent.version);
+    assert.deepEqual(attempt.approval?.run, attempt.run);
+    assert.equal(attempt.practiceSha256, intent.assessment.practice.sha256);
+  }
+  return attempt;
+}
+function publicationAttempts(release, intent, intentBytes, checkout) {
+  return Object.entries(release.assets)
+    .filter(([name]) => /^attempt-[1-9]\d*-[1-9]\d*\.json$/.test(name))
+    .map(([name, bytes]) => ({
+      name,
+      bytes: Buffer.from(bytes),
+      value: validateAttempt(bytes, name, intent, intentBytes, checkout),
+    }));
+}
+function proofAttempt(proof, attempts, intent) {
+  assert.ok(attempts.length, "Missing durable publication attempt");
+  const invocation =
+    proof?.statement?.predicate?.runDetails?.metadata?.invocationId;
+  const selected = attempts.filter(
+    ({ value }) =>
+      invocation ===
+      `https://github.com/${REPOSITORY}/actions/runs/${value.run.id}/attempts/${value.run.attempt}`
+  );
+  assert.equal(
+    selected.length,
+    1,
+    "Provenance publication attempt has no exact retained identity"
+  );
+  verifyProvenance(proof, intent, selected[0].value);
+  return selected[0];
+}
+function assertChannels(metadata, intent) {
+  assert.equal(metadata.name, PACKAGE);
+  historicalLatest(metadata, intent);
+  assert.equal(
+    metadata.versions[intent.version]?.dist?.integrity,
+    intent.artifact.integrity,
+    "Published version integrity changed"
+  );
+  assert.equal(
+    metadata["dist-tags"].beta || null,
+    intent.channel === "stable" ? intent.before.beta : intent.version,
+    "Beta moved during publication; no tag repair attempted"
+  );
+  assert.equal(
+    metadata["dist-tags"].latest,
+    intent.channel === "stable" ? intent.version : intent.before.latest,
+    "Latest moved during publication; no tag repair attempted"
+  );
+}
+function verifyRetainedSet(release, intent, assets) {
+  assert.ok(release, "Missing durable release evidence");
+  assert.equal(release.tag, `v${intent.version}`);
+  assert.equal(
+    release.source,
+    intent.source.commit,
+    "Durable release source changed"
+  );
+  assert.equal(
+    release.prerelease,
+    intent.channel === "beta",
+    "Durable release channel changed"
+  );
+  for (const [name, bytes] of Object.entries(assets))
+    assert.ok(
+      release.assets[name] && Buffer.from(release.assets[name]).equals(bytes),
+      `Durable ${name} changed`
+    );
+}
+async function hydratePrepared(request, services, release) {
+  const local = path.join(request.output, "intent.json");
+  const intentBytes = fs.existsSync(local)
+    ? fs.readFileSync(local)
+    : release?.assets["intent.json"];
+  assert.ok(
+    intentBytes,
+    "Missing retained beta intent or durable original intent"
+  );
+  const intent = validateRecord(json(intentBytes));
+  const stable = intent.channel === "stable";
   assert.equal(intent.version, request.version);
   assert.equal(intent.source.commit, request.source);
+  verifyCapturedRecord(request.checkout, intent);
+  const assets = {};
+  for (const name of retainedNames(stable)) {
+    const filename = path.join(request.output, name);
+    const localBytes = fs.existsSync(filename)
+      ? fs.readFileSync(filename)
+      : null;
+    const remote = release?.assets[name];
+    if (localBytes && remote)
+      assert.ok(
+        localBytes.equals(Buffer.from(remote)),
+        `Local and durable ${name} disagree`
+      );
+    assert.ok(
+      localBytes || remote,
+      `Missing original retained ${name}; cannot rebuild`
+    );
+    assets[name] = Buffer.from(localBytes || remote);
+  }
+  verifyArtifact(assets["danielbaars-anthracite.tgz"], intent);
   assert.deepEqual(
-    intent.dispatcher,
-    context.dispatcher,
+    json(assets["tests.json"]),
+    intent.tests,
+    "Retained test results disagree"
+  );
+  assert.equal(
+    assets.SHA256SUMS.toString(),
+    `${intent.artifact.sha256}  danielbaars-anthracite.tgz\n`
+  );
+  if (stable) {
+    assert.deepEqual(json(assets["assessment.json"]), intent.assessment);
+    assert.equal(
+      hash(assets["practice.json"]),
+      intent.assessment.practice.sha256
+    );
+    assert.equal(
+      hash(assets["beta-intent.json"]),
+      intent.assessment.beta.intentSha256
+    );
+    assert.equal(
+      hash(assets["beta-verification.json"]),
+      intent.assessment.beta.verificationSha256
+    );
+  }
+  fs.mkdirSync(request.output, { recursive: true });
+  for (const [name, bytes] of Object.entries(assets))
+    equalFile(path.join(request.output, name), bytes, name);
+  verifyPackage(
+    path.join(request.output, "danielbaars-anthracite.tgz"),
+    intent
+  );
+  if (release) {
+    assert.equal(release.tag, `v${request.version}`);
+    assert.equal(release.source, request.source);
+    assert.equal(release.prerelease, !stable);
+    assert.equal(
+      await services.github.tag(release.tag),
+      request.source,
+      "Prepared version tag moved"
+    );
+    // Complete interrupted uploads only with the already validated original bytes.
+    if (retainedNames(stable).some((name) => !release.assets[name])) {
+      await services.github.retain({
+        tag: release.tag,
+        source: request.source,
+        prerelease: !stable,
+        assets,
+      });
+      release = await services.github.release(release.tag);
+    }
+  } else {
+    assert.equal(
+      request.operation,
+      "prepare-beta",
+      "Missing durable release evidence; append cannot recreate release"
+    );
+    await services.github.retain({
+      tag: `v${request.version}`,
+      source: request.source,
+      prerelease: true,
+      assets,
+      initialRetention: true,
+    });
+    release = await services.github.release(`v${request.version}`);
+  }
+  for (const [name, bytes] of Object.entries(assets))
+    assert.ok(
+      release?.assets[name] && Buffer.from(release.assets[name]).equals(bytes),
+      `Missing durable ${name}`
+    );
+  return { intent, intentBytes: Buffer.from(intentBytes), release, assets };
+}
+function substantiveAssessment(value) {
+  const copy = JSON.parse(JSON.stringify(value));
+  delete copy.approval.run;
+  delete copy.dispatcher.commit;
+  // Current mutable mappings are checked separately for an absent-version write.
+  delete copy.before;
+  return copy;
+}
+async function publishPrepared(request, services, context) {
+  const tag = `v${request.version}`;
+  const retained = await hydratePrepared(
+    request,
+    services,
+    await services.github.release(tag)
+  );
+  const { intent, intentBytes } = retained;
+  let release = retained.release;
+  const isStable = request.operation === "stable";
+  assert.equal(intent.channel, isStable ? "stable" : "beta");
+  assert.deepEqual(
+    intent.dispatcher.files,
+    context.dispatcher.files,
     "Retained dispatcher differs from execution"
+  );
+  assert.deepEqual(
+    intent.dispatcher.entries,
+    context.dispatcher.entries,
+    "Retained dispatcher entry modes differ from execution"
   );
   assert.deepEqual(
     intent.tools,
     context.tools,
     "Retained tools differ from execution"
   );
-  assert.deepEqual(
-    intent.run,
-    request.run,
-    "Publication must use its retained run and attempt"
+  const current = await services.registry.snapshot();
+  historicalLatest(current, intent);
+  const existing = Boolean(current.versions[request.version]);
+  let attempts = publicationAttempts(
+    release,
+    intent,
+    intentBytes,
+    request.checkout
   );
-  verifyCapturedRecord(request.checkout, intent);
-  const release = await services.github.release(tag);
-  assert.ok(release, "Missing durable release evidence");
-  assert.equal(release.tag, tag);
-  assert.equal(release.source, request.source);
-  assert.equal(release.prerelease, !isStable);
-  assert.equal(
-    await services.github.tag(tag),
-    request.source,
-    "Prepared version tag moved"
-  );
-  for (const name of [
-    "intent.json",
-    "danielbaars-anthracite.tgz",
-    "SHA256SUMS",
-    "tests.json",
-    ...(isStable
-      ? [
-          "assessment.json",
-          "practice.json",
-          "beta-intent.json",
-          "beta-verification.json",
-        ]
-      : []),
-  ]) {
-    assert.ok(release.assets[name], `Missing durable ${name}`);
-    assert.ok(
-      Buffer.from(release.assets[name]).equals(
-        fs.readFileSync(path.join(request.output, name))
-      ),
-      `Local and durable ${name} disagree`
-    );
-  }
-  assert.deepEqual(
-    json(release.assets["tests.json"]),
-    intent.tests,
-    "Retained test results disagree"
-  );
-  assert.deepEqual(
-    intent.tests,
-    {
-      passed: true,
-      checks: [
-        "locked-install",
-        "build-lint",
-        "typecheck",
-        "curated-tarball",
-        "isolated-install",
-        "commands-completion-MCP",
-      ],
-    },
-    "Missing required release test results"
-  );
-  const filename = path.join(request.output, "danielbaars-anthracite.tgz");
-  const bytes = fs.readFileSync(filename);
-  verifyArtifact(bytes, intent);
-  assert.equal(
-    Buffer.from(release.assets.SHA256SUMS).toString(),
-    `${intent.artifact.sha256}  danielbaars-anthracite.tgz\n`
-  );
-  verifyPackage(filename, intent);
+  const deadline = Date.now() + 300000;
+  let freshAssessment;
   if (isStable) {
-    const temporaryAssessment = fs.mkdtempSync(
+    const temporary = fs.mkdtempSync(
       path.join(os.tmpdir(), "anthracite-stable-recheck-")
     );
     try {
-      const fresh = await assessStable(
-        { ...request, output: temporaryAssessment },
+      freshAssessment = await assessStable(
+        { ...request, output: temporary },
         services,
         {
-          metadata: await services.registry.snapshot(),
-          dispatcher: dispatcherIdentity(request.checkout, request.dispatcher),
-          tools: toolchain(request.checkout),
+          metadata: current,
+          dispatcher: context.dispatcher,
+          tools: context.tools,
           main: await services.github.main(),
         }
       );
       assert.deepEqual(
-        fresh,
-        intent.assessment,
+        substantiveAssessment(freshAssessment),
+        substantiveAssessment(intent.assessment),
         "Stable approval/source/beta/practice assessment changed before publication"
       );
       for (const name of [
-        "assessment.json",
         "practice.json",
         "beta-intent.json",
         "beta-verification.json",
       ])
         assert.ok(
           fs
-            .readFileSync(path.join(temporaryAssessment, name))
-            .equals(Buffer.from(release.assets[name])),
+            .readFileSync(path.join(temporary, name))
+            .equals(retained.assets[name]),
           `Stable durable ${name} changed`
         );
     } finally {
-      fs.rmSync(temporaryAssessment, { recursive: true, force: true });
+      fs.rmSync(temporary, { recursive: true, force: true });
     }
   }
-  const current = await services.registry.snapshot();
-  assert.equal(current.name, PACKAGE);
-  assert.equal(
-    current["dist-tags"].latest,
-    intent.before.latest,
-    "Latest moved before publication"
-  );
-  assert.equal(
-    current.versions[intent.before.latest]?.dist?.integrity,
-    intent.before.latestIntegrity,
-    "Latest stable integrity changed"
-  );
-  assert.ok(
-    !current.versions[request.version],
-    "Version already exists; do not publish again"
-  );
-  assert.equal(
-    current["dist-tags"].beta || null,
-    intent.before.beta,
-    "Beta moved before publication"
-  );
-  assert.equal(
-    await services.github.tag(tag),
-    request.source,
-    "Prepared version tag moved"
-  );
   const finalRepository = await services.github.repository();
   assert.equal(finalRepository.full_name, REPOSITORY);
   assert.equal(finalRepository.default_branch, "main");
-  const finalMain = await services.github.main();
-  assert.match(finalMain, /^[a-f0-9]{40}$/);
+  const main = await services.github.main();
   for (const commit of [request.source, request.dispatcher])
-    git(request.checkout, "merge-base", "--is-ancestor", commit, finalMain);
+    git(request.checkout, "merge-base", "--is-ancestor", commit, main);
   assert.equal(
     git(request.checkout, "rev-parse", "HEAD"),
     request.dispatcher,
@@ -595,7 +790,7 @@ async function publishPrepared(request, services, context) {
   );
   assert.deepEqual(
     dispatcherIdentity(request.checkout, request.dispatcher),
-    intent.dispatcher
+    context.dispatcher
   );
   assert.deepEqual(
     sourceIdentity(request.checkout, request.source),
@@ -606,49 +801,249 @@ async function publishPrepared(request, services, context) {
     intent.tools,
     "Release tools changed before publication"
   );
+  assert.equal(
+    await services.github.tag(tag),
+    request.source,
+    "Prepared version tag moved"
+  );
+  const filename = path.join(request.output, "danielbaars-anthracite.tgz");
   verifyArtifact(fs.readFileSync(filename), intent);
+  let sent = false;
+  let publishOutcome = existing
+    ? "existing version; read-only reconciliation"
+    : "no publication requested";
+  let selected;
+  let attempted;
+  let publicVersionVisible = existing;
+  let lastMappings = {
+    latest: current["dist-tags"].latest,
+    beta: current["dist-tags"].beta || null,
+  };
   const temporary = fs.mkdtempSync(
     path.join(os.tmpdir(), "anthracite-publish-")
   );
-  let sent = false;
   try {
-    const publishFile = path.join(temporary, "danielbaars-anthracite.tgz");
-    fs.writeFileSync(publishFile, bytes, { flag: "wx", mode: 0o444 });
-    sent = true;
-    await services.registry.publish({
-      tarball: publishFile,
-      channel: intent.distTag,
-      version: request.version,
-    });
-    const proof = await services.registry.inspect(request.version);
-    verifyProvenance(proof, intent);
-    const after = await services.registry.snapshot();
-    assert.equal(after.name, PACKAGE);
-    assert.equal(
-      after.versions[request.version]?.dist?.integrity,
-      intent.artifact.integrity,
-      "Published version integrity changed"
+    if (!existing) {
+      const latest = version(current["dist-tags"].latest, false);
+      assert.ok(
+        newer(version(intent.version, !isStable).numbers, latest.numbers),
+        "Target must be newer than latest"
+      );
+      assert.equal(
+        current["dist-tags"].latest,
+        intent.before.latest,
+        "Latest moved before publication"
+      );
+      assert.equal(
+        current["dist-tags"].beta || null,
+        intent.before.beta,
+        "Beta moved before publication"
+      );
+      if (!isStable)
+        for (const value of Object.keys(current.versions)) {
+          if (!/^\d+\.\d+\.\d+-beta\.[1-9]\d*$/.test(value)) continue;
+          const previous = version(value, true),
+            next = version(intent.version, true);
+          if (previous.target === next.target)
+            assert.ok(next.beta > previous.beta, "Beta number must advance");
+        }
+      const absent = await services.registry.inspect(request.version, {
+        deadline,
+      });
+      assert.equal(
+        absent,
+        null,
+        "Version existence changed before publication; reconcile before retrying"
+      );
+      const attempt = {
+        schema: 1,
+        status: "publication-intended",
+        intentSha256: hash(intentBytes),
+        source: intent.source,
+        artifact: intent.artifact,
+        tools: context.tools,
+        dispatcher: context.dispatcher,
+        run: request.run,
+        before: {
+          latest: current["dist-tags"].latest,
+          beta: current["dist-tags"].beta || null,
+        },
+        ...(isStable
+          ? {
+              approval: freshAssessment.approval,
+              practiceSha256: freshAssessment.practice.sha256,
+            }
+          : {}),
+      };
+      const name = `attempt-${request.run.id}-${request.run.attempt}.json`;
+      assert.ok(
+        !release.assets[name],
+        "Previously attempted identity; use a new explicit run/attempt after verified absence"
+      );
+      const bytes = Buffer.from(JSON.stringify(attempt, null, 2) + "\n");
+      validateAttempt(bytes, name, intent, intentBytes, request.checkout);
+      equalFile(path.join(request.output, name), bytes, name);
+      await services.github.retain({
+        tag,
+        source: request.source,
+        prerelease: !isStable,
+        assets: { [name]: bytes },
+      });
+      release = await services.github.release(tag);
+      verifyRetainedSet(release, intent, retained.assets);
+      assert.ok(
+        release?.assets[name] &&
+          Buffer.from(release.assets[name]).equals(bytes),
+        "Attempt retention incomplete before publication"
+      );
+      attempts = publicationAttempts(
+        release,
+        intent,
+        intentBytes,
+        request.checkout
+      );
+      attempted = { name, bytes, value: attempt };
+      const finalState = await services.registry.snapshot({ deadline });
+      historicalLatest(finalState, intent);
+      assert.equal(
+        finalState["dist-tags"].latest,
+        intent.before.latest,
+        "Latest moved before publication"
+      );
+      assert.equal(
+        finalState["dist-tags"].beta || null,
+        intent.before.beta,
+        "Beta moved before publication"
+      );
+      assert.ok(
+        !finalState.versions[request.version],
+        "Version existence changed before publication; reconcile before retrying"
+      );
+      assert.equal(
+        await services.registry.inspect(request.version, { deadline }),
+        null,
+        "Version existence changed before publication; reconcile before retrying"
+      );
+      assert.equal(
+        await services.github.tag(tag),
+        request.source,
+        "Prepared version tag moved before publication"
+      );
+      assert.deepEqual(
+        dispatcherIdentity(request.checkout, request.dispatcher),
+        context.dispatcher
+      );
+      assert.deepEqual(
+        sourceIdentity(request.checkout, request.source),
+        intent.source.normalized
+      );
+      assert.deepEqual(
+        toolchain(request.checkout),
+        intent.tools,
+        "Release tools changed before publication"
+      );
+      verifyArtifact(fs.readFileSync(filename), intent);
+      const publishFile = path.join(temporary, "danielbaars-anthracite.tgz");
+      fs.writeFileSync(
+        publishFile,
+        retained.assets["danielbaars-anthracite.tgz"],
+        { flag: "wx", mode: 0o444 }
+      );
+      sent = true;
+      try {
+        await services.registry.publish({
+          tarball: publishFile,
+          channel: intent.distTag,
+          version: request.version,
+        });
+        publishOutcome = "publication accepted response";
+      } catch (error) {
+        publishOutcome =
+          error.definiteRejection ||
+          ["E403", "E400", "E401", "E409"].includes(error.code)
+            ? `definite registry rejection: ${error.message}`
+            : `publication response lost or unavailable: ${error.message}`;
+      }
+    }
+    let proof,
+      after,
+      lastObservation = "package or provenance not yet visible";
+    while (Date.now() < deadline) {
+      try {
+        after = await services.registry.snapshot({ deadline });
+        assert.equal(after.name, PACKAGE);
+        historicalLatest(after, intent);
+        lastMappings = {
+          latest: after["dist-tags"].latest,
+          beta: after["dist-tags"].beta || null,
+        };
+        publicVersionVisible = Boolean(after.versions[request.version]);
+        const expected = {
+          latest: isStable ? intent.version : intent.before.latest,
+          beta: isStable ? intent.before.beta : intent.version,
+        };
+        for (const channel of ["latest", "beta"])
+          assert.ok(
+            lastMappings[channel] === expected[channel] ||
+              (sent && lastMappings[channel] === intent.before[channel]),
+            `${
+              channel === "latest" ? "Latest" : "Beta"
+            } moved during publication; no tag repair attempted`
+          );
+        if (publicVersionVisible) {
+          const published = after.versions[request.version];
+          assert.equal(
+            published.name,
+            PACKAGE,
+            "Published package identity disagrees"
+          );
+          assert.equal(
+            published.version,
+            request.version,
+            "Published package version disagrees"
+          );
+          assert.equal(
+            published.dist?.integrity,
+            intent.artifact.integrity,
+            "Published version integrity changed"
+          );
+        }
+        proof = await services.registry.inspect(request.version, { deadline });
+        if (proof) {
+          const candidate = proofAttempt(proof, attempts, intent);
+          after = await services.registry.snapshot({ deadline });
+          lastMappings = {
+            latest: after["dist-tags"].latest,
+            beta: after["dist-tags"].beta || null,
+          };
+          publicVersionVisible = Boolean(after.versions[request.version]);
+          assertChannels(after, intent);
+          assert.equal(
+            await services.github.tag(tag),
+            request.source,
+            "Prepared version tag moved after publication"
+          );
+          selected = candidate;
+          break;
+        }
+        lastObservation = "Published package or provenance is not yet visible";
+        if (publishOutcome.startsWith("definite registry rejection"))
+          throw Error(`${publishOutcome}; version verified absent`);
+      } catch (error) {
+        if (!error.retryable) throw error;
+        lastObservation = `public verification unavailable: ${error.message}`;
+      }
+      const remaining = deadline - Date.now();
+      if (remaining <= 0) break;
+      await new Promise((resolve) =>
+        setTimeout(resolve, Math.min(2000, remaining))
+      );
+    }
+    assert.ok(
+      selected,
+      `Public verification deadline exhausted: ${lastObservation}`
     );
-    assert.equal(
-      await services.github.tag(tag),
-      request.source,
-      "Prepared version tag moved after publication"
-    );
-    assert.equal(
-      after["dist-tags"].beta || null,
-      isStable ? intent.before.beta : request.version,
-      "Beta moved during publication; no tag repair attempted"
-    );
-    assert.equal(
-      after["dist-tags"].latest,
-      isStable ? request.version : intent.before.latest,
-      "Latest moved during publication; no tag repair attempted"
-    );
-    assert.equal(
-      after.versions[intent.before.latest]?.dist?.integrity,
-      intent.before.latestIntegrity,
-      "Latest stable integrity changed"
-    );
+    const actual = selected.value;
     const verification = {
       schema: 1,
       status: "verified",
@@ -657,57 +1052,116 @@ async function publishPrepared(request, services, context) {
       repository: REPOSITORY,
       version: request.version,
       source: request.source,
-      dispatcher: intent.dispatcher,
-      run: intent.run,
-      intentSha256: hash(localIntent),
+      dispatcher: actual.dispatcher,
+      run: actual.run,
+      intentSha256: hash(intentBytes),
+      attemptSha256: hash(selected.bytes),
       artifact: intent.artifact,
       provenance: {
         verified: true,
         signerIdentity: proof.signerIdentity,
-        dispatcher: intent.dispatcher.commit,
-        run: intent.run,
+        dispatcher: actual.dispatcher.commit,
+        run: actual.run,
       },
       tags: {
         latest: after["dist-tags"].latest,
-        beta: after["dist-tags"].beta,
+        beta: after["dist-tags"].beta || null,
       },
       confirmedWrites: [`npm ${intent.channel} publication`],
     };
-    const assetName = `verification-${request.run.id}-${request.run.attempt}.json`;
+    const assetName = `verification-${actual.run.id}-${actual.run.attempt}.json`;
     const verificationBytes = Buffer.from(
       JSON.stringify(verification, null, 2) + "\n"
     );
-    await services.github.retain({
-      tag,
-      source: request.source,
-      prerelease: !isStable,
-      assets: { [assetName]: verificationBytes },
-    });
-    fs.writeFileSync(path.join(request.output, assetName), verificationBytes, {
-      flag: "wx",
-    });
+    try {
+      await services.github.retain({
+        tag,
+        source: request.source,
+        prerelease: !isStable,
+        assets: { [assetName]: verificationBytes },
+      });
+      const saved = await services.github.release(tag);
+      verifyRetainedSet(saved, intent, retained.assets);
+      assert.ok(
+        saved.assets[selected.name] &&
+          Buffer.from(saved.assets[selected.name]).equals(selected.bytes),
+        "Durable publishing attempt changed"
+      );
+      assert.ok(
+        saved?.assets[assetName] &&
+          Buffer.from(saved.assets[assetName]).equals(verificationBytes),
+        "Final durable verification readback failed"
+      );
+      equalFile(
+        path.join(request.output, assetName),
+        verificationBytes,
+        assetName
+      );
+    } catch (error) {
+      throw Error(
+        `Package publication confirmed; durable verification incomplete: ${error.message}`
+      );
+    }
     return {
       ...verification,
-      npmWrites: 1,
+      npmWrites: sent ? 1 : 0,
+      publishOutcome,
       next: isStable
         ? "Stable publication verified; retained beta and practice evidence preserved"
         : "Exercise this exact beta and retain practice evidence before explicit stable approval",
     };
   } catch (error) {
+    if (attempted) {
+      const name = `observation-${attempted.value.run.id}-${attempted.value.run.attempt}.json`;
+      const observation = Buffer.from(
+        JSON.stringify(
+          {
+            schema: 1,
+            status: publishOutcome.startsWith("definite registry rejection")
+              ? "rejected"
+              : "unconfirmed",
+            intentSha256: hash(intentBytes),
+            attemptSha256: hash(attempted.bytes),
+            run: attempted.value.run,
+            npmWrites: sent ? 1 : 0,
+            publishOutcome,
+            tags: lastMappings,
+            publicVersionVisible,
+            diagnostic: error.message,
+          },
+          null,
+          2
+        ) + "\n"
+      );
+      try {
+        await services.github.retain({
+          tag,
+          source: request.source,
+          prerelease: !isStable,
+          assets: { [name]: observation },
+        });
+        equalFile(path.join(request.output, name), observation, name);
+      } catch (retentionError) {
+        error.message += `; observation retention incomplete: ${retentionError.message}`;
+      }
+    }
     throw new Error(
       `${
         sent
           ? "Publication requested; completion unconfirmed"
           : "No publication requested"
-      } for ${request.version}: ${
+      } for ${request.version}: ${publishOutcome}; ${
         error.message
-      }. Retained evidence preserved; inspect registry before retrying; no automatic republish or tag repair.`,
+      }. Public version visible: ${publicVersionVisible}; observed tags: ${JSON.stringify(
+        lastMappings
+      )}. Retained evidence preserved; inspect registry before retrying; no automatic republish or tag repair.`,
       { cause: error }
     );
   } finally {
     fs.rmSync(temporary, { recursive: true, force: true });
   }
 }
+
 function practiceReference(reference, betaVersion) {
   assert.equal(
     reference,
@@ -947,7 +1401,27 @@ async function assessStable(request, services, context) {
   } finally {
     fs.rmSync(betaPackage, { recursive: true, force: true });
   }
-  const verificationName = `verification-${intent.run.id}-${intent.run.attempt}.json`;
+  historicalLatest(context.metadata, intent);
+  const attempts = publicationAttempts(
+    release,
+    intent,
+    intentBytes,
+    request.checkout
+  );
+  const selected = proofAttempt(
+    await services.registry.inspect(intent.version),
+    attempts,
+    intent
+  );
+  const actual = selected.value;
+  git(
+    request.checkout,
+    "merge-base",
+    "--is-ancestor",
+    actual.dispatcher.commit,
+    context.main
+  );
+  const verificationName = `verification-${actual.run.id}-${actual.run.attempt}.json`;
   const verificationBytes = release.assets[verificationName];
   assert.ok(verificationBytes, "Missing verified beta record");
   const verification = json(verificationBytes);
@@ -960,8 +1434,9 @@ async function assessStable(request, services, context) {
   assert.equal(verification.source, intent.source.commit);
   assert.equal(verification.intentSha256, hash(intentBytes));
   assert.deepEqual(verification.artifact, intent.artifact);
-  assert.deepEqual(verification.dispatcher, intent.dispatcher);
-  assert.deepEqual(verification.run, intent.run);
+  assert.deepEqual(verification.dispatcher, actual.dispatcher);
+  assert.equal(verification.attemptSha256, hash(selected.bytes));
+  assert.deepEqual(verification.run, actual.run);
   assert.deepEqual(
     verification.confirmedWrites,
     ["npm beta publication"],
@@ -971,8 +1446,8 @@ async function assessStable(request, services, context) {
     verified: true,
     signerIdentity:
       "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main",
-    dispatcher: intent.dispatcher.commit,
-    run: intent.run,
+    dispatcher: actual.dispatcher.commit,
+    run: actual.run,
   });
   assert.equal(verification.tags.beta, intent.version);
   assert.equal(verification.tags.latest, intent.before.latest);
@@ -981,7 +1456,6 @@ async function assessStable(request, services, context) {
     intent.artifact.integrity,
     "Published beta integrity disagrees"
   );
-  verifyProvenance(await services.registry.inspect(intent.version), intent);
   const reference = practiceReference(request.practice, intent.version);
   const evidence = await services.github.evidence(reference);
   assert.equal(
@@ -1073,10 +1547,7 @@ async function assessStable(request, services, context) {
   return assessment;
 }
 
-async function runRelease(
-  request,
-  services = require("./release-services.cjs").services()
-) {
+function validateRequest(request) {
   assert.equal(request.repository, REPOSITORY, "Wrong repository");
   assert.ok(
     ["prepare-beta", "beta", "assess-stable", "stable"].includes(
@@ -1102,10 +1573,6 @@ async function runRelease(
       "Explicit absolute output required"
     );
     assert.ok(
-      fs.existsSync(path.join(request.output, "intent.json")),
-      "Missing retained beta intent"
-    );
-    assert.ok(
       request.channel === undefined || request.channel === "beta",
       "Wrong beta channel"
     );
@@ -1119,12 +1586,22 @@ async function runRelease(
       `Expected immutable ${field} commit`
     );
   assert.ok(
-    path.isAbsolute(request.checkout) && path.isAbsolute(request.output),
+    typeof request.checkout === "string" &&
+      typeof request.output === "string" &&
+      path.isAbsolute(request.checkout) &&
+      path.isAbsolute(request.output),
     "Explicit absolute paths required"
   );
   assert.match(request.run?.id || "", /^[1-9]\d*$/);
   assert.match(request.run?.attempt || "", /^[1-9]\d*$/);
   assert.match(request.run?.actor || "", /^[A-Za-z0-9][A-Za-z0-9-]*$/);
+  return { isStable, parsed };
+}
+async function runReleaseOwned(
+  request,
+  services = require("./release-services.cjs").services()
+) {
+  const { isStable, parsed } = validateRequest(request);
   assert.equal(
     git(request.checkout, "status", "--porcelain", "--untracked-files=no"),
     "",
@@ -1151,6 +1628,41 @@ async function runRelease(
   const tools = toolchain(request.checkout);
   const metadata = await services.registry.snapshot();
   assert.equal(metadata.name, PACKAGE);
+  const context = { metadata, dispatcher, tools, main };
+  const retainedRelease = await services.github.release(`v${request.version}`);
+  if (
+    ["beta", "stable", "prepare-beta"].includes(request.operation) &&
+    (retainedRelease?.assets["intent.json"] ||
+      fs.existsSync(path.join(request.output, "intent.json")))
+  ) {
+    if (request.operation === "prepare-beta") {
+      const retained = await hydratePrepared(
+        request,
+        services,
+        retainedRelease
+      );
+      return {
+        status: "prepared",
+        channel: "beta",
+        version: request.version,
+        source: request.source,
+        artifact: retained.intent.artifact,
+        tests: retained.intent.tests,
+        confirmedWrites: ["GitHub release evidence"],
+        npmWrites: 0,
+        next: "Publish only through the separately authorized beta operation",
+      };
+    }
+    return publishPrepared(request, services, context);
+  }
+  if (request.operation === "beta")
+    throw Error("Missing retained beta intent or durable original intent");
+  assert.ok(
+    request.operation === "assess-stable" ||
+      !retainedRelease ||
+      Object.keys(retainedRelease.assets).length === 0,
+    "Missing original intent; cannot rebuild retained artifact"
+  );
   const latest = metadata["dist-tags"]?.latest;
   const stable = version(latest, false);
   assert.ok(
@@ -1177,21 +1689,11 @@ async function runRelease(
     existingTag === null || existingTag === request.source,
     "Existing version tag changed source"
   );
-  const context = { metadata, dispatcher, tools, main };
   let assessment;
   if (isStable) {
     assessment = await assessStable(request, services, context);
     if (request.operation === "assess-stable") return assessment;
-    if (fs.existsSync(path.join(request.output, "intent.json")))
-      return publishPrepared(request, services, context);
   }
-  if (request.operation === "beta")
-    return publishPrepared(request, services, {
-      metadata,
-      dispatcher,
-      tools,
-      main,
-    });
   if (!isStable)
     assert.equal(
       await services.github.release(tag),
@@ -1383,6 +1885,7 @@ async function runRelease(
       source: request.source,
       prerelease: !isStable,
       assets,
+      initialRetention: !isStable,
     });
     if (isStable) return publishPrepared(request, services, context);
     return {
@@ -1398,6 +1901,45 @@ async function runRelease(
     };
   } finally {
     fs.rmSync(temporary, { recursive: true, force: true });
+  }
+}
+async function runRelease(
+  request,
+  services = require("./release-services.cjs").services()
+) {
+  validateRequest(request);
+  if (!["prepare-beta", "beta", "stable"].includes(request.operation))
+    return runReleaseOwned(request, services);
+  assert.ok(
+    path.isAbsolute(request.checkout),
+    "Explicit absolute checkout required"
+  );
+  const common = git(
+    request.checkout,
+    "rev-parse",
+    "--path-format=absolute",
+    "--git-common-dir"
+  );
+  const lock = path.join(common, "anthracite-release-publication.lock");
+  const owner = `${process.pid}-${require("node:crypto").randomUUID()}`;
+  try {
+    fs.mkdirSync(lock);
+  } catch (error) {
+    if (error.code === "EEXIST")
+      throw Error(
+        "Owned release publication boundary is already held; preserving the existing owner and lock"
+      );
+    throw error;
+  }
+  const token = path.join(lock, "owner");
+  try {
+    fs.writeFileSync(token, owner, { flag: "wx" });
+    return await runReleaseOwned(request, services);
+  } finally {
+    if (fs.existsSync(token) && fs.readFileSync(token, "utf8") === owner) {
+      fs.unlinkSync(token);
+      fs.rmdirSync(lock);
+    }
   }
 }
 module.exports = {

@@ -64,7 +64,8 @@ const services = {
       save();
     },
     inspect: async (version) => {
-      if (state.missingReadback) return null;
+      if (state.missingReadback || !state.registry.versions[version])
+        return null;
       return {
         manifest: state.registry.versions[version],
         bytes: Buffer.from(state.writes[0].bytes, "base64"),

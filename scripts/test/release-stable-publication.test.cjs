@@ -184,19 +184,40 @@ test(
           after.releases["v0.7.0"].assets[name],
           `Missing durable stable ${name}`
         );
+      const orphaned = structuredClone(baseline);
+      orphaned.releases["v0.7.0"] = structuredClone(after.releases["v0.7.0"]);
+      delete orphaned.releases["v0.7.0"].assets["intent.json"];
+      delete orphaned.releases["v0.7.0"].assets["danielbaars-anthracite.tgz"];
+      f.write(orphaned);
+      const orphanOutput = path.join(f.temp, "missing-original-intent");
+      const orphanRefused = f.invoke({ ...input, output: orphanOutput });
+      assert.notEqual(orphanRefused.status, 0);
+      assert.match(
+        orphanRefused.stderr,
+        /Missing original intent; cannot rebuild/
+      );
+      assert.equal(
+        fs.existsSync(path.join(orphanOutput, "intent.json")),
+        false
+      );
+      assert.equal(JSON.parse(fs.readFileSync(f.statePath)).writes.length, 1);
       const retained = structuredClone(baseline);
       retained.releases["v0.7.0"] = structuredClone(after.releases["v0.7.0"]);
-      delete retained.releases["v0.7.0"].assets["verification-2345-1.json"];
+      for (const name of Object.keys(retained.releases["v0.7.0"].assets))
+        if (/^(attempt|verification|observation)-/.test(name))
+          delete retained.releases["v0.7.0"].assets[name];
       const originalArtifact = fs.readFileSync(
         path.join(input.output, "danielbaars-anthracite.tgz")
       );
       for (const [flag, reason, writes] of [
-        ["moveBetaBeforeWrite", /assessment changed|assessment.*changed/, 1],
+        ["moveBetaBeforeWrite", /Beta moved before|assessment.*changed/, 1],
         ["changePracticeBeforeWrite", /not approved/, 1],
         ["invalidateBetaBeforeWrite", /signatures/, 1],
         ["changeArtifactBeforeWrite", /checksum/, 1],
+        ["changeDurableBeforeWrite", /Durable tests.json changed/, 1],
         ["moveBetaAfterWrite", /Beta moved/, 2],
         ["wrongLatestAfterWrite", /Latest moved/, 2],
+        ["moveLatestDuringInspect", /Latest moved/, 2],
       ]) {
         const remote = structuredClone(retained);
         remote[flag] = true;
@@ -206,9 +227,15 @@ test(
           path.join(input.output, "danielbaars-anthracite.tgz"),
           originalArtifact
         );
+        // Independent external worlds must not inherit a prior attempt's local records.
+        for (const name of fs.readdirSync(input.output))
+          if (/^(attempt|verification|observation)-/.test(name))
+            fs.rmSync(path.join(input.output, name));
         const answer = f.invoke(input);
         assert.notEqual(answer.status, 0, answer.stdout);
         assert.match(answer.stderr, reason, flag);
+        if (flag === "moveLatestDuringInspect")
+          assert.match(answer.stderr, /observed tags:.*0.6.10/);
         assert.equal(
           JSON.parse(fs.readFileSync(f.statePath)).writes.length,
           writes,

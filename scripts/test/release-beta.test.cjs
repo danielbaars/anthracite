@@ -180,13 +180,15 @@ test(
         },
         /tag changed source|tag moved/
       );
-      refuse(
-        {},
-        (state) => {
-          delete state.release.assets["tests.json"];
-        },
-        /Missing durable tests/
+      const partial = structuredClone(before);
+      delete partial.release.assets["tests.json"];
+      f.write(partial);
+      const recovered = f.invoke();
+      assert.equal(recovered.status, 0, recovered.stderr);
+      assert.ok(
+        JSON.parse(fs.readFileSync(f.statePath)).release.assets["tests.json"]
       );
+      assert.equal(JSON.parse(fs.readFileSync(f.statePath)).writes.length, 0);
       refuse(
         {},
         (state) => {
@@ -228,14 +230,13 @@ test(
       assert.equal(proof.version, "0.7.0-beta.1");
       for (const [flag, reason] of [
         ["moveLatest", /Latest moved/],
-        ["missingReadback", /not yet visible/],
         ["invalidSignature", /signatures and attestations/],
         ["foreignSigner", /signer is not the trusted release workflow/],
       ]) {
         const state = JSON.parse(JSON.stringify(before));
-        fs.rmSync(path.join(f.request.output, "verification-1234-1.json"), {
-          force: true,
-        });
+        for (const name of fs.readdirSync(f.request.output))
+          if (/^(attempt|verification|observation)-/.test(name))
+            fs.rmSync(path.join(f.request.output, name));
         state[flag] = true;
         f.write(state);
         const uncertain = f.invoke({ operation: "beta" }, intent);

@@ -33,6 +33,11 @@ const services = {
       };
     },
     retain: async ({ tag, source, prerelease, assets }) => {
+      if (
+        state.failFinalRetention &&
+        Object.keys(assets).some((name) => name.startsWith("verification-"))
+      )
+        throw Error("Durable verification upload unavailable");
       state.releases ||= {};
       state.releases[tag] ||= { tag, source, prerelease, assets: {} };
       state.tags ||= {};
@@ -43,6 +48,13 @@ const services = {
           throw Error("Conflicting durable asset");
         state.releases[tag].assets[name] = bytes.toString("base64");
       }
+      if (
+        state.changeDurableBeforeWrite &&
+        Object.keys(assets).some((name) => name.startsWith("attempt-"))
+      )
+        state.releases[tag].assets["tests.json"] = Buffer.from(
+          "changed by another actor"
+        ).toString("base64");
       save();
     },
   },
@@ -50,6 +62,8 @@ const services = {
     snapshot: async () => {
       state.snapshots = (state.snapshots || 0) + 1;
       if (state.snapshots === 2) {
+        if (state.moveLatestBeforeWrite)
+          state.registry["dist-tags"].latest = "0.6.10";
         if (state.moveBetaBeforeWrite)
           state.registry["dist-tags"].beta = "0.7.0-beta.3";
         if (state.changePracticeBeforeWrite)
@@ -64,9 +78,23 @@ const services = {
             "changed"
           );
       }
-      return state.registry;
+      return structuredClone(state.registry);
     },
     publish: async ({ tarball, channel, version }) => {
+      if (state.publishDelayMs) {
+        state.publishEntered = true;
+        save();
+        await new Promise((resolve) =>
+          setTimeout(resolve, state.publishDelayMs)
+        );
+      }
+      if (state.rejectPublish) {
+        state.rejections = (state.rejections || 0) + 1;
+        save();
+        const error = Error("Registry definitely rejected publication");
+        error.code = "E403";
+        throw error;
+      }
       const bytes = fs.readFileSync(tarball);
       const intent =
         input.intent ||
@@ -113,12 +141,12 @@ const services = {
                 },
               },
               resolvedDependencies: [
-                { digest: { gitCommit: intent.dispatcher.commit } },
+                { digest: { gitCommit: input.request.dispatcher } },
               ],
             },
             runDetails: {
               metadata: {
-                invocationId: `https://github.com/danielbaars/anthracite/actions/runs/${intent.run.id}/attempts/${intent.run.attempt}`,
+                invocationId: `https://github.com/danielbaars/anthracite/actions/runs/${input.request.run.id}/attempts/${input.request.run.attempt}`,
               },
             },
           },
@@ -131,14 +159,52 @@ const services = {
         version,
         dist: { integrity: intent.artifact.integrity },
       };
+      if (state.moveLatestAfterBeta && channel === "beta")
+        state.registry["dist-tags"].latest = "0.6.10";
+      if (state.moveTagAfterWrite) state.tags[`v${version}`] = "a".repeat(40);
       if (state.moveBetaAfterWrite && channel === "latest")
         state.registry["dist-tags"].beta = "0.7.0-beta.3";
       if (state.wrongLatestAfterWrite && channel === "latest")
         state.registry["dist-tags"].latest = "0.6.9";
       save();
+      if (state.lostResponse)
+        throw Error("Connection lost after accepted publication");
     },
-    inspect: async (version) =>
-      state.registry.versions[version]
+    inspect: async (version, options = {}) => {
+      if (!state.registry.versions[version]) return null;
+      if (version === input.request.version) {
+        state.inspectCalls = (state.inspectCalls || 0) + 1;
+        state.deadlines ||= [];
+        state.deadlines.push(options.deadline - Date.now());
+        save();
+        if (state.delayedManifest > 0) {
+          state.delayedManifest--;
+          save();
+          return null;
+        }
+        if (state.delayedProvenance > 0) {
+          state.delayedProvenance--;
+          save();
+          const error = Error("Provenance not yet visible");
+          error.retryable = true;
+          throw error;
+        }
+        if (state.registryUnavailableAfterWrite) {
+          const error = Error("Registry read unavailable");
+          error.retryable = true;
+          throw error;
+        }
+      }
+      if (state.moveLatestDuringInspect && version === input.request.version) {
+        state.registry["dist-tags"].latest = "0.6.10";
+        state.registry.versions["0.6.10"] = {
+          name: "@danielbaars/anthracite",
+          version: "0.6.10",
+          dist: { integrity: "sha512-external-stable" },
+        };
+        save();
+      }
+      return state.registry.versions[version]
         ? {
             manifest: state.registry.versions[version],
             bytes: Buffer.from(
@@ -151,7 +217,8 @@ const services = {
               ? "https://github.com/foreign/repository/.github/workflows/release.yml@refs/heads/main"
               : "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main",
           }
-        : null,
+        : null;
+    },
   },
 };
 require(input.process)
