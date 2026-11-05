@@ -192,6 +192,15 @@ const services = {
           save();
           return null;
         }
+        if (state.delayedInstallTarget > 0) {
+          state.delayedInstallTarget--;
+          save();
+          const error = Error(
+            "npm error code ETARGET: exact published version is not yet installable"
+          );
+          error.retryable = true;
+          throw error;
+        }
         if (state.delayedProvenance > 0) {
           state.delayedProvenance--;
           save();

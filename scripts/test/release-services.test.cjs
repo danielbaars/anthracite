@@ -221,3 +221,59 @@ test("durable adapter never recreates missing releases on append and preserves c
     fs.rmSync(temporary, { recursive: true, force: true });
   }
 });
+
+test("npm readback retries ETARGET propagation but not authentication or integrity failures", () => {
+  const temporary = fs.mkdtempSync(
+    path.join(os.tmpdir(), "anthracite-npm-readback-")
+  );
+  try {
+    const calls = path.join(temporary, "calls.json");
+    fs.writeFileSync(
+      path.join(temporary, "npm"),
+      `#!${process.execPath}\nconst fs=require('node:fs');fs.writeFileSync(process.env.READBACK_CALLS,JSON.stringify(process.argv.slice(2)));console.error('npm error code '+process.env.READBACK_CODE);process.exit(1);\n`,
+      { mode: 0o755 }
+    );
+    const driver = path.join(temporary, "inspect.cjs");
+    fs.writeFileSync(
+      driver,
+      `
+const {createHash}=require('node:crypto');
+const bytes=Buffer.from('Controlled registry artifact');
+const manifest={name:'@danielbaars/anthracite',version:'0.6.10',dist:{integrity:'sha512-'+createHash('sha512').update(bytes).digest('base64'),tarball:'https://registry.npmjs.org/@danielbaars/anthracite/-/anthracite-0.6.10.tgz',attestations:{url:'https://registry.npmjs.org/-/npm/v1/attestations/@danielbaars%2fanthracite@0.6.10'}}};
+global.fetch=async url=>new Response(url.endsWith('.tgz')?bytes:JSON.stringify(manifest),{status:200});
+require(process.argv[2]).services().registry.inspect('0.6.10',{deadline:Date.now()+5000}).then(()=>{throw Error('Expected controlled npm install failure')}).catch(error=>console.log(JSON.stringify({retryable:error.retryable===true,message:error.message})));
+`
+    );
+    for (const [code, retryable] of [
+      ["ETARGET", true],
+      ["E404", true],
+      ["E401", false],
+      ["E403", false],
+      ["EINTEGRITY", false],
+    ]) {
+      const result = spawnSync(
+        process.execPath,
+        [driver, path.join(root, "scripts/release-services.cjs")],
+        {
+          encoding: "utf8",
+          env: {
+            ...process.env,
+            PATH: temporary + path.delimiter + process.env.PATH,
+            READBACK_CALLS: calls,
+            READBACK_CODE: code,
+          },
+        }
+      );
+      assert.equal(result.status, 0, result.stderr);
+      const observed = JSON.parse(result.stdout);
+      assert.match(observed.message, new RegExp(code));
+      assert.equal(observed.retryable, retryable, code);
+      const args = JSON.parse(fs.readFileSync(calls));
+      assert.equal(args[0], "install");
+      assert.equal(args.at(-1), "@danielbaars/anthracite@0.6.10");
+      assert.ok(args.includes("--ignore-scripts"));
+    }
+  } finally {
+    fs.rmSync(temporary, { recursive: true, force: true });
+  }
+});
