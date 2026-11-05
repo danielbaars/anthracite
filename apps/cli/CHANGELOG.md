@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.10](https://github.com/danielbaars/anthracite/compare/v0.6.9...v0.6.10) (2026-11-05)
+
+
+### Bug Fixes
+
+* **cli:** preserve ancestor PR bodies during selective submit ([54c11fd](https://github.com/danielbaars/anthracite/commit/54c11fd794448da8c350a30b223f8dba18685f89))
+* **cli:** repair stale dependency footers on unchanged submit ([1e7ab69](https://github.com/danielbaars/anthracite/commit/1e7ab6900791ec9d6fd01668da9853d0b3b5557d))
+
 ## [0.6.9](https://github.com/danielbaars/anthracite/compare/v0.6.8...v0.6.9) (2026-11-04)
 
 
