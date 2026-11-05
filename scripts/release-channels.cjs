@@ -296,6 +296,20 @@ function validateRecord(record) {
     assert.deepEqual(record.assessment.tools, record.tools);
     assert.deepEqual(record.assessment.before, record.before);
   }
+  if (record.assessment?.mode === "patch") {
+    assert.equal(record.channel, "stable");
+    const prior = version(record.before.latest, false).numbers;
+    assert.equal(
+      record.version,
+      `${prior[0]}.${prior[1]}.${prior[2] + 1n}`,
+      "Patch record must be next patch"
+    );
+    assert.ok(
+      typeof record.assessment.approval.reason === "string" &&
+        record.assessment.approval.reason.trim(),
+      "Patch reason missing"
+    );
+  }
   const latest = version(record.before.latest, false);
   assert.ok(
     newer(parsed.numbers, latest.numbers),
@@ -452,12 +466,14 @@ function verifyProvenance(proof, intent, attempt = intent) {
     "Provenance publication attempt differs from retained intent"
   );
 }
-const retainedNames = (stable) => [
+const retainedNames = (stable, patch = false) => [
   "intent.json",
   "danielbaars-anthracite.tgz",
   "SHA256SUMS",
   "tests.json",
-  ...(stable
+  ...(stable && patch
+    ? ["assessment.json"]
+    : stable
     ? [
         "assessment.json",
         "practice.json",
@@ -519,7 +535,7 @@ function validateAttempt(bytes, name, intent, intentBytes, checkout) {
     assert.equal(attempt.approval?.actor, attempt.run.actor);
     assert.equal(attempt.approval?.version, intent.version);
     assert.deepEqual(attempt.approval?.run, attempt.run);
-    assert.equal(attempt.practiceSha256, intent.assessment.practice.sha256);
+    assert.equal(attempt.practiceSha256, intent.assessment.practice?.sha256);
   }
   return attempt;
 }
@@ -602,7 +618,10 @@ async function hydratePrepared(request, services, release) {
   assert.equal(intent.source.commit, request.source);
   verifyCapturedRecord(request.checkout, intent);
   const assets = {};
-  for (const name of retainedNames(stable)) {
+  for (const name of retainedNames(
+    stable,
+    intent.assessment?.mode === "patch"
+  )) {
     const filename = path.join(request.output, name);
     const localBytes = fs.existsSync(filename)
       ? fs.readFileSync(filename)
@@ -631,9 +650,11 @@ async function hydratePrepared(request, services, release) {
   );
   if (stable) {
     assert.deepEqual(json(assets["assessment.json"]), intent.assessment);
+  }
+  if (stable && intent.assessment.mode !== "patch") {
     assert.equal(
       hash(assets["practice.json"]),
-      intent.assessment.practice.sha256
+      intent.assessment.practice?.sha256
     );
     assert.equal(
       hash(assets["beta-intent.json"]),
@@ -661,7 +682,11 @@ async function hydratePrepared(request, services, release) {
       "Prepared version tag moved"
     );
     // Complete interrupted uploads only with the already validated original bytes.
-    if (retainedNames(stable).some((name) => !release.assets[name])) {
+    if (
+      retainedNames(stable, intent.assessment?.mode === "patch").some(
+        (name) => !release.assets[name]
+      )
+    ) {
       await services.github.retain({
         tag: release.tag,
         source: request.source,
@@ -757,11 +782,9 @@ async function publishPrepared(request, services, context) {
         substantiveAssessment(intent.assessment),
         "Stable approval/source/beta/practice assessment changed before publication"
       );
-      for (const name of [
-        "practice.json",
-        "beta-intent.json",
-        "beta-verification.json",
-      ])
+      for (const name of freshAssessment.mode === "patch"
+        ? []
+        : ["practice.json", "beta-intent.json", "beta-verification.json"])
         assert.ok(
           fs
             .readFileSync(path.join(temporary, name))
@@ -871,7 +894,7 @@ async function publishPrepared(request, services, context) {
         ...(isStable
           ? {
               approval: freshAssessment.approval,
-              practiceSha256: freshAssessment.practice.sha256,
+              practiceSha256: freshAssessment.practice?.sha256,
             }
           : {}),
       };
@@ -1107,7 +1130,7 @@ async function publishPrepared(request, services, context) {
       npmWrites: sent ? 1 : 0,
       publishOutcome,
       next: isStable
-        ? "Stable publication verified; retained beta and practice evidence preserved"
+        ? "Stable publication verified; retained release assessment preserved"
         : "Exercise this exact beta and retain practice evidence before explicit stable approval",
     };
   } catch (error) {
@@ -1296,12 +1319,6 @@ function validatePractice(value, intent, intentSha256, actor) {
   return value;
 }
 async function assessStable(request, services, context) {
-  const betaParsed = version(request.betaVersion, true);
-  assert.equal(
-    betaParsed.target,
-    request.version,
-    "Selected beta target differs from stable version"
-  );
   assert.equal(
     request.tag,
     `v${request.version}`,
@@ -1330,6 +1347,62 @@ async function assessStable(request, services, context) {
     manifest.version,
     request.version,
     "Stable source manifest must already match its tag"
+  );
+  if (request.patchReason !== undefined) {
+    assert.ok(
+      !request.betaVersion && !request.practice,
+      "Patch cannot supply beta/practice evidence"
+    );
+    assert.ok(
+      typeof request.patchReason === "string" && request.patchReason.trim(),
+      "Patch release reason required"
+    );
+    const target = version(request.version, false).numbers;
+    assert.ok(target[2] > 0, "Patch release must increment patch");
+    const previous = `${target[0]}.${target[1]}.${target[2] - 1n}`;
+    const latest = context.metadata["dist-tags"].latest;
+    assert.ok(
+      latest === previous ||
+        (latest === request.version &&
+          context.metadata.versions[request.version]),
+      "Patch must be exactly the next patch after latest"
+    );
+    const assessment = {
+      schema: 1,
+      mode: "patch",
+      version: request.version,
+      source: {
+        commit: request.source,
+        normalized: sourceIdentity(request.checkout, request.source),
+      },
+      dispatcher: context.dispatcher,
+      tools: context.tools,
+      sourceEquivalent: true,
+      approval: {
+        actor: request.run.actor,
+        version: request.version,
+        run: request.run,
+        reason: request.patchReason,
+      },
+      before: {
+        latest,
+        latestIntegrity: context.metadata.versions[latest].dist.integrity,
+        beta: context.metadata["dist-tags"].beta || null,
+      },
+    };
+    fs.mkdirSync(request.output, { recursive: true });
+    equalFile(
+      path.join(request.output, "assessment.json"),
+      Buffer.from(JSON.stringify(assessment, null, 2) + "\n"),
+      "assessment.json"
+    );
+    return assessment;
+  }
+  const betaParsed = version(request.betaVersion, true);
+  assert.equal(
+    betaParsed.target,
+    request.version,
+    "Selected beta target differs from stable version"
   );
   const betaTag = `v${request.betaVersion}`;
   const release = await services.github.release(betaTag);
@@ -1862,12 +1935,14 @@ async function runReleaseOwned(
       "tests.json": Buffer.from(JSON.stringify(tests, null, 2) + "\n"),
     };
     if (isStable)
-      for (const name of [
-        "assessment.json",
-        "practice.json",
-        "beta-intent.json",
-        "beta-verification.json",
-      ])
+      for (const name of assessment.mode === "patch"
+        ? ["assessment.json"]
+        : [
+            "assessment.json",
+            "practice.json",
+            "beta-intent.json",
+            "beta-verification.json",
+          ])
         assets[name] = fs.readFileSync(path.join(request.output, name));
     fs.mkdirSync(request.output, { recursive: true });
     for (const [name, contents] of Object.entries(assets)) {

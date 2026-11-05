@@ -66,7 +66,7 @@ The development installer uses separate versioned `-dev.<timestamp>` directories
 
 Use conventional commit and squash-PR titles such as `feat(cli): ...` or `fix(cli): ...` so release-please can determine the version and changelog.
 
-See [npm release operations](docs/npm-release.md) for the generated artifact, exact-tarball tests, release-please, OIDC, beta practice evidence and separate exact-version stable confirmation. The development workspaces remain private. Relevant local regression and exact installed-artifact checks remain required. Stable additionally requires approved practice for one immutable beta and verified source equivalence; a CI result or prepared release alone does not authorize publication. The native asset gate below does not apply to an npm-only release. Do not change the user's active installation during package verification.
+See [npm release operations](docs/npm-release.md) for the generated artifact, exact-tarball tests, release-please, OIDC, beta practice evidence and separate exact-version stable confirmation. The development workspaces remain private. Relevant local regression and exact installed-artifact checks remain required. Stable beta promotion additionally requires approved practice for one immutable beta and verified source equivalence. Explicit direct patch releases instead require the exact next patch and a recorded targeted-bugfix justification; a CI result or prepared release alone does not authorize publication. The native asset gate below does not apply to an npm-only release. Do not change the user's active installation during package verification.
 
 ## Prepare standalone release assets
 

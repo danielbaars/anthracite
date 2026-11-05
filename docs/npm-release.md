@@ -32,6 +32,8 @@ Publication requires manual dispatch of `.github/workflows/release.yml` from `ma
 
 Both jobs share the `release` concurrency group with `cancel-in-progress: false`. Preparation has a five-minute limit; manual publication has a ten-minute limit. The process installs locked dependencies, builds/lints/typechecks and tests the exact intended tarball through the established gates. It neither starts the full matrix nor compiles native releases. Run relevant focused local checks for release changes; the standalone release gate remains separate.
 
+Use the [direct targeted patch route](#direct-targeted-patch-releases) for narrowly scoped bugfixes. The beta/promotion procedure below remains for features and broader changes.
+
 ### Manual beta and stable inputs
 
 Use the Actions `Release` dispatch form or `gh workflow run release.yml --repo danielbaars/anthracite --ref main` with the following literal fields. The commands below are operational examples, not authorization to publish during implementation.
@@ -210,3 +212,19 @@ export and isolated consumer commands in the
 [reproduction procedure](verification/beta-stable-channels-2026-11-04.md#reproduction-and-public-seams).
 These local captured external-service records do not certify live npm/OIDC or
 personal-use acceptance. No publication or active installation is needed.
+
+## Direct targeted patch releases
+
+Use a direct patch for narrowly scoped bugfixes with focused regression tests and review. Features and broader behavior changes still use beta practice and the stable promotion route. This is an explicit maintainer choice, not a classification inferred from commit titles.
+
+After merging the release-please PR, the stable GitHub tag and CLI manifest must match. The version must be exactly one patch newer than npm `latest` (for example, 0.6.9 to 0.6.10). Provide the exact version confirmation and a substantive bugfix justification:
+
+```sh
+gh workflow run release.yml --repo danielbaars/anthracite --ref main \
+  -f operation=patch \
+  -f stable_tag=v0.6.10 \
+  -f confirmation=0.6.10 \
+  -f patch_reason="Targeted submit footer repairs; focused regressions and review passed."
+```
+
+Omit beta source/version and practice inputs. No beta or personal-use evidence is claimed. The workflow retains the patch decision, actor and exact source, builds and tests the stable tarball, publishes that exact artifact through OIDC to `latest`, and verifies signatures/provenance and unchanged `beta`. Reconciliation reuses retained bytes and never silently rebuilds or republishes an existing version. Repository identity, main ancestry, immutable tag, artifact and publication guards still apply. This operation does not start the full CI matrix or change a user's installation.

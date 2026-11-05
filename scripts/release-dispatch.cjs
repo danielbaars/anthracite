@@ -91,6 +91,7 @@ async function runDispatch(
     "stable_tag",
     "practice",
     "confirmation",
+    "patch_reason",
   ];
   for (const [key, value] of Object.entries(inputs)) {
     assert.ok(fields.includes(key), `Unsupported input: ${key}`);
@@ -101,10 +102,11 @@ async function runDispatch(
     );
   }
   assert.ok(
-    ["beta", "stable"].includes(inputs.operation),
-    "Explicit beta or stable operation required"
+    ["beta", "stable", "patch"].includes(inputs.operation),
+    "Explicit beta, stable or patch operation required"
   );
-  const beta = version(inputs.beta_version, true);
+  const patch = inputs.operation === "patch";
+  const beta = patch ? null : version(inputs.beta_version, true);
   let source;
   let intendedVersion;
   if (inputs.operation === "beta") {
@@ -113,7 +115,12 @@ async function runDispatch(
       /^[a-f0-9]{40}$/,
       "Expected immutable beta source commit"
     );
-    for (const field of ["stable_tag", "practice", "confirmation"])
+    for (const field of [
+      "stable_tag",
+      "practice",
+      "confirmation",
+      "patch_reason",
+    ])
       assert.ok(!inputs[field], `Contradictory beta input: ${field}`);
     source = inputs.beta_source;
     intendedVersion = inputs.beta_version;
@@ -130,16 +137,28 @@ async function runDispatch(
       intendedVersion,
       "Stable confirmation must equal the intended stable version"
     );
-    assert.equal(
-      beta.target,
-      intendedVersion,
-      "Selected beta target differs from stable version"
-    );
-    assert.equal(
-      inputs.practice,
-      `release:v${inputs.beta_version}/practice.json`,
-      "Supported exact-beta practice reference required"
-    );
+    if (patch) {
+      assert.ok(
+        !inputs.beta_version && !inputs.practice,
+        "Patch cannot supply beta/practice inputs"
+      );
+      assert.ok(inputs.patch_reason?.trim(), "Patch release reason required");
+    } else {
+      assert.ok(
+        !inputs.patch_reason,
+        "Stable beta promotion cannot supply patch_reason"
+      );
+      assert.equal(
+        beta.target,
+        intendedVersion,
+        "Selected beta target differs from stable version"
+      );
+      assert.equal(
+        inputs.practice,
+        `release:v${inputs.beta_version}/practice.json`,
+        "Supported exact-beta practice reference required"
+      );
+    }
   }
   assert.equal(
     environment.NPM_TRUSTED_PUBLISHING,
@@ -147,7 +166,7 @@ async function runDispatch(
     "Trusted publication is disabled"
   );
   // The tag resolves once here; core checks detect movement rather than selecting a new source.
-  if (inputs.operation === "stable") {
+  if (inputs.operation !== "beta") {
     source = await services.github.tag(inputs.stable_tag);
     assert.match(
       source || "",
@@ -156,7 +175,7 @@ async function runDispatch(
     );
   }
   const request = {
-    operation: inputs.operation,
+    operation: patch ? "stable" : inputs.operation,
     repository: REPOSITORY,
     checkout: environment.GITHUB_WORKSPACE,
     output: path.join(environment.RUNNER_TEMP, `release-${intendedVersion}`),
@@ -170,11 +189,12 @@ async function runDispatch(
       originalActor: environment.GITHUB_ACTOR,
       triggeringActor: environment.GITHUB_TRIGGERING_ACTOR,
     },
-    ...(inputs.operation === "stable"
+    ...(inputs.operation !== "beta"
       ? {
           tag: inputs.stable_tag,
-          betaVersion: inputs.beta_version,
-          practice: inputs.practice,
+          ...(patch
+            ? { patchReason: inputs.patch_reason }
+            : { betaVersion: inputs.beta_version, practice: inputs.practice }),
           confirmation: inputs.confirmation,
         }
       : {}),
