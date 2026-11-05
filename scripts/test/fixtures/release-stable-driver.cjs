@@ -105,16 +105,24 @@ const services = {
         );
       if (channel === "latest") {
         const release = state.releases[`v${version}`];
-        for (const name of [
-          "intent.json",
-          "danielbaars-anthracite.tgz",
-          "SHA256SUMS",
-          "tests.json",
-          "assessment.json",
-          "practice.json",
-          "beta-intent.json",
-          "beta-verification.json",
-        ])
+        for (const name of intent.assessment?.mode === "patch"
+          ? [
+              "intent.json",
+              "danielbaars-anthracite.tgz",
+              "SHA256SUMS",
+              "tests.json",
+              "assessment.json",
+            ]
+          : [
+              "intent.json",
+              "danielbaars-anthracite.tgz",
+              "SHA256SUMS",
+              "tests.json",
+              "assessment.json",
+              "practice.json",
+              "beta-intent.json",
+              "beta-verification.json",
+            ])
           if (!release.assets[name])
             throw Error(`Missing stable evidence before write: ${name}`);
       }
