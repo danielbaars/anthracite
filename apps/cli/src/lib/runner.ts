@@ -16,7 +16,7 @@ import { repoConfigFactory } from './spiffy/repo_config_spf';
 import { TGit } from './git/git';
 import { assertDeleteRecoveryEditable } from '../actions/delete_recovery';
 import { continueConfigFactory } from './spiffy/continuation_spf';
-import { assertDeleteAllowed } from '../actions/delete_branch';
+import { prepareDelete } from '../actions/delete_branch';
 import { planFileSplit } from '../actions/split_file_plan';
 import {
   assertAbsorbContinuationAvailable,
@@ -281,7 +281,7 @@ async function preflightLifecycle(
     { ...args, inspection: true }
   );
   if (canonicalName === 'delete' && typeof args.name === 'string')
-    assertDeleteAllowed(
+    await prepareDelete(
       { branchName: args.name, force: args.force === true },
       preservingContext
     );
