@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.11](https://github.com/danielbaars/anthracite/compare/v0.6.10...v0.6.11) (2026-11-05)
+
+
+### Bug Fixes
+
+* **cli:** verify PR state before branch deletion ([#137](https://github.com/danielbaars/anthracite/issues/137)) ([103ab2b](https://github.com/danielbaars/anthracite/commit/103ab2bcc6b473a0c06eacd48449860f54be0619))
+
 ## [0.6.10](https://github.com/danielbaars/anthracite/compare/v0.6.9...v0.6.10) (2026-11-05)
 
 
