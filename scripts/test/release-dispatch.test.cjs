@@ -189,8 +189,8 @@ test("literal manual inputs and authenticated execution identity refuse before p
         /repository/,
       ],
       [{}, {}, { sender: { login: "forged-actor" } }, /actor/],
-      [{ operation: "" }, {}, {}, /Explicit beta or stable/],
-      [{ operation: "select" }, {}, {}, /Explicit beta or stable/],
+      [{ operation: "" }, {}, {}, /Explicit beta, stable or patch/],
+      [{ operation: "select" }, {}, {}, /Explicit beta, stable or patch/],
       [
         {
           operation: "stable",
