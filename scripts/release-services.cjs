@@ -519,7 +519,8 @@ function services() {
         } catch (error) {
           if (
             error.code === "ETIMEDOUT" ||
-            /(?:EAI_AGAIN|ENOTFOUND|ECONNRESET|ETIMEDOUT|E404|E429|E50[0234])/.test(
+            // The version endpoint can lead npm install metadata during propagation.
+            /(?:EAI_AGAIN|ENOTFOUND|ECONNRESET|ETIMEDOUT|ETARGET|E404|E429|E50[0234])/.test(
               [error.stdout, error.stderr].join("\n")
             )
           )

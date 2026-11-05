@@ -5,7 +5,7 @@ const { test } = require("node:test");
 const { fixture } = require("./fixtures/release-stable-setup.cjs");
 
 test(
-  "direct patch publishes tested exact artifact without beta, preserves beta and reconciles once",
+  "direct patch waits for install propagation without republishing, preserves beta and reconciles once",
   { timeout: 600000 },
   () => {
     const f = fixture();
@@ -74,6 +74,7 @@ test(
         assert.match(result.stderr, reason);
         assert.equal(JSON.parse(fs.readFileSync(f.statePath)).writes.length, 0);
       }
+      f.state.delayedInstallTarget = 2;
       f.write(f.state);
       const published = f.invoke(input);
       assert.equal(published.status, 0, published.stderr);
@@ -81,6 +82,11 @@ test(
       assert.equal(result.status, "verified");
       assert.equal(result.npmWrites, 1);
       const state = JSON.parse(fs.readFileSync(f.statePath));
+      assert.equal(state.writes.length, 1);
+      assert.equal(state.inspectCalls, 3);
+      assert.equal(state.delayedInstallTarget, 0);
+      assert.ok(state.deadlines[0] > 0 && state.deadlines[0] <= 300000);
+      assert.ok(state.deadlines[2] < state.deadlines[0]);
       assert.equal(state.registry["dist-tags"].latest, "0.6.10");
       assert.equal(state.registry["dist-tags"].beta, "0.7.0-beta.2");
       const intent = JSON.parse(

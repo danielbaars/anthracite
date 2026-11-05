@@ -228,3 +228,7 @@ gh workflow run release.yml --repo danielbaars/anthracite --ref main \
 ```
 
 Omit beta source/version and practice inputs. No beta or personal-use evidence is claimed. The workflow retains the patch decision, actor and exact source, builds and tests the stable tarball, publishes that exact artifact through OIDC to `latest`, and verifies signatures/provenance and unchanged `beta`. Reconciliation reuses retained bytes and never silently rebuilds or republishes an existing version. Repository identity, main ancestry, immutable tag, artifact and publication guards still apply. This operation does not start the full CI matrix or change a user's installation.
+
+## npm installation propagation
+
+After npm accepts a publication, the exact-version endpoint can become visible before npm install metadata. An `ETARGET` response during isolated readback uses the existing bounded public-verification retry budget (five minutes). Retries repeat reads, installation and signature/provenance verification; they do not repeat publication or reset the deadline. Authentication and integrity errors still stop immediately. Exhausting the budget retains the original publication evidence for deliberate reconciliation.
