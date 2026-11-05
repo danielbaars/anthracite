@@ -10,22 +10,25 @@ on:
         type: choice
         required: true
         default: select
-        options: [select, beta, stable]
+        options: [select, beta, stable, patch]
       beta_source:
         description: Full 40-character main-history source commit (beta only)
         type: string
       beta_version:
-        description: Exact canonical beta version (required for either operation)
+        description: Exact canonical beta version (beta or stable promotion only)
         type: string
-        required: true
+        required: false
       stable_tag:
-        description: Existing stable release tag (stable only)
+        description: Existing stable release tag (stable or patch)
         type: string
       practice:
         description: "Exact beta evidence: release:v<VERSION>/practice.json (stable only)"
         type: string
+      patch_reason:
+        description: Targeted bugfix justification (direct patch only)
+        type: string
       confirmation:
-        description: Exact intended stable version without v (stable only)
+        description: Exact intended stable version without v (stable or patch)
         type: string
 
 permissions:

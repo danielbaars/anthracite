@@ -32,6 +32,9 @@ function summarize(result, intentBytes) {
     channel: result.channel,
     version: result.version,
     source: result.source,
+    releaseMode:
+      assessment?.mode ||
+      (result.channel === "stable" ? "beta-promotion" : "beta"),
     selectedBeta:
       assessment?.beta ||
       (result.channel === "beta"
@@ -49,7 +52,12 @@ function summarize(result, intentBytes) {
       rerunByDisplay: false,
     },
     practice: assessment?.practice || {
-      disposition: result.channel === "beta" ? "pending" : "unavailable",
+      disposition:
+        assessment?.mode === "patch"
+          ? "not-required-for-targeted-patch"
+          : result.channel === "beta"
+          ? "pending"
+          : "unavailable",
     },
     actualPublishingRun: result.run,
     actualTags: result.tags,
@@ -61,6 +69,7 @@ function summarize(result, intentBytes) {
   const lines = [
     `Channel / version: ${result.channel} / ${result.version}`,
     `Source: ${result.source}`,
+    `Release mode: ${operatorSummary.releaseMode}`,
     `Selected beta: ${
       operatorSummary.selectedBeta?.version ?? "unavailable"
     } (${operatorSummary.selectedBeta?.source ?? "unavailable"})`,

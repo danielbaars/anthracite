@@ -98,10 +98,9 @@ function dispatchFixture() {
       eventPath,
       JSON.stringify({ ...event, inputs: selected, ...eventChanges })
     );
-    const version =
-      selected.operation === "stable"
-        ? selected.stable_tag.slice(1)
-        : selected.beta_version;
+    const version = ["stable", "patch"].includes(selected.operation)
+      ? selected.stable_tag.slice(1)
+      : selected.beta_version;
     const input = path.join(f.temp, "dispatch-input.json");
     const output = path.join(f.temp, `release-${version}`);
     const env = { ...process.env, ...environment, ...environmentChanges };
@@ -503,5 +502,32 @@ test("production npm boundary requires the publication flag and uses explicit ex
     }
   } finally {
     fs.rmSync(temporary, { recursive: true, force: true });
+  }
+});
+
+test("direct patch manual input requires reason and rejects beta contradictions before writes", () => {
+  const f = dispatchFixture();
+  try {
+    for (const [changes, reason] of [
+      [{ patch_reason: "" }, /reason/],
+      [{ beta_version: "0.7.0-beta.1" }, /cannot supply beta/],
+      [{ practice: "invented" }, /cannot supply beta/],
+      [{ confirmation: "0.6.11" }, /confirmation/],
+    ]) {
+      const result = f.invoke({
+        operation: "patch",
+        beta_source: "",
+        beta_version: "",
+        stable_tag: "v0.6.10",
+        confirmation: "0.6.10",
+        patch_reason: "Targeted bugfix",
+        ...changes,
+      });
+      assert.notEqual(result.status, 0);
+      assert.match(result.stderr, reason);
+      assert.equal(JSON.parse(fs.readFileSync(f.statePath)).writes.length, 0);
+    }
+  } finally {
+    fs.rmSync(f.temp, { recursive: true, force: true });
   }
 });
