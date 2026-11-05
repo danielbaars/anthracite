@@ -153,7 +153,7 @@ export async function getGithubPr(
       'PR workflows require a same-repository GitHub head.'
     );
   if (
-    pr.headRepository?.nameWithOwner !== undefined &&
+    pr.headRepository?.nameWithOwner &&
     pr.headRepository.nameWithOwner.toLowerCase() !== repo.toLowerCase()
   )
     throw new ExitFailedError('GitHub head repository identity mismatch.');

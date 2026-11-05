@@ -198,6 +198,8 @@ an rename better-name
 ### `delete` (alias `dl`)
 Delete a branch and its corresponding Anthracite metadata.
 
+Source candidate after 0.6.10: unless `--force` or independent local empty/merged proof applies, deletion verifies an already associated PR against GitHub before using its state. Closed/merged PRs permit existing cleanup; open/reopened PRs refuse. The verified PR state is retained even on refusal. Missing access or disabled integration refuses with the cached state and unknown cache age, without treating cached closure as current permission. Frozen-survivor, worktree and recovery protections still apply.
+
 | Flag | Description |
 | --- | --- |
 | `[name]` | Positional: branch to delete. |

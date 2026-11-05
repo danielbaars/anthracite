@@ -1,4 +1,6 @@
 import chalk from 'chalk';
+import { getGithubPr, GithubPr } from '../lib/api/github_pr';
+import { runGitCommand } from '../lib/git/runner';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { ExitFailedError } from '../lib/errors';
@@ -8,6 +10,69 @@ import { clearContinuation } from './persist_continuation';
 import { assertNoGitOperation } from '../lib/git/assert_no_operation';
 
 type TDeleteArgs = { branchName: string; force?: boolean };
+
+/** Verify PR authority before ordinary context repair or local deletion. */
+export async function prepareDelete(
+  args: TDeleteArgs,
+  context: TContext
+): Promise<void> {
+  // Local participant protection must refuse before any remote read or cache write.
+  assertDeleteAllowed({ ...args, force: true }, context);
+  if (args.force) return;
+  const cached = context.engine.getPrInfo(args.branchName);
+  const locallySafe =
+    context.engine.isMergedIntoTrunk(args.branchName) ||
+    context.engine.isBranchEmpty(args.branchName);
+  if (locallySafe) return;
+  if (cached?.number === undefined) {
+    if (cached?.state)
+      throw new ExitFailedError(
+        `The branch ${args.branchName} has last known ${cached.state} (cached; age unknown), but no associated PR number. Could not verify its current GitHub state.`
+      );
+    assertDeleteAllowed(args, context);
+    return;
+  }
+  const before = deleteGraphState();
+  let pr: GithubPr | undefined;
+  try {
+    if (!context.repoConfig.getIsGithubIntegrationEnabled())
+      throw new ExitFailedError('GitHub integration is disabled.');
+    pr = await getGithubPr(args.branchName, context);
+    if (!pr) throw new ExitFailedError('The associated PR was not found.');
+  } catch (error: unknown) {
+    throw new ExitFailedError(
+      `The branch ${args.branchName} has PR #${cached.number}, last known ${
+        cached.state ?? 'UNKNOWN'
+      } (cached; age unknown). Could not verify its current GitHub state. ${
+        error instanceof Error ? error.message : 'PR information unavailable.'
+      }`
+    );
+  }
+  if (before !== deleteGraphState())
+    throw new ExitFailedError(
+      'Branches or metadata changed while verifying PR state; deletion refused. Retry after inspecting the local stack.'
+    );
+  assertDeleteAllowed({ ...args, force: true }, context);
+  // Retain the verified state even when an open/reopened PR refuses deletion.
+  context.engine.upsertPrInfo(args.branchName, {
+    state: pr.state,
+    base: pr.baseRefName,
+  });
+  assertDeleteAllowed(args, context);
+}
+
+function deleteGraphState(): string {
+  return runGitCommand({
+    args: [
+      'for-each-ref',
+      '--format=%(refname) %(objectname)',
+      'refs/heads',
+      'refs/branch-metadata',
+    ],
+    onError: 'throw',
+    resource: 'deleteGraphState',
+  });
+}
 
 /** Deletion may remove a frozen target, but surviving mandatory edits may not. */
 export function assertDeleteAllowed(

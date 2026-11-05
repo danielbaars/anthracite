@@ -31,7 +31,7 @@ jobs:
       NO_COLOR: "1"
       TEST_SHARD: "0"
       TEST_SHARDS: "1"
-      TEST_FILTER: 'commands/(anthracite_identity_cli|branch/branch_(create|checkout)|log/short|log_steps_(full|short|state|options)_cli|submit_(footer_repair|ancestor_footer)_cli)\.test\.js$'
+      TEST_FILTER: 'commands/(anthracite_identity_cli|branch/branch_(create|checkout)|log/short|log_steps_(full|short|state|options)_cli|submit_(footer_repair|ancestor_footer)_cli|delete_pr_state_cli)\.test\.js$'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
