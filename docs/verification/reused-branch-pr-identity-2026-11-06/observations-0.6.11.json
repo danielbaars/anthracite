@@ -1,0 +1,47 @@
+[
+  {
+    "case": "inspection matches old merged PR on different head",
+    "status": 0,
+    "localHead": "865c2978e296069c5df9e245d955b45d02a5488e",
+    "historicalHead": "a7bdd62ec08b20e68b0851d73e0fb41134fc4467",
+    "showsOldPr": true,
+    "writesAssociation": false
+  },
+  {
+    "case": "submit attempts old PR ready transition after pushing reused name",
+    "status": 1,
+    "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-submit-hDE9JA/remote.git\n * [new branch]      reuse -> reuse\nPull request #890 is closed. Only draft pull requests can be marked as ready for review\nERROR: Failed to submit PR for reuse: Command failed: gh pr ready 890 --repo fixture/submit --undo\nPull request #890 is closed. Only draft pull requests can be marked as ready for review\n\nCode for reuse was already pushed; earlier confirmed PR changes remain applied.\nNot attempted: dependency footer updates.",
+    "remoteHeadMatchesNewLocal": true,
+    "readyCalls": [
+      [
+        "pr",
+        "ready",
+        "890",
+        "--repo",
+        "fixture/submit",
+        "--undo"
+      ]
+    ]
+  },
+  {
+    "case": "two historical matches cause ambiguity",
+    "status": 1,
+    "stderr": "ERROR: Ambiguous pull request association for branch \"reuse\"."
+  },
+  {
+    "case": "sync with no stored association",
+    "status": 0,
+    "branchSurvives": true,
+    "localHeadBefore": "a4394dc70dedd30bef916c8208992c5e39bb2f06",
+    "stdout": "reuse is local-only; remote refresh skipped (no open pull request).\n🧹 Checking if any branches have been merged/closed and can be deleted...",
+    "stderr": ""
+  },
+  {
+    "case": "sync with retained old association",
+    "status": 0,
+    "branchSurvives": false,
+    "localHeadBefore": "927d9f3db6cc1a1c736568351a99a2873059ec55",
+    "stdout": "reuse has a merged pull request; feature refresh skipped, pending separately authorized cleanup.\n🧹 Checking if any branches have been merged/closed and can be deleted...\nDeleted branch reuse\nOriginal checkout reuse was deleted by sync cleanup; switched to trunk main.",
+    "stderr": ""
+  }
+]
