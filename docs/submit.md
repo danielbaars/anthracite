@@ -1,4 +1,6 @@
-# Reviewers and assignees during submission
+# Pull request submission
+
+## Reviewers and assignees
 
 Submission selects branches independently of who receives a review request or assignment. `an submit` and `an s` select the starting branch and its ancestors. `--stack`, or `an ss` by default, also includes descendants. `--branch` changes that starting point without checking it out.
 
@@ -25,3 +27,11 @@ Role options preserve draft status. Use the existing `--publish` or `--draft` op
 Submission stops at its first failure. Already pushed code, PR changes and confirmed role additions remain applied. Read the reported confirmed, failed and unattempted work before repeating; submission does not roll back reached work or store deferred role changes. Use `gh pr edit` for separate edits or removal of reviewers and assignees.
 
 The same literal arguments work through the existing MCP `run_an_cmd` tool. MCP execution is noninteractive and retains the owner's publication approval process; see [MCP configuration and authority](mcp.md).
+
+## Reusing branch names
+
+The candidate fix for [#139](https://github.com/danielbaars/anthracite/issues/139) distinguishes the current open PR from historical closed or merged PRs. Submit updates a unique verified open PR even when local commits have not yet been pushed. If complete discovery finds no open PR, submit uses normal new-PR inputs and defaults; `--publish` creates it ready for review, while unattended submission otherwise creates a draft. Historical titles, descriptions, roles, draft status and dependency footers are not edited.
+
+Previews identify creation versus updates. Ambiguous, incomplete or unavailable identity evidence refuses before the first push, and confirmed plans are checked again before execution. If a PR closes or changes identity after code has already been pushed, submission stops and reports that reached work. Inspect the current PRs before retrying; an uncertain creation response is reconciled through discovery rather than blindly creating another PR.
+
+Dependency-footers use current verified PR identities, including editable referenced ancestors and descendants outside the push selection. A retired out-of-scope association cannot authorize a PR edit or silently expand submission: resolve that stale branch relationship, then preview again. Frozen anchors retain their existing protection and are neither refreshed nor edited by submission.

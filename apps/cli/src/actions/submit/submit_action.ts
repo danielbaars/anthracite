@@ -2,12 +2,17 @@ import chalk from 'chalk';
 import { getAssignees } from './assignees';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
-import { TScopeSpec } from '../../lib/engine/scope_spec';
+import { SCOPE, TScopeSpec } from '../../lib/engine/scope_spec';
 import { ExitFailedError, KilledError } from '../../lib/errors';
 import { CommandFailedError, CommandKilledError } from '../../lib/git/runner';
 import { getPRInfoForBranches } from './prepare_branches';
 import { validateBranchesToSubmit } from './validate_branches';
-import { submitPullRequest, TPRSubmissionInfo } from './submit_prs';
+import {
+  assertOpenSubmitTarget,
+  assertSubmitTargets,
+  submitPullRequest,
+  TPRSubmissionInfo,
+} from './submit_prs';
 import {
   createPrBodyFooter,
   footerFooter,
@@ -190,6 +195,8 @@ export async function submitAction(
     context.engine.assertBranchEditable(args.rolesBranch);
   }
 
+  await assertSubmitTargets(submissionInfos, context);
+
   if (submissionInfos.length) {
     context.splog.info(
       chalk.blueBright('📨 Pushing to remote and creating/updating PRs...')
@@ -246,14 +253,24 @@ export async function submitAction(
   );
 
   const repo = githubRepoSlug(context);
-  const footerUpdates = await getPrFooterUpdates(
-    branchNames,
-    submissionInfos,
-    context
-  );
+  let footerUpdates: Awaited<ReturnType<typeof getPrFooterUpdates>>;
+  try {
+    footerUpdates = await getPrFooterUpdates(
+      branchNames,
+      submissionInfos,
+      context
+    );
+  } catch (error) {
+    throw new ExitFailedError(
+      `${
+        error instanceof Error ? error.message : String(error)
+      }\nAny confirmed PR submissions remain applied. Dependency footer updates not attempted; rerun submit with the same selection after resolving the lookup failure.`
+    );
+  }
   for (const [index, update] of footerUpdates.entries()) {
     try {
       context.engine.assertBranchEditable(update.branch);
+      await assertOpenSubmitTarget(update.branch, update.number, context);
       execFileSync('gh', [
         'pr',
         'edit',
@@ -301,6 +318,21 @@ async function getPrFooterUpdates(
     }
   }
 
+  // The rendered tree also references descendants outside this submission.
+  const referencedDescendants = [
+    ...new Set(
+      branchNames.flatMap((branch) =>
+        context.engine.getRelativeStack(branch, SCOPE.UPSTACK_EXCLUSIVE)
+      )
+    ),
+  ].filter(
+    (branch) =>
+      !branchesToUpdate.has(branch) &&
+      !context.engine.isBranchFrozen(branch) &&
+      context.engine.getPrInfo(branch)?.number !== undefined
+  );
+  await syncPrInfo(referencedDescendants, context);
+
   const footerBranches = [...branchesToUpdate].filter(
     (branch) =>
       !context.engine.isBranchFrozen(branch) &&
@@ -310,12 +342,24 @@ async function getPrFooterUpdates(
     (info) => info.action === 'update' && info.body !== undefined
   );
   // Inline edits are current user input; all other bodies need a fresh read.
-  const freshPrs = await syncPrInfo(
-    footerBranches.filter(
-      (branch) => !editedBodies.some((info) => info.head === branch)
-    ),
-    context
-  );
+  const freshPrs = (
+    await Promise.all(
+      footerBranches
+        .filter((branch) => !editedBodies.some((info) => info.head === branch))
+        .map(async (branch) => {
+          const number = context.engine.getPrInfo(branch)?.number;
+          try {
+            return await syncPrInfo([branch], context);
+          } catch (error) {
+            throw new ExitFailedError(
+              `Cannot read fresh PR body for ${branch} (#${number}); cached text will not be used. ${
+                error instanceof Error ? error.message : String(error)
+              }`
+            );
+          }
+        })
+    )
+  ).flat();
   const updates = [];
   for (const branch of footerBranches) {
     if (context.engine.isBranchFrozen(branch)) continue;

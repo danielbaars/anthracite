@@ -10,6 +10,8 @@ export type SubmitPr = {
   title: string;
   body: string;
   state: string;
+  headRefOid?: string;
+  baseRefOid?: string;
   isDraft: boolean;
   reviewDecision: string;
   reviewRequests: {
@@ -113,13 +115,48 @@ function main(): void {
     const index = args.indexOf(flag);
     return index < 0 ? undefined : args[index + 1];
   };
-  if (option('--repo') !== 'fixture/submit')
+  if (option('--repo')?.replace(/^github\.com\//, '') !== 'fixture/submit')
     throw new Error('Unexpected repository');
   const prs = readSubmitPrs(statePath);
   const pr = prs.find(
     (candidate) =>
       candidate.headRefName === args[2] || String(candidate.number) === args[2]
   );
+  if (args[1] === 'list') {
+    const matching = prs.filter(
+      (candidate) =>
+        candidate.headRefName === option('--head') &&
+        (option('--state') === 'all' || candidate.state === 'OPEN')
+    );
+    process.stdout.write(
+      JSON.stringify(matching.map((candidate) => inspectionFields(candidate)))
+    );
+    return;
+  }
+  function inspectionFields(candidate: SubmitPr): Record<string, unknown> {
+    const revision = (ref: string): string =>
+      execFileSync('git', ['rev-parse', ref], { encoding: 'utf8' }).trim();
+    const remote = execFileSync(
+      'git',
+      ['ls-remote', 'origin', `refs/heads/${candidate.headRefName}`],
+      { encoding: 'utf8' }
+    ).split(/\s/)[0];
+    return {
+      ...candidate,
+      headRefOid:
+        candidate.headRefOid ??
+        (remote || revision(`refs/heads/${candidate.headRefName}`)),
+      baseRefOid:
+        candidate.baseRefOid ?? revision(`refs/heads/${candidate.baseRefName}`),
+      author: { login: 'fixture-user' },
+      headRepository: { name: 'submit', nameWithOwner: 'fixture/submit' },
+      headRepositoryOwner: { login: 'fixture' },
+      isCrossRepository: false,
+      mergeable: null,
+      mergeStateStatus: null,
+      statusCheckRollup: null,
+    };
+  }
   if (args[1] === 'view') {
     if (!pr) {
       process.stderr.write('no pull requests found\n');
@@ -138,11 +175,10 @@ function main(): void {
         { encoding: 'utf8' }
       ).trim();
     const response: Record<string, unknown> = {
-      ...pr,
+      ...inspectionFields(pr),
       reviews: pr.reviews ?? [],
       assignees: pr.assignees ?? [],
-      headRefOid,
-      headRepository: { nameWithOwner: 'fixture/submit' },
+      headRefOid: pr.headRefOid ?? headRefOid,
     };
     if (
       process.env.ANTHRACITE_TEST_GH_REVIEW_MODE === 'invalid' &&
@@ -192,7 +228,10 @@ function main(): void {
     if (
       !head ||
       !base ||
-      prs.some((candidate) => candidate.headRefName === head)
+      prs.some(
+        (candidate) =>
+          candidate.headRefName === head && candidate.state === 'OPEN'
+      )
     )
       throw new Error('Invalid or duplicate PR creation');
     const number = Math.max(0, ...prs.map((candidate) => candidate.number)) + 1;

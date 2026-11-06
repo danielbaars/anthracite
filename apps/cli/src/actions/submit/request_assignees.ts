@@ -10,6 +10,7 @@ type AssigneeTarget = {
 
 const assigneeStateSchema = t.shape({
   headRefName: t.string,
+  state: t.literal('OPEN' as const),
   number: t.number,
   assignees: t.array(t.shape({ login: t.string })),
 });
@@ -25,7 +26,7 @@ function readAssignees(target: AssigneeTarget): string[] {
         '--repo',
         target.repo,
         '--json',
-        'headRefName,number,assignees',
+        'headRefName,number,assignees,state',
       ],
       { stdio: ['ignore', 'pipe', 'pipe'] }
     ).toString()

@@ -4,6 +4,7 @@ import { assertBranchEditable } from '../../lib/engine/frozen_branch';
 
 const reviewStateSchema = t.shape({
   headRefName: t.string,
+  state: t.literal('OPEN' as const),
   number: t.number,
   reviewRequests: t.array(
     t.shape({ login: t.optional(t.string), slug: t.optional(t.string) })
@@ -50,7 +51,7 @@ function readReviewState(target: ReviewTarget): ReviewState {
         '--repo',
         target.repo,
         '--json',
-        'headRefName,number,reviewRequests,reviews',
+        'headRefName,number,reviewRequests,reviews,state',
       ],
       { stdio: ['ignore', 'pipe', 'pipe'] }
     ).toString()

@@ -117,8 +117,22 @@ export class FrozenSubmitCliFixture extends SubmitCliFixture {
   freezeAfterGhView(
     fields: string,
     branch: string,
-    afterAssignment = false
+    options: { afterAssignment?: boolean; afterPush?: boolean } = {}
   ): void {
+    const { afterAssignment = false, afterPush = false } = options;
+    const pushMarker = path.join(this.root, 'discovery-after-push');
+    if (afterPush) {
+      const hook = path.join(this.repo, '.git/hooks/pre-push');
+      if (fs.existsSync(hook))
+        throw new Error('Fixture push hook already exists');
+      fs.writeFileSync(
+        hook,
+        `#!${process.execPath}\nrequire('fs').writeFileSync(${JSON.stringify(
+          pushMarker
+        )}, 'pushed');\n`
+      );
+      fs.chmodSync(hook, 0o755);
+    }
     const shim = path.join(this.root, 'bin', 'gh');
     const original = shim + '-original';
     fs.renameSync(shim, original);
@@ -133,9 +147,14 @@ const result = cp.spawnSync(${JSON.stringify(
       )}, args, {encoding: 'utf8'});
 process.stdout.write(result.stdout);
 process.stderr.write(result.stderr);
-if (args[0] === 'pr' && args[1] === 'view' && args[args.indexOf('--json') + 1] === ${JSON.stringify(
+const fields = args[args.indexOf('--json') + 1];
+if (args[0] === 'pr' && ['view', 'list'].includes(args[1]) && (${JSON.stringify(
         fields
-      )} && (!${afterAssignment} || JSON.parse(result.stdout).assignees?.length)) {
+      )} === 'inspection' ? fields?.includes('headRefOid') && fields?.includes('isCrossRepository') : fields === ${JSON.stringify(
+        fields
+      )}) && (!${afterAssignment} || JSON.parse(result.stdout).assignees?.length) && (!${afterPush} || require('fs').existsSync(${JSON.stringify(
+        pushMarker
+      )}))) {
   const frozen = cp.spawnSync(${JSON.stringify(freeze[0])}, ${JSON.stringify(
         freeze.slice(1)
       )}, {encoding: 'utf8'});
