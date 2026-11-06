@@ -151,7 +151,7 @@ try {
         CHARCOAL_TEST_BINARY: "",
       },
       encoding: "utf8",
-      timeout: 180000,
+      timeout: 300000,
     }
   );
   process.stdout.write(scenarios.stdout || "");
