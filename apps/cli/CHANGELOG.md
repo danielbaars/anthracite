@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.13](https://github.com/danielbaars/anthracite/compare/v0.6.12...v0.6.13) (2026-11-06)
+
+
+### Bug Fixes
+
+* **cli:** draw parent edges in short logs ([#147](https://github.com/danielbaars/anthracite/issues/147)) ([5672e76](https://github.com/danielbaars/anthracite/commit/5672e767190cec39ad4eb4a70e158187a9b4b828))
+
 ## [0.6.12](https://github.com/danielbaars/anthracite/compare/v0.6.11...v0.6.12) (2026-11-06)
 
 
