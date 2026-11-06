@@ -60,6 +60,7 @@ jobs:
         run: |
           node node_modules/mocha/bin/mocha.js \
             apps/cli/dist/test/commands/pr_reused_branch_cli.test.js \
+            apps/cli/dist/test/commands/sync_reused_branch_cli.test.js \
             --grep 'prefers the unique open PR|npm reuse:'
       - name: Build and test the npm tarball
         run: |
