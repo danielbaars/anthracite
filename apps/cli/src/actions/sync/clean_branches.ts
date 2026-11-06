@@ -477,7 +477,8 @@ export function verifySyncCleanupPrCoverage(
   plan: SyncCleanupPlan,
   context: TContext,
   names: readonly string[]
-): void {
+): SyncCleanupPlan {
+  const verifiedHeads = new Map<string, string>();
   for (const name of names) {
     const branch = plan.branches.find((entry) => entry.branchName === name);
     if (!branch?.head)
@@ -511,7 +512,16 @@ export function verifySyncCleanupPrCoverage(
       throw new ExitFailedError(
         `Pending cleanup PR identity/state/head changed or does not cover current work for ${name}; local work and reached progress are retained.`
       );
+    verifiedHeads.set(name, pr.headRefOid);
   }
+  // Older saved plans gain fresh application evidence without rewriting recovery.
+  return {
+    ...plan,
+    branches: plan.branches.map((branch) => {
+      const prHead = verifiedHeads.get(branch.branchName);
+      return prHead ? { ...branch, prHead } : branch;
+    }),
+  };
 }
 
 function reportSyncCleanupFailure(
