@@ -115,8 +115,9 @@ function main(): void {
     const index = args.indexOf(flag);
     return index < 0 ? undefined : args[index + 1];
   };
-  if (option('--repo')?.replace(/^github\.com\//, '') !== 'fixture/submit')
-    throw new Error('Unexpected repository');
+  const repo = option('--repo')?.replace(/^github\.com\//, '');
+  if (repo !== 'fixture/submit') throw new Error('Unexpected repository');
+  const [owner, name] = repo.split('/');
   const prs = readSubmitPrs(statePath);
   const pr = prs.find(
     (candidate) =>
@@ -149,8 +150,8 @@ function main(): void {
       baseRefOid:
         candidate.baseRefOid ?? revision(`refs/heads/${candidate.baseRefName}`),
       author: { login: 'fixture-user' },
-      headRepository: { name: 'submit', nameWithOwner: 'fixture/submit' },
-      headRepositoryOwner: { login: 'fixture' },
+      headRepository: { name, nameWithOwner: repo },
+      headRepositoryOwner: { login: owner },
       isCrossRepository: false,
       mergeable: null,
       mergeStateStatus: null,

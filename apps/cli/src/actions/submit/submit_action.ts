@@ -9,6 +9,7 @@ import { getPRInfoForBranches } from './prepare_branches';
 import { validateBranchesToSubmit } from './validate_branches';
 import {
   assertOpenSubmitTarget,
+  assertSubmitInputs,
   assertSubmitTargets,
   submitPullRequest,
   TPRSubmissionInfo,
@@ -21,6 +22,7 @@ import {
 } from '../create_pr_body_footer';
 import { execFileSync } from 'child_process';
 import { syncPrInfo } from '../sync_pr_info';
+import { getShaOrThrow } from '../../lib/git/get_sha';
 
 // eslint-disable-next-line max-lines-per-function
 export async function submitAction(
@@ -179,6 +181,12 @@ export async function submitAction(
     );
   }
 
+  const plannedMetadata = new Map(
+    submissionInfos.map((info) => [
+      info.head,
+      getShaOrThrow(`refs/branch-metadata/${info.head}`),
+    ])
+  );
   if (
     await shouldAbort(
       {
@@ -195,7 +203,7 @@ export async function submitAction(
     context.engine.assertBranchEditable(args.rolesBranch);
   }
 
-  await assertSubmitTargets(submissionInfos, context);
+  await assertSubmitTargets(submissionInfos, context, plannedMetadata);
 
   if (submissionInfos.length) {
     context.splog.info(
@@ -209,7 +217,7 @@ export async function submitAction(
       remaining.length ? `submission of ${remaining.join(', ')}; ` : ''
     }dependency footer updates.`;
     try {
-      context.engine.assertBranchEditable(submissionInfo.head);
+      assertSubmitInputs(submissionInfo, context, plannedMetadata);
       context.engine.pushBranch(submissionInfo.head, args.forcePush);
     } catch (err) {
       if (err instanceof CommandKilledError) throw err;
@@ -229,9 +237,9 @@ export async function submitAction(
         );
       }
       throw new ExitFailedError(
-        `${
-          err instanceof Error ? err.message : String(err)
-        }\nNot attempted: PR and role changes for ${
+        `${err instanceof Error ? err.message : String(err)}\n${
+          index ? 'Earlier confirmed submissions remain applied.\n' : ''
+        }Not attempted: PR and role changes for ${
           submissionInfo.head
         }. ${notAttempted}`
       );

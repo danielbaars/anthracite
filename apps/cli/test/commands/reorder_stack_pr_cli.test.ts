@@ -4,6 +4,7 @@ import path from 'path';
 import { ReorderCliFixture } from '../lib/fixtures/reorder_cli';
 import { readSubmitPrs } from '../lib/fixtures/submit_gh';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
+import { configureGithubFixtureHost } from '../lib/fixtures/github_host';
 
 // eslint-disable-next-line max-lines-per-function
 describe('stack reorder local PR boundary with public submit/sync and external adapter', function () {
@@ -36,6 +37,7 @@ describe('stack reorder local PR boundary with public submit/sync and external a
     fixture.git(['push', '-u', 'origin', 'main']);
     fixture.ok(['repo', 'owner', '--set', 'fixture']);
     fixture.ok(['repo', 'name', '--set', 'submit']);
+    configureGithubFixtureHost(fixture.repo);
   });
   afterEach(() => fixture?.cleanup());
   const identity = (output: string): string =>

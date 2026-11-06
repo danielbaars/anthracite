@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { RelationCliFixture } from './relation_cli';
 import { readSubmitPrs } from './submit_gh';
+import { configureGithubFixtureHost } from './github_host';
 
 export type PrFixture = ReturnType<typeof preparePrInspection>;
 
@@ -55,6 +56,7 @@ export function preparePrInspection(fixture: RelationCliFixture): {
     remote,
     bin,
     associate: () => {
+      configureGithubFixtureHost(fixture.repo);
       const script = path.join(bin, 'gh');
       const inspection = fs.readFileSync(script);
       const submitState = path.join(fixture.root, 'submit-setup.json');

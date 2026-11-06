@@ -11,6 +11,7 @@ import { execFileSync } from 'child_process';
 import { readPrDraftStatus } from './pr_status';
 import { requestReviewers } from './request_reviewers';
 import { requestAssignees } from './request_assignees';
+import { getSha } from '../../lib/git/get_sha';
 
 export type TPRSubmissionInfo = (Unpacked<
   t.UnwrapSchemaMap<typeof API_ROUTES.submitPullRequests.params>['prs']
@@ -291,7 +292,8 @@ export async function assertOpenSubmitTarget(
 /** Confirmation does not make a stale PR plan authoritative. */
 export async function assertSubmitTargets(
   submissionInfo: Readonly<TPRSubmissionInfo>,
-  context: TContext
+  context: TContext,
+  plannedMetadata: ReadonlyMap<string, string>
 ): Promise<void> {
   const targets = await Promise.all(
     submissionInfo.map(async (request) => ({
@@ -300,14 +302,7 @@ export async function assertSubmitTargets(
     }))
   );
   for (const { request, pr } of targets) {
-    context.engine.assertBranchEditable(request.head);
-    if (
-      context.engine.getRevision(request.head) !== request.headSha ||
-      context.engine.getRevision(request.base) !== request.baseSha
-    )
-      throw new ExitFailedError(
-        `Local submission inputs changed for ${request.head}; replan before pushing.`
-      );
+    assertSubmitInputs(request, context, plannedMetadata);
     if (
       request.action === 'create'
         ? pr !== undefined
@@ -317,4 +312,22 @@ export async function assertSubmitTargets(
         `Open PR target changed for ${request.head}; replan before pushing. No code was pushed by this submit attempt.`
       );
   }
+}
+
+/** Re-read refs rather than accepting cached revisions from before confirmation. */
+export function assertSubmitInputs(
+  request: TSubmittedPRRequest,
+  context: TContext,
+  plannedMetadata: ReadonlyMap<string, string>
+): void {
+  context.engine.assertBranchEditable(request.head);
+  if (
+    getSha(`refs/heads/${request.head}`) !== request.headSha ||
+    getSha(`refs/heads/${request.base}`) !== request.baseSha ||
+    getSha(`refs/branch-metadata/${request.head}`) !==
+      plannedMetadata.get(request.head)
+  )
+    throw new ExitFailedError(
+      `Local submission inputs changed for ${request.head}; replan before pushing.`
+    );
 }
