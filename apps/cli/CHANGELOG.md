@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.12](https://github.com/danielbaars/anthracite/compare/v0.6.11...v0.6.12) (2026-11-06)
+
+
+### Bug Fixes
+
+* **cli:** handle reused branch PR identities safely ([#144](https://github.com/danielbaars/anthracite/issues/144)) ([df364a5](https://github.com/danielbaars/anthracite/commit/df364a5374e3965ee0c12ee7aae2f4a9ea7f481d))
+
 ## [0.6.11](https://github.com/danielbaars/anthracite/compare/v0.6.10...v0.6.11) (2026-11-05)
 
 
