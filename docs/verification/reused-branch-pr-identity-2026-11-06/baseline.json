@@ -1,0 +1,15 @@
+{
+  "baseline": {
+    "package": "@danielbaars/anthracite",
+    "version": "0.6.11",
+    "source": "1ae171c08a3e23ae3eb4b0274266a5a5f1dbdb1a",
+    "artifactSha256": "08527413082f845fe06e6f22f676e781616595f48ba66ec46d5b1a2145283a7c",
+    "artifactIntegrity": "sha512-t76mZ6z1mE/an5Hrgz/ccliM3SQY4MF8rVggJLxpfuJF9udIEhctQiCPjM3W6H5eMhRXiMmUPUzZPQyZItEiSg==",
+    "publicationRun": "https://github.com/danielbaars/anthracite/actions/runs/42020134990/attempts/1"
+  },
+  "issueUrl": "https://github.com/danielbaars/anthracite/issues/139",
+  "issueCapturedUpdatedAt": "2026-11-06T07:10:22Z",
+  "observations": "Synthetic repositories and controlled gh boundary; no live test PRs or user project changes. Raw observation paths identify disposable fixtures only.",
+  "originalIssueSha256": "1c317f6fdab7064afa001653c62bfd832aa44490fd6c79aef8f5125e26800b82",
+  "observationSha256": "8ef8248a1c875854dabb976a292d553c727b8ec2f2dde5a69a9d9b466df10dc3"
+}
