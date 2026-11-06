@@ -1,0 +1,6 @@
+{
+  "status": 1,
+  "actorRan": true,
+  "metadata": "{\"parentBranchName\":\"main\",\"parentBranchRevision\":\"b09c1c932fd3e6fc107d16d77a01ce8dc2b624e2\",\"prInfo\":{\"title\":\"feature\",\"body\":\"Concurrent local description after push\",\"number\":1,\"url\":\"https://github.com/fixture/submit/pull/1\",\"base\":\"main\",\"state\":\"OPEN\",\"reviewDecision\":\"REVIEW_REQUIRED\",\"isDraft\":true}}",
+  "output": "Running in non-interactive mode. Inline prompts to fill PR fields will be skipped.\n\n🥞 Validating that this Anthracite stack is ready to submit...\n\n✏️  Preparing to submit PRs for the following branches...\n▸ feature (Update)\n  Publish as ready for review\n\n📨 Pushing to remote and creating/updating PRs...\nbranch 'feature' set up to track 'origin/feature'.\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-submit-frRJVP/remote.git\n   c1d0027..d8cb083  feature -> feature\nERROR: Failed to submit PR for feature: Local submission inputs changed for feature; replan before pushing.\nCode for feature was already pushed; earlier confirmed PR changes remain applied.\nNot attempted: dependency footer updates.\n"
+}

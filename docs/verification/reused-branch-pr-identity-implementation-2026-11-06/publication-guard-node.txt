@@ -1,0 +1,26 @@
+
+
+  submit preserves disclosed local inputs
+    ✔ npm reuse: refuses concurrent parent metadata after pushing without overwriting it (6233ms)
+    ✔ refuses concurrent description metadata after pushing without overwriting it (6248ms)
+    ✔ retains a confirmed new PR but preserves concurrent metadata from its status readback (3039ms)
+    ✔ refuses reviewers additions when their read sees changed post-push metadata (7181ms)
+    ✔ refuses assignees additions when their read sees changed post-push metadata (7092ms)
+
+  submit role progress through the public CLI
+    ✔ preserves pending reviewers and existing assignees without redundant additions (8073ms)
+    ✔ reports retained reviewer progress and unattempted later work after assignment failure, then safely retries (12533ms)
+    ✔ reports unattempted work when an earlier PR discovery freezes a later branch (6388ms)
+
+  submit ancestor footer freshness through the public CLI
+    ✔ keeps an explicit selected PR body edit while preserving fresh unselected ancestor text (10290ms)
+
+  submit dependency footer repair through the public CLI
+    ✔ leaves a matching footer and later bot content unchanged (4962ms)
+
+  frozen publication through the public CLI
+    ✔ rechecks after the original configured pre-push hook freezes the branch before any remote ref publication (2580ms)
+
+
+  11 passing (1m)
+

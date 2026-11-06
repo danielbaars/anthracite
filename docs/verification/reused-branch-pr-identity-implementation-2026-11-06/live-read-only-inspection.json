@@ -1,0 +1,7 @@
+{
+  "exitCode": 0,
+  "statePreserved": true,
+  "source": "4733986a3ac9d117d458ee682592265115d5421e",
+  "stdout": "Repository: danielbaars/anthracite\nBranch: resolve-reused-branch-pr-identity\nPR #144: https://github.com/danielbaars/anthracite/pull/144\nTitle: fix(cli): handle reused branch PR identities safely\nAuthor: danielbaars\nState: OPEN\nDraft: true\nBase: main\nHead: be7e9cd6f58a1299b0987f10d56d32e08a52a9f8\nReview: UNKNOWN\nMergeability: MERGEABLE\nReadiness: CLEAN\nRequired policy: UNKNOWN (requirements not inspected)\nChecks: Build, typecheck and CLI smoke tests SUCCESS\n",
+  "stderr": ""
+}

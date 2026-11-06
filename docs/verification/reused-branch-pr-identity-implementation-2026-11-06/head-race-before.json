@@ -1,0 +1,8 @@
+{
+  "status": 1,
+  "planned": "f540d7f39a32b4df3d43b9b507cec202496b2e68",
+  "oldRemote": "ace912e696a68e1cdd1c77da02f45560962037ba",
+  "current": "980b543e875ad8b7893c26f2d7b0b18fcc17f641",
+  "newRemote": "980b543e875ad8b7893c26f2d7b0b18fcc17f641",
+  "output": "🥞 Validating that this Anthracite stack is ready to submit...\r\n\r\n✏️  Preparing to submit PRs for the following branches...\r\n▸ feature (Update)\r\n  Publish as ready for review\r\n\r\n\u001b[?25l\u001b[2K\u001b[1G? Continue with this submit operation? › (Y/n)\u001b[2K\u001b[1G\u001b[2K\u001b[1G✔ Continue with this submit operation? … yes\r\n\u001b[?25h📨 Pushing to remote and creating/updating PRs...\r\nbranch 'feature' set up to track 'origin/feature'.\r\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-submit-CSb0DX/remote.git\r\n   ace912e..980b543  feature -> feature\r\nfeature: https://github.com/fixture/submit/pull/1 (updated; ready for review)\r\n\r\n🌳 Updating dependency trees in PR bodies...\r\nERROR: Cannot read fresh PR body for feature (#1); cached text will not be used. feature changed before PR discovery; inspect current metadata and replan submit.\r\nAny confirmed PR submissions remain applied. Dependency footer updates not attempted; rerun submit with the same selection after resolving the lookup failure.\r\n"
+}
