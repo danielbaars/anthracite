@@ -39,6 +39,10 @@ Documentation-only changes (`**/*.md`, `docs/**` and `LICENSE`) skip automatic C
 
 The same job runs the fast release-service boundary regressions. Real release-process build campaigns remain separate local/manual checks; ordinary CI does not publish npm packages.
 
+A small public-CLI selection also checks reused-branch PR safety. These representative cases run against the isolated installed npm artifact as well; the broader reused-branch acceptance campaign remains a targeted local check.
+
+Legacy cleanup-recovery cases use an unmodified record produced by public npm 0.6.11. Ordinary CI installs that exact producer into `RUNNER_TEMP`. For local runs, set `ANTHRACITE_TEST_LEGACY_BINARY` to an absolute 0.6.11 executable path; legacy-only cases are explicitly pending without it. The installed-artifact check itself remains offline: the legacy producer is supplied before that check.
+
 Developers must run tests relevant to their changes locally on both runtimes. After building, the smoke selection can also be run locally with the same runner:
 
 ```sh
