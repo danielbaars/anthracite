@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { TContext } from '../context';
 import { ExitFailedError } from '../errors';
 import { githubRepoSlug } from './github_repo';
+import { getShaOrThrow } from '../git/get_sha';
 
 const execFileAsync = promisify(execFile);
 const oid = z.string().regex(/^[a-f0-9]{40}$/);
@@ -82,64 +83,108 @@ export async function runGithubPrCommand(
   }
 }
 
-/** Stored associations are lookup hints, never permission to relink another PR. */
+/** Current/open discovery treats stored numbers as validated hints; pinned workflows retain their identity. */
 export async function getGithubPr(
   branch: string,
-  context: TContext
+  context: TContext,
+  mode: 'pinned' | 'current' | 'open' = 'pinned'
 ): Promise<GithubPr | undefined> {
   const repo = inspectionGithubRepo(context);
   const association = context.engine.getPrInfo(branch);
   const number = association?.number;
+  const localHead =
+    mode === 'pinned' && number !== undefined
+      ? undefined
+      : getShaOrThrow(`refs/heads/${branch}`);
   if (
-    number !== undefined &&
-    (!z.number().int().positive().safeParse(number).success ||
-      (association?.url !== undefined &&
-        association.url.toLowerCase() !==
-          `https://github.com/${repo}/pull/${number}`.toLowerCase()))
+    (number === undefined && association?.url !== undefined) ||
+    (number !== undefined &&
+      (!z.number().int().positive().safeParse(number).success ||
+        (association?.url !== undefined &&
+          association.url.toLowerCase() !==
+            `https://github.com/${repo}/pull/${number}`.toLowerCase())))
   )
     throw new ExitFailedError(
       'Stored pull request association does not match the configured repository and PR identity.'
     );
+  let pinned: GithubPr | undefined;
+  if (number !== undefined) {
+    const output = await runGithubPrCommand(
+      ['pr', 'view', String(number), '--json', PR_FIELDS],
+      repo
+    );
+    pinned = parsePrResponse(output, false)[0];
+    validatePrIdentity(pinned, branch, repo);
+    if (pinned.number !== number)
+      throw new ExitFailedError(
+        'GitHub pull request repository or number identity mismatch.'
+      );
+    if (mode === 'pinned') return pinned;
+  }
   const output = await runGithubPrCommand(
-    number === undefined
-      ? [
-          'pr',
-          'list',
-          '--head',
-          branch,
-          '--state',
-          'all',
-          '--limit',
-          '100',
-          '--json',
-          PR_FIELDS,
-        ]
-      : ['pr', 'view', String(number), '--json', PR_FIELDS],
+    [
+      'pr',
+      'list',
+      '--head',
+      branch,
+      '--state',
+      'all',
+      '--limit',
+      '100',
+      '--json',
+      PR_FIELDS,
+    ],
     repo
   );
+  const candidates = parsePrResponse(output, true);
+  if (candidates.length >= 100)
+    throw new ExitFailedError(
+      `GitHub pull request discovery is incomplete for branch "${branch}"; refusing an unproven association.`
+    );
+  for (const pr of candidates) validatePrIdentity(pr, branch, repo);
+  if (pinned) {
+    const discovered = candidates.find((pr) => pr.number === pinned?.number);
+    if (
+      !discovered ||
+      discovered.state !== pinned.state ||
+      discovered.headRefOid !== pinned.headRefOid
+    )
+      throw new ExitFailedError(
+        'GitHub PR identity or state changed during discovery; retry inspection.'
+      );
+  }
+  const open = candidates.filter((pr) => pr.state === 'OPEN');
+  if (getShaOrThrow(`refs/heads/${branch}`) !== localHead)
+    throw new ExitFailedError(
+      `Local branch "${branch}" changed during GitHub PR discovery; retry inspection.`
+    );
+  const eligible =
+    open.length || mode === 'open'
+      ? open
+      : candidates.filter((pr) => pr.headRefOid === localHead);
+  if (eligible.length > 1)
+    throw new ExitFailedError(
+      `Ambiguous pull request association for branch "${branch}".`
+    );
+  return eligible[0];
+}
+
+function parsePrResponse(output: string, list: boolean): GithubPr[] {
   let raw: unknown;
   try {
     raw = JSON.parse(output);
   } catch {
     throw new ExitFailedError('Malformed GitHub pull request response.');
   }
-  const parsed = (
-    number === undefined ? z.array(prSchema) : prSchema
-  ).safeParse(raw);
+  const parsed = (list ? z.array(prSchema) : prSchema).safeParse(raw);
   if (!parsed.success)
     throw new ExitFailedError('Malformed GitHub pull request response.');
-  const prs = Array.isArray(parsed.data) ? parsed.data : [parsed.data];
-  if (prs.length > 1)
-    throw new ExitFailedError(
-      `Ambiguous pull request association for branch "${branch}".`
-    );
-  const pr = prs[0];
-  if (!pr) return undefined;
+  return Array.isArray(parsed.data) ? parsed.data : [parsed.data];
+}
+
+function validatePrIdentity(pr: GithubPr, branch: string, repo: string): void {
   const expectedUrl = `https://github.com/${repo}/pull/${pr.number}`;
-  if (
-    pr.url.toLowerCase() !== expectedUrl.toLowerCase() ||
-    (number !== undefined && pr.number !== number)
-  )
+  if (pr.url.toLowerCase() !== expectedUrl.toLowerCase())
     throw new ExitFailedError(
       'GitHub pull request repository or number identity mismatch.'
     );
@@ -157,5 +202,4 @@ export async function getGithubPr(
     pr.headRepository.nameWithOwner.toLowerCase() !== repo.toLowerCase()
   )
     throw new ExitFailedError('GitHub head repository identity mismatch.');
-  return pr;
 }
