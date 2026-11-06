@@ -9,7 +9,11 @@ import { persistContinuation } from '../persist_continuation';
 import { SyncOperation, syncOperationSchema } from './sync_operation';
 import { getRecoveryIdentity } from './get_recovery';
 import { SyncRefreshPlan, getSyncPullRequestInfo } from './sync_refresh';
-import { SyncCleanupPlan, applySyncCleanup } from './clean_branches';
+import {
+  SyncCleanupPlan,
+  applySyncCleanup,
+  verifySyncCleanupPrCoverage,
+} from './clean_branches';
 import { GetMaintenanceEntry } from './get_maintenance';
 import { applySyncMaintenance } from './sync_maintenance';
 import {
@@ -198,6 +202,12 @@ async function executeSyncRefresh(
 function executeSyncCleanup(operation: SyncOperation, context: TContext): void {
   operation.phase = 'cleanup';
   saveSyncOperation(operation, context);
+  assertSyncExpected(operation);
+  verifySyncCleanupPrCoverage(
+    operation.cleanup,
+    context,
+    operation.cleanup.deletions
+  );
   assertSyncExpected(operation);
   applySyncCleanup(operation.cleanup, context, {
     progress: operation.progress,

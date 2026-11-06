@@ -1,3 +1,4 @@
+import { getGithubPr } from '../../lib/api/github_pr';
 import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
 import { getSha } from '../../lib/git/get_sha';
 import { getMergeBase } from '../../lib/git/merge_base';
@@ -12,6 +13,7 @@ import { prepareRemoteUpdates } from './get';
 import { captureGetCheckout } from './get_checkout';
 import {
   lookupPullRequest,
+  pullRequestSchema,
   assertRemoteUpdateNodeUnchanged,
   orderRemoteUpdateGraph,
   releaseRemoteUpdateGraph,
@@ -27,7 +29,7 @@ export type SyncRefreshPlan = {
   readonly original: ReturnType<typeof captureGetCheckout>;
   readonly trunk?: RemoteTrunkUpdate;
   readonly nodes: ReturnType<typeof snapshotRemoteUpdateGraph>;
-  readonly prs: ReturnType<typeof selectSyncFeatures>['prs'];
+  readonly prs: Awaited<ReturnType<typeof selectSyncFeatures>>['prs'];
 };
 
 /** Snapshot sources and collect all reconciliation authority before application. */
@@ -41,7 +43,7 @@ export async function prepareSyncRefresh(
   const trunk = opts.pull ? snapshotRemoteTrunk(context, 'sync') : undefined;
   let nodes: ReturnType<typeof snapshotRemoteUpdateGraph> = [];
   try {
-    const { selected, prs } = selectSyncFeatures(context);
+    const { selected, prs } = await selectSyncFeatures(context);
     nodes = snapshotRemoteUpdateGraph(
       orderRemoteUpdateGraph(selected, context),
       context,
@@ -138,7 +140,7 @@ async function confirmSyncTrunkReset(
     throw new KilledError();
 }
 
-function selectSyncFeatures(context: TContext) {
+async function selectSyncFeatures(context: TContext) {
   if (!context.repoConfig.getIsGithubIntegrationEnabled()) {
     context.splog.info(
       'GitHub integration is disabled; PR information and feature refresh skipped. Cached PR states are not freshly verified.'
@@ -154,16 +156,8 @@ function selectSyncFeatures(context: TContext) {
     )
       continue;
     const association = context.engine.getPrInfo(branch)?.number;
-    const pr = lookupPullRequest(
-      association ? String(association) : { branchName: branch },
-      context,
-      'sync'
-    );
+    const pr = await getCurrentSyncPullRequest(branch, context);
     if (!pr) {
-      if (association)
-        throw new ExitFailedError(
-          `Required associated pull request ${association} for ${branch} is missing.`
-        );
       context.splog.info(
         `${branch} is local-only; remote refresh skipped (no pull request).`
       );
@@ -187,4 +181,35 @@ function selectSyncFeatures(context: TContext) {
     selected.push(snapshotSelection(branch, pr));
   }
   return { selected, prs };
+}
+
+async function getCurrentSyncPullRequest(
+  branch: string,
+  context: TContext
+): Promise<ReturnType<typeof lookupPullRequest>> {
+  try {
+    let pr = await getGithubPr(branch, context, 'current');
+    if (!pr && context.engine.getPrInfo(branch)?.number !== undefined) {
+      pr = await getGithubPr(branch, context);
+      if (pr?.state === 'OPEN')
+        throw new ExitFailedError(
+          `GitHub PR state changed during discovery for ${branch}; retry sync.`
+        );
+    }
+    return pr
+      ? pullRequestSchema.parse({
+          ...pr,
+          reviewDecision: pr.reviewDecision || undefined,
+        })
+      : undefined;
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      /identity|same-repository|Malformed|association/.test(error.message)
+    )
+      throw new ExitFailedError(
+        `Invalid pull request identity for ${branch}. ${error.message}`
+      );
+    throw error;
+  }
 }
