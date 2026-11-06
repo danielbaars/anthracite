@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import fs from 'fs-extra';
 import path from 'path';
+import { z } from 'zod';
 import { FrozenGetFixture } from '../lib/fixtures/frozen_get_cli';
 
 // eslint-disable-next-line max-lines-per-function
@@ -52,6 +53,8 @@ describe('sync CLI existing feature refresh', function () {
     it(`refreshes independent roots and fanout once from main via ${route.join(
       ' '
     )}`, () => {
+      // Four-source Git/gh fixtures also run during parallel local verification.
+      fixture.commandTimeoutMs = 30000;
       for (const [branch, parent] of [
         ['sibling', 'parent'],
         ['independent', 'main'],
@@ -94,11 +97,23 @@ describe('sync CLI existing feature refresh', function () {
       expect(fixture.ok('info', 'independent').output).to.include(
         'Parent: main'
       );
-      const calls = fs.readFileSync(fixture.ghCalls, 'utf8').trim().split('\n');
-      expect(calls).to.have.length(4);
-      expect(new Set(calls.map((line) => JSON.parse(line)[2])).size).to.equal(
-        4
+      const calls = fs
+        .readFileSync(fixture.ghCalls, 'utf8')
+        .trim()
+        .split('\n')
+        .map((line) => z.array(z.string()).parse(JSON.parse(line)));
+      const discoveries = calls.filter(
+        (call) => call[0] === 'pr' && call[1] === 'list'
       );
+      expect(discoveries).to.have.length(expected.size);
+      expect(
+        discoveries.map((call) => call[call.indexOf('--head') + 1])
+      ).to.have.members([...expected.keys()]);
+      for (const call of calls) {
+        const branch =
+          call[1] === 'list' ? call[call.indexOf('--head') + 1] : call[2];
+        expect([...expected.keys()]).to.include(branch);
+      }
     });
   }
 
@@ -346,7 +361,7 @@ describe('sync CLI existing feature refresh', function () {
     expect(result.output).to.include('Sync requires no active');
     expect(fixture.observe()).to.deep.equal(before);
   });
-  it('resolves stored PR numbers even when a reused branch name would select another PR', () => {
+  it('refuses contradictory stored and discovered open PR identities without applying updates', () => {
     fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
     fixture.advanceBoth();
     fs.writeJsonSync(fixture.identities, {
@@ -358,13 +373,32 @@ describe('sync CLI existing feature refresh', function () {
       },
     });
     fs.writeFileSync(fixture.ghCalls, '');
-    fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
-    const references = fs
+    const before = fixture.observe();
+    const result = fixture.run([
+      'sync',
+      '--no-pull',
+      '--no-delete',
+      '--no-restack',
+    ]);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include('changed during discovery');
+    fixture.assertTip('parent', fixture.oldParent);
+    fixture.assertTip('child', fixture.oldChild);
+    expect(fixture.observe()).to.deep.equal(before);
+    const calls = fs
       .readFileSync(fixture.ghCalls, 'utf8')
       .trim()
       .split('\n')
-      .map((line) => JSON.parse(line)[2]);
-    expect(references).to.have.members(['1', '2']);
+      .map((line) => z.array(z.string()).parse(JSON.parse(line)));
+    expect(
+      calls.some((call) => call[1] === 'view' && call[2] === '2')
+    ).to.equal(true);
+    expect(
+      calls.some(
+        (call) =>
+          call[1] === 'list' && call[call.indexOf('--head') + 1] === 'child'
+      )
+    ).to.equal(true);
   });
 
   it('rejects a mismatched source OID before applying an earlier selected branch', () => {
