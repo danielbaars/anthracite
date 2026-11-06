@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import fs from 'fs';
 import path from 'path';
 import { RelationCliFixture } from '../lib/fixtures/relation_cli';
+import { configureGithubFixtureHost } from '../lib/fixtures/github_host';
 
 // eslint-disable-next-line max-lines-per-function
 describe('parent persistent operation and PR state through the public CLI', function () {
@@ -36,6 +37,7 @@ describe('parent persistent operation and PR state through the public CLI', func
     fixture.git(['push', '-u', 'origin', 'main']);
     fixture.ok(['repo', 'owner', '--set', 'fixture']);
     fixture.ok(['repo', 'name', '--set', 'submit']);
+    configureGithubFixtureHost(fixture.repo);
     fixture.ok(['submit', '--publish']);
     const identity = (output: string): string =>
       output

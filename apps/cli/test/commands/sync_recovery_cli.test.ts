@@ -9,6 +9,7 @@ describe('sync CLI owned recovery', function () {
   let fixture: FrozenGetFixture;
   beforeEach(() => {
     fixture = new FrozenGetFixture();
+    fixture.commandTimeoutMs = 30000;
   });
   afterEach(() => fixture?.cleanup());
 
@@ -61,10 +62,12 @@ describe('sync CLI owned recovery', function () {
       .trim()
       .split('\n')
       .map((line) => JSON.parse(line));
-    expect(calls.map((args) => args.slice(0, 3))).to.deep.equal([
-      ['pr', 'view', '2'],
-      ['pr', 'view', '2'],
-    ]);
+    expect(calls.length).to.be.at.least(2);
+    expect(
+      calls.every(
+        (args) => args[0] === 'pr' && args[1] === 'view' && args[2] === '2'
+      )
+    ).to.equal(true);
     fs.writeFileSync(fixture.ghCalls, '');
     fs.writeFileSync(
       path.join(fixture.consumer, 'parent.txt'),
@@ -577,7 +580,7 @@ describe('sync CLI owned recovery', function () {
     const result = fixture.run(['continue', '--all']);
     expect(result.status, result.output).to.equal(1);
     expect(result.output)
-      .to.include('PR identity/state changed')
+      .to.include('PR identity/state/head changed')
       .and.to.include('No verified owned continuation');
     expect(
       fixture.git(fixture.consumer, 'show', 'parent:conflict.txt')

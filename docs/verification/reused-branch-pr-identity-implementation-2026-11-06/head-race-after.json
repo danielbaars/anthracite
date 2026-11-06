@@ -1,0 +1,8 @@
+{
+  "status": 1,
+  "planned": "a74a877a091d82dd90d7cb32e7ead08181999b06",
+  "oldRemote": "74ffc1b359490652fc391d035cb56e8cc8cdd493",
+  "current": "f35aee46aba14721bcff0d8f9c381db4583e6357",
+  "newRemote": "74ffc1b359490652fc391d035cb56e8cc8cdd493",
+  "output": "🥞 Validating that this Anthracite stack is ready to submit...\r\n\r\n✏️  Preparing to submit PRs for the following branches...\r\n▸ feature (Update)\r\n  Publish as ready for review\r\n\r\n\u001b[?25l\u001b[2K\u001b[1G? Continue with this submit operation? › (Y/n)\u001b[2K\u001b[1G\u001b[2K\u001b[1G✔ Continue with this submit operation? … yes\r\n\u001b[?25hERROR: Local submission inputs changed for feature; replan before pushing.\r\n"
+}

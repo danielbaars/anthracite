@@ -56,7 +56,22 @@ jobs:
           git config --global user.email 'ci@example.test'
       - name: Test Node CLI smoke files
         run: node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-ci
+      - name: Prepare published legacy recovery producer
+        run: npm install --prefix "$RUNNER_TEMP/anthracite-legacy" --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org @danielbaars/anthracite@0.6.11
+      - name: Test reused-branch PR safety
+        env:
+          ANTHRACITE_TEST_LEGACY_BINARY: ${{ runner.temp }}/anthracite-legacy/node_modules/.bin/an
+        run: |
+          node node_modules/mocha/bin/mocha.js \
+            apps/cli/dist/test/commands/pr_reused_branch_cli.test.js \
+            apps/cli/dist/test/commands/submit_reused_branch_cli.test.js \
+            apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js \
+            apps/cli/dist/test/commands/sync_reused_branch_cli.test.js \
+            apps/cli/dist/test/commands/sync_cleanup_identity_recovery_cli.test.js \
+            --grep 'prefers the unique open PR|npm reuse: refuses'
       - name: Build and test the npm tarball
+        env:
+          ANTHRACITE_TEST_LEGACY_BINARY: ${{ runner.temp }}/anthracite-legacy/node_modules/.bin/an
         run: |
           node scripts/build-npm-package.cjs
           node scripts/test-npm-package.cjs

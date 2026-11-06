@@ -3,6 +3,7 @@ import { execFileSync, spawnSync } from 'child_process';
 import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
+import { z } from 'zod';
 import { runCliInPty } from '../utils/run_cli_in_pty';
 import { getTestCliCommand } from '../../../src/lib/utils/test_cli_command';
 
@@ -77,7 +78,22 @@ if (args[0] === 'api' && args[1] === 'user') {
   if (identity.accountError) respond('', 7);
   respond((identity.accountRaw === undefined ? JSON.stringify(identity.account || {}) : identity.accountRaw) + '\\n');
 }
-if (args[0] !== 'pr' || args[1] !== 'view' || args[4] !== 'get-fixture/repo' || args[5] !== '--json') respond('', 2);
+const repoIndex = args.indexOf('--repo');
+const jsonIndex = args.indexOf('--json');
+const fields = jsonIndex < 0 ? '' : args[jsonIndex + 1];
+if (args[0] !== 'pr' || repoIndex < 0 || args[repoIndex + 1].replace(/^github\\.com\\//, '') !== 'get-fixture/repo' || !fields) respond('', 2);
+if (args[1] === 'list') {
+  const head = args[args.indexOf('--head') + 1];
+  if (identity.prLists && head in identity.prLists) respond(JSON.stringify(identity.prLists[head]) + '\\n');
+  const result = require('child_process').spawnSync(process.execPath, [__filename, 'pr', 'view', head, '--repo', 'get-fixture/repo', '--json', fields], {encoding:'utf8'});
+  if (result.status !== 0) {
+    if (/^no pull requests found/.test(result.stderr)) respond('[]\\n');
+    respond(result.stdout || '', result.status || 1, result.stderr || 'fixture lookup failure');
+  }
+  const pr = JSON.parse(result.stdout);
+  respond(JSON.stringify(args[args.indexOf('--state') + 1] === 'open' && pr.state !== 'OPEN' ? [] : [pr]) + '\\n');
+}
+if (args[1] !== 'view') respond('', 2);
 const base = require('fs').readFileSync(${JSON.stringify(this.prs)}, 'utf8');
 const parents = JSON.parse(base);
 const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : /^\\d+$/.test(args[2]) ? Object.keys(parents)[Number(args[2]) - 1] || args[2] : args[2];
@@ -91,14 +107,17 @@ const details = JSON.parse(require('fs').readFileSync(${JSON.stringify(
 const headRefOid = require('child_process').execFileSync('git', ['rev-parse', 'refs/heads/' + head], { cwd: ${JSON.stringify(
         this.producer
       )}, encoding: 'utf8' }).trim();
-const response = { headRepository: { name: 'repo', nameWithOwner: 'get-fixture/repo' }, headRepositoryOwner: { login: 'get-fixture' }, headRefName: head, baseRefName: parent, headRefOid, number: head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
-if (args[6] === 'author') {
+const baseRefOid = require('child_process').execFileSync('git', ['rev-parse', 'refs/heads/' + parent], { cwd: ${JSON.stringify(
+        this.producer
+      )}, encoding: 'utf8' }).trim();
+const response = { mergeable: null, mergeStateStatus: null, statusCheckRollup: null, author: { login: 'get-fixture' }, isCrossRepository: false, baseRefOid, headRepository: { name: 'repo', nameWithOwner: 'get-fixture/repo' }, headRepositoryOwner: { login: 'get-fixture' }, headRefName: head, baseRefName: parent, headRefOid, number: head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
+if (fields === 'author') {
   if (identity.authorError) respond('', 8);
   respond((identity.authorRaw === undefined ? JSON.stringify({author: (identity.authors || {})[head]}) : identity.authorRaw) + '\\n');
 }
 Object.assign(response, (identity.prOverrides || {})[head] || {}, (identity.prReferenceOverrides || {})[args[2]] || {});
 const selected = {};
-for (const field of args[6].split(',')) { if (!(field in response)) respond('', 2); selected[field] = response[field]; }
+for (const field of fields.split(',')) { if (!(field in response)) respond('', 2); selected[field] = response[field]; }
 respond(JSON.stringify(selected) + '\\n');\n`,
       { mode: 0o755 }
     );
@@ -130,6 +149,11 @@ respond(JSON.stringify(selected) + '\\n');\n`,
     this.ok('init', '--trunk', 'main');
     this.ok('repo', 'owner', '--set', 'get-fixture');
     this.ok('repo', 'name', '--set', 'repo');
+    const config = path.join(this.consumer, '.git', '.graphite_repo_config');
+    fs.writeJsonSync(config, {
+      ...z.record(z.string(), z.unknown()).parse(fs.readJsonSync(config)),
+      host: 'github.com',
+    });
   }
 
   git(cwd: string, ...args: string[]): string {

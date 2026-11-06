@@ -134,8 +134,14 @@ try {
       "apps/cli/dist/test/commands/get_delivery_cli.test.js",
       "apps/cli/dist/test/commands/sync_delivery_cli.test.js",
       "apps/cli/dist/test/commands/land_private_delivery_cli.test.js",
+      "apps/cli/dist/test/commands/pr_reused_branch_cli.test.js",
+      "apps/cli/dist/test/commands/submit_reused_branch_cli.test.js",
+      "apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "apps/cli/dist/test/commands/sync_reused_branch_cli.test.js",
+      "apps/cli/dist/test/commands/sync_cleanup_identity_recovery_cli.test.js",
+      "apps/cli/dist/test/commands/delete_pr_state_cli.test.js",
       "--grep",
-      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base|installed get workflow learns explicit options|installed sync workflow learns explicit options|private-plan delivery",
+      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base|installed get workflow learns explicit options|installed sync workflow learns explicit options|private-plan delivery|prefers the unique open PR|validates a stale stored terminal PR|npm reuse:",
     ],
     {
       cwd: root,
@@ -145,7 +151,7 @@ try {
         CHARCOAL_TEST_BINARY: "",
       },
       encoding: "utf8",
-      timeout: 180000,
+      timeout: 300000,
     }
   );
   process.stdout.write(scenarios.stdout || "");

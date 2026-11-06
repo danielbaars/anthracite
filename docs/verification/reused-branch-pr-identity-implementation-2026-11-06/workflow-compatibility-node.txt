@@ -1,0 +1,29 @@
+
+
+  modern submit aliases through the public CLI
+    ✔ submits downstack through s without publishing descendants or another stack (3598ms)
+    ✔ submits the whole selected stack through ss by default (4993ms)
+
+  stack fold local PR policy through the public CLI (keep false)
+    ✔ preserves a known MERGED PR on selected base before effects (8344ms)
+
+  stack fold local PR policy through the public CLI (keep true)
+    ✔ preserves a known MERGED PR on selected base before effects (8495ms)
+
+  stack reorder local PR boundary with public submit/sync and external adapter
+    ✔ refuses known MERGED identity on selected pr-base before editor or local/remote effects (11549ms)
+
+  chosen stack reorder keeps its local PR boundary
+    ✔ keeps an unchanged unselected PR and unrelated refs intact after a chosen no-op (8099ms)
+
+  parent persistent operation and PR state through the public CLI
+    ✔ keeps known PR identity and makes no external adapter calls (4610ms)
+
+  public landing interruption recovery
+    ✔ reconciles an accepted merge after SIGKILL using only its dead owned cache acquisition (23345ms)
+    ✔ resumes a preserved no-active queue locally after public freeze/unfreeze, then requires explicit land (38500ms)
+    ✔ permits only an explicit fresh retry after a definite HTTP403 merge rejection and verified unchanged open PR (23377ms)
+
+
+  10 passing (3m)
+

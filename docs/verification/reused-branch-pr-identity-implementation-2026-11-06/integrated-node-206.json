@@ -1,0 +1,123 @@
+{
+  "runtime": "node",
+  "shard": 0,
+  "shards": 1,
+  "files": 7,
+  "passes": 88,
+  "pending": 0,
+  "failedFiles": 2,
+  "results": [
+    {
+      "file": "commands/delete_pr_state_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 25,
+        "passes": 25,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:18:35.060Z",
+        "end": "2026-11-06T09:19:19.593Z",
+        "duration": 44533
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/pr_inspection_cli.test.js",
+      "status": 2,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 9,
+        "pending": 0,
+        "failures": 2,
+        "start": "2026-11-06T09:18:35.020Z",
+        "end": "2026-11-06T09:19:40.247Z",
+        "duration": 65227
+      },
+      "passed": false
+    },
+    {
+      "file": "commands/pr_reused_branch_cli.test.js",
+      "status": 5,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 10,
+        "pending": 0,
+        "failures": 5,
+        "start": "2026-11-06T09:19:19.690Z",
+        "end": "2026-11-06T09:20:24.821Z",
+        "duration": 65131
+      },
+      "passed": false
+    },
+    {
+      "file": "commands/pr_review_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 15,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:19:40.345Z",
+        "end": "2026-11-06T09:21:14.672Z",
+        "duration": 94327
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/submit_reused_branch_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 15,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:20:24.933Z",
+        "end": "2026-11-06T09:21:53.957Z",
+        "duration": 89024
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_cleanup_identity_recovery_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:21:14.798Z",
+        "end": "2026-11-06T09:22:15.164Z",
+        "duration": 60366
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_reused_branch_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:21:54.075Z",
+        "end": "2026-11-06T09:23:05.779Z",
+        "duration": 71704
+      },
+      "passed": true
+    }
+  ]
+}

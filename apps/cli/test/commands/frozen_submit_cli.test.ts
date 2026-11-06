@@ -206,10 +206,7 @@ ${freeze.map((part) => "'" + part.replace(/'/g, "'\\''") + "'").join(' ')}
   it('rechecks after external PR discovery before creating a PR for a newly frozen head', () => {
     fixture.branch('target', 'main');
     const head = fixture.git('rev-parse', 'target');
-    fixture.freezeAfterGhView(
-      'headRefName,url,number,baseRefName,body,isDraft',
-      'target'
-    );
+    fixture.freezeAfterGhView('inspection', 'target', { afterPush: true });
     const result = fixture.run([
       'submit',
       '--no-interactive',
@@ -238,7 +235,7 @@ ${freeze.map((part) => "'" + part.replace(/'/g, "'\\''") + "'").join(' ')}
     const remote = fixture.remoteSha('target');
     fixture.clearCalls();
     fixture.freezeAfterGhView(
-      'headRefName,number,reviewRequests,reviews',
+      'headRefName,number,reviewRequests,reviews,state',
       'target'
     );
     const result = fixture.run([
@@ -709,14 +706,15 @@ ${freeze.map((part) => "'" + part.replace(/'/g, "'\\''") + "'").join(' ')}
       fixture.succeed('submit', '--draft');
       if (transition === 'base')
         fixture.setPrs(
-          fixture.prs().map((pr) => ({ ...pr, baseRefName: 'old-base' }))
+          fixture.prs().map((pr) => ({
+            ...pr,
+            baseRefName: 'old-base',
+            baseRefOid: fixture.git('rev-parse', 'main'),
+          }))
         );
       const prs = fixture.prs();
       fixture.clearCalls();
-      fixture.freezeAfterGhView(
-        'headRefName,url,number,baseRefName,body,isDraft',
-        'target'
-      );
+      fixture.freezeAfterGhView('inspection', 'target', { afterPush: true });
       const result = fixture.run(['s', '--no-interactive', '--publish']);
       expect(result.status, result.stdout + result.stderr).to.equal(1);
       expect(result.stderr).to.include('frozen branch target');
@@ -948,10 +946,7 @@ printf 'real original hook work' > hook-work.txt
     const prs = fixture.prs();
     const remote = fixture.remoteSha('target');
     fixture.clearCalls();
-    fixture.freezeAfterGhView(
-      'state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft',
-      'target'
-    );
+    fixture.freezeAfterGhView('inspection', 'target');
     const result = fixture.run([
       'submit',
       '--no-interactive',
@@ -972,15 +967,12 @@ printf 'real original hook work' > hook-work.txt
     expect(fixture.succeed('info', 'target')).to.include('(frozen)');
   });
 
-  it('rechecks a freeze from closed-PR discovery before offering a replacement PR prompt', () => {
+  it('rechecks a freeze from closed-PR discovery before preparing replacement PR fields', () => {
     fixture.branch('target', 'main');
     fixture.succeed('submit', '--draft');
     fixture.setPrs(fixture.prs().map((pr) => ({ ...pr, state: 'CLOSED' })));
     const prs = fixture.prs();
-    fixture.freezeAfterGhView(
-      'state,url,title,body,number,headRefName,baseRefName,reviewDecision,isDraft',
-      'target'
-    );
+    fixture.freezeAfterGhView('inspection', 'target');
     const result = terminal(
       fixture,
       getTestCliCommand(['submit', '--interactive', '--edit', '--publish']),
@@ -994,7 +986,7 @@ printf 'real original hook work' > hook-work.txt
     expect(fixture.succeed('info', 'target')).to.include('(frozen)');
   });
 
-  it('rechecks a freeze at the replacement-PR choice before clearing the existing PR association', () => {
+  it('rechecks a freeze during replacement PR title entry before editing or pushing', () => {
     fixture.branch('target', 'main');
     fixture.succeed('submit', '--draft');
     fixture.setPrs(fixture.prs().map((pr) => ({ ...pr, state: 'CLOSED' })));
@@ -1008,8 +1000,8 @@ printf 'real original hook work' > hook-work.txt
         env: fixture.env,
         responses: [
           {
-            prompt: 'How would you like to proceed?',
-            input: '\u001b[B\r',
+            prompt: 'Title',
+            input: '\r',
             beforeInput: getTestCliCommand([
               'freeze',
               'target',
@@ -1022,11 +1014,11 @@ printf 'real original hook work' > hook-work.txt
     expect(result.status, result.output).to.equal(1);
     expect(result.output)
       .to.include('frozen branch target')
-      .and.not.to.include('Enter info');
+      .and.to.include('Title');
     expect(fixture.prs()).to.deep.equal(prs);
     expect(fixture.remoteSha('target')).to.equal(remote);
     const info = fixture.succeed('info', 'target');
-    expect(info).to.include('(frozen)').and.to.include('PR #1');
+    expect(info).to.include('(frozen)');
   });
 
   it('skips frozen empty branches with closed PRs before their ordinary interactive validation', () => {

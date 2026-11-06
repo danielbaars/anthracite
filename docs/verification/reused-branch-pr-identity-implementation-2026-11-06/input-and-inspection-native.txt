@@ -1,0 +1,58 @@
+
+
+  submit preserves disclosed local inputs
+    ✔ npm reuse: refuses an unplanned head moved during confirmation before pushing (10535ms)
+    ✔ refuses changed base during confirmation without publishing planned work (6732ms)
+    ✔ refuses changed metadata during confirmation without publishing planned work (6806ms)
+    ✔ retains completed submission but refuses a later branch changed by an earlier PR effect (10941ms)
+
+  submit reused branch names through the public CLI
+    ✔ npm reuse: creates a new draft after CLOSED history without editing the retired PR (5909ms)
+    ✔ npm reuse: updates the unique current open PR among repeated history and unpublished local work (6722ms)
+    ✔ refuses a PR that closes during reviewer readback before adding a reviewer (5339ms)
+    ✔ creates a published PR after exact-head MERGED history without a new commit (5173ms)
+    ✔ discovers reused numeric and shell-sensitive branch names without adopting historical PR numbers (9395ms)
+    ✔ refuses ambiguous open discovery before pushing new work (3260ms)
+    ✔ refuses incomplete bounded discovery before pushing new work (6877ms)
+    ✔ refuses an obsolete unselected ancestor without pushing the selected child or editing history (7171ms)
+    ✔ reconciles an uncertain create on retry instead of duplicating the PR (6192ms)
+    ✔ stops after a push if its selected open PR becomes terminal, without mutating that PR (4474ms)
+    ✔ rechecks all selected targets after confirmation before the first push (4009ms)
+    ✔ refuses a stale unselected descendant before writing its historical number into a footer (5476ms)
+    ✔ reports unavailable GitHub evidence before pushing or creating a replacement PR (3122ms)
+    ✔ reports confirmed PR creation and unattempted footers when fresh footer discovery fails (4248ms)
+    ✔ preserves concurrent PR metadata changes during discovery before cache writes or pushing (3405ms)
+
+  public GitHub PR inspection
+    ✔ shows fresh complete configured-repository identity without changing local or remote state (963ms)
+    ✔ shows the complete connected fanout and opens only the selected PR when explicitly requested (3106ms)
+    ✔ provides help and literal branch completion and rejects invalid selectors before inspection (2452ms)
+    ✔ keeps numeric and shell-sensitive branch names literal through cwd and subdirectory selection (2643ms)
+    ✔ preserves dirty bytes, staging, damaged caches and saved recovery while using physical HEAD (1635ms)
+    ✔ reports unavailable policy and checks explicitly and refuses web when no PR exists (1840ms)
+    ✔ refuses stale associations, wrong identities and ambiguous PRs without relinking (5630ms)
+    ✔ does not reuse a stored association from a different configured repository (3128ms)
+    ✔ distinguishes missing gh, authentication, rate limit, network and malformed responses from no PR (3458ms)
+    ✔ preserves a real detached rebase recovery and permits only explicit branch inspection (5654ms)
+    ✔ refuses uninitialized, untracked and unsupported-host repositories without repairing them (1182ms)
+
+  public reused-branch PR discovery
+    ✔ prefers the unique open PR over exact-head terminal history and unrelated old generations (1444ms)
+    ✔ validates a stale stored terminal PR before discovering the current open generation (3324ms)
+    ✔ refuses a bounded discovery result that cannot prove uniqueness or absence (819ms)
+    ✔ refuses when local work changes while discovery is in flight without undoing the external change (971ms)
+    ✔ shows exact-head CLOSED history after excluding unrelated old generations (1440ms)
+    ✔ shows exact-head MERGED history after excluding unrelated old generations (1458ms)
+    ✔ refuses multiple eligible OPEN candidates without choosing a result order (1146ms)
+    ✔ refuses multiple eligible MERGED candidates without choosing a result order (1176ms)
+    ✔ ignores multiple obsolete stored and discovered generations while preserving dirty work and recovery (3332ms)
+    ✔ refuses multiple open candidates even when one has a valid stored association (3262ms)
+    ✔ refuses malformed or foreign obsolete history before claiming absence or selecting an open PR (2528ms)
+    ✔ does not ignore an unreadable stored historical PR when another open match exists (2909ms)
+    ✔ refuses inconsistent view and discovery evidence instead of treating a stored open PR as absent (3890ms)
+    ✔ refuses a stored URL without a usable PR number instead of silently relinking (777ms)
+    ✔ ignores terminal history at an ancestor of new local work without adopting an association (856ms)
+
+
+  45 passing (4m)
+

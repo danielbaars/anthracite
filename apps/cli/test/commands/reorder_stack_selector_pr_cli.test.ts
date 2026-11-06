@@ -4,6 +4,7 @@ import path from 'path';
 import { getTestCliCommand } from '../../src/lib/utils/test_cli_command';
 import { ReorderCliFixture } from '../lib/fixtures/reorder_cli';
 import { runCliInPty } from '../lib/utils/run_cli_in_pty';
+import { configureGithubFixtureHost } from '../lib/fixtures/github_host';
 
 // eslint-disable-next-line max-lines-per-function
 describe('chosen stack reorder keeps its local PR boundary', function () {
@@ -40,6 +41,7 @@ describe('chosen stack reorder keeps its local PR boundary', function () {
     fixture.git(['push', '-u', 'origin', 'main']);
     fixture.ok(['repo', 'owner', '--set', 'fixture']);
     fixture.ok(['repo', 'name', '--set', 'submit']);
+    configureGithubFixtureHost(fixture.repo);
   });
   afterEach(() => fixture?.cleanup());
 

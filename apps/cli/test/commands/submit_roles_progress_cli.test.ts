@@ -4,6 +4,8 @@ import fs from 'fs';
 import path from 'path';
 import { FrozenSubmitCliFixture } from '../lib/fixtures/frozen_submit_cli';
 
+// Independent public CLI scenarios, not one production operation.
+// eslint-disable-next-line max-lines-per-function
 describe('submit role progress through the public CLI', function () {
   this.timeout(120000);
   let fixture: FrozenSubmitCliFixture;
@@ -182,7 +184,7 @@ describe('submit role progress through the public CLI', function () {
     fixture.branch('base', 'main');
     fixture.branch('child', 'base');
     fixture.branch('leaf', 'child');
-    fixture.freezeAfterGhView('headRefName,number,assignees', 'child');
+    fixture.freezeAfterGhView('headRefName,number,assignees,state', 'child');
     const result = fixture.cli(
       'submit',
       '--stack',
@@ -217,8 +219,8 @@ describe('submit role progress through the public CLI', function () {
       const original = shim + '-original';
       const fields =
         role === 'reviewers'
-          ? 'headRefName,number,reviewRequests,reviews'
-          : 'headRefName,number,assignees';
+          ? 'headRefName,number,reviewRequests,reviews,state'
+          : 'headRefName,number,assignees,state';
       fs.renameSync(shim, original);
       fs.writeFileSync(
         shim,
@@ -326,7 +328,9 @@ process.exitCode = result.status ?? 1;
     fixture.branch('base', 'main');
     fixture.branch('child', 'base');
     fixture.branch('leaf', 'child');
-    fixture.freezeAfterGhView('headRefName,number,assignees', 'child', true);
+    fixture.freezeAfterGhView('headRefName,number,assignees,state', 'child', {
+      afterAssignment: true,
+    });
     const result = fixture.cli(
       'submit',
       '--stack',
@@ -342,8 +346,9 @@ process.exitCode = result.status ?? 1;
     expect(fixture.remoteSha('child')).to.equal('');
     expect(fixture.remoteSha('leaf')).to.equal('');
     expect(result.stdout + result.stderr)
-      .to.include('PR and role changes for child')
-      .and.include('submission of leaf')
+      .to.include('assignment failed')
+      .and.include('Confirmed reviewers: alice')
+      .and.include('submission of child, leaf')
       .and.include('dependency footer updates');
   });
 });

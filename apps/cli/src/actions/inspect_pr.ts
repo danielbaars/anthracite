@@ -19,7 +19,7 @@ export async function inspectPr(
   const prs = await Promise.all(
     branches.map(async (name) => ({
       name,
-      pr: await getGithubPr(name, context),
+      pr: await getGithubPr(name, context, 'current'),
     }))
   );
   const selected = prs.find((entry) => entry.name === branch)?.pr;

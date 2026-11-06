@@ -9,7 +9,11 @@ import { persistContinuation } from '../persist_continuation';
 import { SyncOperation, syncOperationSchema } from './sync_operation';
 import { getRecoveryIdentity } from './get_recovery';
 import { SyncRefreshPlan, getSyncPullRequestInfo } from './sync_refresh';
-import { SyncCleanupPlan, applySyncCleanup } from './clean_branches';
+import {
+  SyncCleanupPlan,
+  applySyncCleanup,
+  verifySyncCleanupPrCoverage,
+} from './clean_branches';
 import { GetMaintenanceEntry } from './get_maintenance';
 import { applySyncMaintenance } from './sync_maintenance';
 import {
@@ -199,7 +203,13 @@ function executeSyncCleanup(operation: SyncOperation, context: TContext): void {
   operation.phase = 'cleanup';
   saveSyncOperation(operation, context);
   assertSyncExpected(operation);
-  applySyncCleanup(operation.cleanup, context, {
+  const cleanup = verifySyncCleanupPrCoverage(
+    operation.cleanup,
+    context,
+    operation.cleanup.deletions
+  );
+  assertSyncExpected(operation);
+  applySyncCleanup(cleanup, context, {
     progress: operation.progress,
     onProgress: (branch, boundary) => {
       const expected = operation.expected.find(
@@ -325,9 +335,14 @@ function verifyPendingSyncCleanup(
   context: TContext
 ): void {
   if (operation.cleanupCompleted) return;
+  const pending = operation.cleanup.deletions.filter(
+    (name) => !operation.progress.deleted.includes(name)
+  );
+  verifySyncCleanupPrCoverage(operation.cleanup, context, pending);
+  assertSyncExpected(operation);
   for (const branch of operation.cleanup.branches.filter(
     (entry) =>
-      operation.cleanup.accepted.includes(entry.branchName) &&
+      pending.includes(entry.branchName) &&
       (entry.state === 'CLOSED' || entry.state === 'MERGED')
   )) {
     if (!context.repoConfig.getIsGithubIntegrationEnabled())
@@ -356,6 +371,7 @@ function verifyPendingSyncCleanup(
         `Pending cleanup PR identity/state changed for ${branch.branchName}; replan before deletion.`
       );
   }
+  assertSyncExpected(operation);
 }
 function reportSyncFailure(operation: SyncOperation, error: unknown): never {
   let live = false;

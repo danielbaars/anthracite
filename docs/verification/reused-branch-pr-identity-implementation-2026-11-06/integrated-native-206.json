@@ -1,0 +1,203 @@
+{
+  "runtime": "native",
+  "shard": 0,
+  "shards": 1,
+  "files": 12,
+  "passes": 160,
+  "pending": 0,
+  "failedFiles": 2,
+  "results": [
+    {
+      "file": "commands/delete_pr_state_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 25,
+        "passes": 25,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:18:35.059Z",
+        "end": "2026-11-06T09:19:15.821Z",
+        "duration": 40762
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/pr_inspection_cli.test.js",
+      "status": 2,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 11,
+        "passes": 9,
+        "pending": 0,
+        "failures": 2,
+        "start": "2026-11-06T09:18:35.019Z",
+        "end": "2026-11-06T09:19:32.626Z",
+        "duration": 57607
+      },
+      "passed": false
+    },
+    {
+      "file": "commands/pr_reused_branch_cli.test.js",
+      "status": 5,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 10,
+        "pending": 0,
+        "failures": 5,
+        "start": "2026-11-06T09:19:15.918Z",
+        "end": "2026-11-06T09:20:13.006Z",
+        "duration": 57088
+      },
+      "passed": false
+    },
+    {
+      "file": "commands/pr_review_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 15,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:19:32.719Z",
+        "end": "2026-11-06T09:20:55.650Z",
+        "duration": 82931
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/submit_reused_branch_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 15,
+        "passes": 15,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:20:13.116Z",
+        "end": "2026-11-06T09:21:37.934Z",
+        "duration": 84818
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_cleanup_identity_recovery_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 4,
+        "passes": 4,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:21:38.048Z",
+        "end": "2026-11-06T09:22:36.844Z",
+        "duration": 58796
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_authority_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 23,
+        "passes": 23,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:20:55.806Z",
+        "end": "2026-11-06T09:23:32.039Z",
+        "duration": 156233
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_maintenance_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 8,
+        "passes": 8,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:22:36.988Z",
+        "end": "2026-11-06T09:24:21.830Z",
+        "duration": 104842
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_merged_parent_local_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:23:32.152Z",
+        "end": "2026-11-06T09:24:51.701Z",
+        "duration": 79549
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_reused_branch_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 10,
+        "passes": 10,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:24:51.815Z",
+        "end": "2026-11-06T09:26:31.508Z",
+        "duration": 99693
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_survivor_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 9,
+        "passes": 9,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:26:31.705Z",
+        "end": "2026-11-06T09:28:08.545Z",
+        "duration": 96840
+      },
+      "passed": true
+    },
+    {
+      "file": "commands/sync_refresh_cli.test.js",
+      "status": 0,
+      "signal": null,
+      "stats": {
+        "suites": 1,
+        "tests": 26,
+        "passes": 26,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-06T09:24:21.943Z",
+        "end": "2026-11-06T09:28:13.527Z",
+        "duration": 231584
+      },
+      "passed": true
+    }
+  ]
+}

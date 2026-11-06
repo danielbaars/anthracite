@@ -31,6 +31,7 @@ const cleanup = z
           base: oid,
           frozen: z.boolean(),
           prNumber: z.number().int().positive().optional(),
+          prHead: oid.optional(),
           prInfo: prInfo.optional(),
           state: z.string().optional(),
         })

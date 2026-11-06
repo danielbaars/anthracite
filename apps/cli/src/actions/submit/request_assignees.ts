@@ -10,6 +10,7 @@ type AssigneeTarget = {
 
 const assigneeStateSchema = t.shape({
   headRefName: t.string,
+  state: t.literal('OPEN' as const),
   number: t.number,
   assignees: t.array(t.shape({ login: t.string })),
 });
@@ -25,7 +26,7 @@ function readAssignees(target: AssigneeTarget): string[] {
         '--repo',
         target.repo,
         '--json',
-        'headRefName,number,assignees',
+        'headRefName,number,assignees,state',
       ],
       { stdio: ['ignore', 'pipe', 'pipe'] }
     ).toString()
@@ -44,15 +45,18 @@ function readAssignees(target: AssigneeTarget): string[] {
 
 export function requestAssignees(
   target: AssigneeTarget,
-  assignees: readonly string[]
+  assignees: readonly string[],
+  assertInputs: () => void
 ): void {
   if (!assignees.length) return;
   const before = readAssignees(target);
+  assertInputs();
   const additions = assignees.filter(
     (assignee) => !before.includes(assignee.toLowerCase())
   );
   if (!additions.length) return;
   assertBranchEditable(target.head);
+  assertInputs();
   let failure: unknown;
   try {
     execFileSync(
@@ -73,6 +77,7 @@ export function requestAssignees(
   let after: string[];
   try {
     after = readAssignees(target);
+    assertInputs();
   } catch (error) {
     throw new Error(
       `${

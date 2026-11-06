@@ -14,6 +14,7 @@ import { isDiffEmpty } from '../../lib/git/diff';
 import { isMerged } from '../../lib/git/is_merged';
 import { ExitFailedError } from '../../lib/errors';
 import { SyncRefreshPlan, getSyncPullRequestInfo } from './sync_refresh';
+import { lookupPullRequest } from './remote_update_graph';
 
 type CleanupBranch = {
   readonly branchName: string;
@@ -24,6 +25,7 @@ type CleanupBranch = {
   readonly base: string;
   readonly frozen: boolean;
   readonly prNumber?: number;
+  readonly prHead?: string;
   readonly prInfo?: TBranchPRInfo;
   readonly state?: string;
 };
@@ -88,7 +90,17 @@ export async function planSyncCleanup(
         )}% done searching for merged/closed branches to delete...`
       );
     const reason = cleanupReason(branch, trunk, context.engine.trunk);
-    if (!reason) continue;
+    if (!reason) {
+      if (branch.state === 'CLOSED' || branch.state === 'MERGED')
+        context.splog.info(
+          `Keeping ${branch.branchName}: ${
+            branch.prHead
+              ? 'the terminal PR does not cover the current local head'
+              : 'terminal PR coverage is not freshly verified'
+          }. Local work is retained.`
+        );
+      continue;
+    }
     const confirmed =
       opts.force ||
       opts.deleteAll ||
@@ -195,6 +207,7 @@ function projectCleanupBranches(
             : context.engine.getBaseRevision(branchName),
         frozen: context.engine.isBranchFrozen(branchName),
         prNumber: pr?.number,
+        prHead: freshPr?.headRefOid,
         prInfo: pr,
         state: pr?.state,
       };
@@ -208,7 +221,11 @@ function cleanupReason(
 ): string | undefined {
   if (branch.head && isDiffEmpty(branch.head, branch.base) && !branch.prNumber)
     return undefined;
-  if (branch.state === 'CLOSED' || branch.state === 'MERGED')
+  if (
+    (branch.state === 'CLOSED' || branch.state === 'MERGED') &&
+    branch.head !== undefined &&
+    branch.prHead === branch.head
+  )
     return `${branch.branchName} is ${branch.state.toLowerCase()} on GitHub`;
   // A reconciliation rebase has no known result yet; old local eligibility cannot grant deletion.
   if (!branch.head) return undefined;
@@ -425,6 +442,7 @@ export function applySyncCleanup(
       );
     }
     for (const name of plan.deletions) {
+      verifySyncCleanupPrCoverage(plan, context, [name]);
       check();
       try {
         context.engine.deleteBranch(name, check, {
@@ -452,6 +470,58 @@ export function applySyncCleanup(
   } catch (error) {
     reportSyncCleanupFailure(plan, progress, error);
   }
+}
+
+/** Terminal state is permission only for the exact local work selected for removal. */
+export function verifySyncCleanupPrCoverage(
+  plan: SyncCleanupPlan,
+  context: TContext,
+  names: readonly string[]
+): SyncCleanupPlan {
+  const verifiedHeads = new Map<string, string>();
+  for (const name of names) {
+    const branch = plan.branches.find((entry) => entry.branchName === name);
+    if (!branch?.head)
+      throw new ExitFailedError(`Missing protected cleanup head for ${name}.`);
+    if (
+      isMerged({ branchName: branch.head, trunkName: plan.trunkHead }) ||
+      isDiffEmpty(branch.head, branch.base)
+    )
+      continue;
+    if (!context.repoConfig.getIsGithubIntegrationEnabled())
+      throw new ExitFailedError(
+        `Pending PR-based sync cleanup requires GitHub read access for ${name}; cached terminal state is insufficient.`
+      );
+    if (!branch.prNumber)
+      throw new ExitFailedError(
+        `Missing saved cleanup PR identity for ${name}.`
+      );
+    const pr = lookupPullRequest(String(branch.prNumber), context, 'sync');
+    if (
+      !pr ||
+      pr.headRefName !== name ||
+      pr.number !== branch.prNumber ||
+      pr.url !== branch.prInfo?.url ||
+      pr.state !== branch.state ||
+      (pr.state !== 'CLOSED' && pr.state !== 'MERGED') ||
+      pr.baseRefName !== branch.prInfo?.base ||
+      pr.headRefOid !== branch.head ||
+      (branch.prHead !== undefined && pr.headRefOid !== branch.prHead) ||
+      getSha(`refs/heads/${name}`) !== branch.head
+    )
+      throw new ExitFailedError(
+        `Pending cleanup PR identity/state/head changed or does not cover current work for ${name}; local work and reached progress are retained.`
+      );
+    verifiedHeads.set(name, pr.headRefOid);
+  }
+  // Older saved plans gain fresh application evidence without rewriting recovery.
+  return {
+    ...plan,
+    branches: plan.branches.map((branch) => {
+      const prHead = verifiedHeads.get(branch.branchName);
+      return prHead ? { ...branch, prHead } : branch;
+    }),
+  };
 }
 
 function reportSyncCleanupFailure(

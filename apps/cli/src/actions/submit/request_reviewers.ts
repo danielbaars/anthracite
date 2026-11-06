@@ -4,6 +4,7 @@ import { assertBranchEditable } from '../../lib/engine/frozen_branch';
 
 const reviewStateSchema = t.shape({
   headRefName: t.string,
+  state: t.literal('OPEN' as const),
   number: t.number,
   reviewRequests: t.array(
     t.shape({ login: t.optional(t.string), slug: t.optional(t.string) })
@@ -50,7 +51,7 @@ function readReviewState(target: ReviewTarget): ReviewState {
         '--repo',
         target.repo,
         '--json',
-        'headRefName,number,reviewRequests,reviews',
+        'headRefName,number,reviewRequests,reviews,state',
       ],
       { stdio: ['ignore', 'pipe', 'pipe'] }
     ).toString()
@@ -69,10 +70,12 @@ function readReviewState(target: ReviewTarget): ReviewState {
 
 export function requestReviewers(
   target: ReviewTarget,
-  reviewers: readonly string[]
+  reviewers: readonly string[],
+  assertInputs: () => void
 ): void {
   if (!reviewers.length) return;
   const before = readReviewState(target);
+  assertInputs();
   const names = [
     ...new Map(reviewers.map((name) => [name.toLowerCase(), name])).values(),
   ];
@@ -81,6 +84,7 @@ export function requestReviewers(
   );
   if (!additions.length) return;
   assertBranchEditable(target.head);
+  assertInputs();
   let failure: unknown;
   try {
     execFileSync(
@@ -101,6 +105,7 @@ export function requestReviewers(
   let after: ReviewState;
   try {
     after = readReviewState(target);
+    assertInputs();
   } catch (error) {
     throw new Error(
       `${

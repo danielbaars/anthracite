@@ -98,6 +98,36 @@ describe('delete verifies known PR state through the public CLI', function () {
     expect(fixture.calls()).to.have.length(1);
   });
 
+  it('npm reuse: retains unpublished work not covered by a terminal PR head', () => {
+    knownPr('CLOSED', 'CLOSED');
+    response({ headRefOid: fixture.git('rev-parse', 'main') });
+    const before = refs();
+    const result = fixture.cli('delete', 'target');
+    expect(result.status).not.to.equal(0);
+    expect(result.stderr).to.include('does not cover the current local head');
+    expect(refs()).to.equal(before);
+  });
+
+  it('retains commits added by a post-checkout hook after PR verification', () => {
+    knownPr('OPEN', 'CLOSED');
+    const approved = fixture.git('rev-parse', 'target');
+    const correction = fixture.commit('late-correction');
+    fixture.git('reset', '--hard', approved);
+    const hook = path.join(fixture.repo, '.git/hooks/post-checkout');
+    fs.writeFileSync(
+      hook,
+      `#!/bin/sh\ngit update-ref refs/heads/target ${correction} ${approved}\n`,
+      { mode: 0o755 }
+    );
+    const result = fixture.cli('delete', 'target');
+    expect(result.status).not.to.equal(0);
+    expect(result.stderr).to.include('does not cover the current local head');
+    expect(fixture.git('rev-parse', 'target')).to.equal(correction);
+    expect(fixture.git('show', 'target:late-correction.txt')).to.equal(
+      'late-correction'
+    );
+  });
+
   for (const cached of ['OPEN', 'CLOSED']) {
     it(`refuses a freshly open PR with cached ${cached} and retains the verified state`, () => {
       knownPr(cached, 'OPEN');

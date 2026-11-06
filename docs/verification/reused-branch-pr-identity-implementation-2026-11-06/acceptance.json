@@ -1,0 +1,18 @@
+{
+  "baseline": "1ae171c08a3e23ae3eb4b0274266a5a5f1dbdb1a",
+  "testedCodeSource": "e0f8a3f52c6649a4f8a6b0c6478e0d55f421ee22",
+  "reviewFix": "f549a7a4",
+  "packageVersion": "0.6.11 (isolated unreleased candidate)",
+  "packageSha256": "0401c1f9ac627d8c91ff6e93b13a173adbfac4af5c5fb4e9d0ce6e1b0d5512e8",
+  "installedPackageCases": 23,
+  "additionalAliasCases": 1,
+  "legacyProducer": "public npm @danielbaars/anthracite@0.6.11",
+  "sourceBuildLint": true,
+  "typecheck": true,
+  "workflowValidation": true,
+  "standardsOpenFindings": 0,
+  "specOpenFindings": 0,
+  "fullMatrixStarted": false,
+  "activeInstallationChanged": false,
+  "ordinaryCi": "Final run follows push; first draft run42187302721 passed."
+}

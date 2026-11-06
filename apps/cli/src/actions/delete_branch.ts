@@ -8,14 +8,21 @@ import { getBranchesToRestack, restackBranches } from './restack';
 import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { clearContinuation } from './persist_continuation';
 import { assertNoGitOperation } from '../lib/git/assert_no_operation';
+import { getSha } from '../lib/git/get_sha';
 
 type TDeleteArgs = { branchName: string; force?: boolean };
+// Preflight and execution use different contexts within the same CLI process.
+const verifiedDeleteWork = new Map<
+  string,
+  { readonly head: string; readonly metadata: string }
+>();
 
 /** Verify PR authority before ordinary context repair or local deletion. */
 export async function prepareDelete(
   args: TDeleteArgs,
   context: TContext
 ): Promise<void> {
+  verifiedDeleteWork.delete(args.branchName);
   // Local participant protection must refuse before any remote read or cache write.
   assertDeleteAllowed({ ...args, force: true }, context);
   if (args.force) return;
@@ -53,11 +60,27 @@ export async function prepareDelete(
       'Branches or metadata changed while verifying PR state; deletion refused. Retry after inspecting the local stack.'
     );
   assertDeleteAllowed({ ...args, force: true }, context);
+  if (
+    pr.state !== 'OPEN' &&
+    pr.headRefOid !== getSha(`refs/heads/${args.branchName}`)
+  )
+    throw new ExitFailedError(
+      `PR #${
+        pr.number
+      } is ${pr.state.toLowerCase()} but does not cover the current local head of ${
+        args.branchName
+      }. Local commits are retained; inspect them before explicitly using delete --force.`
+    );
   // Retain the verified state even when an open/reopened PR refuses deletion.
   context.engine.upsertPrInfo(args.branchName, {
     state: pr.state,
     base: pr.baseRefName,
   });
+  if (pr.state !== 'OPEN')
+    verifiedDeleteWork.set(args.branchName, {
+      head: pr.headRefOid,
+      metadata: getSha(`refs/branch-metadata/${args.branchName}`),
+    });
   assertDeleteAllowed(args, context);
 }
 
@@ -83,6 +106,14 @@ export function assertDeleteAllowed(
     throw new ExitFailedError('Cannot delete trunk!');
   }
   if (!args.force && !isSafeToDelete(args.branchName, context).result) {
+    if (
+      ['CLOSED', 'MERGED'].includes(
+        context.engine.getPrInfo(args.branchName)?.state ?? ''
+      )
+    )
+      throw new ExitFailedError(
+        `The terminal PR does not cover the current local head or metadata of ${args.branchName}; its local work is retained. Inspect before explicitly using delete --force.`
+      );
     throw new ExitFailedError(
       [
         `The branch ${args.branchName} is neither merged nor closed.  Use the \`--force\` option to delete it.`,
@@ -171,11 +202,16 @@ export function isSafeToDelete(
   context: TContext
 ): { result: true; reason: string } | { result: false } {
   const prInfo = context.engine.getPrInfo(branchName);
+  const verified = verifiedDeleteWork.get(branchName);
+  const covered =
+    verified !== undefined &&
+    verified.head === getSha(`refs/heads/${branchName}`) &&
+    verified.metadata === getSha(`refs/branch-metadata/${branchName}`);
 
   const reason =
-    prInfo?.state === 'CLOSED'
+    covered && prInfo?.state === 'CLOSED'
       ? `${chalk.redBright(branchName)} is closed on GitHub`
-      : prInfo?.state === 'MERGED'
+      : covered && prInfo?.state === 'MERGED'
       ? `${chalk.green(branchName)} is merged into ${chalk.cyan(
           prInfo?.base ?? context.engine.trunk
         )}`
