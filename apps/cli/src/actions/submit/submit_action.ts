@@ -246,7 +246,7 @@ export async function submitAction(
     }
 
     try {
-      await submitPullRequest([submissionInfo], context);
+      await submitPullRequest([submissionInfo], context, plannedMetadata);
     } catch (error) {
       throw new ExitFailedError(
         `${error instanceof Error ? error.message : String(error)}\nCode for ${

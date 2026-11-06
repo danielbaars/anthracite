@@ -30,12 +30,17 @@ type TSubmittedPR = {
 
 export async function submitPullRequest(
   submissionInfo: TPRSubmissionInfo,
-  context: TContext
+  context: TContext,
+  plannedMetadata: Map<string, string>
 ): Promise<void> {
+  const assertInputs = (): void =>
+    assertSubmitInputs(submissionInfo[0], context, plannedMetadata);
+  assertInputs();
   const pr = await requestServerToSubmitPR({
     submissionInfo,
     repo: githubRepoSlug(context),
     context,
+    assertInputs,
   });
 
   if (pr.response.status === 'error') {
@@ -44,22 +49,38 @@ export async function submitPullRequest(
     );
   }
 
-  context.engine.upsertPrInfo(pr.response.head, {
-    number: pr.response.prNumber,
-    url: pr.response.prURL,
-    base: pr.request.base,
-    state: 'OPEN', // We know this is not closed or merged because submit succeeded
-    ...(pr.request.action === 'create'
-      ? {
-          title: pr.request.title,
-          body: pr.request.body,
-          reviewDecision: 'REVIEW_REQUIRED', // Because we just opened this PR
-        }
-      : {}),
-    ...(pr.response.isDraft !== undefined
-      ? { isDraft: pr.response.isDraft }
-      : {}),
-  });
+  try {
+    assertInputs();
+    const published = context.engine.upsertPrInfo(pr.response.head, {
+      number: pr.response.prNumber,
+      url: pr.response.prURL,
+      base: pr.request.base,
+      state: 'OPEN', // We know this is not closed or merged because submit succeeded
+      ...(pr.request.action === 'create'
+        ? {
+            title: pr.request.title,
+            body: pr.request.body,
+            reviewDecision: 'REVIEW_REQUIRED', // Because we just opened this PR
+          }
+        : {}),
+      ...(pr.response.isDraft !== undefined
+        ? { isDraft: pr.response.isDraft }
+        : {}),
+    });
+    if (!published)
+      throw new ExitFailedError('No confirmed local PR cache publication.');
+    // Advance only to the blob returned by our own publication, never a fresh adoption.
+    plannedMetadata.set(pr.response.head, published);
+    assertInputs();
+  } catch (error) {
+    throw new ExitFailedError(
+      `PR ${pr.response.status} at ${
+        pr.response.prURL
+      }; local cache publication could not be verified. Remote effects are retained. ${
+        error instanceof Error ? error.message : String(error)
+      }\nNot attempted: reviewers and assignees.`
+    );
+  }
   const reviewers = 'reviewers' in pr.request ? pr.request.reviewers ?? [] : [];
   try {
     if (reviewers.length)
@@ -68,13 +89,15 @@ export async function submitPullRequest(
         pr.response.prNumber,
         context
       );
+    assertInputs();
     requestReviewers(
       {
         head: pr.response.head,
         number: pr.response.prNumber,
         repo: githubRepoSlug(context),
       },
-      reviewers
+      reviewers,
+      assertInputs
     );
   } catch (error) {
     throw new ExitFailedError(
@@ -94,13 +117,15 @@ export async function submitPullRequest(
         pr.response.prNumber,
         context
       );
+    assertInputs();
     requestAssignees(
       {
         head: pr.response.head,
         number: pr.response.prNumber,
         repo: githubRepoSlug(context),
       },
-      pr.request.assignees ?? []
+      pr.request.assignees ?? [],
+      assertInputs
     );
   } catch (error) {
     throw new ExitFailedError(
@@ -127,10 +152,12 @@ async function requestServerToSubmitPR({
   submissionInfo,
   repo,
   context,
+  assertInputs,
 }: {
   context: TContext;
   submissionInfo: TPRSubmissionInfo;
   repo: string;
+  assertInputs: () => void;
 }): Promise<TSubmittedPR> {
   const request = submissionInfo[0];
 
@@ -139,6 +166,7 @@ async function requestServerToSubmitPR({
       request,
       repo,
       context,
+      assertInputs,
     });
 
     return {
@@ -161,12 +189,15 @@ async function submitPrToGithub({
   request,
   repo,
   context,
+  assertInputs,
 }: {
   request: TSubmittedPRRequest;
   repo: string;
   context: TContext;
+  assertInputs: () => void;
 }): Promise<TSubmittedPRResponse> {
   const prInfo = await getGithubPr(request.head, context, 'open');
+  assertInputs();
   if (request.action === 'create') {
     if (prInfo)
       throw new Error(
@@ -190,24 +221,12 @@ async function submitPrToGithub({
     ])
       .toString()
       .trim();
-    const prNumber = getPrNumberFromUrl(result);
-    if (
-      result.toLowerCase() !==
-      `https://github.com/${repo}/pull/${prNumber}`.toLowerCase()
-    )
-      throw new Error(
-        `Invalid GitHub PR creation identity for ${request.head}`
-      );
-    const created = await getGithubPr(request.head, context, 'open');
-    if (!created || created.number !== prNumber)
-      throw new Error(
-        `Could not confirm newly created PR for ${request.head}; reconcile before retrying.`
-      );
-    const isDraft = readPrDraftStatus(request.head, prNumber, repo);
-    if (isDraft !== request.draft)
-      throw new Error(
-        `GitHub did not confirm the requested status for ${request.head} (PR #${prNumber})`
-      );
+    const { prNumber, isDraft } = await confirmCreatedPr({
+      request,
+      result,
+      context,
+      assertInputs,
+    });
     return {
       isDraft,
       head: request.head,
@@ -226,6 +245,7 @@ async function submitPrToGithub({
 
   if (editArgs.length) {
     await assertOpenSubmitTarget(request.head, prInfo.number, context);
+    assertInputs();
     assertBranchEditable(request.head);
     execFileSync('gh', [
       'pr',
@@ -235,10 +255,12 @@ async function submitPrToGithub({
       repo,
       ...editArgs,
     ]);
+    assertInputs();
   }
 
   if (request.draft !== undefined && request.draft !== prInfo.isDraft) {
     await assertOpenSubmitTarget(request.head, prInfo.number, context);
+    assertInputs();
     assertBranchEditable(request.head);
     execFileSync('gh', [
       'pr',
@@ -248,8 +270,10 @@ async function submitPrToGithub({
       repo,
       ...(request.draft ? ['--undo'] : []),
     ]);
+    assertInputs();
   }
   const isDraft = readPrDraftStatus(request.head, prInfo.number, repo);
+  assertInputs();
   if (request.draft !== undefined && isDraft !== request.draft) {
     throw new Error(
       `GitHub did not confirm ${request.head} (PR #${prInfo.number}) as ${
@@ -265,6 +289,49 @@ async function submitPrToGithub({
     prNumber: prInfo.number,
     prURL: prInfo.url,
   };
+}
+
+async function confirmCreatedPr({
+  request,
+  result,
+  context,
+  assertInputs,
+}: {
+  request: TSubmittedPRRequest;
+  result: string;
+  context: TContext;
+  assertInputs: () => void;
+}): Promise<{ prNumber: number; isDraft: boolean }> {
+  const repo = githubRepoSlug(context);
+  const prNumber = getPrNumberFromUrl(result);
+  if (
+    result.toLowerCase() !==
+    `https://github.com/${repo}/pull/${prNumber}`.toLowerCase()
+  )
+    throw new Error(`Invalid GitHub PR creation identity for ${request.head}`);
+  let isDraft: boolean;
+  try {
+    assertInputs();
+    const created = await getGithubPr(request.head, context, 'open');
+    assertInputs();
+    if (!created || created.number !== prNumber)
+      throw new Error(
+        `Could not confirm newly created PR for ${request.head}; reconcile before retrying.`
+      );
+    isDraft = readPrDraftStatus(request.head, prNumber, repo);
+    assertInputs();
+    if (isDraft !== request.draft)
+      throw new Error(
+        `GitHub did not confirm the requested status for ${request.head} (PR #${prNumber})`
+      );
+  } catch (error) {
+    throw new ExitFailedError(
+      `PR creation returned ${result}; reconcile before retrying. ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
+  }
+  return { prNumber, isDraft };
 }
 
 function getPrNumberFromUrl(url: string): number {

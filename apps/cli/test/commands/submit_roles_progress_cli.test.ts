@@ -346,8 +346,9 @@ process.exitCode = result.status ?? 1;
     expect(fixture.remoteSha('child')).to.equal('');
     expect(fixture.remoteSha('leaf')).to.equal('');
     expect(result.stdout + result.stderr)
-      .to.include('PR and role changes for child')
-      .and.include('submission of leaf')
+      .to.include('assignment failed')
+      .and.include('Confirmed reviewers: alice')
+      .and.include('submission of child, leaf')
       .and.include('dependency footer updates');
   });
 });

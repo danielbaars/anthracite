@@ -45,15 +45,18 @@ function readAssignees(target: AssigneeTarget): string[] {
 
 export function requestAssignees(
   target: AssigneeTarget,
-  assignees: readonly string[]
+  assignees: readonly string[],
+  assertInputs: () => void
 ): void {
   if (!assignees.length) return;
   const before = readAssignees(target);
+  assertInputs();
   const additions = assignees.filter(
     (assignee) => !before.includes(assignee.toLowerCase())
   );
   if (!additions.length) return;
   assertBranchEditable(target.head);
+  assertInputs();
   let failure: unknown;
   try {
     execFileSync(
@@ -74,6 +77,7 @@ export function requestAssignees(
   let after: string[];
   try {
     after = readAssignees(target);
+    assertInputs();
   } catch (error) {
     throw new Error(
       `${
