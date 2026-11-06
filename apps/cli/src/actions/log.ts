@@ -33,6 +33,7 @@ export function logAction(
       indentLevel: 0,
       steps: opts.steps,
       sortForDisplay: true,
+      showParentEdges: true,
       worktreeLabels: new Map(
         [...getOtherWorktreeBranches()].map(([branch, directory]) => [
           branch,
@@ -156,6 +157,7 @@ type TPrintStackArgs = {
   noStyleBranchName?: boolean; // Currently only implemented for short = true
   steps?: number;
   sortForDisplay?: boolean;
+  showParentEdges?: boolean;
   worktreeLabels?: ReadonlyMap<string, string>;
 };
 
@@ -173,31 +175,51 @@ function getStackLines(args: TPrintStackArgs, context: TContext): string[] {
     getDownstackExclusiveLines(args, context),
   ];
 
-  return (args.reverse ? outputDeep.reverse().flat() : outputDeep.flat()).map(
-    (line) => {
-      if (!args.short) {
-        return line;
-      }
-      // This lambda is for finalizing log short formatting
-      const circleIndex = line.indexOf('◯');
-      const arrowIndex = line.indexOf('▸');
-      const branchNameAndDetails = line.slice(arrowIndex + 1);
-
-      const replaceCircle =
-        !args.noStyleBranchName &&
-        context.engine.currentBranch &&
-        branchNameAndDetails.split(' ')[0] === context.engine.currentBranch;
-
-      return `${line
-        .slice(0, arrowIndex)
-        .split('')
-        .map(getLogShortColor)
-        .map((c) => (replaceCircle ? c.replace('◯', '◉') : c))
-        .join('')}${' '.repeat(
-        overallIndent.value * 2 + 3 - arrowIndex
-      )}${getLogShortColor(line.slice(arrowIndex + 1), circleIndex)}`;
+  const lines = args.reverse ? outputDeep.reverse().flat() : outputDeep.flat();
+  return lines.flatMap((line, index) => {
+    if (!args.short) {
+      return line;
     }
-  );
+    // This lambda is for finalizing log short formatting
+    const circleIndex = line.indexOf('◯');
+    const arrowIndex = line.indexOf('▸');
+    const branchNameAndDetails = line.slice(arrowIndex + 1);
+
+    const replaceCircle =
+      !args.noStyleBranchName &&
+      context.engine.currentBranch &&
+      branchNameAndDetails.split(' ')[0] === context.engine.currentBranch;
+
+    const formatted = `${line
+      .slice(0, arrowIndex)
+      .split('')
+      .map(getLogShortColor)
+      .map((c) => (replaceCircle ? c.replace('◯', '◉') : c))
+      .join('')}${' '.repeat(
+      overallIndent.value * 2 + 3 - arrowIndex
+    )}${getLogShortColor(line.slice(arrowIndex + 1), circleIndex)}`;
+
+    const nextLine = lines[index + 1];
+    const prefix = line.slice(0, arrowIndex);
+    // Only log output gets stems; selectors and conflict status keep branch-only rows.
+    if (
+      !args.showParentEdges ||
+      !prefix.endsWith('◯') ||
+      !nextLine?.startsWith(`${prefix}▸`)
+    )
+      return [formatted];
+
+    const branchName = branchNameAndDetails.split(' ')[0];
+    const nextBranchName = nextLine.slice(arrowIndex + 1).split(' ')[0];
+    const parent = args.reverse ? branchName : nextBranchName;
+    const child = args.reverse ? nextBranchName : branchName;
+    return context.engine.getChildren(parent).includes(child)
+      ? [
+          formatted,
+          `${prefix.slice(0, -1)}│`.split('').map(getLogShortColor).join(''),
+        ]
+      : [formatted];
+  });
 }
 
 function getDownstackExclusiveLines(

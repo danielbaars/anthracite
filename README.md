@@ -35,6 +35,8 @@ For a shared prerequisite below selected branches, see [targeted insertion](docs
 
 Stage changes with Git before `create` or `modify`, or choose the command's staging options deliberately. Use `an <command> --help` for details.
 
+The short log (`an ls` or `an log short`) draws vertical stems between consecutive parents and children in a linear stack, including within parallel arms. Existing fork connectors remain visible; `--steps 0` shows only the current branch.
+
 Use `an split --by-file 'path/**'` or `an sp -f path` to extract selected committed files into a prerequisite while retaining the original branch. See [file splitting, history and recovery](docs/split.md).
 
 Use `an submit --reviewers alice --assignees @me --roles-branch my-change` to add roles only to one selected PR while retaining the usual submission scope. See [reviewers, assignees and submission scope](docs/submit.md).

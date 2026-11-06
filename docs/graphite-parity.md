@@ -70,6 +70,7 @@ These examples reconcile advertised Graphite 1.8.6 interfaces with the released 
 | D04 | Retain `an`/`anthracite`, Charcoal metadata compatibility, `CH_EDITOR`/`CH_PAGER`, fixed legacy aliases and short-only log `-c`. GitHub auth uses `gh`, not Graphite activation/token input. |
 | D05 | Keep correct current-only zero-depth selection and suppress connectors to hidden descendants. Do not reproduce the measured Graphite dangling connectors. |
 | D06 | Quiet disables Anthracite prompts/editors/pagers under its effective interaction policy. Raw Git `merge`, `revert` and `mv` keep Git meanings; a future feature must not silently reinterpret them. |
+| D07 | The source candidate for [#145](https://github.com/danielbaars/anthracite/issues/145) draws missing linear parent edges in short logs while preserving fork rows, selectors and conflict output. This deliberately extends the retained Graphite 1.8.6 presentation reference. Public npm 0.6.12 still has the former stemless linear view. |
 
 ## Unverified comparisons and coverage limits
 
