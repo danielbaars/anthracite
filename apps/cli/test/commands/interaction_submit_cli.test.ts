@@ -149,7 +149,7 @@ function failPrLookups(fixture: SubmitCliFixture): void {
     `#!${process.execPath}
 const cp = require('child_process');
 const args = process.argv.slice(2);
-if (args[0] === 'pr' && args[1] === 'view') {
+if (args[0] === 'pr' && ['view', 'list'].includes(args[1])) {
   process.stderr.write('controlled gh lookup failure\\n');
   process.exitCode = 17;
 } else {
@@ -536,7 +536,9 @@ describe('submit under the shared interaction policy', function () {
     const result = invoke(fixture, ['submit', '--quiet']);
     expect(result.status).not.to.equal(0);
     expect(result.stdout).to.equal('');
-    expect(result.stderr).to.include('controlled gh lookup failure');
+    expect(result.stderr).to.include(
+      'GitHub request failed; PR information is unavailable.'
+    );
     expect(observe(fixture)).to.deep.equal(before);
   });
 

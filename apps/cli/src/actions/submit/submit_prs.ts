@@ -1,5 +1,6 @@
 import { API_ROUTES } from '@withgraphite/graphite-cli-routes';
 import * as t from '@withgraphite/retype';
+import { getGithubPr } from '../../lib/api/github_pr';
 import chalk from 'chalk';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
@@ -21,15 +22,6 @@ type TSubmittedPRResponse = Unpacked<
   t.UnwrapSchemaMap<typeof API_ROUTES.submitPullRequests.response>['prs']
 > & { isDraft?: boolean };
 
-const existingPrSchema = t.shape({
-  headRefName: t.string,
-  url: t.string,
-  number: t.number,
-  baseRefName: t.string,
-  body: t.string,
-  isDraft: t.boolean,
-});
-
 type TSubmittedPR = {
   request: TSubmittedPRRequest;
   response: TSubmittedPRResponse;
@@ -42,6 +34,7 @@ export async function submitPullRequest(
   const pr = await requestServerToSubmitPR({
     submissionInfo,
     repo: githubRepoSlug(context),
+    context,
   });
 
   if (pr.response.status === 'error') {
@@ -68,6 +61,12 @@ export async function submitPullRequest(
   });
   const reviewers = 'reviewers' in pr.request ? pr.request.reviewers ?? [] : [];
   try {
+    if (reviewers.length)
+      await assertOpenSubmitTarget(
+        pr.response.head,
+        pr.response.prNumber,
+        context
+      );
     requestReviewers(
       {
         head: pr.response.head,
@@ -88,6 +87,12 @@ export async function submitPullRequest(
     );
   }
   try {
+    if (pr.request.assignees?.length)
+      await assertOpenSubmitTarget(
+        pr.response.head,
+        pr.response.prNumber,
+        context
+      );
     requestAssignees(
       {
         head: pr.response.head,
@@ -120,7 +125,9 @@ export async function submitPullRequest(
 async function requestServerToSubmitPR({
   submissionInfo,
   repo,
+  context,
 }: {
+  context: TContext;
   submissionInfo: TPRSubmissionInfo;
   repo: string;
 }): Promise<TSubmittedPR> {
@@ -130,6 +137,7 @@ async function requestServerToSubmitPR({
     const response = await submitPrToGithub({
       request,
       repo,
+      context,
     });
 
     return {
@@ -151,87 +159,77 @@ async function requestServerToSubmitPR({
 async function submitPrToGithub({
   request,
   repo,
+  context,
 }: {
   request: TSubmittedPRRequest;
   repo: string;
+  context: TContext;
 }): Promise<TSubmittedPRResponse> {
-  let prInfo: unknown;
-  try {
-    prInfo = JSON.parse(
-      execFileSync(
-        'gh',
-        [
-          'pr',
-          'view',
-          request.head,
-          '--repo',
-          repo,
-          '--json',
-          'headRefName,url,number,baseRefName,body,isDraft',
-        ],
-        { stdio: ['ignore', 'pipe', 'pipe'] }
-      ).toString()
-    );
-  } catch (error) {
+  const prInfo = await getGithubPr(request.head, context, 'open');
+  if (request.action === 'create') {
+    if (prInfo)
+      throw new Error(
+        `PR target changed for ${request.head}; inspect and rerun submit before updating the newly discovered PR.`
+      );
+    assertBranchEditable(request.head);
+    const result = execFileSync('gh', [
+      'pr',
+      'create',
+      '--repo',
+      repo,
+      '--head',
+      request.head,
+      '--base',
+      request.base,
+      '--title',
+      request.title ?? '',
+      '--body',
+      request.body ?? '',
+      ...(request.draft ? ['--draft'] : []),
+    ])
+      .toString()
+      .trim();
+    const prNumber = getPrNumberFromUrl(result);
     if (
-      error instanceof Error &&
-      error.message.includes('no pull requests found')
-    ) {
-      assertBranchEditable(request.head);
-      const result = execFileSync('gh', [
-        'pr',
-        'create',
-        '--repo',
-        repo,
-        '--head',
-        request.head,
-        '--base',
-        request.base,
-        '--title',
-        request.title ?? '',
-        '--body',
-        request.body ?? '',
-        ...(request.draft ? ['--draft'] : []),
-      ])
-        .toString()
-        .trim();
-
-      const prNumber = getPrNumberFromUrl(result);
-
-      const isDraft = readPrDraftStatus(request.head, prNumber, repo);
-      if (isDraft !== request.draft) {
-        throw new Error(
-          `GitHub did not confirm the requested status for ${request.head} (PR #${prNumber})`
-        );
-      }
-      return {
-        isDraft,
-        head: request.head,
-        status: 'created',
-        prNumber,
-        prURL: result,
-      };
-    }
-
-    throw error;
+      result.toLowerCase() !==
+      `https://github.com/${repo}/pull/${prNumber}`.toLowerCase()
+    )
+      throw new Error(
+        `Invalid GitHub PR creation identity for ${request.head}`
+      );
+    const created = await getGithubPr(request.head, context, 'open');
+    if (!created || created.number !== prNumber)
+      throw new Error(
+        `Could not confirm newly created PR for ${request.head}; reconcile before retrying.`
+      );
+    const isDraft = readPrDraftStatus(request.head, prNumber, repo);
+    if (isDraft !== request.draft)
+      throw new Error(
+        `GitHub did not confirm the requested status for ${request.head} (PR #${prNumber})`
+      );
+    return {
+      isDraft,
+      head: request.head,
+      status: 'created',
+      prNumber,
+      prURL: result,
+    };
   }
-  if (!existingPrSchema(prInfo)) {
-    throw new Error(`Invalid GitHub PR response for ${request.head}`);
-  }
-  if (prInfo.headRefName !== request.head) {
-    throw Error(`PR head mismatch: ${prInfo.headRefName} !== ${request.head}`);
-  }
-
+  if (!prInfo || prInfo.number !== request.prNumber)
+    throw new Error(
+      `Open PR target changed for ${request.head}; no PR changes were attempted. Inspect and rerun submit.`
+    );
   const prBaseChanged = prInfo.baseRefName !== request.base;
 
   const editArgs = [...(prBaseChanged ? ['--base', request.base] : [])];
 
   if (editArgs.length) {
+    await assertOpenSubmitTarget(request.head, prInfo.number, context);
     assertBranchEditable(request.head);
     execFileSync('gh', [
       'pr',
       'edit',
-      prInfo.headRefName,
+      String(prInfo.number),
       '--repo',
       repo,
       ...editArgs,
@@ -239,6 +237,7 @@ async function submitPrToGithub({
   }
 
   if (request.draft !== undefined && request.draft !== prInfo.isDraft) {
+    await assertOpenSubmitTarget(request.head, prInfo.number, context);
     assertBranchEditable(request.head);
     execFileSync('gh', [
       'pr',
@@ -275,4 +274,47 @@ function getPrNumberFromUrl(url: string): number {
   }
 
   return Number(prNumber);
+}
+
+export async function assertOpenSubmitTarget(
+  branch: string,
+  number: number,
+  context: TContext
+): Promise<void> {
+  const pr = await getGithubPr(branch, context, 'pinned');
+  if (!pr || pr.number !== number || pr.state !== 'OPEN')
+    throw new ExitFailedError(
+      `Open PR target changed for ${branch}; refusing a historical or different PR write. Inspect and rerun submit.`
+    );
+}
+
+/** Confirmation does not make a stale PR plan authoritative. */
+export async function assertSubmitTargets(
+  submissionInfo: Readonly<TPRSubmissionInfo>,
+  context: TContext
+): Promise<void> {
+  const targets = await Promise.all(
+    submissionInfo.map(async (request) => ({
+      request,
+      pr: await getGithubPr(request.head, context, 'open'),
+    }))
+  );
+  for (const { request, pr } of targets) {
+    context.engine.assertBranchEditable(request.head);
+    if (
+      context.engine.getRevision(request.head) !== request.headSha ||
+      context.engine.getRevision(request.base) !== request.baseSha
+    )
+      throw new ExitFailedError(
+        `Local submission inputs changed for ${request.head}; replan before pushing.`
+      );
+    if (
+      request.action === 'create'
+        ? pr !== undefined
+        : !pr || pr.number !== request.prNumber
+    )
+      throw new ExitFailedError(
+        `Open PR target changed for ${request.head}; replan before pushing. No code was pushed by this submit attempt.`
+      );
+  }
 }

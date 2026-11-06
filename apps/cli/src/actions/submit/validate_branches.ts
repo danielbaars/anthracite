@@ -7,7 +7,7 @@ export async function validateBranchesToSubmit(
   branchNames: string[],
   context: TContext
 ): Promise<string[]> {
-  const syncPrInfoPromise = syncPrInfo(branchNames, context);
+  const syncPrInfoPromise = syncPrInfo(branchNames, context, branchNames);
 
   try {
     validateBaseRevisions(branchNames, context);
@@ -23,66 +23,7 @@ export async function validateBranchesToSubmit(
 
   await syncPrInfoPromise;
   branchNames.forEach(context.engine.assertBranchEditable);
-  await validateNoMergedOrClosedBranches(branchNames, context);
   return branchNames;
-}
-
-async function validateNoMergedOrClosedBranches(
-  branchNames: string[],
-  context: TContext
-): Promise<void> {
-  const mergedOrClosedBranches = branchNames.filter((b) =>
-    ['MERGED', 'CLOSED'].includes(context.engine.getPrInfo(b)?.state ?? '')
-  );
-  if (mergedOrClosedBranches.length === 0) {
-    return;
-  }
-
-  const hasMultipleBranches = mergedOrClosedBranches.length > 1;
-  context.splog.tip(
-    'You can use `an sync` to find and delete all merged/closed branches automatically and rebase their children.'
-  );
-
-  context.splog.warn(
-    `PR${hasMultipleBranches ? 's' : ''} for the following branch${
-      hasMultipleBranches ? 'es have' : ' has'
-    } already been merged or closed:`
-  );
-
-  mergedOrClosedBranches.forEach((b) =>
-    context.splog.warn(`▸ ${chalk.reset(b)}`)
-  );
-
-  context.splog.newline();
-  if (!context.interactive) {
-    throw new ExitFailedError(`Aborting non-interactive submit.`);
-  }
-
-  const response = await context.prompts({
-    type: 'select',
-    name: 'empty_branches_options',
-    message: `How would you like to proceed?`,
-    choices: [
-      {
-        title: `Abort command and delete or rename ${
-          hasMultipleBranches ? 'these branches' : 'this branch'
-        }.`,
-        value: 'abort',
-      },
-      {
-        title: `Create new PRs for the branch${
-          hasMultipleBranches ? 'es' : ''
-        } and continue.`,
-        value: 'continue',
-      },
-    ],
-  });
-  if (response.empty_branches_options === 'abort') {
-    throw new KilledError();
-  }
-  branchNames.forEach(context.engine.assertBranchEditable);
-  branchNames.map((branchName) => context.engine.clearPrInfo(branchName));
-  context.splog.newline();
 }
 
 // We want to ensure that for each branch, either:

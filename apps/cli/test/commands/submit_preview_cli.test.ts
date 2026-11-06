@@ -78,7 +78,11 @@ describe('submit action previews through the built CLI', function () {
           if (action === 'Update') fixture.commit('target-update');
           else
             fixture.setPrs(
-              fixture.prs().map((pr) => ({ ...pr, baseRefName: 'old-parent' }))
+              fixture.prs().map((pr) => ({
+                ...pr,
+                baseRefName: 'old-parent',
+                baseRefOid: fixture.git('rev-parse', 'main'),
+              }))
             );
         }
         fixture.branch('current', 'main');
