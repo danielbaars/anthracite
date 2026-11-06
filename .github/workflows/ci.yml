@@ -65,9 +65,10 @@ jobs:
           node node_modules/mocha/bin/mocha.js \
             apps/cli/dist/test/commands/pr_reused_branch_cli.test.js \
             apps/cli/dist/test/commands/submit_reused_branch_cli.test.js \
+            apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js \
             apps/cli/dist/test/commands/sync_reused_branch_cli.test.js \
             apps/cli/dist/test/commands/sync_cleanup_identity_recovery_cli.test.js \
-            --grep 'prefers the unique open PR|npm reuse:'
+            --grep 'prefers the unique open PR|validates a stale stored terminal PR|npm reuse:'
       - name: Build and test the npm tarball
         env:
           ANTHRACITE_TEST_LEGACY_BINARY: ${{ runner.temp }}/anthracite-legacy/node_modules/.bin/an
