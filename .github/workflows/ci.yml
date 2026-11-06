@@ -56,6 +56,11 @@ jobs:
           git config --global user.email 'ci@example.test'
       - name: Test Node CLI smoke files
         run: node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-ci
+      - name: Test reused-branch PR safety
+        run: |
+          node node_modules/mocha/bin/mocha.js \
+            apps/cli/dist/test/commands/pr_reused_branch_cli.test.js \
+            --grep 'prefers the unique open PR|npm reuse:'
       - name: Build and test the npm tarball
         run: |
           node scripts/build-npm-package.cjs

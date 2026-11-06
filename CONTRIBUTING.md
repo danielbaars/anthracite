@@ -39,6 +39,8 @@ Documentation-only changes (`**/*.md`, `docs/**` and `LICENSE`) skip automatic C
 
 The same job runs the fast release-service boundary regressions. Real release-process build campaigns remain separate local/manual checks; ordinary CI does not publish npm packages.
 
+A small public-CLI selection also checks reused-branch PR safety. These representative cases run against the isolated installed npm artifact as well; the broader reused-branch acceptance campaign remains a targeted local check.
+
 Developers must run tests relevant to their changes locally on both runtimes. After building, the smoke selection can also be run locally with the same runner:
 
 ```sh
