@@ -11,13 +11,15 @@ describe('single-trunk log graph presentation through the public CLI', function 
   let fixture: LogStepsCliFixture;
   afterEach(() => fixture?.cleanup());
 
-  // Literal branch rows from the retained Graphite 1.8.6 capture. This fixture
-  // has no linked worktree; worktree labels and header whitespace are separate.
+  // Retain the Graphite 1.8.6 branch rows and add explicit linear edges (#145).
+  // Worktree labels and header whitespace are covered separately.
   const shortGraph = [
     '◯      api-followup (needs restack)',
+    '│',
     '◯      api',
     '│ ◯    feature/café-long-branch-name-for-terminal-width',
     '│ │ ◯  empty-tip',
+    '│ │ │',
     '│ │ ◯  ui',
     '│ ◉─┘  search',
     '◯─┘    base',
@@ -42,7 +44,7 @@ describe('single-trunk log graph presentation through the public CLI', function 
       .map((line) => line.replace(/ +$/, ''));
   }
 
-  it('matches the reference short graph for independent stacks and fanout', () => {
+  it('preserves reference branch rows and connects linear segments within fanout', () => {
     fixture = new LogPresentationCliFixture();
     expect(inspect(['log', 'short'])).to.equal(shortGraph);
     expect(graphRows(inspect(['log']))).to.deep.equal([
@@ -82,10 +84,12 @@ describe('single-trunk log graph presentation through the public CLI', function 
         '◯─┐    main',
         '│ ◯─┐  base',
         '│ │ ◯  api',
+        '│ │ │',
         '│ │ ◯  api-followup (needs restack)',
         '│ ◉─┐  search',
         '│ │ ◯  feature/café-long-branch-name-for-terminal-width',
         '│ ◯    ui',
+        '│ │',
         '│ ◯    empty-tip',
         '◯      maintenance',
         '',
@@ -136,7 +140,7 @@ describe('single-trunk log graph presentation through the public CLI', function 
     expect(full).to.include(fixture.git(['rev-parse', '--short', 'child']));
     expect(inspect(['l'])).to.equal(full);
     const short = inspect(['log', 'short']);
-    expect(short).to.equal('◉  child\n◯  main\n');
+    expect(short).to.equal('◉  child\n│\n◯  main\n');
     expect(inspect(['l', 's'])).to.equal(short);
   });
 
