@@ -479,7 +479,7 @@ describe('submit reused branch names through the public CLI', function () {
         marker
       )})){process.stderr.write('network unavailable');process.exitCode=1;}else{const r=cp.spawnSync(${JSON.stringify(
         original
-      )},args,{encoding:'utf8'});process.stdout.write(r.stdout);process.stderr.write(r.stderr);if(args[1]==='create'&&r.status===0)fs.writeFileSync(${JSON.stringify(
+      )},args,{encoding:'utf8'});process.stdout.write(r.stdout);process.stderr.write(r.stderr);if(args[1]==='view'&&args[args.indexOf('--json')+1]==='headRefName,number,isDraft'&&r.status===0)fs.writeFileSync(${JSON.stringify(
         marker
       )},'1');process.exitCode=r.status??1;}`
     );
