@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.14](https://github.com/danielbaars/anthracite/compare/v0.6.13...v0.6.14) (2026-11-07)
+
+
+### Bug Fixes
+
+* **cli:** reconcile PR discovery after pushing ([#150](https://github.com/danielbaars/anthracite/issues/150)) ([37ceb96](https://github.com/danielbaars/anthracite/commit/37ceb96b536e70708aea9e8135ab008b9c30c6ab))
+
 ## [0.6.13](https://github.com/danielbaars/anthracite/compare/v0.6.12...v0.6.13) (2026-11-06)
 
 
