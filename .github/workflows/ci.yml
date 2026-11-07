@@ -31,7 +31,7 @@ jobs:
       NO_COLOR: "1"
       TEST_SHARD: "0"
       TEST_SHARDS: "1"
-      TEST_FILTER: 'commands/(anthracite_identity_cli|branch/branch_(create|checkout)|log/short|log_short_edges_cli|log_steps_(full|short|state|options)_cli|submit_(footer_repair|ancestor_footer|discovery_lag)_cli|delete_pr_state_cli)\.test\.js$'
+      TEST_FILTER: 'commands/(anthracite_identity_cli|branch/branch_(create|checkout)|log/short|log_short_edges_cli|log_steps_(full|short|state|options)_cli|submit_(footer_repair|ancestor_footer)_cli|delete_pr_state_cli)\.test\.js$'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -56,6 +56,11 @@ jobs:
           git config --global user.email 'ci@example.test'
       - name: Test Node CLI smoke files
         run: node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-ci
+      - name: Test submit discovery propagation
+        run: >-
+          node node_modules/mocha/bin/mocha.js
+          apps/cli/dist/test/commands/submit_discovery_lag_cli.test.js
+          --grep 'list head lags|when view snapshots'
       - name: Prepare published legacy recovery producer
         run: npm install --prefix "$RUNNER_TEMP/anthracite-legacy" --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org @danielbaars/anthracite@0.6.11
       - name: Test reused-branch PR safety

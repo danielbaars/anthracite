@@ -33,11 +33,11 @@ Set `ANTHRACITE_TEST_BINARY` to an absolute native binary path to run command fi
 
 ## CI cost controls
 
-Automatic `CI` runs on pull-request updates and pushes to `main`. It runs one Linux Node job: build/lint, typecheck and thirteen smoke-test files covering release identity, branch creation/checkout, short log and its parent edges, the zero-depth log regressions, submit discovery propagation, footer repair and ancestor PR body freshness, plus fresh PR-state verification before deletion. It also builds the npm tarball and checks an isolated offline installation, real Git/MCP execution and numeric-zero cancellation. The ten-minute job timeout bounds runner execution to approximately $0.06 at the current [standard Linux rate](https://docs.github.com/en/billing/reference/actions-runner-pricing) of $0.006/minute, before included usage. Actual duration varies. This is a smoke check, not complete regression acceptance.
+Automatic `CI` runs on pull-request updates and pushes to `main`. It runs one Linux Node job: build/lint, typecheck and twelve smoke-test files covering release identity, branch creation/checkout, short log and its parent edges, the zero-depth log regressions, submit footer repair and ancestor PR body freshness, plus fresh PR-state verification before deletion. It also builds the npm tarball and checks an isolated offline installation, real Git/MCP execution and numeric-zero cancellation. The ten-minute job timeout bounds runner execution to approximately $0.06 at the current [standard Linux rate](https://docs.github.com/en/billing/reference/actions-runner-pricing) of $0.006/minute, before included usage. Actual duration varies. This is a smoke check, not complete regression acceptance.
 
 Documentation-only changes (`**/*.md`, `docs/**` and `LICENSE`) skip automatic CI. Mixed code/documentation changes still run it. If required checks are introduced, account for GitHub leaving path-filtered workflows pending; do not require an absent check for documentation-only changes.
 
-The same job runs the fast release-service boundary regressions. Real release-process build campaigns remain separate local/manual checks; ordinary CI does not publish npm packages.
+The same job separately runs the two representative submit discovery propagation cases (stale list and stale detail snapshots). The other seven propagation/protection cases remain in the focused local suite and manual full validation. The same job runs the fast release-service boundary regressions. Real release-process build campaigns remain separate local/manual checks; ordinary CI does not publish npm packages.
 
 A small public-CLI selection also checks reused-branch PR safety. These representative cases run against the isolated installed npm artifact as well; the broader reused-branch acceptance campaign remains a targeted local check.
 
@@ -47,7 +47,7 @@ Developers must run tests relevant to their changes locally on both runtimes. Af
 
 ```sh
 TEST_SHARD=0 TEST_SHARDS=1 \
-TEST_FILTER='commands/(anthracite_identity_cli|branch/branch_(create|checkout)|log/short|log_short_edges_cli|log_steps_(full|short|state|options)_cli|submit_(footer_repair|ancestor_footer|discovery_lag)_cli|delete_pr_state_cli)\.test\.js$' \
+TEST_FILTER='commands/(anthracite_identity_cli|branch/branch_(create|checkout)|log/short|log_short_edges_cli|log_steps_(full|short|state|options)_cli|submit_(footer_repair|ancestor_footer)_cli|delete_pr_state_cli)\.test\.js$' \
 node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-ci
 ```
 
