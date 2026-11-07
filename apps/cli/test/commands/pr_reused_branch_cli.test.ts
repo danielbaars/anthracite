@@ -244,35 +244,62 @@ describe('public reused-branch PR discovery', function () {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
-  it('refuses inconsistent view and discovery evidence instead of treating a stored open PR as absent', () => {
+  it('refuses missing discovery evidence instead of treating a stored open PR as absent', () => {
     const number = github.associate();
     const pr = github.pr('base', number);
     fs.writeFileSync(github.state, JSON.stringify([pr]));
     const script = path.join(github.bin, 'gh');
     const original = fs.readFileSync(script, 'utf8').split('\n');
     const before = fixture.inspectionSnapshot();
-    for (const list of [
-      [],
-      [{ ...pr, state: 'CLOSED' }],
-      [{ ...pr, headRefOid: 'b'.repeat(40) }],
-    ]) {
-      fs.writeFileSync(
-        script,
-        [
-          original[0],
-          `if (process.argv[3] === 'list') { process.stdout.write(${JSON.stringify(
-            JSON.stringify(list)
-          )}); process.exit(0); }`,
-          ...original.slice(1),
-        ].join('\n'),
-        { mode: 0o755 }
-      );
-      const result = fixture.run(['pr', '--no-interactive']);
-      expect(result.status, result.stdout + result.stderr).to.equal(1);
-      expect(result.stderr).to.include('changed during');
-      expect(result.stdout).to.equal('');
-      expect(fixture.inspectionSnapshot()).to.deep.equal(before);
-    }
+    fs.writeFileSync(
+      script,
+      [
+        original[0],
+        "if (process.argv[3] === 'list') { process.stdout.write('[]'); process.exit(0); }",
+        ...original.slice(1),
+      ].join('\n'),
+      { mode: 0o755 }
+    );
+    const result = fixture.run(['pr', '--no-interactive']);
+    expect(result.status, result.stdout + result.stderr).to.equal(1);
+    expect(result.stderr).to.include('changed during');
+    expect(result.stdout).to.equal('');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+  });
+
+  it('uses refreshed detail state when a stored identity has an older list snapshot', () => {
+    const number = github.associate();
+    const pr = { ...github.pr('base', number), title: 'Fresh detail title' };
+    fs.writeFileSync(github.state, JSON.stringify([pr]));
+    const script = path.join(github.bin, 'gh');
+    const original = fs.readFileSync(script, 'utf8').split('\n');
+    const stale = [
+      {
+        ...pr,
+        title: 'Stale list title',
+        state: 'CLOSED',
+        headRefOid: 'b'.repeat(40),
+      },
+    ];
+    fs.writeFileSync(
+      script,
+      [
+        original[0],
+        `if(process.argv[3]==='list'){process.stdout.write(${JSON.stringify(
+          JSON.stringify(stale)
+        )});process.exit(0);}`,
+        ...original.slice(1),
+      ].join('\n'),
+      { mode: 0o755 }
+    );
+    const before = fixture.inspectionSnapshot();
+    const result = fixture.run(['pr', '--no-interactive']);
+    expect(result.status, result.stderr).to.equal(0);
+    expect(result.stdout)
+      .to.include('State: OPEN')
+      .and.include('Title: Fresh detail title')
+      .and.include(`Head: ${fixture.git(['rev-parse', 'base'])}`);
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
   it('refuses a stored URL without a usable PR number instead of silently relinking', () => {

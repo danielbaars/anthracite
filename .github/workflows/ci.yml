@@ -56,6 +56,11 @@ jobs:
           git config --global user.email 'ci@example.test'
       - name: Test Node CLI smoke files
         run: node .yarn/releases/yarn-3.2.1.cjs workspace @danielbaars/anthracite test-ci
+      - name: Test submit discovery propagation
+        run: >-
+          node node_modules/mocha/bin/mocha.js
+          apps/cli/dist/test/commands/submit_discovery_lag_cli.test.js
+          --grep 'list head lags|when view snapshots'
       - name: Prepare published legacy recovery producer
         run: npm install --prefix "$RUNNER_TEMP/anthracite-legacy" --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org @danielbaars/anthracite@0.6.11
       - name: Test reused-branch PR safety

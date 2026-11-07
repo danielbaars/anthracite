@@ -109,16 +109,7 @@ export async function getGithubPr(
     );
   let pinned: GithubPr | undefined;
   if (number !== undefined) {
-    const output = await runGithubPrCommand(
-      ['pr', 'view', String(number), '--json', PR_FIELDS],
-      repo
-    );
-    pinned = parsePrResponse(output, false)[0];
-    validatePrIdentity(pinned, branch, repo);
-    if (pinned.number !== number)
-      throw new ExitFailedError(
-        'GitHub pull request repository or number identity mismatch.'
-      );
+    pinned = await readGithubPr(number, branch, repo);
     if (mode === 'pinned') return pinned;
   }
   const output = await runGithubPrCommand(
@@ -143,21 +134,20 @@ export async function getGithubPr(
     );
   for (const pr of candidates) validatePrIdentity(pr, branch, repo);
   if (pinned) {
-    const discovered = candidates.find((pr) => pr.number === pinned?.number);
-    if (
-      !discovered ||
-      discovered.state !== pinned.state ||
-      discovered.headRefOid !== pinned.headRefOid
-    )
+    const index = candidates.findIndex((pr) => pr.number === pinned?.number);
+    if (index === -1)
       throw new ExitFailedError(
         'GitHub PR identity or state changed during discovery; retry inspection.'
       );
+    // List and detail snapshots can disagree after a push; refresh the known identity.
+    if (
+      candidates[index].state !== pinned.state ||
+      candidates[index].headRefOid !== pinned.headRefOid
+    )
+      pinned = await readGithubPr(pinned.number, branch, repo);
+    candidates[index] = pinned;
   }
   const open = candidates.filter((pr) => pr.state === 'OPEN');
-  if (getShaOrThrow(`refs/heads/${branch}`) !== localHead)
-    throw new ExitFailedError(
-      `Local branch "${branch}" changed during GitHub PR discovery; retry inspection.`
-    );
   const eligible =
     open.length || mode === 'open'
       ? open
@@ -166,7 +156,41 @@ export async function getGithubPr(
     throw new ExitFailedError(
       `Ambiguous pull request association for branch "${branch}".`
     );
-  return eligible[0];
+  let selected = eligible[0];
+  if (selected && selected.number !== pinned?.number) {
+    const fresh = await readGithubPr(selected.number, branch, repo);
+    if (
+      fresh.state !== selected.state ||
+      (fresh.state !== 'OPEN' && fresh.headRefOid !== localHead)
+    )
+      throw new ExitFailedError(
+        'GitHub PR state changed during discovery; retry inspection.'
+      );
+    selected = fresh;
+  }
+  if (getShaOrThrow(`refs/heads/${branch}`) !== localHead)
+    throw new ExitFailedError(
+      `Local branch "${branch}" changed during GitHub PR discovery; retry inspection.`
+    );
+  return selected;
+}
+
+async function readGithubPr(
+  number: number,
+  branch: string,
+  repo: string
+): Promise<GithubPr> {
+  const output = await runGithubPrCommand(
+    ['pr', 'view', String(number), '--json', PR_FIELDS],
+    repo
+  );
+  const pr = parsePrResponse(output, false)[0];
+  validatePrIdentity(pr, branch, repo);
+  if (pr.number !== number)
+    throw new ExitFailedError(
+      'GitHub pull request repository or number identity mismatch.'
+    );
+  return pr;
 }
 
 function parsePrResponse(output: string, list: boolean): GithubPr[] {

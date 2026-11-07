@@ -1,6 +1,6 @@
 import { API_ROUTES } from '@withgraphite/graphite-cli-routes';
 import * as t from '@withgraphite/retype';
-import { getGithubPr } from '../../lib/api/github_pr';
+import { getGithubPr, GithubPr } from '../../lib/api/github_pr';
 import chalk from 'chalk';
 import { githubRepoSlug } from '../../lib/api/github_repo';
 import { TContext } from '../../lib/context';
@@ -196,7 +196,7 @@ async function submitPrToGithub({
   context: TContext;
   assertInputs: () => void;
 }): Promise<TSubmittedPRResponse> {
-  const prInfo = await getGithubPr(request.head, context, 'open');
+  let prInfo = await getGithubPr(request.head, context, 'open');
   assertInputs();
   if (request.action === 'create') {
     if (prInfo)
@@ -239,6 +239,10 @@ async function submitPrToGithub({
     throw new Error(
       `Open PR target changed for ${request.head}; no PR changes were attempted. Inspect and rerun submit.`
     );
+  prInfo = await confirmSubmittedHead(
+    { request, initial: prInfo, assertInputs },
+    context
+  );
   const prBaseChanged = prInfo.baseRefName !== request.base;
 
   const editArgs = [...(prBaseChanged ? ['--base', request.base] : [])];
@@ -289,6 +293,47 @@ async function submitPrToGithub({
     prNumber: prInfo.number,
     prURL: prInfo.url,
   };
+}
+
+async function confirmSubmittedHead(
+  {
+    request,
+    initial,
+    assertInputs,
+  }: {
+    request: Extract<TSubmittedPRRequest, { action: 'update' }>;
+    initial: GithubPr;
+    assertInputs: () => void;
+  },
+  context: TContext
+): Promise<GithubPr> {
+  let pr = initial;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    assertInputs();
+    await context.engine.populateRemoteShas();
+    assertInputs();
+    if (!context.engine.branchMatchesRemote(request.head))
+      throw new ExitFailedError(
+        `Remote branch ${request.head} no longer confirms this submit's pushed commit (changed or unavailable); no PR changes were attempted.`
+      );
+    if (pr.number !== request.prNumber || pr.state !== 'OPEN')
+      throw new ExitFailedError(
+        `Open PR target changed for ${request.head}; no PR changes were attempted.`
+      );
+    if (pr.headRefOid === request.headSha) return pr;
+    if (attempt < 2) {
+      await new Promise<void>((resolve) => setTimeout(resolve, 250));
+      const fresh = await getGithubPr(request.head, context, 'pinned');
+      if (!fresh)
+        throw new ExitFailedError(
+          `PR information unavailable for ${request.head}.`
+        );
+      pr = fresh;
+    }
+  }
+  throw new ExitFailedError(
+    `GitHub has not confirmed the commit pushed for ${request.head}; its remote branch still matches this submit. PR visibility remains unconfirmed after bounded reads; rerun submit to finish PR and dependency footer updates.`
+  );
 }
 
 async function confirmCreatedPr({

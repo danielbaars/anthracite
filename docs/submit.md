@@ -34,4 +34,12 @@ The candidate fix for [#139](https://github.com/danielbaars/anthracite/issues/13
 
 Previews identify creation versus updates. Ambiguous, incomplete or unavailable identity evidence refuses before the first push, and confirmed plans are checked again before execution. If a PR closes or changes identity after code has already been pushed, submission stops and reports that reached work. Inspect the current PRs before retrying; an uncertain creation response is reconciled through discovery rather than blindly creating another PR.
 
+## GitHub visibility after pushing
+
+In the source candidate for [#149](https://github.com/danielbaars/anthracite/issues/149), discovery validates repository, number and branch identity independently of mutable head/status snapshots. A stale list snapshot can trigger a fresh detail read instead of reporting a concurrent identity change. Known-number review and landing inspection retain their pinned identities.
+
+After updating an existing PR branch, submit confirms both the actual remote head and GitHub's detail head against the commit it pushed. If the detail snapshot returned by discovery is still behind, it allows up to two additional known-number detail reads, with 250 ms before each. These retries repeat reads only; they do not repeat pushes or PR writes. Once confirmed, normal PR and dependency-footer work continues in the same command.
+
+If visibility stays unconfirmed, the error identifies the already-pushed code and unattempted work. Repeat submit with the same selection after visibility recovers; existing footer reconciliation needs no new commit. A changed or unavailable remote head, closed PR, invalid identity or ambiguous association still refuses. Public npm 0.6.13 predates this correction.
+
 Dependency-footers use current verified PR identities, including editable referenced ancestors and descendants outside the push selection. A retired out-of-scope association cannot authorize a PR edit or silently expand submission: resolve that stale branch relationship, then preview again. Frozen anchors retain their existing protection and are neither refreshed nor edited by submission.

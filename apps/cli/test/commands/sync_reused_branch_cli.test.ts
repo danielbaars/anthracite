@@ -59,20 +59,16 @@ describe('sync protects current work from retired PR identities', function () {
       headRepositoryOwner: { login: 'get-fixture' },
       isCrossRepository: false,
     };
+    const current = {
+      ...old,
+      number: 3,
+      url: 'https://github.com/get-fixture/repo/pull/3',
+      state: 'OPEN',
+      headRefOid: incoming,
+    };
     fs.writeJsonSync(fixture.identities, {
-      prReferenceOverrides: { '2': old },
-      prLists: {
-        child: [
-          old,
-          {
-            ...old,
-            number: 3,
-            url: 'https://github.com/get-fixture/repo/pull/3',
-            state: 'OPEN',
-            headRefOid: incoming,
-          },
-        ],
-      },
+      prReferenceOverrides: { '2': old, '3': current },
+      prLists: { child: [old, current] },
     });
     fixture.ok('sync', '--no-pull', '--delete-all', '--no-restack');
     fixture.assertTip('child', incoming);

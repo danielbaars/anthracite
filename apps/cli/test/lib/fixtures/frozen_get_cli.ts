@@ -96,7 +96,7 @@ if (args[1] === 'list') {
 if (args[1] !== 'view') respond('', 2);
 const base = require('fs').readFileSync(${JSON.stringify(this.prs)}, 'utf8');
 const parents = JSON.parse(base);
-const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : /^\\d+$/.test(args[2]) ? Object.keys(parents)[Number(args[2]) - 1] || args[2] : args[2];
+const head = args[2] === '2' ? 'child' : args[2] === '1' ? 'parent' : /^\\d+$/.test(args[2]) ? Object.keys(parents)[Number(args[2]) - 1] || (identity.prReferenceOverrides || {})[args[2]]?.headRefName || args[2] : args[2];
 const parent = parents[head];
 const failure = (identity.prErrors || {})[head];
 if (failure) respond(failure.stdout || '', failure.status === undefined ? 1 : failure.status, failure.stderr === undefined ? 'fixture lookup failure' : failure.stderr);
