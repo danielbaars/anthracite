@@ -1,0 +1,1496 @@
+{
+  "scenario": "fanout7",
+  "chain": [
+    "base",
+    "child",
+    "tip",
+    "four",
+    "five",
+    "six",
+    "seven"
+  ],
+  "baseline": "a3c9f7055c7a42dfe38daee8fb843f21e1763474",
+  "fixtureRoot": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU",
+  "cliVersion": "0.6.15",
+  "preview": {
+    "status": 0,
+    "stdout": "Landing plan: fixture/inspection\nTarget: seven -> main\nPolicy: 0 required approval(s); required checks: unit\nLocal main: up to date.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\n  Merge 3: tip #19\n  Merge 4: four #20\n  Merge 5: five #21\n  Merge 6: six #22\n  Merge 7: seven #23\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\n🔧 Other branches to restack (not merge targets):\n  Maintain: local-only -> main\n    Keep local; no push; no PR creation.\n  Maintain: published-sibling -> main\n    Push existing branch; update PR #24 base and dependency footer.\n\n🧹 Cleanup: base, child, tip, four, five, six, seven\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\n",
+    "stderr": ""
+  },
+  "first": {
+    "status": 1,
+    "stdout": "Landing plan: fixture/inspection\nTarget: seven -> main\nPolicy: 0 required approval(s); required checks: unit\nLocal main: up to date.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\n  Merge 3: tip #19\n  Merge 4: four #20\n  Merge 5: five #21\n  Merge 6: six #22\n  Merge 7: seven #23\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\n🔧 Other branches to restack (not merge targets):\n  Maintain: local-only -> main\n    Keep local; no push; no PR creation.\n  Maintain: published-sibling -> main\n    Push existing branch; update PR #24 base and dependency footer.\n\n🧹 Cleanup: base, child, tip, four, five, six, seven\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\n✅ Confirmed merged #17.\n🔧 Maintained: child; existing PR #18; existing remote head verified.\n🔧 Maintained: tip; existing PR #19; existing remote head verified.\n🔧 Maintained: four; existing PR #20; existing remote head verified.\n🔧 Maintained: five; existing PR #21; existing remote head verified.\n🔧 Maintained: six; existing PR #22; existing remote head verified.\n🔧 Maintained: seven; existing PR #23; existing remote head verified.\n🔧 Maintained: local-only; no PR; remains unpublished.\n🔧 Maintained: published-sibling; existing PR #24; existing remote head verified.\n",
+    "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/remote.git\n - [deleted]         base\nERROR: ⏸ Landing paused before #18. Confirmed merged #17 (adeb0bfcd55ceddef2a811e062f7932bbc54757c); No merge request sent for #18; later work unattempted. Check wait timed out before #18: Check unit: IN_PROGRESS. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/repo; rerun an land seven --yes.\n",
+    "counts": {
+      "pushInvocations": 8,
+      "featureUpdates": 7,
+      "deletions": 1,
+      "updatesByRef": {
+        "refs/heads/child": 1,
+        "refs/heads/tip": 1,
+        "refs/heads/four": 1,
+        "refs/heads/five": 1,
+        "refs/heads/six": 1,
+        "refs/heads/seven": 1,
+        "refs/heads/published-sibling": 1
+      },
+      "deletionsByRef": {
+        "refs/heads/base": 1
+      }
+    }
+  },
+  "savedAfterFirst": {
+    "owner": "anthracite-landing",
+    "version": 1,
+    "directory": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/repo",
+    "gitDirectory": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/repo/.git",
+    "repo": "fixture/inspection",
+    "remote": "origin",
+    "remoteUrlHash": "b3593f46e3e28d7ddc1a74989cec0bd39d4580246be00d0aed7784ce40117ed1",
+    "pushUrlHash": "b3593f46e3e28d7ddc1a74989cec0bd39d4580246be00d0aed7784ce40117ed1",
+    "trunk": "main",
+    "trunkHead": "969d50a6e6b07db6fed0552504f5905f949bc970",
+    "target": "seven",
+    "checkout": "seven",
+    "cacheLock": {
+      "pid": 22895,
+      "timestamp": 1794257719070
+    },
+    "merges": [
+      {
+        "branch": "base",
+        "parent": "main",
+        "base": "969d50a6e6b07db6fed0552504f5905f949bc970",
+        "head": "333fd862b225a8c043876c3f7aa15a4a626a5d87",
+        "remoteHead": "333fd862b225a8c043876c3f7aa15a4a626a5d87",
+        "metadata": "3c58d3c5a0b0d91ac5e9c43c752964545b01612a",
+        "number": 17,
+        "url": "https://github.com/fixture/inspection/pull/17",
+        "result": "adeb0bfcd55ceddef2a811e062f7932bbc54757c"
+      },
+      {
+        "branch": "child",
+        "parent": "base",
+        "base": "333fd862b225a8c043876c3f7aa15a4a626a5d87",
+        "head": "7fd72bbae472235ee4ec803a6c6b4749761341c0",
+        "remoteHead": "7fd72bbae472235ee4ec803a6c6b4749761341c0",
+        "metadata": "ee2da679fc304a8415e86421936bb6c84f3ee86a",
+        "number": 18,
+        "url": "https://github.com/fixture/inspection/pull/18",
+        "reached": {
+          "head": "8cbddb846676fbd5ee66e8c1edc306961a8696a1",
+          "metadata": "bb9ac58b85df02a1f9ee2747272665e5dacab87c",
+          "parent": "main",
+          "base": "adeb0bfcd55ceddef2a811e062f7932bbc54757c",
+          "remoteHead": "8cbddb846676fbd5ee66e8c1edc306961a8696a1"
+        }
+      },
+      {
+        "branch": "tip",
+        "parent": "child",
+        "base": "7fd72bbae472235ee4ec803a6c6b4749761341c0",
+        "head": "8c6cf17d996cf368c2a023756bfc1d61572371ef",
+        "remoteHead": "8c6cf17d996cf368c2a023756bfc1d61572371ef",
+        "metadata": "73bc91e532ff6a9109e5b06256f5a95f1757154e",
+        "number": 19,
+        "url": "https://github.com/fixture/inspection/pull/19",
+        "reached": {
+          "head": "3f259c8c2996f49a8ef574024c560d2055ee6a37",
+          "metadata": "21a12a3255813133c7d71f4387a297f3c4206448",
+          "parent": "child",
+          "base": "8cbddb846676fbd5ee66e8c1edc306961a8696a1",
+          "remoteHead": "3f259c8c2996f49a8ef574024c560d2055ee6a37"
+        }
+      },
+      {
+        "branch": "four",
+        "parent": "tip",
+        "base": "8c6cf17d996cf368c2a023756bfc1d61572371ef",
+        "head": "e8aec017a296f883475e674d7175eef69f3b0400",
+        "remoteHead": "e8aec017a296f883475e674d7175eef69f3b0400",
+        "metadata": "ee08e03e75004cbe0805458c84353f9761171009",
+        "number": 20,
+        "url": "https://github.com/fixture/inspection/pull/20",
+        "reached": {
+          "head": "ebecc94247e8391cba4c436dd0840c9a7ca086b4",
+          "metadata": "5d4009958dd69420fa4d90cc2c906ea785b62d90",
+          "parent": "tip",
+          "base": "3f259c8c2996f49a8ef574024c560d2055ee6a37",
+          "remoteHead": "ebecc94247e8391cba4c436dd0840c9a7ca086b4"
+        }
+      },
+      {
+        "branch": "five",
+        "parent": "four",
+        "base": "e8aec017a296f883475e674d7175eef69f3b0400",
+        "head": "d2a0fec0219289a037b7c48356919b6f1f93bb17",
+        "remoteHead": "d2a0fec0219289a037b7c48356919b6f1f93bb17",
+        "metadata": "3921dfa13115b28fb463bfabb36237ab8104ae9b",
+        "number": 21,
+        "url": "https://github.com/fixture/inspection/pull/21",
+        "reached": {
+          "head": "9533e92ad580e13222b2de4ae4c6857533132d17",
+          "metadata": "9a7dc0dd74dfae05152e7e6fc77d57ce8b78a538",
+          "parent": "four",
+          "base": "ebecc94247e8391cba4c436dd0840c9a7ca086b4",
+          "remoteHead": "9533e92ad580e13222b2de4ae4c6857533132d17"
+        }
+      },
+      {
+        "branch": "six",
+        "parent": "five",
+        "base": "d2a0fec0219289a037b7c48356919b6f1f93bb17",
+        "head": "a480b9f4aaaab49c30d7193e55a084dd6e53b624",
+        "remoteHead": "a480b9f4aaaab49c30d7193e55a084dd6e53b624",
+        "metadata": "822ccc1035229d1eae1382c6995ae2d94a9900a0",
+        "number": 22,
+        "url": "https://github.com/fixture/inspection/pull/22",
+        "reached": {
+          "head": "0230c093711176ca8ccba9e324c5b88c0234343c",
+          "metadata": "ddb0942d4d81e35cee70ab030cf9f7d03db78ed2",
+          "parent": "five",
+          "base": "9533e92ad580e13222b2de4ae4c6857533132d17",
+          "remoteHead": "0230c093711176ca8ccba9e324c5b88c0234343c"
+        }
+      },
+      {
+        "branch": "seven",
+        "parent": "six",
+        "base": "a480b9f4aaaab49c30d7193e55a084dd6e53b624",
+        "head": "b1c0ab7aa4fa3b42ba04afba703e0471dc13db53",
+        "remoteHead": "b1c0ab7aa4fa3b42ba04afba703e0471dc13db53",
+        "metadata": "47266fed4c38bb078b8d78dca259c9722bda48c3",
+        "number": 23,
+        "url": "https://github.com/fixture/inspection/pull/23",
+        "reached": {
+          "head": "c6ccb0d099cb5a1714eec1c8d00307c4ff41431d",
+          "metadata": "e0c86e14d6500d082c150b775be2ee17ab2d4d6a",
+          "parent": "six",
+          "base": "0230c093711176ca8ccba9e324c5b88c0234343c",
+          "remoteHead": "c6ccb0d099cb5a1714eec1c8d00307c4ff41431d"
+        }
+      }
+    ],
+    "maintenance": [
+      {
+        "branch": "local-only",
+        "parent": "base",
+        "base": "333fd862b225a8c043876c3f7aa15a4a626a5d87",
+        "head": "a3847b7e080a67df0e583fd9f1f73b27ad88daa9",
+        "metadata": "ee2da679fc304a8415e86421936bb6c84f3ee86a",
+        "reached": {
+          "head": "58fcc8ad711170945471f276fa87e651e4b8bb36",
+          "metadata": "014db0bf4fbd6565219358645054b7f2475f69dc",
+          "parent": "main",
+          "base": "adeb0bfcd55ceddef2a811e062f7932bbc54757c"
+        }
+      },
+      {
+        "branch": "published-sibling",
+        "parent": "base",
+        "base": "333fd862b225a8c043876c3f7aa15a4a626a5d87",
+        "head": "00902c1a9c5b2624e4f00521ee53816c407f27a4",
+        "remoteHead": "00902c1a9c5b2624e4f00521ee53816c407f27a4",
+        "metadata": "ee2da679fc304a8415e86421936bb6c84f3ee86a",
+        "number": 24,
+        "url": "https://github.com/fixture/inspection/pull/24",
+        "reached": {
+          "head": "1b056e8f2e2eba4348b9a982fc9bb52f118fdda1",
+          "metadata": "43149797792c8796035da75396b9c62da6104631",
+          "parent": "main",
+          "base": "adeb0bfcd55ceddef2a811e062f7932bbc54757c",
+          "remoteHead": "1b056e8f2e2eba4348b9a982fc9bb52f118fdda1"
+        }
+      }
+    ],
+    "index": 1,
+    "phase": "prepared"
+  },
+  "resumed": {
+    "status": 0,
+    "stdout": "⏸ Pending landing: fixture/inspection\nTarget: seven -> main\nLocal main: fast-forward after confirmed merges.\n✅ Already merged: #17 base\n\n🔀 Remaining PRs (bottom to top):\n  Merge 1: child #18\n  Merge 2: tip #19\n  Merge 3: four #20\n  Merge 4: five #21\n  Merge 5: six #22\n  Merge 6: seven #23\n\n🔧 After merging #18: verify required branch maintenance.\n  Maintain: tip #19 (also a merge target)\n    Verify replay; push existing branch; update existing PR #19 base/footer.\n  Maintain: four #20 (also a merge target)\n    Verify replay; push existing branch; update existing PR #20 base/footer.\n  Maintain: five #21 (also a merge target)\n    Verify replay; push existing branch; update existing PR #21 base/footer.\n  Maintain: six #22 (also a merge target)\n    Verify replay; push existing branch; update existing PR #22 base/footer.\n  Maintain: seven #23 (also a merge target)\n    Verify replay; push existing branch; update existing PR #23 base/footer.\n\n🧹 Cleanup: child, tip, four, five, six, seven\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\n✅ Readiness: READY for remaining work; checks repeat before every merge.\nUse --debug for recovery phases, commit IDs and replay details.\n✅ Confirmed merged #18.\n🔧 Maintained: tip; existing PR #19; existing remote head verified.\n🔧 Maintained: four; existing PR #20; existing remote head verified.\n🔧 Maintained: five; existing PR #21; existing remote head verified.\n🔧 Maintained: six; existing PR #22; existing remote head verified.\n🔧 Maintained: seven; existing PR #23; existing remote head verified.\n✅ Confirmed merged #19.\n🔧 Maintained: four; existing PR #20; existing remote head verified.\n🔧 Maintained: five; existing PR #21; existing remote head verified.\n🔧 Maintained: six; existing PR #22; existing remote head verified.\n🔧 Maintained: seven; existing PR #23; existing remote head verified.\n✅ Confirmed merged #20.\n🔧 Maintained: five; existing PR #21; existing remote head verified.\n🔧 Maintained: six; existing PR #22; existing remote head verified.\n🔧 Maintained: seven; existing PR #23; existing remote head verified.\n✅ Confirmed merged #21.\n🔧 Maintained: six; existing PR #22; existing remote head verified.\n🔧 Maintained: seven; existing PR #23; existing remote head verified.\n✅ Confirmed merged #22.\n🔧 Maintained: seven; existing PR #23; existing remote head verified.\n✅ Confirmed merged #23.\n✅ Landing complete: seven; trunk advanced and landed refs/metadata cleaned.\n",
+    "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/remote.git\n - [deleted]         child\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/remote.git\n - [deleted]         tip\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/remote.git\n - [deleted]         four\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/remote.git\n - [deleted]         five\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/remote.git\n - [deleted]         six\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-9cd7gU/remote.git\n - [deleted]         seven\n"
+  },
+  "clientPushes": [
+    {
+      "pid": 88601,
+      "index": 0,
+      "phase": "trunk-advanced",
+      "merge": "base",
+      "refs": [
+        {
+          "local": "refs/heads/child",
+          "new": "8cbddb846676fbd5ee66e8c1edc306961a8696a1",
+          "ref": "refs/heads/child",
+          "old": "7fd72bbae472235ee4ec803a6c6b4749761341c0"
+        }
+      ]
+    },
+    {
+      "pid": 1598,
+      "index": 0,
+      "phase": "trunk-advanced",
+      "merge": "base",
+      "refs": [
+        {
+          "local": "refs/heads/tip",
+          "new": "3f259c8c2996f49a8ef574024c560d2055ee6a37",
+          "ref": "refs/heads/tip",
+          "old": "8c6cf17d996cf368c2a023756bfc1d61572371ef"
+        }
+      ]
+    },
+    {
+      "pid": 13083,
+      "index": 0,
+      "phase": "trunk-advanced",
+      "merge": "base",
+      "refs": [
+        {
+          "local": "refs/heads/four",
+          "new": "ebecc94247e8391cba4c436dd0840c9a7ca086b4",
+          "ref": "refs/heads/four",
+          "old": "e8aec017a296f883475e674d7175eef69f3b0400"
+        }
+      ]
+    },
+    {
+      "pid": 25292,
+      "index": 0,
+      "phase": "trunk-advanced",
+      "merge": "base",
+      "refs": [
+        {
+          "local": "refs/heads/five",
+          "new": "9533e92ad580e13222b2de4ae4c6857533132d17",
+          "ref": "refs/heads/five",
+          "old": "d2a0fec0219289a037b7c48356919b6f1f93bb17"
+        }
+      ]
+    },
+    {
+      "pid": 35936,
+      "index": 0,
+      "phase": "trunk-advanced",
+      "merge": "base",
+      "refs": [
+        {
+          "local": "refs/heads/six",
+          "new": "0230c093711176ca8ccba9e324c5b88c0234343c",
+          "ref": "refs/heads/six",
+          "old": "a480b9f4aaaab49c30d7193e55a084dd6e53b624"
+        }
+      ]
+    },
+    {
+      "pid": 47704,
+      "index": 0,
+      "phase": "trunk-advanced",
+      "merge": "base",
+      "refs": [
+        {
+          "local": "refs/heads/seven",
+          "new": "c6ccb0d099cb5a1714eec1c8d00307c4ff41431d",
+          "ref": "refs/heads/seven",
+          "old": "b1c0ab7aa4fa3b42ba04afba703e0471dc13db53"
+        }
+      ]
+    },
+    {
+      "pid": 61757,
+      "index": 0,
+      "phase": "trunk-advanced",
+      "merge": "base",
+      "refs": [
+        {
+          "local": "refs/heads/published-sibling",
+          "new": "1b056e8f2e2eba4348b9a982fc9bb52f118fdda1",
+          "ref": "refs/heads/published-sibling",
+          "old": "00902c1a9c5b2624e4f00521ee53816c407f27a4"
+        }
+      ]
+    },
+    {
+      "pid": 69630,
+      "index": 0,
+      "phase": "trunk-advanced",
+      "merge": "base",
+      "refs": [
+        {
+          "local": "(delete)",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/base",
+          "old": "333fd862b225a8c043876c3f7aa15a4a626a5d87"
+        }
+      ]
+    },
+    {
+      "pid": 77571,
+      "index": 1,
+      "phase": "trunk-advanced",
+      "merge": "child",
+      "refs": [
+        {
+          "local": "refs/heads/tip",
+          "new": "3d222f0af20e314dde1b5119d12f7dccf57d04bb",
+          "ref": "refs/heads/tip",
+          "old": "3f259c8c2996f49a8ef574024c560d2055ee6a37"
+        }
+      ]
+    },
+    {
+      "pid": 85390,
+      "index": 1,
+      "phase": "trunk-advanced",
+      "merge": "child",
+      "refs": [
+        {
+          "local": "refs/heads/four",
+          "new": "ab0cd017df5c1dbfc16bbc29b4468633d205c47d",
+          "ref": "refs/heads/four",
+          "old": "ebecc94247e8391cba4c436dd0840c9a7ca086b4"
+        }
+      ]
+    },
+    {
+      "pid": 91963,
+      "index": 1,
+      "phase": "trunk-advanced",
+      "merge": "child",
+      "refs": [
+        {
+          "local": "refs/heads/five",
+          "new": "77f96f8a65d0296b60d3d67699c6d423bc3b5d14",
+          "ref": "refs/heads/five",
+          "old": "9533e92ad580e13222b2de4ae4c6857533132d17"
+        }
+      ]
+    },
+    {
+      "pid": 1827,
+      "index": 1,
+      "phase": "trunk-advanced",
+      "merge": "child",
+      "refs": [
+        {
+          "local": "refs/heads/six",
+          "new": "293b7aa9991f1143a3c0e2ed57590f1b957f01c7",
+          "ref": "refs/heads/six",
+          "old": "0230c093711176ca8ccba9e324c5b88c0234343c"
+        }
+      ]
+    },
+    {
+      "pid": 10848,
+      "index": 1,
+      "phase": "trunk-advanced",
+      "merge": "child",
+      "refs": [
+        {
+          "local": "refs/heads/seven",
+          "new": "516f65a345327541c020f13870bfa4525552fcd6",
+          "ref": "refs/heads/seven",
+          "old": "c6ccb0d099cb5a1714eec1c8d00307c4ff41431d"
+        }
+      ]
+    },
+    {
+      "pid": 19654,
+      "index": 1,
+      "phase": "trunk-advanced",
+      "merge": "child",
+      "refs": [
+        {
+          "local": "(delete)",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/child",
+          "old": "8cbddb846676fbd5ee66e8c1edc306961a8696a1"
+        }
+      ]
+    },
+    {
+      "pid": 60549,
+      "index": 2,
+      "phase": "trunk-advanced",
+      "merge": "tip",
+      "refs": [
+        {
+          "local": "refs/heads/four",
+          "new": "715a0bf7a5d4fa8ca741a7b6099fc0dc5fc99316",
+          "ref": "refs/heads/four",
+          "old": "ab0cd017df5c1dbfc16bbc29b4468633d205c47d"
+        }
+      ]
+    },
+    {
+      "pid": 67801,
+      "index": 2,
+      "phase": "trunk-advanced",
+      "merge": "tip",
+      "refs": [
+        {
+          "local": "refs/heads/five",
+          "new": "3c8721a4c6b39732f3c58c9f961aa4752d358cfc",
+          "ref": "refs/heads/five",
+          "old": "77f96f8a65d0296b60d3d67699c6d423bc3b5d14"
+        }
+      ]
+    },
+    {
+      "pid": 76057,
+      "index": 2,
+      "phase": "trunk-advanced",
+      "merge": "tip",
+      "refs": [
+        {
+          "local": "refs/heads/six",
+          "new": "73654b430dde802a1baeb986c94c92b658de9e77",
+          "ref": "refs/heads/six",
+          "old": "293b7aa9991f1143a3c0e2ed57590f1b957f01c7"
+        }
+      ]
+    },
+    {
+      "pid": 84750,
+      "index": 2,
+      "phase": "trunk-advanced",
+      "merge": "tip",
+      "refs": [
+        {
+          "local": "refs/heads/seven",
+          "new": "c3930462aac97a3560d5141ab54df8eb8570ea68",
+          "ref": "refs/heads/seven",
+          "old": "516f65a345327541c020f13870bfa4525552fcd6"
+        }
+      ]
+    },
+    {
+      "pid": 94014,
+      "index": 2,
+      "phase": "trunk-advanced",
+      "merge": "tip",
+      "refs": [
+        {
+          "local": "(delete)",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/tip",
+          "old": "3d222f0af20e314dde1b5119d12f7dccf57d04bb"
+        }
+      ]
+    },
+    {
+      "pid": 36956,
+      "index": 3,
+      "phase": "trunk-advanced",
+      "merge": "four",
+      "refs": [
+        {
+          "local": "refs/heads/five",
+          "new": "f5af4d54878b0aa41b72ed2df8f945adbaf2566a",
+          "ref": "refs/heads/five",
+          "old": "3c8721a4c6b39732f3c58c9f961aa4752d358cfc"
+        }
+      ]
+    },
+    {
+      "pid": 41278,
+      "index": 3,
+      "phase": "trunk-advanced",
+      "merge": "four",
+      "refs": [
+        {
+          "local": "refs/heads/six",
+          "new": "a0d7120bbb073dca5f4717f501de940e22b2742d",
+          "ref": "refs/heads/six",
+          "old": "73654b430dde802a1baeb986c94c92b658de9e77"
+        }
+      ]
+    },
+    {
+      "pid": 45560,
+      "index": 3,
+      "phase": "trunk-advanced",
+      "merge": "four",
+      "refs": [
+        {
+          "local": "refs/heads/seven",
+          "new": "c93dfbbf69cd9182d70f7443a182f93dbdb18033",
+          "ref": "refs/heads/seven",
+          "old": "c3930462aac97a3560d5141ab54df8eb8570ea68"
+        }
+      ]
+    },
+    {
+      "pid": 49852,
+      "index": 3,
+      "phase": "trunk-advanced",
+      "merge": "four",
+      "refs": [
+        {
+          "local": "(delete)",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/four",
+          "old": "715a0bf7a5d4fa8ca741a7b6099fc0dc5fc99316"
+        }
+      ]
+    },
+    {
+      "pid": 70532,
+      "index": 4,
+      "phase": "trunk-advanced",
+      "merge": "five",
+      "refs": [
+        {
+          "local": "refs/heads/six",
+          "new": "0672c158b2343b25072f9e19e980b47ed00de13c",
+          "ref": "refs/heads/six",
+          "old": "a0d7120bbb073dca5f4717f501de940e22b2742d"
+        }
+      ]
+    },
+    {
+      "pid": 74415,
+      "index": 4,
+      "phase": "trunk-advanced",
+      "merge": "five",
+      "refs": [
+        {
+          "local": "refs/heads/seven",
+          "new": "7fb007e662b0f47074ef83da8e914c42103da93e",
+          "ref": "refs/heads/seven",
+          "old": "c93dfbbf69cd9182d70f7443a182f93dbdb18033"
+        }
+      ]
+    },
+    {
+      "pid": 78298,
+      "index": 4,
+      "phase": "trunk-advanced",
+      "merge": "five",
+      "refs": [
+        {
+          "local": "(delete)",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/five",
+          "old": "f5af4d54878b0aa41b72ed2df8f945adbaf2566a"
+        }
+      ]
+    },
+    {
+      "pid": 92372,
+      "index": 5,
+      "phase": "trunk-advanced",
+      "merge": "six",
+      "refs": [
+        {
+          "local": "refs/heads/seven",
+          "new": "182f799aa3bbb22ac29216898945d929316a864f",
+          "ref": "refs/heads/seven",
+          "old": "7fb007e662b0f47074ef83da8e914c42103da93e"
+        }
+      ]
+    },
+    {
+      "pid": 95877,
+      "index": 5,
+      "phase": "trunk-advanced",
+      "merge": "six",
+      "refs": [
+        {
+          "local": "(delete)",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/six",
+          "old": "0672c158b2343b25072f9e19e980b47ed00de13c"
+        }
+      ]
+    },
+    {
+      "pid": 4563,
+      "index": 6,
+      "phase": "trunk-advanced",
+      "merge": "seven",
+      "refs": [
+        {
+          "local": "(delete)",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/seven",
+          "old": "182f799aa3bbb22ac29216898945d929316a864f"
+        }
+      ]
+    }
+  ],
+  "remoteReceives": [
+    {
+      "pid": 46417,
+      "refs": [
+        {
+          "old": "969d50a6e6b07db6fed0552504f5905f949bc970",
+          "new": "adeb0bfcd55ceddef2a811e062f7932bbc54757c",
+          "ref": "refs/heads/main"
+        }
+      ]
+    },
+    {
+      "pid": 89217,
+      "refs": [
+        {
+          "old": "7fd72bbae472235ee4ec803a6c6b4749761341c0",
+          "new": "8cbddb846676fbd5ee66e8c1edc306961a8696a1",
+          "ref": "refs/heads/child"
+        }
+      ]
+    },
+    {
+      "pid": 1667,
+      "refs": [
+        {
+          "old": "8c6cf17d996cf368c2a023756bfc1d61572371ef",
+          "new": "3f259c8c2996f49a8ef574024c560d2055ee6a37",
+          "ref": "refs/heads/tip"
+        }
+      ]
+    },
+    {
+      "pid": 13361,
+      "refs": [
+        {
+          "old": "e8aec017a296f883475e674d7175eef69f3b0400",
+          "new": "ebecc94247e8391cba4c436dd0840c9a7ca086b4",
+          "ref": "refs/heads/four"
+        }
+      ]
+    },
+    {
+      "pid": 25470,
+      "refs": [
+        {
+          "old": "d2a0fec0219289a037b7c48356919b6f1f93bb17",
+          "new": "9533e92ad580e13222b2de4ae4c6857533132d17",
+          "ref": "refs/heads/five"
+        }
+      ]
+    },
+    {
+      "pid": 36193,
+      "refs": [
+        {
+          "old": "a480b9f4aaaab49c30d7193e55a084dd6e53b624",
+          "new": "0230c093711176ca8ccba9e324c5b88c0234343c",
+          "ref": "refs/heads/six"
+        }
+      ]
+    },
+    {
+      "pid": 47725,
+      "refs": [
+        {
+          "old": "b1c0ab7aa4fa3b42ba04afba703e0471dc13db53",
+          "new": "c6ccb0d099cb5a1714eec1c8d00307c4ff41431d",
+          "ref": "refs/heads/seven"
+        }
+      ]
+    },
+    {
+      "pid": 61777,
+      "refs": [
+        {
+          "old": "00902c1a9c5b2624e4f00521ee53816c407f27a4",
+          "new": "1b056e8f2e2eba4348b9a982fc9bb52f118fdda1",
+          "ref": "refs/heads/published-sibling"
+        }
+      ]
+    },
+    {
+      "pid": 69712,
+      "refs": [
+        {
+          "old": "333fd862b225a8c043876c3f7aa15a4a626a5d87",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/base"
+        }
+      ]
+    },
+    {
+      "pid": 87327,
+      "refs": [
+        {
+          "old": "adeb0bfcd55ceddef2a811e062f7932bbc54757c",
+          "new": "99903648e3e2f0f1c875961228a86f8fcb4bc4eb",
+          "ref": "refs/heads/main"
+        }
+      ]
+    },
+    {
+      "pid": 77610,
+      "refs": [
+        {
+          "old": "3f259c8c2996f49a8ef574024c560d2055ee6a37",
+          "new": "3d222f0af20e314dde1b5119d12f7dccf57d04bb",
+          "ref": "refs/heads/tip"
+        }
+      ]
+    },
+    {
+      "pid": 85408,
+      "refs": [
+        {
+          "old": "ebecc94247e8391cba4c436dd0840c9a7ca086b4",
+          "new": "ab0cd017df5c1dbfc16bbc29b4468633d205c47d",
+          "ref": "refs/heads/four"
+        }
+      ]
+    },
+    {
+      "pid": 92242,
+      "refs": [
+        {
+          "old": "9533e92ad580e13222b2de4ae4c6857533132d17",
+          "new": "77f96f8a65d0296b60d3d67699c6d423bc3b5d14",
+          "ref": "refs/heads/five"
+        }
+      ]
+    },
+    {
+      "pid": 2152,
+      "refs": [
+        {
+          "old": "0230c093711176ca8ccba9e324c5b88c0234343c",
+          "new": "293b7aa9991f1143a3c0e2ed57590f1b957f01c7",
+          "ref": "refs/heads/six"
+        }
+      ]
+    },
+    {
+      "pid": 10988,
+      "refs": [
+        {
+          "old": "c6ccb0d099cb5a1714eec1c8d00307c4ff41431d",
+          "new": "516f65a345327541c020f13870bfa4525552fcd6",
+          "ref": "refs/heads/seven"
+        }
+      ]
+    },
+    {
+      "pid": 19809,
+      "refs": [
+        {
+          "old": "8cbddb846676fbd5ee66e8c1edc306961a8696a1",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/child"
+        }
+      ]
+    },
+    {
+      "pid": 29176,
+      "refs": [
+        {
+          "old": "99903648e3e2f0f1c875961228a86f8fcb4bc4eb",
+          "new": "fa662d525fca37e328c163b354e2b11ec6b51f13",
+          "ref": "refs/heads/main"
+        }
+      ]
+    },
+    {
+      "pid": 60562,
+      "refs": [
+        {
+          "old": "ab0cd017df5c1dbfc16bbc29b4468633d205c47d",
+          "new": "715a0bf7a5d4fa8ca741a7b6099fc0dc5fc99316",
+          "ref": "refs/heads/four"
+        }
+      ]
+    },
+    {
+      "pid": 68059,
+      "refs": [
+        {
+          "old": "77f96f8a65d0296b60d3d67699c6d423bc3b5d14",
+          "new": "3c8721a4c6b39732f3c58c9f961aa4752d358cfc",
+          "ref": "refs/heads/five"
+        }
+      ]
+    },
+    {
+      "pid": 76335,
+      "refs": [
+        {
+          "old": "293b7aa9991f1143a3c0e2ed57590f1b957f01c7",
+          "new": "73654b430dde802a1baeb986c94c92b658de9e77",
+          "ref": "refs/heads/six"
+        }
+      ]
+    },
+    {
+      "pid": 84763,
+      "refs": [
+        {
+          "old": "516f65a345327541c020f13870bfa4525552fcd6",
+          "new": "c3930462aac97a3560d5141ab54df8eb8570ea68",
+          "ref": "refs/heads/seven"
+        }
+      ]
+    },
+    {
+      "pid": 94241,
+      "refs": [
+        {
+          "old": "3d222f0af20e314dde1b5119d12f7dccf57d04bb",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/tip"
+        }
+      ]
+    },
+    {
+      "pid": 5669,
+      "refs": [
+        {
+          "old": "fa662d525fca37e328c163b354e2b11ec6b51f13",
+          "new": "7b671e4bd5b873e22ed29ea862d841e619b6ea52",
+          "ref": "refs/heads/main"
+        }
+      ]
+    },
+    {
+      "pid": 36969,
+      "refs": [
+        {
+          "old": "3c8721a4c6b39732f3c58c9f961aa4752d358cfc",
+          "new": "f5af4d54878b0aa41b72ed2df8f945adbaf2566a",
+          "ref": "refs/heads/five"
+        }
+      ]
+    },
+    {
+      "pid": 41291,
+      "refs": [
+        {
+          "old": "73654b430dde802a1baeb986c94c92b658de9e77",
+          "new": "a0d7120bbb073dca5f4717f501de940e22b2742d",
+          "ref": "refs/heads/six"
+        }
+      ]
+    },
+    {
+      "pid": 45573,
+      "refs": [
+        {
+          "old": "c3930462aac97a3560d5141ab54df8eb8570ea68",
+          "new": "c93dfbbf69cd9182d70f7443a182f93dbdb18033",
+          "ref": "refs/heads/seven"
+        }
+      ]
+    },
+    {
+      "pid": 49861,
+      "refs": [
+        {
+          "old": "715a0bf7a5d4fa8ca741a7b6099fc0dc5fc99316",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/four"
+        }
+      ]
+    },
+    {
+      "pid": 54633,
+      "refs": [
+        {
+          "old": "7b671e4bd5b873e22ed29ea862d841e619b6ea52",
+          "new": "df1cddcc9cc3beb6c48628541fb54a5609dbf22d",
+          "ref": "refs/heads/main"
+        }
+      ]
+    },
+    {
+      "pid": 70545,
+      "refs": [
+        {
+          "old": "a0d7120bbb073dca5f4717f501de940e22b2742d",
+          "new": "0672c158b2343b25072f9e19e980b47ed00de13c",
+          "ref": "refs/heads/six"
+        }
+      ]
+    },
+    {
+      "pid": 74428,
+      "refs": [
+        {
+          "old": "c93dfbbf69cd9182d70f7443a182f93dbdb18033",
+          "new": "7fb007e662b0f47074ef83da8e914c42103da93e",
+          "ref": "refs/heads/seven"
+        }
+      ]
+    },
+    {
+      "pid": 78307,
+      "refs": [
+        {
+          "old": "f5af4d54878b0aa41b72ed2df8f945adbaf2566a",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/five"
+        }
+      ]
+    },
+    {
+      "pid": 82678,
+      "refs": [
+        {
+          "old": "df1cddcc9cc3beb6c48628541fb54a5609dbf22d",
+          "new": "a1f5de15d67544ccf1550818067aaa83e47384a5",
+          "ref": "refs/heads/main"
+        }
+      ]
+    },
+    {
+      "pid": 92387,
+      "refs": [
+        {
+          "old": "7fb007e662b0f47074ef83da8e914c42103da93e",
+          "new": "182f799aa3bbb22ac29216898945d929316a864f",
+          "ref": "refs/heads/seven"
+        }
+      ]
+    },
+    {
+      "pid": 95886,
+      "refs": [
+        {
+          "old": "0672c158b2343b25072f9e19e980b47ed00de13c",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/six"
+        }
+      ]
+    },
+    {
+      "pid": 99852,
+      "refs": [
+        {
+          "old": "a1f5de15d67544ccf1550818067aaa83e47384a5",
+          "new": "b1b3a5eccaa5db99f918610964294bc71da0af30",
+          "ref": "refs/heads/main"
+        }
+      ]
+    },
+    {
+      "pid": 4572,
+      "refs": [
+        {
+          "old": "182f799aa3bbb22ac29216898945d929316a864f",
+          "new": "0000000000000000000000000000000000000000",
+          "ref": "refs/heads/seven"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "pushInvocations": 29,
+    "featureUpdates": 22,
+    "deletions": 7,
+    "updatesByRef": {
+      "refs/heads/child": 1,
+      "refs/heads/tip": 2,
+      "refs/heads/four": 3,
+      "refs/heads/five": 4,
+      "refs/heads/six": 5,
+      "refs/heads/seven": 6,
+      "refs/heads/published-sibling": 1
+    },
+    "deletionsByRef": {
+      "refs/heads/base": 1,
+      "refs/heads/child": 1,
+      "refs/heads/tip": 1,
+      "refs/heads/four": 1,
+      "refs/heads/five": 1,
+      "refs/heads/six": 1,
+      "refs/heads/seven": 1
+    }
+  },
+  "serverMainAdvances": 7,
+  "githubMergeRequests": 7,
+  "githubPrEdits": [
+    {
+      "number": "18",
+      "base": "main",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #18** 👈\n  * **PR #19**\n    * **PR #20**\n      * **PR #21**\n        * **PR #22**\n          * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "19",
+      "base": "child",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #18**\n  * **PR #19** 👈\n    * **PR #20**\n      * **PR #21**\n        * **PR #22**\n          * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "20",
+      "base": "tip",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #18**\n  * **PR #19**\n    * **PR #20** 👈\n      * **PR #21**\n        * **PR #22**\n          * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "21",
+      "base": "four",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #18**\n  * **PR #19**\n    * **PR #20**\n      * **PR #21** 👈\n        * **PR #22**\n          * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "22",
+      "base": "five",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #18**\n  * **PR #19**\n    * **PR #20**\n      * **PR #21**\n        * **PR #22** 👈\n          * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "23",
+      "base": "six",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #18**\n  * **PR #19**\n    * **PR #20**\n      * **PR #21**\n        * **PR #22**\n          * **PR #23** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "24",
+      "base": "main",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #24** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "19",
+      "base": "main",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #19** 👈\n  * **PR #20**\n    * **PR #21**\n      * **PR #22**\n        * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "20",
+      "base": "tip",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #19**\n  * **PR #20** 👈\n    * **PR #21**\n      * **PR #22**\n        * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "21",
+      "base": "four",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #19**\n  * **PR #20**\n    * **PR #21** 👈\n      * **PR #22**\n        * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "22",
+      "base": "five",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #19**\n  * **PR #20**\n    * **PR #21**\n      * **PR #22** 👈\n        * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "23",
+      "base": "six",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #19**\n  * **PR #20**\n    * **PR #21**\n      * **PR #22**\n        * **PR #23** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "20",
+      "base": "main",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #20** 👈\n  * **PR #21**\n    * **PR #22**\n      * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "21",
+      "base": "four",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #20**\n  * **PR #21** 👈\n    * **PR #22**\n      * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "22",
+      "base": "five",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #20**\n  * **PR #21**\n    * **PR #22** 👈\n      * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "23",
+      "base": "six",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #20**\n  * **PR #21**\n    * **PR #22**\n      * **PR #23** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "21",
+      "base": "main",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #21** 👈\n  * **PR #22**\n    * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "22",
+      "base": "five",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #21**\n  * **PR #22** 👈\n    * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "23",
+      "base": "six",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #21**\n  * **PR #22**\n    * **PR #23** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "22",
+      "base": "main",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #22** 👈\n  * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "23",
+      "base": "six",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #22**\n  * **PR #23** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    },
+    {
+      "number": "23",
+      "base": "main",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #23** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)"
+    }
+  ],
+  "finalPrs": [
+    {
+      "number": 17,
+      "url": "https://github.com/fixture/inspection/pull/17",
+      "title": "PR for base",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "base",
+      "headRefOid": "333fd862b225a8c043876c3f7aa15a4a626a5d87",
+      "baseRefName": "main",
+      "baseRefOid": "969d50a6e6b07db6fed0552504f5905f949bc970",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "adeb0bfcd55ceddef2a811e062f7932bbc54757c"
+    },
+    {
+      "number": 18,
+      "url": "https://github.com/fixture/inspection/pull/18",
+      "title": "PR for child",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #18** 👈\n  * **PR #19**\n    * **PR #20**\n      * **PR #21**\n        * **PR #22**\n          * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "child",
+      "headRefOid": "8cbddb846676fbd5ee66e8c1edc306961a8696a1",
+      "baseRefName": "main",
+      "baseRefOid": "adeb0bfcd55ceddef2a811e062f7932bbc54757c",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "99903648e3e2f0f1c875961228a86f8fcb4bc4eb"
+    },
+    {
+      "number": 19,
+      "url": "https://github.com/fixture/inspection/pull/19",
+      "title": "PR for tip",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #19** 👈\n  * **PR #20**\n    * **PR #21**\n      * **PR #22**\n        * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "tip",
+      "headRefOid": "3d222f0af20e314dde1b5119d12f7dccf57d04bb",
+      "baseRefName": "main",
+      "baseRefOid": "99903648e3e2f0f1c875961228a86f8fcb4bc4eb",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "fa662d525fca37e328c163b354e2b11ec6b51f13"
+    },
+    {
+      "number": 20,
+      "url": "https://github.com/fixture/inspection/pull/20",
+      "title": "PR for four",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #20** 👈\n  * **PR #21**\n    * **PR #22**\n      * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "four",
+      "headRefOid": "715a0bf7a5d4fa8ca741a7b6099fc0dc5fc99316",
+      "baseRefName": "main",
+      "baseRefOid": "fa662d525fca37e328c163b354e2b11ec6b51f13",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "7b671e4bd5b873e22ed29ea862d841e619b6ea52"
+    },
+    {
+      "number": 21,
+      "url": "https://github.com/fixture/inspection/pull/21",
+      "title": "PR for five",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #21** 👈\n  * **PR #22**\n    * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "five",
+      "headRefOid": "f5af4d54878b0aa41b72ed2df8f945adbaf2566a",
+      "baseRefName": "main",
+      "baseRefOid": "7b671e4bd5b873e22ed29ea862d841e619b6ea52",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "df1cddcc9cc3beb6c48628541fb54a5609dbf22d"
+    },
+    {
+      "number": 22,
+      "url": "https://github.com/fixture/inspection/pull/22",
+      "title": "PR for six",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #22** 👈\n  * **PR #23**\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "six",
+      "headRefOid": "0672c158b2343b25072f9e19e980b47ed00de13c",
+      "baseRefName": "main",
+      "baseRefOid": "df1cddcc9cc3beb6c48628541fb54a5609dbf22d",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "a1f5de15d67544ccf1550818067aaa83e47384a5"
+    },
+    {
+      "number": 23,
+      "url": "https://github.com/fixture/inspection/pull/23",
+      "title": "PR for seven",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #23** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "seven",
+      "headRefOid": "182f799aa3bbb22ac29216898945d929316a864f",
+      "baseRefName": "main",
+      "baseRefOid": "a1f5de15d67544ccf1550818067aaa83e47384a5",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "b1b3a5eccaa5db99f918610964294bc71da0af30"
+    },
+    {
+      "number": 24,
+      "url": "https://github.com/fixture/inspection/pull/24",
+      "title": "PR for published-sibling",
+      "body": "User body\n\n\n#### PR Dependency Tree\n\n\n* **PR #24** 👈\n\nThis tree was auto-generated by [Anthracite](https://github.com/danielbaars/anthracite)",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "published-sibling",
+      "headRefOid": "1b056e8f2e2eba4348b9a982fc9bb52f118fdda1",
+      "baseRefName": "main",
+      "baseRefOid": "a1f5de15d67544ccf1550818067aaa83e47384a5",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ]
+    }
+  ],
+  "before": {
+    "head": "b1c0ab7aa4fa3b42ba04afba703e0471dc13db53\n",
+    "branch": "seven\n",
+    "refs": "refs/branch-metadata/base 3c58d3c5a0b0d91ac5e9c43c752964545b01612a\nrefs/branch-metadata/child ee2da679fc304a8415e86421936bb6c84f3ee86a\nrefs/branch-metadata/five 3921dfa13115b28fb463bfabb36237ab8104ae9b\nrefs/branch-metadata/four ee08e03e75004cbe0805458c84353f9761171009\nrefs/branch-metadata/local-only ee2da679fc304a8415e86421936bb6c84f3ee86a\nrefs/branch-metadata/other 3c58d3c5a0b0d91ac5e9c43c752964545b01612a\nrefs/branch-metadata/published-sibling ee2da679fc304a8415e86421936bb6c84f3ee86a\nrefs/branch-metadata/seven 47266fed4c38bb078b8d78dca259c9722bda48c3\nrefs/branch-metadata/six 822ccc1035229d1eae1382c6995ae2d94a9900a0\nrefs/branch-metadata/tip 73bc91e532ff6a9109e5b06256f5a95f1757154e\nrefs/heads/base 333fd862b225a8c043876c3f7aa15a4a626a5d87\nrefs/heads/child 7fd72bbae472235ee4ec803a6c6b4749761341c0\nrefs/heads/five d2a0fec0219289a037b7c48356919b6f1f93bb17\nrefs/heads/four e8aec017a296f883475e674d7175eef69f3b0400\nrefs/heads/local-only a3847b7e080a67df0e583fd9f1f73b27ad88daa9\nrefs/heads/main 969d50a6e6b07db6fed0552504f5905f949bc970\nrefs/heads/other 301e79b0729cf62faf1dbd4e0369c52d30e93291\nrefs/heads/published-sibling 00902c1a9c5b2624e4f00521ee53816c407f27a4\nrefs/heads/seven b1c0ab7aa4fa3b42ba04afba703e0471dc13db53\nrefs/heads/six a480b9f4aaaab49c30d7193e55a084dd6e53b624\nrefs/heads/tip 8c6cf17d996cf368c2a023756bfc1d61572371ef\nrefs/remotes/origin/base 333fd862b225a8c043876c3f7aa15a4a626a5d87\nrefs/remotes/origin/child 7fd72bbae472235ee4ec803a6c6b4749761341c0\nrefs/remotes/origin/five d2a0fec0219289a037b7c48356919b6f1f93bb17\nrefs/remotes/origin/four e8aec017a296f883475e674d7175eef69f3b0400\nrefs/remotes/origin/main 969d50a6e6b07db6fed0552504f5905f949bc970\nrefs/remotes/origin/other 301e79b0729cf62faf1dbd4e0369c52d30e93291\nrefs/remotes/origin/published-sibling 00902c1a9c5b2624e4f00521ee53816c407f27a4\nrefs/remotes/origin/seven b1c0ab7aa4fa3b42ba04afba703e0471dc13db53\nrefs/remotes/origin/six a480b9f4aaaab49c30d7193e55a084dd6e53b624\nrefs/remotes/origin/tip 8c6cf17d996cf368c2a023756bfc1d61572371ef\n",
+    "index": "RElSQwAAAAIAAAAIavIzKgyWlFlq8jMqDJaUWQEAAA0MYby8AACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAavIzMxdjgYlq8jMzF2OBiQEAAA0MYcCKAACBpAAAAfUAAAAUAAAABbDG7h4A9KtSvXKpNNBHpjgOh3QhAAljaGlsZC50eHQAavIzMxdltVZq8jMzF2W1VgEAAA0MYcCLAACBpAAAAfUAAAAUAAAABAESA+qwHuh6/noMQY1fNpdMsa8sAAhmaXZlLnR4dAAAavIzMxdnaQtq8jMzF2dpCwEAAA0MYcCMAACBpAAAAfUAAAAUAAAABOofNDyKEkikzE60e8kpU9Dv3bUQAAhmb3VyLnR4dAAAavIzJzEdYe5q8jMnMR1h7gEAAA0MYbv6AACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAavIzMxdpF7Vq8jMzF2kXtQEAAA0MYcCNAACBpAAAAfUAAAAUAAAABVEXTKUvPf2dBMWQLZaDYbDqgOZJAAlzZXZlbi50eHQAavIzMxdqwDBq8jMzF2rAMAEAAA0MYcCOAACBpAAAAfUAAAAUAAAAA2TFajZAFX6HfIhDBcGgatigud+eAAdzaXgudHh0AAAAavIzMxdsVsNq8jMzF2xWwwEAAA0MYcCPAACBpAAAAfUAAAAUAAAAA3HJ9dWrsKbQ4MpqX8GPzbeh3dxQAAd0aXAudHh0AAAAVFJFRQAAABkAOCAwCvsJLDiAy9dpn3faDEp5VjnXgXHMBK6eHkzPPWAGDW7Nk1LO62sDa6Q=",
+    "indexLock": null,
+    "staging": "",
+    "status": "",
+    "files": {
+      "base.txt": "YmFzZQ==",
+      "child.txt": "Y2hpbGQ=",
+      "five.txt": "Zml2ZQ==",
+      "four.txt": "Zm91cg==",
+      "main.txt": "bWFpbg==",
+      "seven.txt": "c2V2ZW4=",
+      "six.txt": "c2l4",
+      "tip.txt": "dGlw"
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQpbcmVtb3RlICJvcmlnaW4iXQoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL2ZpeHR1cmUvaW5zcGVjdGlvbi5naXQKCWZldGNoID0gK3JlZnMvaGVhZHMvKjpyZWZzL3JlbW90ZXMvb3JpZ2luLyoKCXB1c2h1cmwgPSBodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uLmdpdApbdXJsICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW4tcmVvcmRlci05Y2Q3Z1UvcmVtb3RlLmdpdCJdCglpbnN0ZWFkT2YgPSBodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uLmdpdAo=",
+      ".graphite_repo_config": "eyJ0cnVuayI6Im1haW4iLCJvd25lciI6ImZpeHR1cmUiLCJuYW1lIjoiaW5zcGVjdGlvbiIsImhvc3QiOiJnaXRodWIuY29tIn0=",
+      ".gtcontinue": null,
+      ".anthracite_landing": null,
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": "ewogICJzaGEiOiAiNWM4NzIzYzhkYTZhZjE2MzI1ZjViMmIwMDI0MTgwOTk0MmE3NDBmZSIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibG9jYWwtb25seSIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImEzODQ3YjdlMDgwYTY3ZGYwZTU4M2ZkOWYxZjczYjI3YWQ4OGRhYTkiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogImJhc2UiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIzMzNmZDg2MmIyMjVhOGMwNDM4NzZjM2Y3YWExNWE0YTYyNmE1ZDg3IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjk2OWQ1MGE2ZTZiMDdkYjZmZWQwNTUyNTA0ZjU5MDVmOTQ5YmM5NzAiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJvdGhlciIsCiAgICAgICAgICAiYmFzZSIKICAgICAgICBdCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJvdGhlciIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMzAxZTc5YjA3MjljZjYyZmFmMWRiZDRlMDM2OWM1MmQzMGU5MzI5MSIsCiAgICAgICAgImNoaWxkcmVuIjogW10sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICI5NjlkNTBhNmU2YjA3ZGI2ZmVkMDU1MjUwNGY1OTA1Zjk0OWJjOTcwIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMzMzZmQ4NjJiMjI1YThjMDQzODc2YzNmN2FhMTVhNGE2MjZhNWQ4NyIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIiwKICAgICAgICAgICJwdWJsaXNoZWQtc2libGluZyIsCiAgICAgICAgICAibG9jYWwtb25seSIKICAgICAgICBdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiOTY5ZDUwYTZlNmIwN2RiNmZlZDA1NTI1MDRmNTkwNWY5NDliYzk3MCIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgImNoaWxkIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogImJhc2UiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICI3ZmQ3MmJiYWU0NzIyMzVlZTRlYzgwM2E2YzZiNDc0OTc2MTM0MWMwIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAidGlwIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIzMzNmZDg2MmIyMjVhOGMwNDM4NzZjM2Y3YWExNWE0YTYyNmE1ZDg3IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAicHVibGlzaGVkLXNpYmxpbmciLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjAwOTAyYzFhOWM1YjI2MjRlNGYwMDUyMWVlNTM4MTZjNDA3ZjI3YTQiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiMzMzZmQ4NjJiMjI1YThjMDQzODc2YzNmN2FhMTVhNGE2MjZhNWQ4NyIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgInRpcCIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjhjNmNmMTdkOTk2Y2YzNjhjMmEwMjM3NTZiZmMxZDYxNTcyMzcxZWYiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJmb3VyIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICI3ZmQ3MmJiYWU0NzIyMzVlZTRlYzgwM2E2YzZiNDc0OTc2MTM0MWMwIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiZm91ciIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJ0aXAiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICJlOGFlYzAxN2EyOTZmODgzNDc1ZTY3NGQ3MTc1ZWVmNjlmM2IwNDAwIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAiZml2ZSIKICAgICAgICBdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiOGM2Y2YxN2Q5OTZjZjM2OGMyYTAyMzc1NmJmYzFkNjE1NzIzNzFlZiIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgImZpdmUiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiZm91ciIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImQyYTBmZWMwMjE5Mjg5YTAzN2I3YzQ4MzU2OTE5YjZmMWY5M2JiMTciLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJzaXgiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogImU4YWVjMDE3YTI5NmY4ODM0NzVlNjc0ZDcxNzVlZWY2OWYzYjA0MDAiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJzaXgiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiZml2ZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImE0ODBiOWY0YWFhYWI0OWMzMGQ3MTkzZTU1YTA4NGRkNmU1M2I2MjQiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJzZXZlbiIKICAgICAgICBdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZDJhMGZlYzAyMTkyODlhMDM3YjdjNDgzNTY5MTliNmYxZjkzYmIxNyIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgInNldmVuIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInNpeCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImIxYzBhYjdhYTRmYTNiNDJiYTA0YWZiYTcwM2UwNDcxZGMxM2RiNTMiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiYTQ4MGI5ZjRhYWFhYjQ5YzMwZDcxOTNlNTVhMDg0ZGQ2ZTUzYjYyNCIKICAgICAgfQogICAgXQogIF0KfQ=="
+    },
+    "operation": {
+      "rebase-merge": null,
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "after": {
+    "head": "b1b3a5eccaa5db99f918610964294bc71da0af30\n",
+    "branch": "main\n",
+    "refs": "refs/branch-metadata/local-only 014db0bf4fbd6565219358645054b7f2475f69dc\nrefs/branch-metadata/other 3c58d3c5a0b0d91ac5e9c43c752964545b01612a\nrefs/branch-metadata/published-sibling 43149797792c8796035da75396b9c62da6104631\nrefs/heads/local-only 58fcc8ad711170945471f276fa87e651e4b8bb36\nrefs/heads/main b1b3a5eccaa5db99f918610964294bc71da0af30\nrefs/heads/other 301e79b0729cf62faf1dbd4e0369c52d30e93291\nrefs/heads/published-sibling 1b056e8f2e2eba4348b9a982fc9bb52f118fdda1\nrefs/remotes/origin/main b1b3a5eccaa5db99f918610964294bc71da0af30\nrefs/remotes/origin/other 301e79b0729cf62faf1dbd4e0369c52d30e93291\nrefs/remotes/origin/published-sibling 1b056e8f2e2eba4348b9a982fc9bb52f118fdda1\n",
+    "index": "RElSQwAAAAIAAAAIavIzPjP7IFlq8jM+M/sgWQEAAA0MYcLzAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAavIzkC9GiuBq8jOQL0aK4AEAAA0MYdHuAACBpAAAAfUAAAAUAAAABbDG7h4A9KtSvXKpNNBHpjgOh3QhAAljaGlsZC50eHQAavIz/QSR4SVq8jP9BJHhJQEAAA0MYelkAACBpAAAAfUAAAAUAAAABAESA+qwHuh6/noMQY1fNpdMsa8sAAhmaXZlLnR4dAAAavIz4i9ABH9q8jPiL0AEfwEAAA0MYeWLAACBpAAAAfUAAAAUAAAABOofNDyKEkikzE60e8kpU9Dv3bUQAAhmb3VyLnR4dAAAavIzJzEdYe5q8jMnMR1h7gEAAA0MYbv6AACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAavI0Gh/LrI9q8jQaH8usjwEAAA0MYe7pAACBpAAAAfUAAAAUAAAABVEXTKUvPf2dBMWQLZaDYbDqgOZJAAlzZXZlbi50eHQAavI0Dw8A3R9q8jQPDwDdHwEAAA0MYexdAACBpAAAAfUAAAAUAAAAA2TFajZAFX6HfIhDBcGgatigud+eAAdzaXgudHh0AAAAavIzvxJrDGhq8jO/EmsMaAEAAA0MYd5TAACBpAAAAfUAAAAUAAAAA3HJ9dWrsKbQ4MpqX8GPzbeh3dxQAAd0aXAudHh0AAAAVFJFRQAAABkAOCAwCvsJLDiAy9dpn3faDEp5VjnXgXHMko1cdCA4QMJD0jKEY23pFcdDjrQ=",
+    "indexLock": null,
+    "staging": "",
+    "status": "",
+    "files": {
+      "base.txt": "YmFzZQ==",
+      "child.txt": "Y2hpbGQ=",
+      "five.txt": "Zml2ZQ==",
+      "four.txt": "Zm91cg==",
+      "main.txt": "bWFpbg==",
+      "seven.txt": "c2V2ZW4=",
+      "six.txt": "c2l4",
+      "tip.txt": "dGlw"
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQpbcmVtb3RlICJvcmlnaW4iXQoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL2ZpeHR1cmUvaW5zcGVjdGlvbi5naXQKCWZldGNoID0gK3JlZnMvaGVhZHMvKjpyZWZzL3JlbW90ZXMvb3JpZ2luLyoKCXB1c2h1cmwgPSBodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uLmdpdApbdXJsICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW4tcmVvcmRlci05Y2Q3Z1UvcmVtb3RlLmdpdCJdCglpbnN0ZWFkT2YgPSBodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uLmdpdAo=",
+      ".graphite_repo_config": "eyJ0cnVuayI6Im1haW4iLCJvd25lciI6ImZpeHR1cmUiLCJuYW1lIjoiaW5zcGVjdGlvbiIsImhvc3QiOiJnaXRodWIuY29tIn0=",
+      ".gtcontinue": null,
+      ".anthracite_landing": null,
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": "ewogICJzaGEiOiAiNWM4NzIzYzhkYTZhZjE2MzI1ZjViMmIwMDI0MTgwOTk0MmE3NDBmZSIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAibG9jYWwtb25seSIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImEzODQ3YjdlMDgwYTY3ZGYwZTU4M2ZkOWYxZjczYjI3YWQ4OGRhYTkiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogImJhc2UiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIzMzNmZDg2MmIyMjVhOGMwNDM4NzZjM2Y3YWExNWE0YTYyNmE1ZDg3IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAibWFpbiIsCiAgICAgIHsKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJUUlVOSyIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjk2OWQ1MGE2ZTZiMDdkYjZmZWQwNTUyNTA0ZjU5MDVmOTQ5YmM5NzAiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJvdGhlciIsCiAgICAgICAgICAiYmFzZSIKICAgICAgICBdCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJvdGhlciIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMzAxZTc5YjA3MjljZjYyZmFmMWRiZDRlMDM2OWM1MmQzMGU5MzI5MSIsCiAgICAgICAgImNoaWxkcmVuIjogW10sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICI5NjlkNTBhNmU2YjA3ZGI2ZmVkMDU1MjUwNGY1OTA1Zjk0OWJjOTcwIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiMzMzZmQ4NjJiMjI1YThjMDQzODc2YzNmN2FhMTVhNGE2MjZhNWQ4NyIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIiwKICAgICAgICAgICJwdWJsaXNoZWQtc2libGluZyIsCiAgICAgICAgICAibG9jYWwtb25seSIKICAgICAgICBdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiOTY5ZDUwYTZlNmIwN2RiNmZlZDA1NTI1MDRmNTkwNWY5NDliYzk3MCIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgImNoaWxkIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogImJhc2UiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICI3ZmQ3MmJiYWU0NzIyMzVlZTRlYzgwM2E2YzZiNDc0OTc2MTM0MWMwIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAidGlwIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIzMzNmZDg2MmIyMjVhOGMwNDM4NzZjM2Y3YWExNWE0YTYyNmE1ZDg3IgogICAgICB9CiAgICBdLAogICAgWwogICAgICAicHVibGlzaGVkLXNpYmxpbmciLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjAwOTAyYzFhOWM1YjI2MjRlNGYwMDUyMWVlNTM4MTZjNDA3ZjI3YTQiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiMzMzZmQ4NjJiMjI1YThjMDQzODc2YzNmN2FhMTVhNGE2MjZhNWQ4NyIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgInRpcCIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogIjhjNmNmMTdkOTk2Y2YzNjhjMmEwMjM3NTZiZmMxZDYxNTcyMzcxZWYiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJmb3VyIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICI3ZmQ3MmJiYWU0NzIyMzVlZTRlYzgwM2E2YzZiNDc0OTc2MTM0MWMwIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiZm91ciIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJ0aXAiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICJlOGFlYzAxN2EyOTZmODgzNDc1ZTY3NGQ3MTc1ZWVmNjlmM2IwNDAwIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAiZml2ZSIKICAgICAgICBdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiOGM2Y2YxN2Q5OTZjZjM2OGMyYTAyMzc1NmJmYzFkNjE1NzIzNzFlZiIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgImZpdmUiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiZm91ciIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImQyYTBmZWMwMjE5Mjg5YTAzN2I3YzQ4MzU2OTE5YjZmMWY5M2JiMTciLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJzaXgiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogImU4YWVjMDE3YTI5NmY4ODM0NzVlNjc0ZDcxNzVlZWY2OWYzYjA0MDAiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJzaXgiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiZml2ZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImE0ODBiOWY0YWFhYWI0OWMzMGQ3MTkzZTU1YTA4NGRkNmU1M2I2MjQiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJzZXZlbiIKICAgICAgICBdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiZDJhMGZlYzAyMTkyODlhMDM3YjdjNDgzNTY5MTliNmYxZjkzYmIxNyIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgInNldmVuIiwKICAgICAgewogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInNpeCIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImIxYzBhYjdhYTRmYTNiNDJiYTA0YWZiYTcwM2UwNDcxZGMxM2RiNTMiLAogICAgICAgICJjaGlsZHJlbiI6IFtdLAogICAgICAgICJ2YWxpZGF0aW9uUmVzdWx0IjogIlZBTElEIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiYTQ4MGI5ZjRhYWFhYjQ5YzMwZDcxOTNlNTVhMDg0ZGQ2ZTUzYjYyNCIKICAgICAgfQogICAgXQogIF0KfQ=="
+    },
+    "operation": {
+      "rebase-merge": null,
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "expectedTrees": {
+    "base": "48af8a60b68c282fb8cf7cb6b7d9b0968c6e81a1",
+    "child": "617083d576005d46947f08ff90c42ca5a34b863e",
+    "tip": "342ff61e48361344f5a95c2eeadc9dd443ff5421",
+    "four": "273caa3b86517dbef837d2135f203b8b1ebddf4a",
+    "five": "f361fe6cbe66f62ab2b4f804c08de3c310d0f535",
+    "six": "7231b9e6f62e4dae165d08cbd0fdf90e125333c9",
+    "seven": "fb092c3880cbd7699f77da0c4a795639d78171cc",
+    "published-sibling": "cc8db74e258f60ba599fed98b48d51d2e58db387"
+  },
+  "commits": {
+    "base": "Reorder fixture <reorder@example.test>\nbase",
+    "child": "Reorder fixture <reorder@example.test>\nchild",
+    "tip": "Reorder fixture <reorder@example.test>\ntip",
+    "four": "Reorder fixture <reorder@example.test>\nfour",
+    "five": "Reorder fixture <reorder@example.test>\nfive",
+    "six": "Reorder fixture <reorder@example.test>\nsix",
+    "seven": "Reorder fixture <reorder@example.test>\nseven",
+    "published-sibling": "Reorder fixture <reorder@example.test>\npublished-sibling",
+    "local-only": "Reorder fixture <reorder@example.test>\nlocal-only"
+  },
+  "preserved": {
+    "independent": true,
+    "localOnlyNeverPublished": true,
+    "chainContent": true,
+    "siblingContent": true
+  },
+  "finalLog": "◯      local-only (needs restack)\n│ ◯    other (needs restack)\n│ │ ◯  published-sibling (needs restack)\n◉─┴─┘  main\n"
+}

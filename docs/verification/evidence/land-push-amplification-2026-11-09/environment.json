@@ -1,0 +1,8 @@
+{
+  "node": "v24.19.0",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "cliVersion": "0.6.15 (compiled merged-source candidate, not public npm 0.6.15 acceptance)",
+  "baseline": "a3c9f7055c7a42dfe38daee8fb843f21e1763474",
+  "compiledCliEntrySha256": "f41af96e346bcfc1648d5636bc8feb109e70d0df7e5fd91e9a4ebf2b07c010bd",
+  "platform": "Darwin arm64"
+}

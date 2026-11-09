@@ -1,0 +1,316 @@
+{
+  "scenario": "conflict3",
+  "chain": [
+    "base",
+    "child",
+    "tip"
+  ],
+  "baseline": "a3c9f7055c7a42dfe38daee8fb843f21e1763474",
+  "fixtureRoot": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-HyXzId",
+  "cliVersion": "0.6.15",
+  "preview": {
+    "status": 0,
+    "stdout": "Landing plan: fixture/inspection\nTarget: tip -> main\nPolicy: No required reviews or checks.\nLocal main: up to date.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\n  Merge 3: tip #19\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\n🧹 Cleanup: base, child, tip\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\n",
+    "stderr": ""
+  },
+  "first": {
+    "status": 1,
+    "stdout": "Landing plan: fixture/inspection\nTarget: tip -> main\nPolicy: No required reviews or checks.\nLocal main: up to date.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\n  Merge 3: tip #19\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\n🧹 Cleanup: base, child, tip\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\n✅ Confirmed merged #17.\n",
+    "stderr": "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (4a95a0e35a554e2949d77fee43d603b86b47f25d); later work unattempted. Local replay conflict in child. Resolve and stage files, run an continue in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-HyXzId/repo, then rerun an land tip --yes for remote maintenance. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-HyXzId/repo; rerun an land tip --yes.\n",
+    "counts": {
+      "pushInvocations": 0,
+      "featureUpdates": 0,
+      "deletions": 0,
+      "updatesByRef": {},
+      "deletionsByRef": {}
+    }
+  },
+  "savedAfterFirst": {
+    "owner": "anthracite-landing",
+    "version": 1,
+    "directory": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-HyXzId/repo",
+    "gitDirectory": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-HyXzId/repo/.git",
+    "repo": "fixture/inspection",
+    "remote": "origin",
+    "remoteUrlHash": "3325c84ff9de80fdd2e71384db08e537f00cc3a48c045f0d1b3d375b02d9e198",
+    "pushUrlHash": "3325c84ff9de80fdd2e71384db08e537f00cc3a48c045f0d1b3d375b02d9e198",
+    "trunk": "main",
+    "trunkHead": "03d7dbe0653d8a9e90cdb7e3150928700f122c2b",
+    "target": "tip",
+    "checkout": "tip",
+    "cacheLock": {
+      "pid": 19469,
+      "timestamp": 1794257989918
+    },
+    "merges": [
+      {
+        "branch": "base",
+        "parent": "main",
+        "base": "03d7dbe0653d8a9e90cdb7e3150928700f122c2b",
+        "head": "b7a660211571bc3ad7a4add7816c1b16e17832c2",
+        "remoteHead": "b7a660211571bc3ad7a4add7816c1b16e17832c2",
+        "metadata": "51d3c1b68ddac2fef66e79fa72bc5c15ec9f8973",
+        "number": 17,
+        "url": "https://github.com/fixture/inspection/pull/17"
+      },
+      {
+        "branch": "child",
+        "parent": "base",
+        "base": "b7a660211571bc3ad7a4add7816c1b16e17832c2",
+        "head": "e9036b14a52adf2220ffaa9c002b29358b863be5",
+        "remoteHead": "e9036b14a52adf2220ffaa9c002b29358b863be5",
+        "metadata": "7588639f004fce7ac81199346e11b748b52fbf57",
+        "number": 18,
+        "url": "https://github.com/fixture/inspection/pull/18",
+        "reached": {
+          "head": "e9036b14a52adf2220ffaa9c002b29358b863be5",
+          "metadata": "973151b8f421779f22d7f6b1c0c0326072bd69fa",
+          "parent": "main",
+          "base": "b7a660211571bc3ad7a4add7816c1b16e17832c2",
+          "remoteHead": "e9036b14a52adf2220ffaa9c002b29358b863be5"
+        }
+      },
+      {
+        "branch": "tip",
+        "parent": "child",
+        "base": "e9036b14a52adf2220ffaa9c002b29358b863be5",
+        "head": "86ba2c5233fc9a774109fd336f7b53a07324a534",
+        "remoteHead": "86ba2c5233fc9a774109fd336f7b53a07324a534",
+        "metadata": "d68b5c6ec24af2a098bd30105d66d9d82cc4c6da",
+        "number": 19,
+        "url": "https://github.com/fixture/inspection/pull/19"
+      }
+    ],
+    "maintenance": [],
+    "replay": {
+      "pending": [
+        "child",
+        "tip"
+      ],
+      "onto": "48a7623c5e073e140299a70a3567f8eee34e04e7",
+      "continuation": "728932a63cf8addad9016c0c1212ff97cc8b531a664b72c26319557541f6a318"
+    },
+    "phase": "trunk-advanced",
+    "result": "4a95a0e35a554e2949d77fee43d603b86b47f25d"
+  },
+  "resumed": null,
+  "clientPushes": [],
+  "remoteReceives": [
+    {
+      "pid": 28700,
+      "refs": [
+        {
+          "old": "03d7dbe0653d8a9e90cdb7e3150928700f122c2b",
+          "new": "48a7623c5e073e140299a70a3567f8eee34e04e7",
+          "ref": "refs/heads/main"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "pushInvocations": 0,
+    "featureUpdates": 0,
+    "deletions": 0,
+    "updatesByRef": {},
+    "deletionsByRef": {}
+  },
+  "serverMainAdvances": 1,
+  "githubMergeRequests": 1,
+  "githubPrEdits": [],
+  "finalPrs": [
+    {
+      "number": 17,
+      "url": "https://github.com/fixture/inspection/pull/17",
+      "title": "PR for base",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "MERGED",
+      "isDraft": false,
+      "headRefName": "base",
+      "headRefOid": "b7a660211571bc3ad7a4add7816c1b16e17832c2",
+      "baseRefName": "main",
+      "baseRefOid": "03d7dbe0653d8a9e90cdb7e3150928700f122c2b",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ],
+      "mergeResult": "4a95a0e35a554e2949d77fee43d603b86b47f25d"
+    },
+    {
+      "number": 18,
+      "url": "https://github.com/fixture/inspection/pull/18",
+      "title": "PR for child",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "child",
+      "headRefOid": "e9036b14a52adf2220ffaa9c002b29358b863be5",
+      "baseRefName": "base",
+      "baseRefOid": "b7a660211571bc3ad7a4add7816c1b16e17832c2",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "url": "https://github.com/fixture/inspection/pull/19",
+      "title": "PR for tip",
+      "body": "User body",
+      "author": {
+        "login": "reviewer"
+      },
+      "state": "OPEN",
+      "isDraft": false,
+      "headRefName": "tip",
+      "headRefOid": "86ba2c5233fc9a774109fd336f7b53a07324a534",
+      "baseRefName": "child",
+      "baseRefOid": "e9036b14a52adf2220ffaa9c002b29358b863be5",
+      "headRepository": {
+        "name": "inspection",
+        "nameWithOwner": "fixture/inspection"
+      },
+      "headRepositoryOwner": {
+        "login": "fixture"
+      },
+      "isCrossRepository": false,
+      "reviewDecision": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "mergeStateStatus": "CLEAN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "name": "unit",
+          "status": "COMPLETED",
+          "conclusion": "SUCCESS"
+        }
+      ]
+    }
+  ],
+  "before": {
+    "head": "86ba2c5233fc9a774109fd336f7b53a07324a534\n",
+    "branch": "tip\n",
+    "refs": "refs/branch-metadata/base 51d3c1b68ddac2fef66e79fa72bc5c15ec9f8973\nrefs/branch-metadata/child 7588639f004fce7ac81199346e11b748b52fbf57\nrefs/branch-metadata/other 51d3c1b68ddac2fef66e79fa72bc5c15ec9f8973\nrefs/branch-metadata/tip d68b5c6ec24af2a098bd30105d66d9d82cc4c6da\nrefs/heads/base b7a660211571bc3ad7a4add7816c1b16e17832c2\nrefs/heads/child e9036b14a52adf2220ffaa9c002b29358b863be5\nrefs/heads/main 03d7dbe0653d8a9e90cdb7e3150928700f122c2b\nrefs/heads/other 5b5101123add18ca8544f2546a926e5c9957e84e\nrefs/heads/tip 86ba2c5233fc9a774109fd336f7b53a07324a534\nrefs/remotes/origin/base b7a660211571bc3ad7a4add7816c1b16e17832c2\nrefs/remotes/origin/child e9036b14a52adf2220ffaa9c002b29358b863be5\nrefs/remotes/origin/main 03d7dbe0653d8a9e90cdb7e3150928700f122c2b\nrefs/remotes/origin/other 5b5101123add18ca8544f2546a926e5c9957e84e\nrefs/remotes/origin/tip 86ba2c5233fc9a774109fd336f7b53a07324a534\n",
+    "index": "RElSQwAAAAIAAAAEavI0QDIQ05hq8jRAMhDTmAEAAA0MYfAQAACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAavI0QxkOcyNq8jRDGQ5zIwEAAA0MYfC7AACBpAAAAfUAAAAUAAAABbDG7h4A9KtSvXKpNNBHpjgOh3QhAAljaGlsZC50eHQAavI0Picd1vBq8jQ+Jx3W8AEAAA0MYe9wAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAavI0QxkQsDdq8jRDGRCwNwEAAA0MYfC8AACBpAAAAfUAAAAUAAAAA3HJ9dWrsKbQ4MpqX8GPzbeh3dxQAAd0aXAudHh0AAAAVFJFRQAAABkANCAwCjQv9h5INhNE9alcLurcndRD/1QhNeZJFZm4NwNZZDxw5qh1yJq/2MU=",
+    "indexLock": null,
+    "staging": "",
+    "status": "",
+    "files": {
+      "base.txt": "YmFzZQ==",
+      "child.txt": "Y2hpbGQ=",
+      "main.txt": "bWFpbg==",
+      "tip.txt": "dGlw"
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQpbcmVtb3RlICJvcmlnaW4iXQoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL2ZpeHR1cmUvaW5zcGVjdGlvbi5naXQKCWZldGNoID0gK3JlZnMvaGVhZHMvKjpyZWZzL3JlbW90ZXMvb3JpZ2luLyoKCXB1c2h1cmwgPSBodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uLmdpdApbdXJsICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW4tcmVvcmRlci1IeVh6SWQvcmVtb3RlLmdpdCJdCglpbnN0ZWFkT2YgPSBodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uLmdpdAo=",
+      ".graphite_repo_config": "eyJ0cnVuayI6Im1haW4iLCJvd25lciI6ImZpeHR1cmUiLCJuYW1lIjoiaW5zcGVjdGlvbiIsImhvc3QiOiJnaXRodWIuY29tIn0=",
+      ".gtcontinue": null,
+      ".anthracite_landing": null,
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": "ewogICJzaGEiOiAiNTAzMjBiZmU0YjQzMWM3YjdlYTkzZmU3NzJlNTdjNGZmMGFiMWRhMyIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAib3RoZXIiLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICI1YjUxMDExMjNhZGQxOGNhODU0NGYyNTQ2YTkyNmU1Yzk5NTdlODRlIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiMDNkN2RiZTA2NTNkOGE5ZTkwY2RiN2UzMTUwOTI4NzAwZjEyMmMyYiIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgIm1haW4iLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVFJVTksiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIwM2Q3ZGJlMDY1M2Q4YTllOTBjZGI3ZTMxNTA5Mjg3MDBmMTIyYzJiIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAiYmFzZSIsCiAgICAgICAgICAib3RoZXIiCiAgICAgICAgXQogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiYjdhNjYwMjExNTcxYmMzYWQ3YTRhZGQ3ODE2YzFiMTZlMTc4MzJjMiIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIwM2Q3ZGJlMDY1M2Q4YTllOTBjZGI3ZTMxNTA5Mjg3MDBmMTIyYzJiIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImU5MDM2YjE0YTUyYWRmMjIyMGZmYWE5YzAwMmIyOTM1OGI4NjNiZTUiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJ0aXAiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogImI3YTY2MDIxMTU3MWJjM2FkN2E0YWRkNzgxNmMxYjE2ZTE3ODMyYzIiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJ0aXAiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICI4NmJhMmM1MjMzZmM5YTc3NDEwOWZkMzM2ZjdiNTNhMDczMjRhNTM0IiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogImU5MDM2YjE0YTUyYWRmMjIyMGZmYWE5YzAwMmIyOTM1OGI4NjNiZTUiCiAgICAgIH0KICAgIF0KICBdCn0="
+    },
+    "operation": {
+      "rebase-merge": null,
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "after": {
+    "head": "48a7623c5e073e140299a70a3567f8eee34e04e7\n",
+    "branch": "",
+    "refs": "refs/branch-metadata/base 51d3c1b68ddac2fef66e79fa72bc5c15ec9f8973\nrefs/branch-metadata/child 973151b8f421779f22d7f6b1c0c0326072bd69fa\nrefs/branch-metadata/other 51d3c1b68ddac2fef66e79fa72bc5c15ec9f8973\nrefs/branch-metadata/tip d68b5c6ec24af2a098bd30105d66d9d82cc4c6da\nrefs/heads/base b7a660211571bc3ad7a4add7816c1b16e17832c2\nrefs/heads/child e9036b14a52adf2220ffaa9c002b29358b863be5\nrefs/heads/main 48a7623c5e073e140299a70a3567f8eee34e04e7\nrefs/heads/other 5b5101123add18ca8544f2546a926e5c9957e84e\nrefs/heads/tip 86ba2c5233fc9a774109fd336f7b53a07324a534\nrefs/remotes/origin/base b7a660211571bc3ad7a4add7816c1b16e17832c2\nrefs/remotes/origin/child e9036b14a52adf2220ffaa9c002b29358b863be5\nrefs/remotes/origin/main 48a7623c5e073e140299a70a3567f8eee34e04e7\nrefs/remotes/origin/other 5b5101123add18ca8544f2546a926e5c9957e84e\nrefs/remotes/origin/tip 86ba2c5233fc9a774109fd336f7b53a07324a534\n",
+    "index": "RElSQwAAAAIAAAAEavI0SjD3t9lq8jRKMPe32QEAAA0MYfJ7AACBpAAAAfUAAAAUAAAABIaB+LjzJhWhZwMFO8Hq/7Pl5yClAAhiYXNlLnR4dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBpAAAAAAAAAAAAAAAAAerR/DauxM1KUW7Aocb7FTcmpdgIAljaGlsZC50eHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBpAAAAAAAAAAAAAAAALDG7h4A9KtSvXKpNNBHpjgOh3QhMAljaGlsZC50eHQAavI0Picd1vBq8jQ+Jx3W8AEAAA0MYe9wAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAAAYALTEgMArFoTLXUD+XMfHXfHqhv16xXFSLiA==",
+    "indexLock": null,
+    "staging": ":100644 000000 07ab47f 0000000 U\u0000child.txt\u0000",
+    "status": "AA child.txt\u0000",
+    "files": {
+      "base.txt": "YmFzZQ==",
+      "child.txt": "PDw8PDw8PCBIRUFECmNvbmN1cnJlbnQgdHJ1bmsgY2hhbmdlCj09PT09PT0KY2hpbGQKPj4+Pj4+PiBlOTAzNmIxIChjaGlsZCkK",
+      "main.txt": "bWFpbg=="
+    },
+    "persistent": {
+      "config": "W2NvcmVdCglyZXBvc2l0b3J5Zm9ybWF0dmVyc2lvbiA9IDAKCWZpbGVtb2RlID0gdHJ1ZQoJYmFyZSA9IGZhbHNlCglsb2dhbGxyZWZ1cGRhdGVzID0gdHJ1ZQoJaWdub3JlY2FzZSA9IHRydWUKCXByZWNvbXBvc2V1bmljb2RlID0gdHJ1ZQpbdXNlcl0KCW5hbWUgPSBSZW9yZGVyIGZpeHR1cmUKCWVtYWlsID0gcmVvcmRlckBleGFtcGxlLnRlc3QKW2NvbW1pdF0KCWdwZ3NpZ24gPSBmYWxzZQpbcmVtb3RlICJvcmlnaW4iXQoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL2ZpeHR1cmUvaW5zcGVjdGlvbi5naXQKCWZldGNoID0gK3JlZnMvaGVhZHMvKjpyZWZzL3JlbW90ZXMvb3JpZ2luLyoKCXB1c2h1cmwgPSBodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uLmdpdApbdXJsICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW4tcmVvcmRlci1IeVh6SWQvcmVtb3RlLmdpdCJdCglpbnN0ZWFkT2YgPSBodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uLmdpdAo=",
+      ".graphite_repo_config": "eyJ0cnVuayI6Im1haW4iLCJvd25lciI6ImZpeHR1cmUiLCJuYW1lIjoiaW5zcGVjdGlvbiIsImhvc3QiOiJnaXRodWIuY29tIn0=",
+      ".gtcontinue": "ewogICJicmFuY2hlc1RvU3luYyI6IFtdLAogICJicmFuY2hlc1RvUmVzdGFjayI6IFsKICAgICJ0aXAiCiAgXSwKICAiY3VycmVudEJyYW5jaE92ZXJyaWRlIjogIm1haW4iLAogICJyZWJhc2VkQnJhbmNoQmFzZSI6ICI0OGE3NjIzYzVlMDczZTE0MDI5OWE3MGEzNTY3ZjhlZWUzNGUwNGU3IiwKICAicmViYXNlT3duZXJzaGlwIjogIjgwMWE2Y2E3LWFkY2MtNDkyOS04YjYyLTdmZTYxYWFkNmVhYiIKfQ==",
+      ".anthracite_landing": "eyJvd25lciI6ImFudGhyYWNpdGUtbGFuZGluZyIsInZlcnNpb24iOjEsImRpcmVjdG9yeSI6Ii9wcml2YXRlL3Zhci9mb2xkZXJzL3A4L2JfMDV0bTc1NWIzNHliOWgxMXp6cXAxYzAwMDBnbi9UL2FuLXJlb3JkZXItSHlYeklkL3JlcG8iLCJnaXREaXJlY3RvcnkiOiIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbi1yZW9yZGVyLUh5WHpJZC9yZXBvLy5naXQiLCJyZXBvIjoiZml4dHVyZS9pbnNwZWN0aW9uIiwicmVtb3RlIjoib3JpZ2luIiwicmVtb3RlVXJsSGFzaCI6IjMzMjVjODRmZjlkZTgwZmRkMmU3MTM4NGRiMDhlNTM3ZjAwY2MzYTQ4YzA0NWYwZDFiM2QzNzViMDJkOWUxOTgiLCJwdXNoVXJsSGFzaCI6IjMzMjVjODRmZjlkZTgwZmRkMmU3MTM4NGRiMDhlNTM3ZjAwY2MzYTQ4YzA0NWYwZDFiM2QzNzViMDJkOWUxOTgiLCJ0cnVuayI6Im1haW4iLCJ0cnVua0hlYWQiOiIwM2Q3ZGJlMDY1M2Q4YTllOTBjZGI3ZTMxNTA5Mjg3MDBmMTIyYzJiIiwidGFyZ2V0IjoidGlwIiwiY2hlY2tvdXQiOiJ0aXAiLCJjYWNoZUxvY2siOnsicGlkIjoxOTQ2OSwidGltZXN0YW1wIjoxNzk0MjU3OTg5OTE4fSwibWVyZ2VzIjpbeyJicmFuY2giOiJiYXNlIiwicGFyZW50IjoibWFpbiIsImJhc2UiOiIwM2Q3ZGJlMDY1M2Q4YTllOTBjZGI3ZTMxNTA5Mjg3MDBmMTIyYzJiIiwiaGVhZCI6ImI3YTY2MDIxMTU3MWJjM2FkN2E0YWRkNzgxNmMxYjE2ZTE3ODMyYzIiLCJyZW1vdGVIZWFkIjoiYjdhNjYwMjExNTcxYmMzYWQ3YTRhZGQ3ODE2YzFiMTZlMTc4MzJjMiIsIm1ldGFkYXRhIjoiNTFkM2MxYjY4ZGRhYzJmZWY2NmU3OWZhNzJiYzVjMTVlYzlmODk3MyIsIm51bWJlciI6MTcsInVybCI6Imh0dHBzOi8vZ2l0aHViLmNvbS9maXh0dXJlL2luc3BlY3Rpb24vcHVsbC8xNyJ9LHsiYnJhbmNoIjoiY2hpbGQiLCJwYXJlbnQiOiJiYXNlIiwiYmFzZSI6ImI3YTY2MDIxMTU3MWJjM2FkN2E0YWRkNzgxNmMxYjE2ZTE3ODMyYzIiLCJoZWFkIjoiZTkwMzZiMTRhNTJhZGYyMjIwZmZhYTljMDAyYjI5MzU4Yjg2M2JlNSIsInJlbW90ZUhlYWQiOiJlOTAzNmIxNGE1MmFkZjIyMjBmZmFhOWMwMDJiMjkzNThiODYzYmU1IiwibWV0YWRhdGEiOiI3NTg4NjM5ZjAwNGZjZTdhYzgxMTk5MzQ2ZTExYjc0OGI1MmZiZjU3IiwibnVtYmVyIjoxOCwidXJsIjoiaHR0cHM6Ly9naXRodWIuY29tL2ZpeHR1cmUvaW5zcGVjdGlvbi9wdWxsLzE4IiwicmVhY2hlZCI6eyJoZWFkIjoiZTkwMzZiMTRhNTJhZGYyMjIwZmZhYTljMDAyYjI5MzU4Yjg2M2JlNSIsIm1ldGFkYXRhIjoiOTczMTUxYjhmNDIxNzc5ZjIyZDdmNmIxYzBjMDMyNjA3MmJkNjlmYSIsInBhcmVudCI6Im1haW4iLCJiYXNlIjoiYjdhNjYwMjExNTcxYmMzYWQ3YTRhZGQ3ODE2YzFiMTZlMTc4MzJjMiIsInJlbW90ZUhlYWQiOiJlOTAzNmIxNGE1MmFkZjIyMjBmZmFhOWMwMDJiMjkzNThiODYzYmU1In19LHsiYnJhbmNoIjoidGlwIiwicGFyZW50IjoiY2hpbGQiLCJiYXNlIjoiZTkwMzZiMTRhNTJhZGYyMjIwZmZhYTljMDAyYjI5MzU4Yjg2M2JlNSIsImhlYWQiOiI4NmJhMmM1MjMzZmM5YTc3NDEwOWZkMzM2ZjdiNTNhMDczMjRhNTM0IiwicmVtb3RlSGVhZCI6Ijg2YmEyYzUyMzNmYzlhNzc0MTA5ZmQzMzZmN2I1M2EwNzMyNGE1MzQiLCJtZXRhZGF0YSI6ImQ2OGI1YzZlYzI0YWYyYTA5OGJkMzAxMDVkNjZkOWQ4MmNjNGM2ZGEiLCJudW1iZXIiOjE5LCJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vZml4dHVyZS9pbnNwZWN0aW9uL3B1bGwvMTkifV0sIm1haW50ZW5hbmNlIjpbXSwicmVwbGF5Ijp7InBlbmRpbmciOlsiY2hpbGQiLCJ0aXAiXSwib250byI6IjQ4YTc2MjNjNWUwNzNlMTQwMjk5YTcwYTM1NjdmOGVlZTM0ZTA0ZTciLCJjb250aW51YXRpb24iOiI3Mjg5MzJhNjNjZjhhZGRhZDkwMTZjMGMxMjEyZmY5N2NjOGI1MzFhNjY0YjcyYzI2MzE5NTU3NTQxZjZhMzE4In0sInBoYXNlIjoidHJ1bmstYWR2YW5jZWQiLCJyZXN1bHQiOiI0YTk1YTBlMzVhNTU0ZTI5NDlkNzdmZWU0M2Q2MDNiODZiNDdmMjVkIn0K",
+      ".graphite_pr_info": null,
+      ".graphite_cache_lock": null,
+      ".graphite_cache_persist": "ewogICJzaGEiOiAiNTAzMjBiZmU0YjQzMWM3YjdlYTkzZmU3NzJlNTdjNGZmMGFiMWRhMyIsCiAgImJyYW5jaGVzIjogWwogICAgWwogICAgICAib3RoZXIiLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICI1YjUxMDExMjNhZGQxOGNhODU0NGYyNTQ2YTkyNmU1Yzk5NTdlODRlIiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAicGFyZW50QnJhbmNoUmV2aXNpb24iOiAiMDNkN2RiZTA2NTNkOGE5ZTkwY2RiN2UzMTUwOTI4NzAwZjEyMmMyYiIKICAgICAgfQogICAgXSwKICAgIFsKICAgICAgIm1haW4iLAogICAgICB7CiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVFJVTksiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICIwM2Q3ZGJlMDY1M2Q4YTllOTBjZGI3ZTMxNTA5Mjg3MDBmMTIyYzJiIiwKICAgICAgICAiY2hpbGRyZW4iOiBbCiAgICAgICAgICAiYmFzZSIsCiAgICAgICAgICAib3RoZXIiCiAgICAgICAgXQogICAgICB9CiAgICBdLAogICAgWwogICAgICAiYmFzZSIsCiAgICAgIHsKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiYnJhbmNoUmV2aXNpb24iOiAiYjdhNjYwMjExNTcxYmMzYWQ3YTRhZGQ3ODE2YzFiMTZlMTc4MzJjMiIsCiAgICAgICAgImNoaWxkcmVuIjogWwogICAgICAgICAgImNoaWxkIgogICAgICAgIF0sCiAgICAgICAgInZhbGlkYXRpb25SZXN1bHQiOiAiVkFMSUQiLAogICAgICAgICJwYXJlbnRCcmFuY2hSZXZpc2lvbiI6ICIwM2Q3ZGJlMDY1M2Q4YTllOTBjZGI3ZTMxNTA5Mjg3MDBmMTIyYzJiIgogICAgICB9CiAgICBdLAogICAgWwogICAgICAiY2hpbGQiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiYmFzZSIsCiAgICAgICAgImJyYW5jaFJldmlzaW9uIjogImU5MDM2YjE0YTUyYWRmMjIyMGZmYWE5YzAwMmIyOTM1OGI4NjNiZTUiLAogICAgICAgICJjaGlsZHJlbiI6IFsKICAgICAgICAgICJ0aXAiCiAgICAgICAgXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogImI3YTY2MDIxMTU3MWJjM2FkN2E0YWRkNzgxNmMxYjE2ZTE3ODMyYzIiCiAgICAgIH0KICAgIF0sCiAgICBbCiAgICAgICJ0aXAiLAogICAgICB7CiAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJicmFuY2hSZXZpc2lvbiI6ICI4NmJhMmM1MjMzZmM5YTc3NDEwOWZkMzM2ZjdiNTNhMDczMjRhNTM0IiwKICAgICAgICAiY2hpbGRyZW4iOiBbXSwKICAgICAgICAidmFsaWRhdGlvblJlc3VsdCI6ICJWQUxJRCIsCiAgICAgICAgInBhcmVudEJyYW5jaFJldmlzaW9uIjogImU5MDM2YjE0YTUyYWRmMjIyMGZmYWE5YzAwMmIyOTM1OGI4NjNiZTUiCiAgICAgIH0KICAgIF0KICBdCn0="
+    },
+    "operation": {
+      "rebase-merge": {
+        "author-script": "R0lUX0FVVEhPUl9OQU1FPSdSZW9yZGVyIGZpeHR1cmUnCkdJVF9BVVRIT1JfRU1BSUw9J3Jlb3JkZXJAZXhhbXBsZS50ZXN0JwpHSVRfQVVUSE9SX0RBVEU9J0AxNzk0MjU3OTgzICswMTAwJwo=",
+        "charcoal-continuation": "ODAxYTZjYTctYWRjYy00OTI5LThiNjItN2ZlNjFhYWQ2ZWFi",
+        "done": "cGljayBlOTAzNmIxNGE1MmFkZjIyMjBmZmFhOWMwMDJiMjkzNThiODYzYmU1ICMgY2hpbGQK",
+        "drop_redundant_commits": "",
+        "end": "MQo=",
+        "git-rebase-todo": "",
+        "git-rebase-todo.backup": "cGljayBlOTAzNmIxNGE1MmFkZjIyMjBmZmFhOWMwMDJiMjkzNThiODYzYmU1ICMgY2hpbGQKCiMgUmViYXNlIGI3YTY2MDIuLmU5MDM2YjEgb250byA0OGE3NjIzICgxIGNvbW1hbmQpCiMKIyBDb21tYW5kczoKIyBwLCBwaWNrIDxjb21taXQ+ID0gdXNlIGNvbW1pdAojIHIsIHJld29yZCA8Y29tbWl0PiA9IHVzZSBjb21taXQsIGJ1dCBlZGl0IHRoZSBjb21taXQgbWVzc2FnZQojIGUsIGVkaXQgPGNvbW1pdD4gPSB1c2UgY29tbWl0LCBidXQgc3RvcCBmb3IgYW1lbmRpbmcKIyBzLCBzcXVhc2ggPGNvbW1pdD4gPSB1c2UgY29tbWl0LCBidXQgbWVsZCBpbnRvIHByZXZpb3VzIGNvbW1pdAojIGYsIGZpeHVwIFstQyB8IC1jXSA8Y29tbWl0PiA9IGxpa2UgInNxdWFzaCIgYnV0IGtlZXAgb25seSB0aGUgcHJldmlvdXMKIyAgICAgICAgICAgICAgICAgICAgY29tbWl0J3MgbG9nIG1lc3NhZ2UsIHVubGVzcyAtQyBpcyB1c2VkLCBpbiB3aGljaCBjYXNlCiMgICAgICAgICAgICAgICAgICAgIGtlZXAgb25seSB0aGlzIGNvbW1pdCdzIG1lc3NhZ2U7IC1jIGlzIHNhbWUgYXMgLUMgYnV0CiMgICAgICAgICAgICAgICAgICAgIG9wZW5zIHRoZSBlZGl0b3IKIyB4LCBleGVjIDxjb21tYW5kPiA9IHJ1biBjb21tYW5kICh0aGUgcmVzdCBvZiB0aGUgbGluZSkgdXNpbmcgc2hlbGwKIyBiLCBicmVhayA9IHN0b3AgaGVyZSAoY29udGludWUgcmViYXNlIGxhdGVyIHdpdGggJ2dpdCByZWJhc2UgLS1jb250aW51ZScpCiMgZCwgZHJvcCA8Y29tbWl0PiA9IHJlbW92ZSBjb21taXQKIyBsLCBsYWJlbCA8bGFiZWw+ID0gbGFiZWwgY3VycmVudCBIRUFEIHdpdGggYSBuYW1lCiMgdCwgcmVzZXQgPGxhYmVsPiA9IHJlc2V0IEhFQUQgdG8gYSBsYWJlbAojIG0sIG1lcmdlIFstQyA8Y29tbWl0PiB8IC1jIDxjb21taXQ+XSA8bGFiZWw+IFsjIDxvbmVsaW5lPl0KIyAgICAgICAgIGNyZWF0ZSBhIG1lcmdlIGNvbW1pdCB1c2luZyB0aGUgb3JpZ2luYWwgbWVyZ2UgY29tbWl0J3MKIyAgICAgICAgIG1lc3NhZ2UgKG9yIHRoZSBvbmVsaW5lLCBpZiBubyBvcmlnaW5hbCBtZXJnZSBjb21taXQgd2FzCiMgICAgICAgICBzcGVjaWZpZWQpOyB1c2UgLWMgPGNvbW1pdD4gdG8gcmV3b3JkIHRoZSBjb21taXQgbWVzc2FnZQojIHUsIHVwZGF0ZS1yZWYgPHJlZj4gPSB0cmFjayBhIHBsYWNlaG9sZGVyIGZvciB0aGUgPHJlZj4gdG8gYmUgdXBkYXRlZAojICAgICAgICAgICAgICAgICAgICAgICB0byB0aGlzIHBvc2l0aW9uIGluIHRoZSBuZXcgY29tbWl0cy4gVGhlIDxyZWY+IGlzCiMgICAgICAgICAgICAgICAgICAgICAgIHVwZGF0ZWQgYXQgdGhlIGVuZCBvZiB0aGUgcmViYXNlCiMKIyBUaGVzZSBsaW5lcyBjYW4gYmUgcmUtb3JkZXJlZDsgdGhleSBhcmUgZXhlY3V0ZWQgZnJvbSB0b3AgdG8gYm90dG9tLgojCiMgSWYgeW91IHJlbW92ZSBhIGxpbmUgaGVyZSBUSEFUIENPTU1JVCBXSUxMIEJFIExPU1QuCiMKIyBIb3dldmVyLCBpZiB5b3UgcmVtb3ZlIGV2ZXJ5dGhpbmcsIHRoZSByZWJhc2Ugd2lsbCBiZSBhYm9ydGVkLgojCg==",
+        "head-name": "cmVmcy9oZWFkcy9jaGlsZAo=",
+        "interactive": "",
+        "message": "Y2hpbGQKCiMgQ29uZmxpY3RzOgojCWNoaWxkLnR4dAo=",
+        "msgnum": "MQo=",
+        "no-reschedule-failed-exec": "",
+        "onto": "NDhhNzYyM2M1ZTA3M2UxNDAyOTlhNzBhMzU2N2Y4ZWVlMzRlMDRlNwo=",
+        "orig-head": "ZTkwMzZiMTRhNTJhZGYyMjIwZmZhYTljMDAyYjI5MzU4Yjg2M2JlNQo=",
+        "patch": "ZGlmZiAtLWdpdCBhL2NoaWxkLnR4dCBiL2NoaWxkLnR4dApuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwLi5iMGM2ZWUxCi0tLSAvZGV2L251bGwKKysrIGIvY2hpbGQudHh0CkBAIC0wLDAgKzEgQEAKK2NoaWxkClwgTm8gbmV3bGluZSBhdCBlbmQgb2YgZmlsZQo=",
+        "stopped-sha": "ZTkwMzZiMTRhNTJhZGYyMjIwZmZhYTljMDAyYjI5MzU4Yjg2M2JlNQo="
+      },
+      "rebase-apply": null
+    },
+    "userConfig": "eyJ0aXBzIjpmYWxzZSwiYnJhbmNoRGF0ZSI6ZmFsc2V9"
+  },
+  "expectedTrees": {
+    "base": "48af8a60b68c282fb8cf7cb6b7d9b0968c6e81a1",
+    "child": "617083d576005d46947f08ff90c42ca5a34b863e",
+    "tip": "342ff61e48361344f5a95c2eeadc9dd443ff5421"
+  },
+  "commits": {
+    "base": "Reorder fixture <reorder@example.test>\nbase",
+    "child": "Reorder fixture <reorder@example.test>\nchild",
+    "tip": "Reorder fixture <reorder@example.test>\ntip"
+  },
+  "preserved": {
+    "independent": true,
+    "localOnlyNeverPublished": null,
+    "chainContent": null,
+    "siblingContent": null
+  },
+  "finalLog": ""
+}
