@@ -1,0 +1,1347 @@
+{
+  "scenario": "missing-leaf",
+  "commands": [
+    {
+      "label": "initial-log",
+      "args": [
+        "ls"
+      ],
+      "status": 0,
+      "output": "◯  obsolete-leaf\n│\n◯  child\n│\n◯  parent (frozen)\n│\n◉  main\n",
+      "stdout": "◯  obsolete-leaf\n│\n◯  child\n│\n◯  parent (frozen)\n│\n◉  main\n",
+      "stderr": ""
+    },
+    {
+      "label": "initial-sync-conflict",
+      "args": [
+        "sync",
+        "--no-delete"
+      ],
+      "status": 1,
+      "output": "obsolete-leaf is local-only; remote refresh skipped (no pull request).\nSynced parent from remote.\nLocal children may need to be restacked.\nchild is up to date.\nLocal maintenance: child, obsolete-leaf.\nRestacked child on parent.\nHit conflict restacking obsolete-leaf on child.\n\nUnmerged files:\nparent.txt\n\nYou are here (resolving obsolete-leaf):\n◯  obsolete-leaf\n◯  child\n\nTo fix and continue your previous Anthracite command:\n(1) resolve the listed merge conflicts\n(2) mark them as resolved with an add .\n(3) run an continue to continue executing your previous Anthracite command\nan rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.\nERROR: Sync stopped during maintenance. Updated: parent, child. Completed feature refresh: parent, child. Pending feature refresh: none. Confirmed cleanup deletions: none. Completed parent changes: none. Completed local maintenance: child. Pending local maintenance: obsolete-leaf. Actual checkout: detached HEAD (56568974f4a19fa967b2a293bd4928a83d198901). Original project: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-H4npfI/consumer. Resolve the conflict and run an continue. Some source refs may already have been removed; inspect remaining refs.\nUpdated parent, child before sync stopped during local maintenance.\nCompleted local maintenance: child.\nPending local maintenance: obsolete-leaf.\nActual checkout: detached HEAD (56568974f4a19fa967b2a293bd4928a83d198901).\nHit a conflict during rebase. Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted. To end a supported owned sync preserving reached work and residual files, use an sync --abort; foreign or malformed state still requires inspection.\n",
+      "stdout": "obsolete-leaf is local-only; remote refresh skipped (no pull request).\nSynced parent from remote.\nLocal children may need to be restacked.\nchild is up to date.\nLocal maintenance: child, obsolete-leaf.\nRestacked child on parent.\n",
+      "stderr": "Hit conflict restacking obsolete-leaf on child.\n\nUnmerged files:\nparent.txt\n\nYou are here (resolving obsolete-leaf):\n◯  obsolete-leaf\n◯  child\n\nTo fix and continue your previous Anthracite command:\n(1) resolve the listed merge conflicts\n(2) mark them as resolved with an add .\n(3) run an continue to continue executing your previous Anthracite command\nan rebase --abort only cancels the active rebase; it does not undo earlier completed operations or restore all parent relationships.\nERROR: Sync stopped during maintenance. Updated: parent, child. Completed feature refresh: parent, child. Pending feature refresh: none. Confirmed cleanup deletions: none. Completed parent changes: none. Completed local maintenance: child. Pending local maintenance: obsolete-leaf. Actual checkout: detached HEAD (56568974f4a19fa967b2a293bd4928a83d198901). Original project: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-H4npfI/consumer. Resolve the conflict and run an continue. Some source refs may already have been removed; inspect remaining refs.\nUpdated parent, child before sync stopped during local maintenance.\nCompleted local maintenance: child.\nPending local maintenance: obsolete-leaf.\nActual checkout: detached HEAD (56568974f4a19fa967b2a293bd4928a83d198901).\nHit a conflict during rebase. Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted. To end a supported owned sync preserving reached work and residual files, use an sync --abort; foreign or malformed state still requires inspection.\n"
+    },
+    {
+      "label": "continue-refusal",
+      "args": [
+        "continue",
+        "--all"
+      ],
+      "status": 1,
+      "output": "ERROR: No matching owned active sync rebase; completed work may remain after abort or publication failure. Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted. To end a supported owned sync preserving reached work and residual files, use an sync --abort; foreign or malformed state still requires inspection.\n",
+      "stdout": "",
+      "stderr": "ERROR: No matching owned active sync rebase; completed work may remain after abort or publication failure. Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted. To end a supported owned sync preserving reached work and residual files, use an sync --abort; foreign or malformed state still requires inspection.\n"
+    },
+    {
+      "label": "pending-log",
+      "args": [
+        "ls"
+      ],
+      "status": 0,
+      "output": "Pending sync; checked out: main.\n◯  child\n│\n◯  parent (frozen)\n│\n◉  main\n",
+      "stdout": "Pending sync; checked out: main.\n◯  child\n│\n◯  parent (frozen)\n│\n◉  main\n",
+      "stderr": ""
+    },
+    {
+      "label": "owned-sync-abandonment",
+      "args": [
+        "sync",
+        "--abort",
+        "--no-interactive"
+      ],
+      "status": 0,
+      "output": "Sync abandoned; completed effects remain applied. No rollback or pending work was performed.\nArchive: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-H4npfI/consumer/.git/anthracite-sync-abandonment/ce44c920e86e6538ef3d16a709511fb32bdb1d01c14b6597dd3bcb6701355b14\nRecorded completed trunk update: yes.\nRecorded completed feature refresh: parent, child.\nRecorded completed cleanup deletions: none.\nRecorded completed maintenance: child.\nRecorded incomplete cleanup metadata: none.\nPending feature refresh: none.\nPending cleanup: none.\nPending maintenance: obsolete-leaf.\nCurrent local observations differing from saved state (missing/changed): obsolete-leaf.\nObserved local refs/parents: main: head 01f6c88a17847dae93ffa5206d8ddfc8c618c764, parent unavailable; child: head 56568974f4a19fa967b2a293bd4928a83d198901, parent parent; obsolete-leaf: head missing, parent child; parent: head 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4, parent main.\nSource pins missing/changed: none.\nActual checkout: main (01f6c88a17847dae93ffa5206d8ddfc8c618c764).\nRemaining index conflicts: none.\nRecorded completion is not fresh verification or GitHub readiness. PR status is not queried.\nInspect git status and the retained archive. Deliberately handle residual Git/files before guarded deletion or a new sync; ending sync does not resolve conflicts or restore checkout.\n",
+      "stdout": "Sync abandoned; completed effects remain applied. No rollback or pending work was performed.\nArchive: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-H4npfI/consumer/.git/anthracite-sync-abandonment/ce44c920e86e6538ef3d16a709511fb32bdb1d01c14b6597dd3bcb6701355b14\nRecorded completed trunk update: yes.\nRecorded completed feature refresh: parent, child.\nRecorded completed cleanup deletions: none.\nRecorded completed maintenance: child.\nRecorded incomplete cleanup metadata: none.\nPending feature refresh: none.\nPending cleanup: none.\nPending maintenance: obsolete-leaf.\nCurrent local observations differing from saved state (missing/changed): obsolete-leaf.\nObserved local refs/parents: main: head 01f6c88a17847dae93ffa5206d8ddfc8c618c764, parent unavailable; child: head 56568974f4a19fa967b2a293bd4928a83d198901, parent parent; obsolete-leaf: head missing, parent child; parent: head 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4, parent main.\nSource pins missing/changed: none.\nActual checkout: main (01f6c88a17847dae93ffa5206d8ddfc8c618c764).\nRemaining index conflicts: none.\nRecorded completion is not fresh verification or GitHub readiness. PR status is not queried.\nInspect git status and the retained archive. Deliberately handle residual Git/files before guarded deletion or a new sync; ending sync does not resolve conflicts or restore checkout.\n",
+      "stderr": ""
+    },
+    {
+      "label": "fresh-default-sync",
+      "args": [
+        "sync"
+      ],
+      "status": 1,
+      "output": "child shares a name with a local branch, and they have the same parent.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\nERROR: Local branch child has diverged from remote. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n",
+      "stdout": "child shares a name with a local branch, and they have the same parent.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\n",
+      "stderr": "ERROR: Local branch child has diverged from remote. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n"
+    },
+    {
+      "label": "fresh-sync-after-remote-alignment",
+      "args": [
+        "sync"
+      ],
+      "status": 0,
+      "output": "🧹 Checking if any branches have been merged/closed and can be deleted...\nparent is up to date.\nchild is up to date.\n",
+      "stdout": "🧹 Checking if any branches have been merged/closed and can be deleted...\nparent is up to date.\nchild is up to date.\n",
+      "stderr": ""
+    },
+    {
+      "label": "final-log",
+      "args": [
+        "ls"
+      ],
+      "status": 0,
+      "output": "◯  child\n│\n◯  parent (frozen)\n│\n◉  main\n",
+      "stdout": "◯  child\n│\n◯  parent (frozen)\n│\n◉  main\n",
+      "stderr": ""
+    }
+  ],
+  "snapshots": {
+    "initial": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child dfd42d5735d8c123c84d90cd677770e6eeb840ef\nrefs/branch-metadata/obsolete-leaf 25bba691823a0c4045f520d95faf19bc629db1a3\nrefs/branch-metadata/parent 47550655bec040fb1b3deb195f3273746801759a\nrefs/heads/child 9f9ab5f2a7afbae613aa928ac788b3870a2c8131\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/obsolete-leaf 57a94538e56af2bb18963be5959a979ba5b06996\nrefs/heads/parent d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+        "commits": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131 d6b09eb53d84a29b9128c1bc4dc63376177d365e 4791ab7ff2a3790ceba762f298479d46e7fd50b1\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n57a94538e56af2bb18963be5959a979ba5b06996 9f9ab5f2a7afbae613aa928ac788b3870a2c8131 f998eae6e9898ac4cb0f9ef5dd5915f774013d07\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "frozen": false
+        },
+        "refs/branch-metadata/obsolete-leaf": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131"
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true
+        }
+      }
+    },
+    "conflict": {
+      "work": {
+        "head": "56568974f4a19fa967b2a293bd4928a83d198901",
+        "branch": "",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/obsolete-leaf 25bba691823a0c4045f520d95faf19bc629db1a3\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/obsolete-leaf 57a94538e56af2bb18963be5959a979ba5b06996\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n57a94538e56af2bb18963be5959a979ba5b06996 9f9ab5f2a7afbae613aa928ac788b3870a2c8131 f998eae6e9898ac4cb0f9ef5dd5915f774013d07\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\n9f9ab5f2a7afbae613aa928ac788b3870a2c8131 d6b09eb53d84a29b9128c1bc4dc63376177d365e 4791ab7ff2a3790ceba762f298479d46e7fd50b1\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "UU parent.txt",
+        "stages": "100644 2a37893a810fcd3122620b930f9546f69ba7cde3 0\tchild.txt\n100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt\n100644 8d14faeb2321f3b742c2d9a7e4ce2746e5227fc7 1\tparent.txt\n100644 67ef7b44fc1e07a92e5c635ed10d6b2dea550ab5 2\tparent.txt\n100644 d216f1ea41e67bd3860251e873e69df2e361a195 3\tparent.txt",
+        "index": "RElSQwAAAAIAAAAFavG8cinuLr5q8bxyKe4uvgEAAA0MXEdNAACBpAAAAfUAAAAUAAAACSo3iTqBD80xImILkw+VRvabp83jAAljaGlsZC50eHQAavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBpAAAAAAAAAAAAAAAAI0U+usjIfO3QsLZp+TOJ0blIn/HEApwYXJlbnQudHh0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIGkAAAAAAAAAAAAAAAAZ+97RPweB6kuXGNe0Q1rLepVCrUgCnBhcmVudC50eHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgaQAAAAAAAAAAAAAAADSFvHqQeZ704YCUehz5p3y42GhlTAKcGFyZW50LnR4dAAAAAAAAAAAVFJFRQAAAAYALTEgMAruBrEiq8N1HvN/9DYkALu+I7hwsg==",
+        "recovery": "ewogICJzeW5jIjogewogICAgImtpbmQiOiAic3luYyIsCiAgICAidmVyc2lvbiI6IDEsCiAgICAicm9vdCI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIiLAogICAgImNvbW1vbkRpcmVjdG9yeSI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIvLmdpdCIsCiAgICAiZ2l0RGlyZWN0b3J5IjogIi9wcml2YXRlL3Zhci9mb2xkZXJzL3A4L2JfMDV0bTc1NWIzNHliOWgxMXp6cXAxYzAwMDBnbi9UL2FudGhyYWNpdGUtZ2V0LUg0bnBmSS9jb25zdW1lci8uZ2l0IiwKICAgICJyZXBvc2l0b3J5IjogImdldC1maXh0dXJlL3JlcG8iLAogICAgInJlbW90ZSI6ICJvcmlnaW4iLAogICAgInJlbW90ZVVybCI6ICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW50aHJhY2l0ZS1nZXQtSDRucGZJL3JlbW90ZS5naXQiLAogICAgInRydW5rTmFtZSI6ICJtYWluIiwKICAgICJyZWZyZXNoIjogewogICAgICAidHJ1bmtIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWxIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIKICAgICAgfSwKICAgICAgInRydW5rIjogewogICAgICAgICJicmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwcmV2aW91c0hlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgImhlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC82ZTJhZjVjMy05MmU5LTRjNGEtYmQzOC1lZDU1NDc2NWM3NGEvdHJ1bmsiLAogICAgICAgICJyZXNldCI6IGZhbHNlCiAgICAgIH0sCiAgICAgICJub2RlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMSwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzEiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogIjQ3NTUwNjU1YmVjMDQwZmIxYjNkZWIxOTVmMzI3Mzc0NjgwMTc1OWEiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAgICJwcmV2aW91c0Jhc2UiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIKICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMiwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzIiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogImRmZDQyZDU3MzVkOGMxMjNjODRkOTBjZDY3Nzc3MGU2ZWViODQwZWYiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInByZXZpb3VzQmFzZSI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0L2E3MGM5YTYwLWQ2OGQtNGNjZi1hNzFjLTdjNzBkNDk0YTdhNy8xIgogICAgICAgIH0KICAgICAgXSwKICAgICAgInBycyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZFJlZk5hbWUiOiAiY2hpbGQiLAogICAgICAgICAgImJhc2VSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAibnVtYmVyIjogMiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8yIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJjaGlsZCBvcmlnaW5hbCBQUiIsCiAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAicmV2aWV3RGVjaXNpb24iOiAiUkVWSUVXX1JFUVVJUkVEIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImhlYWRSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiYmFzZVJlZk5hbWUiOiAibWFpbiIsCiAgICAgICAgICAibnVtYmVyIjogMSwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8xIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAiaXNEcmFmdCI6IGZhbHNlLAogICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICB9CiAgICAgIF0KICAgIH0sCiAgICAiY2xlYW51cCI6IHsKICAgICAgImJyYW5jaGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICJkZmQ0MmQ1NzM1ZDhjMTIzYzg0ZDkwY2Q2Nzc3NzBlNmVlYjg0MGVmIiwKICAgICAgICAgICJwYXJlbnQiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAiZnJvemVuIjogZmFsc2UsCiAgICAgICAgICAicHJOdW1iZXIiOiAyLAogICAgICAgICAgInBySGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAyLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMiIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAicGFyZW50IiwKICAgICAgICAgICAgInRpdGxlIjogImNoaWxkIG9yaWdpbmFsIFBSIiwKICAgICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAgICJyZXZpZXdEZWNpc2lvbiI6ICJSRVZJRVdfUkVRVUlSRUQiCiAgICAgICAgICB9LAogICAgICAgICAgInN0YXRlIjogIk9QRU4iCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIiwKICAgICAgICAgICJwYXJlbnQiOiAiY2hpbGQiLAogICAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAiYmFzZSI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJmcm96ZW4iOiBmYWxzZQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICI0NzU1MDY1NWJlYzA0MGZiMWIzZGViMTk1ZjMyNzM3NDY4MDE3NTlhIiwKICAgICAgICAgICJwYXJlbnQiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgImZyb3plbiI6IHRydWUsCiAgICAgICAgICAicHJOdW1iZXIiOiAxLAogICAgICAgICAgInBySGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAxLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMSIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAibWFpbiIsCiAgICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICAgImlzRHJhZnQiOiBmYWxzZSwKICAgICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICAgIH0sCiAgICAgICAgICAic3RhdGUiOiAiT1BFTiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ1bnRvdWNoZWQiOiBbXSwKICAgICAgInRydW5rSGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgImFjY2VwdGVkIjogW10sCiAgICAgICJkZWxldGlvbnMiOiBbXSwKICAgICAgImRlY2xpbmVkIjogW10sCiAgICAgICJleGNsdWRlZCI6IFtdLAogICAgICAicGFyZW50cyI6IFtdLAogICAgICAibWFuZGF0b3J5IjogW10sCiAgICAgICJyZXBsYXkiOiBbXSwKICAgICAgInJlc3RhY2siOiB0cnVlCiAgICB9LAogICAgIm1haW50ZW5hbmNlIjogWwogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgImhlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgImJhc2UiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0KICAgIF0sCiAgICAicGhhc2UiOiAibWFpbnRlbmFuY2UiLAogICAgInRydW5rQ29tcGxldGVkIjogdHJ1ZSwKICAgICJjb21wbGV0ZWRSZW1vdGUiOiBbCiAgICAgICJwYXJlbnQiLAogICAgICAiY2hpbGQiCiAgICBdLAogICAgImNvbXBsZXRlZFBycyI6IFsKICAgICAgImNoaWxkIiwKICAgICAgInBhcmVudCIKICAgIF0sCiAgICAiY29tcGxldGVkTWFpbnRlbmFuY2UiOiBbCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiY2xlYW51cENvbXBsZXRlZCI6IHRydWUsCiAgICAicHJvZ3Jlc3MiOiB7CiAgICAgICJjaGFuZ2VkIjogW10sCiAgICAgICJkZWxldGVkIjogW10sCiAgICAgICJpbmNvbXBsZXRlIjogW10KICAgIH0sCiAgICAidXBkYXRlZCI6IFsKICAgICAgInBhcmVudCIsCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiZXhwZWN0ZWQiOiBbCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAibWV0YWRhdGEiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJoZWFkIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgIm1ldGFkYXRhIjogIjI1YmJhNjkxODIzYTBjNDA0NWY1MjBkOTVmYWYxOWJjNjI5ZGIxYTMiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICJtZXRhZGF0YSI6ICI2NzdjZTljY2ZmNjY0ODcwMmNhM2U1NjMxZGMzNmY5OWZmN2VmMzU2IgogICAgICB9CiAgICBdLAogICAgImFjdGl2ZSI6IHsKICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICJwaGFzZSI6ICJtYWludGVuYW5jZSIsCiAgICAgICJiYXNlIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAib250byI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgIm9yaWdpbmFsSGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IgogICAgfSwKICAgICJjb21wbGV0aW9uIjogewogICAgICAiY2hlY2tvdXQiOiB7CiAgICAgICAgInRhcmdldCI6ICJtYWluIiwKICAgICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIgogICAgICAgIH0sCiAgICAgICAgInNob3VsZENoZWNrb3V0IjogZmFsc2UKICAgICAgfSwKICAgICAgInVudG91Y2hlZCI6IFtdLAogICAgICAiZXhwZWN0ZWQiOiBbCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIiCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgICAiaGVhZCI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgICAiaGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgIm1ldGFkYXRhIjogIjY3N2NlOWNjZmY2NjQ4NzAyY2EzZTU2MzFkYzM2Zjk5ZmY3ZWYzNTYiCiAgICAgICAgfQogICAgICBdLAogICAgICAic291cmNlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0LzZlMmFmNWMzLTkyZTktNGM0YS1iZDM4LWVkNTU0NzY1Yzc0YS90cnVuayIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMSIsCiAgICAgICAgICAiaGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIgogICAgICAgIH0KICAgICAgXQogICAgfQogIH0sCiAgImJyYW5jaGVzVG9TeW5jIjogW10sCiAgImJyYW5jaGVzVG9SZXN0YWNrIjogW10sCiAgImN1cnJlbnRCcmFuY2hPdmVycmlkZSI6ICJwYXJlbnQiLAogICJyZWJhc2VkQnJhbmNoQmFzZSI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAicmViYXNlT3duZXJzaGlwIjogIjFlNDU0YWU4LTFlYmItNGQ5ZC05NTFmLTU2NWNhYmRiNmM4Yjo0ZGQ5M2JjNWZhNTc4MzEzNjI4MjkyYjYxOWRjMGRjYmQwMzdmMjRiYzM4NTRkMzQ3ZmEyMTZiODM2ZDJjZDAyIgp9",
+        "rebase": true,
+        "rebaseFiles": {
+          "author-script": "R0lUX0FVVEhPUl9OQU1FPSdHZXQgVGVzdCcKR0lUX0FVVEhPUl9FTUFJTD0nZ2V0QGV4YW1wbGUudGVzdCcKR0lUX0FVVEhPUl9EQVRFPSdAMTc5MjU4NDAwMCArMDAwMCcK",
+          "charcoal-continuation": "MWU0NTRhZTgtMWViYi00ZDlkLTk1MWYtNTY1Y2FiZGI2YzhiOjRkZDkzYmM1ZmE1NzgzMTM2MjgyOTJiNjE5ZGMwZGNiZDAzN2YyNGJjMzg1NGQzNDdmYTIxNmI4MzZkMmNkMDI=",
+          "done": "cGljayA1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2ICMgTG9jYWwgY29ycmVjdGlvbiBiZWZvcmUgc3luYwo=",
+          "drop_redundant_commits": "",
+          "end": "MQo=",
+          "git-rebase-todo": "",
+          "git-rebase-todo.backup": "cGljayA1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2ICMgTG9jYWwgY29ycmVjdGlvbiBiZWZvcmUgc3luYwoKIyBSZWJhc2UgOWY5YWI1Zi4uNTdhOTQ1MyBvbnRvIDU2NTY4OTcgKDEgY29tbWFuZCkKIwojIENvbW1hbmRzOgojIHAsIHBpY2sgPGNvbW1pdD4gPSB1c2UgY29tbWl0CiMgciwgcmV3b3JkIDxjb21taXQ+ID0gdXNlIGNvbW1pdCwgYnV0IGVkaXQgdGhlIGNvbW1pdCBtZXNzYWdlCiMgZSwgZWRpdCA8Y29tbWl0PiA9IHVzZSBjb21taXQsIGJ1dCBzdG9wIGZvciBhbWVuZGluZwojIHMsIHNxdWFzaCA8Y29tbWl0PiA9IHVzZSBjb21taXQsIGJ1dCBtZWxkIGludG8gcHJldmlvdXMgY29tbWl0CiMgZiwgZml4dXAgWy1DIHwgLWNdIDxjb21taXQ+ID0gbGlrZSAic3F1YXNoIiBidXQga2VlcCBvbmx5IHRoZSBwcmV2aW91cwojICAgICAgICAgICAgICAgICAgICBjb21taXQncyBsb2cgbWVzc2FnZSwgdW5sZXNzIC1DIGlzIHVzZWQsIGluIHdoaWNoIGNhc2UKIyAgICAgICAgICAgICAgICAgICAga2VlcCBvbmx5IHRoaXMgY29tbWl0J3MgbWVzc2FnZTsgLWMgaXMgc2FtZSBhcyAtQyBidXQKIyAgICAgICAgICAgICAgICAgICAgb3BlbnMgdGhlIGVkaXRvcgojIHgsIGV4ZWMgPGNvbW1hbmQ+ID0gcnVuIGNvbW1hbmQgKHRoZSByZXN0IG9mIHRoZSBsaW5lKSB1c2luZyBzaGVsbAojIGIsIGJyZWFrID0gc3RvcCBoZXJlIChjb250aW51ZSByZWJhc2UgbGF0ZXIgd2l0aCAnZ2l0IHJlYmFzZSAtLWNvbnRpbnVlJykKIyBkLCBkcm9wIDxjb21taXQ+ID0gcmVtb3ZlIGNvbW1pdAojIGwsIGxhYmVsIDxsYWJlbD4gPSBsYWJlbCBjdXJyZW50IEhFQUQgd2l0aCBhIG5hbWUKIyB0LCByZXNldCA8bGFiZWw+ID0gcmVzZXQgSEVBRCB0byBhIGxhYmVsCiMgbSwgbWVyZ2UgWy1DIDxjb21taXQ+IHwgLWMgPGNvbW1pdD5dIDxsYWJlbD4gWyMgPG9uZWxpbmU+XQojICAgICAgICAgY3JlYXRlIGEgbWVyZ2UgY29tbWl0IHVzaW5nIHRoZSBvcmlnaW5hbCBtZXJnZSBjb21taXQncwojICAgICAgICAgbWVzc2FnZSAob3IgdGhlIG9uZWxpbmUsIGlmIG5vIG9yaWdpbmFsIG1lcmdlIGNvbW1pdCB3YXMKIyAgICAgICAgIHNwZWNpZmllZCk7IHVzZSAtYyA8Y29tbWl0PiB0byByZXdvcmQgdGhlIGNvbW1pdCBtZXNzYWdlCiMgdSwgdXBkYXRlLXJlZiA8cmVmPiA9IHRyYWNrIGEgcGxhY2Vob2xkZXIgZm9yIHRoZSA8cmVmPiB0byBiZSB1cGRhdGVkCiMgICAgICAgICAgICAgICAgICAgICAgIHRvIHRoaXMgcG9zaXRpb24gaW4gdGhlIG5ldyBjb21taXRzLiBUaGUgPHJlZj4gaXMKIyAgICAgICAgICAgICAgICAgICAgICAgdXBkYXRlZCBhdCB0aGUgZW5kIG9mIHRoZSByZWJhc2UKIwojIFRoZXNlIGxpbmVzIGNhbiBiZSByZS1vcmRlcmVkOyB0aGV5IGFyZSBleGVjdXRlZCBmcm9tIHRvcCB0byBib3R0b20uCiMKIyBJZiB5b3UgcmVtb3ZlIGEgbGluZSBoZXJlIFRIQVQgQ09NTUlUIFdJTEwgQkUgTE9TVC4KIwojIEhvd2V2ZXIsIGlmIHlvdSByZW1vdmUgZXZlcnl0aGluZywgdGhlIHJlYmFzZSB3aWxsIGJlIGFib3J0ZWQuCiMK",
+          "head-name": "cmVmcy9oZWFkcy9vYnNvbGV0ZS1sZWFmCg==",
+          "interactive": "",
+          "message": "TG9jYWwgY29ycmVjdGlvbiBiZWZvcmUgc3luYwoKIyBDb25mbGljdHM6CiMJcGFyZW50LnR4dAo=",
+          "msgnum": "MQo=",
+          "no-reschedule-failed-exec": "",
+          "onto": "NTY1Njg5NzRmNGExOWZhOTY3YjJhMjkzYmQ0OTI4YTgzZDE5ODkwMQo=",
+          "orig-head": "NTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5Ngo=",
+          "patch": "ZGlmZiAtLWdpdCBhL3BhcmVudC50eHQgYi9wYXJlbnQudHh0CmluZGV4IDhkMTRmYWUuLmQyMTZmMWUgMTAwNjQ0Ci0tLSBhL3BhcmVudC50eHQKKysrIGIvcGFyZW50LnR4dApAQCAtMSArMSBAQAotcGFyZW50LW9sZApcIE5vIG5ld2xpbmUgYXQgZW5kIG9mIGZpbGUKK2xvY2FsIGNvcnJlY3Rpb24gcmVxdWlyaW5nIGEgY29uZmxpY3QK",
+          "stopped-sha": "NTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5Ngo="
+        },
+        "files": {
+          "child.txt": "Y2hpbGQtb2xk",
+          "main.txt": "bWFpbg==",
+          "parent.txt": "PDw8PDw8PCBIRUFECmluY29taW5nIHBhcmVudCBjb3JyZWN0aW9uCj09PT09PT0KbG9jYWwgY29ycmVjdGlvbiByZXF1aXJpbmcgYSBjb25mbGljdAo+Pj4+Pj4+IDU3YTk0NTMgKExvY2FsIGNvcnJlY3Rpb24gYmVmb3JlIHN5bmMpCg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/obsolete-leaf": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131"
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-raw-git-abort": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/obsolete-leaf 25bba691823a0c4045f520d95faf19bc629db1a3\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/obsolete-leaf 57a94538e56af2bb18963be5959a979ba5b06996\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n57a94538e56af2bb18963be5959a979ba5b06996 9f9ab5f2a7afbae613aa928ac788b3870a2c8131 f998eae6e9898ac4cb0f9ef5dd5915f774013d07\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\n9f9ab5f2a7afbae613aa928ac788b3870a2c8131 d6b09eb53d84a29b9128c1bc4dc63376177d365e 4791ab7ff2a3790ceba762f298479d46e7fd50b1\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": "ewogICJzeW5jIjogewogICAgImtpbmQiOiAic3luYyIsCiAgICAidmVyc2lvbiI6IDEsCiAgICAicm9vdCI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIiLAogICAgImNvbW1vbkRpcmVjdG9yeSI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIvLmdpdCIsCiAgICAiZ2l0RGlyZWN0b3J5IjogIi9wcml2YXRlL3Zhci9mb2xkZXJzL3A4L2JfMDV0bTc1NWIzNHliOWgxMXp6cXAxYzAwMDBnbi9UL2FudGhyYWNpdGUtZ2V0LUg0bnBmSS9jb25zdW1lci8uZ2l0IiwKICAgICJyZXBvc2l0b3J5IjogImdldC1maXh0dXJlL3JlcG8iLAogICAgInJlbW90ZSI6ICJvcmlnaW4iLAogICAgInJlbW90ZVVybCI6ICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW50aHJhY2l0ZS1nZXQtSDRucGZJL3JlbW90ZS5naXQiLAogICAgInRydW5rTmFtZSI6ICJtYWluIiwKICAgICJyZWZyZXNoIjogewogICAgICAidHJ1bmtIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWxIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIKICAgICAgfSwKICAgICAgInRydW5rIjogewogICAgICAgICJicmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwcmV2aW91c0hlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgImhlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC82ZTJhZjVjMy05MmU5LTRjNGEtYmQzOC1lZDU1NDc2NWM3NGEvdHJ1bmsiLAogICAgICAgICJyZXNldCI6IGZhbHNlCiAgICAgIH0sCiAgICAgICJub2RlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMSwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzEiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogIjQ3NTUwNjU1YmVjMDQwZmIxYjNkZWIxOTVmMzI3Mzc0NjgwMTc1OWEiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAgICJwcmV2aW91c0Jhc2UiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIKICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMiwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzIiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogImRmZDQyZDU3MzVkOGMxMjNjODRkOTBjZDY3Nzc3MGU2ZWViODQwZWYiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInByZXZpb3VzQmFzZSI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0L2E3MGM5YTYwLWQ2OGQtNGNjZi1hNzFjLTdjNzBkNDk0YTdhNy8xIgogICAgICAgIH0KICAgICAgXSwKICAgICAgInBycyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZFJlZk5hbWUiOiAiY2hpbGQiLAogICAgICAgICAgImJhc2VSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAibnVtYmVyIjogMiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8yIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJjaGlsZCBvcmlnaW5hbCBQUiIsCiAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAicmV2aWV3RGVjaXNpb24iOiAiUkVWSUVXX1JFUVVJUkVEIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImhlYWRSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiYmFzZVJlZk5hbWUiOiAibWFpbiIsCiAgICAgICAgICAibnVtYmVyIjogMSwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8xIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAiaXNEcmFmdCI6IGZhbHNlLAogICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICB9CiAgICAgIF0KICAgIH0sCiAgICAiY2xlYW51cCI6IHsKICAgICAgImJyYW5jaGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICJkZmQ0MmQ1NzM1ZDhjMTIzYzg0ZDkwY2Q2Nzc3NzBlNmVlYjg0MGVmIiwKICAgICAgICAgICJwYXJlbnQiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAiZnJvemVuIjogZmFsc2UsCiAgICAgICAgICAicHJOdW1iZXIiOiAyLAogICAgICAgICAgInBySGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAyLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMiIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAicGFyZW50IiwKICAgICAgICAgICAgInRpdGxlIjogImNoaWxkIG9yaWdpbmFsIFBSIiwKICAgICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAgICJyZXZpZXdEZWNpc2lvbiI6ICJSRVZJRVdfUkVRVUlSRUQiCiAgICAgICAgICB9LAogICAgICAgICAgInN0YXRlIjogIk9QRU4iCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIiwKICAgICAgICAgICJwYXJlbnQiOiAiY2hpbGQiLAogICAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAiYmFzZSI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJmcm96ZW4iOiBmYWxzZQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICI0NzU1MDY1NWJlYzA0MGZiMWIzZGViMTk1ZjMyNzM3NDY4MDE3NTlhIiwKICAgICAgICAgICJwYXJlbnQiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgImZyb3plbiI6IHRydWUsCiAgICAgICAgICAicHJOdW1iZXIiOiAxLAogICAgICAgICAgInBySGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAxLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMSIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAibWFpbiIsCiAgICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICAgImlzRHJhZnQiOiBmYWxzZSwKICAgICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICAgIH0sCiAgICAgICAgICAic3RhdGUiOiAiT1BFTiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ1bnRvdWNoZWQiOiBbXSwKICAgICAgInRydW5rSGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgImFjY2VwdGVkIjogW10sCiAgICAgICJkZWxldGlvbnMiOiBbXSwKICAgICAgImRlY2xpbmVkIjogW10sCiAgICAgICJleGNsdWRlZCI6IFtdLAogICAgICAicGFyZW50cyI6IFtdLAogICAgICAibWFuZGF0b3J5IjogW10sCiAgICAgICJyZXBsYXkiOiBbXSwKICAgICAgInJlc3RhY2siOiB0cnVlCiAgICB9LAogICAgIm1haW50ZW5hbmNlIjogWwogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgImhlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgImJhc2UiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0KICAgIF0sCiAgICAicGhhc2UiOiAibWFpbnRlbmFuY2UiLAogICAgInRydW5rQ29tcGxldGVkIjogdHJ1ZSwKICAgICJjb21wbGV0ZWRSZW1vdGUiOiBbCiAgICAgICJwYXJlbnQiLAogICAgICAiY2hpbGQiCiAgICBdLAogICAgImNvbXBsZXRlZFBycyI6IFsKICAgICAgImNoaWxkIiwKICAgICAgInBhcmVudCIKICAgIF0sCiAgICAiY29tcGxldGVkTWFpbnRlbmFuY2UiOiBbCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiY2xlYW51cENvbXBsZXRlZCI6IHRydWUsCiAgICAicHJvZ3Jlc3MiOiB7CiAgICAgICJjaGFuZ2VkIjogW10sCiAgICAgICJkZWxldGVkIjogW10sCiAgICAgICJpbmNvbXBsZXRlIjogW10KICAgIH0sCiAgICAidXBkYXRlZCI6IFsKICAgICAgInBhcmVudCIsCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiZXhwZWN0ZWQiOiBbCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAibWV0YWRhdGEiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJoZWFkIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgIm1ldGFkYXRhIjogIjI1YmJhNjkxODIzYTBjNDA0NWY1MjBkOTVmYWYxOWJjNjI5ZGIxYTMiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICJtZXRhZGF0YSI6ICI2NzdjZTljY2ZmNjY0ODcwMmNhM2U1NjMxZGMzNmY5OWZmN2VmMzU2IgogICAgICB9CiAgICBdLAogICAgImFjdGl2ZSI6IHsKICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICJwaGFzZSI6ICJtYWludGVuYW5jZSIsCiAgICAgICJiYXNlIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAib250byI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgIm9yaWdpbmFsSGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IgogICAgfSwKICAgICJjb21wbGV0aW9uIjogewogICAgICAiY2hlY2tvdXQiOiB7CiAgICAgICAgInRhcmdldCI6ICJtYWluIiwKICAgICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIgogICAgICAgIH0sCiAgICAgICAgInNob3VsZENoZWNrb3V0IjogZmFsc2UKICAgICAgfSwKICAgICAgInVudG91Y2hlZCI6IFtdLAogICAgICAiZXhwZWN0ZWQiOiBbCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIiCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgICAiaGVhZCI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgICAiaGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgIm1ldGFkYXRhIjogIjY3N2NlOWNjZmY2NjQ4NzAyY2EzZTU2MzFkYzM2Zjk5ZmY3ZWYzNTYiCiAgICAgICAgfQogICAgICBdLAogICAgICAic291cmNlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0LzZlMmFmNWMzLTkyZTktNGM0YS1iZDM4LWVkNTU0NzY1Yzc0YS90cnVuayIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMSIsCiAgICAgICAgICAiaGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIgogICAgICAgIH0KICAgICAgXQogICAgfQogIH0sCiAgImJyYW5jaGVzVG9TeW5jIjogW10sCiAgImJyYW5jaGVzVG9SZXN0YWNrIjogW10sCiAgImN1cnJlbnRCcmFuY2hPdmVycmlkZSI6ICJwYXJlbnQiLAogICJyZWJhc2VkQnJhbmNoQmFzZSI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAicmViYXNlT3duZXJzaGlwIjogIjFlNDU0YWU4LTFlYmItNGQ5ZC05NTFmLTU2NWNhYmRiNmM4Yjo0ZGQ5M2JjNWZhNTc4MzEzNjI4MjkyYjYxOWRjMGRjYmQwMzdmMjRiYzM4NTRkMzQ3ZmEyMTZiODM2ZDJjZDAyIgp9",
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/obsolete-leaf": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131"
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-external-branch-change": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/obsolete-leaf 25bba691823a0c4045f520d95faf19bc629db1a3\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": "ewogICJzeW5jIjogewogICAgImtpbmQiOiAic3luYyIsCiAgICAidmVyc2lvbiI6IDEsCiAgICAicm9vdCI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIiLAogICAgImNvbW1vbkRpcmVjdG9yeSI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIvLmdpdCIsCiAgICAiZ2l0RGlyZWN0b3J5IjogIi9wcml2YXRlL3Zhci9mb2xkZXJzL3A4L2JfMDV0bTc1NWIzNHliOWgxMXp6cXAxYzAwMDBnbi9UL2FudGhyYWNpdGUtZ2V0LUg0bnBmSS9jb25zdW1lci8uZ2l0IiwKICAgICJyZXBvc2l0b3J5IjogImdldC1maXh0dXJlL3JlcG8iLAogICAgInJlbW90ZSI6ICJvcmlnaW4iLAogICAgInJlbW90ZVVybCI6ICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW50aHJhY2l0ZS1nZXQtSDRucGZJL3JlbW90ZS5naXQiLAogICAgInRydW5rTmFtZSI6ICJtYWluIiwKICAgICJyZWZyZXNoIjogewogICAgICAidHJ1bmtIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWxIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIKICAgICAgfSwKICAgICAgInRydW5rIjogewogICAgICAgICJicmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwcmV2aW91c0hlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgImhlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC82ZTJhZjVjMy05MmU5LTRjNGEtYmQzOC1lZDU1NDc2NWM3NGEvdHJ1bmsiLAogICAgICAgICJyZXNldCI6IGZhbHNlCiAgICAgIH0sCiAgICAgICJub2RlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMSwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzEiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogIjQ3NTUwNjU1YmVjMDQwZmIxYjNkZWIxOTVmMzI3Mzc0NjgwMTc1OWEiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAgICJwcmV2aW91c0Jhc2UiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIKICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMiwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzIiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogImRmZDQyZDU3MzVkOGMxMjNjODRkOTBjZDY3Nzc3MGU2ZWViODQwZWYiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInByZXZpb3VzQmFzZSI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0L2E3MGM5YTYwLWQ2OGQtNGNjZi1hNzFjLTdjNzBkNDk0YTdhNy8xIgogICAgICAgIH0KICAgICAgXSwKICAgICAgInBycyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZFJlZk5hbWUiOiAiY2hpbGQiLAogICAgICAgICAgImJhc2VSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAibnVtYmVyIjogMiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8yIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJjaGlsZCBvcmlnaW5hbCBQUiIsCiAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAicmV2aWV3RGVjaXNpb24iOiAiUkVWSUVXX1JFUVVJUkVEIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImhlYWRSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiYmFzZVJlZk5hbWUiOiAibWFpbiIsCiAgICAgICAgICAibnVtYmVyIjogMSwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8xIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAiaXNEcmFmdCI6IGZhbHNlLAogICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICB9CiAgICAgIF0KICAgIH0sCiAgICAiY2xlYW51cCI6IHsKICAgICAgImJyYW5jaGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICJkZmQ0MmQ1NzM1ZDhjMTIzYzg0ZDkwY2Q2Nzc3NzBlNmVlYjg0MGVmIiwKICAgICAgICAgICJwYXJlbnQiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAiZnJvemVuIjogZmFsc2UsCiAgICAgICAgICAicHJOdW1iZXIiOiAyLAogICAgICAgICAgInBySGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAyLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMiIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAicGFyZW50IiwKICAgICAgICAgICAgInRpdGxlIjogImNoaWxkIG9yaWdpbmFsIFBSIiwKICAgICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAgICJyZXZpZXdEZWNpc2lvbiI6ICJSRVZJRVdfUkVRVUlSRUQiCiAgICAgICAgICB9LAogICAgICAgICAgInN0YXRlIjogIk9QRU4iCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIiwKICAgICAgICAgICJwYXJlbnQiOiAiY2hpbGQiLAogICAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAiYmFzZSI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJmcm96ZW4iOiBmYWxzZQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICI0NzU1MDY1NWJlYzA0MGZiMWIzZGViMTk1ZjMyNzM3NDY4MDE3NTlhIiwKICAgICAgICAgICJwYXJlbnQiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgImZyb3plbiI6IHRydWUsCiAgICAgICAgICAicHJOdW1iZXIiOiAxLAogICAgICAgICAgInBySGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAxLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMSIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAibWFpbiIsCiAgICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICAgImlzRHJhZnQiOiBmYWxzZSwKICAgICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICAgIH0sCiAgICAgICAgICAic3RhdGUiOiAiT1BFTiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ1bnRvdWNoZWQiOiBbXSwKICAgICAgInRydW5rSGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgImFjY2VwdGVkIjogW10sCiAgICAgICJkZWxldGlvbnMiOiBbXSwKICAgICAgImRlY2xpbmVkIjogW10sCiAgICAgICJleGNsdWRlZCI6IFtdLAogICAgICAicGFyZW50cyI6IFtdLAogICAgICAibWFuZGF0b3J5IjogW10sCiAgICAgICJyZXBsYXkiOiBbXSwKICAgICAgInJlc3RhY2siOiB0cnVlCiAgICB9LAogICAgIm1haW50ZW5hbmNlIjogWwogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgImhlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgImJhc2UiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0KICAgIF0sCiAgICAicGhhc2UiOiAibWFpbnRlbmFuY2UiLAogICAgInRydW5rQ29tcGxldGVkIjogdHJ1ZSwKICAgICJjb21wbGV0ZWRSZW1vdGUiOiBbCiAgICAgICJwYXJlbnQiLAogICAgICAiY2hpbGQiCiAgICBdLAogICAgImNvbXBsZXRlZFBycyI6IFsKICAgICAgImNoaWxkIiwKICAgICAgInBhcmVudCIKICAgIF0sCiAgICAiY29tcGxldGVkTWFpbnRlbmFuY2UiOiBbCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiY2xlYW51cENvbXBsZXRlZCI6IHRydWUsCiAgICAicHJvZ3Jlc3MiOiB7CiAgICAgICJjaGFuZ2VkIjogW10sCiAgICAgICJkZWxldGVkIjogW10sCiAgICAgICJpbmNvbXBsZXRlIjogW10KICAgIH0sCiAgICAidXBkYXRlZCI6IFsKICAgICAgInBhcmVudCIsCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiZXhwZWN0ZWQiOiBbCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAibWV0YWRhdGEiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJoZWFkIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgIm1ldGFkYXRhIjogIjI1YmJhNjkxODIzYTBjNDA0NWY1MjBkOTVmYWYxOWJjNjI5ZGIxYTMiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICJtZXRhZGF0YSI6ICI2NzdjZTljY2ZmNjY0ODcwMmNhM2U1NjMxZGMzNmY5OWZmN2VmMzU2IgogICAgICB9CiAgICBdLAogICAgImFjdGl2ZSI6IHsKICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICJwaGFzZSI6ICJtYWludGVuYW5jZSIsCiAgICAgICJiYXNlIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAib250byI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgIm9yaWdpbmFsSGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IgogICAgfSwKICAgICJjb21wbGV0aW9uIjogewogICAgICAiY2hlY2tvdXQiOiB7CiAgICAgICAgInRhcmdldCI6ICJtYWluIiwKICAgICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIgogICAgICAgIH0sCiAgICAgICAgInNob3VsZENoZWNrb3V0IjogZmFsc2UKICAgICAgfSwKICAgICAgInVudG91Y2hlZCI6IFtdLAogICAgICAiZXhwZWN0ZWQiOiBbCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIiCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgICAiaGVhZCI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgICAiaGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgIm1ldGFkYXRhIjogIjY3N2NlOWNjZmY2NjQ4NzAyY2EzZTU2MzFkYzM2Zjk5ZmY3ZWYzNTYiCiAgICAgICAgfQogICAgICBdLAogICAgICAic291cmNlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0LzZlMmFmNWMzLTkyZTktNGM0YS1iZDM4LWVkNTU0NzY1Yzc0YS90cnVuayIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMSIsCiAgICAgICAgICAiaGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIgogICAgICAgIH0KICAgICAgXQogICAgfQogIH0sCiAgImJyYW5jaGVzVG9TeW5jIjogW10sCiAgImJyYW5jaGVzVG9SZXN0YWNrIjogW10sCiAgImN1cnJlbnRCcmFuY2hPdmVycmlkZSI6ICJwYXJlbnQiLAogICJyZWJhc2VkQnJhbmNoQmFzZSI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAicmViYXNlT3duZXJzaGlwIjogIjFlNDU0YWU4LTFlYmItNGQ5ZC05NTFmLTU2NWNhYmRiNmM4Yjo0ZGQ5M2JjNWZhNTc4MzEzNjI4MjkyYjYxOWRjMGRjYmQwMzdmMjRiYzM4NTRkMzQ3ZmEyMTZiODM2ZDJjZDAyIgp9",
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/obsolete-leaf": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131"
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-continue": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/obsolete-leaf 25bba691823a0c4045f520d95faf19bc629db1a3\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": "ewogICJzeW5jIjogewogICAgImtpbmQiOiAic3luYyIsCiAgICAidmVyc2lvbiI6IDEsCiAgICAicm9vdCI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIiLAogICAgImNvbW1vbkRpcmVjdG9yeSI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIvLmdpdCIsCiAgICAiZ2l0RGlyZWN0b3J5IjogIi9wcml2YXRlL3Zhci9mb2xkZXJzL3A4L2JfMDV0bTc1NWIzNHliOWgxMXp6cXAxYzAwMDBnbi9UL2FudGhyYWNpdGUtZ2V0LUg0bnBmSS9jb25zdW1lci8uZ2l0IiwKICAgICJyZXBvc2l0b3J5IjogImdldC1maXh0dXJlL3JlcG8iLAogICAgInJlbW90ZSI6ICJvcmlnaW4iLAogICAgInJlbW90ZVVybCI6ICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW50aHJhY2l0ZS1nZXQtSDRucGZJL3JlbW90ZS5naXQiLAogICAgInRydW5rTmFtZSI6ICJtYWluIiwKICAgICJyZWZyZXNoIjogewogICAgICAidHJ1bmtIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWxIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIKICAgICAgfSwKICAgICAgInRydW5rIjogewogICAgICAgICJicmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwcmV2aW91c0hlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgImhlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC82ZTJhZjVjMy05MmU5LTRjNGEtYmQzOC1lZDU1NDc2NWM3NGEvdHJ1bmsiLAogICAgICAgICJyZXNldCI6IGZhbHNlCiAgICAgIH0sCiAgICAgICJub2RlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMSwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzEiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogIjQ3NTUwNjU1YmVjMDQwZmIxYjNkZWIxOTVmMzI3Mzc0NjgwMTc1OWEiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAgICJwcmV2aW91c0Jhc2UiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIKICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMiwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzIiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogImRmZDQyZDU3MzVkOGMxMjNjODRkOTBjZDY3Nzc3MGU2ZWViODQwZWYiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInByZXZpb3VzQmFzZSI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0L2E3MGM5YTYwLWQ2OGQtNGNjZi1hNzFjLTdjNzBkNDk0YTdhNy8xIgogICAgICAgIH0KICAgICAgXSwKICAgICAgInBycyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZFJlZk5hbWUiOiAiY2hpbGQiLAogICAgICAgICAgImJhc2VSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAibnVtYmVyIjogMiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8yIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJjaGlsZCBvcmlnaW5hbCBQUiIsCiAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAicmV2aWV3RGVjaXNpb24iOiAiUkVWSUVXX1JFUVVJUkVEIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImhlYWRSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiYmFzZVJlZk5hbWUiOiAibWFpbiIsCiAgICAgICAgICAibnVtYmVyIjogMSwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8xIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAiaXNEcmFmdCI6IGZhbHNlLAogICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICB9CiAgICAgIF0KICAgIH0sCiAgICAiY2xlYW51cCI6IHsKICAgICAgImJyYW5jaGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICJkZmQ0MmQ1NzM1ZDhjMTIzYzg0ZDkwY2Q2Nzc3NzBlNmVlYjg0MGVmIiwKICAgICAgICAgICJwYXJlbnQiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAiZnJvemVuIjogZmFsc2UsCiAgICAgICAgICAicHJOdW1iZXIiOiAyLAogICAgICAgICAgInBySGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAyLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMiIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAicGFyZW50IiwKICAgICAgICAgICAgInRpdGxlIjogImNoaWxkIG9yaWdpbmFsIFBSIiwKICAgICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAgICJyZXZpZXdEZWNpc2lvbiI6ICJSRVZJRVdfUkVRVUlSRUQiCiAgICAgICAgICB9LAogICAgICAgICAgInN0YXRlIjogIk9QRU4iCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIiwKICAgICAgICAgICJwYXJlbnQiOiAiY2hpbGQiLAogICAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAiYmFzZSI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJmcm96ZW4iOiBmYWxzZQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICI0NzU1MDY1NWJlYzA0MGZiMWIzZGViMTk1ZjMyNzM3NDY4MDE3NTlhIiwKICAgICAgICAgICJwYXJlbnQiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgImZyb3plbiI6IHRydWUsCiAgICAgICAgICAicHJOdW1iZXIiOiAxLAogICAgICAgICAgInBySGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAxLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMSIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAibWFpbiIsCiAgICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICAgImlzRHJhZnQiOiBmYWxzZSwKICAgICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICAgIH0sCiAgICAgICAgICAic3RhdGUiOiAiT1BFTiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ1bnRvdWNoZWQiOiBbXSwKICAgICAgInRydW5rSGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgImFjY2VwdGVkIjogW10sCiAgICAgICJkZWxldGlvbnMiOiBbXSwKICAgICAgImRlY2xpbmVkIjogW10sCiAgICAgICJleGNsdWRlZCI6IFtdLAogICAgICAicGFyZW50cyI6IFtdLAogICAgICAibWFuZGF0b3J5IjogW10sCiAgICAgICJyZXBsYXkiOiBbXSwKICAgICAgInJlc3RhY2siOiB0cnVlCiAgICB9LAogICAgIm1haW50ZW5hbmNlIjogWwogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgImhlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgImJhc2UiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0KICAgIF0sCiAgICAicGhhc2UiOiAibWFpbnRlbmFuY2UiLAogICAgInRydW5rQ29tcGxldGVkIjogdHJ1ZSwKICAgICJjb21wbGV0ZWRSZW1vdGUiOiBbCiAgICAgICJwYXJlbnQiLAogICAgICAiY2hpbGQiCiAgICBdLAogICAgImNvbXBsZXRlZFBycyI6IFsKICAgICAgImNoaWxkIiwKICAgICAgInBhcmVudCIKICAgIF0sCiAgICAiY29tcGxldGVkTWFpbnRlbmFuY2UiOiBbCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiY2xlYW51cENvbXBsZXRlZCI6IHRydWUsCiAgICAicHJvZ3Jlc3MiOiB7CiAgICAgICJjaGFuZ2VkIjogW10sCiAgICAgICJkZWxldGVkIjogW10sCiAgICAgICJpbmNvbXBsZXRlIjogW10KICAgIH0sCiAgICAidXBkYXRlZCI6IFsKICAgICAgInBhcmVudCIsCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiZXhwZWN0ZWQiOiBbCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAibWV0YWRhdGEiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJoZWFkIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgIm1ldGFkYXRhIjogIjI1YmJhNjkxODIzYTBjNDA0NWY1MjBkOTVmYWYxOWJjNjI5ZGIxYTMiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICJtZXRhZGF0YSI6ICI2NzdjZTljY2ZmNjY0ODcwMmNhM2U1NjMxZGMzNmY5OWZmN2VmMzU2IgogICAgICB9CiAgICBdLAogICAgImFjdGl2ZSI6IHsKICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICJwaGFzZSI6ICJtYWludGVuYW5jZSIsCiAgICAgICJiYXNlIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAib250byI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgIm9yaWdpbmFsSGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IgogICAgfSwKICAgICJjb21wbGV0aW9uIjogewogICAgICAiY2hlY2tvdXQiOiB7CiAgICAgICAgInRhcmdldCI6ICJtYWluIiwKICAgICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIgogICAgICAgIH0sCiAgICAgICAgInNob3VsZENoZWNrb3V0IjogZmFsc2UKICAgICAgfSwKICAgICAgInVudG91Y2hlZCI6IFtdLAogICAgICAiZXhwZWN0ZWQiOiBbCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIiCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgICAiaGVhZCI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgICAiaGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgIm1ldGFkYXRhIjogIjY3N2NlOWNjZmY2NjQ4NzAyY2EzZTU2MzFkYzM2Zjk5ZmY3ZWYzNTYiCiAgICAgICAgfQogICAgICBdLAogICAgICAic291cmNlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0LzZlMmFmNWMzLTkyZTktNGM0YS1iZDM4LWVkNTU0NzY1Yzc0YS90cnVuayIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMSIsCiAgICAgICAgICAiaGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIgogICAgICAgIH0KICAgICAgXQogICAgfQogIH0sCiAgImJyYW5jaGVzVG9TeW5jIjogW10sCiAgImJyYW5jaGVzVG9SZXN0YWNrIjogW10sCiAgImN1cnJlbnRCcmFuY2hPdmVycmlkZSI6ICJwYXJlbnQiLAogICJyZWJhc2VkQnJhbmNoQmFzZSI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAicmViYXNlT3duZXJzaGlwIjogIjFlNDU0YWU4LTFlYmItNGQ5ZC05NTFmLTU2NWNhYmRiNmM4Yjo0ZGQ5M2JjNWZhNTc4MzEzNjI4MjkyYjYxOWRjMGRjYmQwMzdmMjRiYzM4NTRkMzQ3ZmEyMTZiODM2ZDJjZDAyIgp9",
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/obsolete-leaf": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131"
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-pending-log": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/obsolete-leaf 25bba691823a0c4045f520d95faf19bc629db1a3\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": "ewogICJzeW5jIjogewogICAgImtpbmQiOiAic3luYyIsCiAgICAidmVyc2lvbiI6IDEsCiAgICAicm9vdCI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIiLAogICAgImNvbW1vbkRpcmVjdG9yeSI6ICIvcHJpdmF0ZS92YXIvZm9sZGVycy9wOC9iXzA1dG03NTViMzR5YjloMTF6enFwMWMwMDAwZ24vVC9hbnRocmFjaXRlLWdldC1ING5wZkkvY29uc3VtZXIvLmdpdCIsCiAgICAiZ2l0RGlyZWN0b3J5IjogIi9wcml2YXRlL3Zhci9mb2xkZXJzL3A4L2JfMDV0bTc1NWIzNHliOWgxMXp6cXAxYzAwMDBnbi9UL2FudGhyYWNpdGUtZ2V0LUg0bnBmSS9jb25zdW1lci8uZ2l0IiwKICAgICJyZXBvc2l0b3J5IjogImdldC1maXh0dXJlL3JlcG8iLAogICAgInJlbW90ZSI6ICJvcmlnaW4iLAogICAgInJlbW90ZVVybCI6ICIvdmFyL2ZvbGRlcnMvcDgvYl8wNXRtNzU1YjM0eWI5aDExenpxcDFjMDAwMGduL1QvYW50aHJhY2l0ZS1nZXQtSDRucGZJL3JlbW90ZS5naXQiLAogICAgInRydW5rTmFtZSI6ICJtYWluIiwKICAgICJyZWZyZXNoIjogewogICAgICAidHJ1bmtIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWxIZWFkIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIKICAgICAgfSwKICAgICAgInRydW5rIjogewogICAgICAgICJicmFuY2hOYW1lIjogIm1haW4iLAogICAgICAgICJwcmV2aW91c0hlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgImhlYWQiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC82ZTJhZjVjMy05MmU5LTRjNGEtYmQzOC1lZDU1NDc2NWM3NGEvdHJ1bmsiLAogICAgICAgICJyZXNldCI6IGZhbHNlCiAgICAgIH0sCiAgICAgICJub2RlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInBhcmVudEJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMSwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzEiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogIjQ3NTUwNjU1YmVjMDQwZmIxYjNkZWIxOTVmMzI3Mzc0NjgwMTc1OWEiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAgICJwcmV2aW91c0Jhc2UiOiAiMDFmNmM4OGExNzg0N2RhZTkzZmZhNTIwNmQ4ZGRmYzhjNjE4Yzc2NCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIKICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiZXhwZWN0ZWRTb3VyY2VIZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInB1bGxSZXF1ZXN0TnVtYmVyIjogMiwKICAgICAgICAgICJwdWxsUmVxdWVzdFVybCI6ICJodHRwczovL2dpdGh1Yi5jb20vZ2V0LWZpeHR1cmUvcmVwby9wdWxsLzIiLAogICAgICAgICAgInByZXZpb3VzSGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwcmV2aW91c01ldGFkYXRhIjogImRmZDQyZDU3MzVkOGMxMjNjODRkOTBjZDY3Nzc3MGU2ZWViODQwZWYiLAogICAgICAgICAgInByZXZpb3VzUGFyZW50QnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICAgInByZXZpb3VzQmFzZSI6ICJkNmIwOWViNTNkODRhMjliOTEyOGMxYmM0ZGM2MzM3NjE3N2QzNjVlIiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0L2E3MGM5YTYwLWQ2OGQtNGNjZi1hNzFjLTdjNzBkNDk0YTdhNy8xIgogICAgICAgIH0KICAgICAgXSwKICAgICAgInBycyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZFJlZk5hbWUiOiAiY2hpbGQiLAogICAgICAgICAgImJhc2VSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAibnVtYmVyIjogMiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8yIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJjaGlsZCBvcmlnaW5hbCBQUiIsCiAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAicmV2aWV3RGVjaXNpb24iOiAiUkVWSUVXX1JFUVVJUkVEIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImhlYWRSZWZOYW1lIjogInBhcmVudCIsCiAgICAgICAgICAiYmFzZVJlZk5hbWUiOiAibWFpbiIsCiAgICAgICAgICAibnVtYmVyIjogMSwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2dldC1maXh0dXJlL3JlcG8vcHVsbC8xIiwKICAgICAgICAgICJoZWFkUmVmT2lkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgInN0YXRlIjogIk9QRU4iLAogICAgICAgICAgImhlYWRSZXBvc2l0b3J5IjogewogICAgICAgICAgICAibmFtZSI6ICJyZXBvIiwKICAgICAgICAgICAgIm5hbWVXaXRoT3duZXIiOiAiZ2V0LWZpeHR1cmUvcmVwbyIKICAgICAgICAgIH0sCiAgICAgICAgICAiaGVhZFJlcG9zaXRvcnlPd25lciI6IHsKICAgICAgICAgICAgImxvZ2luIjogImdldC1maXh0dXJlIgogICAgICAgICAgfSwKICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAiaXNEcmFmdCI6IGZhbHNlLAogICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICB9CiAgICAgIF0KICAgIH0sCiAgICAiY2xlYW51cCI6IHsKICAgICAgImJyYW5jaGVzIjogWwogICAgICAgIHsKICAgICAgICAgICJicmFuY2hOYW1lIjogImNoaWxkIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICJkZmQ0MmQ1NzM1ZDhjMTIzYzg0ZDkwY2Q2Nzc3NzBlNmVlYjg0MGVmIiwKICAgICAgICAgICJwYXJlbnQiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjlmOWFiNWYyYTdhZmJhZTYxM2FhOTI4YWM3ODhiMzg3MGEyYzgxMzEiLAogICAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAiZnJvemVuIjogZmFsc2UsCiAgICAgICAgICAicHJOdW1iZXIiOiAyLAogICAgICAgICAgInBySGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAyLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMiIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAicGFyZW50IiwKICAgICAgICAgICAgInRpdGxlIjogImNoaWxkIG9yaWdpbmFsIFBSIiwKICAgICAgICAgICAgImJvZHkiOiAiRXhpc3RpbmcgUFIgYm9keSIsCiAgICAgICAgICAgICJpc0RyYWZ0IjogZmFsc2UsCiAgICAgICAgICAgICJyZXZpZXdEZWNpc2lvbiI6ICJSRVZJRVdfUkVRVUlSRUQiCiAgICAgICAgICB9LAogICAgICAgICAgInN0YXRlIjogIk9QRU4iCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIiwKICAgICAgICAgICJwYXJlbnQiOiAiY2hpbGQiLAogICAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgICAiYmFzZSI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIiwKICAgICAgICAgICJmcm96ZW4iOiBmYWxzZQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJwcmV2aW91c0hlYWQiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgICAicHJldmlvdXNNZXRhZGF0YSI6ICI0NzU1MDY1NWJlYzA0MGZiMWIzZGViMTk1ZjMyNzM3NDY4MDE3NTlhIiwKICAgICAgICAgICJwYXJlbnQiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJiYXNlIjogIjAxZjZjODhhMTc4NDdkYWU5M2ZmYTUyMDZkOGRkZmM4YzYxOGM3NjQiLAogICAgICAgICAgImZyb3plbiI6IHRydWUsCiAgICAgICAgICAicHJOdW1iZXIiOiAxLAogICAgICAgICAgInBySGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IiwKICAgICAgICAgICJwckluZm8iOiB7CiAgICAgICAgICAgICJudW1iZXIiOiAxLAogICAgICAgICAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9nZXQtZml4dHVyZS9yZXBvL3B1bGwvMSIsCiAgICAgICAgICAgICJzdGF0ZSI6ICJPUEVOIiwKICAgICAgICAgICAgImJhc2UiOiAibWFpbiIsCiAgICAgICAgICAgICJ0aXRsZSI6ICJwYXJlbnQgb3JpZ2luYWwgUFIiLAogICAgICAgICAgICAiYm9keSI6ICJFeGlzdGluZyBQUiBib2R5IiwKICAgICAgICAgICAgImlzRHJhZnQiOiBmYWxzZSwKICAgICAgICAgICAgInJldmlld0RlY2lzaW9uIjogIlJFVklFV19SRVFVSVJFRCIKICAgICAgICAgIH0sCiAgICAgICAgICAic3RhdGUiOiAiT1BFTiIKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJ1bnRvdWNoZWQiOiBbXSwKICAgICAgInRydW5rSGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgImFjY2VwdGVkIjogW10sCiAgICAgICJkZWxldGlvbnMiOiBbXSwKICAgICAgImRlY2xpbmVkIjogW10sCiAgICAgICJleGNsdWRlZCI6IFtdLAogICAgICAicGFyZW50cyI6IFtdLAogICAgICAibWFuZGF0b3J5IjogW10sCiAgICAgICJyZXBsYXkiOiBbXSwKICAgICAgInJlc3RhY2siOiB0cnVlCiAgICB9LAogICAgIm1haW50ZW5hbmNlIjogWwogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJwYXJlbnRCcmFuY2hOYW1lIjogInBhcmVudCIsCiAgICAgICAgImhlYWQiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImJhc2UiOiAiZDZiMDllYjUzZDg0YTI5YjkxMjhjMWJjNGRjNjMzNzYxNzdkMzY1ZSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJvYnNvbGV0ZS1sZWFmIiwKICAgICAgICAicGFyZW50QnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgImJhc2UiOiAiOWY5YWI1ZjJhN2FmYmFlNjEzYWE5MjhhYzc4OGIzODcwYTJjODEzMSIsCiAgICAgICAgImZyb3plbiI6IGZhbHNlCiAgICAgIH0KICAgIF0sCiAgICAicGhhc2UiOiAibWFpbnRlbmFuY2UiLAogICAgInRydW5rQ29tcGxldGVkIjogdHJ1ZSwKICAgICJjb21wbGV0ZWRSZW1vdGUiOiBbCiAgICAgICJwYXJlbnQiLAogICAgICAiY2hpbGQiCiAgICBdLAogICAgImNvbXBsZXRlZFBycyI6IFsKICAgICAgImNoaWxkIiwKICAgICAgInBhcmVudCIKICAgIF0sCiAgICAiY29tcGxldGVkTWFpbnRlbmFuY2UiOiBbCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiY2xlYW51cENvbXBsZXRlZCI6IHRydWUsCiAgICAicHJvZ3Jlc3MiOiB7CiAgICAgICJjaGFuZ2VkIjogW10sCiAgICAgICJkZWxldGVkIjogW10sCiAgICAgICJpbmNvbXBsZXRlIjogW10KICAgIH0sCiAgICAidXBkYXRlZCI6IFsKICAgICAgInBhcmVudCIsCiAgICAgICJjaGlsZCIKICAgIF0sCiAgICAiZXhwZWN0ZWQiOiBbCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIiwKICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAibWV0YWRhdGEiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAiY2hpbGQiLAogICAgICAgICJoZWFkIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICB9LAogICAgICB7CiAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgImhlYWQiOiAiNTdhOTQ1MzhlNTZhZjJiYjE4OTYzYmU1OTU5YTk3OWJhNWIwNjk5NiIsCiAgICAgICAgIm1ldGFkYXRhIjogIjI1YmJhNjkxODIzYTBjNDA0NWY1MjBkOTVmYWYxOWJjNjI5ZGIxYTMiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnJhbmNoTmFtZSI6ICJwYXJlbnQiLAogICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICJtZXRhZGF0YSI6ICI2NzdjZTljY2ZmNjY0ODcwMmNhM2U1NjMxZGMzNmY5OWZmN2VmMzU2IgogICAgICB9CiAgICBdLAogICAgImFjdGl2ZSI6IHsKICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICJwaGFzZSI6ICJtYWludGVuYW5jZSIsCiAgICAgICJiYXNlIjogIjU2NTY4OTc0ZjRhMTlmYTk2N2IyYTI5M2JkNDkyOGE4M2QxOTg5MDEiLAogICAgICAib250byI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgIm9yaWdpbmFsSGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IgogICAgfSwKICAgICJjb21wbGV0aW9uIjogewogICAgICAiY2hlY2tvdXQiOiB7CiAgICAgICAgInRhcmdldCI6ICJtYWluIiwKICAgICAgICAib3JpZ2luYWwiOiB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJtYWluIgogICAgICAgIH0sCiAgICAgICAgInNob3VsZENoZWNrb3V0IjogZmFsc2UKICAgICAgfSwKICAgICAgInVudG91Y2hlZCI6IFtdLAogICAgICAiZXhwZWN0ZWQiOiBbCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAibWFpbiIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIiCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAiYnJhbmNoTmFtZSI6ICJjaGlsZCIsCiAgICAgICAgICAiaGVhZCI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIwN2JhYzg4MGI1Njk4MTZlZWE2ZjBmMGJkY2MyZGNlYjA1M2I2NDgwIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAib2Jzb2xldGUtbGVhZiIsCiAgICAgICAgICAiaGVhZCI6ICI1N2E5NDUzOGU1NmFmMmJiMTg5NjNiZTU5NTlhOTc5YmE1YjA2OTk2IiwKICAgICAgICAgICJtZXRhZGF0YSI6ICIyNWJiYTY5MTgyM2EwYzQwNDVmNTIwZDk1ZmFmMTliYzYyOWRiMWEzIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgImJyYW5jaE5hbWUiOiAicGFyZW50IiwKICAgICAgICAgICJoZWFkIjogIjUyYTk3YTRiNmY3OGEzZmZmZDJhNWNhZTc1Y2FmZmM1YzZkNGZiZTQiLAogICAgICAgICAgIm1ldGFkYXRhIjogIjY3N2NlOWNjZmY2NjQ4NzAyY2EzZTU2MzFkYzM2Zjk5ZmY3ZWYzNTYiCiAgICAgICAgfQogICAgICBdLAogICAgICAic291cmNlcyI6IFsKICAgICAgICB7CiAgICAgICAgICAic291cmNlUmVmIjogInJlZnMvZ3QtbWV0YWRhdGEvZ2V0LzZlMmFmNWMzLTkyZTktNGM0YS1iZDM4LWVkNTU0NzY1Yzc0YS90cnVuayIsCiAgICAgICAgICAiaGVhZCI6ICIwMWY2Yzg4YTE3ODQ3ZGFlOTNmZmE1MjA2ZDhkZGZjOGM2MThjNzY0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMCIsCiAgICAgICAgICAiaGVhZCI6ICI1MmE5N2E0YjZmNzhhM2ZmZmQyYTVjYWU3NWNhZmZjNWM2ZDRmYmU0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNvdXJjZVJlZiI6ICJyZWZzL2d0LW1ldGFkYXRhL2dldC9hNzBjOWE2MC1kNjhkLTRjY2YtYTcxYy03YzcwZDQ5NGE3YTcvMSIsCiAgICAgICAgICAiaGVhZCI6ICI5ZjlhYjVmMmE3YWZiYWU2MTNhYTkyOGFjNzg4YjM4NzBhMmM4MTMxIgogICAgICAgIH0KICAgICAgXQogICAgfQogIH0sCiAgImJyYW5jaGVzVG9TeW5jIjogW10sCiAgImJyYW5jaGVzVG9SZXN0YWNrIjogW10sCiAgImN1cnJlbnRCcmFuY2hPdmVycmlkZSI6ICJwYXJlbnQiLAogICJyZWJhc2VkQnJhbmNoQmFzZSI6ICI1NjU2ODk3NGY0YTE5ZmE5NjdiMmEyOTNiZDQ5MjhhODNkMTk4OTAxIiwKICAicmViYXNlT3duZXJzaGlwIjogIjFlNDU0YWU4LTFlYmItNGQ5ZC05NTFmLTU2NWNhYmRiNmM4Yjo0ZGQ5M2JjNWZhNTc4MzEzNjI4MjkyYjYxOWRjMGRjYmQwMzdmMjRiYzM4NTRkMzQ3ZmEyMTZiODM2ZDJjZDAyIgp9",
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/obsolete-leaf": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131"
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-abandonment": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/obsolete-leaf 25bba691823a0c4045f520d95faf19bc629db1a3\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/obsolete-leaf": {
+          "parentBranchName": "child",
+          "parentBranchRevision": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131"
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-fresh-sync": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "before-remote-alignment": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-remote-alignment": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-aligned-sync": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    },
+    "after-final-log": {
+      "work": {
+        "head": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "branch": "main",
+        "refs": "refs/branch-metadata/child 07bac880b569816eea6f0f0bdcc2dceb053b6480\nrefs/branch-metadata/parent 677ce9ccff6648702ca3e5631dc36f99ff7ef356\nrefs/heads/child 56568974f4a19fa967b2a293bd4928a83d198901\nrefs/heads/main 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/heads/parent 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+        "commits": "56568974f4a19fa967b2a293bd4928a83d198901 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 86c535953fd19b3d4796d459d9e934538f34083f\n01f6c88a17847dae93ffa5206d8ddfc8c618c764  95eff859c9e9635db428f84f53c6e54aeaf47c7a\n52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4 d6b09eb53d84a29b9128c1bc4dc63376177d365e 5a274c687bdb4d2c1510ba9f4fc61b7b2c9d0e70\nd6b09eb53d84a29b9128c1bc4dc63376177d365e 01f6c88a17847dae93ffa5206d8ddfc8c618c764 d755a85d51b7821b441c839bdd0348cacb59b155",
+        "status": "",
+        "stages": "100644 88d050b1908057b53d38b42702ebc659e3d7f696 0\tmain.txt",
+        "index": "RElSQwAAAAIAAAABavG8YjZwAN9q8bxiNnAA3wEAAA0MXEXlAACBpAAAAfUAAAAUAAAABIjQULGQgFe1PTi0JwLrxlnj1/aWAAhtYWluLnR4dAAAVFJFRQAAABkAMSAwCpXv+FnJ6WNdtCj4T1PG5Urq9Hx6eGh8foWl9SDiBQhY1CVBgW5SV7k=",
+        "recovery": null,
+        "rebase": false,
+        "rebaseFiles": null,
+        "files": {
+          "main.txt": "bWFpbg=="
+        }
+      },
+      "pins": "refs/gt-metadata/get/6e2af5c3-92e9-4c4a-bd38-ed554765c74a/trunk 01f6c88a17847dae93ffa5206d8ddfc8c618c764\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/0 52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\nrefs/gt-metadata/get/a70c9a60-d68d-4ccf-a71c-7c70d494a7a7/1 9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+      "metadata": {
+        "refs/branch-metadata/child": {
+          "parentBranchName": "parent",
+          "parentBranchRevision": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+          "frozen": false,
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        },
+        "refs/branch-metadata/parent": {
+          "parentBranchName": "main",
+          "parentBranchRevision": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": true,
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "base": "main",
+            "state": "OPEN",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          }
+        }
+      }
+    }
+  },
+  "checks": {
+    "continuePreservedAllObservedState": true,
+    "pendingLogPreservedAllObservedState": true,
+    "abandonmentPreservedAllOtherObservedState": true,
+    "originalRecoveryBytesRetained": true,
+    "remoteAlignmentPreservedLocalObservedState": true,
+    "abandonedSourcePinsRetainedAfterFreshSync": true
+  },
+  "fixtureRoot": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-H4npfI",
+  "version": "0.6.15",
+  "target": "obsolete-leaf",
+  "oldTarget": {
+    "sha": "57a94538e56af2bb18963be5959a979ba5b06996",
+    "commit": "57a94538e56af2bb18963be5959a979ba5b06996\n9f9ab5f2a7afbae613aa928ac788b3870a2c8131\nGet Test\nget@example.test\nLocal correction before sync\n\nf998eae6e9898ac4cb0f9ef5dd5915f774013d07"
+  },
+  "incomingParent": "52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4",
+  "archive": {
+    "path": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-H4npfI/consumer/.git/anthracite-sync-abandonment/ce44c920e86e6538ef3d16a709511fb32bdb1d01c14b6597dd3bcb6701355b14",
+    "originalRecoverySha256": "ce44c920e86e6538ef3d16a709511fb32bdb1d01c14b6597dd3bcb6701355b14",
+    "archivedRecoverySha256": "ce44c920e86e6538ef3d16a709511fb32bdb1d01c14b6597dd3bcb6701355b14",
+    "files": [
+      "observations.json",
+      "recovery.json",
+      "released.gtcontinue"
+    ]
+  },
+  "remoteAlignmentControl": {
+    "remoteBefore": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+    "publishedChild": "56568974f4a19fa967b2a293bd4928a83d198901",
+    "producerBefore": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+    "remoteAfter": "56568974f4a19fa967b2a293bd4928a83d198901",
+    "purpose": "Only align the synthetic bare remote and controlled PR head with already reached local child work; do not repair local dependencies."
+  },
+  "alignedRemoteControlStatus": 0,
+  "oldTargetObjectAvailable": true,
+  "freshSyncStatus": 1,
+  "ghCalls": [
+    [
+      "pr",
+      "view",
+      "child",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "headRefName,baseRefName,number,url,headRefOid"
+    ],
+    [
+      "pr",
+      "view",
+      "parent",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "headRefName,baseRefName,number,url,headRefOid"
+    ],
+    [
+      "api",
+      "user"
+    ],
+    [
+      "pr",
+      "list",
+      "--head",
+      "child",
+      "--state",
+      "all",
+      "--limit",
+      "100",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "view",
+      "child",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+    ],
+    [
+      "pr",
+      "view",
+      "2",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "list",
+      "--head",
+      "obsolete-leaf",
+      "--state",
+      "all",
+      "--limit",
+      "100",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "view",
+      "obsolete-leaf",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+    ],
+    [
+      "pr",
+      "list",
+      "--head",
+      "parent",
+      "--state",
+      "all",
+      "--limit",
+      "100",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "view",
+      "parent",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+    ],
+    [
+      "pr",
+      "view",
+      "1",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "view",
+      "2",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "list",
+      "--head",
+      "child",
+      "--state",
+      "all",
+      "--limit",
+      "100",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "view",
+      "child",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+    ],
+    [
+      "pr",
+      "view",
+      "1",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "list",
+      "--head",
+      "parent",
+      "--state",
+      "all",
+      "--limit",
+      "100",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "view",
+      "parent",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+    ],
+    [
+      "pr",
+      "view",
+      "2",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "list",
+      "--head",
+      "child",
+      "--state",
+      "all",
+      "--limit",
+      "100",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "view",
+      "child",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+    ],
+    [
+      "pr",
+      "view",
+      "1",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "list",
+      "--head",
+      "parent",
+      "--state",
+      "all",
+      "--limit",
+      "100",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+      "--repo",
+      "github.com/get-fixture/repo"
+    ],
+    [
+      "pr",
+      "view",
+      "parent",
+      "--repo",
+      "get-fixture/repo",
+      "--json",
+      "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+    ]
+  ],
+  "ghResponses": [
+    {
+      "args": [
+        "pr",
+        "view",
+        "child",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "headRefName,baseRefName,number,url,headRefOid"
+      ],
+      "stdout": "{\"headRefName\":\"child\",\"baseRefName\":\"parent\",\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"headRefOid\":\"9f9ab5f2a7afbae613aa928ac788b3870a2c8131\"}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "parent",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "headRefName,baseRefName,number,url,headRefOid"
+      ],
+      "stdout": "{\"headRefName\":\"parent\",\"baseRefName\":\"main\",\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"headRefOid\":\"d6b09eb53d84a29b9128c1bc4dc63376177d365e\"}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "api",
+        "user"
+      ],
+      "stdout": "{}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "child",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+      ],
+      "stdout": "{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"9f9ab5f2a7afbae613aa928ac788b3870a2c8131\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "list",
+        "--head",
+        "child",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "[{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"9f9ab5f2a7afbae613aa928ac788b3870a2c8131\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}]\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "2",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"9f9ab5f2a7afbae613aa928ac788b3870a2c8131\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "obsolete-leaf",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+      ],
+      "stdout": "",
+      "stderr": "no pull requests found\n",
+      "exit": 3
+    },
+    {
+      "args": [
+        "pr",
+        "list",
+        "--head",
+        "obsolete-leaf",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "[]\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "parent",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+      ],
+      "stdout": "{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "list",
+        "--head",
+        "parent",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "[{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}]\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "1",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "2",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"9f9ab5f2a7afbae613aa928ac788b3870a2c8131\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "child",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+      ],
+      "stdout": "{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"9f9ab5f2a7afbae613aa928ac788b3870a2c8131\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "list",
+        "--head",
+        "child",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "[{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"9f9ab5f2a7afbae613aa928ac788b3870a2c8131\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}]\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "1",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "parent",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+      ],
+      "stdout": "{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "list",
+        "--head",
+        "parent",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "[{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}]\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "2",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"56568974f4a19fa967b2a293bd4928a83d198901\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "child",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+      ],
+      "stdout": "{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"56568974f4a19fa967b2a293bd4928a83d198901\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "list",
+        "--head",
+        "child",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "[{\"number\":2,\"url\":\"https://github.com/get-fixture/repo/pull/2\",\"title\":\"child original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"child\",\"headRefOid\":\"56568974f4a19fa967b2a293bd4928a83d198901\",\"baseRefName\":\"parent\",\"baseRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}]\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "1",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "view",
+        "parent",
+        "--repo",
+        "get-fixture/repo",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup"
+      ],
+      "stdout": "{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "args": [
+        "pr",
+        "list",
+        "--head",
+        "parent",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,url,title,body,author,state,isDraft,headRefName,headRefOid,baseRefName,baseRefOid,headRepository,headRepositoryOwner,isCrossRepository,reviewDecision,mergeable,mergeStateStatus,statusCheckRollup",
+        "--repo",
+        "github.com/get-fixture/repo"
+      ],
+      "stdout": "[{\"number\":1,\"url\":\"https://github.com/get-fixture/repo/pull/1\",\"title\":\"parent original PR\",\"body\":\"Existing PR body\",\"author\":{\"login\":\"get-fixture\"},\"state\":\"OPEN\",\"isDraft\":false,\"headRefName\":\"parent\",\"headRefOid\":\"52a97a4b6f78a3fffd2a5cae75caffc5c6d4fbe4\",\"baseRefName\":\"main\",\"baseRefOid\":\"01f6c88a17847dae93ffa5206d8ddfc8c618c764\",\"headRepository\":{\"name\":\"repo\",\"nameWithOwner\":\"get-fixture/repo\"},\"headRepositoryOwner\":{\"login\":\"get-fixture\"},\"isCrossRepository\":false,\"reviewDecision\":\"REVIEW_REQUIRED\",\"mergeable\":null,\"mergeStateStatus\":null,\"statusCheckRollup\":null}]\n",
+      "stderr": "",
+      "exit": 0
+    }
+  ]
+}

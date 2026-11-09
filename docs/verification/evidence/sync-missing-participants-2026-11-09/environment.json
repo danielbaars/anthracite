@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-09",
+  "package": "@danielbaars/anthracite",
+  "version": "0.6.15",
+  "source": "c1ee9a4d1d69f67f3b1cde2568ff96d8fad9928a",
+  "node": "v24.19.0",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "platform": "darwin",
+  "arch": "arm64",
+  "publicCliSha256": "b5ec9d945824443cd441ae9f40220d174ef4c367952e7c264186a2bfc0882608",
+  "publicTarballSha256": "490d9c42c270aa6f242ba44fe441d9d776f3b8fdae100872dac82584d9d65c23",
+  "publicIntegrity": "sha512-hDla14RukVCN9Nmflp2E4z74E4Y4Br1sg53eqAzak11CBHw2mCRdiaHrOb5vgtMmyk/w+pViJknuk7ZEzo5jzQ==",
+  "fixtureSource": "apps/cli/test/lib/fixtures/frozen_get_cli.ts",
+  "fixtureSourceSha256": "efc3784229f0c81597aa87d91191dbc539b9b657b26a1a5dd405bd2806bee1a0",
+  "boundary": "Public CLI processes, real temporary Git repositories and bare remotes; gh responses controlled by existing fixture",
+  "scope": "Three raw-Git-aborted sync topologies; local-only affected participants; replacement recreated on current child",
+  "normalization": "Raw records are unchanged. Temporary fixture paths are observations, not durable recovery locations.",
+  "controls": "Initial fresh sync preserved as observed refusal. Only synthetic bare child head and controlled PR head are then aligned, without local observed state changes. No real GitHub writes, CI, full matrix or active-installation changes.",
+  "postRunPreservationChecks": [
+    {
+      "scenario": "missing-leaf",
+      "existingBranchTipsUnchanged": true,
+      "physicalCheckoutUnchanged": true,
+      "indexEntriesAndFileContentsUnchanged": true,
+      "note": "Normal fresh-sync metadata repair is recorded separately; this is not an assertion that the dependency graph was repaired."
+    },
+    {
+      "scenario": "missing-parent",
+      "existingBranchTipsUnchanged": true,
+      "physicalCheckoutUnchanged": true,
+      "indexEntriesAndFileContentsUnchanged": true,
+      "note": "Normal fresh-sync metadata repair is recorded separately; this is not an assertion that the dependency graph was repaired."
+    },
+    {
+      "scenario": "reused-name",
+      "existingBranchTipsUnchanged": true,
+      "physicalCheckoutUnchanged": true,
+      "indexEntriesAndFileContentsUnchanged": true,
+      "note": "Normal fresh-sync metadata repair is recorded separately; this is not an assertion that the dependency graph was repaired."
+    }
+  ]
+}
