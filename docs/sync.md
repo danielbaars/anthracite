@@ -52,6 +52,8 @@ The candidate #139 correction also verifies that a terminal PR covers the exact 
 
 A raw Git abort cancels only its active rebase, not earlier updates, deletions or completed rewrites. Foreign, changed, stale or missing ownership must not consume another workflow's state or execute an unchecked queue. A non-conflict interruption or uncertain completed publication or a saved record without a matching active rebase requires guarded manual inspection; automatic retry and general rollback are not promised. Some source pins may already have been removed when a late check fails.
 
+**Approved specification, implementation pending:** [preserving sync abandonment and pending inspection](specs/sync-abandonment.md), tracked by [#152](https://github.com/danielbaars/anthracite/issues/152), defines a supported exit that retains reached work and recovery evidence. Public npm 0.6.14 does not yet provide `sync --abort`. Missing-participant continuation is a separate follow-up, [#153](https://github.com/danielbaars/anthracite/issues/153).
+
 Finish a pending new sync workflow before downgrading. Existing get, structural, landing and legacy continuations retain their own contracts. MCP uses the existing learn_an/run_an_cmd tools with literal arguments and an explicit cwd; process cancellation does not imply atomic undo.
 
 See [candidate verification](verification/sync-updates-implementation-2026-11-01.md) for bounded local acceptance and the retained historical [Graphite comparison](https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/get-sync-parity-2026-10-31.md). Multi-trunk selection and remote-only discovery remain separate work.

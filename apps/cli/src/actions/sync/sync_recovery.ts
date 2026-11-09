@@ -117,6 +117,95 @@ export function preflightSyncRecovery(command: string): boolean {
   return true;
 }
 
+/** Read supported intent without granting continuation or participant rewrite authority. */
+export function readOwnedSyncRecovery():
+  | {
+      readonly data: TContinueConfig['data'];
+      readonly operation: SyncOperation;
+      readonly bytes: string;
+      readonly file: string;
+    }
+  | undefined {
+  const file = getRecoveryFile();
+  if (!fs.existsSync(file)) return undefined;
+  if (!fs.lstatSync(file).isFile())
+    refuseSync('Saved recovery is not a regular file.');
+  const bytes = fs.readFileSync(file, 'utf8');
+  let value: unknown;
+  try {
+    value = JSON.parse(bytes);
+  } catch {
+    refuseSync('Malformed continuation JSON.');
+  }
+  if (typeof value !== 'object' || value === null || !('sync' in value))
+    return undefined;
+  if (gitEnvironmentOverrides.some((key) => process.env[key] !== undefined))
+    refuseSync('Inspect owned sync without Git repository/index overrides.');
+  const parsed = syncOperationSchema.safeParse(value.sync);
+  if (!parsed.success) refuseSync('Incompatible or malformed sync intent.');
+  const allowed = new Set([
+    'sync',
+    'branchesToSync',
+    'branchesToRestack',
+    'currentBranchOverride',
+    'rebasedBranchBase',
+    'rebaseOwnership',
+    'delete',
+  ]);
+  if (Object.keys(value).some((key) => !allowed.has(key)))
+    refuseSync('Sync intent overlaps foreign recovery fields.');
+  const data = continueConfigFactory.load(undefined, {
+    preserveInvalid: true,
+  }).data;
+  if (fs.readFileSync(file, 'utf8') !== bytes)
+    refuseSync('Saved sync ownership changed while reading.');
+  const operation = parsed.data;
+  if (
+    (parsed.data.active || data.rebaseOwnership !== undefined) &&
+    (!data.rebaseOwnership?.match(/^[a-f0-9-]{36}:[a-f0-9]{64}$/) ||
+      !data.rebaseOwnership.endsWith(`:${getRecoveryDigest(data)}`))
+  )
+    refuseSync(
+      'The saved sync intent changed after its conflict was recorded.'
+    );
+  if (
+    data.delete &&
+    (!operation.cleanupCompleted ||
+      !operation.cleanup.restack ||
+      data.delete.branch !== 'Cleanup candidates' ||
+      JSON.stringify(data.delete.mandatory) !==
+        JSON.stringify(
+          operation.cleanup.replay.filter(
+            (name) => !operation.completedMaintenance.includes(name)
+          )
+        ))
+  )
+    refuseSync('Sync intent overlaps foreign cleanup recovery.');
+  if (
+    !operation.active &&
+    !data.rebaseOwnership &&
+    (data.branchesToSync.length ||
+      data.branchesToRestack.length ||
+      data.rebasedBranchBase !== undefined)
+  )
+    refuseSync('Sync intent overlaps an unverified legacy queue.');
+  const identity = getRecoveryIdentity();
+  const repo = repoConfigFactory.load(undefined, { preserveInvalid: true });
+  if (
+    identity.root !== operation.root ||
+    identity.commonDirectory !== operation.commonDirectory ||
+    identity.gitDirectory !== operation.gitDirectory ||
+    repo.data.trunk !== operation.trunkName ||
+    repo.getRemote() !== operation.remote ||
+    getSyncRepository(repo) !== operation.repository ||
+    getSyncRemoteUrl(operation.remote) !== operation.remoteUrl
+  )
+    refuseSync(
+      'Inspect owned sync in its original worktree and configured repository.'
+    );
+  return { data, operation, bytes, file };
+}
+
 export function validateSyncRecovery(
   data: TContinueConfig['data'],
   protections = true
