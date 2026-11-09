@@ -10,7 +10,11 @@ import { getSha } from '../../lib/git/get_sha';
 import { runGitCommand } from '../../lib/git/runner';
 import { getRebaseDirectory } from '../../lib/git/rebase_in_progress';
 import { landingProgressPath } from '../../lib/landing_progress';
-import { quitSyncRebase, retainSyncAutostash } from './sync_abandon_rebase';
+import {
+  quitSyncRebase,
+  retainSyncAutostash,
+  verifyRetainedSyncAutostash,
+} from './sync_abandon_rebase';
 import {
   assertRetainedSyncFile,
   retainSyncFile,
@@ -55,6 +59,12 @@ export function abandonSync(): void {
     if (assertAbandonmentGitState(owned) !== directory)
       refuseSync('Active Git state changed before release.');
     if (directory) {
+      retainSyncFile(
+        path.join(archive, 'quit.json'),
+        JSON.stringify({ version: 1, autostash: autostash ?? null }, null, 2) +
+          '\n'
+      );
+      verifyRetainedSyncAutostash(owned, archive);
       quit = 'requested; result not confirmed';
       quitSyncRebase(owned, directory, autostash);
       quit = 'completed';
@@ -63,6 +73,7 @@ export function abandonSync(): void {
     if (getRebaseDirectory())
       refuseSync('Active Git rebase remains after quit.');
     assertAbandonmentGitState(owned);
+    verifyRetainedSyncAutostash(owned, archive);
     releaseSync(owned, archive);
     reportAbandonment(owned, archive);
   } catch (error) {

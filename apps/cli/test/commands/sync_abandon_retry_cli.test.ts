@@ -175,6 +175,127 @@ describe('retrying preserving sync abandonment', function () {
     expect(again.output).to.include('No pending sync');
     expect(fixture.observe()).to.deep.equal(before);
   });
+  it('revalidates retained autostash evidence after quit before any retry can release recovery', () => {
+    fixture.git(fixture.consumer, 'config', 'rebase.autoStash', 'true');
+    fs.writeFileSync(
+      path.join(fixture.bin, 'git'),
+      '#!/bin/sh\nis_rebase=false\nlast_arg=\nfor arg do\n [ "$arg" = rebase ] && is_rebase=true\n last_arg=$arg\ndone\nif $is_rebase && [ "$last_arg" = local-work ]; then printf owned-autostash-work > main.txt; fi\nexec /usr/bin/git "$@"\n',
+      { mode: 0o755 }
+    );
+    startConflict(fixture);
+    const marker = fs.readFileSync(
+      path.join(fixture.consumer, '.git/rebase-merge/autostash'),
+      'utf8'
+    );
+    const oid = marker.trim();
+    const record = fs.readFileSync(recovery(fixture));
+    const digest = createHash('sha256').update(record).digest('hex');
+    const archive = archivePath(fixture, record);
+    const pin = `refs/gt-metadata/sync-abandonment/${digest}/autostash`;
+    const calls = path.join(fixture.root, 'autostash-quit-calls');
+    fs.writeFileSync(
+      path.join(fixture.bin, 'git'),
+      `#!/bin/sh\nis_rebase=false\nis_quit=false\nfor arg do\n [ "$arg" = rebase ] && is_rebase=true\n [ "$arg" = --quit ] && is_quit=true\ndone\nif $is_rebase && $is_quit; then\n /usr/bin/git "$@" || exit $?\n printf quit >> ${quote(
+        calls
+      )}\n exit 27\nfi\nexec /usr/bin/git "$@"\n`,
+      { mode: 0o755 }
+    );
+    const first = fixture.run(['sync', '--abort']);
+    expect(first.status, first.output).to.equal(1);
+    expect(
+      fs.existsSync(path.join(fixture.consumer, '.git/rebase-merge'))
+    ).to.equal(false);
+    const evidence = path.join(archive, 'autostash.json');
+    const bytes = fs.readFileSync(evidence);
+    for (const change of [
+      'missing pin',
+      'changed pin',
+      'corrupt JSON',
+      'foreign pin identity',
+      'missing JSON',
+      'both missing',
+    ]) {
+      fs.writeFileSync(evidence, bytes, { mode: 0o600 });
+      fixture.git(fixture.consumer, 'update-ref', pin, oid);
+      if (change.includes('missing') && change !== 'missing JSON')
+        fixture.git(fixture.consumer, 'update-ref', '-d', pin);
+      if (change === 'changed pin')
+        fixture.git(fixture.consumer, 'update-ref', pin, fixture.oldParent);
+      if (change === 'corrupt JSON') fs.writeFileSync(evidence, '{');
+      if (change === 'foreign pin identity')
+        fs.writeJsonSync(evidence, {
+          version: 1,
+          marker,
+          oid,
+          pin: 'refs/heads/foreign',
+        });
+      if (change === 'missing JSON' || change === 'both missing')
+        fs.removeSync(evidence);
+      const before = fixture.observe();
+      const retained = fs.existsSync(evidence)
+        ? fs.readFileSync(evidence)
+        : null;
+      const observedPin = fixture.git(
+        fixture.consumer,
+        'for-each-ref',
+        '--format=%(objectname)',
+        pin
+      );
+      const retry = fixture.run(['sync', '--abort']);
+      expect(retry.status, change + ': ' + retry.output).to.equal(1);
+      expect(retry.output).to.include('autostash');
+      expect(fixture.observe()).to.deep.equal(before);
+      expect(
+        fs.existsSync(evidence) ? fs.readFileSync(evidence) : null
+      ).to.deep.equal(retained);
+      expect(
+        fixture.git(
+          fixture.consumer,
+          'for-each-ref',
+          '--format=%(objectname)',
+          pin
+        )
+      ).to.equal(observedPin);
+    }
+    fs.writeFileSync(evidence, bytes, { mode: 0o600 });
+    fixture.git(fixture.consumer, 'update-ref', pin, oid);
+    const completed = fixture.run(['sync', '--abort']);
+    expect(completed.status, completed.output).to.equal(0);
+    expect(completed.output).to.include(
+      'Owned autostash retained without applying/discarding'
+    );
+    expect(fs.readFileSync(calls, 'utf8')).to.equal('quit');
+    expect(fixture.git(fixture.consumer, 'show', `${pin}:main.txt`)).to.equal(
+      'owned-autostash-work'
+    );
+  });
+
+  it('rejects accepted long aliases, negations and camel-case update options before effects', () => {
+    for (const flag of [
+      '--f',
+      '--p',
+      '--d',
+      '--r',
+      '--no-f',
+      '--no-p',
+      '--no-d',
+      '--no-r',
+      '--f=false',
+      '--p=false',
+      '--d=false',
+      '--r=false',
+      '--deleteAll',
+      '--no-deleteAll',
+      '--showDeleteProgress',
+      '--no-showDeleteProgress',
+    ]) {
+      const before = fixture.observe();
+      const result = fixture.run(['sync', '--abort', flag]);
+      expect(result.status, flag + ': ' + result.output).to.equal(1);
+      expect(result.output, flag).to.include('--abort cannot be combined');
+      expect(fixture.observe()).to.deep.equal(before);
+    }
+  });
 });
 
 function recovery(fixture: FrozenGetFixture): string {
