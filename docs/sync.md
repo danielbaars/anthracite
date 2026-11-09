@@ -22,6 +22,7 @@ When GitHub retargets an open child to trunk after its parent PR merges, sync pr
 |`--delete` / `--no-delete`|Default true. No-delete suppresses cleanup even with delete-all or force.|
 |`--delete-all`|Default false. Supplies confirmation only for already eligible local cleanup; it grants no trunk reset or feature-overwrite authority.|
 |`--restack` / `--no-restack`|Default true. Controls automatic local maintenance; no-restack retains incoming updates and approved cleanup/parent changes, and names pending repair.|
+|`--abort`|Candidate: ends only the owned sync locally, preserving reached work and recovery evidence. Refuses explicit combinations with other sync update/cleanup options.|
 |`--force`|Retains separate sync trunk-reset and cleanup-consent powers. It does not authorize silently overwriting divergent feature work.|
 
 Existing `-p`, `-d`, `-r`, `-f` and progress options remain available. Explicit boolean forms follow the same rules across all three routes. No new refresh switch or persistent preference is introduced.
@@ -51,6 +52,27 @@ When cleanup is still pending, continuation freshly verifies the exact saved PR 
 The candidate #139 correction also verifies that a terminal PR covers the exact local head selected for each remaining deletion, before `continue --all` stages files or advances the active rebase. Completed deletions are not selected again. Older version-1 records do not need migration: fresh evidence can establish unchanged safe coverage without the optional saved PR-head field. If coverage is missing or changed, continuation preserves local work, index and recovery rather than completing the rebase first. Inspect the retained plan and commits; do not edit ownership, delete recovery or reset refs to force it through. Already completed effects remain completed.
 
 A raw Git abort cancels only its active rebase, not earlier updates, deletions or completed rewrites. Foreign, changed, stale or missing ownership must not consume another workflow's state or execute an unchecked queue. A non-conflict interruption or uncertain completed publication or a saved record without a matching active rebase requires guarded manual inspection; automatic retry and general rollback are not promised. Some source pins may already have been removed when a late check fails.
+
+### Abandon an owned sync (candidate)
+
+The candidate for [#152](https://github.com/danielbaars/anthracite/issues/152) adds:
+
+```sh
+an ls                              # preserving inspection of supported pending sync
+an sync --abort --no-interactive    # end only that sync, without rollback
+```
+
+Public npm 0.6.14 does not provide this exit. The candidate supports its unchanged version-1 records, including after a raw Git rebase abort or a participant's removal. It does not skip or continue missing participants; that remains [#153](https://github.com/danielbaars/anthracite/issues/153).
+
+Abandonment works offline, with no GitHub authentication. It retains the original recovery bytes and source-pin observations in private repository-local storage, prints the archive path, quits only a matching owned active rebase and releases the owned sync gate. Existing source pins and owned autostash evidence remain available. Matching interrupted archive/release work can be retried; repeating after success is a distinct successful no-op. Foreign, malformed or replaced recovery and unrelated Git operations remain protected.
+
+Completed updates, cleanup and rewrites stay applied. Physical HEAD, branch refs/metadata, frozen status, index and tracked/untracked files remain as reached. A quit can leave detached HEAD and unresolved index conflicts. It does not roll back, checkout, stage, replay, delete branches or resolve files. Read the report's recorded completion, current observations, pending maintenance and uncertainty separately; recorded completion is not fresh GitHub readiness. Do not combine `--abort` with explicit refresh, cleanup, force or restack options.
+
+Full/short logs and aliases inspect supported pending sync without consuming recovery. An attached physical checkout determines the current marker; at detached HEAD a validated pending participant can anchor selection but is labelled pending, not checked out. If unavailable, selection falls back to trunk. Explicit zero depth still refuses detached HEAD. Existing branch-info/children/PR inspection retains its preserving behavior.
+
+For an obsolete participant, inspect first, abandon the owned sync, deliberately handle remaining Git state and files, and only then consider guarded branch deletion or a new sync. A separately confirmed absence of a PR may inform that decision; unknown PR status must not be interpreted as no PR. Do not delete private recovery files to bypass the gate.
+
+See the [specification](specs/sync-abandonment.md) and [implementation acceptance](verification/sync-abandonment-implementation-2026-11-09.md).
 
 Finish a pending new sync workflow before downgrading. Existing get, structural, landing and legacy continuations retain their own contracts. MCP uses the existing learn_an/run_an_cmd tools with literal arguments and an explicit cwd; process cancellation does not imply atomic undo.
 

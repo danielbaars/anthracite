@@ -90,6 +90,7 @@ export function initContext(
     preserveMetadata?: boolean;
     readonly inspection?: boolean;
     readonly metadataOnly?: boolean;
+    readonly physicalCheckout?: boolean;
   }
 ): TContext {
   const preserving = opts?.inspection || opts?.metadataOnly;
@@ -127,6 +128,7 @@ export function initContext(
   // Attached worktrees keep their own subject; only an own local replay may use C.
   const inspectionOverride =
     preserving &&
+    !opts?.physicalCheckout &&
     !git.getCurrentBranchName() &&
     ownsRebase(continueConfig.data.rebaseOwnership) &&
     continueConfig.data.rebasedBranchBase

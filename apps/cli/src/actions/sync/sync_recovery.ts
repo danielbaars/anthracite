@@ -48,7 +48,7 @@ export function assertSyncHookOwnership(expected?: string): void {
 
 export function refuseSync(reason: string): never {
   throw new ExitFailedError(
-    `${reason} Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted.`
+    `${reason} Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted. To end a supported owned sync preserving reached work and residual files, use an sync --abort; foreign or malformed state still requires inspection.`
   );
 }
 export function assertSyncRecoveryWrite(context: TContext): void {
@@ -117,6 +117,100 @@ export function preflightSyncRecovery(command: string): boolean {
   return true;
 }
 
+/** Read supported intent without granting continuation or participant rewrite authority. */
+export function readOwnedSyncRecovery():
+  | {
+      readonly data: TContinueConfig['data'];
+      readonly operation: SyncOperation;
+      readonly bytes: string;
+      readonly file: string;
+    }
+  | undefined {
+  const file = getRecoveryFile();
+  if (!fs.existsSync(file)) return undefined;
+  if (!fs.lstatSync(file).isFile())
+    refuseSync('Saved recovery is not a regular file.');
+  const original = fs.readFileSync(file);
+  const bytes = original.toString('utf8');
+  if (!Buffer.from(bytes).equals(original))
+    refuseSync(
+      'Saved sync recovery is not valid UTF-8; original bytes preserved.'
+    );
+  let value: unknown;
+  try {
+    value = JSON.parse(bytes);
+  } catch {
+    refuseSync('Malformed continuation JSON.');
+  }
+  if (typeof value !== 'object' || value === null || !('sync' in value))
+    return undefined;
+  if (gitEnvironmentOverrides.some((key) => process.env[key] !== undefined))
+    refuseSync('Inspect owned sync without Git repository/index overrides.');
+  const parsed = syncOperationSchema.safeParse(value.sync);
+  if (!parsed.success) refuseSync('Incompatible or malformed sync intent.');
+  const allowed = new Set([
+    'sync',
+    'branchesToSync',
+    'branchesToRestack',
+    'currentBranchOverride',
+    'rebasedBranchBase',
+    'rebaseOwnership',
+    'delete',
+  ]);
+  if (Object.keys(value).some((key) => !allowed.has(key)))
+    refuseSync('Sync intent overlaps foreign recovery fields.');
+  const data = continueConfigFactory.load(undefined, {
+    preserveInvalid: true,
+  }).data;
+  if (fs.readFileSync(file, 'utf8') !== bytes)
+    refuseSync('Saved sync ownership changed while reading.');
+  const operation = parsed.data;
+  if (
+    (parsed.data.active || data.rebaseOwnership !== undefined) &&
+    (!data.rebaseOwnership?.match(/^[a-f0-9-]{36}:[a-f0-9]{64}$/) ||
+      !data.rebaseOwnership.endsWith(`:${getRecoveryDigest(data)}`))
+  )
+    refuseSync(
+      'The saved sync intent changed after its conflict was recorded.'
+    );
+  if (
+    data.delete &&
+    (!operation.cleanupCompleted ||
+      !operation.cleanup.restack ||
+      data.delete.branch !== 'Cleanup candidates' ||
+      JSON.stringify(data.delete.mandatory) !==
+        JSON.stringify(
+          operation.cleanup.replay.filter(
+            (name) => !operation.completedMaintenance.includes(name)
+          )
+        ))
+  )
+    refuseSync('Sync intent overlaps foreign cleanup recovery.');
+  if (
+    !operation.active &&
+    !data.rebaseOwnership &&
+    (data.branchesToSync.length ||
+      data.branchesToRestack.length ||
+      data.rebasedBranchBase !== undefined)
+  )
+    refuseSync('Sync intent overlaps an unverified legacy queue.');
+  const identity = getRecoveryIdentity();
+  const repo = repoConfigFactory.load(undefined, { preserveInvalid: true });
+  if (
+    identity.root !== operation.root ||
+    identity.commonDirectory !== operation.commonDirectory ||
+    identity.gitDirectory !== operation.gitDirectory ||
+    repo.data.trunk !== operation.trunkName ||
+    repo.getRemote() !== operation.remote ||
+    getSyncRepository(repo) !== operation.repository ||
+    getSyncRemoteUrl(operation.remote) !== operation.remoteUrl
+  )
+    refuseSync(
+      'Inspect owned sync in its original worktree and configured repository.'
+    );
+  return { data, operation, bytes, file };
+}
+
 export function validateSyncRecovery(
   data: TContinueConfig['data'],
   protections = true
@@ -137,8 +231,32 @@ export function validateSyncRecovery(
     refuseSync(
       'Continue sync in its original worktree and configured repository.'
     );
+  const { active } = assertOwnedSyncRebase(data);
+  assertSyncSources(operation);
+  if (protections) assertSyncParticipants(operation, active.branchName);
+  else assertSyncExpected(operation);
+  return operation;
+}
+
+/** Rebase identity is separate from mutable branch/source continuation protections. */
+export function assertOwnedSyncRebase(data: TContinueConfig['data']): {
+  readonly directory: string;
+  readonly active: NonNullable<SyncOperation['active']>;
+} {
+  const operation = data.sync;
+  if (!operation) refuseSync('No owned sync intent.');
   const active = operation.active;
   const directory = getRebaseDirectory();
+  if (
+    directory &&
+    (!fs.lstatSync(directory).isDirectory() ||
+      ['head-name', 'onto', 'orig-head', 'charcoal-continuation'].some(
+        (name) =>
+          !fs.existsSync(path.join(directory, name)) ||
+          !fs.lstatSync(path.join(directory, name)).isFile()
+      ))
+  )
+    refuseSync('Owned rebase markers are not regular local files.');
   if (
     !active ||
     !directory ||
@@ -158,10 +276,7 @@ export function validateSyncRecovery(
     refuseSync(
       'The saved sync intent changed after its conflict was recorded.'
     );
-  assertSyncSources(operation);
-  if (protections) assertSyncParticipants(operation, active.branchName);
-  else assertSyncExpected(operation);
-  return operation;
+  return { directory: fs.realpathSync(directory), active };
 }
 
 export function saveSyncOperation(

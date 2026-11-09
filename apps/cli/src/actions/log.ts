@@ -15,6 +15,34 @@ function getUntrackedBranchNames(context: TContext) {
   );
 }
 
+/** Pending intent may select a graph, but never supplies a checkout marker. */
+export function getLogSelectionBranch(context: TContext): string {
+  if (context.engine.currentBranch || !context.continueConfig.data.sync)
+    return context.engine.currentBranchPrecondition;
+  const operation = context.continueConfig.data.sync;
+  const pending = operation?.active?.branchName;
+  const expected = operation?.expected.find(
+    (entry) => entry.branchName === pending
+  );
+  return pending &&
+    context.engine.branchExists(pending) &&
+    context.engine.isBranchTracked(pending) &&
+    context.engine.getRevision(pending) === expected?.head
+    ? pending
+    : context.engine.trunk;
+}
+
+export function getPendingSyncLogNotice(context: TContext): string | undefined {
+  if (!context.continueConfig.data.sync) return undefined;
+  if (context.engine.currentBranch)
+    return `Pending sync; checked out: ${context.engine.currentBranch}.`;
+  const pending = context.continueConfig.data.sync.active?.branchName;
+  const anchor = getLogSelectionBranch(context);
+  return pending === anchor
+    ? `Pending sync: ${anchor} (detached HEAD; selection anchor only).`
+    : `Pending sync: detached HEAD; selection anchor: ${anchor} (pending participant unavailable).`;
+}
+
 export function logAction(
   opts: {
     style: 'SHORT' | 'FULL';
@@ -54,7 +82,8 @@ export function logAction(
     )
     .join('\n');
 
-  context.splog.page(logOutput);
+  const notice = getPendingSyncLogNotice(context);
+  context.splog.page(notice ? `${notice}\n${logOutput}` : logOutput);
 }
 
 export function logForConflictStatus(

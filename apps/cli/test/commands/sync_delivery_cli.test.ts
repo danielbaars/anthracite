@@ -21,6 +21,7 @@ const resultSchema = z.object({
   truncated: z.boolean(),
 });
 
+// eslint-disable-next-line max-lines-per-function
 describe('sync CLI and installed MCP delivery', function () {
   this.timeout(120000);
   let fixture: FrozenGetFixture;
@@ -65,6 +66,7 @@ describe('sync CLI and installed MCP delivery', function () {
         '--restack',
         '--no-restack',
         '--show-delete-progress',
+        '--abort',
       ])
         expect(completion).to.include(flag);
     });
@@ -175,6 +177,69 @@ describe('sync CLI and installed MCP delivery', function () {
     expect(failed.exitCode).to.equal(1);
     expect(failed.truncated).to.equal(false);
     expect(fixture.observe()).to.deep.equal(before);
+    expect(connection.errors).to.deep.equal([]);
+    expect(connection.stderr).to.equal('');
+  });
+
+  it('installed pending sync inspection and abandonment preserve reached work through MCP', async () => {
+    fixture.ok('unfreeze', 'child');
+    fixture.ok('create', 'local-work');
+    fixture.commit(fixture.consumer, 'parent.txt', 'local conflict');
+    fixture.git(fixture.consumer, 'switch', 'main');
+    fixture.git(fixture.producer, 'switch', 'parent');
+    fixture.commit(fixture.producer, 'parent.txt', 'incoming conflict');
+    fixture.git(fixture.producer, 'push', 'origin', 'parent');
+    const paused = fixture.run(['sync', '--no-delete']);
+    expect(paused.status, paused.output).to.equal(1);
+    expect(paused.output).to.include('Hit conflict');
+    const record = fs.readFileSync(
+      path.join(fixture.consumer, '.git/.gtcontinue')
+    );
+    const pins = fixture.git(
+      fixture.consumer,
+      'for-each-ref',
+      '--format=%(refname) %(objectname)',
+      'refs/gt-metadata/get'
+    );
+    const before = fixture.observe();
+    fs.writeFileSync(fixture.ghCalls, '');
+    connection = new McpCliClient(fixture.consumer, fixture.env);
+    await connection.connect();
+    const learned = await connection.client.callTool({
+      name: 'learn_an',
+      arguments: {},
+    });
+    expect(JSON.stringify(learned.content)).to.include('sync --abort');
+    const inspected = await run(['ls']);
+    expect(inspected.status, inspected.stderr).to.equal('success');
+    expect(inspected.stdout).to.include('Pending sync');
+    expect(fixture.observe()).to.deep.equal(before);
+    const ended = await run(['sync', '--abort']);
+    expect(ended.status, ended.stderr).to.equal('success');
+    expect(ended.exitCode).to.equal(0);
+    expect(ended.stdout).to.include('Remaining index conflicts: parent.txt');
+    expect(fixture.observe()).to.deep.equal({
+      ...Object(before),
+      recovery: null,
+      rebase: false,
+      rebaseFiles: null,
+    });
+    const archive = /Archive: (.+)/.exec(ended.stdout)?.[1];
+    expect(
+      fs.readFileSync(path.join(archive ?? '', 'recovery.json'))
+    ).to.deep.equal(record);
+    expect(
+      fixture.git(
+        fixture.consumer,
+        'for-each-ref',
+        '--format=%(refname) %(objectname)',
+        'refs/gt-metadata/get'
+      )
+    ).to.equal(pins);
+    const again = await run(['repo', 's', '--abort']);
+    expect(again.status, again.stderr).to.equal('success');
+    expect(again.stdout).to.include('No pending sync');
+    expect(fs.readFileSync(fixture.ghCalls, 'utf8')).to.equal('');
     expect(connection.errors).to.deep.equal([]);
     expect(connection.stderr).to.equal('');
   });
