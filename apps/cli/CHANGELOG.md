@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.15](https://github.com/danielbaars/anthracite/compare/v0.6.14...v0.6.15) (2026-11-09)
+
+
+### Bug Fixes
+
+* **cli:** allow preserving sync abandonment and inspection ([#158](https://github.com/danielbaars/anthracite/issues/158)) ([ad1b76b](https://github.com/danielbaars/anthracite/commit/ad1b76b37871ab4902baf81182dfcde5c65fc6d4))
+
 ## [0.6.14](https://github.com/danielbaars/anthracite/compare/v0.6.13...v0.6.14) (2026-11-07)
 
 
