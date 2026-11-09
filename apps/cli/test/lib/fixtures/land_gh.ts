@@ -3,7 +3,10 @@ import path from 'path';
 import { RelationCliFixture } from './relation_cli';
 import { preparePrInspection, PrFixture } from './pr_gh';
 
-export function prepareLand(fixture: RelationCliFixture): PrFixture & {
+export function prepareLand(
+  fixture: RelationCliFixture,
+  requiredChecks: readonly string[] = []
+): PrFixture & {
   readonly policy: string;
   readonly prs: readonly Record<string, unknown>[];
 } {
@@ -26,7 +29,18 @@ export function prepareLand(fixture: RelationCliFixture): PrFixture & {
     JSON.stringify({
       allow_rebase_merge: true,
       protected: false,
-      rules: [],
+      rules: requiredChecks.length
+        ? [
+            {
+              type: 'required_status_checks',
+              parameters: {
+                required_status_checks: requiredChecks.map((context) => ({
+                  context,
+                })),
+              },
+            },
+          ]
+        : [],
       protection: null,
     })
   );

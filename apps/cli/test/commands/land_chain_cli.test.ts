@@ -144,6 +144,10 @@ describe('public linear landing and prefixes', function () {
           [scenario]: true,
           rules: [
             {
+              type: 'required_status_checks',
+              parameters: { required_status_checks: [{ context: 'unit' }] },
+            },
+            {
               type: 'pull_request',
               parameters: { required_approving_review_count: 1 },
             },

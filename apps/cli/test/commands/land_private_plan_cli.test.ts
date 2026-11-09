@@ -595,7 +595,7 @@ describe('public landing with independently verified private-plan policy', funct
     preservingPreview(1, 'Required approvals missing');
   });
 
-  it('retains failed checks when policy absence is verified', () => {
+  it('reports optional failed checks without blocking when policy absence is verified', () => {
     const prs = github.prs.map((pr) => ({
       ...pr,
       statusCheckRollup: [
@@ -608,7 +608,7 @@ describe('public landing with independently verified private-plan policy', funct
       ],
     }));
     fs.writeFileSync(github.state, JSON.stringify(prs));
-    preservingPreview(1, 'unit: FAILURE');
+    preservingPreview(0, 'Optional check unit: FAILURE');
   });
 
   it('preserves dirty local work when independent policy evidence is available', () => {

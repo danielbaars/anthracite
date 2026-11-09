@@ -15,7 +15,7 @@ describe('public resumed landing presentation', function () {
     fixture = new RelationCliFixture();
     // Cold source processes and real survivor replay can exceed one minute.
     fixture.commandTimeoutMs = 180000;
-    github = prepareLand(fixture);
+    github = prepareLand(fixture, ['unit']);
   });
   afterEach(() => fixture?.cleanup());
 
@@ -36,7 +36,14 @@ describe('public resumed landing presentation', function () {
     expect(stopped.stderr).to.include('Check wait timed out before #18');
     const prs = JSON.parse(fs.readFileSync(github.state, 'utf8'));
     for (const pr of prs) {
-      pr.statusCheckRollup = [];
+      pr.statusCheckRollup = [
+        {
+          __typename: 'CheckRun',
+          name: 'unit',
+          status: 'COMPLETED',
+          conclusion: 'SUCCESS',
+        },
+      ];
       pr.mergeStateStatus = 'CLEAN';
     }
     fs.writeFileSync(github.state, JSON.stringify(prs));
@@ -99,7 +106,14 @@ describe('public resumed landing presentation', function () {
     prs[1].state = 'MERGED';
     prs[1].mergeResult = head;
     prs[1].mergeStateStatus = 'CLEAN';
-    prs[1].statusCheckRollup = [];
+    prs[1].statusCheckRollup = [
+      {
+        __typename: 'CheckRun',
+        name: 'unit',
+        status: 'COMPLETED',
+        conclusion: 'SUCCESS',
+      },
+    ];
     fs.writeFileSync(github.state, JSON.stringify(prs));
     fixture.git(['update-ref', 'refs/heads/main', head], github.remote);
     expect(declineMatchingPlan(0))
@@ -180,7 +194,7 @@ describe('public resumed landing presentation', function () {
     prs[1].statusCheckRollup = [
       {
         __typename: 'CheckRun',
-        name: 'publish-beta',
+        name: 'unit',
         status: 'IN_PROGRESS',
         conclusion: null,
       },
@@ -197,7 +211,7 @@ describe('public resumed landing presentation', function () {
     expect(preview.stdout.indexOf('Clean index/worktree')).to.be.lessThan(
       preview.stdout.indexOf('Pending landing:')
     );
-    expect(preview.stdout.indexOf('publish-beta: IN_PROGRESS')).to.be.lessThan(
+    expect(preview.stdout.indexOf('unit: IN_PROGRESS')).to.be.lessThan(
       preview.stdout.indexOf('Pending landing:')
     );
     expect(preview.stdout)

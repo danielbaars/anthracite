@@ -10,6 +10,7 @@ import {
   emptyPrivatePolicyEvidence,
   preparePrivatePlanLand,
   updatePrivatePlanPolicy,
+  planRulesFailure,
 } from '../lib/fixtures/land_private_policy';
 
 /* eslint-disable max-lines-per-function */
@@ -42,7 +43,16 @@ describe('public private-plan landing recovery freshness', function () {
     fs.writeFileSync(github.state, JSON.stringify(prs));
   }
   function pauseLanding(): void {
-    updatePrivatePlanPolicy(github, { pendingAfterPush: true });
+    updatePrivatePlanPolicy(github, {
+      pendingAfterPush: true,
+      rulesFailure: null,
+      rules: [
+        {
+          type: 'required_status_checks',
+          parameters: { required_status_checks: [{ context: 'unit' }] },
+        },
+      ],
+    });
     const stopped = fixture.run([
       'land',
       'child',
@@ -54,7 +64,11 @@ describe('public private-plan landing recovery freshness', function () {
     expect(stopped.stderr)
       .to.include('No merge request sent for #18')
       .and.include('Check wait timed out');
-    updatePrivatePlanPolicy(github, { pendingAfterPush: false });
+    updatePrivatePlanPolicy(github, {
+      pendingAfterPush: false,
+      rulesFailure: planRulesFailure,
+      rules: [],
+    });
   }
   function assertProgress(): void {
     const prs: ReadonlyArray<{ readonly state: string }> = JSON.parse(
@@ -470,15 +484,28 @@ describe('public private-plan landing recovery freshness', function () {
     'inherited rule activates',
     'REST becomes available',
   ] as const) {
-    it(`revalidates private-plan policy while resumed checks wait when ${change}`, async () => {
+    it(`revalidates transitions to private-plan policy while required checks wait when ${change}`, async () => {
       pauseLanding();
       const before = fixture.inspectionSnapshot();
       const remote = fixture.git(['for-each-ref'], github.remote);
       const calls = fs.readFileSync(github.calls, 'utf8');
       let waitingRefs: unknown;
+      updatePrivatePlanPolicy(github, {
+        rulesFailure: null,
+        rules: [
+          {
+            type: 'required_status_checks',
+            parameters: { required_status_checks: [{ context: 'unit' }] },
+          },
+        ],
+      });
       const result = await runWaiting(() => {
         waitingRefs = fixture.inspectionSnapshot().refs;
         clearChecks();
+        updatePrivatePlanPolicy(github, {
+          rulesFailure: planRulesFailure,
+          rules: [],
+        });
         if (change === 'inherited rule activates')
           updatePrivatePlanPolicy(github, {
             planAbsenceResponse: activeEvidence(),

@@ -503,6 +503,7 @@ export async function getGithubLandPolicy(
 type LandReadiness = {
   readonly blockers: readonly string[];
   readonly pending: readonly string[];
+  readonly warnings: readonly string[];
 };
 
 function pendingCheck(state: string): boolean {
@@ -518,6 +519,7 @@ export async function githubLandReadiness(
 ): Promise<LandReadiness> {
   const blockers = [...policy.blockers];
   const pending: string[] = [];
+  const warnings: string[] = [];
   if (pr.state !== 'OPEN') blockers.push(`PR is ${pr.state}, not open.`);
   if (pr.isDraft) blockers.push('PR is a draft.');
   if (pr.reviewDecision === 'CHANGES_REQUESTED')
@@ -529,7 +531,8 @@ export async function githubLandReadiness(
     blockers.push('Required approvals missing.');
   if (pr.mergeable !== 'MERGEABLE')
     blockers.push(`Mergeability is ${pr.mergeable ?? 'UNKNOWN'}.`);
-  if (!pr.statusCheckRollup) blockers.push('Checks unavailable.');
+  if (policy.checks.length && !pr.statusCheckRollup)
+    blockers.push('Checks unavailable.');
   const successful = new Set<string>();
   const running = new Set<string>();
   for (const check of pr.statusCheckRollup ?? []) {
@@ -547,6 +550,11 @@ export async function githubLandReadiness(
         ? check.status === 'COMPLETED' &&
           ['SUCCESS', 'NEUTRAL', 'SKIPPED'].includes(state)
         : state === 'SUCCESS';
+    if (!policy.checks.includes(name)) {
+      if (!passed)
+        warnings.push(`Optional check ${name}: ${state} (not blocking).`);
+      continue;
+    }
     if (passed) successful.add(name);
     else if (pendingCheck(state)) {
       running.add(name);
@@ -571,16 +579,14 @@ export async function githubLandReadiness(
       );
     }
   }
-  if (pr.mergeStateStatus !== 'CLEAN') {
+  // UNSTABLE includes optional failures; enforce the verified required checks above.
+  if (!['CLEAN', 'UNSTABLE'].includes(pr.mergeStateStatus ?? '')) {
     const message = `GitHub readiness is ${pr.mergeStateStatus || 'UNKNOWN'}.`;
-    if (
-      pending.length &&
-      ['UNSTABLE', 'BLOCKED'].includes(pr.mergeStateStatus ?? '')
-    )
+    if (pending.length && pr.mergeStateStatus === 'BLOCKED')
       pending.unshift(message);
     else blockers.unshift(message);
   }
-  return { blockers, pending };
+  return { blockers, pending, warnings };
 }
 
 const checkRunSchema = z.object({
@@ -597,7 +603,7 @@ async function verifyCheckPublishers(
   repo: string,
   head: string,
   publishers: LandPolicy['publishers']
-): Promise<LandReadiness> {
+): Promise<Pick<LandReadiness, 'blockers' | 'pending'>> {
   const runs: z.infer<typeof checkRunSchema>[] = [];
   let total: number | undefined;
   for (let page = 1; ; page++) {

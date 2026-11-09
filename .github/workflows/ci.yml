@@ -61,6 +61,11 @@ jobs:
           node node_modules/mocha/bin/mocha.js
           apps/cli/dist/test/commands/submit_discovery_lag_cli.test.js
           --grep 'list head lags|when view snapshots'
+      - name: Test landing required versus optional checks
+        run: >-
+          node node_modules/mocha/bin/mocha.js
+          apps/cli/dist/test/commands/land_required_checks_cli.test.js
+          --grep 'reports an optional failed|keeps real blockers|enforces a required check in FAILURE'
       - name: Prepare published legacy recovery producer
         run: npm install --prefix "$RUNNER_TEMP/anthracite-legacy" --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org @danielbaars/anthracite@0.6.11
       - name: Test reused-branch PR safety

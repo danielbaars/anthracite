@@ -10,7 +10,7 @@ describe('public landing after an external trunk advance', function () {
   let github: ReturnType<typeof prepareLand>;
   beforeEach(() => {
     fixture = new RelationCliFixture();
-    github = prepareLand(fixture);
+    github = prepareLand(fixture, ['unit']);
   });
   afterEach(() => fixture?.cleanup());
 
@@ -25,7 +25,14 @@ describe('public landing after an external trunk advance', function () {
     expect(paused.stderr).to.include('Check wait timed out before #18');
     const prs = JSON.parse(fs.readFileSync(github.state, 'utf8'));
     for (const pr of prs) {
-      pr.statusCheckRollup = [];
+      pr.statusCheckRollup = [
+        {
+          __typename: 'CheckRun',
+          name: 'unit',
+          status: 'COMPLETED',
+          conclusion: 'SUCCESS',
+        },
+      ];
       pr.mergeStateStatus = 'CLEAN';
     }
     fs.writeFileSync(github.state, JSON.stringify(prs));
