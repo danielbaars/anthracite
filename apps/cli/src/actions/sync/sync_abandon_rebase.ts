@@ -3,6 +3,7 @@ import path from 'path';
 import { createHash } from 'crypto';
 import { runGitCommand } from '../../lib/git/runner';
 import { getSha } from '../../lib/git/get_sha';
+import { retainSyncFile } from './sync_abandon_archive';
 import {
   assertOwnedSyncRebase,
   readOwnedSyncRecovery,
@@ -35,29 +36,7 @@ export function retainSyncAutostash(
   const bytes =
     JSON.stringify({ version: 1, marker, oid, pin }, null, 2) + '\n';
   const archived = path.join(archive, 'autostash.json');
-  if (fs.existsSync(archived)) {
-    const stat = fs.lstatSync(archived);
-    if (
-      !stat.isFile() ||
-      (stat.mode & 0o077) !== 0 ||
-      fs.readFileSync(archived, 'utf8') !== bytes
-    )
-      refuseSync('Conflicting retained autostash evidence; nothing was quit.');
-  } else {
-    const fd = fs.openSync(archived, 'wx', 0o600);
-    try {
-      fs.writeFileSync(fd, bytes);
-      fs.fsyncSync(fd);
-    } finally {
-      fs.closeSync(fd);
-    }
-    const parent = fs.openSync(archive, 'r');
-    try {
-      fs.fsyncSync(parent);
-    } finally {
-      fs.closeSync(parent);
-    }
-  }
+  retainSyncFile(archived, bytes);
   const current = getSha(pin);
   if (current && current !== oid)
     refuseSync('Retained autostash pin changed; nothing was quit.');

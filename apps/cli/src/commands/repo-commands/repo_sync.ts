@@ -6,7 +6,7 @@ import { graphite } from '../../lib/runner';
 const args = {
   abort: {
     describe:
-      'End only the owned sync locally, retaining reached work and recovery evidence; residual conflicts/files still require deliberate handling.',
+      'End only the owned sync locally, retaining reached work and recovery evidence, even after raw Git abort; residual conflicts/files still require deliberate handling.',
     type: 'boolean',
     default: false,
   },

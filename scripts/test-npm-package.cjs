@@ -141,7 +141,7 @@ try {
       "apps/cli/dist/test/commands/sync_cleanup_identity_recovery_cli.test.js",
       "apps/cli/dist/test/commands/delete_pr_state_cli.test.js",
       "--grep",
-      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base|installed get workflow learns explicit options|installed sync workflow learns explicit options|private-plan delivery|prefers the unique open PR|validates a stale stored terminal PR|npm reuse:",
+      "scenario (3:|4:|16:|17:|14: accepts numeric-zero)|rechecks after the original configured pre-push hook|publishes an editable child on an existing frozen base|installed get workflow learns explicit options|installed sync workflow learns explicit options|installed pending sync inspection and abandonment|private-plan delivery|prefers the unique open PR|validates a stale stored terminal PR|npm reuse:",
     ],
     {
       cwd: root,

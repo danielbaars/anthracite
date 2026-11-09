@@ -48,7 +48,7 @@ export function assertSyncHookOwnership(expected?: string): void {
 
 export function refuseSync(reason: string): never {
   throw new ExitFailedError(
-    `${reason} Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted.`
+    `${reason} Sync recovery preserved. Inspect git status, git log, source refs and saved .gtcontinue in the original project. Raw git rebase --abort cancels only its active rebase, not reached updates. No unverified queue or automatic rollback is permitted. To end a supported owned sync preserving reached work and residual files, use an sync --abort; foreign or malformed state still requires inspection.`
   );
 }
 export function assertSyncRecoveryWrite(context: TContext): void {
@@ -130,7 +130,12 @@ export function readOwnedSyncRecovery():
   if (!fs.existsSync(file)) return undefined;
   if (!fs.lstatSync(file).isFile())
     refuseSync('Saved recovery is not a regular file.');
-  const bytes = fs.readFileSync(file, 'utf8');
+  const original = fs.readFileSync(file);
+  const bytes = original.toString('utf8');
+  if (!Buffer.from(bytes).equals(original))
+    refuseSync(
+      'Saved sync recovery is not valid UTF-8; original bytes preserved.'
+    );
   let value: unknown;
   try {
     value = JSON.parse(bytes);
