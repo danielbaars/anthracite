@@ -290,7 +290,16 @@ describe('public landing review regressions', function () {
     const policy = JSON.parse(fs.readFileSync(github.policy, 'utf8'));
     fs.writeFileSync(
       github.policy,
-      JSON.stringify({ ...policy, pendingAfterPush: true })
+      JSON.stringify({
+        ...policy,
+        pendingAfterPush: true,
+        rules: [
+          {
+            type: 'required_status_checks',
+            parameters: { required_status_checks: [{ context: 'unit' }] },
+          },
+        ],
+      })
     );
     const stopped = fixture.run([
       'land',

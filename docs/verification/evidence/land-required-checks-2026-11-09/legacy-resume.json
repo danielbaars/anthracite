@@ -1,0 +1,19 @@
+{
+  "producer": "0.6.15",
+  "version": 1,
+  "stopped": {
+    "status": 1,
+    "stdout": "Landing plan: fixture/inspection\nTarget: child -> main\nPolicy: No required reviews or checks.\nLocal main: up to date.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18\nBetween merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n\n🔧 Other branches to restack (not merge targets):\n  Maintain: tip -> main\n    Push existing branch; update PR #19 base and dependency footer.\n\n🧹 Cleanup: base, child\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY to merge this plan.\nUse --debug for commit IDs and technical details.\n✅ Confirmed merged #17.\n🔧 Maintained: child; existing PR #18; existing remote head verified.\n🔧 Maintained: tip; existing PR #19; existing remote head verified.\n",
+    "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-HwxKXT/remote.git\n - [deleted]         base\nERROR: ⏸ Landing paused before #18. Confirmed merged #17 (65012cb3eda00bdc26b3b340cac1416a58cc109b); No merge request sent for #18; later work unattempted. Check wait timed out before #18: GitHub readiness is UNSTABLE. Check unit: IN_PROGRESS. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-HwxKXT/repo; rerun an land child --yes.\n"
+  },
+  "preview": {
+    "status": 0,
+    "stdout": "⚠ #18: Optional check publish-beta: FAILURE (not blocking).\n⏸ Pending landing: fixture/inspection\nTarget: child -> main\nLocal main: fast-forward after confirmed merges.\n✅ Already merged: #17 base\n\n🔀 Remaining PRs (bottom to top):\n  Merge 1: child #18\n\n🔧 After merging #18: verify required branch maintenance.\n  Maintain: tip #19 (not a merge target)\n    Verify replay; push existing branch; update existing PR #19 base/footer.\n\n🧹 Cleanup: child\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\n✅ Readiness: READY for remaining work; checks repeat before every merge.\nUse --debug for recovery phases, commit IDs and replay details.\n"
+  },
+  "resumed": {
+    "status": 0,
+    "stdout": "⚠ #18: Optional check publish-beta: FAILURE (not blocking).\n⏸ Pending landing: fixture/inspection\nTarget: child -> main\nLocal main: fast-forward after confirmed merges.\n✅ Already merged: #17 base\n\n🔀 Remaining PRs (bottom to top):\n  Merge 1: child #18\n\n🔧 After merging #18: verify required branch maintenance.\n  Maintain: tip #19 (not a merge target)\n    Verify replay; push existing branch; update existing PR #19 base/footer.\n\n🧹 Cleanup: child\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\n✅ Readiness: READY for remaining work; checks repeat before every merge.\nUse --debug for recovery phases, commit IDs and replay details.\n⚠ #18: Optional check publish-beta: FAILURE (not blocking).\n✅ Confirmed merged #18.\n🔧 Maintained: tip; existing PR #19; existing remote head verified.\n✅ Landing complete: child; trunk advanced and landed refs/metadata cleaned.\n"
+  },
+  "preservingPreview": true,
+  "mergeRequests": 2
+}

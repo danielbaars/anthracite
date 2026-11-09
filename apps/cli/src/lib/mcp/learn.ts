@@ -171,9 +171,11 @@ survivors, push their existing heads, update existing PR bases/managed footers a
 clean confirmed landed refs. Missing survivor PRs stay missing and unpublished
 heads stay unpublished. Independent stacks stay outside scope. Every next merge
 requires fresh expected-head readiness after maintenance. During confirmed
-application or resumption, known running checks are polled every five seconds
+application or resumption, known running required checks are polled every five seconds
 for up to 600 seconds per PR (--wait-timeout changes seconds; 0 stops immediately).
-Dry-runs and initial preflight never wait. Failed checks, dismissed approvals,
+Dry-runs and initial preflight never wait. Optional running or failed checks are
+reported without waiting or blocking. UNSTABLE alone does not block when verified
+merge requirements pass. Failed required checks, dismissed approvals,
 changed identities, unknown readiness, unreadable policy or missing publisher
 provenance stop progress. Client deadlines may interrupt a wait sooner; inspect
 preserved progress and explicitly resume rather than assuming rollback.

@@ -1,0 +1,68 @@
+{
+  "baselineBinary": "public npm @danielbaars/anthracite@0.6.15",
+  "baselineStats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 1,
+    "pending": 0,
+    "failures": 2,
+    "start": "2026-11-09T15:03:42.073Z",
+    "end": "2026-11-09T15:04:58.778Z",
+    "duration": 76705
+  },
+  "baselineFailures": [
+    {
+      "title": "public landing review regressions preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+      "message": "expected '' to not equal ''"
+    },
+    {
+      "title": "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+      "message": "\u26d4 Cannot resume landing yet:\n  - Command failed with error exit code 128:\ngit rev-parse refs/heads/base\nrefs/heads/base\n\nfatal: ambiguous argument 'refs/heads/base': unknown revision or path not in the working tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'\n\n\ud83d\udc49 Next: inspect the blockers in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-zrEvhc/repo, then preview again.\n\nOnce resolved, this would resume:\n\u23f8 Pending landing: fixture/inspection\nTarget: base -> main\nLocal main: fast-forward after confirmed merges.\n\n\ud83d\udd00 Remaining PRs (bottom to top):\n  Cleanup-only 1: base #17\n\n\ud83d\udd27 After merging #17: verify required branch maintenance.\n  Maintain: child #18 (not a merge target)\n    Verify replay; push existing branch; update existing PR #18 base/footer.\n  Maintain: tip #19 (not a merge target)\n    Verify replay; push existing branch; update existing PR #19 base/footer.\n\n\ud83e\uddf9 Cleanup: base\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\nUse --debug for recovery phases, commit IDs and replay details.\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nPending landing: fixture/inspection trunk main target base; phase local-deleted.\nMerge: #17 head 43e41afe27af5fca3652dde50b60e896a4a9ddd9\nCleanup: base; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-zrEvhc/repo\nRemaining trunk maintenance: fast-forward main; phase local-deleted.\nMerge: base #17; reached head 43e41afe27af5fca3652dde50b60e896a4a9ddd9; captured head 43e41afe27af5fca3652dde50b60e896a4a9ddd9\nMaintain: child; parent main -> main; replay base 10128bed9a7010033758d9406e29eca431dec5aa; reached head 7dbd76f7db9ba94e9f5f66e6621b1a50dcc97d06; verify required replay\nPush: child; verify or update existing leased head\nPR update: child; verify existing #18 base/dependency footer\nMaintain: tip; parent child -> child; replay base 7dbd76f7db9ba94e9f5f66e6621b1a50dcc97d06; reached head 788dff74196b1a08f6c57e6dfa2d49638d7c669a; verify required replay\nPush: tip; verify or update existing leased head\nPR update: tip; verify existing #19 base/dependency footer\nCleanup: base; verify merged results and leased remote/local deletion; restore base.\nERROR: Pending landing preview blocked; recovery and repository preserved.\nExitFailed: Pending landing preview blocked; recovery and repository preserved.\n    at resumeScopedLanding (/private/tmp/anthracite-release-0615-20261109/public install/node_modules/@danielbaars/anthracite/cli.cjs:50745:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async land (/private/tmp/anthracite-release-0615-20261109/public install/node_modules/@danielbaars/anthracite/cli.cjs:57191:7)\n    at async graphiteInspection (/private/tmp/anthracite-release-0615-20261109/public install/node_modules/@danielbaars/anthracite/cli.cjs:52711:7)\n    at async Object.handler (/private/tmp/anthracite-release-0615-20261109/public install/node_modules/@danielbaars/anthracite/cli.cjs:57281:5)\n: expected 1 to equal +0"
+    }
+  ],
+  "node": {
+    "stats": {
+      "suites": 1,
+      "tests": 10,
+      "passes": 8,
+      "pending": 0,
+      "failures": 2,
+      "start": "2026-11-09T15:00:14.006Z",
+      "end": "2026-11-09T15:04:09.085Z",
+      "duration": 235079
+    },
+    "failures": [
+      {
+        "title": "public landing review regressions preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+        "message": "expected '' to not equal ''"
+      },
+      {
+        "title": "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+        "message": "\u26d4 Cannot resume landing yet:\n  - Command failed with error exit code 128:\ngit rev-parse refs/heads/base\nrefs/heads/base\n\nfatal: ambiguous argument 'refs/heads/base': unknown revision or path not in the working tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'\n\n\ud83d\udc49 Next: inspect the blockers in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-RGjDXd/an-reorder-nSCj4n/repo, then preview again.\n\nOnce resolved, this would resume:\n\u23f8 Pending landing: fixture/inspection\nTarget: base -> main\nLocal main: fast-forward after confirmed merges.\n\n\ud83d\udd00 Remaining PRs (bottom to top):\n  Cleanup-only 1: base #17\n\n\ud83d\udd27 After merging #17: verify required branch maintenance.\n  Maintain: child #18 (not a merge target)\n    Verify replay; push existing branch; update existing PR #18 base/footer.\n  Maintain: tip #19 (not a merge target)\n    Verify replay; push existing branch; update existing PR #19 base/footer.\n\n\ud83e\uddf9 Cleanup: base\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\nUse --debug for recovery phases, commit IDs and replay details.\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nPending landing: fixture/inspection trunk main target base; phase local-deleted.\nMerge: #17 head e104bcb2c404a2b061fc679906f58a52025aa746\nCleanup: base; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-RGjDXd/an-reorder-nSCj4n/repo\nRemaining trunk maintenance: fast-forward main; phase local-deleted.\nMerge: base #17; reached head e104bcb2c404a2b061fc679906f58a52025aa746; captured head e104bcb2c404a2b061fc679906f58a52025aa746\nMaintain: child; parent main -> main; replay base a8b6a5ac52a7eb3a4e4bcd9259bed447fd33d247; reached head da50ec1a646961ae91197935291df9ef43967042; verify required replay\nPush: child; verify or update existing leased head\nPR update: child; verify existing #18 base/dependency footer\nMaintain: tip; parent child -> child; replay base da50ec1a646961ae91197935291df9ef43967042; reached head 357aaac29eeab813cfa43d11b0880d8ae7f2f2e1; verify required replay\nPush: tip; verify or update existing leased head\nPR update: tip; verify existing #19 base/dependency footer\nCleanup: base; verify merged results and leased remote/local deletion; restore base.\nERROR: Pending landing preview blocked; recovery and repository preserved.\nExitFailed: Pending landing preview blocked; recovery and repository preserved.\n    at resumeScopedLanding (/private/tmp/anthracite-land-required-checks-20261109/apps/cli/dist/src/actions/land_scoped.js:126:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async land (/private/tmp/anthracite-land-required-checks-20261109/apps/cli/dist/src/actions/land.js:272:9)\n    at async graphiteInspection (/private/tmp/anthracite-land-required-checks-20261109/apps/cli/dist/src/lib/runner.js:59:9)\n    at async Object.handler (/private/tmp/anthracite-land-required-checks-20261109/apps/cli/dist/src/commands/land.js:53:5)\n: expected 1 to equal +0"
+      }
+    ]
+  },
+  "native": {
+    "stats": {
+      "suites": 1,
+      "tests": 10,
+      "passes": 8,
+      "pending": 0,
+      "failures": 2,
+      "start": "2026-11-09T14:59:36.389Z",
+      "end": "2026-11-09T15:02:53.612Z",
+      "duration": 197223
+    },
+    "failures": [
+      {
+        "title": "public landing review regressions preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+        "message": "expected '' to not equal ''"
+      },
+      {
+        "title": "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress",
+        "message": "\u26d4 Cannot resume landing yet:\n  - Command failed with error exit code 128:\ngit rev-parse refs/heads/base\nrefs/heads/base\n\nfatal: ambiguous argument 'refs/heads/base': unknown revision or path not in the working tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'\n\n\ud83d\udc49 Next: inspect the blockers in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-71dxX5/an-reorder-3SSHNF/repo, then preview again.\n\nOnce resolved, this would resume:\n\u23f8 Pending landing: fixture/inspection\nTarget: base -> main\nLocal main: fast-forward after confirmed merges.\n\n\ud83d\udd00 Remaining PRs (bottom to top):\n  Cleanup-only 1: base #17\n\n\ud83d\udd27 After merging #17: verify required branch maintenance.\n  Maintain: child #18 (not a merge target)\n    Verify replay; push existing branch; update existing PR #18 base/footer.\n  Maintain: tip #19 (not a merge target)\n    Verify replay; push existing branch; update existing PR #19 base/footer.\n\n\ud83e\uddf9 Cleanup: base\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\nUse --debug for recovery phases, commit IDs and replay details.\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nReading cache seed data...\nLoading cache...\nBuilding cache from disk...\nValidating branches...\ntrunk: main\nvalidated: child\nvalidated: other\nvalidated: tip\nPending landing: fixture/inspection trunk main target base; phase local-deleted.\nMerge: #17 head f052247bb22c1ffcacc198953e7ea56c0a550fd8\nCleanup: base; original project /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-suite-71dxX5/an-reorder-3SSHNF/repo\nRemaining trunk maintenance: fast-forward main; phase local-deleted.\nMerge: base #17; reached head f052247bb22c1ffcacc198953e7ea56c0a550fd8; captured head f052247bb22c1ffcacc198953e7ea56c0a550fd8\nMaintain: child; parent main -> main; replay base 452254d58c41f0e023fa2aecfe1aa609a6ddb68b; reached head cbbb48119f699f92bfb27e28893acd15c646d60e; verify required replay\nPush: child; verify or update existing leased head\nPR update: child; verify existing #18 base/dependency footer\nMaintain: tip; parent child -> child; replay base cbbb48119f699f92bfb27e28893acd15c646d60e; reached head 5e57bfe7451417b0a6cf3e2f331ffc4b658626d8; verify required replay\nPush: tip; verify or update existing leased head\nPR update: tip; verify existing #19 base/dependency footer\nCleanup: base; verify merged results and leased remote/local deletion; restore base.\nERROR: Pending landing preview blocked; recovery and repository preserved.\nExitFailed: Pending landing preview blocked; recovery and repository preserved.\n    at resumeScopedLanding (/$bunfs/root/an-native:50731:43)\n    at async land (/$bunfs/root/an-native:57193:51)\n    at processTicksAndRejections (native:7:39)\n: expected 1 to equal +0"
+      }
+    ]
+  },
+  "sameFailureTitlesOnPublishedBaselineAndBothCandidateRuntimes": true
+}

@@ -57,6 +57,7 @@ export type LandPlan = {
   readonly merges: readonly LandParticipant[];
   readonly maintenance: readonly LandParticipant[];
   readonly blockers: readonly string[];
+  readonly warnings: readonly string[];
 };
 
 export async function planLand(
@@ -89,6 +90,7 @@ export async function planLand(
   visit(merges[0]);
   const maintenance = affected.filter((name) => !merges.includes(name));
   const blockers: string[] = [];
+  const warnings: string[] = [];
   const protect = (check: () => void): void => {
     try {
       check();
@@ -156,6 +158,7 @@ export async function planLand(
         remoteTrunk,
         policy,
         blockers,
+        warnings,
       })
     )
   );
@@ -173,6 +176,7 @@ export async function planLand(
       maintenance.includes(record.branch)
     ),
     blockers,
+    warnings,
   };
 }
 
@@ -186,9 +190,11 @@ async function inspectParticipant(
     readonly remoteTrunk?: string;
     readonly policy: LandPlan['policy'];
     readonly blockers: string[];
+    readonly warnings: string[];
   }
 ): Promise<LandParticipant> {
-  const { repo, merges, heads, remoteTrunk, policy, blockers } = inspection;
+  const { repo, merges, heads, remoteTrunk, policy, blockers, warnings } =
+    inspection;
   const remote = context.repoConfig.getRemote();
   const pr = await getGithubPr(name, context);
   const head = gitRead(['rev-parse', `refs/heads/${name}`]);
@@ -240,6 +246,9 @@ async function inspectParticipant(
         if (pr.baseRefName !== context.engine.getParentPrecondition(name))
           blockers.push(`${name}: PR base does not match tracked parent.`);
         const readiness = await githubLandReadiness(pr, policy, repo);
+        warnings.push(
+          ...readiness.warnings.map((warning) => `#${pr.number}: ${warning}`)
+        );
         blockers.push(
           ...[...readiness.blockers, ...readiness.pending].map(
             (message) => `${name}: ${message}`
@@ -349,6 +358,7 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
   );
   if (!plan.blockers.length)
     process.stdout.write('✅ Readiness: READY to merge this plan.\n');
+  for (const warning of plan.warnings) process.stdout.write(`⚠ ${warning}\n`);
   process.stdout.write('Use --debug for commit IDs and technical details.\n');
   printLandDetails(plan, (message) => context.splog.debug(message.trimEnd()));
 }

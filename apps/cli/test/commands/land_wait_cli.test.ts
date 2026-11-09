@@ -12,7 +12,7 @@ describe('public landing check waiting', function () {
   let github: ReturnType<typeof prepareLand>;
   beforeEach(() => {
     fixture = new RelationCliFixture();
-    github = prepareLand(fixture);
+    github = prepareLand(fixture, ['unit']);
   });
   afterEach(() => fixture?.cleanup());
 
@@ -71,7 +71,14 @@ describe('public landing check waiting', function () {
       const prs = JSON.parse(fs.readFileSync(github.state, 'utf8'));
       for (const pr of prs) {
         pr.mergeStateStatus = 'CLEAN';
-        pr.statusCheckRollup = [];
+        pr.statusCheckRollup = [
+          {
+            __typename: 'CheckRun',
+            name: 'unit',
+            status: 'COMPLETED',
+            conclusion: 'SUCCESS',
+          },
+        ];
       }
       fs.writeFileSync(github.state, JSON.stringify(prs));
     });
@@ -130,7 +137,14 @@ describe('public landing check waiting', function () {
       sawWaiting = true;
       waitingRefs = fixture.inspectionSnapshot().refs;
       for (const pr of after) {
-        pr.statusCheckRollup = [];
+        pr.statusCheckRollup = [
+          {
+            __typename: 'CheckRun',
+            name: 'unit',
+            status: 'COMPLETED',
+            conclusion: 'SUCCESS',
+          },
+        ];
         pr.mergeStateStatus = 'CLEAN';
       }
       fs.writeFileSync(github.state, JSON.stringify(after));
@@ -257,7 +271,14 @@ describe('public landing check waiting', function () {
     const head = fixture.git(['rev-parse', 'child']);
     const prs = JSON.parse(fs.readFileSync(github.state, 'utf8'));
     for (const pr of prs) {
-      pr.statusCheckRollup = [];
+      pr.statusCheckRollup = [
+        {
+          __typename: 'CheckRun',
+          name: 'unit',
+          status: 'COMPLETED',
+          conclusion: 'SUCCESS',
+        },
+      ];
       pr.mergeStateStatus = 'CLEAN';
     }
     fs.writeFileSync(github.state, JSON.stringify(prs));
@@ -330,7 +351,7 @@ describe('public landing check waiting', function () {
       statusCheckRollup: [
         {
           __typename: 'CheckRun',
-          name: 'publish-beta',
+          name: 'unit',
           status: 'IN_PROGRESS',
           conclusion: null,
         },
@@ -341,7 +362,7 @@ describe('public landing check waiting', function () {
     const remote = fixture.git(['for-each-ref'], github.remote);
     const result = fixture.run(['land', 'child', '--dry-run']);
     expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stdout).to.include('publish-beta: IN_PROGRESS');
+    expect(result.stdout).to.include('unit: IN_PROGRESS');
     expect(result.stdout).not.to.include('Waiting for #');
     for (const value of ['-1', '1.5', 'Infinity', '86401', 'nope']) {
       const invalid = fixture.run([

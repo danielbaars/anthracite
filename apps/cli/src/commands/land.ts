@@ -23,7 +23,7 @@ const options = {
     type: 'number',
     default: 600,
     description:
-      'Seconds to wait for running checks before each merge; 0 stops immediately. Dry-runs never wait.',
+      'Seconds to wait for running required checks before each merge; 0 stops immediately. Dry-runs never wait.',
   },
 } as const;
 export const builder = (cli: yargs.Argv): yargs.Argv =>

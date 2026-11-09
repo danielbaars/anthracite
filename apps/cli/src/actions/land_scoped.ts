@@ -208,6 +208,7 @@ function printPendingLanding(
   context: TContext,
   inspection: {
     readonly blockers: readonly string[];
+    readonly warnings: readonly string[];
     readonly cleanupOnly: ReadonlySet<string>;
     readonly verification?: string;
   }
@@ -305,6 +306,8 @@ function printPendingLanding(
     process.stdout.write(
       '✅ Readiness: READY for remaining work; checks repeat before every merge.\n'
     );
+  for (const warning of inspection.warnings)
+    process.stdout.write(`⚠ ${warning}\n`);
   process.stdout.write(
     'Use --debug for recovery phases, commit IDs and replay details.\n'
   );
@@ -389,6 +392,7 @@ async function inspectPendingLanding(
   context: TContext
 ): Promise<readonly string[]> {
   const blockers: string[] = [];
+  const warnings: string[] = [];
   const inspect = async (action: () => void | Promise<void>): Promise<void> => {
     try {
       await action();
@@ -419,8 +423,7 @@ async function inspectPendingLanding(
     blockers.push(...policy.blockers);
   });
   const fresh = initContext(context, composeGit(), { inspection: true });
-  const participants = [current(record), ...survivors];
-  for (const member of participants)
+  for (const member of [current(record), ...survivors])
     await inspect(async () => {
       const expected = owned(member);
       const published = remoteHead(record, member.branch);
@@ -482,6 +485,8 @@ async function inspectPendingLanding(
           validateMergeTrunk(record, pr.baseRefOid);
         if (policy) {
           const readiness = await githubLandReadiness(pr, policy, record.repo);
+          for (const warning of readiness.warnings)
+            warnings.push(`#${pr.number}: ${warning}`);
           blockers.push(
             ...[...readiness.blockers, ...readiness.pending].map(
               (message) => `${member.branch}: ${message}`
@@ -496,6 +501,7 @@ async function inspectPendingLanding(
     });
   printPendingLanding(record, context, {
     blockers,
+    warnings,
     cleanupOnly,
     verification: policy?.verification,
   });
@@ -785,6 +791,8 @@ async function readyToMerge(
     );
   validateMergeTrunk(record, pr.baseRefOid);
   const readiness = await githubLandReadiness(pr, policy, record.repo);
+  for (const warning of readiness.warnings)
+    process.stdout.write(`⚠ #${pr.number}: ${warning}\n`);
   if (readiness.blockers.length)
     throw new ExitFailedError(
       `Fresh readiness blocked: ${readiness.blockers.join(' ')}`

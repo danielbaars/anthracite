@@ -15,6 +15,19 @@ describe('public landing policy guards', function () {
   afterEach(() => fixture?.cleanup());
 
   it('refuses a noncompleted check even when its conclusion says success', () => {
+    const policy = JSON.parse(fs.readFileSync(github.policy, 'utf8'));
+    fs.writeFileSync(
+      github.policy,
+      JSON.stringify({
+        ...policy,
+        rules: [
+          {
+            type: 'required_status_checks',
+            parameters: { required_status_checks: [{ context: 'ci' }] },
+          },
+        ],
+      })
+    );
     fs.writeFileSync(
       github.state,
       JSON.stringify(
@@ -165,6 +178,19 @@ describe('public landing policy guards', function () {
   });
 
   it('refuses missing or contradictory completion data and ignores unrelated union fields', () => {
+    const policy = JSON.parse(fs.readFileSync(github.policy, 'utf8'));
+    fs.writeFileSync(
+      github.policy,
+      JSON.stringify({
+        ...policy,
+        rules: [
+          {
+            type: 'required_status_checks',
+            parameters: { required_status_checks: [{ context: 'ci' }] },
+          },
+        ],
+      })
+    );
     const checks = [
       ...[
         'QUEUED',

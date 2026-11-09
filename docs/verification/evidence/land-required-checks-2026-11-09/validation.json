@@ -1,0 +1,667 @@
+{
+  "baseline": "c1ee9a4d1d69f67f3b1cde2568ff96d8fad9928a",
+  "boundary": "Public CLI processes, real temporary Git repositories/bare remotes, controlled gh boundary only",
+  "finalFocused": {
+    "node": {
+      "stats": {
+        "suites": 2,
+        "tests": 21,
+        "passes": 21,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-09T15:01:57.616Z",
+        "end": "2026-11-09T15:08:07.386Z",
+        "duration": 369770
+      },
+      "cases": [
+        "public landing required versus optional checks reports an optional failed check without blocking an otherwise mergeable UNSTABLE PR",
+        "public landing required versus optional checks keeps real blockers ahead of optional failure warnings",
+        "public landing required versus optional checks handles unavailable check results with required checks false",
+        "public landing required versus optional checks handles unavailable check results with required checks true",
+        "public landing required versus optional checks does not block on optional check runs or commit statuses in IN_PROGRESS",
+        "public landing required versus optional checks does not block on optional check runs or commit statuses in FAILURE",
+        "public landing required versus optional checks retains unexplained BLOCKED as a blocker despite optional checks",
+        "public landing required versus optional checks retains unexplained DIRTY as a blocker despite optional checks",
+        "public landing required versus optional checks retains unexplained UNKNOWN as a blocker despite optional checks",
+        "public landing required versus optional checks retains unexplained BEHIND as a blocker despite optional checks",
+        "public landing required versus optional checks enforces a required check in IN_PROGRESS independently of optional failure",
+        "public landing required versus optional checks enforces a required check in FAILURE independently of optional failure",
+        "public landing required versus optional checks enforces a required check in MISSING independently of optional failure",
+        "public landing required versus optional checks enforces a required check in SUCCESS independently of optional failure",
+        "public landing required versus optional checks finishes the chain without waiting for optional checks triggered by its own pushes",
+        "public landing required versus optional checks previews and resumes saved progress with optional failed checks without repeating a confirmed merge",
+        "public resumed landing presentation shows the same freshly checked plan before confirmation as readiness and merge state change",
+        "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+        "public resumed landing presentation keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+        "public resumed landing presentation puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+        "public resumed landing presentation uses the same compact remaining scope during real resumption before completing each remaining merge once"
+      ]
+    },
+    "native": {
+      "stats": {
+        "suites": 2,
+        "tests": 21,
+        "passes": 21,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-09T15:01:58.846Z",
+        "end": "2026-11-09T15:07:11.423Z",
+        "duration": 312577
+      },
+      "cases": [
+        "public landing required versus optional checks reports an optional failed check without blocking an otherwise mergeable UNSTABLE PR",
+        "public landing required versus optional checks keeps real blockers ahead of optional failure warnings",
+        "public landing required versus optional checks handles unavailable check results with required checks false",
+        "public landing required versus optional checks handles unavailable check results with required checks true",
+        "public landing required versus optional checks does not block on optional check runs or commit statuses in IN_PROGRESS",
+        "public landing required versus optional checks does not block on optional check runs or commit statuses in FAILURE",
+        "public landing required versus optional checks retains unexplained BLOCKED as a blocker despite optional checks",
+        "public landing required versus optional checks retains unexplained DIRTY as a blocker despite optional checks",
+        "public landing required versus optional checks retains unexplained UNKNOWN as a blocker despite optional checks",
+        "public landing required versus optional checks retains unexplained BEHIND as a blocker despite optional checks",
+        "public landing required versus optional checks enforces a required check in IN_PROGRESS independently of optional failure",
+        "public landing required versus optional checks enforces a required check in FAILURE independently of optional failure",
+        "public landing required versus optional checks enforces a required check in MISSING independently of optional failure",
+        "public landing required versus optional checks enforces a required check in SUCCESS independently of optional failure",
+        "public landing required versus optional checks finishes the chain without waiting for optional checks triggered by its own pushes",
+        "public landing required versus optional checks previews and resumes saved progress with optional failed checks without repeating a confirmed merge",
+        "public resumed landing presentation shows the same freshly checked plan before confirmation as readiness and merge state change",
+        "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+        "public resumed landing presentation keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+        "public resumed landing presentation puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+        "public resumed landing presentation uses the same compact remaining scope during real resumption before completing each remaining merge once"
+      ]
+    }
+  },
+  "broaderCampaign": {
+    "node": {
+      "initialFiles": {
+        "commands__land_trunk_advance_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 5,
+            "passes": 5,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T15:01:43.663Z",
+            "end": "2026-11-09T15:04:52.665Z",
+            "duration": 189002
+          },
+          "failureTitles": []
+        },
+        "commands__land_private_plan_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 73,
+            "passes": 73,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:48:24.058Z",
+            "end": "2026-11-09T14:55:47.045Z",
+            "duration": 442987
+          },
+          "failureTitles": []
+        },
+        "commands__land_chain_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:46:37.984Z",
+            "end": "2026-11-09T14:53:05.081Z",
+            "duration": 387097
+          },
+          "failureTitles": []
+        },
+        "commands__land_policy_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:46:37.984Z",
+            "end": "2026-11-09T14:48:23.927Z",
+            "duration": 105943
+          },
+          "failureTitles": []
+        },
+        "commands__land_review_fixes_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 10,
+            "passes": 8,
+            "pending": 0,
+            "failures": 2,
+            "start": "2026-11-09T15:00:14.006Z",
+            "end": "2026-11-09T15:04:09.085Z",
+            "duration": 235079
+          },
+          "failureTitles": [
+            "public landing review regressions preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+            "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress"
+          ]
+        },
+        "commands__land_private_recovery_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:53:05.193Z",
+            "end": "2026-11-09T15:00:13.862Z",
+            "duration": 428669
+          },
+          "failureTitles": []
+        },
+        "commands__land_required_checks_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 15,
+            "passes": 15,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:55:47.191Z",
+            "end": "2026-11-09T14:58:22.629Z",
+            "duration": 155438
+          },
+          "failureTitles": []
+        },
+        "commands__land_resume_display_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 5,
+            "passes": 4,
+            "pending": 0,
+            "failures": 1,
+            "start": "2026-11-09T14:58:22.744Z",
+            "end": "2026-11-09T15:01:43.532Z",
+            "duration": 200788
+          },
+          "failureTitles": [
+            "public resumed landing presentation puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it"
+          ]
+        },
+        "commands__land_wait_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T15:04:09.236Z",
+            "end": "2026-11-09T15:10:26.199Z",
+            "duration": 376963
+          },
+          "failureTitles": []
+        }
+      },
+      "interpretation": "Initial resumed-display failure corrected and covered by final focused rerun; two review-regression failures independently reproduced on published 0.6.15.",
+      "initialSummary": {
+        "runtime": "node",
+        "shard": 0,
+        "shards": 1,
+        "files": 9,
+        "passes": 149,
+        "pending": 0,
+        "failedFiles": 2,
+        "results": [
+          {
+            "file": "commands/land_policy_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:46:37.984Z",
+              "end": "2026-11-09T14:48:23.927Z",
+              "duration": 105943
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_chain_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:46:37.984Z",
+              "end": "2026-11-09T14:53:05.081Z",
+              "duration": 387097
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_private_plan_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 73,
+              "passes": 73,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:48:24.058Z",
+              "end": "2026-11-09T14:55:47.045Z",
+              "duration": 442987
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_required_checks_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 15,
+              "passes": 15,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:55:47.191Z",
+              "end": "2026-11-09T14:58:22.629Z",
+              "duration": 155438
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_private_recovery_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:53:05.193Z",
+              "end": "2026-11-09T15:00:13.862Z",
+              "duration": 428669
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_resume_display_cli.test.js",
+            "status": 1,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 5,
+              "passes": 4,
+              "pending": 0,
+              "failures": 1,
+              "start": "2026-11-09T14:58:22.744Z",
+              "end": "2026-11-09T15:01:43.532Z",
+              "duration": 200788
+            },
+            "passed": false
+          },
+          {
+            "file": "commands/land_review_fixes_cli.test.js",
+            "status": 2,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 10,
+              "passes": 8,
+              "pending": 0,
+              "failures": 2,
+              "start": "2026-11-09T15:00:14.006Z",
+              "end": "2026-11-09T15:04:09.085Z",
+              "duration": 235079
+            },
+            "passed": false
+          },
+          {
+            "file": "commands/land_trunk_advance_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 5,
+              "passes": 5,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T15:01:43.663Z",
+              "end": "2026-11-09T15:04:52.665Z",
+              "duration": 189002
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_wait_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T15:04:09.236Z",
+              "end": "2026-11-09T15:10:26.199Z",
+              "duration": 376963
+            },
+            "passed": true
+          }
+        ]
+      },
+      "effectiveUniqueAcceptance": {
+        "passes": 151,
+        "failures": 2,
+        "pending": 0,
+        "interpretation": "Replace the initial required-check/display files with the final 21-case rerun; remaining two failures match public npm 0.6.15."
+      }
+    },
+    "native": {
+      "initialFiles": {
+        "commands__land_trunk_advance_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 5,
+            "passes": 5,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T15:00:32.256Z",
+            "end": "2026-11-09T15:03:06.369Z",
+            "duration": 154113
+          },
+          "failureTitles": []
+        },
+        "commands__land_private_plan_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 73,
+            "passes": 73,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:50:39.208Z",
+            "end": "2026-11-09T14:56:45.307Z",
+            "duration": 366099
+          },
+          "failureTitles": []
+        },
+        "commands__land_chain_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:48:57.325Z",
+            "end": "2026-11-09T14:54:27.964Z",
+            "duration": 330639
+          },
+          "failureTitles": []
+        },
+        "commands__land_policy_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:48:57.329Z",
+            "end": "2026-11-09T14:50:39.059Z",
+            "duration": 101730
+          },
+          "failureTitles": []
+        },
+        "commands__land_wait_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T15:02:53.753Z",
+            "end": "2026-11-09T15:08:30.358Z",
+            "duration": 336605
+          },
+          "failureTitles": []
+        },
+        "commands__land_review_fixes_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 10,
+            "passes": 8,
+            "pending": 0,
+            "failures": 2,
+            "start": "2026-11-09T14:59:36.389Z",
+            "end": "2026-11-09T15:02:53.612Z",
+            "duration": 197223
+          },
+          "failureTitles": [
+            "public landing review regressions preserves a foreign continuation introduced by a pre-rebase hook before the first conflict publication",
+            "public landing review regressions previews a deleted original target and known self-produced unpublished survivor heads without changing progress"
+          ]
+        },
+        "commands__land_private_recovery_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-09T14:54:28.113Z",
+            "end": "2026-11-09T15:00:32.113Z",
+            "duration": 364000
+          },
+          "failureTitles": []
+        },
+        "commands__land_resume_display_cli.test.js.json": {
+          "stats": {
+            "suites": 1,
+            "tests": 5,
+            "passes": 4,
+            "pending": 0,
+            "failures": 1,
+            "start": "2026-11-09T14:56:45.418Z",
+            "end": "2026-11-09T14:59:36.279Z",
+            "duration": 170861
+          },
+          "failureTitles": [
+            "public resumed landing presentation puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it"
+          ]
+        }
+      },
+      "interpretation": "Initial resumed-display failure corrected and covered by final focused rerun; two review-regression failures independently reproduced on published 0.6.15.",
+      "initialSummary": {
+        "runtime": "native",
+        "shard": 0,
+        "shards": 1,
+        "files": 8,
+        "passes": 134,
+        "pending": 0,
+        "failedFiles": 2,
+        "results": [
+          {
+            "file": "commands/land_policy_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:48:57.329Z",
+              "end": "2026-11-09T14:50:39.059Z",
+              "duration": 101730
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_chain_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:48:57.325Z",
+              "end": "2026-11-09T14:54:27.964Z",
+              "duration": 330639
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_private_plan_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 73,
+              "passes": 73,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:50:39.208Z",
+              "end": "2026-11-09T14:56:45.307Z",
+              "duration": 366099
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_resume_display_cli.test.js",
+            "status": 1,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 5,
+              "passes": 4,
+              "pending": 0,
+              "failures": 1,
+              "start": "2026-11-09T14:56:45.418Z",
+              "end": "2026-11-09T14:59:36.279Z",
+              "duration": 170861
+            },
+            "passed": false
+          },
+          {
+            "file": "commands/land_private_recovery_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T14:54:28.113Z",
+              "end": "2026-11-09T15:00:32.113Z",
+              "duration": 364000
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_review_fixes_cli.test.js",
+            "status": 2,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 10,
+              "passes": 8,
+              "pending": 0,
+              "failures": 2,
+              "start": "2026-11-09T14:59:36.389Z",
+              "end": "2026-11-09T15:02:53.612Z",
+              "duration": 197223
+            },
+            "passed": false
+          },
+          {
+            "file": "commands/land_trunk_advance_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 5,
+              "passes": 5,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T15:00:32.256Z",
+              "end": "2026-11-09T15:03:06.369Z",
+              "duration": 154113
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/land_wait_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T15:02:53.753Z",
+              "end": "2026-11-09T15:08:30.358Z",
+              "duration": 336605
+            },
+            "passed": true
+          }
+        ]
+      },
+      "effectiveUniqueAcceptance": {
+        "passes": 151,
+        "failures": 2,
+        "pending": 0,
+        "interpretation": "Replace the initial required-check/display files with the final 21-case rerun; remaining two failures match public npm 0.6.15."
+      }
+    }
+  },
+  "installedCandidate": {
+    "stats": {
+      "suites": 1,
+      "tests": 4,
+      "passes": 4,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-11-09T15:04:34.517Z",
+      "end": "2026-11-09T15:06:08.598Z",
+      "duration": 94081
+    },
+    "version": "0.6.15 (unreleased local candidate)",
+    "tarballSha256": "5ed57a2db7a7f3e9713feb1aeb3fb9bb727481494e15b60e320cb86455fd1e06"
+  },
+  "legacyRecovery": {
+    "producer": "public npm 0.6.15",
+    "savedVersion": 1,
+    "preservingPreview": true,
+    "totalMergeRequests": 2,
+    "result": "pass"
+  },
+  "sourceTypecheck": "pass",
+  "sourceNewTestsAndFixtureLint": "pass",
+  "preExistingTestLintDiagnostics": {
+    "oversizedSuiteCallbacks": 4,
+    "unusedLockVariables": 2,
+    "reproducedFromMain": true
+  },
+  "workflowValidation": "actionlint pass",
+  "ci": {
+    "runsStarted": 0,
+    "newJobs": 0,
+    "fullMatrixRun": false,
+    "ordinaryJobAdditionalRepresentativeCases": 3
+  },
+  "frontendPackagesModified": false,
+  "activeInstallationModified": false,
+  "sourceSha256": {
+    "apps/cli/src/actions/land.ts": "899ef69f828fc7a517a4fc6f93fde99fe4a6f78ef6ddcc862607bdad9f4e993d",
+    "apps/cli/src/actions/land_scoped.ts": "e3407b9c7136131cb3c7a0e7aa014ae075f0d5c81a2fc347b621987e948909f9",
+    "apps/cli/src/lib/api/github_land_policy.ts": "659535ed6f21ad4dac3bb2ac457cd747ceb55fcb9fe56eced33685e4e63709f7"
+  }
+}
