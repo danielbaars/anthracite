@@ -1,8 +1,15 @@
 import yargs from 'yargs';
 import { syncAction } from '../../actions/sync/sync';
+import { abandonSync } from '../../actions/sync/sync_abandon';
 import { graphite } from '../../lib/runner';
 
 const args = {
+  abort: {
+    describe:
+      'End only the owned sync locally, retaining reached work and recovery evidence; residual conflicts/files still require deliberate handling.',
+    type: 'boolean',
+    default: false,
+  },
   pull: {
     describe: `Pull the trunk branch from remote.`,
     demandOption: false,
@@ -53,6 +60,29 @@ export const description =
   'Refresh existing tracked open-PR feature heads across the configured trunk, pull trunk, clean eligible merged/closed branches and repair affected tracked stacks by default. No-pull skips only trunk; no-delete suppresses cleanup. Explicit force may reset a divergent trunk, but never authorizes feature overwrite.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
+  if (argv.abort) {
+    const conflict = process.argv
+      .slice(2)
+      .find(
+        (value) =>
+          /^--(?:no-)?(?:pull|delete|delete-all|show-delete-progress|force|restack)(?:=|$)/.test(
+            value
+          ) || /^-[^-]*[pdfr]/.test(value)
+      );
+    try {
+      if (conflict)
+        throw new Error(
+          `--abort cannot be combined with explicit sync options (${conflict}).`
+        );
+      abandonSync();
+    } catch (error) {
+      process.stderr.write(
+        `ERROR: ${error instanceof Error ? error.message : String(error)}\n`
+      );
+      process.exitCode = 1;
+    }
+    return;
+  }
   return graphite(argv, canonical, async (context) => {
     await syncAction(
       {
