@@ -1,5 +1,5 @@
 import yargs from 'yargs';
-import { logAction } from '../../actions/log';
+import { getLogSelectionBranch, logAction } from '../../actions/log';
 import { logShortClassic } from '../../actions/log_short_classic';
 import { graphite } from '../../lib/runner';
 
@@ -59,7 +59,7 @@ export const handler = async (argv: argsT): Promise<void> =>
             reverse: argv.reverse,
             branchName:
               argv.steps !== undefined || argv.stack
-                ? context.engine.currentBranchPrecondition
+                ? getLogSelectionBranch(context)
                 : context.engine.trunk,
             steps: argv.steps,
             showUntracked: argv['show-untracked'],
