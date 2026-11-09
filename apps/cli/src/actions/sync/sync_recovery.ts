@@ -226,8 +226,32 @@ export function validateSyncRecovery(
     refuseSync(
       'Continue sync in its original worktree and configured repository.'
     );
+  const { active } = assertOwnedSyncRebase(data);
+  assertSyncSources(operation);
+  if (protections) assertSyncParticipants(operation, active.branchName);
+  else assertSyncExpected(operation);
+  return operation;
+}
+
+/** Rebase identity is separate from mutable branch/source continuation protections. */
+export function assertOwnedSyncRebase(data: TContinueConfig['data']): {
+  readonly directory: string;
+  readonly active: NonNullable<SyncOperation['active']>;
+} {
+  const operation = data.sync;
+  if (!operation) refuseSync('No owned sync intent.');
   const active = operation.active;
   const directory = getRebaseDirectory();
+  if (
+    directory &&
+    (!fs.lstatSync(directory).isDirectory() ||
+      ['head-name', 'onto', 'orig-head', 'charcoal-continuation'].some(
+        (name) =>
+          !fs.existsSync(path.join(directory, name)) ||
+          !fs.lstatSync(path.join(directory, name)).isFile()
+      ))
+  )
+    refuseSync('Owned rebase markers are not regular local files.');
   if (
     !active ||
     !directory ||
@@ -247,10 +271,7 @@ export function validateSyncRecovery(
     refuseSync(
       'The saved sync intent changed after its conflict was recorded.'
     );
-  assertSyncSources(operation);
-  if (protections) assertSyncParticipants(operation, active.branchName);
-  else assertSyncExpected(operation);
-  return operation;
+  return { directory: fs.realpathSync(directory), active };
 }
 
 export function saveSyncOperation(

@@ -10,6 +10,7 @@ describe('preserving sync abandonment', function () {
   let fixture: FrozenGetFixture;
   beforeEach(() => {
     fixture = new FrozenGetFixture();
+    fixture.commandTimeoutMs = 30000;
   });
   afterEach(() => fixture?.cleanup());
 
@@ -53,6 +54,254 @@ describe('preserving sync abandonment', function () {
     expect(again.status, again.output).to.equal(0);
     expect(again.output).to.include('No pending sync');
   });
+  it('quits its live rebase while preserving conflicts, detached HEAD and all local work', () => {
+    startConflict(fixture);
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'local.txt'),
+      'keep untracked'
+    );
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'main.txt'),
+      'staged correction'
+    );
+    fixture.git(fixture.consumer, 'add', 'main.txt');
+    fs.writeFileSync(fixture.ghCalls, '');
+    const before = fixture.observe();
+    const sources = pins(fixture);
+    const result = fixture.run(['sync', '--abort']);
+    expect(result.status, result.output).to.equal(0);
+    expect(result.output)
+      .to.include('Sync abandoned')
+      .and.include('Remaining index conflicts: parent.txt')
+      .and.include('detached HEAD');
+    expect(fixture.observe()).to.deep.equal({
+      ...Object(before),
+      recovery: null,
+      rebase: false,
+      rebaseFiles: null,
+    });
+    expect(pins(fixture)).to.equal(sources);
+    expect(fs.readFileSync(fixture.ghCalls, 'utf8')).to.equal('');
+  });
+
+  it('preserves manual staged and unstaged resolutions even when participants became frozen or occupied', () => {
+    startConflict(fixture);
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'parent.txt'),
+      'resolved manually'
+    );
+    fixture.git(fixture.consumer, 'add', 'parent.txt');
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'parent.txt'),
+      'unstaged followup'
+    );
+    fixture.ok('freeze', 'local-work');
+    const occupied = path.join(fixture.root, 'occupied');
+    fixture.git(fixture.consumer, 'worktree', 'add', occupied, 'child');
+    const before = fixture.observe();
+    const result = fixture.run(['repo', 'sync', '--abort']);
+    expect(result.status, result.output).to.equal(0);
+    expect(fixture.observe()).to.deep.equal({
+      ...Object(before),
+      recovery: null,
+      rebase: false,
+      rebaseFiles: null,
+    });
+    expect(result.output).to.include('Remaining index conflicts: none');
+    expect(fixture.git(occupied, 'status', '--porcelain')).to.equal('');
+  });
+
+  it('retains an owned autostash without applying it or losing the existing user stash', () => {
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'main.txt'),
+      'earlier user stash'
+    );
+    fixture.git(fixture.consumer, 'stash', 'push', '-m', 'keep user stash');
+    const earlier = fixture.git(fixture.consumer, 'rev-parse', 'refs/stash');
+    installAutostashActor(fixture);
+    startConflict(fixture);
+    const marker = path.join(
+      fixture.consumer,
+      '.git',
+      'rebase-merge',
+      'autostash'
+    );
+    expect(fs.existsSync(marker)).to.equal(true);
+    const stash = fs.readFileSync(marker, 'utf8').trim();
+    const before = fixture.observe();
+    const result = fixture.run(['sync', '--abort']);
+    expect(result.status, result.output).to.equal(0);
+    expect(result.output).to.include(
+      'Owned autostash retained without applying/discarding'
+    );
+    expect(fixture.observe()).to.deep.equal({
+      ...Object(before),
+      recovery: null,
+      rebase: false,
+      rebaseFiles: null,
+    });
+    const stashes = fixture
+      .git(fixture.consumer, 'stash', 'list', '--format=%H')
+      .split('\n');
+    expect(stashes).to.include(earlier).and.include(stash);
+    expect(fixture.git(fixture.consumer, 'show', `${stash}:main.txt`)).to.equal(
+      'owned-autostash-work'
+    );
+    expect(
+      fixture.git(
+        fixture.consumer,
+        'for-each-ref',
+        '--format=%(objectname)',
+        'refs/gt-metadata/sync-abandonment'
+      )
+    ).to.equal(stash);
+  });
+
+  it('preserves competing recovery written while retaining its autostash before quit', () => {
+    installAutostashActor(fixture);
+    startConflict(fixture);
+    const foreign = '{"branchesToSync":["foreign"],"branchesToRestack":[]}';
+    fs.writeFileSync(
+      path.join(fixture.consumer, '.git', 'hooks', 'reference-transaction'),
+      `#!/bin/sh\nif [ "$1" = committed ]; then\n while read old new ref; do\n case "$ref" in refs/gt-metadata/sync-abandonment/*) printf '%s' '${foreign}' > "$(git rev-parse --git-common-dir)/.gtcontinue";; esac\n done\nfi\n`,
+      { mode: 0o755 }
+    );
+    const before = fixture.observe();
+    const result = fixture.run(['sync', '--abort']);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output)
+      .to.include('competing recovery preserved')
+      .and.include('Archive:');
+    expect(fixture.observe()).to.deep.equal({
+      ...Object(before),
+      recovery: Buffer.from(foreign).toString('base64'),
+    });
+    expect(fs.readFileSync(recovery(fixture), 'utf8')).to.equal(foreign);
+  });
+
+  for (const change of ['content', 'symlink'])
+    it(`refuses an autostash marker replaced by ${change} while retaining evidence`, () => {
+      installAutostashActor(fixture);
+      startConflict(fixture);
+      const marker = path.join(
+        fixture.consumer,
+        '.git',
+        'rebase-merge',
+        'autostash'
+      );
+      const replace =
+        change === 'content'
+          ? `printf '%s' '${fixture.oldParent}' > "$(git rev-parse --git-path rebase-merge)/autostash"`
+          : 'rm "$(git rev-parse --git-path rebase-merge)/autostash"; ln -s ../missing-autostash "$(git rev-parse --git-path rebase-merge)/autostash"';
+      fs.writeFileSync(
+        path.join(fixture.consumer, '.git', 'hooks', 'reference-transaction'),
+        `#!/bin/sh\nif [ "$1" = committed ]; then\n while read old new ref; do\n case "$ref" in refs/gt-metadata/sync-abandonment/*) ${replace};; esac\n done\nfi\n`,
+        { mode: 0o755 }
+      );
+      const before = fixture.observe();
+      const result = fixture.run(['sync', '--abort']);
+      expect(result.status, result.output).to.equal(1);
+      expect(result.output).to.include('Owned autostash changed before quit');
+      if (change === 'content')
+        expect(fs.readFileSync(marker, 'utf8')).to.equal(fixture.oldParent);
+      else expect(fs.lstatSync(marker).isSymbolicLink()).to.equal(true);
+      const after = fixture.observe();
+      const observe = (value: unknown): object => {
+        if (typeof value !== 'object' || value === null)
+          throw new Error('Expected observation');
+        const files = Reflect.get(value, 'rebaseFiles');
+        if (typeof files !== 'object' || files === null)
+          throw new Error('Expected active rebase');
+        Reflect.deleteProperty(files, 'autostash');
+        return value;
+      };
+      expect(observe(after)).to.deep.equal(observe(before));
+    });
+
+  for (const marker of ['onto', 'orig-head', 'head-name'])
+    it(`refuses a replaced active rebase ${marker} without quitting`, () => {
+      startConflict(fixture);
+      fs.writeFileSync(
+        path.join(fixture.consumer, '.git', 'rebase-merge', marker),
+        marker === 'head-name' ? 'refs/heads/parent' : '0'.repeat(40)
+      );
+      const before = fixture.observe();
+      const result = fixture.run(['sync', '--abort']);
+      expect(result.status, result.output).to.equal(1);
+      expect(result.output).to.include('No matching owned active sync rebase');
+      expect(fixture.observe()).to.deep.equal(before);
+    });
+
+  it('keeps owned recovery and archive after Git refuses to quit', () => {
+    startConflict(fixture);
+    const directory = path.join(fixture.consumer, '.git', 'rebase-merge');
+    fs.chmodSync(directory, 0o500);
+    try {
+      const before = fixture.observe();
+      const result = fixture.run(['sync', '--abort']);
+      expect(result.status, result.output).to.equal(1);
+      expect(result.output)
+        .to.include('abandonment incomplete')
+        .and.include('Saved sync gate: still present')
+        .and.include('Archive:');
+      expect(fixture.observe()).to.deep.equal(before);
+    } finally {
+      fs.chmodSync(directory, 0o700);
+    }
+  });
+
+  it('keeps normal continuation available when abandonment is not chosen', () => {
+    startConflict(fixture);
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'parent.txt'),
+      'resolved normal continuation'
+    );
+    fixture.ok('continue', '--all');
+    expect(fs.existsSync(recovery(fixture))).to.equal(false);
+    expect(
+      fixture.git(fixture.consumer, 'show', 'local-work:parent.txt')
+    ).to.equal('resolved normal continuation');
+  });
+
+  it('keeps completed cleanup deletion and earlier maintenance when abandoning a later conflict', () => {
+    fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
+    fixture.ok('unfreeze', 'parent');
+    fixture.ok('unfreeze', 'child');
+    fixture.git(fixture.consumer, 'switch', 'parent');
+    fixture.ok('create', 'early-maintenance');
+    fixture.commit(fixture.consumer, 'early.txt', 'earlier maintenance');
+    fixture.git(fixture.consumer, 'switch', 'parent');
+    fixture.ok('create', 'local-work');
+    fixture.commit(fixture.consumer, 'parent.txt', 'later conflict');
+    fixture.git(fixture.consumer, 'switch', 'child');
+    fixture.git(fixture.producer, 'switch', 'parent');
+    fixture.commit(fixture.producer, 'parent.txt', 'incoming parent');
+    fixture.git(fixture.producer, 'push', 'origin', 'parent');
+    fs.writeJsonSync(fixture.identities, {
+      prOverrides: { child: { state: 'CLOSED' } },
+    });
+    const start = fixture.run(['sync', '--delete-all']);
+    expect(start.status, start.output).to.equal(1);
+    expect(start.output, start.output).to.include(
+      'Hit conflict restacking local-work'
+    );
+    expect(fixture.git(fixture.consumer, 'branch', '--list', 'child')).to.equal(
+      ''
+    );
+    const before = fixture.observe();
+    const result = fixture.run(['sync', '--abort']);
+    expect(result.status, result.output).to.equal(0);
+    expect(result.output)
+      .to.include('Recorded completed cleanup deletions: child')
+      .and.include('Recorded completed maintenance: early-maintenance');
+    expect(fixture.observe()).to.deep.equal({
+      ...Object(before),
+      recovery: null,
+      rebase: false,
+      rebaseFiles: null,
+    });
+  });
+
   it('reports changed participants and missing pins without replaying them', () => {
     startConflict(fixture);
     fixture.git(fixture.consumer, 'rebase', '--abort');
@@ -108,6 +357,16 @@ describe('preserving sync abandonment', function () {
       startConflict(fixture);
       if (invalid !== 'active rebase')
         fixture.git(fixture.consumer, 'rebase', '--abort');
+      else
+        fs.writeFileSync(
+          path.join(
+            fixture.consumer,
+            '.git',
+            'rebase-merge',
+            'charcoal-continuation'
+          ),
+          'foreign'
+        );
       if (invalid === 'malformed') fs.writeFileSync(recovery(fixture), '{');
       if (invalid === 'mixed') {
         const value: unknown = fs.readJsonSync(recovery(fixture));
@@ -244,7 +503,7 @@ describe('preserving sync abandonment', function () {
     expect(fs.readFileSync(fixture.ghCalls, 'utf8')).to.equal('');
   });
 
-  const legacy = process.env.ANTHRACITE_TEST_LEGACY_BINARY;
+  const legacy = process.env.ANTHRACITE_TEST_SYNC_LEGACY_BINARY;
   (legacy ? it : it.skip)(
     'npm legacy: abandons an unchanged version-1 record from public 0.6.14',
     () => {
@@ -293,5 +552,15 @@ function startConflict(fixture: FrozenGetFixture): void {
   fixture.git(fixture.producer, 'push', 'origin', 'parent');
   const start = fixture.run(['sync', '--no-delete']);
   expect(start.status, start.output).to.equal(1);
-  expect(start.output).to.include('Hit conflict');
+  expect(start.output, start.output).to.include('Hit conflict');
+}
+
+function installAutostashActor(fixture: FrozenGetFixture): void {
+  fixture.git(fixture.consumer, 'config', 'rebase.autoStash', 'true');
+  // Delegate real Git unchanged; inject a concurrent edit just before the actual replay.
+  fs.writeFileSync(
+    path.join(fixture.bin, 'git'),
+    '#!/bin/sh\nis_rebase=false\nlast_arg=\nfor arg do\n [ "$arg" = rebase ] && is_rebase=true\n last_arg=$arg\ndone\nif $is_rebase && [ "$last_arg" = local-work ]; then printf owned-autostash-work > main.txt; fi\nexec /usr/bin/git "$@"\n',
+    { mode: 0o755 }
+  );
 }
