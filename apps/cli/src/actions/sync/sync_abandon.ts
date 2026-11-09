@@ -10,7 +10,12 @@ import { getSha } from '../../lib/git/get_sha';
 import { runGitCommand } from '../../lib/git/runner';
 import { getRebaseDirectory } from '../../lib/git/rebase_in_progress';
 import { landingProgressPath } from '../../lib/landing_progress';
-import { readOwnedSyncRecovery, refuseSync } from './sync_recovery';
+import { quitSyncRebase, retainSyncAutostash } from './sync_abandon_rebase';
+import {
+  assertOwnedSyncRebase,
+  readOwnedSyncRecovery,
+  refuseSync,
+} from './sync_recovery';
 
 export type OwnedSync = NonNullable<ReturnType<typeof readOwnedSyncRecovery>>;
 const git = (...args: string[]): string =>
@@ -32,12 +37,26 @@ export function abandonSync(): void {
   }
   const lock = getCacheLock();
   let archive: string | undefined;
+  let quit = 'not requested';
   try {
     lock.lock(Date.now());
     assertSavedSync(owned);
-    assertAbandonmentGitState(owned);
+    const directory = assertAbandonmentGitState(owned);
     archive = archiveSync(owned);
+    const autostash = directory
+      ? retainSyncAutostash(owned, archive, directory)
+      : undefined;
     assertSavedSync(owned);
+    if (assertAbandonmentGitState(owned) !== directory)
+      refuseSync('Active Git state changed before release.');
+    if (directory) {
+      quit = 'requested; result not confirmed';
+      quitSyncRebase(owned, directory, autostash);
+      quit = 'completed';
+    }
+    assertSavedSync(owned);
+    if (getRebaseDirectory())
+      refuseSync('Active Git rebase remains after quit.');
     assertAbandonmentGitState(owned);
     releaseSync(owned, archive);
     reportAbandonment(owned, archive);
@@ -45,6 +64,12 @@ export function abandonSync(): void {
     throw new ExitFailedError(
       `Sync abandonment incomplete${
         archive ? `; Archive: ${archive}` : ''
+      }. Owned rebase quit: ${quit}; current Git rebase state: ${
+        ['rebase-merge', 'rebase-apply'].some((name) =>
+          fs.existsSync(path.join(owned.operation.gitDirectory, name))
+        )
+          ? 'present'
+          : 'absent'
       }. Saved sync gate: ${
         fs.existsSync(owned.file)
           ? 'still present'
@@ -62,7 +87,9 @@ export function assertSavedSync(owned: OwnedSync): void {
     refuseSync('Saved sync ownership changed; competing recovery preserved.');
 }
 
-export function assertAbandonmentGitState(owned: OwnedSync): void {
+export function assertAbandonmentGitState(
+  owned: OwnedSync
+): string | undefined {
   if (fs.existsSync(landingProgressPath()))
     refuseSync('Sync recovery overlaps pending landing recovery.');
   const foreign = [
@@ -75,10 +102,12 @@ export function assertAbandonmentGitState(owned: OwnedSync): void {
     fs.existsSync(path.join(owned.operation.gitDirectory, name))
   );
   if (foreign) refuseSync(`Foreign active Git state ${foreign}.`);
-  if (getRebaseDirectory())
-    refuseSync(
-      'An active Git rebase remains; preserving abandonment is unavailable until it is verified and quit.'
-    );
+  const directories = ['rebase-merge', 'rebase-apply'].filter((name) =>
+    fs.existsSync(path.join(owned.operation.gitDirectory, name))
+  );
+  if (directories.length > 1) refuseSync('Multiple active Git rebase states.');
+  if (getRebaseDirectory()) return assertOwnedSyncRebase(owned.data).directory;
+  return undefined;
 }
 
 function privateDirectory(directory: string): void {
@@ -289,6 +318,14 @@ export function reportAbandonment(owned: OwnedSync, archive: string): void {
         'HEAD'
       )}).`,
       `Remaining index conflicts: ${conflicts || 'none'}.`,
+      ...(fs.existsSync(path.join(archive, 'autostash.json'))
+        ? [
+            `Owned autostash retained without applying/discarding it; see ${path.join(
+              archive,
+              'autostash.json'
+            )} and the retained private pin.`,
+          ]
+        : []),
       'Recorded completion is not fresh verification or GitHub readiness. PR status is not queried.',
       'Inspect git status and the retained archive. Deliberately handle residual Git/files before guarded deletion or a new sync; ending sync does not resolve conflicts or restore checkout.',
       '',
