@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
+import { getPendingSyncLogNotice } from './log';
 
 function displayBranchesInternal(
   opts: {
@@ -38,6 +39,8 @@ function displayBranchesInternal(
 }
 
 export function logShortClassic(context: TContext): void {
+  const notice = getPendingSyncLogNotice(context);
+  if (notice) context.splog.info(notice);
   context.splog.page(
     displayBranchesInternal(
       { branchName: context.engine.trunk, highlightCurrentBranch: true },

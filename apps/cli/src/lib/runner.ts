@@ -1,4 +1,7 @@
-import { preflightSyncRecovery } from '../actions/sync/sync_recovery';
+import {
+  preflightSyncRecovery,
+  readOwnedSyncRecovery,
+} from '../actions/sync/sync_recovery';
 import { preflightGetRecovery } from '../actions/sync/get_recovery';
 import { assertGetOperationAvailable } from '../actions/sync/remote_update_graph';
 import { withLandingLock } from '../actions/land_scoped';
@@ -63,7 +66,8 @@ export async function graphite(
 /** Read-only inspections share the engine without mutation/recovery cleanup. */
 export async function graphiteInspection(
   args: yargs.Arguments & TGlobalArguments,
-  handler: (context: TContext) => Promise<void>
+  handler: (context: TContext) => Promise<void>,
+  opts?: { readonly physicalCheckout?: boolean }
 ): Promise<void> {
   try {
     const git = composeGit();
@@ -74,7 +78,11 @@ export async function graphiteInspection(
           process.stderr.write(`${message}\n`);
         }
       : () => void 0;
-    const context = initContext(lite, git, { ...args, inspection: true });
+    const context = initContext(lite, git, {
+      ...args,
+      ...opts,
+      inspection: true,
+    });
     await handler(context);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
@@ -125,10 +133,8 @@ async function graphiteInternal(
   canonicalName: string,
   handler: TGraphiteCommandHandler
 ): Promise<void> {
-  const isZeroDepthLog =
-    (canonicalName === 'log' || canonicalName === 'log short') &&
-    args.steps === 0 &&
-    args.classic !== true;
+  const isZeroDepthLog = isZeroDepthLogCommand(canonicalName, args);
+  if (await inspectPendingSyncLog(args, canonicalName, handler)) return;
   const handlerMaybeWithCacheLock = handler.repo
     ? {
         ...handler,
@@ -239,6 +245,58 @@ async function graphiteInternal(
     }
     process.exitCode = 1;
   }
+}
+
+function isZeroDepthLogCommand(
+  canonicalName: string,
+  args: yargs.Arguments & TGlobalArguments
+): boolean {
+  return (
+    (canonicalName === 'log' || canonicalName === 'log short') &&
+    args.steps === 0 &&
+    args.classic !== true
+  );
+}
+
+async function inspectPendingSyncLog(
+  args: yargs.Arguments & TGlobalArguments,
+  canonicalName: string,
+  handler: TGraphiteCommandHandler
+): Promise<boolean> {
+  if (
+    !handler.repo ||
+    (canonicalName !== 'log' && canonicalName !== 'log short')
+  )
+    return false;
+  try {
+    const recovery = readOwnedSyncRecovery();
+    if (!recovery) return false;
+    await graphiteInspection(
+      args,
+      async (context) => {
+        if (
+          JSON.stringify(context.continueConfig.data) !==
+          JSON.stringify(recovery.data)
+        )
+          throw new ExitFailedError(
+            'Saved sync ownership changed during inspection; recovery preserved.'
+          );
+        if (
+          isZeroDepthLogCommand(canonicalName, args) &&
+          !context.engine.currentBranch
+        )
+          throw new DetachedError();
+        await handler.run(context);
+      },
+      { physicalCheckout: true }
+    );
+  } catch (error: unknown) {
+    process.stderr.write(
+      `ERROR: ${error instanceof Error ? error.message : String(error)}\n`
+    );
+    process.exitCode = 1;
+  }
+  return true;
 }
 
 function preflightFileSplit(args: yargs.Arguments & TGlobalArguments): void {
