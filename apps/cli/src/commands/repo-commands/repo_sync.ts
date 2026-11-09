@@ -6,7 +6,7 @@ import { graphite } from '../../lib/runner';
 const args = {
   abort: {
     describe:
-      'End only the owned sync locally, retaining reached work and recovery evidence; residual conflicts/files still require deliberate handling.',
+      'End only the owned sync locally, retaining reached work and recovery evidence, even after raw Git abort; residual conflicts/files still require deliberate handling.',
     type: 'boolean',
     default: false,
   },
@@ -61,14 +61,26 @@ export const description =
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   if (argv.abort) {
-    const conflict = process.argv
-      .slice(2)
-      .find(
-        (value) =>
-          /^--(?:no-)?(?:pull|delete|delete-all|show-delete-progress|force|restack)(?:=|$)/.test(
-            value
-          ) || /^-[^-]*[pdfr]/.test(value)
-      );
+    const conflict = process.argv.slice(2).find((value) => {
+      if (!value.startsWith('--')) return /^-[^-]*[pdfr]/.test(value);
+      const option = value
+        .slice(2)
+        .split('=')[0]
+        .replace(/^no-/, '')
+        .replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+      return [
+        'p',
+        'pull',
+        'd',
+        'delete',
+        'delete-all',
+        'show-delete-progress',
+        'f',
+        'force',
+        'r',
+        'restack',
+      ].includes(option);
+    });
     try {
       if (conflict)
         throw new Error(

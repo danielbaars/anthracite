@@ -95,8 +95,21 @@ access; disabled integration, changed PRs or failed lookup refuse advancement.
 No new candidates or source heads are discovered on resume. Raw Git abort cancels
 only the active rebase, not earlier updates, cleanup or completed rewrites. Missing,
 foreign, changed, aborted or no-active intent and uncertain completed publication
-require manual inspection, not automatic retry or rollback. Some source refs may
-already have been removed. Finish a pending new sync workflow before downgrading.
+require manual inspection, not automatic retry or rollback. To end a supported
+owned sync, run an sync --abort in the original project. This is local and offline:
+it archives the original intent and source observations, quits only its matching
+active rebase, and releases only the sync gate. Repeating after completion is a
+no-op. Reached updates, source pins, conflicts, index and files stay preserved;
+no rollback, staging, checkout, branch deletion, push or PR edit is performed.
+An owned autostash is retained without applying/discarding it. Handle residual
+Git/files deliberately before guarded deletion or a new sync. Unknown PR status
+is not evidence that a branch has no PR. Do not combine --abort with explicit
+refresh/cleanup/force/restack options. Malformed/foreign ownership still refuses.
+Full/short log and ls inspect supported pending sync without consuming recovery.
+Attached HEAD is current; detached pending intent anchors selection only and is
+not a checked-out branch. Explicit zero depth still refuses detached HEAD.
+Some source refs may already have been removed. Finish a pending new sync
+workflow before downgrading.
 Sync never pushes or edits PRs. Existing MCP tools, literal cwd/args, supervision
 and publication approvals remain unchanged; cancellation does not promise undo.
 

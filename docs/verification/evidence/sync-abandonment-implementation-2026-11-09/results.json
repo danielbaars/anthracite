@@ -1,0 +1,705 @@
+{
+  "date": "2026-11-09",
+  "boundary": "Public CLI processes; real Git repositories, bare remotes and conflicts; controlled gh boundary only",
+  "runtime": {
+    "node": "24.19.0",
+    "bun": "1.3.14"
+  },
+  "candidate": {
+    "source": "495de590bdf23e2c2f862e7b894792319de10c35",
+    "version": "0.6.14 (unpublished candidate manifest)",
+    "tarballSha256": "3b3f1832858d191fdd408fde02e0eb7b0f14e55401d2a245a47b2f1c0530d2b5"
+  },
+  "beforeReview": {
+    "node": {
+      "source": "dfde742a73d4036a07ed066203cde0dff083ef55",
+      "stats": {
+        "suites": 3,
+        "tests": 37,
+        "passes": 37,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-09T09:50:04.726Z",
+        "end": "2026-11-09T09:59:58.381Z",
+        "duration": 593655
+      },
+      "passed": [
+        "preserving sync abandonment abandons after raw Git abort while retaining earlier refresh, files and source pins",
+        "preserving sync abandonment quits its live rebase while preserving conflicts, detached HEAD and all local work",
+        "preserving sync abandonment preserves manual staged and unstaged resolutions even when participants became frozen or occupied",
+        "preserving sync abandonment retains an owned autostash without applying it or losing the existing user stash",
+        "preserving sync abandonment preserves competing recovery written while retaining its autostash before quit",
+        "preserving sync abandonment refuses an autostash marker replaced by content while retaining evidence",
+        "preserving sync abandonment refuses an autostash marker replaced by symlink while retaining evidence",
+        "preserving sync abandonment refuses a replaced active rebase onto without quitting",
+        "preserving sync abandonment refuses a replaced active rebase orig-head without quitting",
+        "preserving sync abandonment refuses a replaced active rebase head-name without quitting",
+        "preserving sync abandonment keeps owned recovery and archive after Git refuses to quit",
+        "preserving sync abandonment keeps normal continuation available when abandonment is not chosen",
+        "preserving sync abandonment keeps completed cleanup deletion and earlier maintenance when abandoning a later conflict",
+        "preserving sync abandonment reports changed participants and missing pins without replaying them",
+        "preserving sync abandonment rejects every explicitly combined sync option before creating evidence or changing work",
+        "preserving sync abandonment preserves state for malformed",
+        "preserving sync abandonment preserves state for mixed",
+        "preserving sync abandonment preserves state for digest",
+        "preserving sync abandonment preserves state for repository",
+        "preserving sync abandonment preserves state for remote",
+        "preserving sync abandonment preserves state for worktree",
+        "preserving sync abandonment preserves state for active rebase",
+        "preserving sync abandonment preserves state for foreign merge",
+        "preserving sync abandonment preserves state for archive collision",
+        "preserving sync abandonment does not clear another workflow or quit raw Git when no sync is pending",
+        "preserving sync abandonment abandons a genuine pre-conflict publication failure without requiring a new recovery format",
+        "preserving sync abandonment npm legacy: abandons an unchanged version-1 record from public 0.6.14",
+        "retrying preserving sync abandonment retries after a real quit with matching retained evidence without quitting twice",
+        "retrying preserving sync abandonment refuses malformed UTF-8 without normalizing the original recovery evidence",
+        "retrying preserving sync abandonment retries a real archive write refusal and preserves interrupted private staging",
+        "retrying preserving sync abandonment refuses conflicting immutable receipts and observations without replacing evidence",
+        "retrying preserving sync abandonment preserves a foreign recovery replacement after real quit and never reports it released",
+        "sync CLI and installed MCP delivery sync help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery repo sync help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery repo s help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure",
+        "sync CLI and installed MCP delivery installed pending sync inspection and abandonment preserve reached work through MCP"
+      ],
+      "failed": []
+    },
+    "native": {
+      "source": "dfde742a73d4036a07ed066203cde0dff083ef55",
+      "stats": {
+        "suites": 3,
+        "tests": 37,
+        "passes": 37,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-09T09:50:17.178Z",
+        "end": "2026-11-09T09:59:09.395Z",
+        "duration": 532217
+      },
+      "passed": [
+        "preserving sync abandonment abandons after raw Git abort while retaining earlier refresh, files and source pins",
+        "preserving sync abandonment quits its live rebase while preserving conflicts, detached HEAD and all local work",
+        "preserving sync abandonment preserves manual staged and unstaged resolutions even when participants became frozen or occupied",
+        "preserving sync abandonment retains an owned autostash without applying it or losing the existing user stash",
+        "preserving sync abandonment preserves competing recovery written while retaining its autostash before quit",
+        "preserving sync abandonment refuses an autostash marker replaced by content while retaining evidence",
+        "preserving sync abandonment refuses an autostash marker replaced by symlink while retaining evidence",
+        "preserving sync abandonment refuses a replaced active rebase onto without quitting",
+        "preserving sync abandonment refuses a replaced active rebase orig-head without quitting",
+        "preserving sync abandonment refuses a replaced active rebase head-name without quitting",
+        "preserving sync abandonment keeps owned recovery and archive after Git refuses to quit",
+        "preserving sync abandonment keeps normal continuation available when abandonment is not chosen",
+        "preserving sync abandonment keeps completed cleanup deletion and earlier maintenance when abandoning a later conflict",
+        "preserving sync abandonment reports changed participants and missing pins without replaying them",
+        "preserving sync abandonment rejects every explicitly combined sync option before creating evidence or changing work",
+        "preserving sync abandonment preserves state for malformed",
+        "preserving sync abandonment preserves state for mixed",
+        "preserving sync abandonment preserves state for digest",
+        "preserving sync abandonment preserves state for repository",
+        "preserving sync abandonment preserves state for remote",
+        "preserving sync abandonment preserves state for worktree",
+        "preserving sync abandonment preserves state for active rebase",
+        "preserving sync abandonment preserves state for foreign merge",
+        "preserving sync abandonment preserves state for archive collision",
+        "preserving sync abandonment does not clear another workflow or quit raw Git when no sync is pending",
+        "preserving sync abandonment abandons a genuine pre-conflict publication failure without requiring a new recovery format",
+        "preserving sync abandonment npm legacy: abandons an unchanged version-1 record from public 0.6.14",
+        "retrying preserving sync abandonment retries after a real quit with matching retained evidence without quitting twice",
+        "retrying preserving sync abandonment refuses malformed UTF-8 without normalizing the original recovery evidence",
+        "retrying preserving sync abandonment retries a real archive write refusal and preserves interrupted private staging",
+        "retrying preserving sync abandonment refuses conflicting immutable receipts and observations without replacing evidence",
+        "retrying preserving sync abandonment preserves a foreign recovery replacement after real quit and never reports it released",
+        "sync CLI and installed MCP delivery sync help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery repo sync help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery repo s help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure",
+        "sync CLI and installed MCP delivery installed pending sync inspection and abandonment preserve reached work through MCP"
+      ],
+      "failed": []
+    }
+  },
+  "review": {
+    "red": {
+      "source": "dfde742a73d4036a07ed066203cde0dff083ef55",
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 0,
+        "pending": 0,
+        "failures": 2,
+        "start": "2026-11-09T10:00:20.909Z",
+        "end": "2026-11-09T10:00:47.311Z",
+        "duration": 26402
+      },
+      "passed": [],
+      "failed": [
+        {
+          "case": "retrying preserving sync abandonment revalidates retained autostash evidence after quit before any retry can release recovery",
+          "message": "missing pin: Sync abandoned; completed effects remain applied. No rollback or pending work was performed.\nArchive: /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-KORcMM/consumer/.git/anthracite-sync-abandonment/49e15a13e5d55ad798d0f4d43b54a68cc222b2be598c6083ba3cf110f9763977\nRecorded completed trunk update: yes.\nRecorded completed feature refresh: parent, child.\nRecorded completed cleanup deletions: none.\nRecorded completed maintenance: child.\nRecorded incomplete cleanup metadata: none.\nPending feature refresh: none.\nPending cleanup: none.\nPending maintenance: local-work.\nCurrent local observations differing from saved state (missing/changed): none.\nObserved local refs/parents: main: head 01f6c88a17847dae93ffa5206d8ddfc8c618c764, parent unavailable; child: head 8315e0aa967194d86e62f5890bd7de143cc9b02a, parent parent; local-work: head 9407a6a5c35f1df8131356b8fa42cdaca29120c2, parent child; parent: head 292b900f8951f8485262dbc74bfd5370e95fbec2, parent main.\nSource pins missing/changed: none.\nActual checkout: detached HEAD (8315e0aa967194d86e62f5890bd7de143cc9b02a).\nRemaining index conflicts: parent.txt.\nOwned autostash retained without applying/discarding it; see /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-KORcMM/consumer/.git/anthracite-sync-abandonment/49e15a13e5d55ad798d0f4d43b54a68cc222b2be598c6083ba3cf110f9763977/autostash.json and the retained private pin.\nRecorded completion is not fresh verification or GitHub readiness. PR status is not queried.\nInspect git status and the retained archive. Deliberately handle residual Git/files before guarded deletion or a new sync; ending sync does not resolve conflicts or restore checkout.\n: expected +0 to equal 1"
+        },
+        {
+          "case": "retrying preserving sync abandonment rejects accepted long aliases, negations and camel-case update options before effects",
+          "message": "--f: No pending sync to abandon; other recovery and Git state left untouched.\n: expected +0 to equal 1"
+        }
+      ]
+    },
+    "green": {
+      "source": "495de590bdf23e2c2f862e7b894792319de10c35",
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-09T10:02:48.816Z",
+        "end": "2026-11-09T10:03:27.956Z",
+        "duration": 39140
+      },
+      "passed": [
+        "retrying preserving sync abandonment revalidates retained autostash evidence after quit before any retry can release recovery",
+        "retrying preserving sync abandonment rejects accepted long aliases, negations and camel-case update options before effects"
+      ],
+      "failed": []
+    },
+    "standardsRemaining": 0,
+    "specRemaining": 0
+  },
+  "finalAffectedPaths": {
+    "node": {
+      "source": "495de590bdf23e2c2f862e7b894792319de10c35",
+      "stats": {
+        "suites": 3,
+        "tests": 20,
+        "passes": 20,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-09T10:04:46.950Z",
+        "end": "2026-11-09T10:09:53.706Z",
+        "duration": 306756
+      },
+      "passed": [
+        "preserving sync abandonment abandons after raw Git abort while retaining earlier refresh, files and source pins",
+        "preserving sync abandonment quits its live rebase while preserving conflicts, detached HEAD and all local work",
+        "preserving sync abandonment retains an owned autostash without applying it or losing the existing user stash",
+        "preserving sync abandonment preserves competing recovery written while retaining its autostash before quit",
+        "preserving sync abandonment refuses an autostash marker replaced by content while retaining evidence",
+        "preserving sync abandonment refuses an autostash marker replaced by symlink while retaining evidence",
+        "preserving sync abandonment keeps normal continuation available when abandonment is not chosen",
+        "preserving sync abandonment rejects every explicitly combined sync option before creating evidence or changing work",
+        "retrying preserving sync abandonment retries after a real quit with matching retained evidence without quitting twice",
+        "retrying preserving sync abandonment refuses malformed UTF-8 without normalizing the original recovery evidence",
+        "retrying preserving sync abandonment retries a real archive write refusal and preserves interrupted private staging",
+        "retrying preserving sync abandonment refuses conflicting immutable receipts and observations without replacing evidence",
+        "retrying preserving sync abandonment preserves a foreign recovery replacement after real quit and never reports it released",
+        "retrying preserving sync abandonment revalidates retained autostash evidence after quit before any retry can release recovery",
+        "retrying preserving sync abandonment rejects accepted long aliases, negations and camel-case update options before effects",
+        "sync CLI and installed MCP delivery sync help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery repo sync help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery repo s help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure",
+        "sync CLI and installed MCP delivery installed pending sync inspection and abandonment preserve reached work through MCP"
+      ],
+      "failed": []
+    },
+    "native": {
+      "source": "495de590bdf23e2c2f862e7b894792319de10c35",
+      "stats": {
+        "suites": 3,
+        "tests": 20,
+        "passes": 20,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-09T10:04:47.962Z",
+        "end": "2026-11-09T10:09:24.510Z",
+        "duration": 276548
+      },
+      "passed": [
+        "preserving sync abandonment abandons after raw Git abort while retaining earlier refresh, files and source pins",
+        "preserving sync abandonment quits its live rebase while preserving conflicts, detached HEAD and all local work",
+        "preserving sync abandonment retains an owned autostash without applying it or losing the existing user stash",
+        "preserving sync abandonment preserves competing recovery written while retaining its autostash before quit",
+        "preserving sync abandonment refuses an autostash marker replaced by content while retaining evidence",
+        "preserving sync abandonment refuses an autostash marker replaced by symlink while retaining evidence",
+        "preserving sync abandonment keeps normal continuation available when abandonment is not chosen",
+        "preserving sync abandonment rejects every explicitly combined sync option before creating evidence or changing work",
+        "retrying preserving sync abandonment retries after a real quit with matching retained evidence without quitting twice",
+        "retrying preserving sync abandonment refuses malformed UTF-8 without normalizing the original recovery evidence",
+        "retrying preserving sync abandonment retries a real archive write refusal and preserves interrupted private staging",
+        "retrying preserving sync abandonment refuses conflicting immutable receipts and observations without replacing evidence",
+        "retrying preserving sync abandonment preserves a foreign recovery replacement after real quit and never reports it released",
+        "retrying preserving sync abandonment revalidates retained autostash evidence after quit before any retry can release recovery",
+        "retrying preserving sync abandonment rejects accepted long aliases, negations and camel-case update options before effects",
+        "sync CLI and installed MCP delivery sync help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery repo sync help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery repo s help and completion expose repository refresh and independent cleanup/replay controls",
+        "sync CLI and installed MCP delivery installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure",
+        "sync CLI and installed MCP delivery installed pending sync inspection and abandonment preserve reached work through MCP"
+      ],
+      "failed": []
+    }
+  },
+  "exactInstalledCore": {
+    "source": "495de590bdf23e2c2f862e7b894792319de10c35",
+    "stats": {
+      "suites": 3,
+      "tests": 9,
+      "passes": 9,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-11-09T10:05:26.463Z",
+      "end": "2026-11-09T10:07:55.030Z",
+      "duration": 148567
+    },
+    "passed": [
+      "retrying preserving sync abandonment retries after a real quit with matching retained evidence without quitting twice",
+      "retrying preserving sync abandonment refuses malformed UTF-8 without normalizing the original recovery evidence",
+      "retrying preserving sync abandonment retries a real archive write refusal and preserves interrupted private staging",
+      "retrying preserving sync abandonment refuses conflicting immutable receipts and observations without replacing evidence",
+      "retrying preserving sync abandonment preserves a foreign recovery replacement after real quit and never reports it released",
+      "retrying preserving sync abandonment revalidates retained autostash evidence after quit before any retry can release recovery",
+      "retrying preserving sync abandonment rejects accepted long aliases, negations and camel-case update options before effects",
+      "preserving sync abandonment npm legacy: abandons an unchanged version-1 record from public 0.6.14",
+      "sync CLI and installed MCP delivery installed pending sync inspection and abandonment preserve reached work through MCP"
+    ],
+    "failed": []
+  },
+  "existingCompatibility": {
+    "logs": {
+      "source": "65b77af667a846a85cb57317be54257f26166424",
+      "node": {
+        "runtime": "node",
+        "shard": 0,
+        "shards": 1,
+        "files": 5,
+        "passes": 49,
+        "pending": 0,
+        "failedFiles": 0,
+        "results": [
+          {
+            "file": "commands/log_long_presentation_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:21:28.224Z",
+              "end": "2026-11-09T09:22:01.031Z",
+              "duration": 32807
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_short_edges_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 7,
+              "passes": 7,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:21:28.212Z",
+              "end": "2026-11-09T09:22:27.087Z",
+              "duration": 58875
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_full_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 3,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:22:01.139Z",
+              "end": "2026-11-09T09:23:30.150Z",
+              "duration": 89011
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_options_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 10,
+              "passes": 10,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:22:27.188Z",
+              "end": "2026-11-09T09:24:55.298Z",
+              "duration": 148110
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_short_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 3,
+              "tests": 17,
+              "passes": 17,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:23:30.252Z",
+              "end": "2026-11-09T09:26:06.303Z",
+              "duration": 156051
+            },
+            "passed": true
+          }
+        ]
+      },
+      "native": {
+        "runtime": "native",
+        "shard": 0,
+        "shards": 1,
+        "files": 5,
+        "passes": 49,
+        "pending": 0,
+        "failedFiles": 0,
+        "results": [
+          {
+            "file": "commands/log_long_presentation_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:21:28.196Z",
+              "end": "2026-11-09T09:21:55.699Z",
+              "duration": 27503
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_short_edges_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 7,
+              "passes": 7,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:21:28.204Z",
+              "end": "2026-11-09T09:22:17.628Z",
+              "duration": 49424
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_full_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 3,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:21:55.847Z",
+              "end": "2026-11-09T09:23:09.485Z",
+              "duration": 73638
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_options_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 10,
+              "passes": 10,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:22:17.731Z",
+              "end": "2026-11-09T09:24:16.222Z",
+              "duration": 118491
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/log_steps_short_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 3,
+              "tests": 17,
+              "passes": 17,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:23:09.612Z",
+              "end": "2026-11-09T09:25:22.141Z",
+              "duration": 132529
+            },
+            "passed": true
+          }
+        ]
+      }
+    },
+    "sync": {
+      "source": "064cd74a03d45e1ad440b5b8496a93823c0343d2",
+      "node": {
+        "runtime": "node",
+        "shard": 0,
+        "shards": 1,
+        "files": 5,
+        "passes": 75,
+        "pending": 0,
+        "failedFiles": 1,
+        "results": [
+          {
+            "file": "commands/sync_delivery_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:37:55.230Z",
+              "end": "2026-11-09T09:38:43.603Z",
+              "duration": 48373
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/sync_cleanup_identity_recovery_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:37:55.139Z",
+              "end": "2026-11-09T09:39:12.528Z",
+              "duration": 77389
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/sync_head_repository_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:38:43.741Z",
+              "end": "2026-11-09T09:40:07.846Z",
+              "duration": 84105
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/sync_late_guards_cli.test.js",
+            "status": 1,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 16,
+              "passes": 15,
+              "pending": 0,
+              "failures": 1,
+              "start": "2026-11-09T09:39:12.684Z",
+              "end": "2026-11-09T09:43:30.355Z",
+              "duration": 257671
+            },
+            "passed": false
+          },
+          {
+            "file": "commands/sync_recovery_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 41,
+              "passes": 41,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:40:07.996Z",
+              "end": "2026-11-09T09:54:48.437Z",
+              "duration": 880441
+            },
+            "passed": true
+          }
+        ]
+      },
+      "native": {
+        "runtime": "native",
+        "shard": 0,
+        "shards": 1,
+        "files": 5,
+        "passes": 76,
+        "pending": 0,
+        "failedFiles": 0,
+        "results": [
+          {
+            "file": "commands/sync_delivery_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:37:55.230Z",
+              "end": "2026-11-09T09:38:37.248Z",
+              "duration": 42018
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/sync_cleanup_identity_recovery_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 4,
+              "passes": 4,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:37:55.135Z",
+              "end": "2026-11-09T09:39:05.373Z",
+              "duration": 70238
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/sync_head_repository_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 11,
+              "passes": 11,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:38:37.393Z",
+              "end": "2026-11-09T09:39:46.066Z",
+              "duration": 68673
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/sync_late_guards_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 16,
+              "passes": 16,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:39:05.564Z",
+              "end": "2026-11-09T09:42:49.417Z",
+              "duration": 223853
+            },
+            "passed": true
+          },
+          {
+            "file": "commands/sync_recovery_cli.test.js",
+            "status": 0,
+            "signal": null,
+            "stats": {
+              "suites": 1,
+              "tests": 41,
+              "passes": 41,
+              "pending": 0,
+              "failures": 0,
+              "start": "2026-11-09T09:39:46.224Z",
+              "end": "2026-11-09T09:52:14.886Z",
+              "duration": 748662
+            },
+            "passed": true
+          }
+        ]
+      }
+    },
+    "isolatedUnchangedNodeLateGuard": {
+      "source": "064cd74a03d45e1ad440b5b8496a93823c0343d2",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-09T09:45:47.772Z",
+        "end": "2026-11-09T09:46:12.401Z",
+        "duration": 24629
+      },
+      "passed": [
+        "sync CLI assembled late participant guards preserves a changed full owner envelope from an original continuation ref hook before the active head advances"
+      ],
+      "failed": []
+    }
+  },
+  "scope": {
+    "liveGitHubWrites": false,
+    "npmPublication": false,
+    "userInstallationChanged": false,
+    "fullMatrixDispatched": false
+  },
+  "pendingInspectionSlice": {
+    "source": "b0ac8fe30afa9a84f9ea4895a5c754592f93e228",
+    "newGroupedCases": 6,
+    "existingStateControls": 11,
+    "passesPerRuntime": 17,
+    "evidence": "inspection-slice.md"
+  },
+  "environmentControl": {
+    "sandboxFailure": "Owned test hook process inspection: spawnSync ps EPERM (not a cancellation or CLI regression)",
+    "wire": "numeric-zero-sandbox-wire.json",
+    "identicalUnsandboxedCase": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 1,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-11-09T10:15:21.386Z",
+      "end": "2026-11-09T10:15:31.135Z",
+      "duration": 9749
+    }
+  },
+  "ciCheckpoint": {
+    "source": "064cd74a03d45e1ad440b5b8496a93823c0343d2",
+    "run": 42597521145,
+    "result": "Job timed out during npm package acceptance after passing previous steps",
+    "previousSuccessfulDuration": "8m47s",
+    "ordinaryJobTimeoutMinutesBefore": 10,
+    "ordinaryJobTimeoutMinutesAfter": 12,
+    "jobCountUnchanged": true,
+    "testsAndTriggersUnchanged": true,
+    "fullMatrixDispatched": false,
+    "checkRun": 129093706331,
+    "annotation": "The job has exceeded the maximum execution time of 10m0s"
+  },
+  "exactNpmPackageCheck": {
+    "source": "495de590bdf23e2c2f862e7b894792319de10c35",
+    "tarballSha256": "3b3f1832858d191fdd408fde02e0eb7b0f14e55401d2a245a47b2f1c0530d2b5",
+    "exitCode": 0,
+    "selectedScenariosPassed": 24,
+    "aliasScenariosPassed": 1,
+    "pending": 0,
+    "log": "npm-package-check.log",
+    "processInspection": "ps access enabled for owned synthetic cancellation fixture; sandbox denial reproduced separately"
+  }
+}

@@ -1,8 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { createHash } from 'crypto';
+import { z } from 'zod';
 import { runGitCommand } from '../../lib/git/runner';
 import { getSha } from '../../lib/git/get_sha';
+import { retainSyncFile } from './sync_abandon_archive';
 import {
   assertOwnedSyncRebase,
   readOwnedSyncRecovery,
@@ -35,29 +37,7 @@ export function retainSyncAutostash(
   const bytes =
     JSON.stringify({ version: 1, marker, oid, pin }, null, 2) + '\n';
   const archived = path.join(archive, 'autostash.json');
-  if (fs.existsSync(archived)) {
-    const stat = fs.lstatSync(archived);
-    if (
-      !stat.isFile() ||
-      (stat.mode & 0o077) !== 0 ||
-      fs.readFileSync(archived, 'utf8') !== bytes
-    )
-      refuseSync('Conflicting retained autostash evidence; nothing was quit.');
-  } else {
-    const fd = fs.openSync(archived, 'wx', 0o600);
-    try {
-      fs.writeFileSync(fd, bytes);
-      fs.fsyncSync(fd);
-    } finally {
-      fs.closeSync(fd);
-    }
-    const parent = fs.openSync(archive, 'r');
-    try {
-      fs.fsyncSync(parent);
-    } finally {
-      fs.closeSync(parent);
-    }
-  }
+  retainSyncFile(archived, bytes);
   const current = getSha(pin);
   if (current && current !== oid)
     refuseSync('Retained autostash pin changed; nothing was quit.');
@@ -103,4 +83,61 @@ function assertRetainedSyncAutostash(
     refuseSync(
       'Retained owned autostash pin changed; inspect archived evidence.'
     );
+}
+
+/** The live marker is gone after quit; retained evidence must still prove retention. */
+export function verifyRetainedSyncAutostash(
+  owned: OwnedSync,
+  archive: string
+): void {
+  const digest = createHash('sha256').update(owned.bytes).digest('hex');
+  const pin = `refs/gt-metadata/sync-abandonment/${digest}/autostash`;
+  const quitFile = path.join(archive, 'quit.json');
+  let expected: string | null | undefined;
+  if (fs.lstatSync(quitFile, { throwIfNoEntry: false })) {
+    const quit = z
+      .object({ version: z.literal(1), autostash: z.string().nullable() })
+      .strict()
+      .safeParse(readAutostashEvidence(quitFile));
+    if (!quit.success)
+      refuseSync('Conflicting retained autostash quit evidence.');
+    expected = quit.data.autostash;
+  }
+  const file = path.join(archive, 'autostash.json');
+  if (!fs.lstatSync(file, { throwIfNoEntry: false })) {
+    if ((expected !== undefined && expected !== null) || getSha(pin))
+      refuseSync('Retained autostash evidence is missing; recovery preserved.');
+    return;
+  }
+  const value = z
+    .object({
+      version: z.literal(1),
+      marker: z.string(),
+      oid: z.string().regex(/^[a-f0-9]{40,64}$/),
+      pin: z.string(),
+    })
+    .strict()
+    .safeParse(readAutostashEvidence(file));
+  if (
+    !value.success ||
+    value.data.marker.trim() !== value.data.oid ||
+    value.data.pin !== pin ||
+    (expected !== undefined && expected !== value.data.marker) ||
+    getSha(`${value.data.oid}^{commit}`) !== value.data.oid ||
+    getSha(pin) !== value.data.oid
+  )
+    refuseSync(
+      'Retained autostash evidence or private pin changed; recovery preserved.'
+    );
+}
+
+function readAutostashEvidence(file: string): unknown {
+  const state = fs.lstatSync(file);
+  if (!state.isFile() || (state.mode & 0o077) !== 0)
+    refuseSync('Retained autostash evidence is not private regular storage.');
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch {
+    refuseSync('Retained autostash evidence is malformed.');
+  }
 }

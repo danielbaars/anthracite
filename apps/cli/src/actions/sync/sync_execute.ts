@@ -408,7 +408,7 @@ function reportSyncFailure(operation: SyncOperation, error: unknown): never {
     )}). Original project: ${operation.root}. ${
       live
         ? 'Resolve the conflict and run an continue.'
-        : 'No verified owned continuation; inspect reached work and saved sync intent manually.'
+        : 'No verified owned continuation; inspect reached work and saved sync intent manually. A supported owned sync can be ended with an sync --abort, preserving reached work and residual Git/files.'
     } Some source refs may already have been removed; inspect remaining refs.\n${
       error instanceof Error ? error.message : String(error)
     }`

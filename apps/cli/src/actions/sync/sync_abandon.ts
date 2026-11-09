@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { createHash } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
 import { z } from 'zod';
 import { ExitFailedError } from '../../lib/errors';
 import { readMetadataRef } from '../../lib/engine/metadata_ref';
@@ -10,7 +10,16 @@ import { getSha } from '../../lib/git/get_sha';
 import { runGitCommand } from '../../lib/git/runner';
 import { getRebaseDirectory } from '../../lib/git/rebase_in_progress';
 import { landingProgressPath } from '../../lib/landing_progress';
-import { quitSyncRebase, retainSyncAutostash } from './sync_abandon_rebase';
+import {
+  quitSyncRebase,
+  retainSyncAutostash,
+  verifyRetainedSyncAutostash,
+} from './sync_abandon_rebase';
+import {
+  assertRetainedSyncFile,
+  retainSyncFile,
+  syncDirectory,
+} from './sync_abandon_archive';
 import {
   assertOwnedSyncRebase,
   readOwnedSyncRecovery,
@@ -50,6 +59,12 @@ export function abandonSync(): void {
     if (assertAbandonmentGitState(owned) !== directory)
       refuseSync('Active Git state changed before release.');
     if (directory) {
+      retainSyncFile(
+        path.join(archive, 'quit.json'),
+        JSON.stringify({ version: 1, autostash: autostash ?? null }, null, 2) +
+          '\n'
+      );
+      verifyRetainedSyncAutostash(owned, archive);
       quit = 'requested; result not confirmed';
       quitSyncRebase(owned, directory, autostash);
       quit = 'completed';
@@ -58,6 +73,7 @@ export function abandonSync(): void {
     if (getRebaseDirectory())
       refuseSync('Active Git rebase remains after quit.');
     assertAbandonmentGitState(owned);
+    verifyRetainedSyncAutostash(owned, archive);
     releaseSync(owned, archive);
     reportAbandonment(owned, archive);
   } catch (error) {
@@ -118,34 +134,6 @@ function privateDirectory(directory: string): void {
       `Archive directory is not private regular storage: ${directory}.`
     );
 }
-function durableFile(file: string, bytes: string): void {
-  if (fs.existsSync(file)) {
-    const stat = fs.lstatSync(file);
-    if (
-      !stat.isFile() ||
-      (stat.mode & 0o077) !== 0 ||
-      fs.readFileSync(file, 'utf8') !== bytes
-    )
-      refuseSync(`Conflicting archive preserved at ${file}.`);
-    return;
-  }
-  const descriptor = fs.openSync(file, 'wx', 0o600);
-  try {
-    fs.writeFileSync(descriptor, bytes);
-    fs.fsyncSync(descriptor);
-  } finally {
-    fs.closeSync(descriptor);
-  }
-}
-export function syncDirectory(directory: string): void {
-  const descriptor = fs.openSync(directory, 'r');
-  try {
-    fs.fsyncSync(descriptor);
-  } finally {
-    fs.closeSync(descriptor);
-  }
-}
-
 export function archiveSync(owned: OwnedSync): string {
   const root = path.join(
     owned.operation.commonDirectory,
@@ -155,14 +143,14 @@ export function archiveSync(owned: OwnedSync): string {
   const digest = createHash('sha256').update(owned.bytes).digest('hex');
   const archive = path.join(root, digest);
   privateDirectory(archive);
-  durableFile(path.join(archive, 'recovery.json'), owned.bytes);
+  retainSyncFile(path.join(archive, 'recovery.json'), owned.bytes);
   const sources = [
     ...(owned.operation.refresh.trunk ? [owned.operation.refresh.trunk] : []),
     ...owned.operation.refresh.nodes,
   ];
   const observations = path.join(archive, 'observations.json');
   if (!fs.existsSync(observations))
-    durableFile(
+    retainSyncFile(
       observations,
       JSON.stringify(
         {
@@ -225,22 +213,40 @@ export function archiveSync(owned: OwnedSync): string {
 /** Rename captures the actual file; a replaced owner is restored without overwriting. */
 export function releaseSync(owned: OwnedSync, archive: string): void {
   const released = path.join(archive, 'released.gtcontinue');
-  if (fs.existsSync(released))
-    refuseSync('A previous release receipt requires inspection.');
+  if (fs.lstatSync(released, { throwIfNoEntry: false }))
+    assertRetainedSyncFile(released, owned.bytes);
   assertSavedSync(owned);
-  fs.renameSync(owned.file, released);
-  if (fs.readFileSync(released, 'utf8') !== owned.bytes) {
-    if (!fs.existsSync(owned.file)) fs.linkSync(released, owned.file);
-    refuseSync(
-      `Recovery changed during release; competing bytes retained at ${released}.`
-    );
+  const captured = path.join(archive, `release-${randomUUID()}.gtcontinue`);
+  fs.closeSync(fs.openSync(captured, 'wx', 0o600));
+  fs.renameSync(owned.file, captured);
+  try {
+    if (!fs.readFileSync(captured).equals(Buffer.from(owned.bytes)))
+      refuseSync(
+        `Recovery changed during release; competing bytes retained at ${captured}.`
+      );
+    retainSyncFile(released, owned.bytes);
+    syncDirectory(archive);
+    syncDirectory(path.dirname(owned.file));
+    if (fs.existsSync(owned.file))
+      refuseSync(
+        'Another recovery appeared during release; it remains untouched.'
+      );
+    fs.unlinkSync(captured);
+    if (fs.existsSync(owned.file))
+      refuseSync(
+        'Recovery appeared after release; inspect the retained archive and competing gate.'
+      );
+  } catch (error) {
+    // Keep the gate retryable, without replacing a concurrent actor's recovery.
+    if (!fs.existsSync(owned.file) && fs.existsSync(captured)) {
+      try {
+        fs.linkSync(captured, owned.file);
+      } catch {
+        /* Captured bytes remain available if another actor wins the link. */
+      }
+    }
+    throw error;
   }
-  syncDirectory(archive);
-  syncDirectory(path.dirname(owned.file));
-  if (fs.existsSync(owned.file))
-    refuseSync(
-      'Another recovery appeared during release; it remains untouched.'
-    );
 }
 
 export function reportAbandonment(owned: OwnedSync, archive: string): void {
@@ -274,6 +280,9 @@ export function reportAbandonment(owned: OwnedSync, archive: string): void {
       )}.`,
       `Recorded completed maintenance: ${names(
         operation.completedMaintenance
+      )}.`,
+      `Recorded incomplete cleanup metadata: ${names(
+        operation.progress.incomplete
       )}.`,
       `Pending feature refresh: ${names(
         operation.refresh.nodes
