@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:49:35.307Z",
+    "end": "2026-11-10T03:51:54.520Z",
+    "duration": 139213
+  },
+  "tests": [
+    {
+      "title": "refuses a concurrent recovery change before push",
+      "fullTitle": "public deferred landing recovery refuses a concurrent recovery change before push",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 15745,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an acknowledged push and reconciles fresh PR content without republishing on retry",
+      "fullTitle": "public deferred landing recovery retains an acknowledged push and reconciles fresh PR content without republishing on retry",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 41672,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps failed publication unconfirmed and withholds PR edits and cleanup until retry",
+      "fullTitle": "public deferred landing recovery keeps failed publication unconfirmed and withholds PR edits and cleanup until retry",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 39492,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a deferred target across SIGINT during required-check waiting",
+      "fullTitle": "public deferred landing recovery retains a deferred target across SIGINT during required-check waiting",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 33927,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses a concurrent recovery change before push",
+      "fullTitle": "public deferred landing recovery refuses a concurrent recovery change before push",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 15745,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains an acknowledged push and reconciles fresh PR content without republishing on retry",
+      "fullTitle": "public deferred landing recovery retains an acknowledged push and reconciles fresh PR content without republishing on retry",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 41672,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps failed publication unconfirmed and withholds PR edits and cleanup until retry",
+      "fullTitle": "public deferred landing recovery keeps failed publication unconfirmed and withholds PR edits and cleanup until retry",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 39492,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a deferred target across SIGINT during required-check waiting",
+      "fullTitle": "public deferred landing recovery retains a deferred target across SIGINT during required-check waiting",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 33927,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

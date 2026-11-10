@@ -1,0 +1,72 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T04:03:47.102Z",
+    "end": "2026-11-10T04:05:30.786Z",
+    "duration": 103684
+  },
+  "tests": [
+    {
+      "title": "preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 26354,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not overwrite a deferred target changed externally after the first merge",
+      "fullTitle": "public deferred landing publication does not overwrite a deferred target changed externally after the first merge",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 21520,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "learns, previews and resumes deferred publication across MCP sessions",
+      "fullTitle": "public deferred landing delivery learns, previews and resumes deferred publication across MCP sessions",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 46153,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 26354,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not overwrite a deferred target changed externally after the first merge",
+      "fullTitle": "public deferred landing publication does not overwrite a deferred target changed externally after the first merge",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 21520,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "learns, previews and resumes deferred publication across MCP sessions",
+      "fullTitle": "public deferred landing delivery learns, previews and resumes deferred publication across MCP sessions",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 46153,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

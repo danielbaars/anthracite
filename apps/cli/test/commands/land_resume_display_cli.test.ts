@@ -118,6 +118,8 @@ describe('public resumed landing presentation', function () {
     fixture.git(['update-ref', 'refs/heads/main', head], github.remote);
     expect(declineMatchingPlan(0))
       .to.include('Cleanup-only 1: child #18')
+      .and.include('Readiness: PENDING for #19 tip')
+      .and.not.include('Readiness: READY')
       .and.not.include('Merge 1: child #18');
     const resumed = fixture.run(['land', 'tip', '--yes']);
     expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(0);

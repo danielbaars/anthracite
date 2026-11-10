@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:49:36.546Z",
+    "end": "2026-11-10T03:50:42.356Z",
+    "duration": 65810
+  },
+  "tests": [
+    {
+      "title": "refuses a concurrent recovery change before push",
+      "fullTitle": "public deferred landing recovery refuses a concurrent recovery change before push",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 18656,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a deferred target across SIGINT during required-check waiting",
+      "fullTitle": "public deferred landing recovery retains a deferred target across SIGINT during required-check waiting",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 42357,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses a concurrent recovery change before push",
+      "fullTitle": "public deferred landing recovery refuses a concurrent recovery change before push",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 18656,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a deferred target across SIGINT during required-check waiting",
+      "fullTitle": "public deferred landing recovery retains a deferred target across SIGINT during required-check waiting",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 42357,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:56:58.576Z",
+    "end": "2026-11-10T03:57:47.651Z",
+    "duration": 49075
+  },
+  "tests": [
+    {
+      "title": "learns, previews and resumes deferred publication across MCP sessions",
+      "fullTitle": "public deferred landing delivery learns, previews and resumes deferred publication across MCP sessions",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 46604,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "learns, previews and resumes deferred publication across MCP sessions",
+      "fullTitle": "public deferred landing delivery learns, previews and resumes deferred publication across MCP sessions",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 46604,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

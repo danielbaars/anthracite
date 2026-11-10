@@ -15,6 +15,8 @@ import {
   current,
   owned,
   landingSurvivors,
+  isLandingPublicationDeferred,
+  assertLandingProgressUnchanged,
 } from '../lib/landing_progress';
 import { createPrBodyFooter } from './create_pr_body_footer';
 import { updatePrBodyFooter } from './submit/submit_action';
@@ -42,6 +44,7 @@ export async function maintainLandingSurvivors(
         'Cleanup-only merged identity/result changed; recovery preserved.'
       );
   }
+  assertLandingProgressUnchanged(initial);
   const replayed = replaySurvivors(initial, context);
   const associated = associatePrs(replayed, context);
   return await publishSurvivors(associated, context);
@@ -220,6 +223,16 @@ async function publishSurvivors(
           record.remote,
           `refs/heads/${member.branch}`,
         ]).split(/\s+/)[0] || undefined;
+      if (record.version === 2 && member.number)
+        await assertPublicationIdentity(record, member, { published, context });
+      assertLandingProgressUnchanged(record);
+      validateLocal(record, context);
+      if (isLandingPublicationDeferred(record, member.branch)) {
+        process.stdout.write(
+          `⏭ Deferred: ${member.branch}; publish before its own merge.\n`
+        );
+        continue;
+      }
       if (expected.remoteHead) {
         if (published !== expected.remoteHead && published !== expected.head)
           throw new ExitFailedError(
@@ -276,7 +289,7 @@ async function publishSurvivors(
       throw new ExitFailedError(
         `Survivor maintenance incomplete for ${member.branch}. ${
           error instanceof Error ? error.message : String(error)
-        }`
+        } Reached local work is retained; publication/base/footer work remains unconfirmed.`
       );
     }
   }
@@ -307,6 +320,7 @@ async function updateSurvivorPr(
     createPrBodyFooter(fresh, member.branch)
   );
   if (pr.baseRefName !== expected.parent || pr.body !== body) {
+    assertLandingProgressUnchanged(record);
     validateLocal(record, context);
     await runGithubPrCommand(
       [
@@ -334,5 +348,34 @@ async function updateSurvivorPr(
   )
     throw new ExitFailedError(
       `Survivor PR base/footer update unconfirmed for ${member.branch}.`
+    );
+  assertLandingProgressUnchanged(record);
+}
+
+async function assertPublicationIdentity(
+  record: LandingProgress,
+  member: Member,
+  input: { readonly published?: string; readonly context: TContext }
+): Promise<void> {
+  const fresh = initContext(input.context, composeGit(), { inspection: true });
+  const pr = await getGithubPr(member.branch, fresh);
+  const expected = owned(participant(record, member.branch));
+  if (
+    input.published !== expected.remoteHead &&
+    input.published !== expected.head
+  )
+    throw new ExitFailedError(
+      `Remote head changed for ${member.branch}; captured-OID lease refused survivor push.`
+    );
+  if (
+    !pr ||
+    pr.number !== member.number ||
+    pr.url !== member.url ||
+    pr.state !== 'OPEN' ||
+    pr.headRefOid !== input.published ||
+    (pr.baseRefName !== member.parent && pr.baseRefName !== expected.parent)
+  )
+    throw new ExitFailedError(
+      `Existing survivor PR identity changed before publication for ${member.branch}.`
     );
 }

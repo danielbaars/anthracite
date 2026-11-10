@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T04:03:23.816Z",
+    "end": "2026-11-10T04:04:11.512Z",
+    "duration": 47696
+  },
+  "tests": [
+    {
+      "title": "preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 22549,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not overwrite a deferred target changed externally after the first merge",
+      "fullTitle": "public deferred landing publication does not overwrite a deferred target changed externally after the first merge",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 18740,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 22549,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not overwrite a deferred target changed externally after the first merge",
+      "fullTitle": "public deferred landing publication does not overwrite a deferred target changed externally after the first merge",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 18740,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:17:54.360Z",
+    "end": "2026-11-10T03:25:57.976Z",
+    "duration": 483616
+  },
+  "tests": [
+    {
+      "title": "publishes each future target only before its own merge in a three-PR chain",
+      "fullTitle": "public deferred landing publication publishes each future target only before its own merge in a three-PR chain",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 35445,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses six target updates for seven PRs with sibling maintenance false",
+      "fullTitle": "public deferred landing publication uses six target updates for seven PRs with sibling maintenance false",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 167643,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses six target updates for seven PRs with sibling maintenance true",
+      "fullTitle": "public deferred landing publication uses six target updates for seven PRs with sibling maintenance true",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 205105,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes a released version-1 record with its eager publication schedule",
+      "fullTitle": "public deferred landing publication resumes a released version-1 record with its eager publication schedule",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 42491,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves malformed version-2 publication identities before effects",
+      "fullTitle": "public deferred landing publication preserves malformed version-2 publication identities before effects",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 21886,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "publishes each future target only before its own merge in a three-PR chain",
+      "fullTitle": "public deferred landing publication publishes each future target only before its own merge in a three-PR chain",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 35445,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses six target updates for seven PRs with sibling maintenance false",
+      "fullTitle": "public deferred landing publication uses six target updates for seven PRs with sibling maintenance false",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 167643,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses six target updates for seven PRs with sibling maintenance true",
+      "fullTitle": "public deferred landing publication uses six target updates for seven PRs with sibling maintenance true",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 205105,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes a released version-1 record with its eager publication schedule",
+      "fullTitle": "public deferred landing publication resumes a released version-1 record with its eager publication schedule",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 42491,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves malformed version-2 publication identities before effects",
+      "fullTitle": "public deferred landing publication preserves malformed version-2 publication identities before effects",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 21886,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

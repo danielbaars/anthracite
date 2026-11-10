@@ -1,0 +1,281 @@
+{
+  "stats": {
+    "suites": 4,
+    "tests": 14,
+    "passes": 13,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-10T03:54:37.156Z",
+    "end": "2026-11-10T04:02:00.847Z",
+    "duration": 443691
+  },
+  "tests": [
+    {
+      "title": "binds classic policy identity to the exact configured repository and trunk",
+      "fullTitle": "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 807,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses app-bound classic requirements when the check publisher is unverified",
+      "fullTitle": "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 949,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "verifies an app-bound required check on the exact PR head",
+      "fullTitle": "public landing policy guards verifies an app-bound required check on the exact PR head",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "fullTitle": "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 8970,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "fullTitle": "public linear landing and prefixes lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 23401,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "fullTitle": "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 35131,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "fullTitle": "public linear landing and prefixes retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 30862,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves an unpublished descendant local without creating a PR or remote branch",
+      "fullTitle": "public linear landing and prefixes leaves an unpublished descendant local without creating a PR or remote branch",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 21235,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 25193,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Landing incomplete at survivor…' to include 'captured-OID lease refused survivor p…'",
+        "showDiff": false,
+        "actual": "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (06e1dd0eeed2322c1f0497d77379d7b9562428d5); later work unattempted. Survivor maintenance incomplete for child. Existing survivor PR identity changed before publication for child. Reached local work is retained; publication/base/footer work remains unconfirmed. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-D6bH5K/repo; rerun an land base --yes.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Landing incomplete at survivor…' to include 'captured-OID lease refused survivor p…'\n    at Context.<anonymous> (dist/test/commands/land_chain_cli.test.js:263:45)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 64791,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "fullTitle": "public scoped fanout landing retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 78554,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks queued sibling identity between completed local replays",
+      "fullTitle": "public scoped fanout landing rechecks queued sibling identity between completed local replays",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 19395,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes the ready saved chain after a colleague advances trunk while GitHub retains the PR base snapshot",
+      "fullTitle": "public landing after an external trunk advance resumes the ready saved chain after a colleague advances trunk while GitHub retains the PR base snapshot",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_trunk_advance_cli.test.js",
+      "duration": 42725,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects a divergent local trunk in preview and application without another merge",
+      "fullTitle": "public landing after an external trunk advance rejects a divergent local trunk in preview and application without another merge",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_trunk_advance_cli.test.js",
+      "duration": 25695,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "fullTitle": "public linear landing and prefixes preserves concurrent remote work when a survivor push loses its explicit captured lease",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 25193,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected 'ERROR: Landing incomplete at survivor…' to include 'captured-OID lease refused survivor p…'",
+        "showDiff": false,
+        "actual": "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (06e1dd0eeed2322c1f0497d77379d7b9562428d5); later work unattempted. Survivor maintenance incomplete for child. Existing survivor PR identity changed before publication for child. Reached local work is retained; publication/base/footer work remains unconfirmed. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-D6bH5K/repo; rerun an land base --yes.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected 'ERROR: Landing incomplete at survivor…' to include 'captured-OID lease refused survivor p…'\n    at Context.<anonymous> (dist/test/commands/land_chain_cli.test.js:263:45)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "binds classic policy identity to the exact configured repository and trunk",
+      "fullTitle": "public landing policy guards binds classic policy identity to the exact configured repository and trunk",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 807,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses app-bound classic requirements when the check publisher is unverified",
+      "fullTitle": "public landing policy guards refuses app-bound classic requirements when the check publisher is unverified",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 949,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "verifies an app-bound required check on the exact PR head",
+      "fullTitle": "public landing policy guards verifies an app-bound required check on the exact PR head",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 979,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "fullTitle": "public landing policy guards refuses publisher mismatch, stale head, ambiguous, pending and incomplete check-run evidence",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_policy_cli.test.js",
+      "duration": 8970,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "fullTitle": "public linear landing and prefixes lands a prefix and replays its draft descendant chain preserving unique work and PR identities",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 23401,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "fullTitle": "public linear landing and prefixes lands the selected linear chain bottom-up and maintains the draft above the target after every merge",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 35131,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "fullTitle": "public linear landing and prefixes retains completed replay and push after a PR update failure, then resumes without replaying patches twice",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 30862,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves an unpublished descendant local without creating a PR or remote branch",
+      "fullTitle": "public linear landing and prefixes leaves an unpublished descendant local without creating a PR or remote branch",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_chain_cli.test.js",
+      "duration": 21235,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "fullTitle": "public scoped fanout landing merges only the chosen chain and maintains every necessary arm while preserving unpublished and independent work",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 64791,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "fullTitle": "public scoped fanout landing retains earlier arms when a later PR update fails and retries without duplicate replay or merge",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 78554,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rechecks queued sibling identity between completed local replays",
+      "fullTitle": "public scoped fanout landing rechecks queued sibling identity between completed local replays",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_fanout_cli.test.js",
+      "duration": 19395,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "resumes the ready saved chain after a colleague advances trunk while GitHub retains the PR base snapshot",
+      "fullTitle": "public landing after an external trunk advance resumes the ready saved chain after a colleague advances trunk while GitHub retains the PR base snapshot",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_trunk_advance_cli.test.js",
+      "duration": 42725,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects a divergent local trunk in preview and application without another merge",
+      "fullTitle": "public landing after an external trunk advance rejects a divergent local trunk in preview and application without another merge",
+      "file": "/private/tmp/anthracite-165-integration-20261110/apps/cli/dist/test/commands/land_trunk_advance_cli.test.js",
+      "duration": 25695,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

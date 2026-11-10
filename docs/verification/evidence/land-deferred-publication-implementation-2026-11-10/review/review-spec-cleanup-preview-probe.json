@@ -1,0 +1,7 @@
+{
+  "status": 0,
+  "stdout": "⏸ Pending landing: fixture/inspection\nTarget: tip -> main\nLocal main: fast-forward after confirmed merges.\n✅ Already merged: #17 base\n\n🔀 Remaining PRs (bottom to top):\n  Cleanup-only 1: child #18\n  Merge 2: tip #19 (publication deferred until its merge preparation)\n\n🔧 After merging #18: verify required branch maintenance.\n  Maintain: tip #19 (also a merge target)\n    Verify replay locally; defer push and PR base/footer updates until its merge preparation.\n\n🧹 Cleanup: child, tip\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\n✅ Readiness: READY for next merge only; deferred targets require publication and fresh checks.\nUse --debug for recovery phases, commit IDs and replay details.\n",
+  "stderr": "",
+  "tipLocal": "dd6805ab79f016b72dba01c58bfb6d335371e452",
+  "tipRemote": "ca00065fe9fa1d7805959a64bb5aa2f7a1800415"
+}

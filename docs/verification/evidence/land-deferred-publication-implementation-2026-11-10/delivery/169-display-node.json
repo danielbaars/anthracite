@@ -1,0 +1,180 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 9,
+    "passes": 9,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T04:01:13.588Z",
+    "end": "2026-11-10T04:04:50.959Z",
+    "duration": 217371
+  },
+  "tests": [
+    {
+      "title": "puts dirty-worktree blockers and the next action before the planned merge scope",
+      "fullTitle": "public landing plan presentation puts dirty-worktree blockers and the next action before the planned merge scope",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1055,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the complete ordered PR scope without commit-level diagnostics by default",
+      "fullTitle": "public landing plan presentation shows the complete ordered PR scope without commit-level diagnostics by default",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1067,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains exact heads and replay boundaries through the existing debug option",
+      "fullTitle": "public landing plan presentation retains exact heads and replay boundaries through the existing debug option",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1076,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "separates mandatory fanout updates from merges and identifies work that remains unpublished",
+      "fullTitle": "public landing plan presentation separates mandatory fanout updates from merges and identifies work that remains unpublished",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 2710,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the same freshly checked plan before confirmation as readiness and merge state change",
+      "fullTitle": "public resumed landing presentation shows the same freshly checked plan before confirmation as readiness and merge state change",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 43414,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "fullTitle": "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 22702,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "fullTitle": "public resumed landing presentation keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 42048,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+      "fullTitle": "public resumed landing presentation puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 24296,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses the same compact remaining scope during real resumption before completing each remaining merge once",
+      "fullTitle": "public resumed landing presentation uses the same compact remaining scope during real resumption before completing each remaining merge once",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 40601,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "puts dirty-worktree blockers and the next action before the planned merge scope",
+      "fullTitle": "public landing plan presentation puts dirty-worktree blockers and the next action before the planned merge scope",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1055,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the complete ordered PR scope without commit-level diagnostics by default",
+      "fullTitle": "public landing plan presentation shows the complete ordered PR scope without commit-level diagnostics by default",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1067,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains exact heads and replay boundaries through the existing debug option",
+      "fullTitle": "public landing plan presentation retains exact heads and replay boundaries through the existing debug option",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 1076,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "separates mandatory fanout updates from merges and identifies work that remains unpublished",
+      "fullTitle": "public landing plan presentation separates mandatory fanout updates from merges and identifies work that remains unpublished",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_display_cli.test.js",
+      "duration": 2710,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the same freshly checked plan before confirmation as readiness and merge state change",
+      "fullTitle": "public resumed landing presentation shows the same freshly checked plan before confirmation as readiness and merge state change",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 43414,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "fullTitle": "public resumed landing presentation previews remaining PRs and mandatory maintenance compactly without changing saved progress or local work",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 22702,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "fullTitle": "public resumed landing presentation keeps complete recovery details under debug while disclosing published and unpublished fanout in the normal scope",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 42048,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+      "fullTitle": "public resumed landing presentation puts fresh dirty-worktree and running-check blockers before the conditional recovery scope without changing it",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 24296,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses the same compact remaining scope during real resumption before completing each remaining merge once",
+      "fullTitle": "public resumed landing presentation uses the same compact remaining scope during real resumption before completing each remaining merge once",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 40601,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

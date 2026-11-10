@@ -62,7 +62,7 @@ describe('public landing plan presentation', function () {
       result.stdout.indexOf('Merge 3:')
     );
     expect(result.stdout).to.include(
-      'Between merges: restack and push affected published branches'
+      'Between merges: restack affected branches locally; publish the next merge target'
     );
     expect(result.stdout)
       .to.include('Cleanup: base, child, tip')

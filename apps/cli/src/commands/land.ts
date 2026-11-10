@@ -11,7 +11,7 @@ const options = {
     type: 'boolean',
     default: false,
     description:
-      'Show PR order, maintenance and blockers without writes; add --debug for commit details.',
+      'Show PR order, deferred publication, maintenance and blockers without writes; add --debug for commit details.',
   },
   yes: {
     type: 'boolean',

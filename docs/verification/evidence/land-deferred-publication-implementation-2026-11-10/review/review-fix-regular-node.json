@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T04:18:39.953Z",
+    "end": "2026-11-10T04:19:09.943Z",
+    "duration": 29990
+  },
+  "tests": [
+    {
+      "title": "keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "fullTitle": "public deferred landing plans keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 27628,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "fullTitle": "public deferred landing plans keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 27628,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

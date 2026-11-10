@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T04:00:13.900Z",
+    "end": "2026-11-10T04:01:09.334Z",
+    "duration": 55434
+  },
+  "tests": [
+    {
+      "title": "preserves released version-1 eager scheduling after a partial mandatory PR update",
+      "fullTitle": "public deferred landing delivery preserves released version-1 eager scheduling after a partial mandatory PR update",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 52860,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves released version-1 eager scheduling after a partial mandatory PR update",
+      "fullTitle": "public deferred landing delivery preserves released version-1 eager scheduling after a partial mandatory PR update",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 52860,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

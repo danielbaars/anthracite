@@ -1,0 +1,2 @@
+  [53ms]  bundle  653 modules
+  [92ms] compile  /private/tmp/anthracite-169-review-fix-native-20261110

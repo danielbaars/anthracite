@@ -322,13 +322,17 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
       `  ${member.mergedResult ? 'Cleanup-only' : 'Merge'} ${index + 1}: ${
         member.branch
       } #${member.pr?.number ?? '?'}${
-        member.mergedResult ? ' (already merged)' : ''
+        member.mergedResult
+          ? ' (already merged)'
+          : index > 0
+          ? ' (publication deferred until its merge preparation)'
+          : ''
       }\n`
     )
   );
   if (plan.merges.length > 1)
     process.stdout.write(
-      'Between merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n'
+      'Between merges: restack affected branches locally; publish the next merge target\nand non-target survivors. Later targets defer publication until their turn.\n'
     );
   if (plan.maintenance.length) {
     process.stdout.write(
@@ -357,7 +361,11 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
       )}\n  Delete landed branches locally and on GitHub after confirmed merges only.\n`
   );
   if (!plan.blockers.length)
-    process.stdout.write('✅ Readiness: READY to merge this plan.\n');
+    process.stdout.write(
+      plan.merges.length > 1
+        ? '✅ Readiness: READY for next merge only; later targets require publication and fresh checks.\n'
+        : '✅ Readiness: READY to merge this plan.\n'
+    );
   for (const warning of plan.warnings) process.stdout.write(`⚠ ${warning}\n`);
   process.stdout.write('Use --debug for commit IDs and technical details.\n');
   printLandDetails(plan, (message) => context.splog.debug(message.trimEnd()));
@@ -435,7 +443,12 @@ function printLandDetails(
       )} (confirmed landed local metadata/refs and unchanged remote heads only)\n`
   );
   for (const blocker of plan.blockers) write(`BLOCKED: ${blocker}\n`);
-  if (!plan.blockers.length) write('Readiness: READY for disclosed plan.\n');
+  if (!plan.blockers.length)
+    write(
+      plan.merges.length > 1
+        ? 'Readiness: READY for next merge only; later heads require publication and fresh checks.\n'
+        : 'Readiness: READY for disclosed plan.\n'
+    );
 }
 
 export async function land(

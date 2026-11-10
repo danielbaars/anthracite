@@ -1,0 +1,128 @@
+{
+  "baseline": "a3c9f7055c7a42dfe38daee8fb843f21e1763474",
+  "boundary": "Real temporary Git repositories/bare remotes; only gh boundary controlled; pre-push and post-receive observations",
+  "scenarios": {
+    "linear3": {
+      "counts": {
+        "pushInvocations": 6,
+        "featureUpdates": 3,
+        "deletions": 3,
+        "updatesByRef": {
+          "refs/heads/child": 1,
+          "refs/heads/tip": 2
+        },
+        "deletionsByRef": {
+          "refs/heads/base": 1,
+          "refs/heads/child": 1,
+          "refs/heads/tip": 1
+        }
+      },
+      "mergeRequests": 3,
+      "prEdits": 3,
+      "simulatedServerMainAdvances": 3,
+      "clientTransactionsExactlyMatchRemoteReceives": true,
+      "finalPhysicalFilesEqualOriginalTarget": true,
+      "independentHeadsPreserved": true,
+      "captureSha256": "3474fb7b96d4d1bd7e26ff05af3ea4e68f4b280b1dccbfcf9df2d13afdc3de6f"
+    },
+    "linear7": {
+      "counts": {
+        "pushInvocations": 28,
+        "featureUpdates": 21,
+        "deletions": 7,
+        "updatesByRef": {
+          "refs/heads/child": 1,
+          "refs/heads/tip": 2,
+          "refs/heads/four": 3,
+          "refs/heads/five": 4,
+          "refs/heads/six": 5,
+          "refs/heads/seven": 6
+        },
+        "deletionsByRef": {
+          "refs/heads/base": 1,
+          "refs/heads/child": 1,
+          "refs/heads/tip": 1,
+          "refs/heads/four": 1,
+          "refs/heads/five": 1,
+          "refs/heads/six": 1,
+          "refs/heads/seven": 1
+        }
+      },
+      "mergeRequests": 7,
+      "prEdits": 21,
+      "simulatedServerMainAdvances": 7,
+      "clientTransactionsExactlyMatchRemoteReceives": true,
+      "finalPhysicalFilesEqualOriginalTarget": true,
+      "independentHeadsPreserved": true,
+      "captureSha256": "2e97406554dc919b72e65651c978d31435cb90400fadb86f424a55f509a5a50e"
+    },
+    "fanout7": {
+      "counts": {
+        "pushInvocations": 29,
+        "featureUpdates": 22,
+        "deletions": 7,
+        "updatesByRef": {
+          "refs/heads/child": 1,
+          "refs/heads/tip": 2,
+          "refs/heads/four": 3,
+          "refs/heads/five": 4,
+          "refs/heads/six": 5,
+          "refs/heads/seven": 6,
+          "refs/heads/published-sibling": 1
+        },
+        "deletionsByRef": {
+          "refs/heads/base": 1,
+          "refs/heads/child": 1,
+          "refs/heads/tip": 1,
+          "refs/heads/four": 1,
+          "refs/heads/five": 1,
+          "refs/heads/six": 1,
+          "refs/heads/seven": 1
+        }
+      },
+      "mergeRequests": 7,
+      "prEdits": 22,
+      "simulatedServerMainAdvances": 7,
+      "clientTransactionsExactlyMatchRemoteReceives": true,
+      "finalPhysicalFilesEqualOriginalTarget": true,
+      "independentHeadsPreserved": true,
+      "captureSha256": "e7aca9d644081212ed8b9eb04eeff014be60fc7ecd8740823d93d44da6ab33c5",
+      "firstPause": {
+        "featureUpdates": 7,
+        "deletions": 1,
+        "confirmedMerges": 1,
+        "nextIndex": 1,
+        "resumptionRepeatsNoConfirmedMerge": true
+      },
+      "survivorsNotRevisitedAfterFirstMaintenance": true,
+      "finalLogMarksSurvivorsAndIndependentBranchNeedsRestack": true
+    },
+    "conflict3": {
+      "counts": {
+        "pushInvocations": 0,
+        "featureUpdates": 0,
+        "deletions": 0,
+        "updatesByRef": {},
+        "deletionsByRef": {}
+      },
+      "mergeRequests": 1,
+      "prEdits": 0,
+      "simulatedServerMainAdvances": 1,
+      "clientTransactionsExactlyMatchRemoteReceives": true,
+      "finalPhysicalFilesEqualOriginalTarget": false,
+      "independentHeadsPreserved": true,
+      "captureSha256": "ed927e43d73c18812302b27c88fd543cecb0958b7e972d0774b66f4b86f25ad4"
+    }
+  },
+  "optimizedImplementationExecuted": false,
+  "liveGithubFixtureWrites": false,
+  "ciRunsStarted": 0,
+  "fullMatrixRun": false,
+  "frontendPackagesModified": false,
+  "userInstallationModified": false,
+  "sourceBridge": {
+    "allCliTypeScriptFilesByteEqual": true,
+    "filesCompared": 289,
+    "sourceManifestSha256": "d1e4a0aeaa5dcf5c1d882a1426d4df96f8eb927d217b83ab00a1adfe129299bd"
+  }
+}

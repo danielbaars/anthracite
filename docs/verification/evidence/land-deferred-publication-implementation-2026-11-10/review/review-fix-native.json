@@ -1,0 +1,72 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T04:18:41.117Z",
+    "end": "2026-11-10T04:20:11.809Z",
+    "duration": 90692
+  },
+  "tests": [
+    {
+      "title": "keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "fullTitle": "public deferred landing plans keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 23835,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "discloses immediate publication and pending readiness after the current target merges externally",
+      "fullTitle": "public deferred landing plans discloses immediate publication and pending readiness after the current target merges externally",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 22873,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the same freshly checked plan before confirmation as readiness and merge state change",
+      "fullTitle": "public resumed landing presentation shows the same freshly checked plan before confirmation as readiness and merge state change",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 35821,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "fullTitle": "public deferred landing plans keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 23835,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "discloses immediate publication and pending readiness after the current target merges externally",
+      "fullTitle": "public deferred landing plans discloses immediate publication and pending readiness after the current target merges externally",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 22873,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "shows the same freshly checked plan before confirmation as readiness and merge state change",
+      "fullTitle": "public resumed landing presentation shows the same freshly checked plan before confirmation as readiness and merge state change",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_resume_display_cli.test.js",
+      "duration": 35821,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

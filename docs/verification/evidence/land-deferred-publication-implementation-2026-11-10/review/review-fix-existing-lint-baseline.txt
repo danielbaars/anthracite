@@ -1,0 +1,6 @@
+
+/private/tmp/anthracite-169-20261110/apps/cli/test/commands/land_resume_display_cli.test.ts
+  10:49  error  Function has too many lines (240). Maximum allowed is 120  max-lines-per-function
+
+✖ 1 problem (1 error, 0 warnings)
+

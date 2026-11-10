@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "6783ac2e0f94ddd1351b9599aa8c71b653c7f9cc",
+  "baseline": "b8e4188b1cb9f3c8e223f1f42cce24e701d4ac76",
+  "node": "v24.19.0",
+  "bun": "1.3.14",
+  "note": "Presentation-only review fix; candidate retains workspace0.6.15 version and is isolated from published/active installations.",
+  "artifacts": {
+    "native": {
+      "path": "/private/tmp/anthracite-169-review-fix-native-20261110",
+      "sha256": "0cfa5225381952578daa76e001ba69e0c5e49dabcac46b0b9ecfa8ddb5634352"
+    },
+    "tarball": {
+      "path": "/private/tmp/anthracite-169-20261110/release/npm/danielbaars-anthracite.tgz",
+      "sha256": "fef34d21b811cd76fe56368605a7ff145fedca14bccb0b57793147251690366a"
+    },
+    "installedCli": {
+      "path": "/private/tmp/anthracite-169-review-fix-npm-installed/node_modules/@danielbaars/anthracite/cli.cjs",
+      "sha256": "a1e6532263c8e75f0218e841b5164156b8dd76b38aac5a4b13d64a3aef6c819b"
+    }
+  }
+}
