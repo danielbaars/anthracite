@@ -201,6 +201,9 @@ describe('public deferred landing recovery', function () {
       const stopped = fixture.run(['land', 'tip', '--yes']);
       expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
       expect(stopped.stderr).to.include('Landing interrupted');
+      expect(stopped.stderr).to.include(
+        'pending publication/base/footer obligations'
+      );
       expect(fs.existsSync(marker)).to.equal(true);
       expect(
         fs.existsSync(path.join(fixture.repo, '.git/.graphite_cache_lock'))
@@ -354,6 +357,7 @@ describe('public deferred landing recovery', function () {
     expect(interrupted, stdout + stderr).to.equal(true);
     expect(status, stdout + stderr).to.equal(1);
     expect(stderr).to.include('Landing interrupted');
+    expect(stderr).to.include('pending publication/base/footer obligations');
     expect(
       fs.existsSync(path.join(fixture.repo, '.git/.graphite_cache_lock'))
     ).to.equal(false);
