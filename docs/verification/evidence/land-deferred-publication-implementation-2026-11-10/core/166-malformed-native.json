@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:20:57.879Z",
+    "end": "2026-11-10T03:21:19.873Z",
+    "duration": 21994
+  },
+  "tests": [
+    {
+      "title": "preserves malformed version-2 publication identities before effects",
+      "fullTitle": "public deferred landing publication preserves malformed version-2 publication identities before effects",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 19943,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "preserves malformed version-2 publication identities before effects",
+      "fullTitle": "public deferred landing publication preserves malformed version-2 publication identities before effects",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 19943,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
