@@ -1,0 +1,7 @@
+{
+  "package": "@danielbaars/anthracite",
+  "version": "0.6.15",
+  "executable": "/private/tmp/anthracite-release-0615-20261109/public install/node_modules/@danielbaars/anthracite/cli.cjs",
+  "sha256": "b5ec9d945824443cd441ae9f40220d174ef4c367952e7c264186a2bfc0882608",
+  "source": "existing isolated installation of public npm 0.6.15; not the user active installation"
+}

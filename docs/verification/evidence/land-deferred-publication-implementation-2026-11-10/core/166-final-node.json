@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:27:32.867Z",
+    "end": "2026-11-10T03:35:14.065Z",
+    "duration": 461198
+  },
+  "tests": [
+    {
+      "title": "publishes each future target only before its own merge in a three-PR chain",
+      "fullTitle": "public deferred landing publication publishes each future target only before its own merge in a three-PR chain",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 37276,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses six target updates for seven PRs with sibling maintenance false",
+      "fullTitle": "public deferred landing publication uses six target updates for seven PRs with sibling maintenance false",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 180126,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses six target updates for seven PRs with sibling maintenance true",
+      "fullTitle": "public deferred landing publication uses six target updates for seven PRs with sibling maintenance true",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 215104,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not overwrite a deferred target changed externally after the first merge",
+      "fullTitle": "public deferred landing publication does not overwrite a deferred target changed externally after the first merge",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 19614,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "publishes each future target only before its own merge in a three-PR chain",
+      "fullTitle": "public deferred landing publication publishes each future target only before its own merge in a three-PR chain",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 37276,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses six target updates for seven PRs with sibling maintenance false",
+      "fullTitle": "public deferred landing publication uses six target updates for seven PRs with sibling maintenance false",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 180126,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses six target updates for seven PRs with sibling maintenance true",
+      "fullTitle": "public deferred landing publication uses six target updates for seven PRs with sibling maintenance true",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 215104,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not overwrite a deferred target changed externally after the first merge",
+      "fullTitle": "public deferred landing publication does not overwrite a deferred target changed externally after the first merge",
+      "file": "/private/tmp/anthracite-166-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 19614,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
