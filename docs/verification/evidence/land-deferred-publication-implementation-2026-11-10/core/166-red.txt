@@ -1,0 +1,26 @@
+
+
+  public deferred landing publication
+    1) publishes each future target only before its own merge in a three-PR chain
+
+
+  0 passing (39s)
+  1 failing
+
+  1) public deferred landing publication
+       publishes each future target only before its own merge in a three-PR chain:
+
+      AssertionError: expected [ 'refs/heads/child', …(2) ] to deeply equal [ Array(2) ]
+      + expected - actual
+
+       [
+         "refs/heads/child"
+         "refs/heads/tip"
+      -  "refs/heads/tip"
+       ]
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/land_deferred_publication_cli.test.js:30:71)
+      at process.processImmediate (node:internal/timers:534:21)
+
+
+
