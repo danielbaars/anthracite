@@ -181,6 +181,19 @@ provenance stop progress. Client deadlines may interrupt a wait sooner; inspect
 preserved progress and explicitly resume rather than assuming rollback.
 There is no queue, bypass, automatic approval or implicit submit route.
 
+In new version-2 landings, later merge targets defer publication until their own
+merge preparation. Local replay remains immediate, including conflict detection.
+The next target is pushed and its existing PR base/footer verified before its
+landed parent is deleted. Non-target published survivors remain eager; local-only
+branches remain unpublished. Deferred remote heads, PR bases and footers can lag
+reached local work temporarily. Readiness applies to the next merge, not all later
+unpublished heads. Saved version-1 landings retain eager publication, including
+partially completed maintenance; both versions enforce current required checks.
+After interruption, inspect reached local work and pending publication/base/footer
+obligations before explicit resumption. A matching acknowledged push or PR update
+is read back rather than blindly repeated. Never clear recovery to skip due work.
+Finish a pending version-2 landing before downgrading to an older CLI.
+
 A landing conflict returns cli_error and retains completed merges and parents.
 Resolve and stage deliberately, then an continue in the printed original project
 performs local-only replay. It never merges, pushes or edits PRs. The landing
