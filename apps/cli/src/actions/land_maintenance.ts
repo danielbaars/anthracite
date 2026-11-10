@@ -15,6 +15,7 @@ import {
   current,
   owned,
   landingSurvivors,
+  isLandingPublicationDeferred,
 } from '../lib/landing_progress';
 import { createPrBodyFooter } from './create_pr_body_footer';
 import { updatePrBodyFooter } from './submit/submit_action';
@@ -220,6 +221,14 @@ async function publishSurvivors(
           record.remote,
           `refs/heads/${member.branch}`,
         ]).split(/\s+/)[0] || undefined;
+      if (record.version === 2 && member.number)
+        await assertPublicationIdentity(record, member, { published, context });
+      if (isLandingPublicationDeferred(record, member.branch)) {
+        process.stdout.write(
+          `⏭ Deferred: ${member.branch}; publish before its own merge.\n`
+        );
+        continue;
+      }
       if (expected.remoteHead) {
         if (published !== expected.remoteHead && published !== expected.head)
           throw new ExitFailedError(
@@ -334,5 +343,28 @@ async function updateSurvivorPr(
   )
     throw new ExitFailedError(
       `Survivor PR base/footer update unconfirmed for ${member.branch}.`
+    );
+}
+
+async function assertPublicationIdentity(
+  record: LandingProgress,
+  member: Member,
+  input: { readonly published?: string; readonly context: TContext }
+): Promise<void> {
+  const fresh = initContext(input.context, composeGit(), { inspection: true });
+  const pr = await getGithubPr(member.branch, fresh);
+  const expected = owned(participant(record, member.branch));
+  if (
+    !pr ||
+    (input.published !== expected.remoteHead &&
+      input.published !== expected.head) ||
+    pr.number !== member.number ||
+    pr.url !== member.url ||
+    pr.state !== 'OPEN' ||
+    pr.headRefOid !== input.published ||
+    (pr.baseRefName !== member.parent && pr.baseRefName !== expected.parent)
+  )
+    throw new ExitFailedError(
+      `Existing survivor PR identity changed before publication for ${member.branch}.`
     );
 }

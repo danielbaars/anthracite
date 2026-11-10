@@ -328,7 +328,7 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
   );
   if (plan.merges.length > 1)
     process.stdout.write(
-      'Between merges: restack and push affected published branches, update PR bases\nand dependency footers, and check readiness again.\n'
+      'Between merges: restack affected branches locally; publish the next merge target\nand non-target survivors. Later targets defer publication until their turn.\n'
     );
   if (plan.maintenance.length) {
     process.stdout.write(
