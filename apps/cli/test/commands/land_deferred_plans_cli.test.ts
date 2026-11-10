@@ -139,6 +139,39 @@ describe('public deferred landing plans', function () {
     );
   });
 
+  it('discloses immediate publication and pending readiness after the current target merges externally', () => {
+    pauseLanding();
+    const prs = readPrs();
+    const child = prs.find((pr) => pr.headRefName === 'child');
+    if (!child) throw new Error('Missing child fixture');
+    const head = fixture.git(['rev-parse', 'child']);
+    child.state = 'MERGED';
+    child.mergeResult = head;
+    fs.writeFileSync(github.state, JSON.stringify(prs));
+    fixture.git(['update-ref', 'refs/heads/main', head], github.remote);
+    expect(fixture.git(['rev-parse', 'tip'], github.remote)).not.to.equal(
+      fixture.git(['rev-parse', 'tip'])
+    );
+    const report = matchingPlan(true);
+    expect(report)
+      .to.include('Cleanup-only 1: child #18')
+      .and.include('Merge 2: tip #19 (publication due before its merge)')
+      .and.include('After confirmed merge #18')
+      .and.include('push existing branch; update existing PR #19 base/footer')
+      .and.include('Readiness: PENDING for #19 tip')
+      .and.not.include('Readiness: READY')
+      .and.not.include('After merging #18')
+      .and.not.include('tip #19 (publication deferred');
+    const before = fixture.inspectionSnapshot();
+    const debug = fixture.run(['land', 'tip', '--dry-run', '--debug']);
+    expect(debug.status, debug.stdout + debug.stderr).to.equal(0);
+    expect(debug.stderr)
+      .to.include('Cleanup-only: child #18')
+      .and.include('Push: tip; verify or update existing leased head')
+      .and.not.include('Push: tip; deferred');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+  });
+
   for (const refusal of [
     { field: 'isDraft', value: true, message: 'PR is a draft.' },
     {
