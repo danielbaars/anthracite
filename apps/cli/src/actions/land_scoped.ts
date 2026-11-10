@@ -205,17 +205,50 @@ export async function resumeScopedLanding(
   }, record);
 }
 
+type PendingLandingInspection = {
+  readonly blockers: readonly string[];
+  readonly warnings: readonly string[];
+  readonly cleanupOnly: ReadonlySet<string>;
+  readonly verification?: string;
+};
+
+function pendingPublicationDue(
+  record: LandingProgress,
+  cleanupOnly: ReadonlySet<string>
+): string | undefined {
+  if (
+    record.version !== 2 ||
+    !cleanupOnly.has(current(record).branch) ||
+    (record.phase !== 'prepared' && record.phase !== 'merge-requested')
+  )
+    return undefined;
+  return record.merges
+    .slice((record.index ?? 0) + 1)
+    .find(
+      (member) =>
+        !member.cleanupResult &&
+        !member.result &&
+        !cleanupOnly.has(member.branch)
+    )?.branch;
+}
+
+function pendingPublicationDeferred(
+  record: LandingProgress,
+  branch: string,
+  publicationDue?: string
+): boolean {
+  return (
+    branch !== publicationDue && isLandingPublicationDeferred(record, branch)
+  );
+}
+
 function printPendingLanding(
   record: LandingProgress,
   context: TContext,
-  inspection: {
-    readonly blockers: readonly string[];
-    readonly warnings: readonly string[];
-    readonly cleanupOnly: ReadonlySet<string>;
-    readonly verification?: string;
-  }
+  inspection: PendingLandingInspection
 ): void {
   const remaining = record.merges.slice(record.index ?? 0);
+  const publicationDue = pendingPublicationDue(record, inspection.cleanupOnly);
   if (inspection.blockers.length) {
     process.stdout.write('⛔ Cannot resume landing yet:\n');
     for (const blocker of inspection.blockers) {
@@ -261,7 +294,9 @@ function printPendingLanding(
       `  ${cleanupOnly ? 'Cleanup-only' : 'Merge'} ${index + 1}: ${
         member.branch
       } #${member.number}${
-        isLandingPublicationDeferred(record, member.branch)
+        member.branch === publicationDue
+          ? ' (publication due before its merge)'
+          : pendingPublicationDeferred(record, member.branch, publicationDue)
           ? ' (publication deferred until its merge preparation)'
           : ''
       }\n`
@@ -270,9 +305,11 @@ function printPendingLanding(
   const survivors = landingSurvivors(record);
   if (survivors.length) {
     process.stdout.write(
-      `\n🔧 After merging #${
-        current(record).number
-      }: verify required branch maintenance.\n`
+      `\n🔧 ${
+        inspection.cleanupOnly.has(current(record).branch)
+          ? 'After confirmed merge'
+          : 'After merging'
+      } #${current(record).number}: verify required branch maintenance.\n`
     );
     for (const member of survivors) {
       const expected = owned(member);
@@ -286,7 +323,7 @@ function printPendingLanding(
       );
       const effect = member.cleanupResult
         ? 'Verify metadata only; already landed.'
-        : isLandingPublicationDeferred(record, member.branch)
+        : pendingPublicationDeferred(record, member.branch, publicationDue)
         ? 'Verify replay locally; defer push and PR base/footer updates until its merge preparation.'
         : `Verify replay; ${
             expected.remoteHead ? 'push existing branch' : 'keep local; no push'
@@ -310,24 +347,43 @@ function printPendingLanding(
         ', '
       )}\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: ${checkout}\n`
   );
-  if (!inspection.blockers.length)
-    process.stdout.write(
-      record.version === 2
-        ? '✅ Readiness: READY for next merge only; deferred targets require publication and fresh checks.\n'
-        : '✅ Readiness: READY for remaining work; checks repeat before every merge.\n'
-    );
-  for (const warning of inspection.warnings)
-    process.stdout.write(`⚠ ${warning}\n`);
+  printPendingReadiness(record, inspection, publicationDue);
   process.stdout.write(
     'Use --debug for recovery phases, commit IDs and replay details.\n'
   );
-  printPendingLandingDetails(record, context);
+  printPendingLandingDetails(record, context, {
+    ...inspection,
+    publicationDue,
+  });
+}
+
+function printPendingReadiness(
+  record: LandingProgress,
+  inspection: PendingLandingInspection,
+  publicationDue?: string
+): void {
+  if (!inspection.blockers.length) {
+    const due = record.merges.find(
+      (member) => member.branch === publicationDue
+    );
+    process.stdout.write(
+      due
+        ? `⏳ Readiness: PENDING for #${due.number} ${due.branch}; complete immediate maintenance and fresh checks before merging.\n`
+        : record.version === 2
+        ? '✅ Readiness: READY for next merge only; deferred targets require publication and fresh checks.\n'
+        : '✅ Readiness: READY for remaining work; checks repeat before every merge.\n'
+    );
+  }
+  for (const warning of inspection.warnings)
+    process.stdout.write(`⚠ ${warning}\n`);
 }
 
 function printPendingLandingDetails(
   record: LandingProgress,
-  context: TContext
+  context: TContext,
+  inspection: PendingLandingInspection & { readonly publicationDue?: string }
 ): void {
+  const { publicationDue } = inspection;
   const write = (message: string): void =>
     context.splog.debug(message.trimEnd());
   write(
@@ -351,9 +407,13 @@ function printPendingLandingDetails(
     );
   for (const member of remaining)
     write(
-      `${member.cleanupResult ? 'Cleanup-only' : 'Merge'}: ${member.branch} #${
-        member.number
-      }; reached head ${owned(member).head}; captured head ${member.head}\n`
+      `${
+        member.cleanupResult || inspection.cleanupOnly.has(member.branch)
+          ? 'Cleanup-only'
+          : 'Merge'
+      }: ${member.branch} #${member.number}; reached head ${
+        owned(member).head
+      }; captured head ${member.head}\n`
     );
   for (const member of survivors) {
     const expected = owned(member);
@@ -371,7 +431,7 @@ function printPendingLandingDetails(
     if (!member.cleanupResult) {
       write(
         `Push: ${member.branch}; ${
-          isLandingPublicationDeferred(record, member.branch)
+          pendingPublicationDeferred(record, member.branch, publicationDue)
             ? 'deferred until its merge preparation'
             : expected.remoteHead
             ? 'verify or update existing leased head'
@@ -380,7 +440,7 @@ function printPendingLandingDetails(
       );
       write(
         `PR update: ${member.branch}; ${
-          isLandingPublicationDeferred(record, member.branch)
+          pendingPublicationDeferred(record, member.branch, publicationDue)
             ? 'base/dependency footer deferred with publication'
             : member.number
             ? `verify existing #${member.number} base/dependency footer`
