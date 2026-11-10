@@ -512,14 +512,11 @@ function pendingCheck(state: string): boolean {
   );
 }
 
-export async function githubLandReadiness(
+export function githubLandReviewBlockers(
   pr: GithubPr,
-  policy: LandPolicy,
-  repo: string
-): Promise<LandReadiness> {
-  const blockers = [...policy.blockers];
-  const pending: string[] = [];
-  const warnings: string[] = [];
+  policy: LandPolicy
+): string[] {
+  const blockers: string[] = [];
   if (pr.state !== 'OPEN') blockers.push(`PR is ${pr.state}, not open.`);
   if (pr.isDraft) blockers.push('PR is a draft.');
   if (pr.reviewDecision === 'CHANGES_REQUESTED')
@@ -529,6 +526,20 @@ export async function githubLandReadiness(
     (policy.reviews > 0 && pr.reviewDecision !== 'APPROVED')
   )
     blockers.push('Required approvals missing.');
+  return blockers;
+}
+
+export async function githubLandReadiness(
+  pr: GithubPr,
+  policy: LandPolicy,
+  repo: string
+): Promise<LandReadiness> {
+  const blockers = [
+    ...policy.blockers,
+    ...githubLandReviewBlockers(pr, policy),
+  ];
+  const pending: string[] = [];
+  const warnings: string[] = [];
   if (pr.mergeable !== 'MERGEABLE')
     blockers.push(`Mergeability is ${pr.mergeable ?? 'UNKNOWN'}.`);
   if (policy.checks.length && !pr.statusCheckRollup)

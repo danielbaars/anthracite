@@ -13,6 +13,7 @@ import { getGithubPr, GithubPr } from '../lib/api/github_pr';
 import {
   getGithubLandPolicy,
   githubLandReadiness,
+  githubLandReviewBlockers,
 } from '../lib/api/github_land_policy';
 import {
   mergeGithubLandPr,
@@ -285,6 +286,8 @@ function printPendingLanding(
       );
       const effect = member.cleanupResult
         ? 'Verify metadata only; already landed.'
+        : isLandingPublicationDeferred(record, member.branch)
+        ? 'Verify replay locally; defer push and PR base/footer updates until its merge preparation.'
         : `Verify replay; ${
             expected.remoteHead ? 'push existing branch' : 'keep local; no push'
           }; ${
@@ -368,14 +371,18 @@ function printPendingLandingDetails(
     if (!member.cleanupResult) {
       write(
         `Push: ${member.branch}; ${
-          expected.remoteHead
+          isLandingPublicationDeferred(record, member.branch)
+            ? 'deferred until its merge preparation'
+            : expected.remoteHead
             ? 'verify or update existing leased head'
             : 'remain unpublished'
         }\n`
       );
       write(
         `PR update: ${member.branch}; ${
-          member.number
+          isLandingPublicationDeferred(record, member.branch)
+            ? 'base/dependency footer deferred with publication'
+            : member.number
             ? `verify existing #${member.number} base/dependency footer`
             : 'no PR creation'
         }\n`
@@ -514,8 +521,16 @@ async function inspectPendingReadiness(
     readonly warnings: string[];
   }
 ): Promise<void> {
-  if (isLandingPublicationDeferred(record, member.branch)) return;
   const { pr, policy, blockers, warnings } = inspection;
+  if (isLandingPublicationDeferred(record, member.branch)) {
+    if (policy)
+      blockers.push(
+        ...githubLandReviewBlockers(pr, policy).map(
+          (message) => `${member.branch}: ${message}`
+        )
+      );
+    return;
+  }
   if (member.branch === current(record).branch)
     validateMergeTrunk(record, pr.baseRefOid);
   if (policy) {
