@@ -76,7 +76,7 @@ export async function withLandingLock(
   const interrupted = (): void => {
     releaseOwnedCacheLockFile(file, identity.pid, cacheLockBytes(identity));
     process.stderr.write(
-      '⏸ Landing interrupted; saved progress is retained. Inspect an land --dry-run before explicit resumption.\n'
+      '⏸ Landing interrupted; reached local work and pending publication/base/footer obligations are retained in saved progress. Inspect an land --dry-run before explicit resumption.\n'
     );
     // eslint-disable-next-line no-restricted-syntax
     process.exit(1);
