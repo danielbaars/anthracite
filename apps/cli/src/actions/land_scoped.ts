@@ -9,7 +9,7 @@ import { composeGit } from '../lib/git/git';
 import { inspectLandAncestry } from '../lib/git/land_inspection';
 import { withFrozenCommitGuard } from '../lib/git/frozen_commit';
 import { deleteLandedRemote } from '../lib/git/land_cleanup';
-import { getGithubPr } from '../lib/api/github_pr';
+import { getGithubPr, GithubPr } from '../lib/api/github_pr';
 import {
   getGithubLandPolicy,
   githubLandReadiness,
@@ -26,6 +26,7 @@ import {
   landingGit as git,
   landingRemoteIdentity,
   landingSurvivors,
+  isLandingPublicationDeferred,
   loadLandingProgress,
   saveLandingProgress,
 } from '../lib/landing_progress';
@@ -124,7 +125,7 @@ export async function startScopedLanding(
     );
   const record: LandingProgress = {
     owner: 'anthracite-landing',
-    version: 1,
+    version: 2,
     directory: fs.realpathSync(git(['rev-parse', '--show-toplevel'])),
     gitDirectory: fs.realpathSync(git(['rev-parse', '--absolute-git-dir'])),
     repo: plan.repo,
@@ -258,7 +259,11 @@ function printPendingLanding(
     process.stdout.write(
       `  ${cleanupOnly ? 'Cleanup-only' : 'Merge'} ${index + 1}: ${
         member.branch
-      } #${member.number}\n`
+      } #${member.number}${
+        isLandingPublicationDeferred(record, member.branch)
+          ? ' (publication deferred until its merge preparation)'
+          : ''
+      }\n`
     );
   });
   const survivors = landingSurvivors(record);
@@ -304,7 +309,9 @@ function printPendingLanding(
   );
   if (!inspection.blockers.length)
     process.stdout.write(
-      '✅ Readiness: READY for remaining work; checks repeat before every merge.\n'
+      record.version === 2
+        ? '✅ Readiness: READY for next merge only; deferred targets require publication and fresh checks.\n'
+        : '✅ Readiness: READY for remaining work; checks repeat before every merge.\n'
     );
   for (const warning of inspection.warnings)
     process.stdout.write(`⚠ ${warning}\n`);
@@ -480,24 +487,13 @@ async function inspectPendingLanding(
         throw new ExitFailedError(
           `${member.branch}: Fresh PR state/head/base differs from saved publication.`
         );
-      if (isMerge && pr) {
-        if (member.branch === current(record).branch)
-          validateMergeTrunk(record, pr.baseRefOid);
-        if (policy) {
-          const readiness = await githubLandReadiness(pr, policy, record.repo);
-          for (const warning of readiness.warnings)
-            warnings.push(`#${pr.number}: ${warning}`);
-          blockers.push(
-            ...[...readiness.blockers, ...readiness.pending].map(
-              (message) => `${member.branch}: ${message}`
-            )
-          );
-        }
-        if (published !== expected.head)
-          blockers.push(
-            `${member.branch}: Readiness for the reached local head is unknown until its mandatory push and fresh checks.`
-          );
-      }
+      if (isMerge && pr)
+        await inspectPendingReadiness(record, member, {
+          pr,
+          policy,
+          blockers,
+          warnings,
+        });
     });
   printPendingLanding(record, context, {
     blockers,
@@ -506,6 +502,36 @@ async function inspectPendingLanding(
     verification: policy?.verification,
   });
   return blockers;
+}
+
+async function inspectPendingReadiness(
+  record: LandingProgress,
+  member: LandingProgress['merges'][number],
+  inspection: {
+    readonly pr: GithubPr;
+    readonly policy?: LandPlan['policy'];
+    readonly blockers: string[];
+    readonly warnings: string[];
+  }
+): Promise<void> {
+  if (isLandingPublicationDeferred(record, member.branch)) return;
+  const { pr, policy, blockers, warnings } = inspection;
+  if (member.branch === current(record).branch)
+    validateMergeTrunk(record, pr.baseRefOid);
+  if (policy) {
+    const readiness = await githubLandReadiness(pr, policy, record.repo);
+    for (const warning of readiness.warnings)
+      warnings.push(`#${pr.number}: ${warning}`);
+    blockers.push(
+      ...[...readiness.blockers, ...readiness.pending].map(
+        (message) => `${member.branch}: ${message}`
+      )
+    );
+  }
+  if (remoteHead(record, member.branch) !== owned(member).head)
+    blockers.push(
+      `${member.branch}: Readiness for the reached local head is unknown until its mandatory push and fresh checks.`
+    );
 }
 
 async function applyScopedLanding(

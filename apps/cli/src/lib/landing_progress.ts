@@ -34,7 +34,7 @@ const member = z
 const schema = z
   .object({
     owner: z.literal('anthracite-landing'),
-    version: z.literal(1),
+    version: z.union([z.literal(1), z.literal(2)]),
     directory: z.string().min(1),
     gitDirectory: z.string().min(1),
     repo: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/),
@@ -196,6 +196,7 @@ export function loadLandingProgress(): LandingProgress | undefined {
           !item.number ||
           !item.url ||
           item.remoteHead !== item.head ||
+          (record.version === 2 && item.reached && !item.reached.remoteHead) ||
           (index > 0 && item.parent !== record.merges[index - 1].branch)
       ) ||
       participants.some(
@@ -314,4 +315,21 @@ export function landingSurvivors(
     survivors.push(member);
   }
   return survivors;
+}
+
+/** Version 1 remains eager; v2 prepares its successor only after the current merge. */
+export function isLandingPublicationDeferred(
+  record: LandingProgress,
+  branch: string
+): boolean {
+  if (record.version === 1) return false;
+  const index = record.merges.findIndex((member) => member.branch === branch);
+  const position = record.index ?? 0;
+  if (index <= position || record.merges[index].cleanupResult) return false;
+  if (record.phase === 'prepared' || record.phase === 'merge-requested')
+    return true;
+  const next = record.merges.findIndex(
+    (member, candidate) => candidate > position && !member.cleanupResult
+  );
+  return index !== next;
 }
