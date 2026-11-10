@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://github.com/danielbaars/anthracite/compare/v0.6.15...v0.7.0) (2026-11-10)
+
+
+### Features
+
+* **cli:** defer publication of later landing targets ([#170](https://github.com/danielbaars/anthracite/issues/170)) ([99298ac](https://github.com/danielbaars/anthracite/commit/99298aca79ec9d34c099ca889f2df1e3447eaf50))
+
+
+### Bug Fixes
+
+* **cli:** gate landing on required checks ([#163](https://github.com/danielbaars/anthracite/issues/163)) ([a3c9f70](https://github.com/danielbaars/anthracite/commit/a3c9f7055c7a42dfe38daee8fb843f21e1763474))
+
 ## [0.6.15](https://github.com/danielbaars/anthracite/compare/v0.6.14...v0.6.15) (2026-11-09)
 
 
