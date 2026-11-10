@@ -290,7 +290,7 @@ describe('public deferred landing publication', function () {
     const result = fixture.run(['land', 'tip', '--yes', '--wait-timeout', '0']);
     expect(result.status, result.stdout + result.stderr).to.equal(1);
     expect(result.stderr).to.include(
-      'Existing survivor PR identity changed before publication for tip'
+      'Remote head changed for tip; captured-OID lease refused survivor push.'
     );
     expect(fixture.git(['rev-parse', 'tip'], github.remote)).to.equal(foreign);
     const prs = z

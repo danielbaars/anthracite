@@ -361,9 +361,14 @@ async function assertPublicationIdentity(
   const pr = await getGithubPr(member.branch, fresh);
   const expected = owned(participant(record, member.branch));
   if (
+    input.published !== expected.remoteHead &&
+    input.published !== expected.head
+  )
+    throw new ExitFailedError(
+      `Remote head changed for ${member.branch}; captured-OID lease refused survivor push.`
+    );
+  if (
     !pr ||
-    (input.published !== expected.remoteHead &&
-      input.published !== expected.head) ||
     pr.number !== member.number ||
     pr.url !== member.url ||
     pr.state !== 'OPEN' ||
