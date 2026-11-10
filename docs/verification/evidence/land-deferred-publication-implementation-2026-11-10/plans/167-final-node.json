@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:45:47.898Z",
+    "end": "2026-11-10T03:47:03.288Z",
+    "duration": 75390
+  },
+  "tests": [
+    {
+      "title": "keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "fullTitle": "public deferred landing plans keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "file": "/private/tmp/anthracite-167-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 26669,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "waits for an exact-head app-bound required check and revalidates its publisher before resuming",
+      "fullTitle": "public landing check waiting waits for an exact-head app-bound required check and revalidates its publisher before resuming",
+      "file": "/private/tmp/anthracite-167-20261110/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 42079,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "fullTitle": "public deferred landing plans keeps saved plans preserving and distinguishes local replay from deferred publication",
+      "file": "/private/tmp/anthracite-167-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 26669,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "waits for an exact-head app-bound required check and revalidates its publisher before resuming",
+      "fullTitle": "public landing check waiting waits for an exact-head app-bound required check and revalidates its publisher before resuming",
+      "file": "/private/tmp/anthracite-167-20261110/apps/cli/dist/test/commands/land_wait_cli.test.js",
+      "duration": 42079,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

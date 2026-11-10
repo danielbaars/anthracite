@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "cab979068b908c9391be99d423ce25dcbdd2aece",
+  "node": "v24.19.0",
+  "bun": "1.3.14",
+  "workspaceVersion": "0.6.15",
+  "note": "Candidate retains workspace version; isolated install and tarball are not a published npm version or active user installation.",
+  "artifacts": {
+    "native": {
+      "path": "/private/tmp/anthracite-169-native-final-20261110",
+      "sha256": "b8dd232e449b932d3e797f8a7200fe0cfb1a2ff97b875d38834d8fdc005c162f"
+    },
+    "tarball": {
+      "path": "/private/tmp/anthracite-169-20261110/release/npm/danielbaars-anthracite.tgz",
+      "sha256": "f0cfb5743cbf554126c8ff0c68e7201238d3a29882c09efbf7645371b63c7ce5"
+    },
+    "installedCli": {
+      "path": "/private/tmp/anthracite-169-npm-final-installed/node_modules/@danielbaars/anthracite/cli.cjs",
+      "sha256": "9363aced1a175c0cdfdb2b1b1f9ace939b5e188dacf34b3669a24420a8f62a42"
+    },
+    "legacyCli": {
+      "path": "/private/tmp/anthracite-release-0615-20261109/public install/node_modules/@danielbaars/anthracite/cli.cjs",
+      "sha256": "b5ec9d945824443cd441ae9f40220d174ef4c367952e7c264186a2bfc0882608"
+    }
+  },
+  "delta": "Lease-specific diagnostic restored with the same refusal predicate after earlier delivery acceptance; affected Node/native and final installed delta are recorded separately."
+}

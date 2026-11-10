@@ -1,0 +1,2 @@
+  [59ms]  bundle  653 modules
+ [102ms] compile  /private/tmp/anthracite-169-native-final-20261110

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:52:05.412Z",
+    "end": "2026-11-10T03:52:48.899Z",
+    "duration": 43487
+  },
+  "tests": [
+    {
+      "title": "retains a deferred target across SIGINT during required-check waiting",
+      "fullTitle": "public deferred landing recovery retains a deferred target across SIGINT during required-check waiting",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 41273,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "retains a deferred target across SIGINT during required-check waiting",
+      "fullTitle": "public deferred landing recovery retains a deferred target across SIGINT during required-check waiting",
+      "file": "/private/tmp/anthracite-168-20261110/apps/cli/dist/test/commands/land_deferred_recovery_cli.test.js",
+      "duration": 41273,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

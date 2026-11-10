@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "9c2993ac19ee6812f9ee24b095918767a6c51626",
+  "node": "v24.19.0",
+  "bun": "1.3.14",
+  "workspaceVersion": "0.6.15",
+  "note": "Candidate retains workspace version; isolated install and tarball are not a published npm version or active user installation.",
+  "artifacts": {
+    "native": {
+      "path": "/private/tmp/anthracite-169-native-20261110",
+      "sha256": "da876b060efdb0b5b7f5a99ccff318c56d19188d9121cfbd5c4e4fec8877aa85"
+    },
+    "tarball": {
+      "path": "/private/tmp/anthracite-169-20261110/release/npm/danielbaars-anthracite.tgz",
+      "sha256": "c459d5e233c743549910f37484fe54188fec8947990f5019803b4778d30ed482"
+    },
+    "installedCli": {
+      "path": "/private/tmp/anthracite-169-npm-installed/node_modules/@danielbaars/anthracite/cli.cjs",
+      "sha256": "1a8458cbd6f998160279f18af6e207f171ddf67d5c0c5edbe1878f58467b5565"
+    },
+    "legacyCli": {
+      "path": "/private/tmp/anthracite-release-0615-20261109/public install/node_modules/@danielbaars/anthracite/cli.cjs",
+      "sha256": "b5ec9d945824443cd441ae9f40220d174ef4c367952e7c264186a2bfc0882608"
+    }
+  }
+}

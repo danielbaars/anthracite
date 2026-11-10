@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:58:39.122Z",
+    "end": "2026-11-10T03:59:29.623Z",
+    "duration": 50501
+  },
+  "tests": [
+    {
+      "title": "detects early replay conflicts before publication and continues locally before explicit landing",
+      "fullTitle": "public deferred landing delivery detects early replay conflicts before publication and continues locally before explicit landing",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 48042,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "detects early replay conflicts before publication and continues locally before explicit landing",
+      "fullTitle": "public deferred landing delivery detects early replay conflicts before publication and continues locally before explicit landing",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 48042,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

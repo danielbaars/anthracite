@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T03:59:25.445Z",
+    "end": "2026-11-10T04:01:02.568Z",
+    "duration": 97123
+  },
+  "tests": [
+    {
+      "title": "learns, previews and resumes deferred publication across MCP sessions",
+      "fullTitle": "public deferred landing delivery learns, previews and resumes deferred publication across MCP sessions",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 49464,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "publishes each future target only before its own merge in a three-PR chain",
+      "fullTitle": "public deferred landing publication publishes each future target only before its own merge in a three-PR chain",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 42451,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "learns, previews and resumes deferred publication across MCP sessions",
+      "fullTitle": "public deferred landing delivery learns, previews and resumes deferred publication across MCP sessions",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 49464,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "publishes each future target only before its own merge in a three-PR chain",
+      "fullTitle": "public deferred landing publication publishes each future target only before its own merge in a three-PR chain",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_publication_cli.test.js",
+      "duration": 42451,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
