@@ -252,6 +252,10 @@ export function clearLandingProgress(record: LandingProgress): void {
   fs.unlinkSync(file);
   syncDirectory(file);
 }
+/** Recheck durable ownership immediately before another external effect. */
+export function assertLandingProgressUnchanged(record: LandingProgress): void {
+  assertUnchanged(landingProgressPath(), record);
+}
 function assertUnchanged(file: string, previous?: LandingProgress): void {
   if (
     previous
