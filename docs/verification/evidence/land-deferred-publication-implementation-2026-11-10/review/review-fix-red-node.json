@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-10T04:15:44.866Z",
+    "end": "2026-11-10T04:16:11.397Z",
+    "duration": 26531
+  },
+  "tests": [
+    {
+      "title": "discloses immediate publication and pending readiness after the current target merges externally",
+      "fullTitle": "public deferred landing plans discloses immediate publication and pending readiness after the current target merges externally",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 24369,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected '⏸ Pending landing: fixture/inspection…' to include 'Merge 2: tip #19 (publication due bef…'",
+        "showDiff": false,
+        "actual": "⏸ Pending landing: fixture/inspection\nTarget: tip -> main\nLocal main: fast-forward after confirmed merges.\n✅ Already merged: #17 base\n\n🔀 Remaining PRs (bottom to top):\n  Cleanup-only 1: child #18\n  Merge 2: tip #19 (publication deferred until its merge preparation)\n\n🔧 After merging #18: verify required branch maintenance.\n  Maintain: tip #19 (also a merge target)\n    Verify replay locally; defer push and PR base/footer updates until its merge preparation.\n\n🧹 Cleanup: child, tip\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\n✅ Readiness: READY for next merge only; deferred targets require publication and fresh checks.\nUse --debug for recovery phases, commit IDs and replay details.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected '⏸ Pending landing: fixture/inspection…' to include 'Merge 2: tip #19 (publication due bef…'\n    at Context.<anonymous> (dist/test/commands/land_deferred_plans_cli.test.js:133:18)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "discloses immediate publication and pending readiness after the current target merges externally",
+      "fullTitle": "public deferred landing plans discloses immediate publication and pending readiness after the current target merges externally",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 24369,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected '⏸ Pending landing: fixture/inspection…' to include 'Merge 2: tip #19 (publication due bef…'",
+        "showDiff": false,
+        "actual": "⏸ Pending landing: fixture/inspection\nTarget: tip -> main\nLocal main: fast-forward after confirmed merges.\n✅ Already merged: #17 base\n\n🔀 Remaining PRs (bottom to top):\n  Cleanup-only 1: child #18\n  Merge 2: tip #19 (publication deferred until its merge preparation)\n\n🔧 After merging #18: verify required branch maintenance.\n  Maintain: tip #19 (also a merge target)\n    Verify replay locally; defer push and PR base/footer updates until its merge preparation.\n\n🧹 Cleanup: child, tip\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\n✅ Readiness: READY for next merge only; deferred targets require publication and fresh checks.\nUse --debug for recovery phases, commit IDs and replay details.\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected '⏸ Pending landing: fixture/inspection…' to include 'Merge 2: tip #19 (publication due bef…'\n    at Context.<anonymous> (dist/test/commands/land_deferred_plans_cli.test.js:133:18)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

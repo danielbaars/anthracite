@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-10T04:18:57.379Z",
+    "end": "2026-11-10T04:20:14.912Z",
+    "duration": 77533
+  },
+  "tests": [
+    {
+      "title": "discloses immediate publication and pending readiness after the current target merges externally",
+      "fullTitle": "public deferred landing plans discloses immediate publication and pending readiness after the current target merges externally",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 27963,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "learns, previews and resumes deferred publication across MCP sessions",
+      "fullTitle": "public deferred landing delivery learns, previews and resumes deferred publication across MCP sessions",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 44476,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "discloses immediate publication and pending readiness after the current target merges externally",
+      "fullTitle": "public deferred landing plans discloses immediate publication and pending readiness after the current target merges externally",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_plans_cli.test.js",
+      "duration": 27963,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "learns, previews and resumes deferred publication across MCP sessions",
+      "fullTitle": "public deferred landing delivery learns, previews and resumes deferred publication across MCP sessions",
+      "file": "/private/tmp/anthracite-169-20261110/apps/cli/dist/test/commands/land_deferred_delivery_cli.test.js",
+      "duration": 44476,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
