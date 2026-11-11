@@ -63,28 +63,34 @@ export async function prepareSyncRefresh(
         `${node.branchName} is ahead of remote; keeping its local commits.`
       );
     }
-    const preserved = nodes
-      .filter((node) => {
-        if (
-          node.previousParentBranchName === node.parentBranchName &&
-          node.previousHead !== node.head &&
-          hasCanonicalAncestry(node.head, node.previousHead)
-        )
-          return true;
-        if (
-          node.parentBranchName !== context.engine.trunk ||
-          !hasEquivalentLocalRestack(node)
-        )
-          return false;
+    const preserved: string[] = [];
+    for (const node of nodes) {
+      const contained =
+        node.previousParentBranchName === node.parentBranchName &&
+        node.previousHead !== node.head &&
+        hasCanonicalAncestry(node.head, node.previousHead);
+      const parent = nodes.find(
+        (candidate) =>
+          candidate.branchName === node.parentBranchName &&
+          preserved.includes(candidate.branchName)
+      );
+      const equivalent =
+        !contained &&
+        (node.parentBranchName === context.engine.trunk ||
+          parent !== undefined) &&
+        hasEquivalentLocalRestack(node, parent, (detail) =>
+          context.splog.debug(
+            `Local restack proof for ${node.branchName} (remote head ${node.head}; local head ${node.previousHead}): ${detail}.`
+          )
+        );
+      if (!contained && !equivalent) continue;
+      assertRemoteUpdateNodeUnchanged(node);
+      if (equivalent)
         context.splog.info(
           `🔁 ${node.branchName}: local restack on newer ${node.parentBranchName}; branch commits match remote. Publication is pending.`
         );
-        return true;
-      })
-      .map((node) => {
-        assertRemoteUpdateNodeUnchanged(node);
-        return node.branchName;
-      });
+      preserved.push(node.branchName);
+    }
     await prepareRemoteUpdates(
       {
         nodes: nodes.filter((node) => !preserved.includes(node.branchName)),

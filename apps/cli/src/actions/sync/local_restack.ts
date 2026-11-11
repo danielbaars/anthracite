@@ -32,39 +32,69 @@ export function hasCanonicalAncestry(ancestor: string, head: string): boolean {
 }
 
 /** Unknown or unsupported evidence must retain ordinary reconciliation. */
-export function hasEquivalentLocalRestack(node: RemoteUpdateNode): boolean {
+export function hasEquivalentLocalRestack(
+  node: RemoteUpdateNode,
+  verifiedParent?: RemoteUpdateNode,
+  debug?: (detail: string) => void
+): boolean {
+  const refuse = (detail: string): false => {
+    debug?.(detail);
+    return false;
+  };
   if (
     node.previousParentBranchName !== node.parentBranchName ||
     !node.previousBase ||
     node.previousBase === node.base ||
     node.previousHead === node.head
   )
-    return false;
+    return refuse('parent bases or current heads do not describe a restack');
   if (
     ![node.base, node.previousBase, node.head, node.previousHead].every((oid) =>
       new RegExp(`^${OID}$`).test(oid)
     )
   )
-    return false;
+    return refuse('unsupported object identity');
   const read = boundedGitReader();
   try {
-    if (!hasCanonicalGraph(read)) return false;
-    read(['merge-base', '--is-ancestor', node.base, node.previousBase]);
+    if (!hasCanonicalGraph(read))
+      return refuse('replacement or graft ancestry is unsupported');
+    if (verifiedParent) {
+      if (
+        node.parentBranchName !== verifiedParent.branchName ||
+        node.base !== verifiedParent.head ||
+        node.previousBase !== verifiedParent.previousHead
+      )
+        return refuse(
+          'captured parent-head pairing does not match child bases'
+        );
+    } else {
+      try {
+        read(['merge-base', '--is-ancestor', node.base, node.previousBase]);
+      } catch {
+        return refuse('newer root-base ancestry is unproven or unavailable');
+      }
+    }
     const remote = ownCommits(node.base, node.head, read);
     const local = ownCommits(node.previousBase, node.previousHead, read);
-    if (!remote || !local || remote.length !== local.length) return false;
-    return remote.every((commit, index) => {
+    if (!remote || !local)
+      return refuse('unsupported or over-limit linear own-commit sequence');
+    if (remote.length !== local.length)
+      return refuse('own-commit counts differ');
+    for (const [index, commit] of remote.entries()) {
       const other = local[index];
-      return (
-        other !== undefined &&
-        commit.author === other.author &&
-        commit.message.equals(other.message) &&
-        commitPatch(commit, read).equals(commitPatch(other, read))
-      );
-    });
+      if (!other) return refuse('own-commit counts differ');
+      if (commit.author !== other.author)
+        return refuse('author identity or author time differs');
+      if (!commit.message.equals(other.message))
+        return refuse('complete commit message bytes differ');
+      if (!commitPatch(commit, read).equals(commitPatch(other, read)))
+        return refuse('per-commit change bytes differ');
+    }
+    debug?.(`matched ${remote.length} ordered own commit(s)`);
+    return true;
   } catch {
     // Read failure, limits and unsupported encodings establish no equivalence.
-    return false;
+    return refuse('bounded Git read failed or commit encoding is unsupported');
   }
 }
 
