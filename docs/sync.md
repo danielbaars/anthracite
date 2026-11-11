@@ -77,3 +77,7 @@ See the [specification](specs/sync-abandonment.md) and [implementation acceptanc
 Finish a pending new sync workflow before downgrading. Existing get, structural, landing and legacy continuations retain their own contracts. MCP uses the existing learn_an/run_an_cmd tools with literal arguments and an explicit cwd; process cancellation does not imply atomic undo.
 
 See [candidate verification](verification/sync-updates-implementation-2026-11-01.md) for bounded local acceptance and the retained historical [Graphite comparison](https://github.com/danielbaars/anthracite/blob/78937d87424a331de34c2cf3cf95a8944c8d6ff5/docs/verification/get-sync-parity-2026-10-31.md). Multi-trunk selection and remote-only discovery remain separate work.
+
+## Planned local-work recognition
+
+The [approved local-work specification](specs/sync-local-restack.md) proposes retaining same-parent unpublished commits and conservatively equivalent local restacks while reporting pending submission. It is not shipped in npm 0.7.0: consecutive syncs can still show the generic reconciliation menu after a local restack. See the [version-pinned baseline investigation](verification/sync-local-restack-research-2026-11-11.md). Different or uncertain histories must retain deliberate reconciliation; this proposal adds no automatic publication.

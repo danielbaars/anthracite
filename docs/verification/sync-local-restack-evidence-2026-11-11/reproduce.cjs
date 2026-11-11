@@ -1,0 +1,31 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const {FrozenGetFixture}=require(process.env.ANTHRACITE_RESEARCH_FIXTURE_MODULE || path.resolve(__dirname,'../../../apps/cli/dist/test/lib/fixtures/frozen_get_cli.js'));
+const resultDir=process.env.ANTHRACITE_RESEARCH_OUTPUT_DIR || fs.mkdtempSync(path.join(require('node:os').tmpdir(),'anthracite-sync-restack-results-'));
+fs.mkdirSync(resultDir,{recursive:true});
+const f=new FrozenGetFixture(false);
+const dest=resultDir;
+try {
+ f.ok('get','parent','--unfrozen');
+ const oldTrunk=f.git(f.consumer,'rev-parse','main');
+ const published=f.git(f.remote,'rev-parse','parent');
+ f.git(f.producer,'switch','main');
+ const newTrunk=f.commit(f.producer,'release.txt','independent trunk release');
+ f.git(f.producer,'push','origin','main');
+ const first=f.ok('sync','--no-delete');
+ const local=f.git(f.consumer,'rev-parse','parent');
+ assert.notEqual(local,published);
+ assert.equal(f.git(f.remote,'rev-parse','parent'),published);
+ const rangeDiff=f.git(f.consumer,'range-diff',oldTrunk+'..'+published,newTrunk+'..'+local);
+ assert.ok(/ = /.test(rangeDiff),rangeDiff);
+ const before=f.observe();
+ const second=f.run(['sync','--no-delete'],true,[{prompt:'How would you like to handle',input:'\u001b[B\u001b[B\r'}]);
+ assert.match(second.output,/shares a name with a local branch, and they have the same parent/);
+ assert.match(second.output,/Overwrite the local copy with the remote version/);
+ assert.deepEqual(f.observe(),before);
+ const record={version:'0.7.0',firstSync:first,secondSync:second,oldTrunk,newTrunk,published,local,rangeDiff,statePreservedOnAbort:true,remoteUnchanged:f.git(f.remote,'rev-parse','parent')===published,explanatoryMessagePresent:/restack/i.test(second.output)&&/submit/i.test(second.output)};
+ fs.writeFileSync(path.join(dest,'reproduction.json'),JSON.stringify(record,null,2)+'\n');
+ console.log(JSON.stringify({firstSyncStatus:first.status,secondSyncStatus:second.status,exactMenuReproduced:true,statePreservedOnAbort:true,patchesEqual:true,explainsLocalRestack:record.explanatoryMessagePresent}));
+ if(process.argv.includes('--expect-clear-explanation')) assert.ok(record.explanatoryMessagePresent,'sync should identify the unpublished local restack and explain submit before reconciliation');
+} finally {f.cleanup();}
