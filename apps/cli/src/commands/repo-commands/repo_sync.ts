@@ -57,7 +57,7 @@ export const command = 'sync';
 export const canonical = 'repo sync';
 export const aliases = ['s'];
 export const description =
-  'Refresh existing tracked open-PR feature heads across the configured trunk, pull trunk, clean eligible merged/closed branches and repair affected tracked stacks by default. No-pull skips only trunk; no-delete suppresses cleanup. Explicit force may reset a divergent trunk, but never authorizes feature overwrite.';
+  'Refresh existing tracked open-PR feature heads across the configured trunk, pull trunk, clean eligible merged/closed branches and repair affected tracked stacks by default. Preserve verified unpublished local commits and equivalent restacks; publication remains separate. No-pull skips only trunk; no-delete suppresses cleanup. Explicit force may reset a divergent trunk, but never authorizes feature overwrite.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
   if (argv.abort) {
