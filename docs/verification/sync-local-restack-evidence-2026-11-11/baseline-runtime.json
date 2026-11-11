@@ -1,0 +1,11 @@
+{
+  "package": "@danielbaars/anthracite",
+  "version": "0.7.0",
+  "source": "4fc0fa51a3f374c4346842d27aa0daee82baf3dc",
+  "registryTarballSha256": "898df187f4021a786e43712dfc0777f96131f1e157fb44795de72a8407d007f3",
+  "registryTarballIntegrity": "sha512-JQGBgHjCmmAcdfo4fGYDNDS0LeF2amgWKie5nzhowVGddNPjAhTNX1h6oHLiuagJ3V8zWaFmb0b/H5UHZ9Tzfw==",
+  "installedEntrySha256": "e8d6dea7df89ce55be892e2eb38b1398678488278e21d0fe892437f007bcd236",
+  "installedEntryMatchesRetainedPublicTarball": true,
+  "signatureEvidence": "raw/public-artifact-proof.json",
+  "note": "Public artifact signature/provenance was independently verified during its stable release. This receipt compares the actual entry used by the investigation to that retained exact tarball; it does not claim a new registry signature lookup."
+}

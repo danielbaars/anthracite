@@ -1,0 +1,69 @@
+{
+  "package": "@danielbaars/anthracite",
+  "version": "0.7.0",
+  "source": "4fc0fa51a3f374c4346842d27aa0daee82baf3dc",
+  "selectedBeta": "0.7.0-beta.3",
+  "normalizedSourceEquivalent": true,
+  "publishingRun": "https://github.com/danielbaars/anthracite/actions/runs/42785832054/attempts/2",
+  "signaturesVerified": true,
+  "signerIdentity": "https://github.com/danielbaars/anthracite/.github/workflows/release.yml@refs/heads/main",
+  "sha256": "898df187f4021a786e43712dfc0777f96131f1e157fb44795de72a8407d007f3",
+  "integrity": "sha512-JQGBgHjCmmAcdfo4fGYDNDS0LeF2amgWKie5nzhowVGddNPjAhTNX1h6oHLiuagJ3V8zWaFmb0b/H5UHZ9Tzfw==",
+  "releaseTarballMatches": true,
+  "betaUnchanged": true,
+  "distTagsBefore": {
+    "beta": "0.7.0-beta.3",
+    "latest": "0.6.15"
+  },
+  "distTagsAfter": {
+    "latest": "0.7.0",
+    "beta": "0.7.0-beta.3"
+  },
+  "provenance": {
+    "_type": "https://in-toto.io/Statement/v1",
+    "subject": [
+      {
+        "name": "pkg:npm/%40danielbaars/anthracite@0.7.0",
+        "digest": {
+          "sha512": "2501818078c29a601c75fa387c66033434b42de1766a68162a27b99f3868c1519d74d3e30214cd5f587aa072e2b9a809dd5f3359a1666f46ff1f950767d4f37f"
+        }
+      }
+    ],
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "predicate": {
+      "buildDefinition": {
+        "buildType": "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1",
+        "externalParameters": {
+          "workflow": {
+            "ref": "refs/heads/main",
+            "repository": "https://github.com/danielbaars/anthracite",
+            "path": ".github/workflows/release.yml"
+          }
+        },
+        "internalParameters": {
+          "github": {
+            "event_name": "workflow_dispatch",
+            "repository_id": "1434847706",
+            "repository_owner_id": "5950958"
+          }
+        },
+        "resolvedDependencies": [
+          {
+            "uri": "git+https://github.com/danielbaars/anthracite@refs/heads/main",
+            "digest": {
+              "gitCommit": "4fc0fa51a3f374c4346842d27aa0daee82baf3dc"
+            }
+          }
+        ]
+      },
+      "runDetails": {
+        "builder": {
+          "id": "https://github.com/actions/runner/github-hosted"
+        },
+        "metadata": {
+          "invocationId": "https://github.com/danielbaars/anthracite/actions/runs/42785832054/attempts/2"
+        }
+      }
+    }
+  }
+}
