@@ -32,7 +32,10 @@ export function hasCanonicalAncestry(ancestor: string, head: string): boolean {
 }
 
 /** Unknown or unsupported evidence must retain ordinary reconciliation. */
-export function hasEquivalentLocalRestack(node: RemoteUpdateNode): boolean {
+export function hasEquivalentLocalRestack(
+  node: RemoteUpdateNode,
+  verifiedParent?: RemoteUpdateNode
+): boolean {
   if (
     node.previousParentBranchName !== node.parentBranchName ||
     !node.previousBase ||
@@ -49,7 +52,16 @@ export function hasEquivalentLocalRestack(node: RemoteUpdateNode): boolean {
   const read = boundedGitReader();
   try {
     if (!hasCanonicalGraph(read)) return false;
-    read(['merge-base', '--is-ancestor', node.base, node.previousBase]);
+    if (verifiedParent) {
+      if (
+        node.parentBranchName !== verifiedParent.branchName ||
+        node.base !== verifiedParent.head ||
+        node.previousBase !== verifiedParent.previousHead
+      )
+        return false;
+    } else {
+      read(['merge-base', '--is-ancestor', node.base, node.previousBase]);
+    }
     const remote = ownCommits(node.base, node.head, read);
     const local = ownCommits(node.previousBase, node.previousHead, read);
     if (!remote || !local || remote.length !== local.length) return false;

@@ -74,6 +74,16 @@ There is no exact old PR-information-only flag recipe or feature-refresh switch.
 Booleans accept true/false and negative forms on all three routes; -p/-d/-f/-r
 and --show-delete-progress remain supported.
 
+Sync preserves verified unpublished local commits when remote is already contained
+under the same parent. A conservative equivalent unpublished local restack can
+also be retained, including children paired to a verified parent's exact remote
+and local heads. Commit changes, complete messages, authorship and order must
+match; uncertain history still requires deliberate reconciliation and refuses
+unattended choices. Preservation keeps captured sources and default maintenance;
+it never pushes or edits PRs. Use the printed bounded submit preview, such as
+an submit --branch child --dry-run, before separately authorized publication.
+A clean local log does not prove published heads or GitHub merge readiness.
+
 Local-only work stays unpublished; closed/merged branches skip incoming refresh
 and remain if cleanup is declined or protected. Disabled GitHub integration makes
 no service calls and retains local sync without treating cached PR status as fresh.
