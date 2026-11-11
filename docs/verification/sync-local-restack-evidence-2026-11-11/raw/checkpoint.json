@@ -1,0 +1,30 @@
+{
+  "status": "investigation-complete",
+  "package": "@danielbaars/anthracite",
+  "version": "0.7.0",
+  "source": "4fc0fa51a3f374c4346842d27aa0daee82baf3dc",
+  "observedAt": "2026-11-11T07:54:10.685197+00:00",
+  "publicCliComparisonCases": 9,
+  "strictDiagnosticCases": 5,
+  "rawByteDiagnosticCases": 2,
+  "twoBranchStackVerified": true,
+  "finding": "The same-parent reconciliation menu handles local-ahead heads and rewritten equivalent histories as well as actual divergent changes. Two consecutive sync operations reproduce the problem after the first locally restacks an unchanged published branch.",
+  "recognitionPrototype": "Compare ordered branch-owned commits above separately validated old/new parent boundaries; exact patches and author/full-message bytes are used, rather than patch-id or aggregate tree equality. A child requires a verified pairing of rewritten parent heads. This is a conservative diagnostic prototype, not authority to overwrite or a production-complete equivalence proof.",
+  "limitations": [
+    "Tested on macOS ARM64 Node 24 with the published npm 0.7.0 CLI; no candidate/native acceptance claimed.",
+    "Conservative exact-patch comparison can refuse valid restacks after contextual changes; uncertainty must keep existing reconciliation protections.",
+    "No stored last-published head is present in the examined branch metadata; reflog history is not proposed as durable authority.",
+    "Integration must retain fresh source/identity/lease, worktree/frozen/dirty-file, maintenance and continuation protections."
+  ],
+  "recommendedBehavior": [
+    "Keep local-ahead work when the remote is contained locally and parent contracts match.",
+    "Recognize bounded equivalent restacks across a validated parent chain and preserve local history, disclosing pending publication without pushing.",
+    "Retain explicit reconciliation for genuinely different or uncertain histories, explaining local versus remote state without claiming someone changed remote."
+  ],
+  "productionCodeChanged": false,
+  "userProjectReadOrWrittenThisInvestigation": false,
+  "liveGitHubWrites": 0,
+  "ciStarted": false,
+  "fullMatrixStarted": false,
+  "remaining": "User decision on the bounded implementation proposal; no PR or release created."
+}
