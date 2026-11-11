@@ -27,6 +27,22 @@ export function assertSyncSources(operation: SyncOperation): void {
       refuseSync(
         `Pinned sync source ${source.sourceRef} is missing or changed.`
       );
+  const preserved = operation.refresh.preserved ?? [];
+  if (
+    new Set(preserved).size !== preserved.length ||
+    preserved.some((name) => {
+      const node = operation.refresh.nodes.find(
+        (candidate) => candidate.branchName === name
+      );
+      return (
+        !node ||
+        node.resolution !== undefined ||
+        node.previousParentBranchName !== node.parentBranchName ||
+        !node.previousBase
+      );
+    })
+  )
+    refuseSync('Invalid saved local-preservation decision.');
   for (const node of operation.refresh.nodes)
     if (
       node.head !== node.expectedSourceHead ||

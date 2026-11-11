@@ -175,9 +175,9 @@ function projectCleanupBranches(
     .filter((name) => context.engine.isBranchTracked(name))
     .sort()
     .map((branchName) => {
-      const node = refresh.nodes.find(
-        (entry) => entry.branchName === branchName
-      );
+      const node = refresh.preserved?.includes(branchName)
+        ? undefined
+        : refresh.nodes.find((entry) => entry.branchName === branchName);
       const freshPr = refresh.prs.find(
         (entry) => entry.headRefName === branchName
       );
