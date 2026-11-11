@@ -78,7 +78,11 @@ export async function prepareSyncRefresh(
         !contained &&
         (node.parentBranchName === context.engine.trunk ||
           parent !== undefined) &&
-        hasEquivalentLocalRestack(node, parent);
+        hasEquivalentLocalRestack(node, parent, (detail) =>
+          context.splog.debug(
+            `Local restack proof for ${node.branchName} (remote head ${node.head}; local head ${node.previousHead}): ${detail}.`
+          )
+        );
       if (!contained && !equivalent) continue;
       assertRemoteUpdateNodeUnchanged(node);
       if (equivalent)

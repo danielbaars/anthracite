@@ -425,6 +425,27 @@ describe('sync CLI paired local restacks', function () {
     expect(connection.errors).to.deep.equal([]);
     expect(connection.stderr).to.equal('');
   });
+
+  it('explains the bounded proof refusal and matching control under debug', () => {
+    restackChain();
+    fixture.git(
+      fixture.consumer,
+      'commit',
+      '--amend',
+      '-m',
+      'different child explanation'
+    );
+    const before = fixture.observe();
+    const failed = fixture.run(['sync', '--no-delete', '--debug']);
+    expect(failed.status, failed.output).to.equal(1);
+    expect(failed.output).to.include('complete commit message bytes differ');
+    expect(fixture.observe()).to.deep.equal(before);
+    fixture.git(fixture.consumer, 'commit', '--amend', '-m', 'child-old');
+    const matching = fixture.observe();
+    const kept = fixture.ok('sync', '--no-delete', '--debug');
+    expect(kept.output).to.include('matched 1 ordered own commit(s)');
+    expect(fixture.observe()).to.deep.equal(matching);
+  });
 });
 
 function parseMcp(content: unknown) {
