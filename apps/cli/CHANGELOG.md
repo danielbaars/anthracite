@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.1](https://github.com/danielbaars/anthracite/compare/v0.7.0...v0.7.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* **cli:** explain bounded sync restack proof under debug ([#175](https://github.com/danielbaars/anthracite/issues/175)) ([6d5dd67](https://github.com/danielbaars/anthracite/commit/6d5dd671a134c711131b3bdf44174c83ef26176c))
+* **cli:** preserve local-ahead sync work ([#172](https://github.com/danielbaars/anthracite/issues/172)) ([ace139e](https://github.com/danielbaars/anthracite/commit/ace139e058937aab9a7a216c1b0dae6a2c54f937))
+* **cli:** preserve verified restacked sync chains ([#175](https://github.com/danielbaars/anthracite/issues/175)) ([3a38c32](https://github.com/danielbaars/anthracite/commit/3a38c32c50b49d4d44c630522cf9c0846c94d5d3))
+* **cli:** recognize equivalent local sync restacks ([#173](https://github.com/danielbaars/anthracite/issues/173)) ([900e813](https://github.com/danielbaars/anthracite/commit/900e813c428f43f2dbd7077eef2cf44540fb6c23))
+
 ## [0.7.0](https://github.com/danielbaars/anthracite/compare/v0.6.15...v0.7.0) (2026-11-10)
 
 
