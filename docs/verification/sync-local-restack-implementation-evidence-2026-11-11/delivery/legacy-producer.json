@@ -1,0 +1,10 @@
+{
+  "package": "@danielbaars/anthracite",
+  "version": "0.6.11",
+  "registryArtifact": "https://registry.npmjs.org/@danielbaars/anthracite/-/anthracite-0.6.11.tgz",
+  "integrity": "sha512-t76mZ6z1mE/an5Hrgz/ccliM3SQY4MF8rVggJLxpfuJF9udIEhctQiCPjM3W6H5eMhRXiMmUPUzZPQyZItEiSg==",
+  "cliSha256": "5a397aa99468fae4539fa5ded2642e43350041165e339f2fd021e09648cd4793",
+  "prefix": "/private/tmp/anthracite-171-legacy0611-20261111",
+  "installScriptsExecuted": false,
+  "activeInstallationChanged": false
+}

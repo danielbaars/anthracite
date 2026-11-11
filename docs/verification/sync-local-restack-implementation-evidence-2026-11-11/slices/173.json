@@ -1,0 +1,287 @@
+{
+  "ticket": 173,
+  "parent": 171,
+  "baseline": "69a1199b26ff1038ab84a7247ce030b1bc1bf06b",
+  "featureCommit": "dfbb2e6d",
+  "tip": "009442abe25cfb8274270cf6b28f7ba065ffc942",
+  "integrationAncestor": "a6e4a51b881afd2f99f8c3b38a63a9ff9bbb8b84",
+  "scope": "Conservative root-newer-base equivalence, canonical containment and sync-only preserved keep decision; rewritten-parent pairing remains #175.",
+  "proof": {
+    "commitsPerHistory": 128,
+    "stdoutBytes": 4194304,
+    "durationMs": 3000,
+    "commitBytes": "fatal UTF-8 validation and raw full-message comparison",
+    "changes": "binary/full-index per-commit raw patches with display/submodule hiding disabled",
+    "ancestry": "actual parents; no replace refs, grafts or lazy fetch"
+  },
+  "productionSha256": {
+    "apps/cli/src/actions/sync/local_restack.ts": "de871707f36004b86cc0585f64545ea9e79aa70a55ec8f4ae8ac7d5886cf36e1",
+    "apps/cli/src/actions/sync/sync_refresh.ts": "7e24c2d96425b3e45aa239f03c34b6796c2bb4fd63b5f344ad2beb60c02bd886"
+  },
+  "nativePinnedSha256": "9f3d62b068350ea5f760f7ba54283ede1e86bcabb85a87b8ae435347461a5682",
+  "checks": {
+    "tsc": 0,
+    "targetedEslint": 0,
+    "targetedPrettier": 0,
+    "gitDiffCheck": 0
+  },
+  "publicCasesInNewSuite": 26,
+  "additionalUniqueCanonicalControls": 3,
+  "receipts": {
+    "green-node-initial.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 16,
+        "passes": 15,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-11-11T09:59:10.746Z",
+        "end": "2026-11-11T10:02:31.000Z",
+        "duration": 200254
+      },
+      "failures": [
+        {
+          "name": "sync CLI equivalent local restacks keeps a root restack created by the preceding sync without publishing it",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        }
+      ]
+    },
+    "canonical-controls-node.json": {
+      "stats": {
+        "suites": 2,
+        "tests": 3,
+        "passes": 3,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T10:15:53.793Z",
+        "end": "2026-11-11T10:16:51.386Z",
+        "duration": 57593
+      },
+      "failures": []
+    },
+    "final-native.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 17,
+        "passes": 17,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-11-11T10:15:52.310Z",
+        "end": "2026-11-11T10:19:24.991Z",
+        "duration": 212681
+      },
+      "failures": [
+        {
+          "name": "sync CLI equivalent local restacks \"before each\" hook for \"retains matching deliberate empty commits in the compared sequence\"",
+          "message": "ERROR: No .git repository found.\n: expected 1 to equal +0"
+        }
+      ]
+    },
+    "green-diff-config.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 2,
+        "passes": 2,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T10:07:27.931Z",
+        "end": "2026-11-11T10:08:13.594Z",
+        "duration": 45663
+      },
+      "failures": []
+    },
+    "green-native.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 21,
+        "passes": 18,
+        "pending": 0,
+        "failures": 4,
+        "start": "2026-11-11T10:08:02.811Z",
+        "end": "2026-11-11T10:13:56.017Z",
+        "duration": 353206
+      },
+      "failures": [
+        {
+          "name": "sync CLI equivalent local restacks retains deliberate reconciliation for changed complete message with equal code",
+          "message": "spawnSync /private/tmp/anthracite-173-evidence-20261111/an-native ETIMEDOUT"
+        },
+        {
+          "name": "sync CLI equivalent local restacks rejects reordered commits even when the aggregate branch diff matches",
+          "message": "spawnSync /private/tmp/anthracite-173-evidence-20261111/an-native ETIMEDOUT"
+        },
+        {
+          "name": "sync CLI equivalent local restacks keeps an over-limit commit sequence uncertain without changing it",
+          "message": "spawnSync /private/tmp/anthracite-173-evidence-20261111/an-native ETIMEDOUT"
+        },
+        {
+          "name": "sync CLI equivalent local restacks \"after each\" hook for \"keeps an over-limit commit sequence uncertain without changing it\"",
+          "message": "ENOTEMPTY, Directory not empty: /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-jrD2le '/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-jrD2le'"
+        }
+      ]
+    },
+    "green-node.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 24,
+        "passes": 20,
+        "pending": 0,
+        "failures": 4,
+        "start": "2026-11-11T10:08:01.584Z",
+        "end": "2026-11-11T10:14:52.993Z",
+        "duration": 411409
+      },
+      "failures": [
+        {
+          "name": "sync CLI equivalent local restacks retains deliberate reconciliation for changed author time",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        },
+        {
+          "name": "sync CLI equivalent local restacks retains deliberate reconciliation for an added empty commit",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        },
+        {
+          "name": "sync CLI equivalent local restacks leaves get reconciliation unchanged for an equivalent local restack",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        },
+        {
+          "name": "sync CLI equivalent local restacks keeps an over-limit commit sequence uncertain without changing it",
+          "message": "spawnSync /Users/danielbaars/.nvm/versions/node/v24.19.0/bin/node ETIMEDOUT"
+        }
+      ]
+    },
+    "green-root.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T09:54:55.915Z",
+        "end": "2026-11-11T09:55:05.564Z",
+        "duration": 9649
+      },
+      "failures": []
+    },
+    "canonical-controls-native.json": {
+      "stats": {
+        "suites": 2,
+        "tests": 3,
+        "passes": 3,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T10:17:14.018Z",
+        "end": "2026-11-11T10:18:12.035Z",
+        "duration": 58017
+      },
+      "failures": []
+    },
+    "final-node.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 26,
+        "passes": 26,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T10:15:26.822Z",
+        "end": "2026-11-11T10:22:18.437Z",
+        "duration": 411615
+      },
+      "failures": []
+    },
+    "red-root.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-11-11T09:52:10.525Z",
+        "end": "2026-11-11T09:52:19.849Z",
+        "duration": 9324
+      },
+      "failures": [
+        {
+          "name": "sync CLI equivalent local restacks keeps a root restack created by the preceding sync without publishing it",
+          "message": "Local and remote histories differ for parent, although their tracked parent is the same.\nThis may include an unpublished local restack; different commit IDs alone do not establish incoming changes.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\nERROR: Local and remote histories differ for parent. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n: expected 1 to equal +0"
+        }
+      ]
+    },
+    "red-relative.json": {
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 0,
+        "pending": 0,
+        "failures": 1,
+        "start": "2026-11-11T10:04:20.608Z",
+        "end": "2026-11-11T10:04:32.540Z",
+        "duration": 11932
+      },
+      "failures": [
+        {
+          "name": "sync CLI equivalent local restacks does not hide changed root files through relative diff configuration",
+          "message": "\ud83d\udd01 parent: local restack on newer main; branch commits match remote. Publication is pending.\nparent has unpublished local history; keeping local history. Preview publication with an submit --branch 'parent' --dry-run.\n: expected +0 to equal 1"
+        }
+      ]
+    },
+    "pinned-native-remaining-and-controls.json": {
+      "stats": {
+        "suites": 3,
+        "tests": 13,
+        "passes": 13,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T10:24:08.723Z",
+        "end": "2026-11-11T10:26:31.037Z",
+        "duration": 142314
+      },
+      "failures": []
+    },
+    "pinned-node-controls.json": {
+      "stats": {
+        "suites": 3,
+        "tests": 6,
+        "passes": 6,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T10:26:43.013Z",
+        "end": "2026-11-11T10:27:59.077Z",
+        "duration": 76064
+      },
+      "failures": []
+    }
+  },
+  "notes": [
+    "Full26 Node and first17 native precede only final GIT_GRAFT_FILE=devNull pin; targeted pinned-read deltas follow.",
+    "Initial timeouts and native constructor No.git failure are retained, not counted as green. Isolated unchanged native setup command repeated successfully; no baseline or root-cause assertion.",
+    "129-commit fixture now constructs paired own sequences through real Git after one real sync, avoiding irrelevant long maintenance during limit setup.",
+    "No push, PR, issue close, CI, live fixture GitHub changes or user installation/project changes."
+  ],
+  "nativeCoverage": {
+    "uniqueNewCases": 26,
+    "uniqueExistingControls": 3,
+    "prePinFirst17": "final-native.json",
+    "remaining9AndRootCanonicalReruns": "pinned-native-remaining-and-controls.json",
+    "totalUniquePerRuntime": 29
+  },
+  "nativeSetupDiagnostic": {
+    "before": "native-init-cwd-diagnostic.json",
+    "isolatedRepeat": "native-setup-isolated-repeat.json",
+    "status": "original transient constructor failure retained; identical public command repeated successfully without source changes"
+  },
+  "integrationMerge": "009442abe25cfb8274270cf6b28f7ba065ffc942",
+  "interface": {
+    "hasEquivalentLocalRestack": "one RemoteUpdateNode; requires same declared parent, newer raw-ancestry base, nonempty linear exact-own history; caller currently limits to trunk roots",
+    "hasCanonicalAncestry": "two exact object IDs; bounded canonical raw ancestry for sync containment/survivors",
+    "delivery": "sync-only refresh.preserved from #172; does not mutate captured nodes/pins or get schema"
+  },
+  "complete": true,
+  "nodeCoverage": {
+    "full26": "final-node.json",
+    "uniqueExistingControls": 3,
+    "prePinControls": "canonical-controls-node.json",
+    "finalPinnedDelta6": "pinned-node-controls.json",
+    "totalUniquePerRuntime": 29
+  }
+}

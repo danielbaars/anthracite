@@ -1,0 +1,48 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-11T10:04:20.608Z",
+    "end": "2026-11-11T10:04:32.540Z",
+    "duration": 11932
+  },
+  "tests": [
+    {
+      "title": "does not hide changed root files through relative diff configuration",
+      "fullTitle": "sync CLI equivalent local restacks does not hide changed root files through relative diff configuration",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 8783,
+      "currentRetry": 0,
+      "err": {
+        "message": "🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nparent has unpublished local history; keeping local history. Preview publication with an submit --branch 'parent' --dry-run.\n: expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: 🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nparent has unpublished local history; keeping local history. Preview publication with an submit --branch 'parent' --dry-run.\n: expected +0 to equal 1\n    at assertUncertainPreserving (dist/test/commands/sync_local_restack_cli.test.js:196:61)\n    at Context.<anonymous> (dist/test/commands/sync_local_restack_cli.test.js:283:9)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "does not hide changed root files through relative diff configuration",
+      "fullTitle": "sync CLI equivalent local restacks does not hide changed root files through relative diff configuration",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 8783,
+      "currentRetry": 0,
+      "err": {
+        "message": "🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nparent has unpublished local history; keeping local history. Preview publication with an submit --branch 'parent' --dry-run.\n: expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: 🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nparent has unpublished local history; keeping local history. Preview publication with an submit --branch 'parent' --dry-run.\n: expected +0 to equal 1\n    at assertUncertainPreserving (dist/test/commands/sync_local_restack_cli.test.js:196:61)\n    at Context.<anonymous> (dist/test/commands/sync_local_restack_cli.test.js:283:9)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-11T10:50:34.901Z",
+    "end": "2026-11-11T10:50:55.446Z",
+    "duration": 20545
+  },
+  "tests": [
+    {
+      "title": "explains the bounded proof refusal and matching control under debug",
+      "fullTitle": "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 16047,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "explains the bounded proof refusal and matching control under debug",
+      "fullTitle": "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 16047,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

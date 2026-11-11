@@ -1,0 +1,267 @@
+{
+  "sync": {
+    "kind": "sync",
+    "version": 1,
+    "root": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-3bV7IQ/consumer",
+    "commonDirectory": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-3bV7IQ/consumer/.git",
+    "gitDirectory": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-3bV7IQ/consumer/.git",
+    "repository": "get-fixture/repo",
+    "remote": "origin",
+    "remoteUrl": "/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-3bV7IQ/remote.git",
+    "trunkName": "main",
+    "refresh": {
+      "trunkHead": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+      "originalHead": "3758901050ae50fda351d83ca694fb97644b4dfe",
+      "original": {
+        "branchName": "child"
+      },
+      "trunk": {
+        "branchName": "main",
+        "previousHead": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "head": "5bf5016c8b65f4bb56303c5566f6868d73671a4f",
+        "sourceRef": "refs/gt-metadata/get/a58d6c35-9ca1-4cae-b8dd-18cea0275bb2/trunk",
+        "reset": false
+      },
+      "nodes": [
+        {
+          "branchName": "parent",
+          "parentBranchName": "main",
+          "expectedSourceHead": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "pullRequestNumber": 1,
+          "pullRequestUrl": "https://github.com/get-fixture/repo/pull/1",
+          "previousHead": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "previousMetadata": "8d6755bd73f8b41895d0d7f09c91e33d7223b409",
+          "previousParentBranchName": "main",
+          "previousBase": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "head": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "base": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "sourceRef": "refs/gt-metadata/get/db3a1792-98dc-4e85-a021-225f40829a30/0"
+        },
+        {
+          "branchName": "child",
+          "parentBranchName": "parent",
+          "expectedSourceHead": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+          "pullRequestNumber": 2,
+          "pullRequestUrl": "https://github.com/get-fixture/repo/pull/2",
+          "previousHead": "3758901050ae50fda351d83ca694fb97644b4dfe",
+          "previousMetadata": "dfd42d5735d8c123c84d90cd677770e6eeb840ef",
+          "previousParentBranchName": "parent",
+          "previousBase": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "head": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+          "base": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "sourceRef": "refs/gt-metadata/get/db3a1792-98dc-4e85-a021-225f40829a30/1"
+        }
+      ],
+      "preserved": [
+        "child"
+      ],
+      "prs": [
+        {
+          "headRefName": "child",
+          "baseRefName": "parent",
+          "number": 2,
+          "url": "https://github.com/get-fixture/repo/pull/2",
+          "headRefOid": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+          "state": "OPEN",
+          "headRepository": {
+            "name": "repo",
+            "nameWithOwner": "get-fixture/repo"
+          },
+          "headRepositoryOwner": {
+            "login": "get-fixture"
+          },
+          "title": "child original PR",
+          "body": "Existing PR body",
+          "isDraft": false,
+          "reviewDecision": "REVIEW_REQUIRED"
+        },
+        {
+          "headRefName": "parent",
+          "baseRefName": "main",
+          "number": 1,
+          "url": "https://github.com/get-fixture/repo/pull/1",
+          "headRefOid": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "state": "OPEN",
+          "headRepository": {
+            "name": "repo",
+            "nameWithOwner": "get-fixture/repo"
+          },
+          "headRepositoryOwner": {
+            "login": "get-fixture"
+          },
+          "title": "parent original PR",
+          "body": "Existing PR body",
+          "isDraft": false,
+          "reviewDecision": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    "cleanup": {
+      "branches": [
+        {
+          "branchName": "child",
+          "previousHead": "3758901050ae50fda351d83ca694fb97644b4dfe",
+          "previousMetadata": "dfd42d5735d8c123c84d90cd677770e6eeb840ef",
+          "parent": "parent",
+          "head": "3758901050ae50fda351d83ca694fb97644b4dfe",
+          "base": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "frozen": false,
+          "prNumber": 2,
+          "prHead": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131",
+          "prInfo": {
+            "number": 2,
+            "url": "https://github.com/get-fixture/repo/pull/2",
+            "state": "OPEN",
+            "base": "parent",
+            "title": "child original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          },
+          "state": "OPEN"
+        },
+        {
+          "branchName": "parent",
+          "previousHead": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "previousMetadata": "8d6755bd73f8b41895d0d7f09c91e33d7223b409",
+          "parent": "main",
+          "head": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "base": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+          "frozen": false,
+          "prNumber": 1,
+          "prHead": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+          "prInfo": {
+            "number": 1,
+            "url": "https://github.com/get-fixture/repo/pull/1",
+            "state": "OPEN",
+            "base": "main",
+            "title": "parent original PR",
+            "body": "Existing PR body",
+            "isDraft": false,
+            "reviewDecision": "REVIEW_REQUIRED"
+          },
+          "state": "OPEN"
+        }
+      ],
+      "untouched": [],
+      "trunkHead": "5bf5016c8b65f4bb56303c5566f6868d73671a4f",
+      "accepted": [],
+      "deletions": [],
+      "declined": [],
+      "excluded": [],
+      "parents": [],
+      "mandatory": [],
+      "replay": [],
+      "restack": true
+    },
+    "maintenance": [
+      {
+        "branchName": "parent",
+        "parentBranchName": "main",
+        "head": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+        "base": "01f6c88a17847dae93ffa5206d8ddfc8c618c764",
+        "frozen": false
+      },
+      {
+        "branchName": "child",
+        "parentBranchName": "parent",
+        "head": "3758901050ae50fda351d83ca694fb97644b4dfe",
+        "base": "d6b09eb53d84a29b9128c1bc4dc63376177d365e",
+        "frozen": false
+      }
+    ],
+    "phase": "maintenance",
+    "trunkCompleted": true,
+    "completedRemote": [
+      "parent",
+      "child"
+    ],
+    "completedPrs": [
+      "child",
+      "parent"
+    ],
+    "completedMaintenance": [
+      "parent"
+    ],
+    "cleanupCompleted": true,
+    "progress": {
+      "changed": [],
+      "deleted": [],
+      "incomplete": []
+    },
+    "updated": [
+      "main",
+      "parent"
+    ],
+    "expected": [
+      {
+        "branchName": "main",
+        "head": "5bf5016c8b65f4bb56303c5566f6868d73671a4f",
+        "metadata": ""
+      },
+      {
+        "branchName": "child",
+        "head": "3758901050ae50fda351d83ca694fb97644b4dfe",
+        "metadata": "f11b1b431b1426f142ead2e396e8ce622fd540a0"
+      },
+      {
+        "branchName": "parent",
+        "head": "295e82a0ec19b5c22ac9ef8693c30bc60fd7cce4",
+        "metadata": "18c58c747eb6bd78e409f0cb343ded362bb5843f"
+      }
+    ],
+    "active": {
+      "branchName": "child",
+      "phase": "maintenance",
+      "base": "295e82a0ec19b5c22ac9ef8693c30bc60fd7cce4",
+      "onto": "295e82a0ec19b5c22ac9ef8693c30bc60fd7cce4",
+      "originalHead": "3758901050ae50fda351d83ca694fb97644b4dfe"
+    },
+    "completion": {
+      "checkout": {
+        "target": "main",
+        "original": {
+          "branchName": "child"
+        },
+        "shouldCheckout": false
+      },
+      "untouched": [],
+      "expected": [
+        {
+          "branchName": "main",
+          "head": "5bf5016c8b65f4bb56303c5566f6868d73671a4f",
+          "metadata": ""
+        },
+        {
+          "branchName": "child",
+          "head": "3758901050ae50fda351d83ca694fb97644b4dfe",
+          "metadata": "f11b1b431b1426f142ead2e396e8ce622fd540a0"
+        },
+        {
+          "branchName": "parent",
+          "head": "295e82a0ec19b5c22ac9ef8693c30bc60fd7cce4",
+          "metadata": "18c58c747eb6bd78e409f0cb343ded362bb5843f"
+        }
+      ],
+      "sources": [
+        {
+          "sourceRef": "refs/gt-metadata/get/a58d6c35-9ca1-4cae-b8dd-18cea0275bb2/trunk",
+          "head": "5bf5016c8b65f4bb56303c5566f6868d73671a4f"
+        },
+        {
+          "sourceRef": "refs/gt-metadata/get/db3a1792-98dc-4e85-a021-225f40829a30/0",
+          "head": "d6b09eb53d84a29b9128c1bc4dc63376177d365e"
+        },
+        {
+          "sourceRef": "refs/gt-metadata/get/db3a1792-98dc-4e85-a021-225f40829a30/1",
+          "head": "9f9ab5f2a7afbae613aa928ac788b3870a2c8131"
+        }
+      ]
+    }
+  },
+  "branchesToSync": [],
+  "branchesToRestack": [],
+  "currentBranchOverride": "main",
+  "rebasedBranchBase": "295e82a0ec19b5c22ac9ef8693c30bc60fd7cce4",
+  "rebaseOwnership": "b4e009dd-9cd0-44d6-846c-54aa666419ee:c56d70b01083de0d5ffbd03af271ff6d4570e940ec45da277933f1909a043688"
+}
