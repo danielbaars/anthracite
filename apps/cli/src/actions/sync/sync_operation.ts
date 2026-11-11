@@ -77,6 +77,7 @@ export const syncOperationSchema = z
           .extend({ reset: z.boolean().optional() })
           .optional(),
         nodes: getOperationSchema.shape.nodes,
+        preserved: z.array(z.string().min(1)).optional(),
         prs: z.array(pullRequestSchema.strict()),
       })
       .strict(),

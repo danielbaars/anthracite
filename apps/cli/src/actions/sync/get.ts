@@ -243,6 +243,7 @@ type RemoteUpdatesArgs = {
   force: boolean;
   importDecisions?: GetImportDecision[];
   nodes?: readonly RemoteUpdateNode[];
+  preserved?: readonly string[];
   onComplete?: (branchName: string) => void;
   scope?: 'get' | 'sync';
 };
@@ -275,7 +276,13 @@ export async function getBranchesFromRemote(
         ) {
           uncommittedTrackedChangesPrecondition();
         }
-        if (
+        if (args.scope === 'sync' && args.preserved?.includes(branchName)) {
+          const label = chalk.cyan(branchName);
+          const quotedBranch = `'${branchName.replace(/'/g, "'\\''")}'`;
+          context.splog.info(
+            `${label} has unpublished local history; keeping local history. Preview publication with an submit --branch ${quotedBranch} --dry-run.`
+          );
+        } else if (
           context.engine.branchExists(branchName) &&
           context.engine.isBranchTracked(branchName) &&
           context.engine.getParentPrecondition(branchName) ===
@@ -476,11 +483,10 @@ export async function prepareRemoteUpdates(
       getMergeBase(node.branchName, node.head) !==
       getSha(`refs/heads/${node.branchName}`)
     ) {
-      node.resolution = await chooseRemoteResolution(
-        node.branchName,
-        context,
-        args.scope
-      );
+      node.resolution = await chooseRemoteResolution(node.branchName, context, {
+        scope: args.scope,
+        sourceHead: node.head,
+      });
     }
   }
 }
@@ -579,14 +585,30 @@ type RemoteResolution = 'REBASE' | 'OVERWRITE';
 async function chooseRemoteResolution(
   branchName: string,
   context: TContext,
-  scope: 'get' | 'sync' = 'get'
+  options: { scope?: 'get' | 'sync'; sourceHead?: string } = {}
 ): Promise<RemoteResolution> {
+  const { scope = 'get', sourceHead } = options;
   const frozen = context.engine.isBranchFrozen(branchName);
+  if (scope === 'sync' && sourceHead)
+    context.splog.debug(
+      `Local ${branchName}: ${getSha(
+        `refs/heads/${branchName}`
+      )}; fetched source: ${sourceHead}.`
+    );
   context.splog.info(
     [
-      `${chalk.yellow(
-        branchName
-      )} shares a name with a local branch, and they have the same parent.`,
+      ...(scope === 'sync'
+        ? [
+            `Local and remote histories differ for ${chalk.yellow(
+              branchName
+            )}, although their tracked parent is the same.`,
+            'This may include an unpublished local restack; different commit IDs alone do not establish incoming changes.',
+          ]
+        : [
+            `${chalk.yellow(
+              branchName
+            )} shares a name with a local branch, and they have the same parent.`,
+          ]),
       frozen
         ? `This branch is frozen. Use an unfreeze ${branchName} before rebasing local changes, or explicitly overwrite it with the remote version.`
         : `You can either overwrite your copy of the branch, or rebase your local changes onto the remote version.`,
@@ -622,7 +644,11 @@ async function chooseRemoteResolution(
   if (fetchChoice === 'ABORT') {
     if (!context.interactive)
       throw new ExitFailedError(
-        `Local branch ${branchName} has diverged from remote.${
+        `${
+          scope === 'sync'
+            ? `Local and remote histories differ for ${branchName}.`
+            : `Local branch ${branchName} has diverged from remote.`
+        }${
           frozen
             ? ` It is frozen; use an unfreeze ${branchName} before rebasing local changes.`
             : ''
@@ -655,7 +681,10 @@ async function handleSameParent(
 ): Promise<void> {
   const fetchChoice =
     args.fetchChoice ??
-    (await chooseRemoteResolution(args.branchName, context));
+    (await chooseRemoteResolution(args.branchName, context, {
+      scope: args.scope,
+      sourceHead: args.source?.head,
+    }));
 
   switch (fetchChoice) {
     case 'REBASE': {

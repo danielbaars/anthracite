@@ -165,6 +165,7 @@ async function executeSyncRefresh(
       nodes,
       force: false,
       scope: 'sync',
+      preserved: operation.refresh.preserved,
       onComplete: (branch) => completeSyncBranch(operation, branch, context),
     },
     context

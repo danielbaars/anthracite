@@ -29,6 +29,7 @@ export type SyncRefreshPlan = {
   readonly original: ReturnType<typeof captureGetCheckout>;
   readonly trunk?: RemoteTrunkUpdate;
   readonly nodes: ReturnType<typeof snapshotRemoteUpdateGraph>;
+  readonly preserved?: readonly string[];
   readonly prs: Awaited<ReturnType<typeof selectSyncFeatures>>['prs'];
 };
 
@@ -59,9 +60,20 @@ export async function prepareSyncRefresh(
         `${node.branchName} is ahead of remote; keeping its local commits.`
       );
     }
+    const preserved = nodes
+      .filter(
+        (node) =>
+          node.previousParentBranchName === node.parentBranchName &&
+          node.previousHead !== node.head &&
+          getMergeBase(node.head, node.previousHead) === node.head
+      )
+      .map((node) => {
+        assertRemoteUpdateNodeUnchanged(node);
+        return node.branchName;
+      });
     await prepareRemoteUpdates(
       {
-        nodes,
+        nodes: nodes.filter((node) => !preserved.includes(node.branchName)),
         force: false,
         scope: 'sync',
         trunk,
@@ -71,7 +83,15 @@ export async function prepareSyncRefresh(
       context
     );
     if (trunk?.reset) await confirmSyncTrunkReset(trunk, opts.force, context);
-    return { original, originalHead, trunkHead, trunk, nodes, prs };
+    return {
+      original,
+      originalHead,
+      trunkHead,
+      trunk,
+      nodes,
+      prs,
+      ...(preserved.length ? { preserved } : {}),
+    };
   } catch (error) {
     releaseRemoteUpdateGraph(nodes);
     if (trunk) releaseRemoteTrunk(trunk);
