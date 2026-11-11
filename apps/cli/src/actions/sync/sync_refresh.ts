@@ -1,7 +1,6 @@
 import { getGithubPr } from '../../lib/api/github_pr';
 import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
 import { getSha } from '../../lib/git/get_sha';
-import { getMergeBase } from '../../lib/git/merge_base';
 import { TContext } from '../../lib/context';
 import { ExitFailedError, KilledError } from '../../lib/errors';
 import {
@@ -10,6 +9,10 @@ import {
   RemoteTrunkUpdate,
 } from './remote_update_trunk';
 import { prepareRemoteUpdates } from './get';
+import {
+  hasCanonicalAncestry,
+  hasEquivalentLocalRestack,
+} from './local_restack';
 import { captureGetCheckout } from './get_checkout';
 import {
   lookupPullRequest,
@@ -61,12 +64,23 @@ export async function prepareSyncRefresh(
       );
     }
     const preserved = nodes
-      .filter(
-        (node) =>
+      .filter((node) => {
+        if (
           node.previousParentBranchName === node.parentBranchName &&
           node.previousHead !== node.head &&
-          getMergeBase(node.head, node.previousHead) === node.head
-      )
+          hasCanonicalAncestry(node.head, node.previousHead)
+        )
+          return true;
+        if (
+          node.parentBranchName !== context.engine.trunk ||
+          !hasEquivalentLocalRestack(node)
+        )
+          return false;
+        context.splog.info(
+          `🔁 ${node.branchName}: local restack on newer ${node.parentBranchName}; branch commits match remote. Publication is pending.`
+        );
+        return true;
+      })
       .map((node) => {
         assertRemoteUpdateNodeUnchanged(node);
         return node.branchName;
@@ -113,7 +127,7 @@ function isLocalAheadMergeSurvivor(
     parent.baseRefName === node.parentBranchName &&
     parent.headRefOid === getSha(`refs/heads/${parent.headRefName}`) &&
     node.previousHead !== node.head &&
-    getMergeBase(node.head, node.previousHead) === node.head
+    hasCanonicalAncestry(node.head, node.previousHead)
   );
 }
 
