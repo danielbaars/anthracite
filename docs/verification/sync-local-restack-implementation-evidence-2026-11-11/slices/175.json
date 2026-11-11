@@ -1,0 +1,284 @@
+{
+  "ticket": 175,
+  "source": "f954138179ef20a70efcaedf8994fd3987506621",
+  "branch": "preserve-restacked-sync-chains",
+  "integrationAncestor": "613f98b827dd9279e4c7ca5dbbde043a85a57603",
+  "status": "complete",
+  "node": {
+    "uniquePassingCases": [
+      "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug",
+      "sync CLI paired local restacks keeps paired history and frozen state under explicit no-pull and no-restack controls",
+      "sync CLI paired local restacks npm restack MCP: learns and executes the same preserving workflow with literal arguments",
+      "sync CLI paired local restacks npm restack recovery: continues a genuine paired-chain conflict in a fresh process",
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed parent author without applying the paired plan",
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed parent boundary without applying the paired plan",
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed remote child without applying the paired plan",
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed remote parent without applying the paired plan",
+      "sync CLI paired local restacks npm restack: preserves a real parent-child restack on a second sync",
+      "sync CLI paired local restacks preserves longer fanout and local-only work while refreshing an independent incoming arm",
+      "sync CLI paired local restacks retains both paired decisions when a hook interrupts later maintenance",
+      "sync CLI paired local restacks retains file collision before maintaining a preserved pair",
+      "sync CLI paired local restacks retains occupied child before maintaining a preserved pair",
+      "sync CLI paired local restacks retains tracked work before maintaining a preserved pair"
+    ],
+    "count": 14,
+    "attempts": [
+      {
+        "file": "green-chain.json",
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-11T10:32:17.286Z",
+          "end": "2026-11-11T10:32:33.154Z",
+          "duration": 15868
+        }
+      },
+      {
+        "file": "mixed-node.json",
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-11T10:33:49.215Z",
+          "end": "2026-11-11T10:34:48.900Z",
+          "duration": 59685
+        }
+      },
+      {
+        "file": "pairing-recovery-node.json",
+        "stats": {
+          "suites": 1,
+          "tests": 5,
+          "passes": 5,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-11T10:35:27.577Z",
+          "end": "2026-11-11T10:37:46.836Z",
+          "duration": 139259
+        }
+      },
+      {
+        "file": "options-protection-mcp-node.json",
+        "stats": {
+          "suites": 1,
+          "tests": 6,
+          "passes": 5,
+          "pending": 0,
+          "failures": 1,
+          "start": "2026-11-11T10:39:20.354Z",
+          "end": "2026-11-11T10:41:56.313Z",
+          "duration": 155959
+        }
+      },
+      {
+        "file": "options-node-corrected.json",
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-11T10:42:50.762Z",
+          "end": "2026-11-11T10:43:21.638Z",
+          "duration": 30876
+        }
+      },
+      {
+        "file": "green-debug-node.json",
+        "stats": {
+          "suites": 1,
+          "tests": 1,
+          "passes": 1,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-11T10:50:34.901Z",
+          "end": "2026-11-11T10:50:55.446Z",
+          "duration": 20545
+        }
+      }
+    ]
+  },
+  "nativeSha256": "59d98e2510dee35229aa6635ca8435c6be46b28fbd9d2c1b1236fcbf5445636b",
+  "tarballSha256": "5048b7668a07ae1ddb5813cb1b89de9694d5682613077c6624f918d6ddfd3fb7",
+  "limits": "128 commits/history, 4MiB, 3seconds; exact linear own changes, author, message bytes; exact already verified parent remote/local boundaries; unsupported cases reconcile/refuse",
+  "notes": [
+    "Option fixture corrected to unfreeze parent because freeze child deliberately freezes ancestors; no production delta for this assertion.",
+    "First npm build attempted defaultcache denied by sandbox; isolatedcache/userconfig build succeeded; no cache ownership or active installation changes.",
+    "13 functional cases passed on both runtimes before debug-only reporting. Final static debug sink retains boolean decisions and bounds; additional public debug negative/matching control passed Node and native, with paired core repeated native.",
+    "Final candidate rebuilt after diagnostics; pre-debug artifact retained separately and not used for full npm acceptance."
+  ],
+  "fullMatrixStarted": false,
+  "liveGithubFixtureWrites": false,
+  "userProjectsChanged": false,
+  "activeInstallationChanged": false,
+  "pushed": false,
+  "priorFunctionalSource": "d5d3c5b72123469ebc0299b79f50103b8e74af4d",
+  "native": {
+    "uniquePassingCases": [
+      "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug",
+      "sync CLI paired local restacks keeps paired history and frozen state under explicit no-pull and no-restack controls",
+      "sync CLI paired local restacks npm restack MCP: learns and executes the same preserving workflow with literal arguments",
+      "sync CLI paired local restacks npm restack recovery: continues a genuine paired-chain conflict in a fresh process",
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed parent author without applying the paired plan",
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed parent boundary without applying the paired plan",
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed remote child without applying the paired plan",
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed remote parent without applying the paired plan",
+      "sync CLI paired local restacks npm restack: preserves a real parent-child restack on a second sync",
+      "sync CLI paired local restacks preserves longer fanout and local-only work while refreshing an independent incoming arm",
+      "sync CLI paired local restacks retains both paired decisions when a hook interrupts later maintenance",
+      "sync CLI paired local restacks retains file collision before maintaining a preserved pair",
+      "sync CLI paired local restacks retains occupied child before maintaining a preserved pair",
+      "sync CLI paired local restacks retains tracked work before maintaining a preserved pair"
+    ],
+    "count": 14,
+    "attempts": [
+      {
+        "file": "final-native.json",
+        "stats": {
+          "suites": 1,
+          "tests": 13,
+          "passes": 13,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-11T10:43:52.842Z",
+          "end": "2026-11-11T10:48:18.621Z",
+          "duration": 265779
+        }
+      },
+      {
+        "file": "debug-delta-native.json",
+        "stats": {
+          "suites": 1,
+          "tests": 2,
+          "passes": 2,
+          "pending": 0,
+          "failures": 0,
+          "start": "2026-11-11T10:51:46.099Z",
+          "end": "2026-11-11T10:52:36.314Z",
+          "duration": 50215
+        }
+      }
+    ]
+  },
+  "preDebugNativeSha256": "b45dbf28fcdb1f90df680cebf15a184621004e89cee2c4626e3108038523607e",
+  "preDebugTarballSha256": "3f219c77a6c5a7207eeb772a443637bceaf698d0d9663ed83f0d0a12513dd65a",
+  "installedCliSha256": "779c7c7fbac626471b7eef9a22a874d6fb1572a1879db423092218e8666e4ec1",
+  "productionFiles": {
+    "apps/cli/src/actions/sync/local_restack.ts": "46404530b4bf1d888b39664d61c9f5641d7e3518e16b4a77206bd767379f52b6",
+    "apps/cli/src/actions/sync/sync_refresh.ts": "02442295bcefc6a3e79a3740091ca5be7c11500f3927329fb7ff8c6dfe332ab1",
+    "apps/cli/src/commands/repo-commands/repo_sync.ts": "10d515b2d0a05343dadab55a96207a7350c2ca03cd3d142eeecad440abff3284",
+    "apps/cli/src/lib/mcp/learn.ts": "f00b3e086c7fe51c22b9a61dde05d8a553a4ced086f562e0d00674f5c58cda3c"
+  },
+  "checks": {
+    "typecheck": 0,
+    "targetedEslint": 0,
+    "prettier": 0,
+    "gitDiffCheck": 0
+  },
+  "npmPackage": {
+    "receipt": "npm-package-final-unsandboxed.txt",
+    "exit": 0,
+    "selectedScenarios": 25,
+    "aliasScenarios": 1,
+    "offlineInstall": true,
+    "aliases": [
+      "an",
+      "anthracite"
+    ],
+    "completionAndCuratedContents": true,
+    "runtime": "outside sandbox for the existing owned-process ps/cancellation fixture",
+    "tarball": "candidate-final.tgz",
+    "source": "f954138179ef20a70efcaedf8994fd3987506621",
+    "legacyProducer": "/private/tmp/anthracite-171-legacy0611-20261111/node_modules/.bin/an"
+  },
+  "environmentAttempts": {
+    "initialFull": "npm-package-final.txt",
+    "observed": "23 passed; numeric-zero failed at hook readiness before cancellation, and reused-sync had a15s command timeout.",
+    "numericZeroNarrow": "npm-numeric-zero-unsandboxed.json",
+    "numericZeroCause": "sandbox denies ps invoked by existing own-hook fixture; unchanged outside-sandbox case passed including actual cancellation and later-work assertions.",
+    "reusedSyncNarrow": "npm-failure-controls.json",
+    "reusedSyncNote": "unchanged isolated retry passed; timeout root cause not established. Same full package later passed without source or timeout changes.",
+    "ownedProcessEvidence": "cancellation-processes/"
+  },
+  "remaining": "Root merger, independent review and final one-PR acceptance; no implementation work remaining in #175.",
+  "complete": true,
+  "worktreeClean": true,
+  "latestIntegrationMerged": "613f98b827dd9279e4c7ca5dbbde043a85a57603 (Already up to date)",
+  "installedDelivery": {
+    "receipt": "npm-extra-delivery.json",
+    "stats": {
+      "suites": 1,
+      "tests": 4,
+      "passes": 4,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-11-11T11:05:46.690Z",
+      "end": "2026-11-11T11:07:23.953Z",
+      "duration": 97263
+    },
+    "passingCases": [
+      "sync CLI paired local restacks npm restack uncertainty: refuses changed remote child without applying the paired plan",
+      "sync CLI paired local restacks npm restack recovery: continues a genuine paired-chain conflict in a fresh process",
+      "sync CLI paired local restacks npm restack MCP: learns and executes the same preserving workflow with literal arguments",
+      "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug"
+    ],
+    "featureCasesAcrossPackageAndExtra": 5,
+    "qualification": "Core consecutive-sync is in full npm runner; four extra installed cases add uncertainty, genuine recovery, MCP and debug disclosure. No active installation changed."
+  },
+  "redReceipts": [
+    "red-chain.json",
+    "red-debug.json"
+  ],
+  "sdkCancellationPatch": {
+    "source": "node_modules/@modelcontextprotocol/sdk/dist/cjs/shared/protocol.js",
+    "verifiedGuard": "notification.params.requestId === undefined",
+    "unchangedOutsideSandboxControl": "npm-numeric-zero-unsandboxed.json"
+  },
+  "receiptFiles": [
+    "red-chain.json",
+    "green-chain.json",
+    "mixed-node.json",
+    "pairing-recovery-node.json",
+    "options-protection-mcp-node.json",
+    "options-node-corrected.json",
+    "final-native.json",
+    "red-debug.json",
+    "green-debug-node.json",
+    "debug-delta-native.json",
+    "npm-build-final.txt",
+    "npm-install-final.txt",
+    "npm-package-final.txt",
+    "npm-failure-controls.json",
+    "npm-numeric-zero-unsandboxed.json",
+    "npm-package-final-unsandboxed.txt",
+    "npm-extra-delivery.json",
+    "final-prettier.txt",
+    "final-lint.txt"
+  ],
+  "receiptSha256": {
+    "red-chain.json": "7caf19b6e5839d442112ed66cef4185b2d2c1b47ddaee56f7367163652c348ff",
+    "green-chain.json": "f34bdcf506f2d3c309b707f998905a47f9a04e8e655adcdef3a23eb185922770",
+    "mixed-node.json": "daeef18b0a6768096803378738f06834a9ecb7083c7923c16b8144ccf8785c83",
+    "pairing-recovery-node.json": "3328e5ae3f83b5ffe114822fb6cfafc6c7b4a39223f38c88aba6ce113a1bebe2",
+    "options-protection-mcp-node.json": "b18329ef1833aeb7cf24a9999bef5f9db82cd7184b6bdd9ca89a0e0615f38727",
+    "options-node-corrected.json": "466de247e65ef6367decc2fef8d00abfcdb2ac66d20ba8699521d83837f03789",
+    "final-native.json": "b73cc56c9c3edf2ac0014f80adfbcd03151e17e8e841898fac857aed001f5924",
+    "red-debug.json": "63d0bef260a8c72107a8ca99647d62556becba209840baf5e80799dd9b1a1b49",
+    "green-debug-node.json": "f0aff3e3188542293096501f5e2aff77fd9e87a515aa85efa224627e2bdc4053",
+    "debug-delta-native.json": "8cc1c8b6f17f31b04ed3844ac5520d27b4c6ece48bdd50d71a4be98c867faff6",
+    "npm-build-final.txt": "8e15ad56dd0f759757d39e9445990ca8b2f0029933e4c33be8b18103aa609592",
+    "npm-install-final.txt": "1695a8f943f6168154b7b8a495036469d464a33ec98b203e7067ee420fb08d65",
+    "npm-package-final.txt": "9145557c438c6748ca3433f45fb67206b7672fbbfbc2ecd9826536950491f9b6",
+    "npm-failure-controls.json": "d6fc8cacdefaa5baf0c5a5b74ddc02293daca16c2cf29c003c4e7f1a672c3f23",
+    "npm-numeric-zero-unsandboxed.json": "05b834a2a00bc6beeab3feb069421936c54171aaad4f966f9cfb6ed53480c07f",
+    "npm-package-final-unsandboxed.txt": "cd65f5ad0c1d41faac5c48f75ab71b9786b9f12cb546f1909518b16aa3d5147f",
+    "npm-extra-delivery.json": "e10f27904f92499d5a8b2edc808ac9d34d0e355d4d4930aff060fb451c9aa3cc",
+    "final-prettier.txt": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+    "final-lint.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

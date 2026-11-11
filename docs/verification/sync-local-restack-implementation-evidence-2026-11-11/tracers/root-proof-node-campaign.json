@@ -1,0 +1,486 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 26,
+    "passes": 26,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-11T10:15:26.822Z",
+    "end": "2026-11-11T10:22:18.437Z",
+    "duration": 411615
+  },
+  "tests": [
+    {
+      "title": "keeps a root restack created by the preceding sync without publishing it",
+      "fullTitle": "sync CLI equivalent local restacks keeps a root restack created by the preceding sync without publishing it",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 12593,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for amended content",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for amended content",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 28640,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for changed author identity",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for changed author identity",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 9122,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for changed author time",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for changed author time",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 8323,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for changed complete message with equal code",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for changed complete message with equal code",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6850,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for leading and trailing message bytes",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for leading and trailing message bytes",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 7132,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for trailing whitespace with equal stable patch IDs",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for trailing whitespace with equal stable patch IDs",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 7908,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for binary changes",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for binary changes",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 17159,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for file mode changes",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for file mode changes",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 11509,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for path changes",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for path changes",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6978,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for an added empty commit",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for an added empty commit",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6875,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for an extra local commit after restacking",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for an extra local commit after restacking",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6613,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for a remote update after restacking",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for a remote update after restacking",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6672,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for unsupported encoding",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for unsupported encoding",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6491,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a frozen equivalent restack in a terminal without prompting",
+      "fullTitle": "sync CLI equivalent local restacks preserves a frozen equivalent restack in a terminal without prompting",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 8101,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves get reconciliation unchanged for an equivalent local restack",
+      "fullTitle": "sync CLI equivalent local restacks leaves get reconciliation unchanged for an equivalent local restack",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6558,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects reordered commits even when the aggregate branch diff matches",
+      "fullTitle": "sync CLI equivalent local restacks rejects reordered commits even when the aggregate branch diff matches",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 14012,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains matching deliberate empty commits in the compared sequence",
+      "fullTitle": "sync CLI equivalent local restacks retains matching deliberate empty commits in the compared sequence",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 31633,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "allows a replay committer timestamp change without erasing author data",
+      "fullTitle": "sync CLI equivalent local restacks allows a replay committer timestamp change without erasing author data",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 7947,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps unsupported merged histories uncertain",
+      "fullTitle": "sync CLI equivalent local restacks keeps unsupported merged histories uncertain",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 10824,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not compare distinct invalid UTF-8 messages as replacement characters",
+      "fullTitle": "sync CLI equivalent local restacks does not compare distinct invalid UTF-8 messages as replacement characters",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 12143,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps an over-limit commit sequence uncertain without changing it",
+      "fullTitle": "sync CLI equivalent local restacks keeps an over-limit commit sequence uncertain without changing it",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 27698,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a large ambiguous patch uncertain within the bounded proof",
+      "fullTitle": "sync CLI equivalent local restacks keeps a large ambiguous patch uncertain within the bounded proof",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 9477,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not hide changed root files through relative diff configuration",
+      "fullTitle": "sync CLI equivalent local restacks does not hide changed root files through relative diff configuration",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 8214,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not hide gitlink changes through ignored-submodule configuration",
+      "fullTitle": "sync CLI equivalent local restacks does not hide gitlink changes through ignored-submodule configuration",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 21891,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not use replacement ancestry to declare remote work locally contained",
+      "fullTitle": "sync CLI equivalent local restacks does not use replacement ancestry to declare remote work locally contained",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 1695,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "keeps a root restack created by the preceding sync without publishing it",
+      "fullTitle": "sync CLI equivalent local restacks keeps a root restack created by the preceding sync without publishing it",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 12593,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for amended content",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for amended content",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 28640,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for changed author identity",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for changed author identity",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 9122,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for changed author time",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for changed author time",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 8323,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for changed complete message with equal code",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for changed complete message with equal code",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6850,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for leading and trailing message bytes",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for leading and trailing message bytes",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 7132,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for trailing whitespace with equal stable patch IDs",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for trailing whitespace with equal stable patch IDs",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 7908,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for binary changes",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for binary changes",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 17159,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for file mode changes",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for file mode changes",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 11509,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for path changes",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for path changes",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6978,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for an added empty commit",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for an added empty commit",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6875,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for an extra local commit after restacking",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for an extra local commit after restacking",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6613,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for a remote update after restacking",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for a remote update after restacking",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6672,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains deliberate reconciliation for unsupported encoding",
+      "fullTitle": "sync CLI equivalent local restacks retains deliberate reconciliation for unsupported encoding",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6491,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves a frozen equivalent restack in a terminal without prompting",
+      "fullTitle": "sync CLI equivalent local restacks preserves a frozen equivalent restack in a terminal without prompting",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 8101,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves get reconciliation unchanged for an equivalent local restack",
+      "fullTitle": "sync CLI equivalent local restacks leaves get reconciliation unchanged for an equivalent local restack",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 6558,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects reordered commits even when the aggregate branch diff matches",
+      "fullTitle": "sync CLI equivalent local restacks rejects reordered commits even when the aggregate branch diff matches",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 14012,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains matching deliberate empty commits in the compared sequence",
+      "fullTitle": "sync CLI equivalent local restacks retains matching deliberate empty commits in the compared sequence",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 31633,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "allows a replay committer timestamp change without erasing author data",
+      "fullTitle": "sync CLI equivalent local restacks allows a replay committer timestamp change without erasing author data",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 7947,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps unsupported merged histories uncertain",
+      "fullTitle": "sync CLI equivalent local restacks keeps unsupported merged histories uncertain",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 10824,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not compare distinct invalid UTF-8 messages as replacement characters",
+      "fullTitle": "sync CLI equivalent local restacks does not compare distinct invalid UTF-8 messages as replacement characters",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 12143,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps an over-limit commit sequence uncertain without changing it",
+      "fullTitle": "sync CLI equivalent local restacks keeps an over-limit commit sequence uncertain without changing it",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 27698,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps a large ambiguous patch uncertain within the bounded proof",
+      "fullTitle": "sync CLI equivalent local restacks keeps a large ambiguous patch uncertain within the bounded proof",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 9477,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not hide changed root files through relative diff configuration",
+      "fullTitle": "sync CLI equivalent local restacks does not hide changed root files through relative diff configuration",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 8214,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not hide gitlink changes through ignored-submodule configuration",
+      "fullTitle": "sync CLI equivalent local restacks does not hide gitlink changes through ignored-submodule configuration",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 21891,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not use replacement ancestry to declare remote work locally contained",
+      "fullTitle": "sync CLI equivalent local restacks does not use replacement ancestry to declare remote work locally contained",
+      "file": "/private/tmp/anthracite-173-20261111/apps/cli/dist/test/commands/sync_local_restack_cli.test.js",
+      "duration": 1695,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

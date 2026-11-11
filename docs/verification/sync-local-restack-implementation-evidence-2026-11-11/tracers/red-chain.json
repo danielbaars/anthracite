@@ -1,0 +1,48 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-11T10:31:23.669Z",
+    "end": "2026-11-11T10:31:38.174Z",
+    "duration": 14505
+  },
+  "tests": [
+    {
+      "title": "npm restack: preserves a real parent-child restack on a second sync",
+      "fullTitle": "sync CLI paired local restacks npm restack: preserves a real parent-child restack on a second sync",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 10932,
+      "currentRetry": 0,
+      "err": {
+        "message": "🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nLocal and remote histories differ for child, although their tracked parent is the same.\nThis may include an unpublished local restack; different commit IDs alone do not establish incoming changes.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\nERROR: Local and remote histories differ for child. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n: expected 1 to equal +0",
+        "showDiff": true,
+        "actual": "1",
+        "expected": "0",
+        "operator": "notStrictEqual",
+        "stack": "AssertionError: 🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nLocal and remote histories differ for child, although their tracked parent is the same.\nThis may include an unpublished local restack; different commit IDs alone do not establish incoming changes.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\nERROR: Local and remote histories differ for child. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n: expected 1 to equal +0\n    at FrozenGetFixture.ok (apps/cli/dist/test/lib/fixtures/frozen_get_cli.js:292:61)\n    at Context.<anonymous> (apps/cli/dist/test/commands/sync_restack_chain_cli.test.js:31:32)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "npm restack: preserves a real parent-child restack on a second sync",
+      "fullTitle": "sync CLI paired local restacks npm restack: preserves a real parent-child restack on a second sync",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 10932,
+      "currentRetry": 0,
+      "err": {
+        "message": "🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nLocal and remote histories differ for child, although their tracked parent is the same.\nThis may include an unpublished local restack; different commit IDs alone do not establish incoming changes.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\nERROR: Local and remote histories differ for child. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n: expected 1 to equal +0",
+        "showDiff": true,
+        "actual": "1",
+        "expected": "0",
+        "operator": "notStrictEqual",
+        "stack": "AssertionError: 🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nLocal and remote histories differ for child, although their tracked parent is the same.\nThis may include an unpublished local restack; different commit IDs alone do not establish incoming changes.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\nERROR: Local and remote histories differ for child. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n: expected 1 to equal +0\n    at FrozenGetFixture.ok (apps/cli/dist/test/lib/fixtures/frozen_get_cli.js:292:61)\n    at Context.<anonymous> (apps/cli/dist/test/commands/sync_restack_chain_cli.test.js:31:32)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}

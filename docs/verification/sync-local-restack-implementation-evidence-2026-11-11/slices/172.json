@@ -1,0 +1,69 @@
+{
+  "ticket": 172,
+  "source": "8c55fcdf59f1ce0e98ce73c8186364b0c41c78f8",
+  "branch": "preserve-sync-local-ahead",
+  "worktree": "/private/tmp/anthracite-172-20261111",
+  "capturedAt": "2026-11-11T09:48:00.651818+00:00",
+  "fullFocusedCampaign": {
+    "final-node-local-ahead.json": {
+      "suites": 1,
+      "tests": 11,
+      "passes": 11,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-11-11T09:43:56.015Z",
+      "end": "2026-11-11T09:45:21.024Z",
+      "duration": 85009
+    },
+    "final-native-local-ahead.json": {
+      "suites": 1,
+      "tests": 11,
+      "passes": 11,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-11-11T09:43:56.776Z",
+      "end": "2026-11-11T09:45:12.449Z",
+      "duration": 75673
+    }
+  },
+  "exactCommitCoreAndQuotedGuidance": {
+    "exact-8c55fcdf-node.json": {
+      "suites": 1,
+      "tests": 2,
+      "passes": 2,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-11-11T09:46:53.742Z",
+      "end": "2026-11-11T09:47:12.891Z",
+      "duration": 19149
+    },
+    "exact-8c55fcdf-native.json": {
+      "suites": 1,
+      "tests": 2,
+      "passes": 2,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-11-11T09:46:53.742Z",
+      "end": "2026-11-11T09:47:11.571Z",
+      "duration": 17829
+    }
+  },
+  "redReceipts": [
+    "red-local-ahead.json",
+    "red-explanation.json",
+    "red-native-quotation.json"
+  ],
+  "checks": {
+    "typecheck": "passed",
+    "targetedLint": "passed",
+    "prettier": "passed",
+    "diffWhitespace": "passed"
+  },
+  "interface": "Optional sync-only refresh.preserved string[] names captured nodes retained locally. All nodes and pins remain. get recovery schema unchanged; shared executor ignores keep argument outside scope sync. Cleanup/maintenance projection uses actual kept local heads/base. Record guard rejects duplicate/missing/explicit-resolution/parent-mismatched decisions.",
+  "baselineRuntimeNote": "The11-case campaign ran before a display-label-only lint adjustment. Exact commit was recompiled and core/quoted-name cases passed on both runtimes. One initial green attempt timed out in fixture setup before any test; its receipt is retained, and an unchanged retry passed.",
+  "nativeSha256": "2a576581111fb0cfcb187842907c25db429575b0ab5619a03c8be36ad9ecaaeb",
+  "ciStarted": false,
+  "fullMatrixStarted": false,
+  "userProjectsChanged": false,
+  "liveGitHubFixtureWrites": false
+}

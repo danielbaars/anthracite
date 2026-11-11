@@ -1,0 +1,212 @@
+{
+  "ticket": 174,
+  "commit": "f0fe2bb6991f74fb7935bed2c38162756122de28",
+  "branch": "resume-preserved-sync-work",
+  "integrationAncestor": "69a1199b26ff1038ab84a7247ce030b1bc1bf06b",
+  "sourceCodeChanged": false,
+  "testBoundary": "Public CLI processes; real temporary Git repositories/bare remotes; controlled gh responses only.",
+  "verified": {
+    "node": {
+      "receipts": [
+        "final-node.json",
+        "final-node-remaining.json",
+        "decision-node.json"
+      ],
+      "uniquePassingWorkflows": [
+        "sync recovery with preserved unpublished work abandons a preserved conflict offline without losing staged or unstaged resolutions",
+        "sync recovery with preserved unpublished work continues an unmodified released record with its explicit rebase choice",
+        "sync recovery with preserved unpublished work continues the pinned plan after a preserved branch remote advances",
+        "sync recovery with preserved unpublished work declines another reconciliation without consuming preserved local work",
+        "sync recovery with preserved unpublished work keeps an explicit overwrite from an unmodified released record",
+        "sync recovery with preserved unpublished work refuses changed decision before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed freeze before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed metadata before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed occupied before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed record before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed source before staging a preserved conflict",
+        "sync recovery with preserved unpublished work released 0.7.0 refuses a preserved plan without staging or consuming it",
+        "sync recovery with preserved unpublished work retains reached work when a hook interrupts child maintenance",
+        "sync recovery with preserved unpublished work retains reached work when a hook interrupts parent maintenance",
+        "sync recovery with preserved unpublished work revalidates identity cleanup evidence while another branch is preserved",
+        "sync recovery with preserved unpublished work revalidates reopened cleanup evidence while another branch is preserved",
+        "sync recovery with preserved unpublished work revalidates unavailable cleanup evidence while another branch is preserved"
+      ],
+      "attempts": [
+        {
+          "file": "final-node.json",
+          "stats": {
+            "suites": 1,
+            "tests": 11,
+            "passes": 11,
+            "pending": 0,
+            "failures": 1,
+            "start": "2026-11-11T10:07:00.258Z",
+            "end": "2026-11-11T10:11:51.858Z",
+            "duration": 291600
+          }
+        },
+        {
+          "file": "final-node-remaining.json",
+          "stats": {
+            "suites": 1,
+            "tests": 5,
+            "passes": 5,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-11T10:13:55.357Z",
+            "end": "2026-11-11T10:15:15.379Z",
+            "duration": 80022
+          }
+        },
+        {
+          "file": "decision-node.json",
+          "stats": {
+            "suites": 1,
+            "tests": 1,
+            "passes": 1,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-11T10:08:14.777Z",
+            "end": "2026-11-11T10:08:32.395Z",
+            "duration": 17618
+          }
+        }
+      ]
+    },
+    "native": {
+      "receipts": [
+        "final-native.json",
+        "final-native-source-confirmed.json",
+        "decision-native.json"
+      ],
+      "uniquePassingWorkflows": [
+        "sync recovery with preserved unpublished work abandons a preserved conflict offline without losing staged or unstaged resolutions",
+        "sync recovery with preserved unpublished work continues an unmodified released record with its explicit rebase choice",
+        "sync recovery with preserved unpublished work continues the pinned plan after a preserved branch remote advances",
+        "sync recovery with preserved unpublished work declines another reconciliation without consuming preserved local work",
+        "sync recovery with preserved unpublished work keeps an explicit overwrite from an unmodified released record",
+        "sync recovery with preserved unpublished work refuses changed decision before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed freeze before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed metadata before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed occupied before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed record before staging a preserved conflict",
+        "sync recovery with preserved unpublished work refuses changed source before staging a preserved conflict",
+        "sync recovery with preserved unpublished work released 0.7.0 refuses a preserved plan without staging or consuming it",
+        "sync recovery with preserved unpublished work retains reached work when a hook interrupts child maintenance",
+        "sync recovery with preserved unpublished work retains reached work when a hook interrupts parent maintenance",
+        "sync recovery with preserved unpublished work revalidates identity cleanup evidence while another branch is preserved",
+        "sync recovery with preserved unpublished work revalidates reopened cleanup evidence while another branch is preserved",
+        "sync recovery with preserved unpublished work revalidates unavailable cleanup evidence while another branch is preserved"
+      ],
+      "attempts": [
+        {
+          "file": "final-native.json",
+          "stats": {
+            "suites": 1,
+            "tests": 16,
+            "passes": 15,
+            "pending": 0,
+            "failures": 1,
+            "start": "2026-11-11T10:07:00.258Z",
+            "end": "2026-11-11T10:13:10.053Z",
+            "duration": 369795
+          }
+        },
+        {
+          "file": "final-native-source-confirmed.json",
+          "stats": {
+            "suites": 1,
+            "tests": 1,
+            "passes": 1,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-11T10:19:04.932Z",
+            "end": "2026-11-11T10:19:20.151Z",
+            "duration": 15219
+          }
+        },
+        {
+          "file": "decision-native.json",
+          "stats": {
+            "suites": 1,
+            "tests": 1,
+            "passes": 1,
+            "pending": 0,
+            "failures": 0,
+            "start": "2026-11-11T10:08:14.777Z",
+            "end": "2026-11-11T10:08:29.738Z",
+            "duration": 14961
+          }
+        }
+      ]
+    }
+  },
+  "getContinuationControls": [
+    {
+      "file": "get-control-node-retry.json",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T10:19:57.571Z",
+        "end": "2026-11-11T10:20:17.528Z",
+        "duration": 19957
+      }
+    },
+    {
+      "file": "get-control-native-retry.json",
+      "stats": {
+        "suites": 1,
+        "tests": 1,
+        "passes": 1,
+        "pending": 0,
+        "failures": 0,
+        "start": "2026-11-11T10:20:17.640Z",
+        "end": "2026-11-11T10:20:33.059Z",
+        "duration": 15419
+      }
+    }
+  ],
+  "redReceipt": "red-public-070.json",
+  "compatibility": {
+    "releasedExecutable": "/private/tmp/anthracite-stable-070-evidence-20261110/public install/node_modules/.bin/an",
+    "candidateOriginalRecord": {
+      "file": "candidate-record/original-recovery.json",
+      "sha256": "a40d8c6647ddd44ef79d4b32c55b803de2f28584dbbe1df874b5432efb13881c"
+    },
+    "releasedOriginalRecord": {
+      "file": "released-record/original-recovery.json",
+      "sha256": "12cd85afe9971144b787ce7636dbfa385f1e9363330e6c36746c4aa220f9b2de"
+    },
+    "findings": "Released0.7 strictly refuses preserving records unchanged; candidate supports untouched released0.7 version1 records and original explicit REBASE/OVERWRITE choices. No version/schema change needed.",
+    "notes": "compatibility.md"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "targetedLint": "passed",
+    "prettier": "passed",
+    "diffWhitespace": "passed",
+    "worktree": "clean"
+  },
+  "nativeSha256": "451c4f8f7c4d98a64abc29c163227ba812c66921c754cee8f752310cf91af992",
+  "timeoutNotes": {
+    "files": [
+      "final-node.json",
+      "final-native.json",
+      "final-native-source-retry.json",
+      "get-control-node.json",
+      "get-control-native.json"
+    ],
+    "observed": "One constructor import15s timeout stopped Node after11 passing cases; one native initial sync30s timeout before guard tampering repeated once. No assertion or preservation failure was observed. Isolated debug run reached intended conflict normally; unchanged native source test then passed15.2s. Remaining Node5 and both unchanged get controls passed sequentially. Timeouts and diagnostics retained, no code or timeout modification used.",
+    "diagnosticProcessReceipt": "native-diagnostic/frozen-get-cli.jsonl",
+    "retainedFixture": "/private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-get-lDKddw"
+  },
+  "ciStarted": false,
+  "fullMatrixStarted": false,
+  "liveGithubFixtureWrites": false,
+  "userProjectsChanged": false,
+  "activeInstallationChanged": false,
+  "pushed": false
+}

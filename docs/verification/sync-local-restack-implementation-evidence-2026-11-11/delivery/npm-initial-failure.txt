@@ -1,0 +1,106 @@
+PASS npm offline installation, both commands, completion and curated contents
+
+
+  MCP command execution through stdio
+    ✔ scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels (1668ms)
+    ✔ scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments (1169ms)
+    ✔ scenario 17: discovers targeted insertion, preserves the unselected arm and refuses invalid children in one installed session (5788ms)
+    ✔ scenario 16: previews and continues a multi-target construction conflict with retained local work in one usable same-installation session (32979ms)
+
+  MCP cancellation and shutdown through stdio
+    1) scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work
+
+  frozen publication through the public CLI
+    ✔ publishes an editable child on an existing frozen base while preserving protected and outside-scope PRs (10348ms)
+    ✔ rechecks after the original configured pre-push hook freezes the branch before any remote ref publication (2477ms)
+
+  get CLI and installed MCP delivery
+    ✔ installed get workflow learns explicit options, matches direct Git state and preserves a protected failure (9686ms)
+
+  sync CLI and installed MCP delivery
+    ✔ installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure (18782ms)
+    ✔ installed pending sync inspection and abandonment preserve reached work through MCP (12979ms)
+
+  sync CLI paired local restacks
+    ✔ npm restack: preserves a real parent-child restack on a second sync (18517ms)
+
+  private-plan landing delivery
+    ✔ direct private-plan delivery previews disabled rules then preserves an invalid-evidence refusal (2113ms)
+    ✔ MCP private-plan delivery previews disabled rules then preserves an invalid-evidence refusal (2390ms)
+
+  public reused-branch PR discovery
+    ✔ prefers the unique open PR over exact-head terminal history and unrelated old generations (2120ms)
+    ✔ validates a stale stored terminal PR before discovering the current open generation (4157ms)
+
+  submit reused branch names through the public CLI
+    ✔ npm reuse: creates a new draft after CLOSED history without editing the retired PR (6754ms)
+    ✔ npm reuse: updates the unique current open PR among repeated history and unpublished local work (7483ms)
+
+  submit preserves disclosed local inputs
+    ✔ npm reuse: refuses an unplanned head moved during confirmation before pushing (4735ms)
+    ✔ npm reuse: refuses concurrent parent metadata after pushing without overwriting it (6731ms)
+
+  sync protects current work from retired PR identities
+    2) npm reuse: refreshes a current open PR instead of its stale terminal association
+    ✔ npm reuse: deletes a freshly verified exact-head terminal branch (3688ms)
+    ✔ npm reuse: retains unpublished commits after the associated PR closes (2869ms)
+
+  sync cleanup identity across saved recovery
+    ✔ npm reuse: refuses uncovered legacy cleanup before staging or advancing (8755ms)
+    ✔ npm reuse: completes valid legacy cleanup with freshly verified coverage (15207ms)
+
+  delete verifies known PR state through the public CLI
+    ✔ npm reuse: retains unpublished work not covered by a terminal PR head (1140ms)
+
+
+  23 passing (5m)
+  2 failing
+
+  1) MCP cancellation and shutdown through stdio
+       scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work:
+
+      AssertionError: expected false to equal true
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/mcp_lifecycle_cli.test.js:188:64)
+
+  2) sync protects current work from retired PR identities
+       npm reuse: refreshes a current open PR instead of its stale terminal association:
+     Error: spawnSync /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/anthracite-npm-BtG0oe/npm prefix/bin/an ETIMEDOUT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at FrozenGetFixture.run (apps/cli/dist/test/lib/fixtures/frozen_get_cli.js:247:54)
+      at FrozenGetFixture.ok (apps/cli/dist/test/lib/fixtures/frozen_get_cli.js:291:29)
+      at Context.<anonymous> (apps/cli/dist/test/commands/sync_reused_branch_cli.test.js:71:17)
+      at process.processImmediate (node:internal/timers:534:21)
+
+
+
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+2 !== 0
+
+    at Object.<anonymous> (/private/tmp/anthracite-175-20261111/scripts/test-npm-package.cjs:159:10)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

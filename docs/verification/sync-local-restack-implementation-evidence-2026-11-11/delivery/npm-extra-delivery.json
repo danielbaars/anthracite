@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-11T11:05:46.690Z",
+    "end": "2026-11-11T11:07:23.953Z",
+    "duration": 97263
+  },
+  "tests": [
+    {
+      "title": "npm restack uncertainty: refuses changed remote child without applying the paired plan",
+      "fullTitle": "sync CLI paired local restacks npm restack uncertainty: refuses changed remote child without applying the paired plan",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 10387,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm restack recovery: continues a genuine paired-chain conflict in a fresh process",
+      "fullTitle": "sync CLI paired local restacks npm restack recovery: continues a genuine paired-chain conflict in a fresh process",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 20065,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm restack MCP: learns and executes the same preserving workflow with literal arguments",
+      "fullTitle": "sync CLI paired local restacks npm restack MCP: learns and executes the same preserving workflow with literal arguments",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 15286,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains the bounded proof refusal and matching control under debug",
+      "fullTitle": "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 19971,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "npm restack uncertainty: refuses changed remote child without applying the paired plan",
+      "fullTitle": "sync CLI paired local restacks npm restack uncertainty: refuses changed remote child without applying the paired plan",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 10387,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm restack recovery: continues a genuine paired-chain conflict in a fresh process",
+      "fullTitle": "sync CLI paired local restacks npm restack recovery: continues a genuine paired-chain conflict in a fresh process",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 20065,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm restack MCP: learns and executes the same preserving workflow with literal arguments",
+      "fullTitle": "sync CLI paired local restacks npm restack MCP: learns and executes the same preserving workflow with literal arguments",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 15286,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "explains the bounded proof refusal and matching control under debug",
+      "fullTitle": "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 19971,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

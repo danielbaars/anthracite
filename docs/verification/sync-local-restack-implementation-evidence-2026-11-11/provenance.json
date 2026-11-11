@@ -1,0 +1,116 @@
+[
+  {
+    "path": "slices/172.json",
+    "sha256": "e3db51086f3ea053857447292945062353147552f758b5c285ca2167bddf82c5",
+    "bytes": 2423,
+    "copiedFrom": "/private/tmp/anthracite-172-evidence-20261111/summary.json"
+  },
+  {
+    "path": "slices/173.json",
+    "sha256": "406f54e9c7cbbc89c5e74c0f9ff4ba877ca8bac210f0cccc54c17fb25a300a05",
+    "bytes": 10980,
+    "copiedFrom": "/private/tmp/anthracite-173-evidence-20261111/summary.json"
+  },
+  {
+    "path": "slices/174.json",
+    "sha256": "e3b8e62a3fb5a5f6a4a06b6bfcb0b61ae30820758397cb1aec18b10feb4296bf",
+    "bytes": 9801,
+    "copiedFrom": "/private/tmp/anthracite-174-evidence-20261111/summary.json"
+  },
+  {
+    "path": "slices/175.json",
+    "sha256": "330af606071d6bde3bfa1daee640615c7d113d258f40c8237fa4529d91aaec7d",
+    "bytes": 13812,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/summary.json"
+  },
+  {
+    "path": "recovery/candidate-original.json",
+    "sha256": "a40d8c6647ddd44ef79d4b32c55b803de2f28584dbbe1df874b5432efb13881c",
+    "bytes": 9109,
+    "copiedFrom": "/private/tmp/anthracite-174-evidence-20261111/candidate-record/original-recovery.json"
+  },
+  {
+    "path": "recovery/published-070-original.json",
+    "sha256": "12cd85afe9971144b787ce7636dbfa385f1e9363330e6c36746c4aa220f9b2de",
+    "bytes": 7424,
+    "copiedFrom": "/private/tmp/anthracite-174-evidence-20261111/released-record/original-recovery.json"
+  },
+  {
+    "path": "recovery/older-reader-result.json",
+    "sha256": "7d4fc80c8805a3769b84317d30eadeb924d611f751474bdbed3e1db125ddf2a7",
+    "bytes": 37166,
+    "copiedFrom": "/private/tmp/anthracite-174-evidence-20261111/candidate-record/older-reader-result.json"
+  },
+  {
+    "path": "recovery/published-producer.json",
+    "sha256": "96048e976858a6f0709361e418d01ad364f4528c470be6362662306b8b9aff80",
+    "bytes": 2325,
+    "copiedFrom": "/private/tmp/anthracite-174-evidence-20261111/released-record/producer.json"
+  },
+  {
+    "path": "delivery/npm-package-final.txt",
+    "sha256": "cd65f5ad0c1d41faac5c48f75ab71b9786b9f12cb546f1909518b16aa3d5147f",
+    "bytes": 3783,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/npm-package-final-unsandboxed.txt"
+  },
+  {
+    "path": "delivery/npm-extra-delivery.json",
+    "sha256": "e10f27904f92499d5a8b2edc808ac9d34d0e355d4d4930aff060fb451c9aa3cc",
+    "bytes": 3875,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/npm-extra-delivery.json"
+  },
+  {
+    "path": "delivery/npm-initial-failure.txt",
+    "sha256": "9145557c438c6748ca3433f45fb67206b7672fbbfbc2ecd9826536950491f9b6",
+    "bytes": 5327,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/npm-package-final.txt"
+  },
+  {
+    "path": "delivery/npm-numeric-zero-unsandboxed.json",
+    "sha256": "05b834a2a00bc6beeab3feb069421936c54171aaad4f966f9cfb6ed53480c07f",
+    "bytes": 1361,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/npm-numeric-zero-unsandboxed.json"
+  },
+  {
+    "path": "delivery/legacy-producer.json",
+    "sha256": "d9dd49ede2bbf9ff11e3fb2cc02c9d738903c886effebb8cc60747cbc50b067e",
+    "bytes": 499,
+    "copiedFrom": "/private/tmp/anthracite-171-evidence-20261111/legacy0611-producer.json"
+  },
+  {
+    "path": "tracers/red-chain.json",
+    "sha256": "7caf19b6e5839d442112ed66cef4185b2d2c1b47ddaee56f7367163652c348ff",
+    "bytes": 4703,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/red-chain.json"
+  },
+  {
+    "path": "tracers/green-chain.json",
+    "sha256": "f34bdcf506f2d3c309b707f998905a47f9a04e8e655adcdef3a23eb185922770",
+    "bytes": 1123,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/green-chain.json"
+  },
+  {
+    "path": "tracers/red-debug.json",
+    "sha256": "63d0bef260a8c72107a8ca99647d62556becba209840baf5e80799dd9b1a1b49",
+    "bytes": 6949,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/red-debug.json"
+  },
+  {
+    "path": "tracers/green-debug.json",
+    "sha256": "f0aff3e3188542293096501f5e2aff77fd9e87a515aa85efa224627e2bdc4053",
+    "bytes": 1123,
+    "copiedFrom": "/private/tmp/anthracite-175-evidence-20261111/green-debug-node.json"
+  },
+  {
+    "path": "tracers/red-relative-diff.json",
+    "sha256": "34950665cf1bdf9dc0f3aa27cd428f160aa5a598a855542b3d4257156a417b90",
+    "bytes": 2905,
+    "copiedFrom": "/private/tmp/anthracite-173-evidence-20261111/red-relative.json"
+  },
+  {
+    "path": "tracers/root-proof-node-campaign.json",
+    "sha256": "38653e0002558847fd77f3fc864f53e8eb1e2771c1489b0bf7a150d168904011",
+    "bytes": 22222,
+    "copiedFrom": "/private/tmp/anthracite-173-evidence-20261111/final-node.json"
+  }
+]

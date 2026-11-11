@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-11-11T10:49:20.677Z",
+    "end": "2026-11-11T10:49:34.733Z",
+    "duration": 14056
+  },
+  "tests": [
+    {
+      "title": "explains the bounded proof refusal and matching control under debug",
+      "fullTitle": "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 10534,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected '🔁 parent: local restack on newer mai…' to include 'complete commit message bytes differ'",
+        "showDiff": false,
+        "actual": "🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nLocal and remote histories differ for child, although their tracked parent is the same.\nThis may include an unpublished local restack; different commit IDs alone do not establish incoming changes.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\n2026-11-11T10:49:33.644Z: Reading cache seed data...\n2026-11-11T10:49:33.669Z: Loading cache...\n2026-11-11T10:49:33.669Z: Building cache from disk...\n2026-11-11T10:49:33.685Z: Validating branches...\n2026-11-11T10:49:33.685Z: trunk: main\n2026-11-11T10:49:33.694Z: validated: parent\n2026-11-11T10:49:33.702Z: validated: child\n2026-11-11T10:49:34.680Z: Local child: 5328ac424a60b1b234dbcdbd23c06d47d5244b51; fetched source: 9f9ab5f2a7afbae613aa928ac788b3870a2c8131.\nERROR: Local and remote histories differ for child. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\nExitFailed: Local and remote histories differ for child. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n    at chooseRemoteResolution (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/actions/sync/get.js:423:19)\n    at prepareRemoteUpdates (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/actions/sync/get.js:332:37)\n    at prepareSyncRefresh (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/actions/sync/sync_refresh.js:51:46)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async syncAction (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/actions/sync/sync.js:11:21)\n    at async Object.run (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/commands/repo-commands/repo_sync.js:94:9)\n    at async graphiteHelper (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/lib/runner.js:268:13)\n    at async /private/tmp/anthracite-175-20261111/apps/cli/dist/src/lib/runner.js:181:20\n    at async Tracer.span (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/lib/utils/tracer.js:91:22)\n    at async graphiteInternal (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/lib/runner.js:153:9)\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected '🔁 parent: local restack on newer mai…' to include 'complete commit message bytes differ'\n    at Context.<anonymous> (apps/cli/dist/test/commands/sync_restack_chain_cli.test.js:305:46)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "explains the bounded proof refusal and matching control under debug",
+      "fullTitle": "sync CLI paired local restacks explains the bounded proof refusal and matching control under debug",
+      "file": "/private/tmp/anthracite-175-20261111/apps/cli/dist/test/commands/sync_restack_chain_cli.test.js",
+      "duration": 10534,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected '🔁 parent: local restack on newer mai…' to include 'complete commit message bytes differ'",
+        "showDiff": false,
+        "actual": "🔁 parent: local restack on newer main; branch commits match remote. Publication is pending.\nLocal and remote histories differ for child, although their tracked parent is the same.\nThis may include an unpublished local restack; different commit IDs alone do not establish incoming changes.\nYou can either overwrite your copy of the branch, or rebase your local changes onto the remote version.\nYou can also abort the command entirely and keep your local state as is.\n2026-11-11T10:49:33.644Z: Reading cache seed data...\n2026-11-11T10:49:33.669Z: Loading cache...\n2026-11-11T10:49:33.669Z: Building cache from disk...\n2026-11-11T10:49:33.685Z: Validating branches...\n2026-11-11T10:49:33.685Z: trunk: main\n2026-11-11T10:49:33.694Z: validated: parent\n2026-11-11T10:49:33.702Z: validated: child\n2026-11-11T10:49:34.680Z: Local child: 5328ac424a60b1b234dbcdbd23c06d47d5244b51; fetched source: 9f9ab5f2a7afbae613aa928ac788b3870a2c8131.\nERROR: Local and remote histories differ for child. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\nExitFailed: Local and remote histories differ for child. Retry sync interactively to choose a resolution. Sync --force only authorizes cleanup and trunk reset; it does not authorize feature overwrite.\n    at chooseRemoteResolution (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/actions/sync/get.js:423:19)\n    at prepareRemoteUpdates (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/actions/sync/get.js:332:37)\n    at prepareSyncRefresh (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/actions/sync/sync_refresh.js:51:46)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async syncAction (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/actions/sync/sync.js:11:21)\n    at async Object.run (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/commands/repo-commands/repo_sync.js:94:9)\n    at async graphiteHelper (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/lib/runner.js:268:13)\n    at async /private/tmp/anthracite-175-20261111/apps/cli/dist/src/lib/runner.js:181:20\n    at async Tracer.span (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/lib/utils/tracer.js:91:22)\n    at async graphiteInternal (/private/tmp/anthracite-175-20261111/apps/cli/dist/src/lib/runner.js:153:9)\n",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected '🔁 parent: local restack on newer mai…' to include 'complete commit message bytes differ'\n    at Context.<anonymous> (apps/cli/dist/test/commands/sync_restack_chain_cli.test.js:305:46)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}
