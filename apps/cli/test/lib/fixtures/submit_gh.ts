@@ -291,6 +291,7 @@ function main(): void {
     }
     if (option('--base')) pr.baseRefName = option('--base') ?? pr.baseRefName;
     if (option('--body') !== undefined) pr.body = option('--body') ?? '';
+    if (option('--title') !== undefined) pr.title = option('--title') ?? '';
     const reviewMode = process.env.ANTHRACITE_TEST_GH_REVIEW_MODE;
     const assigneeMode = process.env.ANTHRACITE_TEST_GH_ASSIGNEE_MODE;
     if (args.includes('--add-assignee') && assigneeMode === 'reject') {
@@ -343,6 +344,7 @@ function main(): void {
     }
     if (
       !args.includes('--base') &&
+      !args.includes('--title') &&
       !args.includes('--body') &&
       !args.includes('--add-reviewer') &&
       !args.includes('--add-assignee')

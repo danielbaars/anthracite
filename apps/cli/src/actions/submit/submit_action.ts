@@ -27,6 +27,7 @@ import { getShaOrThrow } from '../../lib/git/get_sha';
 // eslint-disable-next-line max-lines-per-function
 export async function submitAction(
   args: {
+    title?: string;
     scope: TScopeSpec;
     editPRFieldsInline: boolean | undefined;
     draft: boolean;
@@ -44,6 +45,20 @@ export async function submitAction(
   },
   context: TContext
 ): Promise<void> {
+  const title = args.title?.trim();
+  if (args.title !== undefined && (!title || /[\r\n\0]/.test(args.title)))
+    throw new ExitFailedError('--title requires a nonblank single-line title.');
+  const metadataTarget =
+    title !== undefined
+      ? args.branch ?? context.engine.currentBranchPrecondition
+      : undefined;
+  if (
+    metadataTarget !== undefined &&
+    !context.repoConfig.getIsGithubIntegrationEnabled()
+  )
+    throw new ExitFailedError(
+      'Explicit PR metadata requires enabled GitHub integration.'
+    );
   // Check CLI pre-condition to warn early
   if (args.draft && args.publish) {
     throw new ExitFailedError(
@@ -114,6 +129,11 @@ export async function submitAction(
       )
     : allBranchNames;
 
+  if (metadataTarget !== undefined && !branchNames.includes(metadataTarget))
+    throw new ExitFailedError(
+      `Metadata target "${metadataTarget}" is not a selected editable submission branch.`
+    );
+
   if (
     args.rolesBranch !== undefined &&
     !branchNames.includes(args.rolesBranch)
@@ -146,6 +166,15 @@ export async function submitAction(
     );
   }
 
+  if (
+    metadataTarget !== undefined &&
+    args.updateOnly &&
+    context.engine.getPrInfo(metadataTarget)?.number === undefined
+  )
+    throw new ExitFailedError(
+      `Metadata target "${metadataTarget}" is skipped by --update-only because it has no existing PR.`
+    );
+
   context.splog.info(
     chalk.blueBright(
       '✏️  Preparing to submit PRs for the following branches...'
@@ -154,6 +183,8 @@ export async function submitAction(
   const submissionInfos = await getPRInfoForBranches(
     {
       branchNames: branchNames,
+      title,
+      metadataTarget,
       editPRFieldsInline: args.editPRFieldsInline && context.canPrompt,
       draft: args.draft,
       publish: args.publish,

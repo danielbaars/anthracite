@@ -34,6 +34,8 @@ type TPRSubmissionAction = { branchName: string } & (
 export async function getPRInfoForBranches(
   args: {
     branchNames: string[];
+    title?: string;
+    metadataTarget?: string;
     editPRFieldsInline: boolean | undefined;
     draft: boolean;
     publish: boolean;
@@ -49,6 +51,13 @@ export async function getPRInfoForBranches(
 ): Promise<TPRSubmissionInfo> {
   const submissionInfo: TPRSubmissionInfo = [];
   for await (const branchName of args.branchNames) {
+    const title = args.metadataTarget === branchName ? args.title : undefined;
+    const editPRFieldsInline =
+      title !== undefined ? false : args.editPRFieldsInline;
+    if (title !== undefined)
+      context.splog.info(
+        `PR title for ${branchName}: ${JSON.stringify(title)}`
+      );
     context.engine.assertBranchEditable(branchName);
     const reviewers =
       args.rolesBranch !== undefined && args.rolesBranch !== branchName
@@ -66,7 +75,8 @@ export async function getPRInfoForBranches(
         publish: args.publish,
         dryRun: args.dryRun,
         select: args.select,
-        editPRFieldsInline: args.editPRFieldsInline,
+        editPRFieldsInline,
+        title,
         always: args.always,
         reviewers,
         assignees,
@@ -89,7 +99,7 @@ export async function getPRInfoForBranches(
         ? await getPRCreationInfo(
             {
               branchName: action.branchName,
-              editPRFieldsInline: args.editPRFieldsInline,
+              editPRFieldsInline,
               draft: args.draft,
               publish: args.publish,
               reviewers,
@@ -117,7 +127,7 @@ export async function getPRInfoForBranches(
             ...(await getPRUpdateInfo(
               {
                 branchName: action.branchName,
-                editPRFieldsInline: args.editPRFieldsInline,
+                editPRFieldsInline,
                 draft: args.draft,
                 publish: args.publish,
                 reviewers,
@@ -129,6 +139,7 @@ export async function getPRInfoForBranches(
             action: 'create' as const,
             ...prCreationInfo,
           }),
+      ...(title !== undefined ? { title } : {}),
     });
   }
   context.splog.newline();
@@ -138,6 +149,7 @@ export async function getPRInfoForBranches(
 async function getPRAction(
   args: {
     branchName: string;
+    title?: string;
     updateOnly: boolean;
     draft: boolean;
     publish: boolean;
@@ -167,7 +179,8 @@ async function getPRAction(
       : parentBranchName !== prInfo?.base
       ? 'RESTACK'
       : !context.engine.branchMatchesRemote(args.branchName) ||
-        args.editPRFieldsInline
+        args.editPRFieldsInline ||
+        (args.title !== undefined && args.title !== prInfo?.title)
       ? 'CHANGE'
       : args.draft === true && prInfo.isDraft !== true
       ? 'DRAFT'

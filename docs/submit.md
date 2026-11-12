@@ -43,3 +43,17 @@ After updating an existing PR branch, submit confirms both the actual remote hea
 If visibility stays unconfirmed, the error identifies the already-pushed code and unattempted work. Repeat submit with the same selection after visibility recovers; existing footer reconciliation needs no new commit. A changed or unavailable remote head, closed PR, invalid identity or ambiguous association still refuses. Public npm 0.6.13 predates this correction.
 
 Dependency-footers use current verified PR identities, including editable referenced ancestors and descendants outside the push selection. A retired out-of-scope association cannot authorize a PR edit or silently expand submission: resolve that stale branch relationship, then preview again. Frozen anchors retain their existing protection and are neither refreshed nor edited by submission.
+
+## Explicit PR titles
+
+Use `an submit --title "Approved PR title" --no-interactive` to set the title
+of the starting branch's PR. `--branch` chooses that starting branch; the option
+does not apply one title to every PR in the submission scope. It works during
+creation and without new commits on an existing PR. Other selected branches
+keep their titles, and existing descriptions are read from GitHub and preserved.
+
+Titles must be nonblank and single-line. `--dry-run` reports the target and title
+without publication. Explicit titles bypass that PR's field prompts and work with
+`--no-edit`; combining them with `--edit` is rejected. Frozen or skipped targets
+and disabled GitHub integration refuse before any pushes or PR writes. Existing
+push verification, roles, draft options and dependency-footer handling still apply.
