@@ -122,9 +122,12 @@ export const handler = async (argv: argsT): Promise<void> => {
   const separator = rawArguments.indexOf('--');
   const explicitEdit =
     argv.edit ||
-    rawArguments
-      .slice(0, separator === -1 ? undefined : separator)
-      .some((argument) => ['--edit', '--edit=true', '-e'].includes(argument));
+    rawArguments.slice(0, separator === -1 ? undefined : separator).some(
+      (argument) =>
+        ['--edit', '--edit=true', '-e'].includes(argument) ||
+        // String aliases consume their suffix; only boolean flags precede e.
+        /^-[sdpncufqv]*e(?:[^=]|$|=true$)/.test(argument)
+    );
   if (
     (argv.title !== undefined || argv['body-file'] !== undefined) &&
     explicitEdit
