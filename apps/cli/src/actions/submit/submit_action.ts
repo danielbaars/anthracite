@@ -285,7 +285,11 @@ export async function submitAction(
       throw new ExitFailedError(
         `${error instanceof Error ? error.message : String(error)}\nCode for ${
           submissionInfo.head
-        } was already pushed; earlier confirmed PR changes remain applied.\n${notAttempted}`
+        } was already pushed; earlier confirmed PR changes remain applied.\n${
+          metadataTarget === submissionInfo.head
+            ? `Explicit PR metadata for ${metadataTarget} is unconfirmed; rerun with the same approved input after resolving the failure.\n`
+            : ''
+        }${notAttempted}`
       );
     }
   }

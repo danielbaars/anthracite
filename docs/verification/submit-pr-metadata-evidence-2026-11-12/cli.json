@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "observedOn": "2026-11-12",
+  "sourceCommit": "5183f5198800a3067cd7e81e2cc10975f3cb54f2",
+  "commands": [
+    {
+      "args": [
+        "--version"
+      ],
+      "status": "success",
+      "stdout": "0.7.1-beta.1\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "truncated": false
+    },
+    {
+      "args": [
+        "submit",
+        "--help"
+      ],
+      "status": "success",
+      "stdout": "an submit\n\nIdempotently force push all branches from trunk to the current branch to GitHub,\ncreating or updating distinct pull requests for each. Pass --stack to also\nsubmit descendants of the current branch. Frozen branches are skipped; editable\ndescendants keep their frozen parent as an existing base.\n\nOptions:\n      --help          Show help                                        [boolean]\n      --version       Show version number                              [boolean]\n      --cwd           Working directory. Use a direct --cwd prefix before the\n                      Git command for passthroughs; before or after the command\n                      for Anthracite commands.                          [string]\n      --interactive   Enable interactive features. Defaults to terminal input\n                      and output. Disable with --no-interactive; quiet also\n                      disables interaction.                            [boolean]\n  -q, --quiet         Minimize output to the terminal.[boolean] [default: false]\n      --verify        Run git hooks. Disable with --no-verify.\n                                                       [boolean] [default: true]\n      --debug         Display debug output.           [boolean] [default: false]\n  -s, --stack         Submit the current branch and all of its descendants, in\n                      addition to its ancestors.      [boolean] [default: false]\n  -d, --draft         Create draft PRs or mark existing PRs as draft. Conflicts\n                      with --publish.                 [boolean] [default: false]\n  -p, --publish       Create ready PRs or publish existing drafts, including\n                      without interaction. Without --draft/--publish, new\n                      non-interactive PRs default to draft.\n                                                      [boolean] [default: false]\n  -e, --edit          Edit PR fields inline. If --no-interactive is true, this\n                      is automatically set to false.                   [boolean]\n  -n, --no-edit       Don't edit PR fields inline. Takes precedence over --edit\n                                                      [boolean] [default: false]\n  -r, --reviewers     Add reviewers without removing existing requests, using\n                      comma-separated users or organization/team names. Applies\n                      to every selected PR unless --roles-branch is set. Without\n                      an argument, prompt per target PR.                [string]\n      --assignees     Add comma-separated GitHub users as assignees, including\n                      @me for the authenticated user. Applies to every selected\n                      PR unless --roles-branch is set.                  [string]\n      --roles-branch  Add reviewers and assignees only to this exact selected\n                      branch PR, without narrowing the submission scope.[string]\n      --dry-run       Reports the PRs that would be submitted and terminates. No\n                      branches are pushed and no PRs are opened or updated.\n                                                      [boolean] [default: false]\n  -c, --confirm       Reports the PRs that would be submitted and asks for\n                      confirmation before pushing branches and opening/updating\n                      PRs. If either of --no-interactive or --dry-run is passed,\n                      this flag is ignored.           [boolean] [default: false]\n      --select        Reports the PRs that would be submitted and asks the user\n                      to select which should be updated/created. If either of\n                      --no-interactive or --dry-run is passed, this flag is\n                      ignored.                        [boolean] [default: false]\n  -u, --update-only   Only update the PRs that have been already been submitted.\n                                                      [boolean] [default: false]\n  -f, --force         Force push: overwrites the remote branch with your local\n                      branch. Otherwise defaults to --force-with-lease.\n                                                      [boolean] [default: false]\n      --always        Always push updates, even if the branch has not changed.\n                      Can be helpful for fixing an inconsistent Anthracite stack\n                      view on Web/GitHub resulting from downtime/a bug.\n                                                      [boolean] [default: false]\n      --branch        Which branch to run this command from (default: current\n                      branch)                                           [string]\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "truncated": false
+    }
+  ],
+  "boundary": "Read-only installed CLI version/help through the existing MCP tool; no submission was attempted."
+}

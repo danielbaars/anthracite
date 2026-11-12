@@ -37,6 +37,8 @@ Automatic `CI` runs on pull-request updates and pushes to `main`. It runs one Li
 
 Documentation-only changes (`**/*.md`, `docs/**` and `LICENSE`) skip automatic CI. Mixed code/documentation changes still run it. If required checks are introduced, account for GitHub leaving path-filtered workflows pending; do not require an absent check for documentation-only changes.
 
+The same job runs three representative explicit submit metadata cases (literal title, literal body file and safe retry after an unconfirmed metadata update). The installed npm gate also exercises these inputs through real Git and the existing MCP tools. Broader confirmation and failure coverage remains in the focused local suite.
+
 The same job separately runs the two representative submit discovery propagation cases (stale list and stale detail snapshots). The other seven propagation/protection cases remain in the focused local suite and manual full validation. The same job runs the fast release-service boundary regressions and three focused landing cases for optional failure, required failure and blocker-first presentation. The broader landing/recovery campaign remains local or manual. Real release-process build campaigns remain separate local/manual checks; ordinary CI does not publish npm packages.
 
 A small public-CLI selection also checks reused-branch PR safety. These representative cases run against the isolated installed npm artifact as well; the broader reused-branch acceptance campaign remains a targeted local check.

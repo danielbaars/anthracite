@@ -219,6 +219,11 @@ reconnect before authorizing another call. Same-repository github.com only;
 adapter acceptance does not establish live-service or enterprise compatibility.
 
 Submit deliberately with an submit (or an submit --help to inspect selectors).
+For approved noninteractive PR metadata, submit --title and --body-file apply only
+to the starting branch (--branch or current), including without new commits.
+An empty UTF-8 body file clears the description; omission preserves current fields.
+The file is captured before confirmation, managed dependency footers remain,
+and these options do not grant publication approval or change role/draft scope.
 Reviewer and assignee lists apply to every selected PR by default. Use
 --roles-branch <exact-local-branch> to add both lists only to that selected PR;
 this does not narrow the submission scope selected by --branch or --stack. Preview

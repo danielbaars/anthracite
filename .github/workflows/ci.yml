@@ -61,6 +61,13 @@ jobs:
           node node_modules/mocha/bin/mocha.js
           apps/cli/dist/test/commands/submit_discovery_lag_cli.test.js
           --grep 'list head lags|when view snapshots'
+      - name: Test explicit submit metadata
+        run: >-
+          node node_modules/mocha/bin/mocha.js
+          apps/cli/dist/test/commands/submit_title_cli.test.js
+          apps/cli/dist/test/commands/submit_body_file_cli.test.js
+          apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js
+          --grep 'creates with the literal approved title|creates with literal file contents|reports failed metadata'
       - name: Test landing required versus optional checks
         run: >-
           node node_modules/mocha/bin/mocha.js
