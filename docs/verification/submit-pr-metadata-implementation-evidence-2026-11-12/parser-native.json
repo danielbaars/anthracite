@@ -1,0 +1,144 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-12T12:19:42.827Z",
+    "end": "2026-11-12T12:19:58.343Z",
+    "duration": 15516
+  },
+  "tests": [
+    {
+      "title": "creates with the literal approved title and updates without new commits",
+      "fullTitle": "submit explicit PR titles creates with the literal approved title and updates without new commits",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 6410,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "treats a flag-looking title as literal metadata",
+      "fullTitle": "submit explicit PR titles treats a flag-looking title as literal metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 2916,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects grouped edit with explicit title before publication",
+      "fullTitle": "submit explicit PR titles rejects grouped edit with explicit title before publication",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 524,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects grouped edit with explicit body before publication",
+      "fullTitle": "submit explicit PR titles rejects grouped edit with explicit body before publication",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 507,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects reviewer edit groups with explicit title before preview",
+      "fullTitle": "submit explicit PR titles rejects reviewer edit groups with explicit title before preview",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 513,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects reviewer edit groups with explicit body before preview",
+      "fullTitle": "submit explicit PR titles rejects reviewer edit groups with explicit body before preview",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 494,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "treats a flag-looking body filename as literal metadata",
+      "fullTitle": "submit explicit PR titles treats a flag-looking body filename as literal metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 2686,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "creates with the literal approved title and updates without new commits",
+      "fullTitle": "submit explicit PR titles creates with the literal approved title and updates without new commits",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 6410,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "treats a flag-looking title as literal metadata",
+      "fullTitle": "submit explicit PR titles treats a flag-looking title as literal metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 2916,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects grouped edit with explicit title before publication",
+      "fullTitle": "submit explicit PR titles rejects grouped edit with explicit title before publication",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 524,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects grouped edit with explicit body before publication",
+      "fullTitle": "submit explicit PR titles rejects grouped edit with explicit body before publication",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 507,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects reviewer edit groups with explicit title before preview",
+      "fullTitle": "submit explicit PR titles rejects reviewer edit groups with explicit title before preview",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 513,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects reviewer edit groups with explicit body before preview",
+      "fullTitle": "submit explicit PR titles rejects reviewer edit groups with explicit body before preview",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 494,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "treats a flag-looking body filename as literal metadata",
+      "fullTitle": "submit explicit PR titles treats a flag-looking body filename as literal metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 2686,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

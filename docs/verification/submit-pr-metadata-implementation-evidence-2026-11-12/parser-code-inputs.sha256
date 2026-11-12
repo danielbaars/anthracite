@@ -1,0 +1,2 @@
+6850f06e194295ac25af3462c887156bc99493461185f2aa51ba738df0dd7feb  apps/cli/src/commands/submit.ts
+7a1a85c5003dfbafd348de49982c7191cc051f9489391f28c68402dc006328a3  apps/cli/test/commands/submit_title_cli.test.ts
