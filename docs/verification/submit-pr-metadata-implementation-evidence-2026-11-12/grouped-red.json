@@ -1,0 +1,100 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 0,
+    "pending": 0,
+    "failures": 3,
+    "start": "2026-11-12T12:13:17.991Z",
+    "end": "2026-11-12T12:13:25.257Z",
+    "duration": 7266
+  },
+  "tests": [
+    {
+      "title": "rejects grouped edit with explicit title before publication",
+      "fullTitle": "submit explicit PR titles rejects grouped edit with explicit title before publication",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 3118,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:41:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "rejects grouped edit with explicit body before publication",
+      "fullTitle": "submit explicit PR titles rejects grouped edit with explicit body before publication",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 2955,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:41:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "does not mistake a short reviewer value for a grouped edit",
+      "fullTitle": "submit explicit PR titles does not mistake a short reviewer value for a grouped edit",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 561,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: CLI submit -ralice --title=--edit --no-edit exited 1: \nUnknown arguments: a, l, i\n\n    at SubmitCliFixture.succeed (apps/cli/dist/test/lib/fixtures/submit_cli.js:98:19)\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:50:17)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "CLI submit -ralice --title=--edit --no-edit exited 1: \nUnknown arguments: a, l, i\n"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "rejects grouped edit with explicit title before publication",
+      "fullTitle": "submit explicit PR titles rejects grouped edit with explicit title before publication",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 3118,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:41:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "rejects grouped edit with explicit body before publication",
+      "fullTitle": "submit explicit PR titles rejects grouped edit with explicit body before publication",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 2955,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:41:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "does not mistake a short reviewer value for a grouped edit",
+      "fullTitle": "submit explicit PR titles does not mistake a short reviewer value for a grouped edit",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 561,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: CLI submit -ralice --title=--edit --no-edit exited 1: \nUnknown arguments: a, l, i\n\n    at SubmitCliFixture.succeed (apps/cli/dist/test/lib/fixtures/submit_cli.js:98:19)\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:50:17)\n    at process.processImmediate (node:internal/timers:534:21)",
+        "message": "CLI submit -ralice --title=--edit --no-edit exited 1: \nUnknown arguments: a, l, i\n"
+      }
+    }
+  ],
+  "passes": []
+}
