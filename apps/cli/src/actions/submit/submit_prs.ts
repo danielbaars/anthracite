@@ -247,6 +247,9 @@ async function submitPrToGithub({
 
   const editArgs = [
     ...(prBaseChanged ? ['--base', request.base] : []),
+    ...(request.body !== undefined && request.body !== prInfo.body
+      ? ['--body', request.body]
+      : []),
     ...(request.title !== undefined && request.title !== prInfo.title
       ? ['--title', request.title]
       : []),

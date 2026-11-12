@@ -1,3 +1,6 @@
+import { updatePrBodyFooter } from './update_pr_body_footer';
+import fs from 'fs';
+import path from 'path';
 import chalk from 'chalk';
 import { getAssignees } from './assignees';
 import { githubRepoSlug } from '../../lib/api/github_repo';
@@ -14,12 +17,7 @@ import {
   submitPullRequest,
   TPRSubmissionInfo,
 } from './submit_prs';
-import {
-  createPrBodyFooter,
-  footerFooter,
-  legacyFooterFooter,
-  footerTitle,
-} from '../create_pr_body_footer';
+import { createPrBodyFooter } from '../create_pr_body_footer';
 import { execFileSync } from 'child_process';
 import { syncPrInfo } from '../sync_pr_info';
 import { getShaOrThrow } from '../../lib/git/get_sha';
@@ -28,6 +26,7 @@ import { getShaOrThrow } from '../../lib/git/get_sha';
 export async function submitAction(
   args: {
     title?: string;
+    bodyFile?: string;
     scope: TScopeSpec;
     editPRFieldsInline: boolean | undefined;
     draft: boolean;
@@ -48,8 +47,10 @@ export async function submitAction(
   const title = args.title?.trim();
   if (args.title !== undefined && (!title || /[\r\n\0]/.test(args.title)))
     throw new ExitFailedError('--title requires a nonblank single-line title.');
+  const body =
+    args.bodyFile === undefined ? undefined : readBodyFile(args.bodyFile);
   const metadataTarget =
-    title !== undefined
+    title !== undefined || body !== undefined
       ? args.branch ?? context.engine.currentBranchPrecondition
       : undefined;
   if (
@@ -184,6 +185,8 @@ export async function submitAction(
     {
       branchNames: branchNames,
       title,
+      body,
+      bodyFile: args.bodyFile,
       metadataTarget,
       editPRFieldsInline: args.editPRFieldsInline && context.canPrompt,
       draft: args.draft,
@@ -433,36 +436,6 @@ async function getPrFooterUpdates(
   return updates;
 }
 
-export function updatePrBodyFooter(
-  body: string | undefined,
-  footer: string
-): string {
-  if (!body) {
-    return footer;
-  }
-
-  // Get the core title and footer text without extra whitespace
-  const titleText = footerTitle.trim().replace(/^\s*\n+|\n+\s*$/g, '');
-
-  const escapedTitleText = titleText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const escapedFooterText = [footerFooter, legacyFooterFooter]
-    .map((text) => text.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-    .join('|');
-
-  // Strip every existing footer block (and the blank lines before it), wherever
-  // it sits in the body — not just at the very end. Anchoring to end-of-body
-  // meant that if a bot appended content after the footer, we couldn't find the
-  // old footer and appended a second one (duplicate). Removing all of them and
-  // re-appending a single footer keeps exactly one, and preserves any other
-  // content (e.g. bot sections) that followed it.
-  const footerBlock = new RegExp(
-    `\\s*${escapedTitleText}[\\s\\S]*?(?:${escapedFooterText})`,
-    'g'
-  );
-
-  return body.replace(footerBlock, '').trimEnd() + footer;
-}
-
 function filterFrozenBranches(
   branches: readonly string[],
   context: TContext
@@ -531,3 +504,27 @@ async function shouldAbort(
 
   return false;
 }
+
+function readBodyFile(filename: string): string {
+  try {
+    if (filename === '-') throw new Error('stdin is unsupported');
+    const resolved = path.resolve(filename);
+    if (!fs.statSync(resolved).isFile())
+      throw new Error('expected a regular file');
+    fs.accessSync(resolved, fs.constants.R_OK);
+    const body = new TextDecoder('utf-8', {
+      fatal: true,
+      ignoreBOM: true,
+    }).decode(fs.readFileSync(resolved));
+    if (body.includes('\0')) throw new Error('NUL text is unsupported');
+    return body;
+  } catch (error) {
+    throw new ExitFailedError(
+      `Cannot read --body-file ${JSON.stringify(filename)}: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
+  }
+}
+
+export { updatePrBodyFooter } from './update_pr_body_footer';

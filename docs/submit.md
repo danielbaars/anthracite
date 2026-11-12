@@ -57,3 +57,22 @@ without publication. Explicit titles bypass that PR's field prompts and work wit
 `--no-edit`; combining them with `--edit` is rejected. Frozen or skipped targets
 and disabled GitHub integration refuse before any pushes or PR writes. Existing
 push verification, roles, draft options and dependency-footer handling still apply.
+
+### Supply a PR description from a file
+
+Use `an submit --title "Approved title" --body-file ./approved.md --no-interactive`
+to supply both fields for the starting branch only. `--branch` changes that starting
+branch without broadening metadata scope. Either field may be supplied independently,
+including when there are no new commits; omitted update fields retain their current
+GitHub values. Other selected PR descriptions and normal role/draft decisions remain
+unchanged.
+
+The file must be readable regular UTF-8 text. Relative paths use the effective CLI
+working directory. Markdown and shell-looking text are literal; stdin (`-`), invalid
+UTF-8 and NUL text refuse before publication. An empty file clears the user description
+while retaining the managed dependency footer. The file is captured before confirmation;
+later file edits do not change that invocation's payload. A new invocation reads it anew.
+
+`--dry-run` identifies the target and whether its description will be replaced or
+cleared, without publishing. `--no-edit` keeps explicit values; combining `--edit`
+with either metadata option refuses. Existing selection and publication guards apply.
