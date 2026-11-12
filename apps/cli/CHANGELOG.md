@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.8.0](https://github.com/danielbaars/anthracite/compare/v0.7.1...v0.8.0) (2026-11-12)
+
+
+### Features
+
+* **cli:** complete explicit submit metadata workflows ([#181](https://github.com/danielbaars/anthracite/issues/181)) ([ababdef](https://github.com/danielbaars/anthracite/commit/ababdefd0acad9c2f156241f650e2b961db7c549))
+* **cli:** submit explicit PR titles ([#179](https://github.com/danielbaars/anthracite/issues/179)) ([fb0286f](https://github.com/danielbaars/anthracite/commit/fb0286f09ab18dbc86c2c2ffe63209ec971ea373))
+* **cli:** submit PR descriptions from files ([#180](https://github.com/danielbaars/anthracite/issues/180)) ([8a96568](https://github.com/danielbaars/anthracite/commit/8a96568942cf403fad16dbe881f4dbbae683ef37))
+
+
+### Bug Fixes
+
+* **cli:** parse explicit submit editing with the registered grammar ([a8b15f8](https://github.com/danielbaars/anthracite/commit/a8b15f8e5854fd7f70513e7e7cd3279b3bb0cc0b))
+* **cli:** reject grouped edit flags with submit metadata ([cbc997d](https://github.com/danielbaars/anthracite/commit/cbc997d95e47d1bf2f4fccbf093b8794b655b436))
+
 ## [0.7.1](https://github.com/danielbaars/anthracite/compare/v0.7.0...v0.7.1) (2026-11-11)
 
 
