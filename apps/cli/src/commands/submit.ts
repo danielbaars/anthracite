@@ -3,6 +3,7 @@ import { submitAction } from '../actions/submit/submit_action';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { ExitFailedError } from '../lib/errors';
 import { graphite } from '../lib/runner';
+import { globalArgumentsOptions } from '../lib/global_arguments';
 
 const args = {
   'body-file': {
@@ -117,20 +118,19 @@ export const description =
   'Idempotently force push all branches from trunk to the current branch to GitHub, creating or updating distinct pull requests for each. Pass --stack to also submit descendants of the current branch. Frozen branches are skipped; editable descendants keep their frozen parent as an existing base.';
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> => {
-  // Yargs negation can erase --edit when --no-edit is also present.
   const rawArguments = process.argv.slice(2);
   const separator = rawArguments.indexOf('--');
-  const explicitEdit =
-    argv.edit ||
-    rawArguments.slice(0, separator === -1 ? undefined : separator).some(
-      (argument) =>
-        ['--edit', '--edit=true', '-e'].includes(argument) ||
-        // String aliases consume their suffix; only boolean flags precede e.
-        /^-[sdpncufqv]*e(?:[^=]|$|=true$)/.test(argument)
-    );
   if (
     (argv.title !== undefined || argv['body-file'] !== undefined) &&
-    explicitEdit
+    // Preserve edit intent before --no-edit negates it, using the same grammar.
+    yargs(rawArguments.slice(0, separator === -1 ? undefined : separator))
+      .options(args)
+      .options(globalArgumentsOptions)
+      .parserConfiguration({ 'boolean-negation': false })
+      .help(false)
+      .version(false)
+      .exitProcess(false)
+      .parseSync().edit
   )
     throw new ExitFailedError(
       '--edit cannot be combined with explicit PR metadata.'

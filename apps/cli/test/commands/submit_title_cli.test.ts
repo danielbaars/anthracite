@@ -47,6 +47,40 @@ describe('submit explicit PR titles', function () {
       ).to.equal(false);
     });
   }
+  for (const field of ['title', 'body']) {
+    it(`rejects reviewer edit groups with explicit ${field} before preview`, () => {
+      fixture.branch('target', 'main');
+      const file = path.join(fixture.root, 'body.md');
+      fs.writeFileSync(file, 'Approved description');
+      const metadata =
+        field === 'title' ? ['--title', 'Approved'] : ['--body-file', file];
+      const refs = fixture.git('ls-remote', '--heads', 'origin');
+      const result = fixture.cli(
+        'submit',
+        '-re',
+        '--no-edit',
+        '--dry-run',
+        ...metadata
+      );
+      expect(result.status).to.equal(1);
+      expect(result.stderr).to.include('--edit cannot be combined');
+      expect(fixture.prs()).to.deep.equal([]);
+      expect(fixture.git('ls-remote', '--heads', 'origin')).to.equal(refs);
+      expect(
+        fixture.calls().some((call) => ['create', 'edit'].includes(call[1]))
+      ).to.equal(false);
+    });
+  }
+  it('treats a flag-looking body filename as literal metadata', () => {
+    fixture.branch('target', 'main');
+    fs.writeFileSync(
+      path.join(fixture.repo, '--edit'),
+      'Literal filename body'
+    );
+    fixture.succeed('submit', '--body-file=--edit', '--no-edit');
+    expect(fixture.prs()[0].body).to.include('Literal filename body');
+  });
+
   it('limits a title to the explicit starting branch in a stack', () => {
     fixture.branch('parent', 'main');
     fixture.branch('target', 'parent');

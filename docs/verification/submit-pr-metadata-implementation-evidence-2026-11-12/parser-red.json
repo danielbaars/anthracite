@@ -1,0 +1,78 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2026-11-12T12:19:05.666Z",
+    "end": "2026-11-12T12:19:08.163Z",
+    "duration": 2497
+  },
+  "tests": [
+    {
+      "title": "rejects reviewer edit groups with explicit title before preview",
+      "fullTitle": "submit explicit PR titles rejects reviewer edit groups with explicit title before preview",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1161,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:56:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "rejects reviewer edit groups with explicit body before preview",
+      "fullTitle": "submit explicit PR titles rejects reviewer edit groups with explicit body before preview",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 909,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:56:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "rejects reviewer edit groups with explicit title before preview",
+      "fullTitle": "submit explicit PR titles rejects reviewer edit groups with explicit title before preview",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1161,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:56:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    },
+    {
+      "title": "rejects reviewer edit groups with explicit body before preview",
+      "fullTitle": "submit explicit PR titles rejects reviewer edit groups with explicit body before preview",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 909,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected +0 to equal 1",
+        "showDiff": true,
+        "actual": "0",
+        "expected": "1",
+        "operator": "strictEqual",
+        "stack": "AssertionError: expected +0 to equal 1\n    at Context.<anonymous> (apps/cli/dist/test/commands/submit_title_cli.test.js:56:50)\n    at process.processImmediate (node:internal/timers:534:21)"
+      }
+    }
+  ],
+  "passes": []
+}
