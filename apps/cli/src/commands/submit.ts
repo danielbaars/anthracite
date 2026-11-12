@@ -5,6 +5,11 @@ import { ExitFailedError } from '../lib/errors';
 import { graphite } from '../lib/runner';
 
 const args = {
+  'body-file': {
+    describe:
+      'Set the starting PR description from a UTF-8 file; an empty file clears it.',
+    type: 'string',
+  },
   title: {
     describe:
       'Set the PR title only for the starting branch, including without new commits.',
@@ -120,7 +125,10 @@ export const handler = async (argv: argsT): Promise<void> => {
     rawArguments
       .slice(0, separator === -1 ? undefined : separator)
       .some((argument) => ['--edit', '--edit=true', '-e'].includes(argument));
-  if (argv.title !== undefined && explicitEdit)
+  if (
+    (argv.title !== undefined || argv['body-file'] !== undefined) &&
+    explicitEdit
+  )
     throw new ExitFailedError(
       '--edit cannot be combined with explicit PR metadata.'
     );
@@ -128,6 +136,7 @@ export const handler = async (argv: argsT): Promise<void> => {
     await submitAction(
       {
         title: argv.title,
+        bodyFile: argv['body-file'],
         scope: argv.stack ? SCOPE.STACK : SCOPE.DOWNSTACK,
         editPRFieldsInline: !argv['no-edit'] && argv.edit,
         draft: argv.draft,

@@ -1,3 +1,5 @@
+import { updatePrBodyFooter } from './update_pr_body_footer';
+import { createPrBodyFooter } from '../create_pr_body_footer';
 import chalk from 'chalk';
 import { TContext } from '../../lib/context';
 import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
@@ -31,10 +33,14 @@ type TPRSubmissionAction = { branchName: string } & (
  * Therefore, we should only update the PR iff either of these properties
  * differ from our stored data on the previous PR submission.
  */
+// Keep branch preparation and explicit field ownership in the existing submit orchestration.
+// eslint-disable-next-line max-lines-per-function
 export async function getPRInfoForBranches(
   args: {
     branchNames: string[];
     title?: string;
+    body?: string;
+    bodyFile?: string;
     metadataTarget?: string;
     editPRFieldsInline: boolean | undefined;
     draft: boolean;
@@ -52,8 +58,18 @@ export async function getPRInfoForBranches(
   const submissionInfo: TPRSubmissionInfo = [];
   for await (const branchName of args.branchNames) {
     const title = args.metadataTarget === branchName ? args.title : undefined;
+    const body = getExplicitBody(
+      {
+        body: args.metadataTarget === branchName ? args.body : undefined,
+        file: args.bodyFile,
+        branch: branchName,
+      },
+      context
+    );
     const editPRFieldsInline =
-      title !== undefined ? false : args.editPRFieldsInline;
+      title !== undefined || body !== undefined
+        ? false
+        : args.editPRFieldsInline;
     if (title !== undefined)
       context.splog.info(
         `PR title for ${branchName}: ${JSON.stringify(title)}`
@@ -77,6 +93,7 @@ export async function getPRInfoForBranches(
         select: args.select,
         editPRFieldsInline,
         title,
+        body,
         always: args.always,
         reviewers,
         assignees,
@@ -140,6 +157,7 @@ export async function getPRInfoForBranches(
             ...prCreationInfo,
           }),
       ...(title !== undefined ? { title } : {}),
+      ...(body !== undefined ? { body } : {}),
     });
   }
   context.splog.newline();
@@ -150,6 +168,7 @@ async function getPRAction(
   args: {
     branchName: string;
     title?: string;
+    body?: string;
     updateOnly: boolean;
     draft: boolean;
     publish: boolean;
@@ -180,7 +199,8 @@ async function getPRAction(
       ? 'RESTACK'
       : !context.engine.branchMatchesRemote(args.branchName) ||
         args.editPRFieldsInline ||
-        (args.title !== undefined && args.title !== prInfo?.title)
+        (args.title !== undefined && args.title !== prInfo?.title) ||
+        (args.body !== undefined && args.body !== prInfo?.body)
       ? 'CHANGE'
       : args.draft === true && prInfo.isDraft !== true
       ? 'DRAFT'
@@ -414,4 +434,23 @@ function cliAuthPrecondition(context: TContext): boolean {
   }
 
   return isGhAuthorized;
+}
+
+function getExplicitBody(
+  {
+    body,
+    file,
+    branch,
+  }: { body: string | undefined; file: string | undefined; branch: string },
+  context: TContext
+): string | undefined {
+  if (body === undefined) return undefined;
+  context.splog.info(
+    `PR body for ${branch}: ${
+      body === '' ? 'clear description' : 'replace description'
+    } from ${JSON.stringify(file)}`
+  );
+  return context.engine.getPrInfo(branch)?.number
+    ? updatePrBodyFooter(body, createPrBodyFooter(context, branch))
+    : body;
 }
