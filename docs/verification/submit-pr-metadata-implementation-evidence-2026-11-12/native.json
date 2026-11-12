@@ -1,0 +1,990 @@
+{
+  "stats": {
+    "suites": 6,
+    "tests": 54,
+    "passes": 54,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-12T12:00:05.092Z",
+    "end": "2026-11-12T12:04:01.503Z",
+    "duration": 236411
+  },
+  "tests": [
+    {
+      "title": "creates with the literal approved title and updates without new commits",
+      "fullTitle": "submit explicit PR titles creates with the literal approved title and updates without new commits",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 6113,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "treats a flag-looking title as literal metadata",
+      "fullTitle": "submit explicit PR titles treats a flag-looking title as literal metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 2577,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "limits a title to the explicit starting branch in a stack",
+      "fullTitle": "submit explicit PR titles limits a title to the explicit starting branch in a stack",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 6550,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a metadata-only change and leaves matching titles untouched",
+      "fullTitle": "submit explicit PR titles previews a metadata-only change and leaves matching titles untouched",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 4451,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid title \"\" before external writes",
+      "fullTitle": "submit explicit PR titles rejects invalid title \"\" before external writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 663,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid title \"   \" before external writes",
+      "fullTitle": "submit explicit PR titles rejects invalid title \"   \" before external writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 611,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid title \"first\\nsecond\" before external writes",
+      "fullTitle": "submit explicit PR titles rejects invalid title \"first\\nsecond\" before external writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 628,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid title \"first\\rsecond\" before external writes",
+      "fullTitle": "submit explicit PR titles rejects invalid title \"first\\rsecond\" before external writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 613,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for trunk before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for trunk before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1161,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for frozen before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for frozen before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1450,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for update-only before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for update-only before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1244,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for edit before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for edit before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 870,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for integration before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for integration before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1043,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "creates with literal file contents and updates without new commits",
+      "fullTitle": "submit PR description files creates with literal file contents and updates without new commits",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 4580,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "clears the description while retaining one managed footer and fresh omitted title",
+      "fullTitle": "submit PR description files clears the description while retaining one managed footer and fresh omitted title",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 5534,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "replaces a description even when supplied text includes the matching footer",
+      "fullTitle": "submit PR description files replaces a description even when supplied text includes the matching footer",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 4476,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scopes body replacement to the starting PR and previews without writes",
+      "fullTitle": "submit PR description files scopes body replacement to the starting PR and previews without writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 11704,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses missing body input before any push",
+      "fullTitle": "submit PR description files refuses missing body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 645,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses directory body input before any push",
+      "fullTitle": "submit PR description files refuses directory body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 607,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses invalid UTF-8 body input before any push",
+      "fullTitle": "submit PR description files refuses invalid UTF-8 body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 635,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses NUL body input before any push",
+      "fullTitle": "submit PR description files refuses NUL body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 610,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unreadable body input before any push",
+      "fullTitle": "submit PR description files refuses unreadable body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 649,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses stdin body input before any push",
+      "fullTitle": "submit PR description files refuses stdin body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 479,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects body-only metadata from frozen",
+      "fullTitle": "submit PR description files protects body-only metadata from frozen",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 836,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects body-only metadata from update-only",
+      "fullTitle": "submit PR description files protects body-only metadata from update-only",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 796,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects body-only metadata from edit",
+      "fullTitle": "submit PR description files protects body-only metadata from edit",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 456,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm metadata: reports failed metadata and safely retries unchanged code",
+      "fullTitle": "submit metadata confirmation and retries npm metadata: reports failed metadata and safely retries unchanged code",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 7038,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm metadata: retries after creation and a partial footer failure without a duplicate PR",
+      "fullTitle": "submit metadata confirmation and retries npm metadata: retries after creation and a partial footer failure without a duplicate PR",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 4510,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a foreign PR identity introduced during confirmation",
+      "fullTitle": "submit metadata confirmation and retries refuses a foreign PR identity introduced during confirmation",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 3835,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm metadata: executes literal inputs and a protected refusal through the existing MCP tools",
+      "fullTitle": "submit metadata confirmation and retries npm metadata: executes literal inputs and a protected refusal through the existing MCP tools",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 3199,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses captured file contents when confirmation is accepted",
+      "fullTitle": "submit metadata confirmation and retries uses captured file contents when confirmation is accepted",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 2673,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses captured file contents when confirmation is declined",
+      "fullTitle": "submit metadata confirmation and retries uses captured file contents when confirmation is declined",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 1108,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm reuse: refuses an unplanned head moved during confirmation before pushing",
+      "fullTitle": "submit preserves disclosed local inputs npm reuse: refuses an unplanned head moved during confirmation before pushing",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 4105,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses changed base during confirmation without publishing planned work",
+      "fullTitle": "submit preserves disclosed local inputs refuses changed base during confirmation without publishing planned work",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 6503,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses changed metadata during confirmation without publishing planned work",
+      "fullTitle": "submit preserves disclosed local inputs refuses changed metadata during confirmation without publishing planned work",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 6496,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm reuse: refuses concurrent parent metadata after pushing without overwriting it",
+      "fullTitle": "submit preserves disclosed local inputs npm reuse: refuses concurrent parent metadata after pushing without overwriting it",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 5272,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses concurrent description metadata after pushing without overwriting it",
+      "fullTitle": "submit preserves disclosed local inputs refuses concurrent description metadata after pushing without overwriting it",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 5482,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a confirmed new PR but preserves concurrent metadata from its status readback",
+      "fullTitle": "submit preserves disclosed local inputs retains a confirmed new PR but preserves concurrent metadata from its status readback",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 2364,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses reviewers additions when their read sees changed post-push metadata",
+      "fullTitle": "submit preserves disclosed local inputs refuses reviewers additions when their read sees changed post-push metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 5727,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses assignees additions when their read sees changed post-push metadata",
+      "fullTitle": "submit preserves disclosed local inputs refuses assignees additions when their read sees changed post-push metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 5597,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains completed submission but refuses a later branch changed by an earlier PR effect",
+      "fullTitle": "submit preserves disclosed local inputs retains completed submission but refuses a later branch changed by an earlier PR effect",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 10424,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves fresh ancestor PR text when only its child is selected in a terminal",
+      "fullTitle": "submit ancestor footer freshness through the public CLI preserves fresh ancestor PR text when only its child is selected in a terminal",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 7099,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses before pushing or editing PRs when the omitted ancestor identity is missing",
+      "fullTitle": "submit ancestor footer freshness through the public CLI refuses before pushing or editing PRs when the omitted ancestor identity is missing",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 7269,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses before pushing or editing PRs when the omitted ancestor identity is renamed",
+      "fullTitle": "submit ancestor footer freshness through the public CLI refuses before pushing or editing PRs when the omitted ancestor identity is renamed",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 7276,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "repairs the omitted ancestor footer from its latest body after creating the selected child PR",
+      "fullTitle": "submit ancestor footer freshness through the public CLI repairs the omitted ancestor footer from its latest body after creating the selected child PR",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 5913,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refreshes the ancestor body again after confirmation without widening the push selection",
+      "fullTitle": "submit ancestor footer freshness through the public CLI refreshes the ancestor body again after confirmation without widening the push selection",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 9237,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves a frozen ancestor unread and unchanged while inspecting its editable child",
+      "fullTitle": "submit ancestor footer freshness through the public CLI leaves a frozen ancestor unread and unchanged while inspecting its editable child",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 7287,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps an explicit selected PR body edit while preserving fresh unselected ancestor text",
+      "fullTitle": "submit ancestor footer freshness through the public CLI keeps an explicit selected PR body edit while preserving fresh unselected ancestor text",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 9471,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not repair cached footers when GitHub integration is disabled",
+      "fullTitle": "submit dependency footer repair through the public CLI does not repair cached footers when GitHub integration is disabled",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 3129,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves a matching footer and later bot content unchanged",
+      "fullTitle": "submit dependency footer repair through the public CLI leaves a matching footer and later bot content unchanged",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 3527,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "discloses footer-only repair in dry-run without editing the PR",
+      "fullTitle": "submit dependency footer repair through the public CLI discloses footer-only repair in dry-run without editing the PR",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 3867,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "repairs stale and missing footers without code changes, then makes no redundant PR edits",
+      "fullTitle": "submit dependency footer repair through the public CLI repairs stale and missing footers without code changes, then makes no redundant PR edits",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 8029,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports the failed and unattempted footers after partial progress and repairs them on retry",
+      "fullTitle": "submit dependency footer repair through the public CLI reports the failed and unattempted footers after partial progress and repairs them on retry",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 9153,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports pending footers when a later branch is frozen during an earlier footer edit",
+      "fullTitle": "submit dependency footer repair through the public CLI reports pending footers when a later branch is frozen during an earlier footer edit",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 9681,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "creates with the literal approved title and updates without new commits",
+      "fullTitle": "submit explicit PR titles creates with the literal approved title and updates without new commits",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 6113,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "treats a flag-looking title as literal metadata",
+      "fullTitle": "submit explicit PR titles treats a flag-looking title as literal metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 2577,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "limits a title to the explicit starting branch in a stack",
+      "fullTitle": "submit explicit PR titles limits a title to the explicit starting branch in a stack",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 6550,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "previews a metadata-only change and leaves matching titles untouched",
+      "fullTitle": "submit explicit PR titles previews a metadata-only change and leaves matching titles untouched",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 4451,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid title \"\" before external writes",
+      "fullTitle": "submit explicit PR titles rejects invalid title \"\" before external writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 663,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid title \"   \" before external writes",
+      "fullTitle": "submit explicit PR titles rejects invalid title \"   \" before external writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 611,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid title \"first\\nsecond\" before external writes",
+      "fullTitle": "submit explicit PR titles rejects invalid title \"first\\nsecond\" before external writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 628,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "rejects invalid title \"first\\rsecond\" before external writes",
+      "fullTitle": "submit explicit PR titles rejects invalid title \"first\\rsecond\" before external writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 613,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for trunk before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for trunk before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1161,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for frozen before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for frozen before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1450,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for update-only before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for update-only before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1244,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for edit before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for edit before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 870,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses metadata for integration before pushing other branches",
+      "fullTitle": "submit explicit PR titles refuses metadata for integration before pushing other branches",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_title_cli.test.js",
+      "duration": 1043,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "creates with literal file contents and updates without new commits",
+      "fullTitle": "submit PR description files creates with literal file contents and updates without new commits",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 4580,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "clears the description while retaining one managed footer and fresh omitted title",
+      "fullTitle": "submit PR description files clears the description while retaining one managed footer and fresh omitted title",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 5534,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "replaces a description even when supplied text includes the matching footer",
+      "fullTitle": "submit PR description files replaces a description even when supplied text includes the matching footer",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 4476,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "scopes body replacement to the starting PR and previews without writes",
+      "fullTitle": "submit PR description files scopes body replacement to the starting PR and previews without writes",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 11704,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses missing body input before any push",
+      "fullTitle": "submit PR description files refuses missing body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 645,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses directory body input before any push",
+      "fullTitle": "submit PR description files refuses directory body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 607,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses invalid UTF-8 body input before any push",
+      "fullTitle": "submit PR description files refuses invalid UTF-8 body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 635,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses NUL body input before any push",
+      "fullTitle": "submit PR description files refuses NUL body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 610,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses unreadable body input before any push",
+      "fullTitle": "submit PR description files refuses unreadable body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 649,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses stdin body input before any push",
+      "fullTitle": "submit PR description files refuses stdin body input before any push",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 479,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects body-only metadata from frozen",
+      "fullTitle": "submit PR description files protects body-only metadata from frozen",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 836,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects body-only metadata from update-only",
+      "fullTitle": "submit PR description files protects body-only metadata from update-only",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 796,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "protects body-only metadata from edit",
+      "fullTitle": "submit PR description files protects body-only metadata from edit",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_body_file_cli.test.js",
+      "duration": 456,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm metadata: reports failed metadata and safely retries unchanged code",
+      "fullTitle": "submit metadata confirmation and retries npm metadata: reports failed metadata and safely retries unchanged code",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 7038,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm metadata: retries after creation and a partial footer failure without a duplicate PR",
+      "fullTitle": "submit metadata confirmation and retries npm metadata: retries after creation and a partial footer failure without a duplicate PR",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 4510,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a foreign PR identity introduced during confirmation",
+      "fullTitle": "submit metadata confirmation and retries refuses a foreign PR identity introduced during confirmation",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 3835,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm metadata: executes literal inputs and a protected refusal through the existing MCP tools",
+      "fullTitle": "submit metadata confirmation and retries npm metadata: executes literal inputs and a protected refusal through the existing MCP tools",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 3199,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses captured file contents when confirmation is accepted",
+      "fullTitle": "submit metadata confirmation and retries uses captured file contents when confirmation is accepted",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 2673,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "uses captured file contents when confirmation is declined",
+      "fullTitle": "submit metadata confirmation and retries uses captured file contents when confirmation is declined",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_metadata_delivery_cli.test.js",
+      "duration": 1108,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm reuse: refuses an unplanned head moved during confirmation before pushing",
+      "fullTitle": "submit preserves disclosed local inputs npm reuse: refuses an unplanned head moved during confirmation before pushing",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 4105,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses changed base during confirmation without publishing planned work",
+      "fullTitle": "submit preserves disclosed local inputs refuses changed base during confirmation without publishing planned work",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 6503,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses changed metadata during confirmation without publishing planned work",
+      "fullTitle": "submit preserves disclosed local inputs refuses changed metadata during confirmation without publishing planned work",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 6496,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "npm reuse: refuses concurrent parent metadata after pushing without overwriting it",
+      "fullTitle": "submit preserves disclosed local inputs npm reuse: refuses concurrent parent metadata after pushing without overwriting it",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 5272,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses concurrent description metadata after pushing without overwriting it",
+      "fullTitle": "submit preserves disclosed local inputs refuses concurrent description metadata after pushing without overwriting it",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 5482,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains a confirmed new PR but preserves concurrent metadata from its status readback",
+      "fullTitle": "submit preserves disclosed local inputs retains a confirmed new PR but preserves concurrent metadata from its status readback",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 2364,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses reviewers additions when their read sees changed post-push metadata",
+      "fullTitle": "submit preserves disclosed local inputs refuses reviewers additions when their read sees changed post-push metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 5727,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses assignees additions when their read sees changed post-push metadata",
+      "fullTitle": "submit preserves disclosed local inputs refuses assignees additions when their read sees changed post-push metadata",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 5597,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains completed submission but refuses a later branch changed by an earlier PR effect",
+      "fullTitle": "submit preserves disclosed local inputs retains completed submission but refuses a later branch changed by an earlier PR effect",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_plan_inputs_cli.test.js",
+      "duration": 10424,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves fresh ancestor PR text when only its child is selected in a terminal",
+      "fullTitle": "submit ancestor footer freshness through the public CLI preserves fresh ancestor PR text when only its child is selected in a terminal",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 7099,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses before pushing or editing PRs when the omitted ancestor identity is missing",
+      "fullTitle": "submit ancestor footer freshness through the public CLI refuses before pushing or editing PRs when the omitted ancestor identity is missing",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 7269,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses before pushing or editing PRs when the omitted ancestor identity is renamed",
+      "fullTitle": "submit ancestor footer freshness through the public CLI refuses before pushing or editing PRs when the omitted ancestor identity is renamed",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 7276,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "repairs the omitted ancestor footer from its latest body after creating the selected child PR",
+      "fullTitle": "submit ancestor footer freshness through the public CLI repairs the omitted ancestor footer from its latest body after creating the selected child PR",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 5913,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refreshes the ancestor body again after confirmation without widening the push selection",
+      "fullTitle": "submit ancestor footer freshness through the public CLI refreshes the ancestor body again after confirmation without widening the push selection",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 9237,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves a frozen ancestor unread and unchanged while inspecting its editable child",
+      "fullTitle": "submit ancestor footer freshness through the public CLI leaves a frozen ancestor unread and unchanged while inspecting its editable child",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 7287,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps an explicit selected PR body edit while preserving fresh unselected ancestor text",
+      "fullTitle": "submit ancestor footer freshness through the public CLI keeps an explicit selected PR body edit while preserving fresh unselected ancestor text",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_ancestor_footer_cli.test.js",
+      "duration": 9471,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not repair cached footers when GitHub integration is disabled",
+      "fullTitle": "submit dependency footer repair through the public CLI does not repair cached footers when GitHub integration is disabled",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 3129,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "leaves a matching footer and later bot content unchanged",
+      "fullTitle": "submit dependency footer repair through the public CLI leaves a matching footer and later bot content unchanged",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 3527,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "discloses footer-only repair in dry-run without editing the PR",
+      "fullTitle": "submit dependency footer repair through the public CLI discloses footer-only repair in dry-run without editing the PR",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 3867,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "repairs stale and missing footers without code changes, then makes no redundant PR edits",
+      "fullTitle": "submit dependency footer repair through the public CLI repairs stale and missing footers without code changes, then makes no redundant PR edits",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 8029,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports the failed and unattempted footers after partial progress and repairs them on retry",
+      "fullTitle": "submit dependency footer repair through the public CLI reports the failed and unattempted footers after partial progress and repairs them on retry",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 9153,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports pending footers when a later branch is frozen during an earlier footer edit",
+      "fullTitle": "submit dependency footer repair through the public CLI reports pending footers when a later branch is frozen during an earlier footer edit",
+      "file": "/private/tmp/anthracite-metadata-181/apps/cli/dist/test/commands/submit_footer_repair_cli.test.js",
+      "duration": 9681,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

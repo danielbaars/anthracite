@@ -46,6 +46,8 @@ Dependency-footers use current verified PR identities, including editable refere
 
 ## Explicit PR titles
 
+Candidate behavior for #178; published npm 0.7.1 does not include these options.
+
 Use `an submit --title "Approved PR title" --no-interactive` to set the title
 of the starting branch's PR. `--branch` chooses that starting branch; the option
 does not apply one title to every PR in the submission scope. It works during
@@ -76,3 +78,10 @@ later file edits do not change that invocation's payload. A new invocation reads
 `--dry-run` identifies the target and whether its description will be replaced or
 cleared, without publishing. `--no-edit` keeps explicit values; combining `--edit`
 with either metadata option refuses. Existing selection and publication guards apply.
+
+When an explicit metadata update fails after a push, submit identifies the
+unconfirmed target and retains earlier effects. Resolve the reported failure and
+rerun with the same approved title/file input. A new invocation rereads the file;
+keep its approved contents when retrying. Fresh discovery finds an already created
+PR, and matching metadata is left unchanged. Submit does not automatically repeat
+an uncertain PR creation request or promise a rollback across the stack.

@@ -1,0 +1,80 @@
+PASS npm offline installation, both commands, completion and curated contents
+
+
+  MCP command execution through stdio
+    ✔ scenario 3: matches direct inspection, preserves Git state and launches this build despite PATH sentinels (1600ms)
+    ✔ scenario 4: creates the exact staged commit with literal Unicode and shell-looking arguments (1103ms)
+    ✔ scenario 17: discovers targeted insertion, preserves the unselected arm and refuses invalid children in one installed session (5526ms)
+    ✔ scenario 16: previews and continues a multi-target construction conflict with retained local work in one usable same-installation session (30805ms)
+
+  MCP cancellation and shutdown through stdio
+    ✔ scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work (5403ms)
+
+  frozen publication through the public CLI
+    ✔ publishes an editable child on an existing frozen base while preserving protected and outside-scope PRs (10486ms)
+    ✔ rechecks after the original configured pre-push hook freezes the branch before any remote ref publication (2545ms)
+
+  get CLI and installed MCP delivery
+    ✔ installed get workflow learns explicit options, matches direct Git state and preserves a protected failure (9400ms)
+
+  sync CLI and installed MCP delivery
+    ✔ installed sync workflow learns explicit options, matches direct Git state and preserves a protected failure (17881ms)
+    ✔ installed pending sync inspection and abandonment preserve reached work through MCP (11716ms)
+
+  sync CLI paired local restacks
+    ✔ npm restack: preserves a real parent-child restack on a second sync (13041ms)
+
+  private-plan landing delivery
+    ✔ direct private-plan delivery previews disabled rules then preserves an invalid-evidence refusal (2017ms)
+    ✔ MCP private-plan delivery previews disabled rules then preserves an invalid-evidence refusal (2001ms)
+
+  public reused-branch PR discovery
+    ✔ prefers the unique open PR over exact-head terminal history and unrelated old generations (1798ms)
+    ✔ validates a stale stored terminal PR before discovering the current open generation (4230ms)
+
+  submit reused branch names through the public CLI
+    ✔ npm reuse: creates a new draft after CLOSED history without editing the retired PR (6761ms)
+    ✔ npm reuse: updates the unique current open PR among repeated history and unpublished local work (7544ms)
+
+  submit preserves disclosed local inputs
+    ✔ npm reuse: refuses an unplanned head moved during confirmation before pushing (4615ms)
+    ✔ npm reuse: refuses concurrent parent metadata after pushing without overwriting it (6153ms)
+
+  submit metadata confirmation and retries
+    ✔ npm metadata: reports failed metadata and safely retries unchanged code (8842ms)
+    ✔ npm metadata: retries after creation and a partial footer failure without a duplicate PR (5419ms)
+    ✔ npm metadata: executes literal inputs and a protected refusal through the existing MCP tools (3992ms)
+
+  submit explicit PR titles
+    ✔ creates with the literal approved title and updates without new commits (6393ms)
+
+  submit PR description files
+    ✔ creates with literal file contents and updates without new commits (5505ms)
+    ✔ refuses missing body input before any push (889ms)
+
+  sync protects current work from retired PR identities
+    ✔ npm reuse: refreshes a current open PR instead of its stale terminal association (3721ms)
+    ✔ npm reuse: deletes a freshly verified exact-head terminal branch (3541ms)
+    ✔ npm reuse: retains unpublished commits after the associated PR closes (2914ms)
+
+  sync cleanup identity across saved recovery
+    - npm reuse: refuses uncovered legacy cleanup before staging or advancing
+    - npm reuse: completes valid legacy cleanup with freshly verified coverage
+
+  delete verifies known PR state through the public CLI
+    ✔ npm reuse: retains unpublished work not covered by a terminal PR head (1207ms)
+
+
+  29 passing (4m)
+  2 pending
+
+
+
+  private-plan landing delivery
+    ✔ direct private-plan delivery previews disabled rules then preserves an invalid-evidence refusal (1972ms)
+
+
+  1 passing (6s)
+
+PASS installed anthracite alias private-plan preview and preserving refusal
+PASS installed package real Git stacks, scoped get/sync MCP, private-plan preview/refusal, same-build execution and numeric-zero cancellation
