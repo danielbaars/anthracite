@@ -245,7 +245,12 @@ async function submitPrToGithub({
   );
   const prBaseChanged = prInfo.baseRefName !== request.base;
 
-  const editArgs = [...(prBaseChanged ? ['--base', request.base] : [])];
+  const editArgs = [
+    ...(prBaseChanged ? ['--base', request.base] : []),
+    ...(request.title !== undefined && request.title !== prInfo.title
+      ? ['--title', request.title]
+      : []),
+  ];
 
   if (editArgs.length) {
     await assertOpenSubmitTarget(request.head, prInfo.number, context);
