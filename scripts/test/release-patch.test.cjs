@@ -5,7 +5,7 @@ const { test } = require("node:test");
 const { fixture } = require("./fixtures/release-stable-setup.cjs");
 
 test(
-  "direct patch waits for install propagation without republishing, preserves beta and reconciles once",
+  "direct patch waits for eight-minute registry 404 propagation without republishing, preserves beta and reconciles once",
   { timeout: 600000 },
   () => {
     const f = fixture();
@@ -84,6 +84,9 @@ test(
       );
       f.state.main = dispatcher;
       input.dispatcher = dispatcher;
+      f.state.virtualClock = true;
+      f.state.metadata404Ms = 120000;
+      f.state.tarball404Ms = 480000;
       f.state.delayedInstallTarget = 2;
       f.write(f.state);
       const published = f.invoke(input);
@@ -93,9 +96,10 @@ test(
       assert.equal(result.npmWrites, 1);
       const state = JSON.parse(fs.readFileSync(f.statePath));
       assert.equal(state.writes.length, 1);
+      assert.ok(state.registry404s > 2);
       assert.equal(state.inspectCalls, 3);
       assert.equal(state.delayedInstallTarget, 0);
-      assert.ok(state.deadlines[0] > 0 && state.deadlines[0] <= 300000);
+      assert.ok(state.deadlines[0] > 0 && state.deadlines[0] <= 600000);
       assert.ok(state.deadlines[2] < state.deadlines[0]);
       assert.equal(state.registry["dist-tags"].latest, "0.6.10");
       assert.equal(state.registry["dist-tags"].beta, "0.7.0-beta.2");
@@ -119,6 +123,43 @@ test(
       assert.equal(repeated.status, 0, repeated.stderr);
       assert.equal(JSON.parse(repeated.stdout).npmWrites, 0);
       assert.equal(JSON.parse(fs.readFileSync(f.statePath)).writes.length, 1);
+      for (const phase of ["metadata", "tarball"]) {
+        const unavailable = structuredClone(state);
+        unavailable.writes = [];
+        unavailable.deadlines = [];
+        unavailable.registry404s = 0;
+        delete unavailable.publishedAt;
+        unavailable.metadata404Ms = phase === "metadata" ? 3600000 : 0;
+        unavailable.tarball404Ms = phase === "tarball" ? 3600000 : 0;
+        unavailable.registry["dist-tags"].latest = "0.6.9";
+        delete unavailable.registry.versions[input.version];
+        const release = unavailable.releases[input.tag];
+        for (const name of Object.keys(release.assets))
+          if (/^(attempt|verification|observation)-/.test(name))
+            delete release.assets[name];
+        f.write(unavailable);
+        const exhausted = f.invoke({
+          ...input,
+          run: { id: "2345", attempt: "1", actor: "release-test" },
+          output: path.join(f.temp, `exhausted-${phase}`),
+        });
+        assert.notEqual(exhausted.status, 0);
+        assert.match(
+          exhausted.stderr,
+          /deadline exhausted.*Registry read failed: 404/s
+        );
+        const reached = JSON.parse(fs.readFileSync(f.statePath));
+        assert.equal(reached.writes.length, 1);
+        assert.equal(reached.virtualElapsedMs, 600000);
+        assert.ok(reached.registry404s > 2);
+        assert.ok(
+          reached.releases[input.tag].assets["observation-2345-1.json"]
+        );
+        assert.equal(
+          reached.releases[input.tag].assets["verification-2345-1.json"],
+          undefined
+        );
+      }
     } finally {
       fs.rmSync(f.temp, { recursive: true, force: true });
     }

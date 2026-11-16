@@ -1,6 +1,26 @@
 const fs = require("node:fs");
 const input = JSON.parse(fs.readFileSync(process.argv[2]));
 const state = JSON.parse(fs.readFileSync(input.state));
+// Advance only this fixture's clock; propagation tests never sleep for minutes.
+if (state.virtualClock) {
+  const epoch = Date.now();
+  state.virtualElapsedMs = 0;
+  Date.now = () => epoch + state.virtualElapsedMs;
+  global.setTimeout = (callback, milliseconds, ...args) => {
+    state.virtualElapsedMs += milliseconds;
+    fs.writeFileSync(input.state, JSON.stringify(state));
+    return setImmediate(callback, ...args);
+  };
+}
+const propagation404 = (delay) => {
+  if (state.publishedAt && Date.now() - state.publishedAt < delay) {
+    state.registry404s = (state.registry404s || 0) + 1;
+    fs.writeFileSync(input.state, JSON.stringify(state));
+    const error = Error("Registry read failed: 404");
+    error.retryable = true;
+    throw error;
+  }
+};
 const save = () => fs.writeFileSync(input.state, JSON.stringify(state));
 const decode = (release) =>
   release
@@ -60,6 +80,7 @@ const services = {
   },
   registry: {
     snapshot: async () => {
+      propagation404(state.metadata404Ms || 0);
       state.snapshots = (state.snapshots || 0) + 1;
       if (state.snapshots === 2) {
         if (state.moveLatestBeforeWrite)
@@ -162,6 +183,7 @@ const services = {
           },
         };
       }
+      state.publishedAt = Date.now();
       state.writes.push({ channel, version, bytes: bytes.toString("base64") });
       state.registry["dist-tags"][channel] = version;
       state.registry.versions[version] = {
@@ -181,6 +203,7 @@ const services = {
         throw Error("Connection lost after accepted publication");
     },
     inspect: async (version, options = {}) => {
+      propagation404(state.tarball404Ms || 0);
       if (!state.registry.versions[version]) return null;
       if (version === input.request.version) {
         state.inspectCalls = (state.inspectCalls || 0) + 1;
