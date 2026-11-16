@@ -1,4 +1,6 @@
 import chalk from 'chalk';
+import { getSha } from '../lib/git/get_sha';
+import { PreconditionsFailedError } from '../lib/errors';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { getBranchesToRestack, restackBranches } from './restack';
@@ -11,6 +13,11 @@ export function foldCurrentBranch(keep: boolean, context: TContext): void {
   const currentBranchName = context.engine.currentBranchPrecondition;
   const parentBranchName =
     context.engine.getParentPrecondition(currentBranchName);
+  if (context.engine.isTrunk(parentBranchName)) {
+    throw new PreconditionsFailedError(
+      `Cannot fold '${currentBranchName}' into trunk '${parentBranchName}'. Ordinary fold requires a non-trunk parent.`
+    );
+  }
   const survivor = keep ? currentBranchName : parentBranchName;
   const removed = keep ? parentBranchName : currentBranchName;
   const branches = context.engine
@@ -32,28 +39,31 @@ export function foldCurrentBranch(keep: boolean, context: TContext): void {
               context.engine.getRevision(currentBranchName)
         ),
   });
-  for (const name of new Set([
-    currentBranchName,
-    parentBranchName,
-    ...reparented,
-    ...changing,
-  ]))
-    context.engine.assertBranchEditable(name);
+  const participants = [
+    ...new Set([
+      currentBranchName,
+      parentBranchName,
+      ...reparented,
+      ...changing,
+    ]),
+  ];
+  for (const name of participants) context.engine.assertBranchEditable(name);
+  const before = readFoldState(participants);
   try {
-    context.engine.foldCurrentBranch(keep, [
-      ...new Set([
-        currentBranchName,
-        parentBranchName,
-        ...reparented,
-        ...changing,
-      ]),
-    ]);
+    context.engine.foldCurrentBranch(keep, participants);
   } catch (error) {
-    context.splog.warn(
-      `Fold stopped at checkout ${
-        getCurrentBranchName() ?? 'detached HEAD'
-      }; completed ref and parent writes remain. Inspect an info, the index and local files before retrying.`
-    );
+    const after = readFoldState(participants);
+    if (before === undefined || after === undefined) {
+      context.splog.warn(
+        'Fold stopped; remaining writes could not be verified. Inspect an info, the index and local files before retrying.'
+      );
+    } else if (before !== after) {
+      context.splog.warn(
+        `Fold stopped at checkout ${
+          getCurrentBranchName() ?? 'detached HEAD'
+        }; completed ref and parent writes remain. Inspect an info, the index and local files before retrying.`
+      );
+    }
     throw error;
   }
   context.continueConfig.update((data) => {
@@ -90,4 +100,20 @@ export function foldCurrentBranch(keep: boolean, context: TContext): void {
     context
   );
   clearContinuation(context);
+}
+
+function readFoldState(participants: readonly string[]): string | undefined {
+  try {
+    return JSON.stringify([
+      getCurrentBranchName(),
+      getSha('HEAD'),
+      ...participants.map((name) => [
+        getSha(`refs/heads/${name}`),
+        getSha(`refs/branch-metadata/${name}`),
+      ]),
+    ]);
+  } catch {
+    // An inspection failure must not replace the original fold error.
+    return undefined;
+  }
 }
