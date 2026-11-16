@@ -16,7 +16,7 @@ const args = {
     },
   },
   keep: {
-    describe: `Keep the current name for ordinary fold; with --stack, keep the chosen tip name instead of the original bottom name.`,
+    describe: `Keep the current name for ordinary fold (requires a non-trunk parent); with --stack, keep the chosen tip name instead of the original bottom name.`,
     demandOption: false,
     type: 'boolean',
     alias: 'k',
@@ -28,7 +28,7 @@ type argsT = yargs.Arguments<yargs.InferredOptionTypes<typeof args>>;
 export const command = 'fold';
 export const canonical = 'fold';
 export const description =
-  "Fold a branch's changes into its parent, update dependencies of descendants of the new combined branch, and restack. Frozen contributors, survivors and mandatory participants are refused.";
+  "Fold a branch's changes into its non-trunk parent (ordinary mode), update dependencies of descendants of the new combined branch, and restack. Frozen contributors, survivors and mandatory participants are refused.";
 export const builder = args;
 export const handler = async (argv: argsT): Promise<void> =>
   graphite(argv, canonical, async (context) =>
