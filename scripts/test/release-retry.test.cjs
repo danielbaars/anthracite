@@ -453,7 +453,7 @@ test(
       assert.equal(stableReconciled.status, 0, stableReconciled.stderr);
       assert.equal(JSON.parse(stableReconciled.stdout).npmWrites, 0);
       assert.equal(JSON.parse(fs.readFileSync(f.statePath)).writes.length, 2);
-      // The budget uses real elapsed time; this one case deliberately observes five minutes.
+      // The fixture clock exercises the full deadline without a ten-minute sleep.
       git(f.checkout, "checkout", "--detach", f.request.dispatcher);
       const unavailable = structuredClone(preparedState);
       const unavailableRun = {
@@ -463,6 +463,7 @@ test(
       };
       unavailable.statement = statement({ ...intent, run: unavailableRun });
       unavailable.registryUnavailableAfterWrite = true;
+      unavailable.virtualClock = true;
       unavailable.lostResponse = true;
       f.write(unavailable);
       const began = Date.now();
@@ -480,13 +481,11 @@ test(
         exhausted.stderr,
         /deadline exhausted.*public verification unavailable/s
       );
-      assert.ok(
-        elapsed >= 299000 && elapsed < 320000,
-        `Verification elapsed ${elapsed}ms`
-      );
+      assert.ok(elapsed < 10000, `Verification elapsed ${elapsed}ms`);
       const exhaustedState = JSON.parse(fs.readFileSync(f.statePath));
       assert.equal(exhaustedState.writes.length, 1);
-      assert.ok(exhaustedState.deadlines[0] <= 300000);
+      assert.equal(exhaustedState.virtualElapsedMs, 600000);
+      assert.ok(exhaustedState.deadlines[0] <= 600000);
       assert.ok(exhaustedState.deadlines.at(-1) < 3000);
       assert.equal(
         exhaustedState.releases["v0.7.0-beta.1"].assets[

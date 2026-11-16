@@ -988,12 +988,16 @@ async function publishPrepared(request, services, context) {
             : `publication response lost or unavailable: ${error.message}`;
       }
     }
+    // npm can expose metadata minutes before its tarball is downloadable.
+    const verificationDeadline = Date.now() + 600000;
     let proof,
       after,
       lastObservation = "package or provenance not yet visible";
-    while (Date.now() < deadline) {
+    while (Date.now() < verificationDeadline) {
       try {
-        after = await services.registry.snapshot({ deadline });
+        after = await services.registry.snapshot({
+          deadline: verificationDeadline,
+        });
         assert.equal(after.name, PACKAGE);
         historicalLatest(after, intent);
         lastMappings = {
@@ -1031,10 +1035,14 @@ async function publishPrepared(request, services, context) {
             "Published version integrity changed"
           );
         }
-        proof = await services.registry.inspect(request.version, { deadline });
+        proof = await services.registry.inspect(request.version, {
+          deadline: verificationDeadline,
+        });
         if (proof) {
           const candidate = proofAttempt(proof, attempts, intent);
-          after = await services.registry.snapshot({ deadline });
+          after = await services.registry.snapshot({
+            deadline: verificationDeadline,
+          });
           lastMappings = {
             latest: after["dist-tags"].latest,
             beta: after["dist-tags"].beta || null,
@@ -1056,7 +1064,7 @@ async function publishPrepared(request, services, context) {
         if (!error.retryable) throw error;
         lastObservation = `public verification unavailable: ${error.message}`;
       }
-      const remaining = deadline - Date.now();
+      const remaining = verificationDeadline - Date.now();
       if (remaining <= 0) break;
       await new Promise((resolve) =>
         setTimeout(resolve, Math.min(2000, remaining))

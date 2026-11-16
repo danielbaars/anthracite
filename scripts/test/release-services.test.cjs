@@ -277,3 +277,71 @@ require(process.argv[2]).services().registry.inspect('0.6.10',{deadline:Date.now
     fs.rmSync(temporary, { recursive: true, force: true });
   }
 });
+
+test("registry metadata and tarball 404s are retryable while permission and integrity failures stop", async () => {
+  const { services } = require("../release-services.cjs");
+  const originalFetch = global.fetch;
+  const bytes = Buffer.from("Controlled public tarball");
+  const manifest = {
+    name: "@danielbaars/anthracite",
+    version: "0.6.10",
+    dist: {
+      integrity:
+        "sha512-" + createHash("sha512").update(bytes).digest("base64"),
+      tarball:
+        "https://registry.npmjs.org/@danielbaars/anthracite/-/anthracite-0.6.10.tgz",
+    },
+  };
+  const metadata = {
+    "dist-tags": { latest: manifest.version },
+    versions: { [manifest.version]: manifest },
+  };
+  try {
+    for (const operation of ["snapshot", "inspect"]) {
+      for (const [target, status, retryable] of [
+        ["metadata", 404, true],
+        ["tarball", 404, true],
+        ["tarball", 403, false],
+        ["tarball", 401, false],
+      ]) {
+        global.fetch = async (url) => {
+          const tarball = url.endsWith(".tgz");
+          return new Response(
+            tarball
+              ? bytes
+              : JSON.stringify(operation === "snapshot" ? metadata : manifest),
+            { status: (target === "tarball") === tarball ? status : 200 }
+          );
+        };
+        const registry = services().registry;
+        if (operation === "inspect" && target === "metadata") {
+          assert.equal(await registry.inspect(manifest.version), null);
+        } else {
+          await assert.rejects(
+            operation === "inspect"
+              ? registry.inspect(manifest.version)
+              : registry.snapshot(),
+            (error) =>
+              error.retryable === retryable &&
+              error.message.includes(String(status))
+          );
+        }
+      }
+      global.fetch = async (url) =>
+        new Response(
+          url.endsWith(".tgz")
+            ? Buffer.from("Different tarball")
+            : JSON.stringify(operation === "snapshot" ? metadata : manifest)
+        );
+      const registry = services().registry;
+      await assert.rejects(
+        operation === "inspect"
+          ? registry.inspect(manifest.version)
+          : registry.snapshot(),
+        (error) => error.code === "ERR_ASSERTION" && !error.retryable
+      );
+    }
+  } finally {
+    global.fetch = originalFetch;
+  }
+});
