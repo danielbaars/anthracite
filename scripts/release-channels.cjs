@@ -1825,12 +1825,29 @@ async function runReleaseOwned(
     };
     for (const key of ["NODE_AUTH_TOKEN", "NPM_TOKEN"]) delete buildEnv[key];
     const log = fs.openSync(path.join(temporary, "build.log"), "w");
-    const run = (file, args) =>
-      command(stage, file, args, {
-        stdio: ["ignore", log, log],
-        timeout: 180000,
-        env: buildEnv,
-      });
+    const run = (file, args) => {
+      // Installation, selected scenarios and alias checks have separate inner caps.
+      const timeout =
+        args[0] === "scripts/test-npm-package.cjs" ? 480000 : 180000;
+      try {
+        command(stage, file, args, {
+          stdio: ["ignore", log, log],
+          timeout,
+          env: buildEnv,
+        });
+      } catch (error) {
+        const outcome =
+          error.code === "ETIMEDOUT"
+            ? `timed out after ${timeout} ms`
+            : `exit code ${error.status ?? "unknown"}, signal ${
+                error.signal ?? "none"
+              }`;
+        throw new Error(
+          `${file} ${args.join(" ")}: ${outcome}. ${error.message}`,
+          { cause: error }
+        );
+      }
+    };
     try {
       run(process.execPath, [
         ".yarn/releases/yarn-3.2.1.cjs",
@@ -1853,7 +1870,7 @@ async function runReleaseOwned(
       run(process.execPath, ["scripts/test-npm-package.cjs"]);
     } catch (error) {
       throw new Error(
-        `Release build/install gate failed: ${fs
+        `Release build/install gate failed: ${error.message}\n${fs
           .readFileSync(path.join(temporary, "build.log"), "utf8")
           .slice(-6000)}`,
         { cause: error }

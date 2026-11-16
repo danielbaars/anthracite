@@ -30,7 +30,7 @@ Main pushes run release-please preparation only: a release PR, stable tag or Git
 
 Publication requires manual dispatch of `.github/workflows/release.yml` from `main`. The initial `select` operation is nonpublishing and refuses. `NPM_TRUSTED_PUBLISHING` must equal literal `true`; false or unset refuses. The existing npm trusted publisher remains owner **danielbaars**, repository **anthracite**, workflow **release.yml**, no environment, direct publication with OIDC and provenance. No persistent npm write token or tag-management permission is needed. Only the publishing job has `id-token: write`; its `contents: write` retains durable release assets. The preparation job retains its release-please contents/PR permissions.
 
-Both jobs share the `release` concurrency group with `cancel-in-progress: false`. Preparation has a five-minute limit; manual publication has a ten-minute limit. The process installs locked dependencies, builds/lints/typechecks and tests the exact intended tarball through the established gates. It neither starts the full matrix nor compiles native releases. Run relevant focused local checks for release changes; the standalone release gate remains separate.
+Both jobs share the `release` concurrency group with `cancel-in-progress: false`. Preparation has a five-minute limit; manual publication has a fifteen-minute limit. The process installs locked dependencies, builds/lints/typechecks and tests the exact intended tarball through the established gates. It neither starts the full matrix nor compiles native releases. Run relevant focused local checks for release changes; the standalone release gate remains separate.
 
 Use the [direct targeted patch route](#direct-targeted-patch-releases) for narrowly scoped bugfixes. The beta/promotion procedure below remains for features and broader changes.
 
@@ -232,3 +232,7 @@ Omit beta source/version and practice inputs. No beta or personal-use evidence i
 ## npm installation propagation
 
 After npm accepts a publication, the exact-version endpoint can become visible before npm install metadata. An `ETARGET` response during isolated readback uses the existing bounded public-verification retry budget (five minutes). Retries repeat reads, installation and signature/provenance verification; they do not repeat publication or reset the deadline. Authentication and integrity errors still stop immediately. Exhausting the budget retains the original publication evidence for deliberate reconciliation.
+
+## Release build budgets
+
+The installed-package gate has an eight-minute aggregate outer budget. Its existing one-minute installation, five-minute selected scenarios, two-minute alias limits and individual CLI probe limits remain in place; the outer budget does not guarantee that every inner allowance can be exhausted in one run. Other build commands retain their three-minute limits, and the publishing job is bounded to fifteen minutes overall. Failed build diagnostics identify the command and its exit status, signal or timeout before the retained log tail. A failed preparation does not authorize npm publication.

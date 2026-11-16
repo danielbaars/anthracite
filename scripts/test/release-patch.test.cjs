@@ -74,6 +74,16 @@ test(
         assert.match(result.stderr, reason);
         assert.equal(JSON.parse(fs.readFileSync(f.statePath)).writes.length, 0);
       }
+      // A dispatcher repair must not require moving the existing stable source tag.
+      fs.appendFileSync(
+        path.join(f.checkout, "scripts/release-channels.cjs"),
+        "\n// Dispatcher-only fixture revision.\n"
+      );
+      const dispatcher = f.commit(
+        "Advance dispatcher without changing selected stable source"
+      );
+      f.state.main = dispatcher;
+      input.dispatcher = dispatcher;
       f.state.delayedInstallTarget = 2;
       f.write(f.state);
       const published = f.invoke(input);
@@ -92,6 +102,9 @@ test(
       const intent = JSON.parse(
         fs.readFileSync(path.join(input.output, "intent.json"))
       );
+      assert.equal(intent.source.commit, source);
+      assert.equal(intent.dispatcher.commit, dispatcher);
+      assert.notEqual(source, dispatcher);
       assert.equal(intent.assessment.mode, "patch");
       assert.equal(intent.assessment.approval.reason, input.patchReason);
       assert.equal(intent.tests.passed, true);
