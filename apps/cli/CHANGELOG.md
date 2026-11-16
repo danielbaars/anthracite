@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.1](https://github.com/danielbaars/anthracite/compare/v0.8.0...v0.8.1) (2026-11-16)
+
+
+### Bug Fixes
+
+* **cli:** warn about fold writes only when state changed ([538187a](https://github.com/danielbaars/anthracite/commit/538187aa59b1b8c39d81df276aedfc41ac5336c6))
+
 ## [0.8.0](https://github.com/danielbaars/anthracite/compare/v0.7.1...v0.8.0) (2026-11-12)
 
 
