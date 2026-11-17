@@ -96,10 +96,7 @@ export function retainLandingRetry(
   original: string
 ): LandingProgress {
   assertLandingProgressUnchanged(record);
-  if (record.retry)
-    throw new ExitFailedError(
-      'An earlier retry attempt is retained; no new request authorized.'
-    );
+  assertLandingRetryEvidence(record);
   const member = current(record);
   const retry: Retry = {
     attempt: randomUUID(),
@@ -138,9 +135,18 @@ export function retainLandingRetry(
 }
 
 export function assertLandingRetryEvidence(record: LandingProgress): void {
+  validateEvidence(record, new Set<string>());
+}
+
+function validateEvidence(record: LandingProgress, visited: Set<string>): void {
   const retry = record.retry;
   if (!retry) return;
   try {
+    if (visited.has(retry.attempt) || visited.size >= 128)
+      throw new Error(
+        'Retry evidence chain is cyclic or exceeds 128 attempts.'
+      );
+    visited.add(retry.attempt);
     const root = directory();
     const attempt = path.join(root, retry.attempt);
     assertPrivate(root, true);
@@ -154,7 +160,6 @@ export function assertLandingRetryEvidence(record: LandingProgress): void {
     const source = landingProgressSchema.parse(JSON.parse(original));
     const member = current(source);
     if (
-      source.retry ||
       source.phase !== 'merge-requested' ||
       (source.index ?? 0) !== retry.index ||
       member.number !== retry.number ||
@@ -169,6 +174,7 @@ export function assertLandingRetryEvidence(record: LandingProgress): void {
         JSON.stringify(retry) + '\n'
     )
       throw new Error('Retry evidence identity changed.');
+    validateEvidence(source, visited);
   } catch (error: unknown) {
     throw new ExitFailedError(
       `Retry evidence unavailable or changed; no new request authorized. ${

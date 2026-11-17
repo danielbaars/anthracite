@@ -284,5 +284,18 @@ describe('public partial-stack landing retry', function () {
       ...saved,
       cacheLock: undefined,
     });
+    const recovered = fixture.run([
+      'land',
+      'tip',
+      '--retry-unconfirmed',
+      '--yes',
+      '--no-interactive',
+    ]);
+    expect(recovered.status, recovered.stdout + recovered.stderr).to.equal(0);
+    const finalCalls = fs.readFileSync(github.calls, 'utf8');
+    expect(finalCalls.match(/\/pulls\/17\/merge/g)).to.have.length(1);
+    expect(finalCalls.match(/\/pulls\/18\/merge/g)).to.have.length(2);
+    expect(finalCalls.match(/\/pulls\/19\/merge/g)).to.have.length(2);
+    expect(fs.existsSync(file)).to.equal(false);
   });
 });
