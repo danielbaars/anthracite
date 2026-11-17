@@ -204,6 +204,26 @@ obligations before explicit resumption. A matching acknowledged push or PR updat
 is read back rather than blindly repeated. Never clear recovery to skip due work.
 Finish a pending version-2 landing before downgrading to an older CLI.
 
+For an unconfirmed saved merge, use the explicit original target:
+an land <original-target> --retry-unconfirmed --dry-run. This preserving preview
+names one pinned PR/effective head and all remaining original work. An open PR
+does not prove the earlier request failed. Neither preview, installing another
+executable, plain --yes nor saved attempt intent authorizes another request.
+After inspecting the uncertainty, separately obtain the owner's approval for
+an land <original-target> --retry-unconfirmed --yes through run_an_cmd's existing
+argument array and explicit cwd. Each confirmed invocation can attempt at most
+one new request for that current uncertain PR; later uncertainty needs fresh
+named consent. Fresh identity, head/base, local ownership, policy, review and
+required-check guards still apply. A verified matching merge needs no new request.
+Missing/foreign recovery, another target, changed identities and unsupported
+states refuse preserving. Interrupted or rejected retries retain original and
+attempt evidence; a rejection of a newer request does not settle the older
+unknown outcome. Preview again before any further named confirmation. Version-1
+and version-2 publication schedules remain unchanged. Complete active retry
+recovery with a compatible executable before downgrade; older readers refuse
+its strict evidence marker. Immutable audit archives after completion are not
+an active landing gate. This does not change publication approval conventions.
+
 A landing conflict returns cli_error and retains completed merges and parents.
 Resolve and stage deliberately, then an continue in the printed original project
 performs local-only replay. It never merges, pushes or edits PRs. The landing

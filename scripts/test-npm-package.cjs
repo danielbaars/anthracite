@@ -164,6 +164,36 @@ try {
     0,
     scenarios.stderr || scenarios.error?.message
   );
+  const retryDelivery = spawnSync(
+    process.execPath,
+    [
+      path.join(root, "node_modules/mocha/bin/mocha.js"),
+      "apps/cli/dist/test/commands/land_retry_delivery_cli.test.js",
+      "apps/cli/dist/test/commands/land_retry_preview_cli.test.js",
+      "apps/cli/dist/test/commands/land_retry_recovery_cli.test.js",
+      "--grep",
+      "delivery:|retains the original uncertainty|requires fresh consent after uncertainty",
+    ],
+    {
+      cwd: root,
+      env: {
+        ...env,
+        ANTHRACITE_TEST_BINARY: path.join(prefix, "bin/an"),
+        CHARCOAL_TEST_BINARY: "",
+      },
+      encoding: "utf8",
+      timeout: 180000,
+    }
+  );
+  process.stdout.write(retryDelivery.stdout || "");
+  assert.equal(
+    retryDelivery.status,
+    0,
+    retryDelivery.stderr || retryDelivery.error?.message
+  );
+  console.log(
+    "PASS installed explicit landing retry learning, preserving consent, bounded execution and uncertain/refused recovery"
+  );
   const aliasLanding = spawnSync(
     process.execPath,
     [

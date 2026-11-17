@@ -17,7 +17,7 @@ const options = {
     type: 'boolean',
     default: false,
     description:
-      'Opt into one retry of the saved unconfirmed merge; preview first, and separately confirm application.',
+      'Opt into one retry for the explicit original target and saved unconfirmed merge; preview with --dry-run, and separately confirm application (--yes unattended). Earlier outcome stays unknown.',
   },
   yes: {
     type: 'boolean',
