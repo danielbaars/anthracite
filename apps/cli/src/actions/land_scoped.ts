@@ -185,10 +185,6 @@ export async function resumeScopedLanding(
 ): Promise<void> {
   validateIdentity(record, context);
   assertLandingRetryEvidence(record);
-  if (args['retry-unconfirmed'] && record.retry)
-    throw new ExitFailedError(
-      'A prior retry attempt is retained; this build cannot authorize another attempt. Inspect an land --dry-run; recovery preserved.'
-    );
   const inspection = await inspectPendingLanding(
     record,
     context,
@@ -722,7 +718,6 @@ async function applyScopedLanding(
   context: TContext,
   options: { readonly waitSeconds: number; readonly retryAttempt?: string }
 ): Promise<void> {
-  const { waitSeconds, retryAttempt } = options;
   let record = initial;
   let retryConsumed = false;
   let stage = 'reconciliation';
@@ -744,15 +739,15 @@ async function applyScopedLanding(
       if (!result) {
         const canRetry =
           !retryConsumed &&
-          !!retryAttempt &&
-          record.retry?.attempt === retryAttempt &&
+          !!options.retryAttempt &&
+          record.retry?.attempt === options.retryAttempt &&
           hasCurrentLandingRetry(record);
         if (record.phase !== 'prepared' && !canRetry)
           throw new ExitFailedError(
             'Merge remains uncertain or unconfirmed. No merge is repeated. An open PR alone does not establish that the earlier request was rejected; preserve recovery and inspect the original request failure.'
           );
         stage = 'readiness check';
-        await waitUntilReadyToMerge(record, context, waitSeconds);
+        await waitUntilReadyToMerge(record, context, options.waitSeconds);
         validateLocal(record, context);
         stage = 'merge request';
         advance({ phase: 'merge-requested' });
@@ -760,15 +755,16 @@ async function applyScopedLanding(
         const alreadyMerged = await confirmedResult(record);
         validateMergeEffect(record, context);
         if (canRetry) retryConsumed = true;
-        let response: string;
+        let response = alreadyMerged;
         try {
-          response =
-            alreadyMerged ??
-            (await mergeGithubLandPr(
+          if (!response) {
+            stage = 'merge request attempt';
+            response = await mergeGithubLandPr(
               record.repo,
               current(record).number,
               owned(current(record)).head
-            ));
+            );
+          }
         } catch (error: unknown) {
           const reconciled = await confirmAfterMergeFailure(record, error);
           if (reconciled) {
@@ -831,7 +827,7 @@ async function applyScopedLanding(
     );
   } catch (error: unknown) {
     const failure =
-      stage === 'merge request' && retryConsumed
+      stage.startsWith('merge request') && retryConsumed
         ? retainRetryFailure(record, error)
         : error;
     throw landingFailure(record, stage, failure);
@@ -906,11 +902,17 @@ function landingFailure(
         : error instanceof GithubLandMergeRejected
         ? `GitHub refused merge #${current(record).number};`
         : 'Merge unconfirmed or uncertain;'
+    } ${
+      stage === 'merge request attempt'
+        ? 'New merge request attempted;'
+        : ['reconciliation', 'readiness check', 'merge request'].includes(stage)
+        ? 'No new merge request attempted;'
+        : ''
     } later work unattempted. ${
       error instanceof Error ? error.message : String(error)
     } Recovery retained in ${record.directory}; ${
       record.phase === 'merge-requested' && !record.result
-        ? `use an land ${record.target} --dry-run for read-only inspection or reconciliation of a completed merge. An unconfirmed request is not retried automatically; keep the recovery record for deliberate recovery.`
+        ? `use an land ${record.target} --dry-run for read-only inspection or reconciliation of a completed merge. An unconfirmed request is not retried automatically; after inspecting the original uncertainty, explicitly authorize one verified new attempt with an land ${record.target} --retry-unconfirmed (add --yes for unattended confirmation).`
         : `resolve the reported blocker, preview with an land ${record.target} --dry-run, then explicitly resume with an land ${record.target} --yes.`
     }`
   );

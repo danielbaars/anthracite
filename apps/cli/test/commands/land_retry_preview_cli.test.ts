@@ -216,11 +216,9 @@ describe('public unconfirmed landing retry preview', function () {
       )
     ).to.equal(saved);
     fs.writeFileSync(gh, original);
-    for (const args of [
-      ['land', 'leaf', '--yes', '--no-interactive'],
-      ['land', 'leaf', '--retry-unconfirmed', '--yes', '--no-interactive'],
-    ])
-      expect(fixture.run(args).status).to.equal(1);
+    expect(
+      fixture.run(['land', 'leaf', '--yes', '--no-interactive']).status
+    ).to.equal(1);
     for (const producer of [
       process.env.ANTHRACITE_TEST_LANDING_V1_PRODUCER,
       process.env.ANTHRACITE_TEST_LANDING_V2_PRODUCER,
