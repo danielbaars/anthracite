@@ -16,26 +16,43 @@ The existing MCP `learn_an` and argument-array `run_an_cmd` routes expose the sa
 
 The genuine published producers were installed in isolated temporary prefixes without changes to the active installation. Records were produced by their public CLI processes, without schema rewriting.
 
-| Producer | Scheduling authority | Installed CLI SHA-256 |
-| --- | --- | --- |
-| npm `@danielbaars/anthracite@0.6.15` | Version 1, eager | `b5ec9d945824443cd441ae9f40220d174ef4c367952e7c264186a2bfc0882608` |
-| npm `@danielbaars/anthracite@0.8.0-beta.1` | Version 2, deferred | `7a68d49fb520991931bb5787f87ba8c10bf343d42582e201ad1940fe32082344` |
+| Producer                                   | Scheduling authority | Installed CLI SHA-256                                              |
+| ------------------------------------------ | -------------------- | ------------------------------------------------------------------ |
+| npm `@danielbaars/anthracite@0.6.15`       | Version 1, eager     | `b5ec9d945824443cd441ae9f40220d174ef4c367952e7c264186a2bfc0882608` |
+| npm `@danielbaars/anthracite@0.8.0-beta.1` | Version 2, deferred  | `7a68d49fb520991931bb5787f87ba8c10bf343d42582e201ad1940fe32082344` |
 
-The candidate was compiled directly from the ticket-196 worktree based on integrated commit `129137c7dbbca082cbff17f764e52a6c41ef81a7`, plus the delivery changes in this verification commit. Shared dependencies were reused; Yarn workspace commands were not used to build satellite source. Node tests execute that worktree's emitted CLI, and native tests execute its Bun-compiled binary. The npm builder copied that same emitted source into disposable bundling input, then the package gate installed the exact tarball offline into a fresh temporary prefix with isolated HOME/config/cache and sanitized credentials.
+The historical pre-review candidate was compiled directly from the ticket-196 worktree based on integrated commit `129137c7dbbca082cbff17f764e52a6c41ef81a7`, plus the delivery changes in this verification commit. Shared dependencies were reused; Yarn workspace commands were not used to build satellite source. Node tests execute that worktree's emitted CLI, and native tests execute its Bun-compiled binary. The npm builder copied that same emitted source into disposable bundling input, then the package gate installed the exact tarball offline into a fresh temporary prefix with isolated HOME/config/cache and sanitized credentials.
 
-| Candidate artifact | SHA-256 |
-| --- | --- |
+| Historical pre-review artifact    | SHA-256                                                            |
+| --------------------------------- | ------------------------------------------------------------------ |
 | npm tarball, source version 0.8.2 | `a12d197389d4103e6107d0bca52472bf56a3b9e979d5f517fb5079a646619c71` |
-| macOS ARM64 native executable | `64b14ca05c16ce5f5bb53848176626187ce74d9089e905a009d55b452f812044` |
+| macOS ARM64 native executable     | `64b14ca05c16ce5f5bb53848176626187ce74d9089e905a009d55b452f812044` |
+
+## Final review-fix candidate
+
+Independent review found one P2 contradictory-state case: an unconfirmed current merge could carry a saved result while fresh pinned PR evidence said OPEN. The final guard compares every populated current `record.result`, member `result` and member `cleanupResult` with the existing fresh confirmation reads before confirmation, retry evidence/lock writes and dispatch. A contradiction preserves recovery and refuses. Matching freshly merged evidence still reconciles without PUT; earlier-member results remain outside this current-member guard. Normal and debug blocked plans label unverified claims explicitly instead of claiming cleanup-only work.
+
+The replacement artifacts below were rebuilt from the review-fix worktree based on integrated commit `8e3e8e27480a52e54b71b638e09cf75b13e729fd`, including the preserving guard. Final `land_scoped.ts` SHA-256 is `762cf886beb4c90c0b42505d1d36fbd850a81c2a70ffa481856f8e05bb2efaee`. Direct TypeScript compilation emitted that worktree's source using shared installed dependencies; Bun compilation and disposable npm bundling consumed those emitted files. No Yarn workspace build substituted shared-workspace source.
+
+| Final replacement artifact        | SHA-256                                                            |
+| --------------------------------- | ------------------------------------------------------------------ |
+| npm tarball, source version 0.8.2 | `21d704bd80aa491c5689a4ed6f3be5784bbf2c1dc457ac8e3730ce507da0e4b2` |
+| macOS ARM64 native executable     | `f7de6b61f9ce516061bb3a4865d8ba2c0d9c7d08b223f0bd3935c8f7b85d5c44` |
+
+The review-fix campaign passed ten selected public-process cases on each runtime: all three malformed current-result fields, preserving preview, genuine older-producer bounded success, after-confirmation contradictory OPEN evidence, matching populated-current-result MERGED reconciliation, both genuine older producers' partial stacks with prior results, and existing MCP one-shot execution. After the final inspection/display consolidation, the five affected guard/reconciliation cases passed again on each runtime against the final emitted/native bytes. The rebuilt exact npm tarball was installed offline into a fresh isolated prefix and passed eight selected cases: the five affected cases, preview, genuine older-producer bounded success and existing MCP learning/preview/one-shot execution. None was pending.
+
+The malformed-state regressions deliberately tamper with compact canonical-newline recovery files; they do not attribute those states to published older producers. Preview and application emit the same truthful blocked plan, send zero PUTs, create no retry archive and preserve exact raw recovery bytes, Git/index/metadata snapshots and remote refs. The public PTY race starts with matching MERGED evidence, switches the controlled GitHub response to OPEN at confirmation, and verifies refusal before intent/lock writes. The matching positive case populates all three saved fields and still completes with zero PUTs.
+
+These focused checks supplement the historical campaign below; the full 30-case campaign and unrelated installed baseline were not repeated for this narrow fix. Final direct TypeScript, targeted ESLint, Prettier, local documentation links and `git diff --check` passed. Node 24.19.0 and Bun 1.3.14 remain pinned. Retained logs and replacement artifacts live beside the implementation handoff evidence, outside the disposable worktree.
 
 ## Bounded acceptance
 
 All workflow tests use public CLI or the existing SDK MCP client, real temporary Git repositories and bare remotes. Only the existing `gh` service boundary is controlled. They assert requests and expected heads, actual trunk/ref/metadata changes, preserving refusals, exact archived bytes and usable subsequent commands.
 
-| Campaign | Node | Native |
-| --- | --- | --- |
-| Integrated preview/execution, interrupted recovery, partial-stack schedule and delivery files | 30 passed | 30 passed |
-| Representative inherited normal leaf, accepted lost response, definite405 and unknown transport cases | 4 passed | 4 passed |
+| Campaign                                                                                              | Node      | Native    |
+| ----------------------------------------------------------------------------------------------------- | --------- | --------- |
+| Integrated preview/execution, interrupted recovery, partial-stack schedule and delivery files         | 30 passed | 30 passed |
+| Representative inherited normal leaf, accepted lost response, definite405 and unknown transport cases | 4 passed  | 4 passed  |
 
 The focused integrated files are `land_retry_preview_cli`, `land_retry_recovery_cli`, `land_retry_partial_cli` and `land_retry_delivery_cli`. They cover genuine older producers and preserving older readers; explicit target/consent; private archive refusal; head/identity/local/policy/check blockers; successful recovery and already-merged races; interruption before active CAS, at intent, dispatch, acceptance and readback; corruption/receipt failures; earlier merges and reached heads; eager/deferred survivor publication; later uncertainty receiving no inherited permission; completion and checkout restoration.
 
@@ -63,6 +80,6 @@ Node 24.19.0, TypeScript 5.5.4 and Bun 1.3.14 were used. The ordinary CI job add
 
 Controlled GitHub responses establish adapter/workflow behavior, not live GitHub acceptance or real PR readiness. Separate reads and requests are not atomic; fresh guards, expected-head constraints and GitHub enforcement remain necessary. Retry is new authority under acknowledged uncertainty, not an exactly-once delivery guarantee.
 
-Independent review identified a contradictory-state case outside genuine producer output: a saved unconfirmed phase can carry a recorded result while fresh evidence still says the pinned PR is open. The delivery artifacts above predate the additional preserving guard for that case. This is a review blocker before final acceptance; its focused regression and replacement artifact identity must be recorded after the review fix.
+The historical delivery artifacts predate the contradictory-state guard. The final replacement artifacts and focused acceptance above resolve that review finding; the earlier hashes remain recorded only as provenance.
 
 No live GitHub test PRs or mutations, CI dispatch, npm publication, user project/installation changes or MCP configuration edits were performed. This candidate supplies an executable recovery route for the original report; publication and issue closure remain separate approved actions. Any later review fix that changes the candidate requires appropriate re-verification and a new artifact identity.
