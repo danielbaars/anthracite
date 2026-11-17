@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.2](https://github.com/danielbaars/anthracite/compare/v0.8.1...v0.8.2) (2026-11-17)
+
+
+### Bug Fixes
+
+* **cli:** report merge refusals and allow explicit landing retry ([2341864](https://github.com/danielbaars/anthracite/commit/234186494ddc1270304325c084fb30012a0916d0))
+
 ## [0.8.1](https://github.com/danielbaars/anthracite/compare/v0.8.0...v0.8.1) (2026-11-16)
 
 
