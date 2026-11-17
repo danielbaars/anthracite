@@ -589,10 +589,10 @@ describe('create --onto through the public CLI', function () {
     expect(fixture.snapshot()).to.deep.equal(before);
   });
 
-  it('refuses detached HEAD without creating a branch or changing work', () => {
+  it('commits staged work from detached HEAD above the explicit parent', () => {
     fixture.git(['switch', '--detach']);
     fixture.stage();
-    const before = fixture.snapshot();
+    const parent = fixture.git(['rev-parse', 'other']);
 
     const result = fixture.run([
       'create',
@@ -603,11 +603,11 @@ describe('create --onto through the public CLI', function () {
       'new work',
     ]);
 
-    expect(result.status).not.to.equal(0);
-    expect(result.stdout + result.stderr).to.match(
-      /branch checked out|detached/i
-    );
-    expect(fixture.snapshot()).to.deep.equal(before);
+    expect(result.status, result.stdout + result.stderr).to.equal(0);
+    expect(fixture.git(['branch', '--show-current'])).to.equal('new-branch');
+    expect(fixture.git(['rev-parse', 'HEAD^'])).to.equal(parent);
+    expect(fixture.git(['show', 'HEAD:new.txt'])).to.equal('new work');
+    expect(fixture.ok(['parent'])).to.equal('other\n');
   });
 
   it('refuses an unfinished merge even after its conflicts have been staged', () => {
