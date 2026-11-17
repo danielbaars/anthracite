@@ -582,6 +582,13 @@ async function inspectPendingReadiness(
   }
 ): Promise<void> {
   const { pr, policy, blockers, warnings } = inspection;
+  if (
+    member.branch === current(record).branch &&
+    record.phase === 'merge-requested'
+  )
+    blockers.push(
+      `${member.branch}: Previous merge request remains unconfirmed. An open PR alone does not authorize another request; preserve recovery and inspect the original failure.`
+    );
   if (isLandingPublicationDeferred(record, member.branch)) {
     if (policy)
       blockers.push(
@@ -609,6 +616,25 @@ async function inspectPendingReadiness(
     );
 }
 
+async function confirmAfterMergeFailure(
+  record: LandingProgress,
+  error: unknown
+): Promise<string | undefined> {
+  try {
+    return await confirmedResult(record);
+  } catch (readbackError: unknown) {
+    throw new ExitFailedError(
+      `${
+        error instanceof Error ? error.message : String(error)
+      } Merge readback failed: ${
+        readbackError instanceof Error
+          ? readbackError.message
+          : String(readbackError)
+      }`
+    );
+  }
+}
+
 async function applyScopedLanding(
   initial: LandingProgress,
   context: TContext,
@@ -634,7 +660,7 @@ async function applyScopedLanding(
       if (!result) {
         if (record.phase !== 'prepared')
           throw new ExitFailedError(
-            'Merge remains uncertain or unconfirmed. No merge is repeated; inspect GitHub and recovery.'
+            'Merge remains uncertain or unconfirmed. No merge is repeated. An open PR alone does not establish that the earlier request was rejected; preserve recovery and inspect the original request failure.'
           );
         stage = 'readiness check';
         await waitUntilReadyToMerge(record, context, waitSeconds);
@@ -649,7 +675,7 @@ async function applyScopedLanding(
             owned(current(record)).head
           );
         } catch (error: unknown) {
-          const reconciled = await confirmedResult(record);
+          const reconciled = await confirmAfterMergeFailure(record, error);
           if (reconciled) {
             advance({ phase: 'merged', result: reconciled });
             const number = current(record).number;
@@ -741,12 +767,16 @@ function landingFailure(
         ? `No merge request sent for #${current(record).number};`
         : record.result
         ? `Confirmed merged #${current(record).number} (${record.result});`
+        : error instanceof GithubLandMergeRejected
+        ? `GitHub refused merge #${current(record).number};`
         : 'Merge unconfirmed or uncertain;'
     } later work unattempted. ${
       error instanceof Error ? error.message : String(error)
-    } Recovery retained in ${record.directory}; rerun an land ${
-      record.target
-    } --yes.`
+    } Recovery retained in ${record.directory}; ${
+      record.phase === 'merge-requested' && !record.result
+        ? `use an land ${record.target} --dry-run for read-only inspection or reconciliation of a completed merge. An unconfirmed request is not retried automatically; keep the recovery record for deliberate recovery.`
+        : `resolve the reported blocker, preview with an land ${record.target} --dry-run, then explicitly resume with an land ${record.target} --yes.`
+    }`
   );
 }
 
