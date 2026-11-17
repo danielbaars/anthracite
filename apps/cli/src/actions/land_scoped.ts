@@ -1,3 +1,9 @@
+import {
+  assertLandingRetryEvidence,
+  hasCurrentLandingRetry,
+  retainLandingRetry,
+  retainLandingRetryOutcome,
+} from '../lib/landing_retry';
 import { confirmedLandingResult as confirmedResult } from '../lib/landing_confirmation';
 import fs from 'fs';
 import path from 'path';
@@ -20,6 +26,8 @@ import {
   GithubLandMergeRejected,
 } from '../lib/api/github_land_merge';
 import {
+  assertLandingProgressUnchanged,
+  landingProgressPath,
   current,
   owned,
   clearLandingProgress,
@@ -160,7 +168,9 @@ export async function startScopedLanding(
   validateIdentity(record, context);
   validateLocal(record, context);
   saveLandingProgress(record);
-  await applyScopedLanding(record, context, options.waitSeconds);
+  await applyScopedLanding(record, context, {
+    waitSeconds: options.waitSeconds,
+  });
 }
 
 export async function resumeScopedLanding(
@@ -174,21 +184,26 @@ export async function resumeScopedLanding(
   context: TContext
 ): Promise<void> {
   validateIdentity(record, context);
-  const blockers = await inspectPendingLanding(
+  assertLandingRetryEvidence(record);
+  if (args['retry-unconfirmed'] && record.retry)
+    throw new ExitFailedError(
+      'A prior retry attempt is retained; this build cannot authorize another attempt. Inspect an land --dry-run; recovery preserved.'
+    );
+  const inspection = await inspectPendingLanding(
     record,
     context,
     args['retry-unconfirmed'] === true
   );
   if (args['dry-run']) {
-    if (blockers.length)
+    if (inspection.blockers.length || inspection.pending.length)
       throw new ExitFailedError(
         'Pending landing preview blocked; recovery and repository preserved.'
       );
     return;
   }
-  if (args['retry-unconfirmed'])
+  if (args['retry-unconfirmed'] && inspection.blockers.length)
     throw new ExitFailedError(
-      'Explicit retry is preview-only in this build; use --dry-run. No request sent; recovery preserved.'
+      'Pending landing blocked; no request sent; recovery preserved.'
     );
   if (!args.yes) {
     if (!context.canPrompt)
@@ -198,19 +213,48 @@ export async function resumeScopedLanding(
     const answer = await context.prompts({
       type: 'confirm',
       name: 'confirmed',
-      message: 'Resume this landing plan?',
+      message: args['retry-unconfirmed']
+        ? 'Send at most one new merge request despite the earlier unconfirmed outcome, then resume this disclosed landing plan?'
+        : 'Resume this landing plan?',
       initial: false,
     });
     if (!answer.confirmed) return;
   }
+  const original = fs.readFileSync(landingProgressPath(), 'utf8');
+  assertLandingProgressUnchanged(record);
+  let prepared = record;
+  let createdAttempt: string | undefined;
+  if (args['retry-unconfirmed'] && !(await confirmedResult(record))) {
+    validateLocal(record, context);
+    validateMergeTrunk(record, owned(current(record)).base);
+    await waitUntilReadyToMerge(record, context, args['wait-timeout']);
+    prepared = retainLandingRetry(record, original);
+    createdAttempt = prepared.retry?.attempt;
+  }
   await withLandingLock(async (cacheLock) => {
-    const fresh = loadLandingProgress();
-    if (
-      !fresh ||
-      JSON.stringify(fresh) !== JSON.stringify({ ...record, cacheLock })
-    )
+    let fresh = loadLandingProgress();
+    assertLandingProgressUnchanged({ ...record, cacheLock });
+    if (!fresh)
       throw new ExitFailedError('Landing recovery changed; inspect again.');
-    await applyScopedLanding(fresh, context, args['wait-timeout']);
+    let retryAttempt: string | undefined;
+    if (
+      createdAttempt &&
+      prepared.retry?.attempt === createdAttempt &&
+      !(await confirmedResult(fresh))
+    ) {
+      validateLocal(fresh, context);
+      validateMergeTrunk(fresh, owned(current(fresh)).base);
+      await waitUntilReadyToMerge(fresh, context, args['wait-timeout']);
+      const next = { ...fresh, retry: prepared.retry };
+      assertLandingRetryEvidence(next);
+      saveLandingProgress(next, fresh);
+      fresh = next;
+      retryAttempt = createdAttempt;
+    }
+    await applyScopedLanding(fresh, context, {
+      waitSeconds: args['wait-timeout'],
+      retryAttempt,
+    });
   }, record);
 }
 
@@ -491,8 +535,12 @@ async function inspectPendingLanding(
   record: LandingProgress,
   context: TContext,
   retryUnconfirmed = false
-): Promise<readonly string[]> {
+): Promise<{
+  readonly blockers: readonly string[];
+  readonly pending: readonly string[];
+}> {
   const blockers: string[] = [];
+  const pending: string[] = [];
   const warnings: string[] = [];
   const inspect = async (action: () => void | Promise<void>): Promise<void> => {
     try {
@@ -506,17 +554,7 @@ async function inspectPendingLanding(
   const cleanupOnly = new Set<string>();
   await inspect(() => validateLocal(record, context));
   await inspect(() => {
-    const trunk = remoteHead(record, record.trunk);
-    if (
-      !trunk ||
-      !inspectLandAncestry(ref(`refs/heads/${record.trunk}`), trunk, {
-        name: record.remote,
-        trunk: record.trunk,
-      })
-    )
-      throw new ExitFailedError(
-        'Remote trunk unavailable or local trunk divergent; fast-forward required.'
-      );
+    validateRemoteTrunk(record);
   });
   let policy: LandPlan['policy'] | undefined;
   await inspect(async () => {
@@ -593,18 +631,19 @@ async function inspectPendingLanding(
           pr,
           policy,
           blockers,
+          pending,
           warnings,
           retryUnconfirmed,
         });
     });
   printPendingLanding(record, context, {
-    blockers,
+    blockers: [...blockers, ...pending],
     warnings,
     cleanupOnly,
     verification: policy?.verification,
     retryUnconfirmed,
   });
-  return blockers;
+  return { blockers, pending };
 }
 
 async function inspectPendingReadiness(
@@ -614,6 +653,7 @@ async function inspectPendingReadiness(
     readonly pr: GithubPr;
     readonly policy?: LandPlan['policy'];
     readonly blockers: string[];
+    readonly pending: string[];
     readonly warnings: string[];
     readonly retryUnconfirmed?: boolean;
   }
@@ -646,9 +686,10 @@ async function inspectPendingReadiness(
     for (const warning of readiness.warnings)
       warnings.push(`#${pr.number}: ${warning}`);
     blockers.push(
-      ...[...readiness.blockers, ...readiness.pending].map(
-        (message) => `${member.branch}: ${message}`
-      )
+      ...readiness.blockers.map((message) => `${member.branch}: ${message}`)
+    );
+    inspection.pending.push(
+      ...readiness.pending.map((message) => `${member.branch}: ${message}`)
     );
   }
   if (remoteHead(record, member.branch) !== owned(member).head)
@@ -679,9 +720,11 @@ async function confirmAfterMergeFailure(
 async function applyScopedLanding(
   initial: LandingProgress,
   context: TContext,
-  waitSeconds: number
+  options: { readonly waitSeconds: number; readonly retryAttempt?: string }
 ): Promise<void> {
+  const { waitSeconds, retryAttempt } = options;
   let record = initial;
+  let retryConsumed = false;
   let stage = 'reconciliation';
   const advance = (patch: Partial<LandingProgress>): void => {
     const phase =
@@ -699,7 +742,12 @@ async function applyScopedLanding(
     while ((record.index ?? 0) < record.merges.length) {
       let result = await confirmedResult(record);
       if (!result) {
-        if (record.phase !== 'prepared')
+        const canRetry =
+          !retryConsumed &&
+          !!retryAttempt &&
+          record.retry?.attempt === retryAttempt &&
+          hasCurrentLandingRetry(record);
+        if (record.phase !== 'prepared' && !canRetry)
           throw new ExitFailedError(
             'Merge remains uncertain or unconfirmed. No merge is repeated. An open PR alone does not establish that the earlier request was rejected; preserve recovery and inspect the original request failure.'
           );
@@ -708,24 +756,24 @@ async function applyScopedLanding(
         validateLocal(record, context);
         stage = 'merge request';
         advance({ phase: 'merge-requested' });
+        validateMergeEffect(record, context);
+        const alreadyMerged = await confirmedResult(record);
+        validateMergeEffect(record, context);
+        if (canRetry) retryConsumed = true;
         let response: string;
         try {
-          response = await mergeGithubLandPr(
-            record.repo,
-            current(record).number,
-            owned(current(record)).head
-          );
+          response =
+            alreadyMerged ??
+            (await mergeGithubLandPr(
+              record.repo,
+              current(record).number,
+              owned(current(record)).head
+            ));
         } catch (error: unknown) {
           const reconciled = await confirmAfterMergeFailure(record, error);
           if (reconciled) {
             advance({ phase: 'merged', result: reconciled });
-            const number = current(record).number;
-            process.stdout.write(
-              `✅ Confirmed merged #${number} after uncertain response.\n`
-            );
-            context.splog.debug(
-              `Confirmed merge result #${number}: ${reconciled}`
-            );
+            printConfirmedMerge(record, context, true);
           } else record = retainRejectedMerge(record, error);
           throw error;
         }
@@ -741,10 +789,8 @@ async function applyScopedLanding(
           'Saved merge result changed; inspect recovery.'
         );
       advance({ result, phase: 'merged' });
-      process.stdout.write(`✅ Confirmed merged #${current(record).number}.\n`);
-      context.splog.debug(
-        `Confirmed merge result #${current(record).number}: ${result}`
-      );
+      retainLandingRetryOutcome(record, 'confirmed', result);
+      printConfirmedMerge(record, context);
       stage = 'trunk advance';
       advanceTrunk(record, context);
       advance({ phase: 'trunk-advanced' });
@@ -784,8 +830,57 @@ async function applyScopedLanding(
       `✅ Landing complete: ${record.target}; trunk advanced and landed refs/metadata cleaned.\n`
     );
   } catch (error: unknown) {
-    throw landingFailure(record, stage, error);
+    const failure =
+      stage === 'merge request' && retryConsumed
+        ? retainRetryFailure(record, error)
+        : error;
+    throw landingFailure(record, stage, failure);
   }
+}
+
+function validateMergeEffect(record: LandingProgress, context: TContext): void {
+  validateLocal(record, context);
+  assertLandingProgressUnchanged(record);
+  assertLandingRetryEvidence(record);
+}
+
+function retainRetryFailure(record: LandingProgress, error: unknown): unknown {
+  try {
+    retainLandingRetryOutcome(
+      record,
+      record.result
+        ? 'confirmed'
+        : error instanceof GithubLandMergeRejected
+        ? 'rejected'
+        : 'uncertain',
+      error instanceof Error ? error.message : String(error)
+    );
+  } catch (evidenceError: unknown) {
+    return new Error(
+      `${
+        error instanceof Error ? error.message : String(error)
+      } Retry outcome evidence could not be retained: ${
+        evidenceError instanceof Error
+          ? evidenceError.message
+          : String(evidenceError)
+      }`
+    );
+  }
+  return error;
+}
+
+function printConfirmedMerge(
+  record: LandingProgress,
+  context: TContext,
+  afterUncertainResponse = false
+): void {
+  const number = current(record).number;
+  process.stdout.write(
+    `✅ Confirmed merged #${number}${
+      afterUncertainResponse ? ' after uncertain response' : ''
+    }.\n`
+  );
+  context.splog.debug(`Confirmed merge result #${number}: ${record.result}`);
 }
 
 function landingFailure(
@@ -826,7 +921,11 @@ function retainRejectedMerge(
   record: LandingProgress,
   error: unknown
 ): LandingProgress {
-  if (!(error instanceof GithubLandMergeRejected)) return record;
+  if (
+    !(error instanceof GithubLandMergeRejected) ||
+    hasCurrentLandingRetry(record)
+  )
+    return record;
   const next = { ...record, phase: 'prepared' as const };
   saveLandingProgress(next, record);
   return next;
@@ -949,8 +1048,10 @@ async function readyToMerge(
   const policy = await getGithubLandPolicy(record.repo, record.trunk);
   const pr = await getGithubPr(current(record).branch, context);
   validateLocal(record, context);
+  if (pr?.state === 'MERGED' && (await confirmedResult(record))) return [];
   if (
     !pr ||
+    pr.state !== 'OPEN' ||
     pr.number !== current(record).number ||
     pr.url !== current(record).url ||
     pr.headRefOid !== owned(current(record)).head ||
@@ -962,6 +1063,8 @@ async function readyToMerge(
       'Fresh merge identity/base/head or remote lease changed.'
     );
   validateMergeTrunk(record, pr.baseRefOid);
+  if (hasCurrentLandingRetry(record))
+    validateMergeTrunk(record, owned(current(record)).base);
   const readiness = await githubLandReadiness(pr, policy, record.repo);
   for (const warning of readiness.warnings)
     process.stdout.write(`⚠ #${pr.number}: ${warning}\n`);
@@ -973,17 +1076,28 @@ async function readyToMerge(
 }
 
 /** A PR base snapshot may precede the live trunk after an independent merge. */
-function validateMergeTrunk(record: LandingProgress, base: string): void {
+function validateRemoteTrunk(record: LandingProgress): string {
   const trunk = remoteHead(record, record.trunk);
-  const remote = { name: record.remote, trunk: record.trunk };
   if (
     !trunk ||
-    !inspectLandAncestry(ref(`refs/heads/${record.trunk}`), trunk, remote)
+    !inspectLandAncestry(ref(`refs/heads/${record.trunk}`), trunk, {
+      name: record.remote,
+      trunk: record.trunk,
+    })
   )
     throw new ExitFailedError(
       'Remote trunk unavailable or local trunk divergent; fast-forward required.'
     );
-  if (!inspectLandAncestry(base, trunk, remote))
+  return trunk;
+}
+function validateMergeTrunk(record: LandingProgress, base: string): void {
+  const trunk = validateRemoteTrunk(record);
+  if (
+    !inspectLandAncestry(base, trunk, {
+      name: record.remote,
+      trunk: record.trunk,
+    })
+  )
     throw new ExitFailedError(
       'PR base snapshot is not an ancestor of current remote trunk; inspect changed history.'
     );
