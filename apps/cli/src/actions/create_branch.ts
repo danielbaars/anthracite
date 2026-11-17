@@ -5,13 +5,13 @@ import { assertBranchesAvailableInWorktrees } from '../lib/git/worktrees';
 import { hasCreateChanges } from '../lib/git/create_changes';
 import { assertNoGitOperation } from '../lib/git/assert_no_operation';
 import { getCurrentBranchName } from '../lib/git/branch_ops';
-import { getSha } from '../lib/git/get_sha';
+import { getSha, getShaOrThrow } from '../lib/git/get_sha';
 import { readMetadataRef } from '../lib/engine/metadata_ref';
 import { assertRestackFilesAvailable } from '../lib/git/restack_files';
 import { ensurePatchInputPrecondition } from '../lib/preconditions';
 import { TContext } from '../lib/context';
 import { SCOPE } from '../lib/engine/scope_spec';
-import { ExitFailedError } from '../lib/errors';
+import { DetachedError, ExitFailedError } from '../lib/errors';
 import { newBranchName } from '../lib/utils/branch_name';
 import { getBranchesToRestack, restackBranches } from './restack';
 import { clearContinuation } from './persist_continuation';
@@ -33,6 +33,10 @@ export async function createBranchAction(
   if (opts.insertChildren !== undefined && !opts.insert) {
     throw new ExitFailedError('--insert-child requires an active --insert.');
   }
+  if (opts.onto === undefined && !getCurrentBranchName())
+    throw new DetachedError(
+      'Supply --onto <tracked-parent> when creating from detached HEAD.'
+    );
   if (opts.insert) assertNoGitOperation('insert');
   const selection = opts.insert
     ? await getInsertChildren(opts, context)
@@ -61,7 +65,11 @@ export async function createBranchAction(
     );
   }
 
-  const sourceBranch = context.engine.currentBranch;
+  const sourceBranch = getCurrentBranchName();
+  const sourceRevision =
+    opts.onto !== undefined && !sourceBranch
+      ? getShaOrThrow('HEAD')
+      : undefined;
   const originalIndex = opts.onto !== undefined ? readIndex() : undefined;
   context.engine.checkoutNewBranch(branchName, opts.onto);
   if (insertPlan) {
@@ -80,6 +88,7 @@ export async function createBranchAction(
       ...opts,
       branchName,
       sourceBranch,
+      sourceRevision,
       originalIndex,
       participants: insertPlan?.mandatory,
     },
@@ -202,12 +211,12 @@ async function getInsertChildren(
       );
       return { parent, children };
     }
-    const source = context.engine.currentBranchPrecondition;
+    const source = getCurrentBranchName();
+    const sourceRevision = getShaOrThrow('HEAD');
     const before = new Map(
-      [...new Set([source, parent, ...children])].map((name) => [
-        name,
-        getInsertSelectionState(name),
-      ])
+      [...new Set([...(source ? [source] : []), parent, ...children])].map(
+        (name) => [name, getInsertSelectionState(name)]
+      )
     );
     const response = await context.prompts({
       type: 'multiselect',
@@ -223,7 +232,8 @@ async function getInsertChildren(
     const chosen: readonly string[] = response.children;
     if (
       getCurrentBranchName() !== source ||
-      [source, parent, ...chosen].some(
+      getShaOrThrow('HEAD') !== sourceRevision ||
+      [...(source ? [source] : []), parent, ...chosen].some(
         (name) => getInsertSelectionState(name) !== before.get(name)
       )
     ) {
@@ -316,6 +326,7 @@ function commitNewBranch(
   opts: TCreateBranchOptions & {
     branchName: string;
     sourceBranch?: string;
+    sourceRevision?: string;
     originalIndex?: Buffer;
     readonly participants?: readonly string[];
   },
@@ -356,6 +367,8 @@ function commitNewBranch(
             context.engine.checkoutBranch(opts.sourceBranch, {
               preserveIgnored: true,
             });
+          } else if (opts.sourceRevision) {
+            context.engine.checkoutDetached(opts.sourceRevision);
           }
           if (opts.originalIndex) restoreIndex(opts.originalIndex);
           context.engine.deleteBranch(opts.branchName);

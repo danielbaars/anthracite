@@ -117,6 +117,7 @@ export type TEngine = {
     branchName: string,
     opts?: { preserveIgnored?: boolean }
   ) => void;
+  checkoutDetached: (revision: string) => void;
   renameCurrentBranch: (branchName: string) => void;
   foldCurrentBranch: (keep: boolean, participants?: readonly string[]) => void;
   foldStack: (
@@ -865,9 +866,6 @@ export function composeEngine({
       ];
     },
     checkoutNewBranch: (branchName: string, explicitParent?: string) => {
-      if (explicitParent !== undefined && !git.getCurrentBranchName()) {
-        throw new DetachedError();
-      }
       const parentBranchName = explicitParent ?? getCurrentBranchOrThrow();
       const parentCachedMeta =
         assertBranchIsValidOrTrunkAndGetMeta(parentBranchName);
@@ -887,6 +885,10 @@ export function composeEngine({
       cache.currentBranch = branchName;
     },
     checkoutBranch,
+    checkoutDetached: (revision) => {
+      git.switchBranch(revision, { detach: true, preserveIgnored: true });
+      cache.currentBranch = undefined;
+    },
     renameCurrentBranch: (branchName: string) => {
       const currentBranchName = getCurrentBranchOrThrow();
       if (branchName === currentBranchName) {

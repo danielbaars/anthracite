@@ -13,7 +13,8 @@ const args = {
   },
   onto: {
     alias: 'o',
-    describe: 'Create above this tracked local branch or trunk.',
+    describe:
+      'Create above this tracked local branch or trunk. Required from detached HEAD; uses the local tip without checking out the parent.',
     type: 'string',
     requiresArg: true,
   },
