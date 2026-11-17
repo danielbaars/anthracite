@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.9.0](https://github.com/danielbaars/anthracite/compare/v0.8.2...v0.9.0) (2026-11-17)
+
+
+### Features
+
+* **cli:** deliver explicit landing retry through CLI and MCP ([73b6249](https://github.com/danielbaars/anthracite/commit/73b6249bcd6769757f538f4cea9b54834bcca4b7))
+* **cli:** preview explicit unconfirmed landing retries ([085ebf4](https://github.com/danielbaars/anthracite/commit/085ebf4b3c8d815b011d6aacc6def6d790500d23))
+* **cli:** retry one unconfirmed landing merge ([ecfcb12](https://github.com/danielbaars/anthracite/commit/ecfcb1227581b2824646664fc2e11f59931b0f68))
+
+
+### Bug Fixes
+
+* **cli:** recover interrupted landing retry attempts ([09a5f09](https://github.com/danielbaars/anthracite/commit/09a5f09858642f05dbb13fe196169131486c6621))
+* **cli:** refuse conflicting saved landing results ([1d8e954](https://github.com/danielbaars/anthracite/commit/1d8e95492582cbdf1933ed0e9903ee4124126533))
+
 ## [0.8.2](https://github.com/danielbaars/anthracite/compare/v0.8.1...v0.8.2) (2026-11-17)
 
 
