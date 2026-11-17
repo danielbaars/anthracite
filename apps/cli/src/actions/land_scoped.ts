@@ -220,7 +220,7 @@ export async function resumeScopedLanding(
   assertLandingProgressUnchanged(record);
   let prepared = record;
   let createdAttempt: string | undefined;
-  if (args['retry-unconfirmed'] && !(await confirmedResult(record))) {
+  if (args['retry-unconfirmed'] && !(await confirmCurrentResult(record))) {
     validateLocal(record, context);
     validateMergeTrunk(record, owned(current(record)).base);
     await waitUntilReadyToMerge(record, context, args['wait-timeout']);
@@ -236,7 +236,7 @@ export async function resumeScopedLanding(
     if (
       createdAttempt &&
       prepared.retry?.attempt === createdAttempt &&
-      !(await confirmedResult(fresh))
+      !(await confirmCurrentResult(fresh))
     ) {
       validateLocal(fresh, context);
       validateMergeTrunk(fresh, owned(current(fresh)).base);
@@ -252,6 +252,22 @@ export async function resumeScopedLanding(
       retryAttempt,
     });
   }, record);
+}
+
+async function confirmCurrentResult(
+  record: LandingProgress
+): Promise<string | undefined> {
+  const result = await confirmedResult(record);
+  const member = current(record);
+  if (
+    [record.result, member.result, member.cleanupResult].some(
+      (saved) => saved !== undefined && saved !== result
+    )
+  )
+    throw new ExitFailedError(
+      'Saved current merge result conflicts with fresh PR evidence; inspect recovery before retrying.'
+    );
+  return result;
 }
 
 type PendingLandingInspection = {
@@ -297,6 +313,15 @@ function printRetryProposal(
   cleanupOnly: ReadonlySet<string>
 ): void {
   const member = current(record);
+  if (
+    !cleanupOnly.has(member.branch) &&
+    (record.result || member.result || member.cleanupResult)
+  ) {
+    process.stdout.write(
+      'Retry blocked: saved current result requires matching fresh confirmation.\n'
+    );
+    return;
+  }
   process.stdout.write(
     cleanupOnly.has(member.branch)
       ? `No retry request needed: #${member.number} is confirmed merged.\n`
@@ -350,24 +375,7 @@ function printPendingLanding(
       )}; inspect owned recovery before remote work.\n`
     );
   process.stdout.write('\n🔀 Remaining PRs (bottom to top):\n');
-  remaining.forEach((member, index) => {
-    const cleanupOnly =
-      member.cleanupResult ||
-      member.result ||
-      (index === 0 && record.result) ||
-      inspection.cleanupOnly.has(member.branch);
-    process.stdout.write(
-      `  ${cleanupOnly ? 'Cleanup-only' : 'Merge'} ${index + 1}: ${
-        member.branch
-      } #${member.number}${
-        member.branch === publicationDue
-          ? ' (publication due before its merge)'
-          : pendingPublicationDeferred(record, member.branch, publicationDue)
-          ? ' (publication deferred until its merge preparation)'
-          : ''
-      }\n`
-    );
-  });
+  printRemainingMerges(record, inspection, publicationDue);
   const survivors = landingSurvivors(record);
   if (survivors.length) {
     process.stdout.write(
@@ -423,6 +431,47 @@ function printPendingLanding(
   });
 }
 
+function pendingMergeAction(
+  record: LandingProgress,
+  member: LandingProgress['merges'][number],
+  inspection: PendingLandingInspection
+): string {
+  const isCurrent = member.branch === current(record).branch;
+  const saved =
+    member.cleanupResult || member.result || (isCurrent && record.result);
+  if (
+    inspection.retryUnconfirmed &&
+    isCurrent &&
+    saved &&
+    !inspection.cleanupOnly.has(member.branch)
+  )
+    return 'Unverified saved result';
+  return saved || inspection.cleanupOnly.has(member.branch)
+    ? 'Cleanup-only'
+    : 'Merge';
+}
+
+function printRemainingMerges(
+  record: LandingProgress,
+  inspection: PendingLandingInspection,
+  publicationDue?: string
+): void {
+  const remaining = record.merges.slice(record.index ?? 0);
+  remaining.forEach((member, index) => {
+    process.stdout.write(
+      `  ${pendingMergeAction(record, member, inspection)} ${index + 1}: ${
+        member.branch
+      } #${member.number}${
+        member.branch === publicationDue
+          ? ' (publication due before its merge)'
+          : pendingPublicationDeferred(record, member.branch, publicationDue)
+          ? ' (publication deferred until its merge preparation)'
+          : ''
+      }\n`
+    );
+  });
+}
+
 function printPendingReadiness(
   record: LandingProgress,
   inspection: PendingLandingInspection,
@@ -473,13 +522,9 @@ function printPendingLandingDetails(
     );
   for (const member of remaining)
     write(
-      `${
-        member.cleanupResult || inspection.cleanupOnly.has(member.branch)
-          ? 'Cleanup-only'
-          : 'Merge'
-      }: ${member.branch} #${member.number}; reached head ${
-        owned(member).head
-      }; captured head ${member.head}\n`
+      `${pendingMergeAction(record, member, inspection)}: ${member.branch} #${
+        member.number
+      }; reached head ${owned(member).head}; captured head ${member.head}\n`
     );
   for (const member of survivors) {
     const expected = owned(member);
@@ -574,14 +619,17 @@ async function inspectPendingLanding(
         retryUnconfirmed &&
         member.branch === current(record).branch &&
         pr?.state === 'OPEN'
-          ? await confirmedResult(record)
+          ? await confirmCurrentResult(record)
           : undefined;
       if ((pr?.state === 'MERGED' || retryResult) && isMerge) {
         const index = record.merges.findIndex(
           (item) => item.branch === member.branch
         );
         const result =
-          retryResult ?? (await confirmedResult({ ...record, index }));
+          retryResult ??
+          (index === (record.index ?? 0)
+            ? await confirmCurrentResult(record)
+            : await confirmedResult({ ...record, index }));
         const captured =
           member.cleanupResult ??
           member.result ??
@@ -699,7 +747,7 @@ async function confirmAfterMergeFailure(
   error: unknown
 ): Promise<string | undefined> {
   try {
-    return await confirmedResult(record);
+    return await confirmCurrentResult(record);
   } catch (readbackError: unknown) {
     throw new ExitFailedError(
       `${
@@ -735,7 +783,7 @@ async function applyScopedLanding(
     validateIdentity(record, context);
     validateLocal(record, context);
     while ((record.index ?? 0) < record.merges.length) {
-      let result = await confirmedResult(record);
+      let result = await confirmCurrentResult(record);
       if (!result) {
         const canRetry =
           !retryConsumed &&
@@ -752,7 +800,7 @@ async function applyScopedLanding(
         stage = 'merge request';
         advance({ phase: 'merge-requested' });
         validateMergeEffect(record, context);
-        const alreadyMerged = await confirmedResult(record);
+        const alreadyMerged = await confirmCurrentResult(record);
         validateMergeEffect(record, context);
         if (canRetry) retryConsumed = true;
         let response = alreadyMerged;
@@ -773,7 +821,7 @@ async function applyScopedLanding(
           } else record = retainRejectedMerge(record, error);
           throw error;
         }
-        result = await confirmedResult(record);
+        result = await confirmCurrentResult(record);
         if (result) advance({ result, phase: 'merged' });
         if (!result || result !== response)
           throw new ExitFailedError(
@@ -1050,7 +1098,7 @@ async function readyToMerge(
   const policy = await getGithubLandPolicy(record.repo, record.trunk);
   const pr = await getGithubPr(current(record).branch, context);
   validateLocal(record, context);
-  if (pr?.state === 'MERGED' && (await confirmedResult(record))) return [];
+  if (pr?.state === 'MERGED' && (await confirmCurrentResult(record))) return [];
   if (
     !pr ||
     pr.state !== 'OPEN' ||

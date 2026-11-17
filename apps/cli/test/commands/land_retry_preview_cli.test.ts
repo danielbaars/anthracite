@@ -474,6 +474,104 @@ describe('public unconfirmed landing retry preview', function () {
     }
   });
 
+  for (const field of ['result', 'member.result', 'member.cleanupResult']) {
+    it(`refuses a contradictory current ${field} in preview and application without effects`, () => {
+      leaveUnconfirmed();
+      const record = JSON.parse(fs.readFileSync(recordPath, 'utf8'));
+      const result = fixture.git(['rev-parse', 'leaf']);
+      if (field === 'result') record.result = result;
+      else record.merges[record.index ?? 0][field.split('.')[1]] = result;
+      // Deliberately malformed state, not a record attributed to an older producer.
+      const saved = JSON.stringify(record) + '\n';
+      fs.writeFileSync(recordPath, saved);
+      const before = fixture.inspectionSnapshot();
+      const remote = fixture.git(['for-each-ref'], github.remote);
+      const calls = fs.readFileSync(github.calls, 'utf8');
+      const outputs: string[] = [];
+      for (const mode of ['--dry-run', '--yes']) {
+        const attempt = fixture.run([
+          'land',
+          'leaf',
+          '--retry-unconfirmed',
+          mode,
+          '--no-interactive',
+        ]);
+        expect(attempt.status, attempt.stdout + attempt.stderr).to.equal(1);
+        expect(attempt.stdout).to.include(
+          'Saved current merge result conflicts'
+        );
+        expect(attempt.stdout).not.to.include('Proposed retry:');
+        expect(attempt.stdout).not.to.include('Cleanup-only 1: leaf');
+        outputs.push(attempt.stdout);
+        expect(fs.readFileSync(recordPath, 'utf8')).to.equal(saved);
+        expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+        expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
+        expect(
+          fs.existsSync(
+            path.join(fixture.repo, '.git', '.anthracite_landing_retry')
+          )
+        ).to.equal(false);
+      }
+      expect(outputs[0]).to.equal(outputs[1]);
+      expect(
+        fs.readFileSync(github.calls, 'utf8').slice(calls.length)
+      ).not.to.include('"PUT"');
+    });
+  }
+
+  it('refuses fresh contradictory OPEN evidence after confirmation before retry evidence or lock writes', () => {
+    const policy = JSON.parse(fs.readFileSync(github.policy, 'utf8'));
+    fs.writeFileSync(
+      github.policy,
+      JSON.stringify({ ...policy, interruptAfterMerge: true })
+    );
+    fixture.run(['land', 'leaf', '--yes', '--no-interactive']);
+    const prs = JSON.parse(fs.readFileSync(github.state, 'utf8'));
+    const record = JSON.parse(fs.readFileSync(recordPath, 'utf8'));
+    record.result = prs[0].mergeResult;
+    const saved = JSON.stringify(record) + '\n';
+    fs.writeFileSync(recordPath, saved);
+    const before = fixture.inspectionSnapshot();
+    const remote = fixture.git(['for-each-ref'], github.remote);
+    const calls = fs.readFileSync(github.calls, 'utf8');
+    const result = runCliInPty(
+      getTestCliCommand(['land', 'leaf', '--retry-unconfirmed']),
+      {
+        cwd: fixture.repo,
+        env: fixture.env,
+        timeoutMs: 60000,
+        responses: [
+          {
+            prompt: 'Send at most one new merge request',
+            input: 'y\n',
+            beforeInput: [
+              process.execPath,
+              '-e',
+              'const fs = require("fs"); const file = process.argv[1]; const prs = JSON.parse(fs.readFileSync(file)); prs[0].state = "OPEN"; delete prs[0].mergeResult; fs.writeFileSync(file, JSON.stringify(prs));',
+              github.state,
+            ],
+          },
+        ],
+      }
+    );
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include(
+      'No retry request needed: #31 is confirmed merged.'
+    );
+    expect(result.output).to.include('Saved current merge result conflicts');
+    expect(fs.readFileSync(recordPath, 'utf8')).to.equal(saved);
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
+    expect(
+      fs.existsSync(
+        path.join(fixture.repo, '.git', '.anthracite_landing_retry')
+      )
+    ).to.equal(false);
+    expect(
+      fs.readFileSync(github.calls, 'utf8').slice(calls.length)
+    ).not.to.include('"PUT"');
+  });
+
   it('discloses a freshly confirmed merge without proposing another request', () => {
     const policy = JSON.parse(fs.readFileSync(github.policy, 'utf8'));
     fs.writeFileSync(
@@ -484,7 +582,13 @@ describe('public unconfirmed landing retry preview', function () {
     expect(JSON.parse(fs.readFileSync(recordPath, 'utf8')).phase).to.equal(
       'merge-requested'
     );
-    const saved = fs.readFileSync(recordPath, 'utf8');
+    const record = JSON.parse(fs.readFileSync(recordPath, 'utf8'));
+    const prs = JSON.parse(fs.readFileSync(github.state, 'utf8'));
+    record.result = prs[0].mergeResult;
+    record.merges[record.index ?? 0].result = prs[0].mergeResult;
+    record.merges[record.index ?? 0].cleanupResult = prs[0].mergeResult;
+    const saved = JSON.stringify(record) + '\n';
+    fs.writeFileSync(recordPath, saved);
     const before = fixture.inspectionSnapshot();
     const result = fixture.run([
       'land',
