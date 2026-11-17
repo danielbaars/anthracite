@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://github.com/danielbaars/anthracite/compare/v0.9.0...v0.9.1) (2026-11-17)
+
+
+### Bug Fixes
+
+* **cli:** create above explicit parents from detached HEAD ([40d1402](https://github.com/danielbaars/anthracite/commit/40d1402fb41af62f4550aa65d2b396fcac9c2bde))
+
 ## [0.9.0](https://github.com/danielbaars/anthracite/compare/v0.8.2...v0.9.0) (2026-11-17)
 
 
