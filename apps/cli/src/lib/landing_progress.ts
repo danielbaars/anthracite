@@ -31,8 +31,22 @@ const member = z
     cleanupResult: oid.optional(),
   })
   .strict();
-const schema = z
+export const landingRetrySchema = z
   .object({
+    attempt: z.string().uuid(),
+    source: z.string().regex(/^[a-f0-9]{64}$/),
+    scope: z.string().regex(/^[a-f0-9]{64}$/),
+    index: z.number().int().nonnegative(),
+    number: z.number().int().positive(),
+    url: z.string().url(),
+    branch,
+    head: oid,
+    base: oid,
+  })
+  .strict();
+export const landingProgressSchema = z
+  .object({
+    retry: landingRetrySchema.optional(),
     owner: z.literal('anthracite-landing'),
     version: z.union([z.literal(1), z.literal(2)]),
     directory: z.string().min(1),
@@ -86,7 +100,7 @@ const schema = z
     result: oid.optional(),
   })
   .strict();
-export type LandingProgress = z.infer<typeof schema>;
+export type LandingProgress = z.infer<typeof landingProgressSchema>;
 
 export function landingGit(args: string[]): string {
   return runGitCommand({ args, onError: 'throw', resource: 'landing' });
@@ -173,7 +187,9 @@ export function loadLandingProgress(): LandingProgress | undefined {
   try {
     if (!fs.lstatSync(file).isFile())
       throw new Error('not an owned regular record');
-    const record = schema.parse(JSON.parse(fs.readFileSync(file, 'utf8')));
+    const record = landingProgressSchema.parse(
+      JSON.parse(fs.readFileSync(file, 'utf8'))
+    );
     const first = record.merges[0];
     const participants = [...record.merges, ...record.maintenance];
     const survivors = landingSurvivors(record)
@@ -233,7 +249,10 @@ export function saveLandingProgress(
   const temporary = `${file}.${process.pid}.tmp`;
   const fd = fs.openSync(temporary, 'wx', 0o600);
   try {
-    fs.writeFileSync(fd, JSON.stringify(schema.parse(record)) + '\n');
+    fs.writeFileSync(
+      fd,
+      JSON.stringify(landingProgressSchema.parse(record)) + '\n'
+    );
     fs.fsyncSync(fd);
   } finally {
     fs.closeSync(fd);
@@ -261,7 +280,7 @@ function assertUnchanged(file: string, previous?: LandingProgress): void {
     previous
       ? !exists(file) ||
         fs.readFileSync(file, 'utf8') !==
-          JSON.stringify(schema.parse(previous)) + '\n'
+          JSON.stringify(landingProgressSchema.parse(previous)) + '\n'
       : exists(file)
   )
     throw new ExitFailedError(
