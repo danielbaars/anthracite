@@ -455,12 +455,20 @@ export async function land(
   target: string | undefined,
   args: {
     readonly 'dry-run': boolean;
+    readonly 'retry-unconfirmed'?: boolean;
     readonly yes: boolean;
     readonly 'wait-timeout': number;
   },
   context: TContext
 ): Promise<void> {
   const pending = loadLandingProgress();
+  if (
+    args['retry-unconfirmed'] &&
+    (!pending || target === undefined || pending.phase !== 'merge-requested')
+  )
+    throw new ExitFailedError(
+      'land --retry-unconfirmed requires the explicit original target and an owned merge-requested landing; recovery preserved.'
+    );
   if (pending) {
     if (target !== undefined && target !== pending.target)
       throw new ExitFailedError(

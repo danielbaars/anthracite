@@ -13,6 +13,12 @@ const options = {
     description:
       'Show PR order, deferred publication, maintenance and blockers without writes; add --debug for commit details.',
   },
+  'retry-unconfirmed': {
+    type: 'boolean',
+    default: false,
+    description:
+      'Opt into one retry of the saved unconfirmed merge; preview first, and separately confirm application.',
+  },
   yes: {
     type: 'boolean',
     default: false,
@@ -46,7 +52,11 @@ export const builder = (cli: yargs.Argv): yargs.Argv =>
           throw new Error('land accepts a positional branch name only.');
         if (/^--no-wait-timeout(?:=|$)/.test(argument))
           throw new Error('Use --wait-timeout 0 to disable waiting.');
-        if (/^--(?:no-)?(?:yes|dry-run)=(?!true$|false$)/.test(argument))
+        if (
+          /^--(?:no-)?(?:yes|dry-run|retry-unconfirmed)=(?!true$|false$)/.test(
+            argument
+          )
+        )
           throw new Error('land boolean options require true or false.');
       }
       if (argv._.length > 1)

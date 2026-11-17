@@ -167,13 +167,18 @@ export async function resumeScopedLanding(
   record: LandingProgress,
   args: {
     readonly 'dry-run': boolean;
+    readonly 'retry-unconfirmed'?: boolean;
     readonly yes: boolean;
     readonly 'wait-timeout': number;
   },
   context: TContext
 ): Promise<void> {
   validateIdentity(record, context);
-  const blockers = await inspectPendingLanding(record, context);
+  const blockers = await inspectPendingLanding(
+    record,
+    context,
+    args['retry-unconfirmed'] === true
+  );
   if (args['dry-run']) {
     if (blockers.length)
       throw new ExitFailedError(
@@ -181,6 +186,10 @@ export async function resumeScopedLanding(
       );
     return;
   }
+  if (args['retry-unconfirmed'])
+    throw new ExitFailedError(
+      'Explicit retry is preview-only in this build; use --dry-run. No request sent; recovery preserved.'
+    );
   if (!args.yes) {
     if (!context.canPrompt)
       throw new ExitFailedError(
@@ -210,6 +219,7 @@ type PendingLandingInspection = {
   readonly warnings: readonly string[];
   readonly cleanupOnly: ReadonlySet<string>;
   readonly verification?: string;
+  readonly retryUnconfirmed?: boolean;
 };
 
 function pendingPublicationDue(
@@ -242,6 +252,20 @@ function pendingPublicationDeferred(
   );
 }
 
+function printRetryProposal(
+  record: LandingProgress,
+  cleanupOnly: ReadonlySet<string>
+): void {
+  const member = current(record);
+  process.stdout.write(
+    cleanupOnly.has(member.branch)
+      ? `No retry request needed: #${member.number} is confirmed merged.\n`
+      : `🔁 Proposed retry: #${member.number} ${member.branch} (head ${
+          owned(member).head
+        })\n  One new request; earlier outcome remains unconfirmed. Application confirmation is still required.\n`
+  );
+}
+
 function printPendingLanding(
   record: LandingProgress,
   context: TContext,
@@ -266,6 +290,8 @@ function printPendingLanding(
   process.stdout.write(
     `⏸ Pending landing: ${record.repo}\nTarget: ${record.target} -> ${record.trunk}\nLocal ${record.trunk}: fast-forward after confirmed merges.\n`
   );
+  if (inspection.retryUnconfirmed)
+    printRetryProposal(record, inspection.cleanupOnly);
   if (inspection.verification)
     process.stdout.write(`Policy: ${inspection.verification}\n`);
   const completed = record.merges
@@ -463,7 +489,8 @@ function printPendingLandingDetails(
 /** Inspect the captured remaining scope through the same identity/readiness adapters. */
 async function inspectPendingLanding(
   record: LandingProgress,
-  context: TContext
+  context: TContext,
+  retryUnconfirmed = false
 ): Promise<readonly string[]> {
   const blockers: string[] = [];
   const warnings: string[] = [];
@@ -509,11 +536,18 @@ async function inspectPendingLanding(
         throw new ExitFailedError(
           `${member.branch}: Fresh PR identity changed.`
         );
-      if (pr?.state === 'MERGED' && isMerge) {
+      const retryResult =
+        retryUnconfirmed &&
+        member.branch === current(record).branch &&
+        pr?.state === 'OPEN'
+          ? await confirmedResult(record)
+          : undefined;
+      if ((pr?.state === 'MERGED' || retryResult) && isMerge) {
         const index = record.merges.findIndex(
           (item) => item.branch === member.branch
         );
-        const result = await confirmedResult({ ...record, index });
+        const result =
+          retryResult ?? (await confirmedResult({ ...record, index }));
         const captured =
           member.cleanupResult ??
           member.result ??
@@ -560,6 +594,7 @@ async function inspectPendingLanding(
           policy,
           blockers,
           warnings,
+          retryUnconfirmed,
         });
     });
   printPendingLanding(record, context, {
@@ -567,6 +602,7 @@ async function inspectPendingLanding(
     warnings,
     cleanupOnly,
     verification: policy?.verification,
+    retryUnconfirmed,
   });
   return blockers;
 }
@@ -579,12 +615,14 @@ async function inspectPendingReadiness(
     readonly policy?: LandPlan['policy'];
     readonly blockers: string[];
     readonly warnings: string[];
+    readonly retryUnconfirmed?: boolean;
   }
 ): Promise<void> {
   const { pr, policy, blockers, warnings } = inspection;
   if (
     member.branch === current(record).branch &&
-    record.phase === 'merge-requested'
+    record.phase === 'merge-requested' &&
+    !inspection.retryUnconfirmed
   )
     blockers.push(
       `${member.branch}: Previous merge request remains unconfirmed. An open PR alone does not authorize another request; preserve recovery and inspect the original failure.`
@@ -598,8 +636,11 @@ async function inspectPendingReadiness(
       );
     return;
   }
-  if (member.branch === current(record).branch)
+  if (member.branch === current(record).branch) {
     validateMergeTrunk(record, pr.baseRefOid);
+    if (inspection.retryUnconfirmed)
+      validateMergeTrunk(record, owned(member).base);
+  }
   if (policy) {
     const readiness = await githubLandReadiness(pr, policy, record.repo);
     for (const warning of readiness.warnings)
