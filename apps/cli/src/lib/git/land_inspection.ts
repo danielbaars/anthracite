@@ -3,6 +3,10 @@ import os from 'os';
 import path from 'path';
 import { runGitCommand } from './runner';
 import { gitEnvironmentOverrides } from './environment_overrides';
+import {
+  landingTransportArgs,
+  withLandingInspection,
+} from './landing_inspection_process';
 
 /** Missing remote objects are fetched only into a disposable bare repository. */
 export function inspectLandAncestry(
@@ -86,4 +90,82 @@ function read(args: string[], cwd?: string, ignore = false): string {
     onError: ignore ? 'ignore' : 'throw',
     options: { cwd, env },
   });
+}
+
+/** Fresh planning owns its asynchronous acquisition until cancellation and cleanup finish. */
+export async function inspectNewLandingAncestry(
+  ancestor: string,
+  descendant: string,
+  remote: { readonly name: string; readonly trunk: string }
+): Promise<boolean> {
+  try {
+    return await withLandingInspection('an-land-read-', async (git) => {
+      const source = process.cwd();
+      const hasObject = async (oid: string): Promise<boolean> =>
+        (
+          await git.run(['cat-file', '-e', `${oid}^{commit}`], {
+            cwd: source,
+            allowFailure: true,
+          })
+        ).code === 0;
+      if ((await hasObject(ancestor)) && (await hasObject(descendant))) {
+        const mergeBase = await git.run(['merge-base', ancestor, descendant], {
+          cwd: source,
+          allowFailure: true,
+        });
+        return mergeBase.code === 0 && mergeBase.stdout.trim() === ancestor;
+      }
+      const bare = path.join(git.temporary, 'objects.git');
+      const objects = await git.read(
+        ['rev-parse', '--path-format=absolute', '--git-path', 'objects'],
+        source
+      );
+      await git.run(['init', '--quiet', '--bare', '--template=', bare]);
+      fs.writeFileSync(
+        path.join(bare, 'objects/info/alternates'),
+        objects + '\n'
+      );
+      const url = (
+        await git.run(['remote', 'get-url', remote.name], {
+          cwd: source,
+          env: git.originalEnvironment,
+        })
+      ).stdout.trim();
+      await git.run(
+        [
+          ...(await landingTransportArgs(git, source)),
+          'fetch',
+          '--no-tags',
+          '--no-write-fetch-head',
+          '--',
+          url,
+          `refs/heads/${remote.trunk}`,
+        ],
+        {
+          cwd: bare,
+          env: { ...git.originalEnvironment, GIT_TERMINAL_PROMPT: '0' },
+        }
+      );
+      const mergeBase = await git.run(['merge-base', ancestor, descendant], {
+        cwd: bare,
+        allowFailure: true,
+      });
+      return mergeBase.code === 0 && mergeBase.stdout.trim() === ancestor;
+    });
+  } catch (error: unknown) {
+    throw new Error(
+      `Landing object inspection could not obtain required remote history safely: ${
+        error instanceof Error ? error.message : 'unavailable evidence'
+      }`
+    );
+  }
+}
+
+export async function assertNewLandingTrunkAncestry(
+  ancestor: string,
+  descendant: string,
+  remote: { readonly name: string; readonly trunk: string }
+): Promise<void> {
+  if (!(await inspectNewLandingAncestry(ancestor, descendant, remote)))
+    throw new Error('Local trunk is divergent; fast-forward required.');
 }

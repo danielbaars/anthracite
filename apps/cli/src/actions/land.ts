@@ -27,7 +27,14 @@ import {
 } from '../lib/api/github_land_policy';
 import { z } from 'zod';
 import { readGithubLandApi } from '../lib/api/github_land_policy';
-import { inspectLandAncestry } from '../lib/git/land_inspection';
+import {
+  assertNewLandingTrunkAncestry,
+  inspectNewLandingAncestry,
+} from '../lib/git/land_inspection';
+import {
+  assertSafeLandingSourceAttributes,
+  landingSourceReadArgs,
+} from '../lib/git/landing_inspection_process';
 import { selectPrBranch } from './pr_selection';
 import {
   assertLandingReplayInputs,
@@ -40,7 +47,7 @@ import {
 
 const gitRead = (args: string[]): string =>
   runGitCommand({
-    args,
+    args: landingSourceReadArgs(args),
     onError: 'throw',
     resource: 'landingPreflight',
     options: { env: { ...process.env, GIT_OPTIONAL_LOCKS: '0' } },
@@ -74,6 +81,7 @@ export async function planLand(
   target: string | undefined,
   context: TContext
 ): Promise<LandPlan> {
+  await assertSafeLandingSourceAttributes();
   if (!composeGit().getCurrentBranchName())
     throw new ExitFailedError(
       'Landing requires a physically checked-out branch.'
@@ -146,18 +154,15 @@ export async function planLand(
   const remoteTrunk = heads.get(context.engine.trunk);
   if (!remoteTrunk) blockers.push('Remote trunk unavailable.');
   else
-    protect(() => {
-      if (
-        !inspectLandAncestry(
-          context.engine.getRevision(context.engine.trunk),
-          remoteTrunk,
-          { name: remote, trunk: context.engine.trunk }
-        )
-      )
-        throw new ExitFailedError(
-          'Local trunk is divergent; fast-forward required.'
-        );
-    });
+    try {
+      await assertNewLandingTrunkAncestry(
+        context.engine.getRevision(context.engine.trunk),
+        remoteTrunk,
+        { name: remote, trunk: context.engine.trunk }
+      );
+    } catch (error: unknown) {
+      blockers.push(error instanceof Error ? error.message : String(error));
+    }
   const policy = await getGithubLandPolicy(repo, context.engine.trunk);
   const records = await Promise.all(
     participants.map((name) =>
@@ -268,10 +273,14 @@ async function inspectParticipant(
           merged.base.ref !== context.engine.trunk ||
           merged.base.repo.full_name.toLowerCase() !== repo.toLowerCase() ||
           !remoteTrunk ||
-          !inspectLandAncestry(merged.merge_commit_sha, remoteTrunk, {
-            name: remote,
-            trunk: context.engine.trunk,
-          })
+          !(await inspectNewLandingAncestry(
+            merged.merge_commit_sha,
+            remoteTrunk,
+            {
+              name: remote,
+              trunk: context.engine.trunk,
+            }
+          ))
         )
           blockers.push(
             `${name}: Already-merged identity/result is unverified.`
