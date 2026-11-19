@@ -1,9 +1,11 @@
-import { spawn } from 'child_process';
 import fs from 'fs';
-import os from 'os';
 import path from 'path';
 import type { LandPlan } from '../../actions/land';
-import { gitEnvironmentOverrides } from './environment_overrides';
+import {
+  InspectionGitResult,
+  landingTransportArgs,
+  withLandingInspection,
+} from './landing_inspection_process';
 
 export type LandingReplayAssessment =
   | { readonly status: 'clean' }
@@ -14,16 +16,10 @@ export type LandingReplayAssessment =
     }
   | { readonly status: 'unavailable'; readonly reason: string };
 
-type GitResult = { readonly code: number | null; readonly stdout: string };
 type CommandOptions = {
   readonly cwd?: string;
   readonly env?: NodeJS.ProcessEnv;
   readonly allowFailure?: boolean;
-};
-type Execution = {
-  readonly deadline: number;
-  cancelled: boolean;
-  terminate?: () => void;
 };
 type ReplayRepository = {
   readonly source: string;
@@ -34,130 +30,15 @@ type ReplayRepository = {
   readonly run: (
     args: readonly string[],
     options?: CommandOptions
-  ) => Promise<GitResult>;
+  ) => Promise<InspectionGitResult>;
   readonly read: (args: readonly string[], cwd?: string) => Promise<string>;
 };
-
-async function runBoundedGit(
-  args: readonly string[],
-  options: {
-    readonly cwd: string;
-    readonly env: NodeJS.ProcessEnv;
-    readonly execution: Execution;
-    readonly allowFailure?: boolean;
-  }
-): Promise<GitResult> {
-  const execution = options.execution;
-  const budget = Math.min(30000, execution.deadline - Date.now());
-  if (execution.cancelled || budget <= 0)
-    throw new Error('Replay inspection was interrupted or timed out.');
-  const result = await new Promise<GitResult>((resolve, reject) => {
-    const child = spawn('git', args, {
-      cwd: options.cwd,
-      env: options.env,
-      detached: process.platform !== 'win32',
-      stdio: ['ignore', 'pipe', 'pipe'],
-    });
-    const output: Buffer[] = [];
-    let size = 0;
-    let timedOut = false;
-    let killTimer: NodeJS.Timeout | undefined;
-    const kill = (signal: NodeJS.Signals): void => {
-      if (child.pid === undefined) return;
-      try {
-        if (process.platform === 'win32') child.kill(signal);
-        else process.kill(-child.pid, signal);
-      } catch {
-        // The owned process group may already have exited.
-      }
-    };
-    const stop = (): void => {
-      kill('SIGTERM');
-      killTimer ??= setTimeout(() => kill('SIGKILL'), 250);
-    };
-    execution.terminate = stop;
-    const timer = setTimeout(() => {
-      timedOut = true;
-      stop();
-    }, budget);
-    child.stdout.on('data', (data: Buffer) => {
-      size += data.length;
-      if (size > 4 * 1024 * 1024) {
-        timedOut = true;
-        stop();
-      } else output.push(data);
-    });
-    child.stderr.on('data', (data: Buffer) => {
-      size += data.length;
-      if (size > 4 * 1024 * 1024) {
-        timedOut = true;
-        stop();
-      }
-    });
-    child.once('error', () => {
-      clearTimeout(timer);
-      reject(new Error('Replay inspection could not start Git.'));
-    });
-    child.once('close', (code) => {
-      clearTimeout(timer);
-      if (killTimer) {
-        clearTimeout(killTimer);
-        kill('SIGKILL');
-      }
-      execution.terminate = undefined;
-      if (execution.cancelled || timedOut)
-        reject(
-          new Error('Replay inspection was interrupted or exceeded its bounds.')
-        );
-      else resolve({ code, stdout: Buffer.concat(output).toString() });
-    });
-  });
-  if (!options.allowFailure && result.code !== 0)
-    throw new Error(
-      'Replay inspection could not complete a required Git operation.'
-    );
-  return result;
-}
-
-function simulationEnvironment(original: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
-  const env: NodeJS.ProcessEnv = { ...original };
-  for (const key of Object.keys(env))
-    if (
-      key === 'GIT_CONFIG_PARAMETERS' ||
-      key === 'GIT_CONFIG_COUNT' ||
-      key.startsWith('GIT_CONFIG_KEY_') ||
-      key.startsWith('GIT_CONFIG_VALUE_')
-    )
-      delete env[key];
-  return {
-    ...env,
-    GIT_CONFIG_NOSYSTEM: '1',
-    GIT_CONFIG_GLOBAL: '/dev/null',
-    GIT_ATTR_NOSYSTEM: '1',
-    GIT_NO_REPLACE_OBJECTS: '1',
-    GIT_NO_LAZY_FETCH: '1',
-    GIT_OPTIONAL_LOCKS: '0',
-    GIT_TERMINAL_PROMPT: '0',
-  };
-}
 
 async function assertSupportedInputs(
   plan: LandPlan,
   git: ReplayRepository
 ): Promise<void> {
   assertLandingGraph(plan);
-  const unsafe = await git.run(
-    [
-      'config',
-      '--get-regexp',
-      '^(merge\\.|filter\\.|rebase\\.|core\\.(attributesfile|autocrlf|eol|safecrlf)|extensions\\.objectformat)',
-    ],
-    { cwd: git.source, env: git.originalEnvironment, allowFailure: true }
-  );
-  if (unsafe.code !== 1)
-    throw new Error(
-      'Replay inspection cannot safely reproduce this replay configuration.'
-    );
   if (
     await git.read(
       ['for-each-ref', '--format=%(refname)', 'refs/replace'],
@@ -167,14 +48,150 @@ async function assertSupportedInputs(
     throw new Error(
       'Replay inspection cannot safely reproduce replacement history.'
     );
+}
+
+const replayConfigKeys = new Set([
+  'merge.conflictstyle',
+  'merge.renames',
+  'merge.renamelimit',
+  'merge.directoryrenames',
+  'merge.renormalize',
+  'diff.renames',
+  'diff.renamelimit',
+  'diff.algorithm',
+  'core.autocrlf',
+  'core.eol',
+  'core.safecrlf',
+  'rebase.backend',
+  'rebase.autostash',
+  'rebase.autosquash',
+  'rebase.rebasemerges',
+  'rebase.stat',
+  'rebase.abbreviatecommands',
+  'rebase.reschedulefailedexec',
+  'rebase.missingcommitscheck',
+  'rebase.instructionformat',
+]);
+
+function assertSafeAttributes(content: string): void {
+  for (const line of content.split(/\r?\n/)) {
+    if (line.trimStart().startsWith('#')) continue;
+    for (const token of line.split(/\s+/)) {
+      if (token === 'filter' || token.startsWith('filter='))
+        throw new Error(
+          'Replay inspection cannot safely reproduce executable filter attributes.'
+        );
+      if (
+        token.startsWith('merge=') &&
+        !['text', 'binary', 'union'].includes(token.slice(6))
+      )
+        throw new Error(
+          'Replay inspection cannot safely reproduce custom merge attributes.'
+        );
+    }
+  }
+}
+
+function readAttributeFile(file: string): string {
+  const stat = fs.statSync(file);
+  if (!stat.isFile() || stat.size > 1024 * 1024)
+    throw new Error(
+      'Replay inspection cannot safely read nonregular or oversized attribute rules.'
+    );
+  const content = fs.readFileSync(file, 'utf8');
+  assertSafeAttributes(content);
+  return content;
+}
+
+async function copyReplayConfiguration(git: ReplayRepository): Promise<void> {
+  const configured = await git.run(
+    [
+      'config',
+      '--null',
+      '--get-regexp',
+      '^(merge\\.|filter\\.|rebase\\.|diff\\.|rerere\\.|core\\.(attributesfile|autocrlf|eol|safecrlf)|extensions\\.objectformat)',
+    ],
+    { cwd: git.source, env: git.originalEnvironment, allowFailure: true }
+  );
+  if (configured.code !== 0 && configured.code !== 1)
+    throw new Error('Replay inspection could not read replay configuration.');
+  for (const entry of configured.stdout.split('\0').filter(Boolean)) {
+    const separator = entry.indexOf('\n');
+    if (separator < 0)
+      throw new Error('Replay inspection received invalid configuration.');
+    const key = entry.slice(0, separator).toLowerCase();
+    const value = entry.slice(separator + 1);
+    if (replayConfigKeys.has(key)) await git.run(['config', key, value]);
+    else if (
+      key === 'merge.default' &&
+      ['text', 'binary', 'union'].includes(value)
+    )
+      await git.run(['config', key, value]);
+    else if (
+      key === 'core.attributesfile' ||
+      key.startsWith('filter.') ||
+      key.startsWith('diff.') ||
+      /^merge\..+\.(driver|recursive|name)$/.test(key) ||
+      [
+        'merge.tool',
+        'merge.guitool',
+        'merge.log',
+        'merge.branchdesc',
+        'rebase.updaterefs',
+        'rerere.enabled',
+        'rerere.autoupdate',
+      ].includes(key)
+    ) {
+      if (
+        ['rebase.updaterefs', 'rerere.enabled', 'rerere.autoupdate'].includes(
+          key
+        ) &&
+        !['false', 'no', 'off', '0'].includes(value.toLowerCase())
+      )
+        throw new Error(
+          'Replay inspection cannot safely reproduce automatic ref updates or recorded resolutions.'
+        );
+    } else
+      throw new Error(
+        'Replay inspection cannot safely reproduce this replay configuration.'
+      );
+  }
+  const inherited: string[] = [];
+  for (const variable of ['GIT_ATTR_SYSTEM', 'GIT_ATTR_GLOBAL']) {
+    if (
+      variable === 'GIT_ATTR_SYSTEM' &&
+      git.originalEnvironment.GIT_ATTR_NOSYSTEM
+    )
+      continue;
+    const result = await git.run(['var', variable], {
+      cwd: git.source,
+      env: git.originalEnvironment,
+      allowFailure: true,
+    });
+    if (result.code !== 0)
+      throw new Error(
+        'Replay inspection cannot locate inherited attribute rules safely.'
+      );
+    const file = result.stdout.trim();
+    if (file && fs.existsSync(file)) {
+      inherited.push(readAttributeFile(file));
+    }
+  }
+  const attributes = path.join(git.directory, '.git', 'inspection-attributes');
+  fs.writeFileSync(attributes, inherited.join('\n'));
+  await git.run(['config', 'core.attributesFile', attributes]);
   const info = await git.read(
-    ['rev-parse', '--git-path', 'info/attributes'],
+    ['rev-parse', '--path-format=absolute', '--git-path', 'info/attributes'],
     git.source
   );
-  if (fs.existsSync(path.resolve(git.source, info)))
-    throw new Error(
-      'Replay inspection cannot safely reproduce repository attributes.'
+  if (fs.existsSync(info)) {
+    const content = readAttributeFile(info);
+    fs.mkdirSync(path.join(git.directory, '.git', 'info'), { recursive: true });
+    fs.writeFileSync(
+      path.join(git.directory, '.git', 'info', 'attributes'),
+      content
     );
+  }
 }
 
 async function prepareReplayObjects(
@@ -206,6 +223,11 @@ async function prepareReplayObjects(
     ['rerere.enabled', 'false'],
   ])
     await git.run(['config', key, value]);
+  fs.copyFileSync(
+    path.join(git.directory, '.git', 'config'),
+    path.join(git.directory, '.git', 'inspection-server-config')
+  );
+  await copyReplayConfiguration(git);
   if (
     (
       await git.run(['cat-file', '-e', `${plan.remoteTrunk}^{commit}`], {
@@ -243,6 +265,7 @@ async function prepareReplayObjects(
         'gc.auto=0',
         '-c',
         'fetch.recurseSubmodules=false',
+        ...(await landingTransportArgs(git, git.source)),
         'fetch',
         '--no-tags',
         '--no-write-fetch-head',
@@ -267,9 +290,11 @@ async function prepareReplayObjects(
     const files = (
       await git.run(['ls-tree', '-r', '--name-only', '-z', commit])
     ).stdout.split('\0');
-    if (files.some((file) => path.posix.basename(file) === '.gitattributes'))
-      throw new Error(
-        'Replay inspection cannot safely reproduce tracked attributes.'
+    for (const file of files.filter(
+      (name) => path.posix.basename(name) === '.gitattributes'
+    ))
+      assertSafeAttributes(
+        (await git.run(['show', `${commit}:${file}`])).stdout
       );
   }
 }
@@ -284,25 +309,52 @@ async function replayCommits(
     readonly force: boolean;
   }
 ): Promise<string | LandingReplayAssessment> {
-  await git.run(['checkout', '--quiet', '--detach', input.head]);
-  const result = await git.run(
-    [
-      'rebase',
-      ...(input.force ? ['--force-rebase'] : []),
-      '--onto',
-      input.onto,
-      input.from,
-    ],
-    { allowFailure: true }
-  );
-  if (result.code === 0) return git.read(['rev-parse', 'HEAD']);
-  const paths = (
-    await git.run(['diff', '--name-only', '--diff-filter=U', '-z'])
-  ).stdout
-    .split('\0')
-    .filter(Boolean);
-  if (paths.length) return { status: 'conflict', branch: input.branch, paths };
-  throw new Error('Replay inspection failed without verified conflict paths.');
+  const config = path.join(git.directory, '.git', 'config');
+  const attributes = path.join(git.directory, '.git', 'info', 'attributes');
+  const localConfig = input.force ? fs.readFileSync(config) : undefined;
+  const localAttributes =
+    input.force && fs.existsSync(attributes)
+      ? fs.readFileSync(attributes)
+      : undefined;
+  try {
+    if (input.force) {
+      // GitHub's rebase does not inherit local replay settings or private attributes.
+      fs.copyFileSync(
+        path.join(git.directory, '.git', 'inspection-server-config'),
+        config
+      );
+      fs.rmSync(attributes, { force: true });
+    }
+    await git.run(['checkout', '--quiet', '--force', '--detach', input.head]);
+    const result = await git.run(
+      [
+        'rebase',
+        ...(input.force ? ['--force-rebase'] : []),
+        '--onto',
+        input.onto,
+        input.from,
+      ],
+      { allowFailure: true }
+    );
+    if (result.code === 0) return git.read(['rev-parse', 'HEAD']);
+    if (result.code !== 1)
+      throw new Error(
+        'Replay inspection failed without a completed conflict assessment.'
+      );
+    const paths = (
+      await git.run(['diff', '--name-only', '--diff-filter=U', '-z'])
+    ).stdout
+      .split('\0')
+      .filter(Boolean);
+    if (paths.length)
+      return { status: 'conflict', branch: input.branch, paths };
+    throw new Error(
+      'Replay inspection failed without verified conflict paths.'
+    );
+  } finally {
+    if (localConfig) fs.writeFileSync(config, localConfig);
+    if (localAttributes) fs.writeFileSync(attributes, localAttributes);
+  }
 }
 
 function assertLandingGraph(plan: LandPlan): void {
@@ -435,43 +487,25 @@ export async function inspectLandingReplay(
   plan: LandPlan,
   remote: string
 ): Promise<LandingReplayAssessment> {
-  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'an-land-replay-'));
-  const execution: Execution = {
-    deadline: Date.now() + 60000,
-    cancelled: false,
-  };
-  const cancel = (): void => {
-    execution.cancelled = true;
-    execution.terminate?.();
-  };
-  process.on('SIGINT', cancel);
-  process.on('SIGTERM', cancel);
-  const originalEnvironment = { ...process.env };
-  for (const key of gitEnvironmentOverrides) delete originalEnvironment[key];
-  const environment = simulationEnvironment(originalEnvironment);
-  const directory = path.join(temporary, 'replay');
-  const hooks = path.join(temporary, 'empty-hooks');
-  fs.mkdirSync(hooks);
-  const git: ReplayRepository = {
-    source: process.cwd(),
-    directory,
-    hooks,
-    environment,
-    originalEnvironment,
-    run: (args, options = {}) =>
-      runBoundedGit(args, {
-        cwd: options.cwd ?? directory,
-        env: options.env ?? environment,
-        execution,
-        allowFailure: options.allowFailure,
-      }),
-    read: async (args, cwd = directory) =>
-      (await git.run(args, { cwd })).stdout.trim(),
-  };
   try {
-    await assertSupportedInputs(plan, git);
-    await prepareReplayObjects(plan, remote, git);
-    return await simulateLandingGraph(plan, git);
+    return await withLandingInspection(
+      'an-land-replay-',
+      async (inspection) => {
+        const directory = path.join(inspection.temporary, 'replay');
+        const git: ReplayRepository = {
+          ...inspection,
+          source: process.cwd(),
+          directory,
+          run: (args, options = {}) =>
+            inspection.run(args, { ...options, cwd: options.cwd ?? directory }),
+          read: async (args, cwd = directory) =>
+            (await inspection.run(args, { cwd })).stdout.trim(),
+        };
+        await assertSupportedInputs(plan, git);
+        await prepareReplayObjects(plan, remote, git);
+        return await simulateLandingGraph(plan, git);
+      }
+    );
   } catch (error: unknown) {
     return {
       status: 'unavailable',
@@ -480,10 +514,5 @@ export async function inspectLandingReplay(
           ? error.message
           : 'Replay inspection is unavailable.',
     };
-  } finally {
-    execution.terminate?.();
-    process.removeListener('SIGINT', cancel);
-    process.removeListener('SIGTERM', cancel);
-    fs.rmSync(temporary, { recursive: true, force: true });
   }
 }

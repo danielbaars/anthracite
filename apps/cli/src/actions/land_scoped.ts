@@ -40,6 +40,7 @@ import {
   saveLandingProgress,
 } from '../lib/landing_progress';
 import { LandPlan } from './land';
+import { landingInspectionIsRunning } from '../lib/git/landing_inspection_process';
 import { maintainLandingSurvivors } from './land_maintenance';
 import { validateLocal } from './land_local';
 import { validateLandingIdentity as validateIdentity } from '../lib/landing_identity';
@@ -82,6 +83,7 @@ export async function withLandingLock(
   const lock = getCacheLock();
   lock.lock(identity.timestamp);
   const interrupted = (): void => {
+    if (landingInspectionIsRunning()) return;
     releaseOwnedCacheLockFile(file, identity.pid, cacheLockBytes(identity));
     process.stderr.write(
       '⏸ Landing interrupted; reached local work and pending publication/base/footer obligations are retained in saved progress. Inspect an land --dry-run before explicit resumption.\n'
