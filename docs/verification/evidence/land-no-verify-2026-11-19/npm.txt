@@ -1,0 +1,10 @@
+
+
+  public landing hook selection
+    ✔ skips project hooks for all updates and deletions in a new landing with --no-verify (49318ms)
+    ✔ keeps hooks on by default and resumes failed cleanup with --no-verify (23260ms)
+    ✔ does not retain --no-verify permission across invocations or bypass remote hooks (27609ms)
+
+
+  3 passing (2m)
+

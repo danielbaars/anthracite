@@ -1,0 +1,20 @@
+
+
+  public landing hook selection
+    ✔ skips project hooks for all updates and deletions in a new landing with --no-verify (50231ms)
+    ✔ keeps hooks on by default and resumes failed update with --no-verify (59477ms)
+    ✔ keeps hooks on by default and resumes failed cleanup with --no-verify (22904ms)
+    ✔ does not retain --no-verify permission across invocations or bypass remote hooks (26187ms)
+    ✔ retains required-check protection with --no-verify before any merge (3614ms)
+    ✔ resumes a genuine published version-1 landing with --no-verify (52750ms)
+    ✔ resumes a genuine published version-2 landing with --no-verify (52206ms)
+
+  public one-leaf landing
+    ✔ preserves a remote head changed inside pre-push using the captured deletion lease (17112ms)
+
+  public scoped fanout landing
+    ✔ refuses a necessary frozen sibling before the first merge while unrelated protection is irrelevant (1584ms)
+
+
+  9 passing (5m)
+

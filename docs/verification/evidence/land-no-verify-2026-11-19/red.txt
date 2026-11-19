@@ -1,0 +1,47 @@
+
+
+  public landing hook selection
+    1) skips project hooks for all updates and deletions in a new landing with --no-verify
+
+
+  0 passing (32s)
+  1 failing
+
+  1) public landing hook selection
+       skips project hooks for all updates and deletions in a new landing with --no-verify:
+
+      AssertionError: Landing plan: fixture/inspection
+Target: tip -> main
+Policy: No required reviews or checks.
+Local main: up to date.
+
+🔀 PR order (bottom to top):
+  Merge 1: base #17
+  Merge 2: child #18 (publication deferred until its merge preparation)
+  Merge 3: tip #19 (publication deferred until its merge preparation)
+Between merges: restack affected branches locally; publish the next merge target
+and non-target survivors. Later targets defer publication until their turn.
+
+🧹 Cleanup: base, child, tip
+  Delete landed branches locally and on GitHub after confirmed merges only.
+Replay: conflict-free for captured inputs; future PR readiness remains separate.
+✅ Readiness: READY for next merge only; later targets require publication and fresh checks.
+Use --debug for commit IDs and technical details.
+✅ Confirmed merged #17.
+ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (063069e16cf966e01c5238f7df368d74a4333c4a);  later work unattempted. Survivor maintenance incomplete for child. Command failed with error exit code 1:
+git -c core.hooksPath=/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-push-hooks-ffcfHE push origin --force-with-lease=refs/heads/child:02d302ced5fb592f15e6b669ec1b0863f944847f refs/heads/child:refs/heads/child
+
+FIXTURE_HOOK_REFUSED
+error: failed to push some refs to '/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-MJUB8i/remote.git'
+ Reached local work is retained; publication/base/footer work remains unconfirmed. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-MJUB8i/repo; resolve the reported blocker, preview with an land tip --dry-run, then explicitly resume with an land tip --yes.
+: expected 1 to equal +0
+      + expected - actual
+
+      -1
+      +0
+      
+      at Context.<anonymous> (apps/cli/dist/test/commands/land_verify_cli.test.js:33:77)
+      at process.processImmediate (node:internal/timers:534:21)
+
+
+

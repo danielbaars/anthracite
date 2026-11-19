@@ -508,6 +508,7 @@ export async function land(
     readonly 'dry-run': boolean;
     readonly 'retry-unconfirmed'?: boolean;
     readonly yes: boolean;
+    readonly verify?: boolean;
     readonly 'wait-timeout': number;
   },
   context: TContext
@@ -571,6 +572,7 @@ export async function land(
       startScopedLanding(locked, lockedContext, {
         cacheLock,
         waitSeconds: args['wait-timeout'],
+        noVerify: args.verify === false,
         beforeFirstEffect: () =>
           assertLandingReplayInputs(locked, lockedContext),
       })
