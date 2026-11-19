@@ -23,6 +23,7 @@ type CommandOptions = {
   readonly allowFailure?: boolean;
 };
 type ReplayRepository = {
+  localConfigurationReady: boolean;
   readonly source: string;
   readonly directory: string;
   readonly hooks: string;
@@ -104,12 +105,22 @@ function readAttributeFile(file: string): string {
   return content;
 }
 
-async function copyReplayConfiguration(git: ReplayRepository): Promise<void> {
-  await assertNoBranchConditionalLandingConfiguration(git, git.source);
+type ReplayConfiguration = {
+  readonly key: string;
+  readonly value: string | null;
+  readonly scope: string;
+  readonly origin: string;
+};
+
+async function effectiveReplayConfiguration(
+  git: ReplayRepository
+): Promise<ReplayConfiguration[]> {
   const configured = await git.run(
     [
       'config',
       '--null',
+      '--show-origin',
+      '--show-scope',
       '--get-regexp',
       '^(merge\\.|filter\\.|rebase\\.|diff\\.|rerere\\.|core\\.(attributesfile|autocrlf|eol|safecrlf)|extensions\\.objectformat)',
     ],
@@ -117,15 +128,66 @@ async function copyReplayConfiguration(git: ReplayRepository): Promise<void> {
   );
   if (configured.code !== 0 && configured.code !== 1)
     throw new Error('Replay inspection could not read replay configuration.');
-  for (const entry of configured.stdout.split('\0').filter(Boolean)) {
+  const fields = configured.stdout.split('\0');
+  if (fields.pop() !== '' || fields.length % 3 !== 0)
+    throw new Error('Replay inspection received invalid configuration.');
+  const effective = new Map<string, ReplayConfiguration>();
+  for (let index = 0; index < fields.length; index += 3) {
+    const entry = fields[index + 2];
     const separator = entry.indexOf('\n');
-    if (separator < 0)
-      throw new Error('Replay inspection received invalid configuration.');
-    const key = entry.slice(0, separator).toLowerCase();
-    const value = entry.slice(separator + 1);
-    if (replayConfigKeys.has(key)) await git.run(['config', key, value]);
+    const key = (
+      separator < 0 ? entry : entry.slice(0, separator)
+    ).toLowerCase();
+    effective.set(key, {
+      key,
+      value: separator < 0 ? null : entry.slice(separator + 1),
+      scope: fields[index],
+      origin: fields[index + 1],
+    });
+  }
+  return [...effective.values()];
+}
+
+async function assertSupportedReplayControls(
+  git: ReplayRepository,
+  settings: readonly ReplayConfiguration[]
+): Promise<void> {
+  for (const key of ['rebase.updaterefs', 'rerere.enabled']) {
+    const setting = settings.find((item) => item.key === key);
+    if (!setting) {
+      if (key !== 'rerere.enabled') continue;
+      const cache = await git.read(
+        ['rev-parse', '--path-format=absolute', '--git-path', 'rr-cache'],
+        git.source
+      );
+      if (!fs.existsSync(cache)) continue;
+      throw new Error(
+        `Replay inspection cannot reproduce local replay with implicit rerere.enabled=true from ${cache}. Use an effective rerere.enabled=false for this local replay, then preview again.`
+      );
+    }
+    const result = await git.run(['config', '--type=bool', '--get', key], {
+      cwd: git.source,
+      env: git.originalEnvironment,
+      allowFailure: true,
+    });
+    if (result.code === 0 && result.stdout.trim() === 'false') continue;
+    const value = result.code === 0 ? 'true' : 'invalid boolean';
+    throw new Error(
+      `Replay inspection cannot reproduce local replay with effective ${key}=${value} (${setting.scope}, ${setting.origin}). Use an effective ${key}=false for this local replay, then preview again.`
+    );
+  }
+}
+
+async function copyReplayConfiguration(git: ReplayRepository): Promise<void> {
+  await assertNoBranchConditionalLandingConfiguration(git, git.source);
+  const settings = await effectiveReplayConfiguration(git);
+  await assertSupportedReplayControls(git, settings);
+  for (const { key, value, scope, origin } of settings) {
+    if (replayConfigKeys.has(key) && value !== null)
+      await git.run(['config', key, value]);
     else if (
       key === 'merge.default' &&
+      value !== null &&
       ['text', 'binary', 'union'].includes(value)
     )
       await git.run(['config', key, value]);
@@ -143,19 +205,11 @@ async function copyReplayConfiguration(git: ReplayRepository): Promise<void> {
         'rerere.enabled',
         'rerere.autoupdate',
       ].includes(key)
-    ) {
-      if (
-        ['rebase.updaterefs', 'rerere.enabled', 'rerere.autoupdate'].includes(
-          key
-        ) &&
-        !['false', 'no', 'off', '0'].includes(value.toLowerCase())
-      )
-        throw new Error(
-          'Replay inspection cannot safely reproduce automatic ref updates or recorded resolutions.'
-        );
-    } else
+    )
+      continue;
+    else
       throw new Error(
-        'Replay inspection cannot safely reproduce this replay configuration.'
+        `Replay inspection cannot safely reproduce replay configuration ${key} (${scope}, ${origin}).`
       );
   }
   const inherited: string[] = [];
@@ -229,7 +283,6 @@ async function prepareReplayObjects(
     path.join(git.directory, '.git', 'config'),
     path.join(git.directory, '.git', 'inspection-server-config')
   );
-  await copyReplayConfiguration(git);
   if (
     (
       await git.run(['cat-file', '-e', `${plan.remoteTrunk}^{commit}`], {
@@ -311,6 +364,10 @@ async function replayCommits(
     readonly force: boolean;
   }
 ): Promise<string | LandingReplayAssessment> {
+  if (!input.force && !git.localConfigurationReady) {
+    await copyReplayConfiguration(git);
+    git.localConfigurationReady = true;
+  }
   const config = path.join(git.directory, '.git', 'config');
   const attributes = path.join(git.directory, '.git', 'info', 'attributes');
   const localConfig = input.force ? fs.readFileSync(config) : undefined;
@@ -496,6 +553,7 @@ export async function inspectLandingReplay(
         const directory = path.join(inspection.temporary, 'replay');
         const git: ReplayRepository = {
           ...inspection,
+          localConfigurationReady: false,
           source: process.cwd(),
           directory,
           run: (args, options = {}) =>

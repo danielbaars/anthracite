@@ -1,0 +1,72 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:18:14.302Z",
+    "end": "2026-11-19T20:18:38.982Z",
+    "duration": 24680
+  },
+  "tests": [
+    {
+      "title": "refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4570,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4592,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "identifies implicit recorded-resolution use without changing the old cache",
+      "fullTitle": "public landing effective replay configuration identifies implicit recorded-resolution use without changing the old cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2381,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4570,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4592,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "identifies implicit recorded-resolution use without changing the old cache",
+      "fullTitle": "public landing effective replay configuration identifies implicit recorded-resolution use without changing the old cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2381,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

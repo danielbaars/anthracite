@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:14:39.142Z",
+    "end": "2026-11-19T20:17:16.108Z",
+    "duration": 156966
+  },
+  "tests": [
+    {
+      "title": "uses local false overrides during replay despite global true and an old resolution cache",
+      "fullTitle": "public landing effective replay configuration uses local false overrides during replay despite global true and an old resolution cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2727,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands a leaf without applying local replay settings to the server-only rebase",
+      "fullTitle": "public landing effective replay configuration lands a leaf without applying local replay settings to the server-only rebase",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 16964,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4631,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4594,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a local true override instead of accepting a lower-priority global false",
+      "fullTitle": "public landing effective replay configuration reports a local true override instead of accepting a lower-priority global false",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2433,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors command-scope false overrides and ignores inactive rerere autoupdate",
+      "fullTitle": "public landing effective replay configuration honors command-scope false overrides and ignores inactive rerere autoupdate",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2591,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors worktree configuration above local configuration",
+      "fullTitle": "public landing effective replay configuration honors worktree configuration above local configuration",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2624,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "identifies implicit recorded-resolution use without changing the old cache",
+      "fullTitle": "public landing effective replay configuration identifies implicit recorded-resolution use without changing the old cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2340,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands a stack with effective disabled controls without modifying unrelated refs or configuration",
+      "fullTitle": "public landing effective replay configuration lands a stack with effective disabled controls without modifying unrelated refs or configuration",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 47261,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a newly enabled implicit resolution cache after inspection before any merge request",
+      "fullTitle": "public landing effective replay configuration refuses a newly enabled implicit resolution cache after inspection before any merge request",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 10213,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains included-file origins and accepts a later repository override",
+      "fullTitle": "public landing effective replay configuration retains included-file origins and accepts a later repository override",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4561,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses invalid effective boolean values without echoing their contents",
+      "fullTitle": "public landing effective replay configuration refuses invalid effective boolean values without echoing their contents",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2282,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "uses local false overrides during replay despite global true and an old resolution cache",
+      "fullTitle": "public landing effective replay configuration uses local false overrides during replay despite global true and an old resolution cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2727,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands a leaf without applying local replay settings to the server-only rebase",
+      "fullTitle": "public landing effective replay configuration lands a leaf without applying local replay settings to the server-only rebase",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 16964,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4631,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4594,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "reports a local true override instead of accepting a lower-priority global false",
+      "fullTitle": "public landing effective replay configuration reports a local true override instead of accepting a lower-priority global false",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2433,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors command-scope false overrides and ignores inactive rerere autoupdate",
+      "fullTitle": "public landing effective replay configuration honors command-scope false overrides and ignores inactive rerere autoupdate",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2591,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "honors worktree configuration above local configuration",
+      "fullTitle": "public landing effective replay configuration honors worktree configuration above local configuration",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2624,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "identifies implicit recorded-resolution use without changing the old cache",
+      "fullTitle": "public landing effective replay configuration identifies implicit recorded-resolution use without changing the old cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2340,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands a stack with effective disabled controls without modifying unrelated refs or configuration",
+      "fullTitle": "public landing effective replay configuration lands a stack with effective disabled controls without modifying unrelated refs or configuration",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 47261,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a newly enabled implicit resolution cache after inspection before any merge request",
+      "fullTitle": "public landing effective replay configuration refuses a newly enabled implicit resolution cache after inspection before any merge request",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 10213,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains included-file origins and accepts a later repository override",
+      "fullTitle": "public landing effective replay configuration retains included-file origins and accepts a later repository override",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4561,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses invalid effective boolean values without echoing their contents",
+      "fullTitle": "public landing effective replay configuration refuses invalid effective boolean values without echoing their contents",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2282,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

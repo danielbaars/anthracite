@@ -82,6 +82,11 @@ jobs:
         run: >-
           node node_modules/mocha/bin/mocha.js
           apps/cli/dist/test/commands/land_retry_delivery_cli.test.js
+      - name: Test effective landing replay configuration
+        run: >-
+          node node_modules/mocha/bin/mocha.js
+          apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js
+          --grep 'uses local false overrides'
       - name: Test landing push-hook selection
         run: >-
           node node_modules/mocha/bin/mocha.js

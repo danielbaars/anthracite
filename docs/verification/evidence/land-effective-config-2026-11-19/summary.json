@@ -1,0 +1,66 @@
+{
+  "config-node": {
+    "suites": 1,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:14:39.142Z",
+    "end": "2026-11-19T20:17:16.108Z",
+    "duration": 156966
+  },
+  "config-native": {
+    "suites": 1,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:14:40.486Z",
+    "end": "2026-11-19T20:17:01.812Z",
+    "duration": 141326
+  },
+  "controls-node-final": {
+    "suites": 5,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:18:11.612Z",
+    "end": "2026-11-19T20:20:40.623Z",
+    "duration": 149011
+  },
+  "controls-native-final": {
+    "suites": 5,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:18:12.840Z",
+    "end": "2026-11-19T20:20:25.579Z",
+    "duration": 132739
+  },
+  "npm-focused": {
+    "suites": 2,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:15:00.886Z",
+    "end": "2026-11-19T20:16:19.994Z",
+    "duration": 79108
+  },
+  "npm-diagnostics-final": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:18:14.302Z",
+    "end": "2026-11-19T20:18:38.982Z",
+    "duration": 24680
+  },
+  "artifacts": {
+    "release/npm/danielbaars-anthracite-0.9.4.tgz": "4343b139f667e512a631cf79acb605dec7f3d21cadc52dbaf48d2f14d4c1a20d",
+    "/private/tmp/anthracite-217-verification/an-native": "96dd8884b1ec45f84dcb40e0cbae38fcd639bad95c7b5974fbb8ffa9476a21b4"
+  }
+}
