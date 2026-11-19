@@ -125,6 +125,7 @@ export async function startScopedLanding(
   options: {
     readonly cacheLock: NonNullable<LandingProgress['cacheLock']>;
     readonly waitSeconds: number;
+    readonly beforeFirstEffect?: () => Promise<void>;
   }
 ): Promise<void> {
   const member = plan.merges[0];
@@ -170,6 +171,7 @@ export async function startScopedLanding(
   saveLandingProgress(record);
   await applyScopedLanding(record, context, {
     waitSeconds: options.waitSeconds,
+    beforeFirstEffect: options.beforeFirstEffect,
   });
 }
 
@@ -769,12 +771,44 @@ async function confirmAfterMergeFailure(
   }
 }
 
+type ApplyLandingOptions = {
+  readonly waitSeconds: number;
+  readonly retryAttempt?: string;
+  readonly beforeFirstEffect?: () => Promise<void>;
+};
+
+function initialReplayGuard(callback?: () => Promise<void>): {
+  readonly validate: (record: LandingProgress) => Promise<void>;
+  readonly invalidated: boolean;
+} {
+  let pending = callback;
+  let invalidated = false;
+  return {
+    get invalidated() {
+      return invalidated;
+    },
+    validate: async (record) => {
+      if (!pending) return;
+      try {
+        await pending();
+      } catch (error: unknown) {
+        // Only this fresh invocation's unchanged record exists; no effect was sent.
+        clearLandingProgress(record);
+        invalidated = true;
+        throw error;
+      }
+      pending = undefined;
+    },
+  };
+}
+
 async function applyScopedLanding(
   initial: LandingProgress,
   context: TContext,
-  options: { readonly waitSeconds: number; readonly retryAttempt?: string }
+  options: ApplyLandingOptions
 ): Promise<void> {
   let record = initial;
+  const replayGuard = initialReplayGuard(options.beforeFirstEffect);
   let retryConsumed = false;
   let stage = 'reconciliation';
   const advance = (patch: Partial<LandingProgress>): void => {
@@ -798,10 +832,7 @@ async function applyScopedLanding(
           !!options.retryAttempt &&
           record.retry?.attempt === options.retryAttempt &&
           hasCurrentLandingRetry(record);
-        if (record.phase !== 'prepared' && !canRetry)
-          throw new ExitFailedError(
-            'Merge remains uncertain or unconfirmed. No merge is repeated. An open PR alone does not establish that the earlier request was rejected; preserve recovery and inspect the original request failure.'
-          );
+        assertMergeCanProceed(record, canRetry);
         stage = 'readiness check';
         await waitUntilReadyToMerge(record, context, options.waitSeconds);
         validateLocal(record, context);
@@ -809,6 +840,7 @@ async function applyScopedLanding(
         advance({ phase: 'merge-requested' });
         validateMergeEffect(record, context);
         const alreadyMerged = await confirmCurrentResult(record);
+        await replayGuard.validate(record);
         validateMergeEffect(record, context);
         if (canRetry) retryConsumed = true;
         let response = alreadyMerged;
@@ -840,6 +872,7 @@ async function applyScopedLanding(
         throw new ExitFailedError(
           'Saved merge result changed; inspect recovery.'
         );
+      await replayGuard.validate(record);
       advance({ result, phase: 'merged' });
       retainLandingRetryOutcome(record, 'confirmed', result);
       printConfirmedMerge(record, context);
@@ -882,12 +915,39 @@ async function applyScopedLanding(
       `✅ Landing complete: ${record.target}; trunk advanced and landed refs/metadata cleaned.\n`
     );
   } catch (error: unknown) {
-    const failure =
-      stage.startsWith('merge request') && retryConsumed
-        ? retainRetryFailure(record, error)
-        : error;
-    throw landingFailure(record, stage, failure);
+    failLandingExecution(record, error, {
+      stage,
+      retryConsumed,
+      replayInvalidated: replayGuard.invalidated,
+    });
   }
+}
+
+function assertMergeCanProceed(
+  record: LandingProgress,
+  canRetry: boolean
+): void {
+  if (record.phase !== 'prepared' && !canRetry)
+    throw new ExitFailedError(
+      'Merge remains uncertain or unconfirmed. No merge is repeated. An open PR alone does not establish that the earlier request was rejected; preserve recovery and inspect the original request failure.'
+    );
+}
+
+function failLandingExecution(
+  record: LandingProgress,
+  error: unknown,
+  execution: {
+    readonly stage: string;
+    readonly retryConsumed: boolean;
+    readonly replayInvalidated: boolean;
+  }
+): never {
+  if (execution.replayInvalidated) throw error;
+  const failure =
+    execution.stage.startsWith('merge request') && execution.retryConsumed
+      ? retainRetryFailure(record, error)
+      : error;
+  throw landingFailure(record, execution.stage, failure);
 }
 
 function validateMergeEffect(record: LandingProgress, context: TContext): void {

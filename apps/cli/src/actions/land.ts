@@ -30,6 +30,10 @@ import { readGithubLandApi } from '../lib/api/github_land_policy';
 import { inspectLandAncestry } from '../lib/git/land_inspection';
 import { selectPrBranch } from './pr_selection';
 import {
+  assertLandingReplayInputs,
+  captureLandingReplayInputs,
+} from '../lib/git/landing_replay_inputs';
+import {
   inspectLandingReplay,
   LandingReplayAssessment,
 } from '../lib/git/landing_replay';
@@ -63,6 +67,7 @@ export type LandPlan = {
   readonly blockers: readonly string[];
   readonly warnings: readonly string[];
   readonly replay?: LandingReplayAssessment;
+  readonly replayInputs?: string;
 };
 
 export async function planLand(
@@ -183,16 +188,22 @@ export async function planLand(
     blockers,
     warnings,
   };
-  return await withReplayAssessment(plan, remote);
+  return await withReplayAssessment(plan, remote, context);
 }
 
 async function withReplayAssessment(
   plan: LandPlan,
-  remote: string
+  remote: string,
+  context: TContext
 ): Promise<LandPlan> {
   if (plan.blockers.length) return plan;
   const blockers = [...plan.blockers];
+  const replayInputs = await captureLandingReplayInputs(plan, context);
   const replay = await inspectLandingReplay(plan, remote);
+  if ((await captureLandingReplayInputs(plan, context)) !== replayInputs)
+    blockers.push(
+      'Replay inputs changed during inspection; preview again. No landing effects were started.'
+    );
   if (replay.status === 'conflict')
     blockers.push(
       `Replay conflict in ${replay.branch}: ${replay.paths
@@ -203,7 +214,7 @@ async function withReplayAssessment(
     );
   else if (replay.status === 'unavailable')
     blockers.push(`Replay inspection unavailable: ${replay.reason}`);
-  return { ...plan, blockers, replay };
+  return { ...plan, blockers, replay, replayInputs };
 }
 
 async function inspectParticipant(
@@ -549,6 +560,7 @@ export async function land(
     await startScopedLanding(locked, lockedContext, {
       cacheLock,
       waitSeconds: args['wait-timeout'],
+      beforeFirstEffect: () => assertLandingReplayInputs(locked, lockedContext),
     });
   });
 }
