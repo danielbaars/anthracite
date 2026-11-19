@@ -145,14 +145,7 @@ async function assertSupportedInputs(
   plan: LandPlan,
   git: ReplayRepository
 ): Promise<void> {
-  let parent = plan.trunk;
-  for (const member of [...plan.merges, ...plan.maintenance]) {
-    if (member.parent !== parent || member.mergedResult)
-      throw new Error(
-        'Replay inspection does not yet support this mandatory participant graph.'
-      );
-    parent = member.branch;
-  }
+  assertLandingGraph(plan);
   const unsafe = await git.run(
     [
       'config',
@@ -312,7 +305,49 @@ async function replayCommits(
   throw new Error('Replay inspection failed without verified conflict paths.');
 }
 
-async function simulateLinearLanding(
+function assertLandingGraph(plan: LandPlan): void {
+  const first = plan.merges[0];
+  if (!first) throw new Error('Replay merge scope is unavailable.');
+  let parent = plan.trunk;
+  for (const member of plan.merges) {
+    if (member.parent !== parent)
+      throw new Error('Replay merge chain changed its captured parent.');
+    parent = member.branch;
+  }
+  const known = new Set([plan.trunk]);
+  for (const member of [...plan.merges, ...plan.maintenance]) {
+    if (
+      known.has(member.branch) ||
+      !known.has(member.parent) ||
+      (member !== first && member.parent === plan.trunk)
+    )
+      throw new Error(
+        'Replay mandatory participant graph is unavailable or inconsistent.'
+      );
+    known.add(member.branch);
+  }
+}
+
+function capturedSurvivors(
+  plan: LandPlan,
+  position: number
+): LandPlan['maintenance'] {
+  const current = plan.merges[position];
+  if (!current) throw new Error('Replay merge scope is unavailable.');
+  const affected = new Set([current.branch]);
+  const survivors: LandPlan['merges'][number][] = [];
+  for (const member of [
+    ...plan.merges.slice(position + 1),
+    ...plan.maintenance,
+  ]) {
+    if (!affected.has(member.parent)) continue;
+    affected.add(member.branch);
+    survivors.push(member);
+  }
+  return survivors;
+}
+
+async function simulateLandingGraph(
   plan: LandPlan,
   git: ReplayRepository
 ): Promise<LandingReplayAssessment> {
@@ -325,26 +360,57 @@ async function simulateLinearLanding(
       { head: member.head, base: member.base, parent: member.parent },
     ])
   );
+  for (const member of members) {
+    if (
+      member.mergedResult &&
+      (
+        await git.run(
+          [
+            'merge-base',
+            '--is-ancestor',
+            member.mergedResult,
+            plan.remoteTrunk,
+          ],
+          { allowFailure: true }
+        )
+      ).code !== 0
+    )
+      throw new Error(
+        'Replay cleanup-only result is not verified in captured remote trunk.'
+      );
+  }
   let trunk = plan.remoteTrunk;
-  for (const target of plan.merges) {
+  for (const [index, target] of plan.merges.entries()) {
     const current = reached.get(target.branch);
     if (!current) throw new Error('Replay participant is unavailable.');
-    const merged = await replayCommits(git, {
-      branch: target.branch,
-      onto: trunk,
-      from:
-        target === plan.merges[0]
-          ? target.pr?.baseRefOid ?? current.base
-          : current.base,
-      head: current.head,
-      force: true,
-    });
-    if (typeof merged !== 'string') return merged;
-    trunk = merged;
-    for (const member of members.slice(members.indexOf(target) + 1)) {
+    if (!target.mergedResult) {
+      const merged = await replayCommits(git, {
+        branch: target.branch,
+        onto: trunk,
+        from:
+          index === 0 ? target.pr?.baseRefOid ?? current.base : current.base,
+        head: current.head,
+        force: true,
+      });
+      if (typeof merged !== 'string') return merged;
+      trunk = merged;
+    }
+    const survivors = capturedSurvivors(plan, index);
+    const landedParents = new Set([
+      target.branch,
+      ...survivors
+        .filter((member) => member.mergedResult)
+        .map((member) => member.branch),
+    ]);
+    for (const member of survivors) {
       const next = reached.get(member.branch);
       if (!next) throw new Error('Replay participant is unavailable.');
-      if (next.parent === target.branch) next.parent = plan.trunk;
+      if (landedParents.has(next.parent)) next.parent = plan.trunk;
+    }
+    for (const member of survivors) {
+      if (member.mergedResult) continue;
+      const next = reached.get(member.branch);
+      if (!next) throw new Error('Replay participant is unavailable.');
       const onto =
         next.parent === plan.trunk ? trunk : reached.get(next.parent)?.head;
       if (!onto) throw new Error('Replay parent is unavailable.');
@@ -405,7 +471,7 @@ export async function inspectLandingReplay(
   try {
     await assertSupportedInputs(plan, git);
     await prepareReplayObjects(plan, remote, git);
-    return await simulateLinearLanding(plan, git);
+    return await simulateLandingGraph(plan, git);
   } catch (error: unknown) {
     return {
       status: 'unavailable',

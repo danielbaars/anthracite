@@ -127,12 +127,14 @@ describe('public landing replay preflight', function () {
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
   });
 
-  it('refuses unsupported mandatory fanout rather than ignoring a survivor', () => {
+  it('inspects mandatory fanout rather than ignoring a survivor', () => {
     fixture.ok(['create', 'beside', '--onto', 'base']);
     const before = fixture.inspectionSnapshot();
-    const result = fixture.run(['land', 'tip', '--yes']);
-    expect(result.status, result.stdout + result.stderr).to.equal(1);
-    expect(result.stdout).to.include('mandatory participant graph');
+    const result = fixture.run(['land', 'tip', '--dry-run']);
+    expect(result.status, result.stdout + result.stderr).to.equal(0);
+    expect(result.stdout).to.include(
+      'Replay: conflict-free for captured inputs'
+    );
     expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"PUT"');
   });
