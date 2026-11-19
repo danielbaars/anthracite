@@ -102,8 +102,33 @@ describe('public deferred landing delivery', function () {
     ).to.equal(author);
     expect(fs.existsSync(record)).to.equal(true);
     fs.writeFileSync(github.policy, JSON.stringify(policy));
+    const beforePreview = fixture.inspectionSnapshot();
+    const pendingPreview = fixture.run(['land', 'tip', '--dry-run']);
+    expect(
+      pendingPreview.status,
+      pendingPreview.stdout + pendingPreview.stderr
+    ).to.equal(0);
+    expect(pendingPreview.stdout)
+      .to.include('Readiness: PENDING for #18 child')
+      .and.to.include('complete immediate maintenance and fresh checks')
+      .and.not.to.include('Cannot resume landing yet')
+      .and.not.to.include('unknown until its mandatory push');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(beforePreview);
+    expect(fixture.git(['for-each-ref'], github.remote)).to.equal(remote);
+    const inspectionCalls = fs
+      .readFileSync(github.calls, 'utf8')
+      .slice(calls.length);
+    expect(inspectionCalls)
+      .not.to.include('"PUT"')
+      .and.not.to.include('"edit"');
     const resumed = fixture.run(['land', 'tip', '--yes']);
     expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(0);
+    expect(resumed.stdout)
+      .not.to.include('Cannot resume landing yet')
+      .and.not.to.include('unknown until its mandatory push');
+    expect(resumed.stdout.indexOf('Maintained: child')).to.be.lessThan(
+      resumed.stdout.indexOf('Confirmed merged #18')
+    );
     const transactions = observer.client().flatMap((entry) => entry.refs);
     expect(observer.client()).to.have.length(5);
     expect(
@@ -123,6 +148,116 @@ describe('public deferred landing delivery', function () {
     expect(fixture.git(['show', 'main:child.txt'])).to.equal('resolved child');
     expect(fixture.git(['show', 'main:tip.txt'])).to.equal('tip');
     expect(fs.existsSync(record)).to.equal(false);
+  });
+
+  it('publishes resolved work before waiting for fresh required checks and preserves failures on the published head', () => {
+    const github = prepareLand(fixture, ['unit']);
+    const observer = observeLandingPushes(fixture, github.remote);
+    const policy = z
+      .record(z.string(), z.unknown())
+      .parse(JSON.parse(fs.readFileSync(github.policy, 'utf8')));
+    fs.writeFileSync(
+      github.policy,
+      JSON.stringify({ ...policy, replayConflict: true })
+    );
+    const stopped = fixture.run([
+      'land',
+      'tip',
+      '--yes',
+      '--wait-timeout',
+      '0',
+    ]);
+    expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
+    expect(stopped.stderr).to.include('an continue');
+    fs.writeFileSync(path.join(fixture.repo, 'child.txt'), 'resolved child\n');
+    fixture.git(['add', 'child.txt']);
+    const continued = fixture.run(['continue']);
+    expect(continued.status, continued.stdout + continued.stderr).to.equal(0);
+    const setChecks = (conclusion: string): void => {
+      const prs = z
+        .array(z.object({ headRefName: z.string() }).passthrough())
+        .parse(JSON.parse(fs.readFileSync(github.state, 'utf8')));
+      for (const pr of prs) {
+        pr.mergeStateStatus = conclusion === 'SUCCESS' ? 'CLEAN' : 'UNSTABLE';
+        pr.statusCheckRollup = [
+          {
+            __typename: 'CheckRun',
+            name: 'unit',
+            status: 'COMPLETED',
+            conclusion,
+          },
+        ];
+      }
+      fs.writeFileSync(github.state, JSON.stringify(prs));
+    };
+    // A failure on the old published head cannot describe the resolved head.
+    setChecks('FAILURE');
+    fs.writeFileSync(
+      github.policy,
+      JSON.stringify({ ...policy, pendingAfterPush: true })
+    );
+    const beforePreview = fixture.inspectionSnapshot();
+    const preview = fixture.run(['land', 'tip', '--dry-run']);
+    expect(preview.status, preview.stdout + preview.stderr).to.equal(0);
+    expect(preview.stdout).to.include('Readiness: PENDING for #18 child');
+    expect(preview.stdout).not.to.include('Check unit: FAILURE');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(beforePreview);
+    const resumed = fixture.run([
+      'land',
+      'tip',
+      '--yes',
+      '--wait-timeout',
+      '0',
+    ]);
+    expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(1);
+    expect(resumed.stderr)
+      .to.include('Check wait timed out before #18')
+      .and.to.include('No merge request sent for #18');
+    expect(fixture.git(['rev-parse', 'child'], github.remote)).to.equal(
+      fixture.git(['rev-parse', 'child'])
+    );
+    expect(
+      observer
+        .client()
+        .flatMap((entry) => entry.refs)
+        .filter((entry) => entry.next !== '0'.repeat(40))
+        .map((entry) => entry.ref)
+    ).to.deep.equal(['refs/heads/child']);
+    expect(
+      fs.readFileSync(github.calls, 'utf8').split('"PUT"').length - 1
+    ).to.equal(1);
+    setChecks('FAILURE');
+    const publishedBefore = fixture.inspectionSnapshot();
+    const refused = fixture.run(['land', 'tip', '--dry-run']);
+    expect(refused.status, refused.stdout + refused.stderr).to.equal(1);
+    expect(refused.stdout).to.include('child: Check unit: FAILURE');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(publishedBefore);
+    const failedResume = fixture.run([
+      'land',
+      'tip',
+      '--yes',
+      '--wait-timeout',
+      '0',
+    ]);
+    expect(failedResume.status).to.equal(1);
+    expect(failedResume.stderr).to.include('No merge request sent for #18');
+    expect(
+      fs.readFileSync(github.calls, 'utf8').split('"PUT"').length - 1
+    ).to.equal(1);
+    setChecks('SUCCESS');
+    fs.writeFileSync(github.policy, JSON.stringify(policy));
+    const completed = fixture.run([
+      'land',
+      'tip',
+      '--yes',
+      '--wait-timeout',
+      '0',
+    ]);
+    expect(completed.status, completed.stdout + completed.stderr).to.equal(0);
+    expect(
+      fs.readFileSync(github.calls, 'utf8').split('"PUT"').length - 1
+    ).to.equal(3);
+    expect(fixture.git(['show', 'main:child.txt'])).to.equal('resolved child');
   });
 
   it('preserves released version-1 eager scheduling after a partial mandatory PR update', function () {

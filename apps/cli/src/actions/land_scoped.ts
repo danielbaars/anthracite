@@ -282,20 +282,22 @@ function pendingPublicationDue(
   record: LandingProgress,
   cleanupOnly: ReadonlySet<string>
 ): string | undefined {
-  if (
-    record.version !== 2 ||
-    !cleanupOnly.has(current(record).branch) ||
-    (record.phase !== 'prepared' && record.phase !== 'merge-requested')
-  )
+  if (record.version !== 2 || !cleanupOnly.has(current(record).branch))
     return undefined;
-  return record.merges
+  const next = record.merges
     .slice((record.index ?? 0) + 1)
     .find(
       (member) =>
         !member.cleanupResult &&
         !member.result &&
         !cleanupOnly.has(member.branch)
-    )?.branch;
+    );
+  return next &&
+    (record.phase === 'prepared' ||
+      record.phase === 'merge-requested' ||
+      owned(next).head !== owned(next).remoteHead)
+    ? next.branch
+    : undefined;
 }
 
 function pendingPublicationDeferred(
@@ -678,6 +680,8 @@ async function inspectPendingLanding(
           pending,
           warnings,
           retryUnconfirmed,
+          publicationPending:
+            pendingPublicationDue(record, cleanupOnly) === member.branch,
         });
     });
   printPendingLanding(record, context, {
@@ -700,6 +704,7 @@ async function inspectPendingReadiness(
     readonly pending: string[];
     readonly warnings: string[];
     readonly retryUnconfirmed?: boolean;
+    readonly publicationPending: boolean;
   }
 ): Promise<void> {
   const { pr, policy, blockers, warnings } = inspection;
@@ -711,7 +716,10 @@ async function inspectPendingReadiness(
     blockers.push(
       `${member.branch}: Previous merge request remains unconfirmed. An open PR alone does not authorize another request; preserve recovery and inspect the original failure.`
     );
-  if (isLandingPublicationDeferred(record, member.branch)) {
+  if (
+    inspection.publicationPending ||
+    isLandingPublicationDeferred(record, member.branch)
+  ) {
     if (policy)
       blockers.push(
         ...githubLandReviewBlockers(pr, policy).map(
