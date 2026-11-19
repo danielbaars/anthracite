@@ -1,3 +1,4 @@
+import { scopedGithubPrRead } from './github_pr_execution_scope';
 import { githubProcessOptions, githubFailureKind } from './github_process';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
@@ -65,11 +66,10 @@ export async function runGithubPrCommand(
   repo: string
 ): Promise<string> {
   try {
-    const result = await execFileAsync(
-      'gh',
-      [...args, '--repo', `github.com/${repo}`],
-      githubProcessOptions()
-    );
+    const command = [...args, '--repo', `github.com/${repo}`];
+    const scoped = scopedGithubPrRead(command);
+    if (scoped) return await scoped;
+    const result = await execFileAsync('gh', command, githubProcessOptions());
     return result.stdout;
   } catch (error: unknown) {
     const kind = {

@@ -1,3 +1,4 @@
+import { freshLandingSourceArgs } from '../lib/git/landing_source_scope';
 import fs from 'fs';
 import { validateLandingIdentity } from '../lib/landing_identity';
 import path from 'path';
@@ -37,9 +38,11 @@ export function validateLocal(
   if (
     git([
       '--no-optional-locks',
-      'status',
-      '--porcelain=v1',
-      '--untracked-files=normal',
+      ...freshLandingSourceArgs([
+        'status',
+        '--porcelain=v1',
+        '--untracked-files=normal',
+      ]),
     ])
   )
     throw new ExitFailedError(

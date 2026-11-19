@@ -1,3 +1,5 @@
+import { spawn } from 'child_process';
+import { setTimeout as delay } from 'timers/promises';
 import fs from 'fs';
 import path from 'path';
 import { expect } from 'chai';
@@ -234,5 +236,119 @@ describe('public landing replay freshness', function () {
       fixture.git(['rev-parse', 'base'])
     );
     expect(fixture.git(['rev-parse', 'main'], github.remote)).to.equal(next);
+  });
+
+  for (const command of ['filter', 'fsmonitor'])
+    it(`executes no newly introduced ${command} during pre-effect source inspection`, () => {
+      const sentinel = path.join(fixture.root, 'project-command-ran');
+      const hook = path.join(fixture.root, 'project-command');
+      fs.writeFileSync(
+        hook,
+        `#!/bin/sh\nprintf ran > '${sentinel}'\n${
+          command === 'filter' ? 'cat' : 'exit 0'
+        }\n`,
+        { mode: 0o755 }
+      );
+      const code =
+        command === 'filter'
+          ? `
+        require('child_process').execFileSync('git', ['config','filter.late.clean',${JSON.stringify(
+          hook
+        )}], {cwd:${JSON.stringify(fixture.repo)}});
+        require('fs').writeFileSync(${JSON.stringify(
+          path.join(fixture.repo, '.git/info/attributes')
+        )}, '*.txt filter=late\\n');
+      `
+          : `require('child_process').execFileSync('git', ['config','core.fsmonitor',${JSON.stringify(
+              hook
+            )}], {cwd:${JSON.stringify(fixture.repo)}});`;
+      const marker = duringFirstRequest(code, 'prepared');
+      const refused = fixture.run(['land', 'tip', '--yes']);
+      expect(fs.existsSync(marker)).to.equal(true);
+      expect(refused.status, refused.stdout + refused.stderr).to.equal(1);
+      expect(
+        fs.existsSync(sentinel),
+        'project command executed before invalidation'
+      ).to.equal(false);
+      expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"PUT"');
+    });
+  it('cancels a blocked fresh-input GitHub read under lock without leaking owned state', async () => {
+    const temporary = path.join(fixture.root, 'temporary');
+    fs.mkdirSync(temporary);
+    const foreign = path.join(temporary, 'an-land-inputs-foreign');
+    fs.mkdirSync(foreign);
+    fs.writeFileSync(path.join(foreign, 'sentinel'), 'foreign');
+    fixture.env.TMPDIR = temporary;
+    const blocked = path.join(fixture.root, 'blocked-gh');
+    const script = path.join(github.bin, 'gh');
+    const original = fs.readFileSync(script, 'utf8');
+    const progress = path.join(fixture.repo, '.git/.anthracite_landing');
+    fs.writeFileSync(
+      script,
+      original.slice(0, original.indexOf('\n') + 1) +
+        `
+const ownFs=require('fs');
+if (ownFs.existsSync(${JSON.stringify(
+          progress
+        )}) && JSON.parse(ownFs.readFileSync(${JSON.stringify(
+          progress
+        )},'utf8')).phase==='merge-requested' && process.argv[2]==='pr' && process.argv[3]==='view' && process.argv[4]==='17') {
+ ownFs.writeFileSync(${JSON.stringify(blocked)},String(process.pid));
+ setInterval(()=>{},1000);
+} else {
+` +
+        original.slice(original.indexOf('\n') + 1) +
+        '\n}\n'
+    );
+    const before = fixture.inspectionSnapshot();
+    const [executable, ...args] = getTestCliCommand(['land', 'tip', '--yes']);
+    const child = spawn(executable, args, {
+      cwd: fixture.repo,
+      env: fixture.env,
+      detached: true,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    let output = '';
+    child.stdout.on('data', (chunk: Buffer) => {
+      output += chunk.toString();
+    });
+    child.stderr.on('data', (chunk: Buffer) => {
+      output += chunk.toString();
+    });
+    const ended = new Promise<boolean>((resolve) =>
+      child.once('exit', () => resolve(true))
+    );
+    let ghPid: number | undefined;
+    try {
+      const deadline = Date.now() + 60000;
+      while (!fs.existsSync(blocked) && Date.now() < deadline) await delay(50);
+      expect(fs.existsSync(blocked), output).to.equal(true);
+      const observedPid = Number(fs.readFileSync(blocked, 'utf8'));
+      ghPid = observedPid;
+      child.kill('SIGINT');
+      expect(
+        await Promise.race([ended, delay(5000, false)]),
+        'inspection did not unwind'
+      ).to.equal(true);
+      expect(
+        fs.readdirSync(temporary).filter((name) => name.startsWith('an-land-'))
+      ).to.deep.equal(['an-land-inputs-foreign']);
+      expect(fs.existsSync(progress)).to.equal(false);
+      expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+      expect(fs.readFileSync(github.calls, 'utf8')).not.to.include('"PUT"');
+      expect(fs.readFileSync(path.join(foreign, 'sentinel'), 'utf8')).to.equal(
+        'foreign'
+      );
+      expect(() => process.kill(observedPid, 0)).to.throw();
+    } finally {
+      for (const pid of [child.pid, ghPid])
+        if (pid !== undefined) {
+          try {
+            process.kill(-pid, 'SIGKILL');
+          } catch {
+            /* owned group already exited */
+          }
+        }
+    }
   });
 });

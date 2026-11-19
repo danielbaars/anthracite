@@ -22,11 +22,12 @@ type Execution = {
   cancelled: boolean;
   terminate?: () => void;
 };
-async function runBoundedGit(
+async function runBoundedInspectionProcess(
   args: readonly string[],
   options: {
     readonly cwd: string;
     readonly env: NodeJS.ProcessEnv;
+    readonly executable?: 'git' | 'gh';
     readonly execution: Execution;
     readonly allowFailure?: boolean;
   }
@@ -36,7 +37,7 @@ async function runBoundedGit(
   if (execution.cancelled || budget <= 0)
     throw new Error('Replay inspection was interrupted or timed out.');
   const result = await new Promise<InspectionGitResult>((resolve, reject) => {
-    const child = spawn('git', args, {
+    const child = spawn(options.executable ?? 'git', args, {
       cwd: options.cwd,
       env: options.env,
       detached: process.platform !== 'win32',
@@ -80,7 +81,9 @@ async function runBoundedGit(
     });
     child.once('error', () => {
       clearTimeout(timer);
-      reject(new Error('Replay inspection could not start Git.'));
+      reject(
+        new Error('Replay inspection could not start its required process.')
+      );
     });
     child.once('close', (code, signal) => {
       clearTimeout(timer);
@@ -104,9 +107,7 @@ async function runBoundedGit(
     });
   });
   if (!options.allowFailure && result.code !== 0)
-    throw new Error(
-      'Replay inspection could not complete a required Git operation.'
-    );
+    throw new Error('Replay inspection could not complete a required process.');
   return result;
 }
 
@@ -146,9 +147,10 @@ export type LandingInspection = {
     options?: CommandOptions
   ) => Promise<InspectionGitResult>;
   readonly read: (args: readonly string[], cwd?: string) => Promise<string>;
+  readonly runGithub: (args: readonly string[]) => Promise<string>;
 };
 
-/** Own only disposable inspection resources and child groups, before any landing lock. */
+/** Own only disposable inspection resources and literal child process groups. */
 export async function withLandingInspection<T>(
   prefix: string,
   inspect: (git: LandingInspection) => Promise<T>
@@ -176,7 +178,7 @@ export async function withLandingInspection<T>(
     args: readonly string[],
     options: CommandOptions = {}
   ): Promise<InspectionGitResult> =>
-    runBoundedGit(
+    runBoundedInspectionProcess(
       [
         '-c',
         `core.hooksPath=${hooks}`,
@@ -204,6 +206,21 @@ export async function withLandingInspection<T>(
       environment,
       originalEnvironment,
       run,
+      runGithub: async (args) =>
+        (
+          await runBoundedInspectionProcess(args, {
+            executable: 'gh',
+            cwd: process.cwd(),
+            env: {
+              ...originalEnvironment,
+              GH_HOST: 'github.com',
+              GH_PROMPT_DISABLED: '1',
+              GH_PAGER: '',
+              PAGER: '',
+            },
+            execution,
+          })
+        ).stdout,
       read: async (args, cwd) => (await run(args, { cwd })).stdout.trim(),
     });
   } finally {
