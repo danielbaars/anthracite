@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.3](https://github.com/danielbaars/anthracite/compare/v0.9.2...v0.9.3) (2026-11-19)
+
+
+### Bug Fixes
+
+* **cli:** distinguish pending landing publication from blockers ([91c57dd](https://github.com/danielbaars/anthracite/commit/91c57dd8fd0553e5f48ed41bde7c8b5204c5b330))
+
 ## [0.9.2](https://github.com/danielbaars/anthracite/compare/v0.9.1...v0.9.2) (2026-11-19)
 
 
