@@ -1,0 +1,8 @@
+
+
+  MCP cancellation and shutdown through stdio
+    ✔ scenario 14: accepts numeric-zero cancellation and ignores malformed, unknown and completed notifications during later work (5309ms)
+
+
+  1 passing (10s)
+

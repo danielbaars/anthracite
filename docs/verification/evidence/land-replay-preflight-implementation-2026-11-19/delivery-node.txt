@@ -1,0 +1,11 @@
+
+
+  public landing replay delivery
+    ✔ explains the preserving replay gate in public help (2366ms)
+    ✔ learns the replay boundary and preserves a known conflict through the existing MCP tools (6501ms)
+    ✔ preserves supported published version-1 landing recovery and publication scope (53032ms)
+    ✔ preserves supported published version-2 landing recovery and publication scope (53531ms)
+
+
+  4 passing (2m)
+

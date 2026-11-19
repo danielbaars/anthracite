@@ -1,0 +1,46 @@
+[
+  {
+    "id": "@danielbaars/anthracite@0.6.15",
+    "name": "@danielbaars/anthracite",
+    "version": "0.6.15",
+    "size": 555385,
+    "unpackedSize": 3160418,
+    "shasum": "d0e986784b1ba2fdc9fc608af5bc75375a9365bf",
+    "integrity": "sha512-hDla14RukVCN9Nmflp2E4z74E4Y4Br1sg53eqAzak11CBHw2mCRdiaHrOb5vgtMmyk/w+pViJknuk7ZEzo5jzQ==",
+    "filename": "danielbaars-anthracite-0.6.15.tgz",
+    "files": [
+      {
+        "path": "CREDITS.md",
+        "size": 1155,
+        "mode": 420
+      },
+      {
+        "path": "LICENSE",
+        "size": 34523,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 5460,
+        "mode": 420
+      },
+      {
+        "path": "THIRD_PARTY_NOTICES.md",
+        "size": 53720,
+        "mode": 420
+      },
+      {
+        "path": "cli.cjs",
+        "size": 3064869,
+        "mode": 493
+      },
+      {
+        "path": "package.json",
+        "size": 691,
+        "mode": 420
+      }
+    ],
+    "entryCount": 6,
+    "bundled": []
+  }
+]
