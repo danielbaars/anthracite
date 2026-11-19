@@ -1,0 +1,49 @@
+{
+  "localTrunk": "b115dc108cefe4764a26af2f86750163fc6a6393",
+  "remoteTrunk": "d6c6a8b4d623316a5c6cee38e339c0bb0f2fce93",
+  "preview": {
+    "status": 0
+  },
+  "previewPreserved": true,
+  "application": {
+    "status": 1
+  },
+  "conflicts": "child.txt",
+  "prsAfterFailure": [
+    {
+      "number": 17,
+      "state": "MERGED"
+    },
+    {
+      "number": 18,
+      "state": "OPEN"
+    },
+    {
+      "number": 19,
+      "state": "OPEN"
+    }
+  ],
+  "continue": {
+    "status": 0
+  },
+  "pendingPreview": {
+    "status": 1
+  },
+  "resume": {
+    "status": 0
+  },
+  "finalPrs": [
+    {
+      "number": 17,
+      "state": "MERGED"
+    },
+    {
+      "number": 18,
+      "state": "MERGED"
+    },
+    {
+      "number": 19,
+      "state": "MERGED"
+    }
+  ]
+}
