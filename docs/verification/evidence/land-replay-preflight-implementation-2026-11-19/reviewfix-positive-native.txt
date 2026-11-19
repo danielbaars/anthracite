@@ -1,0 +1,9 @@
+
+
+  public landing replay failure boundaries
+    ✔ preserves built-in text attributes and harmless replay configuration without executing unused drivers (6719ms)
+    ✔ keeps clean local CRLF replays separate from server defaults across actual landing (44560ms)
+
+
+  2 passing (58s)
+
