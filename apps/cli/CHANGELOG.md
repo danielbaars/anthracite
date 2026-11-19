@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.5](https://github.com/danielbaars/anthracite/compare/v0.9.4...v0.9.5) (2026-11-19)
+
+
+### Bug Fixes
+
+* **cli:** honor effective landing replay configuration ([c0498b2](https://github.com/danielbaars/anthracite/commit/c0498b2f300f7298f89a0b692ca4b2201e27ad33))
+
 ## [0.9.4](https://github.com/danielbaars/anthracite/compare/v0.9.3...v0.9.4) (2026-11-19)
 
 
