@@ -1,0 +1,54 @@
+
+
+  public landing replay preflight
+    ✔ refuses a later replay conflict before the first merge when remote trunk moved (4812ms)
+    ✔ detects an intermediate commit conflict even when the final branch diff removed that file (2769ms)
+    ✔ lands a clean linear chain with advanced trunk false (47372ms)
+    ✔ lands a clean linear chain with advanced trunk true (48607ms)
+    ✔ runs no source hooks during preserving inspection (2467ms)
+    ✔ inspects mandatory fanout rather than ignoring a survivor (2961ms)
+    ✔ does not execute injected hooks while obtaining missing remote objects (2703ms)
+
+  public landing replay graph inspection
+    ✔ inspects a clean mandatory fanout and excludes independent trunk branches (4849ms)
+    ✔ refuses a replay conflict in mandatory published-side before any merge (6238ms)
+    ✔ refuses a replay conflict in mandatory local-side before any merge (5773ms)
+    ✔ refuses a replay conflict in mandatory deep-side before any merge (6702ms)
+    ✔ lands a clean fanout without replaying a completed side arm onto unrelated later trunk work (90682ms)
+    ✔ uses verified cleanup-only results without replaying or publishing retired branches (64081ms)
+    ✔ inspects already-applied work and empty commits without changing captured history (6567ms)
+
+  public landing replay freshness
+    ✔ refuses a compatible trunk advance after locked inspection but before the first merge request (12350ms)
+    ✔ preserves a changed recovery record instead of clearing foreign progress (9961ms)
+    ✔ refuses changed configuration after inspection without losing the external change (9423ms)
+    ✔ refuses changed head after inspection without losing the external change (9245ms)
+    ✔ refuses changed parent metadata after inspection without losing the external change (9616ms)
+    ✔ preserves a trunk change at confirmation with acceptance false (2614ms)
+    ✔ preserves a trunk change at confirmation with acceptance true (4611ms)
+    ✔ lands unchanged captured inputs despite an unrelated advice preference changing (45346ms)
+    ✔ revalidates before maintaining an already externally merged first target (9129ms)
+    ✔ executes no newly introduced filter during pre-effect source inspection (9510ms)
+    ✔ executes no newly introduced fsmonitor during pre-effect source inspection (9412ms)
+2026-11-19 15:43:59.044 xcodebuild[47338:27357716]  DVTFilePathFSEvents: Failed to start fs event stream.
+2026-11-19 15:43:59.170 xcodebuild[47338:27357710] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 "Input/output error". Using NSCachesDirectory instead.
+    ✔ cancels a blocked fresh-input GitHub read under lock without leaking owned state (10879ms)
+
+  public landing replay failure boundaries
+    ✔ refuses unsupported grafts history without a clean replay claim (518ms)
+    ✔ refuses unsupported shallow history without a clean replay claim (488ms)
+    ✔ refuses active clean filters before inspecting dirty work without executing project commands (383ms)
+    ✔ preserves built-in text attributes and harmless replay configuration without executing unused drivers (8084ms)
+    ✔ keeps clean local CRLF replays separate from server defaults across actual landing (49379ms)
+    ✔ does not let local union attributes authorize a conflicting server merge (2495ms)
+    ✔ refuses selected custom merge drivers without executing them or changing state (2108ms)
+    ✔ refuses a real missing-object transport failure without retaining its stderr or source writes (2668ms)
+    ✔ cancels missing-object acquisition under lock false with SIGINT without touching foreign resources (2763ms)
+    ✔ cancels missing-object acquisition under lock false with SIGTERM without touching foreign resources (2723ms)
+    ✔ cancels missing-object acquisition under lock false with timeout without touching foreign resources (32648ms)
+    ✔ cancels missing-object acquisition under lock true with SIGINT without touching foreign resources (7316ms)
+    ✔ cancels missing-object acquisition under lock true with SIGTERM without touching foreign resources (7289ms)
+
+
+  39 passing (12m)
+

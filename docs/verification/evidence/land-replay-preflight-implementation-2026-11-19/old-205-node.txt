@@ -1,0 +1,9 @@
+
+
+  public deferred landing delivery
+    ✔ detects early replay conflicts before publication and continues locally before explicit landing (56639ms)
+    ✔ publishes resolved work before waiting for fresh required checks and preserves failures on the published head (63266ms)
+
+
+  2 passing (2m)
+
