@@ -128,7 +128,7 @@ export function landingRemoteIdentity(
   // the user's trusted configuration, not proof of the actual server endpoint.
   const githubRepo = (url: string): string | undefined => {
     const match =
-      /^(?:https:\/\/github\.com\/|git@github\.com:|ssh:\/\/git@github\.com\/)([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+?)(?:\.git)?$/i.exec(
+      /^(?:https:\/\/(?:[^:/?#@\s\\]+@)?github\.com\/|git@github\.com:|ssh:\/\/git@github\.com\/)([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+?)(?:\.git)?$/i.exec(
         url
       );
     return match &&
@@ -147,7 +147,7 @@ export function landingRemoteIdentity(
     )
   )
     throw new ExitFailedError(
-      'Landing requires a supported declared GitHub remote matching the configured repository (HTTPS, git@github.com or ssh://git@github.com). No credentials are recorded.'
+      'Landing requires a supported declared GitHub remote matching the configured repository (HTTPS with an optional username but no password, git@github.com or ssh://git@github.com). No credentials are recorded.'
     );
   const fetch = landingGit(['remote', 'get-url', '--all', remote]);
   const push = landingGit(['remote', 'get-url', '--push', '--all', remote]);
