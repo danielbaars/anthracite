@@ -1,0 +1,13 @@
+
+
+  public landing checkout-dependent configuration
+    ✔ refuses an active branch-conditional union policy before preview or first merge (1114ms)
+    ✔ refuses currently inactive branch includes without executing future project commands (906ms)
+    ✔ retains stable directory-conditional built-in replay configuration (2541ms)
+
+  public landing replay failure boundaries
+    ✔ preserves built-in text attributes and harmless replay configuration without executing unused drivers (7943ms)
+
+
+  4 passing (30s)
+

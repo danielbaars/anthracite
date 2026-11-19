@@ -1,0 +1,46 @@
+{
+  "tested_source": "c7a7789a2c096686e9a6fec87de6f1e83b265432",
+  "reachable_source": "0b481870468ccb667d158c7e53db06b376ef329f",
+  "product_source_diff": "empty across apps/cli/src, scripts, packages, apps/cli/package.json, README.md, LICENSE, CREDITS.md and yarn.lock",
+  "tested_archive_sha256": "690f06a19327a4e879bda2bc710b6b9f318e98d4e3d744fa2b10a904c5628b87",
+  "rebuilt_archive_sha256": "54ac4eba5cd3faf99b435f916cf439b01a73ba27e0401dd83898c67401ea0d16",
+  "package_files": {
+    "CREDITS.md": {
+      "tested_sha256": "7874b424bc9e7f3205452e7713a68ce9fe6a8a3117c4c6792c061569f68e7a80",
+      "rebuilt_sha256": "7874b424bc9e7f3205452e7713a68ce9fe6a8a3117c4c6792c061569f68e7a80",
+      "identical": true
+    },
+    "LICENSE": {
+      "tested_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+      "rebuilt_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+      "identical": true
+    },
+    "README.md": {
+      "tested_sha256": "21bce1609ab4bde0c8a21b54119124d71118aa2f8c21a21f633f4dd1121ca8ff",
+      "rebuilt_sha256": "21bce1609ab4bde0c8a21b54119124d71118aa2f8c21a21f633f4dd1121ca8ff",
+      "identical": true
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "tested_sha256": "cde2cb34b14a813c4e6ed86cc58bd025182326893b7f0afbe6cc58cca96e6a02",
+      "rebuilt_sha256": "cde2cb34b14a813c4e6ed86cc58bd025182326893b7f0afbe6cc58cca96e6a02",
+      "identical": true
+    },
+    "cli.cjs": {
+      "tested_sha256": "7f915234dd518517530cfea3f33305070d68144e67a4e34da9cb6fde330e12bd",
+      "rebuilt_sha256": "a6dfd088998071f98d57b59bf2d3bae4024719c419bbd2c67ce1d41dd5531c1b",
+      "identical": false
+    },
+    "package.json": {
+      "tested_sha256": "649a5e5edd19c5a621a08f603430956d2221380ca4faf5b8a3352f19088db562",
+      "rebuilt_sha256": "649a5e5edd19c5a621a08f603430956d2221380ca4faf5b8a3352f19088db562",
+      "identical": true
+    }
+  },
+  "changed_source_comment_lines": 280,
+  "changed_existing_demo_test_fallback_lines": [
+    56560
+  ],
+  "difference_scope": "Randomized build-stage paths only: generated Bun source comments and one existing getTestCliCommand __dirname fallback used by GitRepo/an demo. Bundles and archives are not byte-identical.",
+  "normalized_bundle_sha256": "b7e8cb378c2835b8a72e287865fcbd6c0e134913f43cda244fa6f3a109efede9",
+  "acceptance_boundary": "Full standard gate36 passing applies to tested archive. Rebuilt reachable-source archive receives targeted public regressions; no full-gate claim for different archive."
+}
