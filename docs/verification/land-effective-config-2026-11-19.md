@@ -28,3 +28,7 @@ Retained JSON reports are in [the evidence directory](evidence/land-effective-co
 TypeScript compilation, targeted ESLint, Prettier, `git diff --check` and local `actionlint` validation passed. Ordinary CI gains only the fast preserving override case; no CI run or full matrix was started.
 
 Active unsupported settings are still intentionally refused when local replay is necessary. This fix does not add a rerere simulator or authorize automatic rewrites of unrelated refs. Existing saved landings retain their execution path.
+
+## Ordinary CI follow-up
+
+[The initial ordinary CI run](https://github.com/danielbaars/anthracite/actions/runs/44608813092) completed build/lint, typecheck and every direct CLI step successfully, including the new effective-configuration regression. Its single job reached the twelve-minute deadline during installed npm validation. Increase only that existing job limit to eighteen minutes, retaining the exact test selection and manual-only full matrix. Validate the workflow locally with actionlint before pushing the follow-up. No product code changes are needed for this timeout.
