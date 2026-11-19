@@ -29,6 +29,10 @@ import { z } from 'zod';
 import { readGithubLandApi } from '../lib/api/github_land_policy';
 import { inspectLandAncestry } from '../lib/git/land_inspection';
 import { selectPrBranch } from './pr_selection';
+import {
+  inspectLandingReplay,
+  LandingReplayAssessment,
+} from '../lib/git/landing_replay';
 
 const gitRead = (args: string[]): string =>
   runGitCommand({
@@ -58,6 +62,7 @@ export type LandPlan = {
   readonly maintenance: readonly LandParticipant[];
   readonly blockers: readonly string[];
   readonly warnings: readonly string[];
+  readonly replay?: LandingReplayAssessment;
 };
 
 export async function planLand(
@@ -163,7 +168,7 @@ export async function planLand(
     )
   );
 
-  return {
+  const plan: LandPlan = {
     repo,
     target: branch,
     trunk: context.engine.trunk,
@@ -178,6 +183,27 @@ export async function planLand(
     blockers,
     warnings,
   };
+  return await withReplayAssessment(plan, remote);
+}
+
+async function withReplayAssessment(
+  plan: LandPlan,
+  remote: string
+): Promise<LandPlan> {
+  if (plan.blockers.length) return plan;
+  const blockers = [...plan.blockers];
+  const replay = await inspectLandingReplay(plan, remote);
+  if (replay.status === 'conflict')
+    blockers.push(
+      `Replay conflict in ${replay.branch}: ${replay.paths
+        .map((file) => JSON.stringify(file))
+        .join(
+          ', '
+        )}. Resolve the affected stack before any PR is merged; refresh its intended base, restack, resolve and submit the changed work, then preview again. Dependent replay remains unverified.`
+    );
+  else if (replay.status === 'unavailable')
+    blockers.push(`Replay inspection unavailable: ${replay.reason}`);
+  return { ...plan, blockers, replay };
 }
 
 async function inspectParticipant(
@@ -360,6 +386,10 @@ export function printLandPlan(plan: LandPlan, context: TContext): void {
         ', '
       )}\n  Delete landed branches locally and on GitHub after confirmed merges only.\n`
   );
+  if (plan.replay?.status === 'clean')
+    process.stdout.write(
+      'Replay: conflict-free for captured inputs; future PR readiness remains separate.\n'
+    );
   if (!plan.blockers.length)
     process.stdout.write(
       plan.merges.length > 1

@@ -23,26 +23,55 @@ export function inspectLandAncestry(
   const url = read(['remote', 'get-url', remote.name]);
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'an-land-read-'));
   for (const key of gitEnvironmentOverrides) delete env[key];
+  const hooks = path.join(temporary, 'empty-hooks');
+  fs.mkdirSync(hooks);
+  const deadline = Date.now() + 30000;
   const run = (args: string[]): string =>
     runGitCommand({
-      args,
+      args: [
+        '-c',
+        `core.hooksPath=${hooks}`,
+        '-c',
+        'core.fsmonitor=false',
+        '-c',
+        'maintenance.auto=false',
+        '-c',
+        'gc.auto=0',
+        '-c',
+        'fetch.recurseSubmodules=false',
+        ...args,
+      ],
       resource: 'landingObjectInspection',
       onError: 'throw',
-      options: { env },
+      options: { env, timeout: Math.max(1, deadline - Date.now()) },
     });
   try {
     const bare = path.join(temporary, 'objects.git');
-    run(['clone', '--bare', '--shared', '--no-hardlinks', source, bare]);
+    run([
+      'clone',
+      '--bare',
+      '--shared',
+      '--no-hardlinks',
+      `--template=${hooks}`,
+      '--',
+      source,
+      bare,
+    ]);
     run([
       '-C',
       bare,
       'fetch',
       '--no-tags',
       '--no-write-fetch-head',
+      '--',
       url,
       `refs/heads/${remote.trunk}`,
     ]);
     return read(['merge-base', ancestor, descendant], bare, true) === ancestor;
+  } catch {
+    throw new Error(
+      'Landing object inspection could not obtain required remote history.'
+    );
   } finally {
     fs.rmSync(temporary, { recursive: true, force: true });
   }
