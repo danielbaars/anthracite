@@ -39,6 +39,60 @@ describe('public landing review regressions', function () {
       }
     }
   });
+  it('accepts username-only HTTPS declarations without changing local state during preview', () => {
+    const url = 'https://landing-user@github.com/fixture/inspection.git';
+    fixture.git(['config', `url.${github.remote}.insteadOf`, url]);
+    fixture.git(['remote', 'set-url', 'origin', url]);
+    fixture.git(['remote', 'set-url', '--push', 'origin', url]);
+    const before = fixture.inspectionSnapshot();
+    const preview = fixture.run(['land', 'base', '--dry-run']);
+    expect(preview.status, preview.stdout + preview.stderr).to.equal(0);
+    expect(preview.stdout).to.include('READY');
+    expect(preview.stdout + preview.stderr).not.to.include('landing-user');
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+  });
+
+  it('resumes username-only HTTPS landing with hashed identity and refuses changed transport', () => {
+    const setRemote = (username: string, transport = github.remote): void => {
+      const url = `https://${username}@github.com/fixture/inspection.git`;
+      fixture.git(['config', '--add', `url.${transport}.insteadOf`, url]);
+      fixture.git(['remote', 'set-url', 'origin', url]);
+      fixture.git(['remote', 'set-url', '--push', 'origin', url]);
+    };
+    setRemote('landing-user');
+    const hook = path.join(fixture.repo, '.git/hooks/pre-push');
+    fs.writeFileSync(hook, '#!/bin/sh\nexit 23\n', { mode: 0o755 });
+    const stopped = fixture.run(['land', 'base', '--yes']);
+    expect(stopped.status, stopped.stdout + stopped.stderr).to.equal(1);
+    expect(JSON.parse(fs.readFileSync(github.state, 'utf8'))[0].state).to.equal(
+      'MERGED'
+    );
+    const progress = path.join(fixture.repo, '.git/.anthracite_landing');
+    const saved = fs.readFileSync(progress, 'utf8');
+    expect(saved).not.to.include('landing-user');
+    fs.unlinkSync(hook);
+    const mirror = path.join(fixture.root, 'mirror.git');
+    fixture.git(['clone', '--mirror', github.remote, mirror]);
+    setRemote('another-user', mirror);
+    const before = fixture.inspectionSnapshot();
+    const refused = fixture.run(['land', 'base', '--yes']);
+    expect(refused.status, refused.stdout + refused.stderr).to.equal(1);
+    expect(refused.stdout + refused.stderr).to.include(
+      'remote endpoint changed'
+    );
+    expect(fixture.inspectionSnapshot()).to.deep.equal(before);
+    expect(fs.readFileSync(progress, 'utf8')).to.equal(saved);
+    setRemote('landing-user');
+    const resumed = fixture.run(['land', 'base', '--yes']);
+    expect(resumed.status, resumed.stdout + resumed.stderr).to.equal(0);
+    expect(fs.existsSync(progress)).to.equal(false);
+    expect(fixture.git(['branch', '--list', 'base'])).to.equal('');
+    expect(
+      fixture.git(['ls-remote', github.remote, 'refs/heads/base'])
+    ).to.equal('');
+    expect(fixture.ok(['info', 'child'])).to.include('Parent: main');
+  });
+
   it('accepts canonical SSH declarations and refuses credential, port and URL suffix ambiguity without echoing credentials', () => {
     for (const url of [
       'git@github.com:fixture/inspection',
@@ -53,7 +107,14 @@ describe('public landing review regressions', function () {
       expect(fixture.inspectionSnapshot()).to.deep.equal(before);
     }
     for (const url of [
-      'https://secret-sentinel@github.com/fixture/inspection.git',
+      'https://user:secret-sentinel@github.com/fixture/inspection.git',
+      'https://user:@github.com/fixture/inspection.git',
+      'https://user@github.com:443/fixture/inspection.git',
+      'https://user@github.com.evil.example/fixture/inspection.git',
+      'https://github.com@evil.example/fixture/inspection.git',
+      'https://user@github.com/other/inspection.git',
+      'https://user@github.com/fixture/inspection.git?other=repo',
+      'https://user@github.com/fixture/inspection.git#other',
       'ssh://git@github.com:22/fixture/inspection.git',
       'https://github.com/fixture/inspection.git?other=repo',
       'https://github.com/fixture/inspection.git#other',
