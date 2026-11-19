@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.9.4](https://github.com/danielbaars/anthracite/compare/v0.9.3...v0.9.4) (2026-11-19)
+
+
+### Bug Fixes
+
+* **cli:** bind replay assessment to fresh landing inputs ([095b361](https://github.com/danielbaars/anthracite/commit/095b36182474f65c1085535c4fa68a2d370a4d88))
+* **cli:** bound and isolate landing replay inspection failures ([458c232](https://github.com/danielbaars/anthracite/commit/458c232890eb0eaf65acbc3e8bb081b99441af96))
+* **cli:** honor landing push hook selection ([4b6c249](https://github.com/danielbaars/anthracite/commit/4b6c249986ae73ffa96e6c18f2a2340e064724f0))
+* **cli:** inspect complete landing survivor replay graphs ([93c4e3d](https://github.com/danielbaars/anthracite/commit/93c4e3d8300fdfcd427ce3ece03172dc05147f6b))
+* **cli:** inspect linear landing replay before merging ([ce8f25b](https://github.com/danielbaars/anthracite/commit/ce8f25bacdb6682b1b0cf64e11081d8a429f70ee))
+* **cli:** own fresh landing inspection reads and guards ([a650bfd](https://github.com/danielbaars/anthracite/commit/a650bfdc064b966828049b1f676dff5ff25ec983))
+* **cli:** refuse branch-conditional replay configuration ([503d2dc](https://github.com/danielbaars/anthracite/commit/503d2dcb8346186fafc9145483378147299c158b))
+
 ## [0.9.3](https://github.com/danielbaars/anthracite/compare/v0.9.2...v0.9.3) (2026-11-19)
 
 
