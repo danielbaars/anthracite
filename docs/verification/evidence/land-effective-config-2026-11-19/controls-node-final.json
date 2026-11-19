@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 5,
+    "tests": 12,
+    "passes": 12,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:18:11.612Z",
+    "end": "2026-11-19T20:20:40.623Z",
+    "duration": 149011
+  },
+  "tests": [
+    {
+      "title": "refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4610,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4520,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "identifies implicit recorded-resolution use without changing the old cache",
+      "fullTitle": "public landing effective replay configuration identifies implicit recorded-resolution use without changing the old cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2295,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an active branch-conditional union policy before preview or first merge",
+      "fullTitle": "public landing checkout-dependent configuration refuses an active branch-conditional union policy before preview or first merge",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_conditional_config_cli.test.js",
+      "duration": 1175,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses currently inactive branch includes without executing future project commands",
+      "fullTitle": "public landing checkout-dependent configuration refuses currently inactive branch includes without executing future project commands",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_conditional_config_cli.test.js",
+      "duration": 951,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains stable directory-conditional built-in replay configuration",
+      "fullTitle": "public landing checkout-dependent configuration retains stable directory-conditional built-in replay configuration",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_conditional_config_cli.test.js",
+      "duration": 2541,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves built-in text attributes and harmless replay configuration without executing unused drivers",
+      "fullTitle": "public landing replay failure boundaries preserves built-in text attributes and harmless replay configuration without executing unused drivers",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_failure_cli.test.js",
+      "duration": 8512,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps clean local CRLF replays separate from server defaults across actual landing",
+      "fullTitle": "public landing replay failure boundaries keeps clean local CRLF replays separate from server defaults across actual landing",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_failure_cli.test.js",
+      "duration": 50573,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not let local union attributes authorize a conflicting server merge",
+      "fullTitle": "public landing replay failure boundaries does not let local union attributes authorize a conflicting server merge",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_failure_cli.test.js",
+      "duration": 2644,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a later replay conflict before the first merge when remote trunk moved",
+      "fullTitle": "public landing replay preflight refuses a later replay conflict before the first merge when remote trunk moved",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_preflight_cli.test.js",
+      "duration": 5252,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "runs no source hooks during preserving inspection",
+      "fullTitle": "public landing replay preflight runs no source hooks during preserving inspection",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_preflight_cli.test.js",
+      "duration": 2515,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses changed configuration after inspection without losing the external change",
+      "fullTitle": "public landing replay freshness refuses changed configuration after inspection without losing the external change",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_freshness_cli.test.js",
+      "duration": 9786,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4610,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4520,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "identifies implicit recorded-resolution use without changing the old cache",
+      "fullTitle": "public landing effective replay configuration identifies implicit recorded-resolution use without changing the old cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2295,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses an active branch-conditional union policy before preview or first merge",
+      "fullTitle": "public landing checkout-dependent configuration refuses an active branch-conditional union policy before preview or first merge",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_conditional_config_cli.test.js",
+      "duration": 1175,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses currently inactive branch includes without executing future project commands",
+      "fullTitle": "public landing checkout-dependent configuration refuses currently inactive branch includes without executing future project commands",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_conditional_config_cli.test.js",
+      "duration": 951,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "retains stable directory-conditional built-in replay configuration",
+      "fullTitle": "public landing checkout-dependent configuration retains stable directory-conditional built-in replay configuration",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_conditional_config_cli.test.js",
+      "duration": 2541,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "preserves built-in text attributes and harmless replay configuration without executing unused drivers",
+      "fullTitle": "public landing replay failure boundaries preserves built-in text attributes and harmless replay configuration without executing unused drivers",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_failure_cli.test.js",
+      "duration": 8512,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "keeps clean local CRLF replays separate from server defaults across actual landing",
+      "fullTitle": "public landing replay failure boundaries keeps clean local CRLF replays separate from server defaults across actual landing",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_failure_cli.test.js",
+      "duration": 50573,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "does not let local union attributes authorize a conflicting server merge",
+      "fullTitle": "public landing replay failure boundaries does not let local union attributes authorize a conflicting server merge",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_failure_cli.test.js",
+      "duration": 2644,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses a later replay conflict before the first merge when remote trunk moved",
+      "fullTitle": "public landing replay preflight refuses a later replay conflict before the first merge when remote trunk moved",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_preflight_cli.test.js",
+      "duration": 5252,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "runs no source hooks during preserving inspection",
+      "fullTitle": "public landing replay preflight runs no source hooks during preserving inspection",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_preflight_cli.test.js",
+      "duration": 2515,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses changed configuration after inspection without losing the external change",
+      "fullTitle": "public landing replay freshness refuses changed configuration after inspection without losing the external change",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_freshness_cli.test.js",
+      "duration": 9786,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

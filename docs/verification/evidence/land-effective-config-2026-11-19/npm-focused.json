@@ -1,0 +1,108 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-11-19T20:15:00.886Z",
+    "end": "2026-11-19T20:16:19.994Z",
+    "duration": 79108
+  },
+  "tests": [
+    {
+      "title": "uses local false overrides during replay despite global true and an old resolution cache",
+      "fullTitle": "public landing effective replay configuration uses local false overrides during replay despite global true and an old resolution cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2737,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands a leaf without applying local replay settings to the server-only rebase",
+      "fullTitle": "public landing effective replay configuration lands a leaf without applying local replay settings to the server-only rebase",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 17590,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4720,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4678,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "delivery: existing MCP client learns, previews and explicitly executes one bounded retry",
+      "fullTitle": "public landing retry delivery delivery: existing MCP client learns, previews and explicitly executes one bounded retry",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_retry_delivery_cli.test.js",
+      "duration": 26465,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "uses local false overrides during replay despite global true and an old resolution cache",
+      "fullTitle": "public landing effective replay configuration uses local false overrides during replay despite global true and an old resolution cache",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 2737,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "lands a leaf without applying local replay settings to the server-only rebase",
+      "fullTitle": "public landing effective replay configuration lands a leaf without applying local replay settings to the server-only rebase",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 17590,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rebase.updateRefs only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4720,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "fullTitle": "public landing effective replay configuration refuses effective global rerere.enabled only when local replay is needed and identifies its source",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_replay_effective_config_cli.test.js",
+      "duration": 4678,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "delivery: existing MCP client learns, previews and explicitly executes one bounded retry",
+      "fullTitle": "public landing retry delivery delivery: existing MCP client learns, previews and explicitly executes one bounded retry",
+      "file": "/private/tmp/anthracite-stable-080-20261116/source/apps/cli/dist/test/commands/land_retry_delivery_cli.test.js",
+      "duration": 26465,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}

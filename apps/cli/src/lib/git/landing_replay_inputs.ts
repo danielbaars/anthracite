@@ -37,6 +37,22 @@ function fileState(filename: string): string | null {
   }
 }
 
+// An existing cache implicitly enables rerere even without a config key.
+async function hasResolutionCache(
+  read: (args: readonly string[]) => Promise<string>
+): Promise<boolean> {
+  return fs.existsSync(
+    (
+      await read([
+        'rev-parse',
+        '--path-format=absolute',
+        '--git-path',
+        'rr-cache',
+      ])
+    ).trim()
+  );
+}
+
 /** Digest-only input evidence; never persist raw configuration or generated OIDs. */
 export async function captureLandingReplayInputs(
   plan: LandPlan,
@@ -140,6 +156,7 @@ export async function captureLandingReplayInputs(
         ).replace(`command line:\0core.hookspath\n${git.hooks}\0`, ''),
         repoConfig: fileState(path.join(common, '.graphite_repo_config')),
         history,
+        resolutionCachePresent: await hasResolutionCache(read),
         replacements: await read([
           'for-each-ref',
           '--format=%(refname) %(objectname)',
