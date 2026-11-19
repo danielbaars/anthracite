@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.2](https://github.com/danielbaars/anthracite/compare/v0.9.1...v0.9.2) (2026-11-19)
+
+
+### Bug Fixes
+
+* **cli:** allow username-only HTTPS landing remotes ([36df31d](https://github.com/danielbaars/anthracite/commit/36df31dc15c8fb0c41d9f883a96f0946908ffc13))
+
 ## [0.9.1](https://github.com/danielbaars/anthracite/compare/v0.9.0...v0.9.1) (2026-11-17)
 
 
