@@ -1,0 +1,59 @@
+{
+  "localTrunk": "b115dc108cefe4764a26af2f86750163fc6a6393",
+  "remoteTrunk": "d6c6a8b4d623316a5c6cee38e339c0bb0f2fce93",
+  "preview": {
+    "status": 0,
+    "stdout": "Landing plan: fixture/inspection\nTarget: tip -> main\nPolicy: No required reviews or checks.\nLocal main: fast-forward required.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18 (publication deferred until its merge preparation)\n  Merge 3: tip #19 (publication deferred until its merge preparation)\nBetween merges: restack affected branches locally; publish the next merge target\nand non-target survivors. Later targets defer publication until their turn.\n\n🧹 Cleanup: base, child, tip\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY for next merge only; later targets require publication and fresh checks.\nUse --debug for commit IDs and technical details.\n",
+    "stderr": ""
+  },
+  "previewPreserved": true,
+  "application": {
+    "status": 1,
+    "stdout": "Landing plan: fixture/inspection\nTarget: tip -> main\nPolicy: No required reviews or checks.\nLocal main: fast-forward required.\n\n🔀 PR order (bottom to top):\n  Merge 1: base #17\n  Merge 2: child #18 (publication deferred until its merge preparation)\n  Merge 3: tip #19 (publication deferred until its merge preparation)\nBetween merges: restack affected branches locally; publish the next merge target\nand non-target survivors. Later targets defer publication until their turn.\n\n🧹 Cleanup: base, child, tip\n  Delete landed branches locally and on GitHub after confirmed merges only.\n✅ Readiness: READY for next merge only; later targets require publication and fresh checks.\nUse --debug for commit IDs and technical details.\n✅ Confirmed merged #17.\n",
+    "stderr": "ERROR: Landing incomplete at survivor maintenance. Confirmed merged #17 (1b305b96f002bac8bd1d9912ddc11e6aafae3672);  later work unattempted. Local replay conflict in child. Resolve and stage files, run an continue in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-BdqPB7/repo, then rerun an land tip --yes for remote maintenance. Recovery retained in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-BdqPB7/repo; resolve the reported blocker, preview with an land tip --dry-run, then explicitly resume with an land tip --yes.\n"
+  },
+  "conflicts": "child.txt",
+  "prsAfterFailure": [
+    {
+      "number": 17,
+      "state": "MERGED"
+    },
+    {
+      "number": 18,
+      "state": "OPEN"
+    },
+    {
+      "number": 19,
+      "state": "OPEN"
+    }
+  ],
+  "continue": {
+    "status": 0,
+    "stdout": "Resolved rebase conflict for child.\nRestacked tip on child.\n",
+    "stderr": ""
+  },
+  "pendingPreview": {
+    "status": 1,
+    "stdout": "⛔ Cannot resume landing yet:\n  - #18 child: Readiness for the reached local head is unknown until its mandatory push and fresh checks.\n👉 Next: inspect the blockers in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-BdqPB7/repo, then preview again.\n\nOnce resolved, this would resume:\n⏸ Pending landing: fixture/inspection\nTarget: tip -> main\nLocal main: fast-forward after confirmed merges.\n\n🔀 Remaining PRs (bottom to top):\n  Cleanup-only 1: base #17\n  Merge 2: child #18\n  Merge 3: tip #19 (publication deferred until its merge preparation)\n\n🔧 After confirmed merge #17: verify required branch maintenance.\n  Maintain: child #18 (also a merge target)\n    Verify replay; push existing branch; update existing PR #18 base/footer.\n  Maintain: tip #19 (also a merge target)\n    Verify replay locally; defer push and PR base/footer updates until its merge preparation.\n\n🧹 Cleanup: base, child, tip\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\nUse --debug for recovery phases, commit IDs and replay details.\n",
+    "stderr": "ERROR: Pending landing preview blocked; recovery and repository preserved.\n"
+  },
+  "resume": {
+    "status": 0,
+    "stdout": "⛔ Cannot resume landing yet:\n  - #18 child: Readiness for the reached local head is unknown until its mandatory push and fresh checks.\n👉 Next: inspect the blockers in /private/var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-BdqPB7/repo, then preview again.\n\nOnce resolved, this would resume:\n⏸ Pending landing: fixture/inspection\nTarget: tip -> main\nLocal main: fast-forward after confirmed merges.\n\n🔀 Remaining PRs (bottom to top):\n  Cleanup-only 1: base #17\n  Merge 2: child #18\n  Merge 3: tip #19 (publication deferred until its merge preparation)\n\n🔧 After confirmed merge #17: verify required branch maintenance.\n  Maintain: child #18 (also a merge target)\n    Verify replay; push existing branch; update existing PR #18 base/footer.\n  Maintain: tip #19 (also a merge target)\n    Verify replay locally; defer push and PR base/footer updates until its merge preparation.\n\n🧹 Cleanup: base, child, tip\n  Verify landed-only local and leased remote cleanup.\nCheckout after completion: main\nUse --debug for recovery phases, commit IDs and replay details.\n✅ Confirmed merged #17.\n🔧 Maintained: child; existing PR #18; existing remote head verified.\n⏭ Deferred: tip; publish before its own merge.\n✅ Confirmed merged #18.\n🔧 Maintained: tip; existing PR #19; existing remote head verified.\n✅ Confirmed merged #19.\n✅ Landing complete: tip; trunk advanced and landed refs/metadata cleaned.\n",
+    "stderr": "To /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-BdqPB7/remote.git\n - [deleted]         base\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-BdqPB7/remote.git\n - [deleted]         child\nTo /var/folders/p8/b_05tm755b34yb9h11zzqp1c0000gn/T/an-reorder-BdqPB7/remote.git\n - [deleted]         tip\n"
+  },
+  "finalPrs": [
+    {
+      "number": 17,
+      "state": "MERGED"
+    },
+    {
+      "number": 18,
+      "state": "MERGED"
+    },
+    {
+      "number": 19,
+      "state": "MERGED"
+    }
+  ]
+}
