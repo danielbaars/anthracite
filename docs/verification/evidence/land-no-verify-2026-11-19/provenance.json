@@ -1,0 +1,49 @@
+{
+  "base": "d5d2ec83e4881b5b8f5c4d24e4e98ba5562f4bb1",
+  "candidate": "Working-tree fix for #213 tested before its first commit; no npm publication or active installation change.",
+  "sourceSha256": {
+    "apps/cli/src/actions/land.ts": "135443395717620e10ed5e7bf6fde20485c79cbe2835e8a8de4a4aecffdbb675",
+    "apps/cli/src/actions/land_scoped.ts": "8f65595bb7ecf955f26db194665e33fc49ba94242c1fc7fa844105acce6fc6d4",
+    "apps/cli/src/actions/land_maintenance.ts": "fe64e5eb46459a4348925486a96abf91c68d81cdcd06c7b80ad66ed2158635a4",
+    "apps/cli/src/lib/git/land_cleanup.ts": "fee94ab522a1d0ff01830a4ef2e3007d624d2359c6a51aef078e387831fafc35",
+    "apps/cli/test/commands/land_verify_cli.test.ts": "2e5a6066a51ff5f36c15c8b59247773de241be4045d994912dd1103df1f46426",
+    ".github/workflows/ci.yml": "c13d27b89cf61dff92c0e6d354f17ceb8661fcf93adaa3eb34bff079d8af3313",
+    "CONTRIBUTING.md": "04e2f60f5542ee81aec4c732e4a97cba5812d847477630e053ed289ebe15a1c3",
+    "docs/land.md": "77ce7c5f2fcf36d858448532932bb6e1f9addc14fe45c08dc1ae09807cd6b17f"
+  },
+  "artifacts": {
+    "tarball": "597571f04a43b625bf5cc56d8a438c67781ffe5472e72d36f6a5c06f4f8489e4",
+    "installedCli": "7574a69f1f263992c34ebc19973fb3ff381942bebd2530ead5022579e70de11e",
+    "native": "15af883ee05887227252f9a6877e9d6388157183fb5835366219ed7dac667dd2"
+  },
+  "packageVersion": "0.9.3 development candidate, distinct from public npm 0.9.3",
+  "node": "v24.19.0",
+  "bun": "1.3.14",
+  "recoveryProducers": {
+    "0.6.15": "b5ec9d945824443cd441ae9f40220d174ef4c367952e7c264186a2bfc0882608",
+    "0.9.3": "0bdb4a431eb925cde23cadc278a27fc97088debfce5c12a1f855ca696366c942"
+  },
+  "results": {
+    "node": {
+      "passed": 9,
+      "failed": 0,
+      "pending": 0
+    },
+    "native": {
+      "passed": 9,
+      "failed": 0,
+      "pending": 0
+    },
+    "installedNpmFocused": {
+      "passed": 3,
+      "failed": 0,
+      "pending": 0
+    }
+  },
+  "evidenceSha256": {
+    "npm.txt": "0f49c3748963e37eec62b42623d738902601e4a0dec198080e60cf521ee79e94",
+    "native.txt": "5088af045739136a1919996d723878ef1623021984558266acaa600429aa11a6",
+    "red.txt": "e6b042f547e58cf1b219cfcf90cd5277f38ae421196750781efff3940f0fa3d9",
+    "node.txt": "7de4fd6455779a3648613903d80fbfacd800edd61620578ffc7e04ed37531e29"
+  }
+}

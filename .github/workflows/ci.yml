@@ -82,6 +82,11 @@ jobs:
         run: >-
           node node_modules/mocha/bin/mocha.js
           apps/cli/dist/test/commands/land_retry_delivery_cli.test.js
+      - name: Test landing push-hook selection
+        run: >-
+          node node_modules/mocha/bin/mocha.js
+          apps/cli/dist/test/commands/land_verify_cli.test.js
+          --grep 'keeps hooks on by default and resumes failed cleanup'
       - name: Prepare published legacy recovery producer
         run: npm install --prefix "$RUNNER_TEMP/anthracite-legacy" --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org @danielbaars/anthracite@0.6.11
       - name: Test reused-branch PR safety

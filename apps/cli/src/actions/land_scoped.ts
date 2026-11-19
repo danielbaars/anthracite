@@ -127,6 +127,7 @@ export async function startScopedLanding(
   options: {
     readonly cacheLock: NonNullable<LandingProgress['cacheLock']>;
     readonly waitSeconds: number;
+    readonly noVerify: boolean;
     readonly beforeFirstEffect?: () => Promise<void>;
   }
 ): Promise<void> {
@@ -173,6 +174,7 @@ export async function startScopedLanding(
   saveLandingProgress(record);
   await applyScopedLanding(record, context, {
     waitSeconds: options.waitSeconds,
+    noVerify: options.noVerify,
     beforeFirstEffect: options.beforeFirstEffect,
   });
 }
@@ -183,6 +185,7 @@ export async function resumeScopedLanding(
     readonly 'dry-run': boolean;
     readonly 'retry-unconfirmed'?: boolean;
     readonly yes: boolean;
+    readonly verify?: boolean;
     readonly 'wait-timeout': number;
   },
   context: TContext
@@ -253,6 +256,7 @@ export async function resumeScopedLanding(
     }
     await applyScopedLanding(fresh, context, {
       waitSeconds: args['wait-timeout'],
+      noVerify: args.verify === false,
       retryAttempt,
     });
   }, record);
@@ -775,6 +779,7 @@ async function confirmAfterMergeFailure(
 
 type ApplyLandingOptions = {
   readonly waitSeconds: number;
+  readonly noVerify: boolean;
   readonly retryAttempt?: string;
   readonly beforeFirstEffect?: () => Promise<void>;
 };
@@ -882,26 +887,13 @@ async function applyScopedLanding(
       advanceTrunk(record, context);
       advance({ phase: 'trunk-advanced' });
       stage = 'survivor maintenance';
-      record = await maintainLandingSurvivors(record, context);
+      record = await maintainLandingSurvivors(
+        record,
+        context,
+        options.noVerify
+      );
       stage = 'remote cleanup';
-      validateLocal(record, context);
-      const published = remoteHead(record, current(record).branch);
-      if (published && published !== owned(current(record)).remoteHead)
-        throw new ExitFailedError(
-          'Remote branch changed; preserved, explicit captured-OID lease refused cleanup.'
-        );
-      if (published && !owned(current(record)).remoteHead)
-        throw new ExitFailedError('Captured remote lease unavailable.');
-      if (published)
-        deleteLandedRemote(
-          record.remote,
-          current(record).branch,
-          owned(current(record)).remoteHead ?? current(record).head
-        );
-      if (remoteHead(record, current(record).branch))
-        throw new ExitFailedError(
-          'Remote deletion is unconfirmed or branch was recreated; preserved.'
-        );
+      deleteRemote(record, context, options.noVerify);
       advance({ phase: 'remote-deleted' });
       stage = 'local cleanup';
       deleteLocal(record, context);
@@ -1235,6 +1227,30 @@ function remoteHead(
 function ref(name: string): string {
   const output = git(['for-each-ref', '--format=%(objectname)', name]);
   return output.split('\n')[0] || '';
+}
+
+function deleteRemote(
+  record: LandingProgress,
+  context: TContext,
+  noVerify: boolean
+): void {
+  validateLocal(record, context);
+  const published = remoteHead(record, current(record).branch);
+  if (published && published !== owned(current(record)).remoteHead)
+    throw new ExitFailedError(
+      'Remote branch changed; preserved, explicit captured-OID lease refused cleanup.'
+    );
+  if (published && !owned(current(record)).remoteHead)
+    throw new ExitFailedError('Captured remote lease unavailable.');
+  if (published)
+    deleteLandedRemote(record.remote, current(record).branch, {
+      expectedHead: owned(current(record)).remoteHead ?? current(record).head,
+      noVerify,
+    });
+  if (remoteHead(record, current(record).branch))
+    throw new ExitFailedError(
+      'Remote deletion is unconfirmed or branch was recreated; preserved.'
+    );
 }
 
 function deleteLocal(record: LandingProgress, context: TContext): void {

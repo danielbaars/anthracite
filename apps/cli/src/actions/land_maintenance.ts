@@ -29,7 +29,8 @@ type Reached = NonNullable<Member['reached']>;
 /** Only the disclosed affected survivors; never submit, sync, publish or discover PRs. */
 export async function maintainLandingSurvivors(
   initial: LandingProgress,
-  context: TContext
+  context: TContext,
+  noVerify: boolean
 ): Promise<LandingProgress> {
   // Reconfirm every captured cleanup-only identity/result before it influences
   // metadata or replay scope. MERGED in a cached PR alone never permits skipping.
@@ -47,7 +48,7 @@ export async function maintainLandingSurvivors(
   assertLandingProgressUnchanged(initial);
   const replayed = replaySurvivors(initial, context);
   const associated = associatePrs(replayed, context);
-  return await publishSurvivors(associated, context);
+  return await publishSurvivors(associated, context, noVerify);
 }
 function participant(record: LandingProgress, branch: string): Member {
   const member = [...record.merges, ...record.maintenance].find(
@@ -207,7 +208,8 @@ function associatePrs(
 }
 async function publishSurvivors(
   initial: LandingProgress,
-  context: TContext
+  context: TContext,
+  noVerify: boolean
 ): Promise<LandingProgress> {
   let record = initial;
   const survivors = landingSurvivors(record);
@@ -239,16 +241,14 @@ async function publishSurvivors(
             `Remote head changed for ${member.branch}; captured-OID lease refused survivor push.`
           );
         if (published !== expected.head) {
-          withFrozenPushGuard(
-            { branch: member.branch, noVerify: false },
-            (prefix) =>
-              git([
-                ...prefix,
-                'push',
-                record.remote,
-                `--force-with-lease=refs/heads/${member.branch}:${expected.remoteHead}`,
-                `refs/heads/${member.branch}:refs/heads/${member.branch}`,
-              ])
+          withFrozenPushGuard({ branch: member.branch, noVerify }, (prefix) =>
+            git([
+              ...prefix,
+              'push',
+              record.remote,
+              `--force-with-lease=refs/heads/${member.branch}:${expected.remoteHead}`,
+              `refs/heads/${member.branch}:refs/heads/${member.branch}`,
+            ])
           );
         }
         if (

@@ -24,15 +24,15 @@ export function deleteLandedLeafRefs(
 export function deleteLandedRemote(
   remote: string,
   branch: string,
-  expected: string
+  options: { readonly expectedHead: string; readonly noVerify: boolean }
 ): void {
-  withFrozenPushGuard({ branch, noVerify: false }, (prefix) => {
+  withFrozenPushGuard({ branch, noVerify: options.noVerify }, (prefix) => {
     runGitCommand({
       args: [
         ...prefix,
         'push',
         remote,
-        `--force-with-lease=refs/heads/${branch}:${expected}`,
+        `--force-with-lease=refs/heads/${branch}:${options.expectedHead}`,
         `:refs/heads/${branch}`,
       ],
       options: { forwardStderr: true },
