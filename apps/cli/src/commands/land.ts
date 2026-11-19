@@ -5,13 +5,13 @@ import { graphiteInspection } from '../lib/runner';
 export const command = 'land [branch]';
 export const canonical = 'land';
 export const description =
-  'Land the selected GitHub PR chain and maintain necessary surviving arms; preview first with --dry-run.';
+  'Land the selected GitHub PR chain and maintain necessary surviving arms; inspect replay conflicts before the first merge.';
 const options = {
   'dry-run': {
     type: 'boolean',
     default: false,
     description:
-      'Show PR order, deferred publication, maintenance and blockers without writes; add --debug for commit details.',
+      'Show replay feasibility, PR order, deferred publication, maintenance and blockers without writes; add --debug for commit details.',
   },
   'retry-unconfirmed': {
     type: 'boolean',

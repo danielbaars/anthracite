@@ -174,6 +174,22 @@ request need --body or --body-file; approval may omit it. Review submission is
 separate from reviewer assignment. Uncertain review responses require inspection;
 never automatically repeat a review POST or claim a newer head was approved.
 
+New landings perform isolated replay inspection before the first merge, including
+all selected targets and mandatory published or local-only survivors against
+captured remote trunk. A known conflict names its branch and paths and refuses
+before any merge, push, PR edit or landing recovery starts. Unsupported or
+unavailable replay evidence also refuses. Inspection does not execute project
+hooks, filters, custom drivers or package commands or change project state.
+A conflict-free captured replay is separate from GitHub readiness and cannot
+guarantee future remote changes. Relevant inputs are checked again after
+confirmation and before the first effect. Do not automatically run broad sync,
+restack or submit: choose the intended refresh/replay scope, resolve deliberately,
+submit changed work for checks/review and preview again. Fetch alone does not
+advance local trunk, and default restack can reach more than the landing scope.
+Existing saved landings keep their prior schedule and recovery instead of gaining
+a retroactive first-merge replay gate. A resolved pending replay can still need
+its owned maintenance push; resumption publishes it before fresh required checks.
+
 Preview an land [branch] --dry-run. The merge set is the unique trunk-to-target
 chain; necessary surviving descendants and sibling arms are maintenance only.
 Only user-authorized application with --yes can merge that chain, replay local
