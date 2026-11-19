@@ -1,3 +1,4 @@
+import { withFreshLandingSourceReads } from '../lib/git/landing_source_scope';
 import {
   landingRemoteIdentity,
   loadLandingProgress,
@@ -566,10 +567,13 @@ export async function land(
       throw new ExitFailedError(
         'Landing scope/readiness changed under lock; preview again. No changes made.'
       );
-    await startScopedLanding(locked, lockedContext, {
-      cacheLock,
-      waitSeconds: args['wait-timeout'],
-      beforeFirstEffect: () => assertLandingReplayInputs(locked, lockedContext),
-    });
+    await withFreshLandingSourceReads(() =>
+      startScopedLanding(locked, lockedContext, {
+        cacheLock,
+        waitSeconds: args['wait-timeout'],
+        beforeFirstEffect: () =>
+          assertLandingReplayInputs(locked, lockedContext),
+      })
+    );
   });
 }
