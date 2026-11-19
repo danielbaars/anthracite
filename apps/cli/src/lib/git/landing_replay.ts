@@ -3,6 +3,7 @@ import path from 'path';
 import type { LandPlan } from '../../actions/land';
 import {
   InspectionGitResult,
+  assertNoBranchConditionalLandingConfiguration,
   landingTransportArgs,
   withLandingInspection,
 } from './landing_inspection_process';
@@ -104,6 +105,7 @@ function readAttributeFile(file: string): string {
 }
 
 async function copyReplayConfiguration(git: ReplayRepository): Promise<void> {
+  await assertNoBranchConditionalLandingConfiguration(git, git.source);
   const configured = await git.run(
     [
       'config',

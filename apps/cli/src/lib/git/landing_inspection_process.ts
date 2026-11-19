@@ -309,9 +309,39 @@ export function landingSourceReadArgs(args: readonly string[]): string[] {
   return [...prefix, ...args];
 }
 
+/** Branch-dependent includes change during replay and cannot be flattened safely. */
+export async function assertNoBranchConditionalLandingConfiguration(
+  git: Pick<LandingInspection, 'run' | 'originalEnvironment'>,
+  source: string
+): Promise<void> {
+  const result = await git.run(
+    landingSourceReadArgs([
+      'config',
+      '--null',
+      '--name-only',
+      '--get-regexp',
+      '^includeif\\..*\\.path$',
+    ]),
+    { cwd: source, env: git.originalEnvironment, allowFailure: true }
+  );
+  if (result.code !== 0 && result.code !== 1)
+    throw new Error(
+      'Replay inspection could not read conditional configuration.'
+    );
+  if (
+    result.stdout
+      .split('\0')
+      .some((key) => key.toLowerCase().startsWith('includeif.onbranch:'))
+  )
+    throw new Error(
+      'Replay inspection cannot safely reproduce checkout-dependent includeIf.onbranch configuration; make replay configuration independent of the checked-out branch, then preview again. No landing effects were started.'
+    );
+}
+
 /** Plumbing reads attributes without applying executable transformations to local files. */
 export async function assertSafeLandingSourceAttributes(): Promise<void> {
   await withLandingInspection('an-land-source-', async (git) => {
+    await assertNoBranchConditionalLandingConfiguration(git, process.cwd());
     const read = async (args: readonly string[]): Promise<string> =>
       (
         await git.run(landingSourceReadArgs(args), {
