@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { syncReconciliationReplaySchema } from './sync_reconciliation_replay';
 import { getOperationSchema } from './get_operation';
 import { pullRequestSchema } from './remote_update_graph';
 
@@ -79,6 +80,7 @@ export const syncOperationSchema = z
         nodes: getOperationSchema.shape.nodes,
         preserved: z.array(z.string().min(1)).optional(),
         deferred: z.array(z.string().min(1)).optional(),
+        reconciliation: z.array(syncReconciliationReplaySchema).optional(),
         prs: z.array(pullRequestSchema.strict()),
       })
       .strict(),
@@ -93,6 +95,7 @@ export const syncOperationSchema = z
       'checkout',
     ]),
     trunkCompleted: z.boolean(),
+    reconciling: z.string().min(1).optional(),
     completedRemote: z.array(z.string()),
     completedPrs: z.array(z.string()),
     completedMaintenance: z.array(z.string()),

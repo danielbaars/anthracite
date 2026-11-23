@@ -1,3 +1,7 @@
+import {
+  assertSyncReconciliationLocalInputs,
+  ownedSyncReconciliation,
+} from './sync_reconciliation_replay';
 import fs from 'fs';
 import path from 'path';
 import { createHash } from 'crypto';
@@ -336,21 +340,35 @@ export function recordSyncConflict(
   };
 }
 
-export function assertSyncHookParticipants(branch: string): void {
+export function assertSyncHookParticipants(
+  branch: string,
+  {
+    owner,
+    beforeMutation,
+  }: { readonly owner?: string; readonly beforeMutation: boolean }
+): boolean {
   const file = getRecoveryFile();
-  if (!fs.existsSync(file)) return;
+  if (!fs.existsSync(file)) return false;
   const data = continueConfigFactory.load(undefined, {
     preserveInvalid: true,
   }).data;
   const operation = data.sync;
-  if (!operation) return;
-  if (operation.active && !getRebaseDirectory()) return;
+  if (!operation) return false;
+  const reconciliation = owner
+    ? ownedSyncReconciliation(operation, branch)
+    : undefined;
+  if (operation.active && !getRebaseDirectory() && !reconciliation)
+    return false;
   if (
     operation.active &&
+    getRebaseDirectory() &&
     (!ownsRebase(data.rebaseOwnership) ||
       !data.rebaseOwnership?.endsWith(`:${getRecoveryDigest(data)}`))
   )
     refuseSync('Owned sync intent changed during a Git hook.');
   assertSyncSources(operation);
   assertSyncParticipants(operation, branch, branch);
+  if (reconciliation && beforeMutation)
+    assertSyncReconciliationLocalInputs(reconciliation, operation);
+  return Boolean(reconciliation);
 }

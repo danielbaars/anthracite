@@ -1,3 +1,7 @@
+import {
+  assertSyncReconciliationLocalInputs,
+  ownedSyncReconciliation,
+} from './sync_reconciliation_replay';
 import { assertBranchEditable } from '../../lib/engine/frozen_branch';
 import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 import {
@@ -27,6 +31,21 @@ export function assertSyncSources(operation: SyncOperation): void {
       refuseSync(
         `Pinned sync source ${source.sourceRef} is missing or changed.`
       );
+  const plans = operation.refresh.reconciliation ?? [];
+  if (
+    new Set(plans.map(({ branch }) => branch)).size !== plans.length ||
+    plans.some(
+      (plan) =>
+        !operation.refresh.deferred?.includes(plan.branch) ||
+        plan.onto !==
+          (operation.refresh.trunk?.head ?? operation.refresh.trunkHead) ||
+        plan.branch === operation.trunkName ||
+        !operation.expected.some(({ branchName }) => branchName === plan.branch)
+    ) ||
+    (operation.reconciling &&
+      !ownedSyncReconciliation(operation, operation.reconciling))
+  )
+    refuseSync('Invalid saved merged-parent reconciliation decision.');
   const preserved = operation.refresh.preserved ?? [];
   if (
     new Set(preserved).size !== preserved.length ||
@@ -82,7 +101,12 @@ export function assertSyncParticipants(
   hookBranch?: string
 ): void {
   assertSyncExpected(operation, hookBranch);
-  assertBranchEditable(activeBranch);
+  const reconciliation = ownedSyncReconciliation(operation, activeBranch);
+  if (reconciliation)
+    assertSyncReconciliationLocalInputs(reconciliation, operation, {
+      checkHead: !hookBranch,
+    });
+  else assertBranchEditable(activeBranch);
   const pending = operation.refresh.nodes.filter(
     (node) => !operation.completedRemote.includes(node.branchName)
   );
