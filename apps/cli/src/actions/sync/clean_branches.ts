@@ -172,7 +172,11 @@ function projectCleanupBranches(
   context: TContext
 ): CleanupBranch[] {
   return context.engine.allBranchNames
-    .filter((name) => context.engine.isBranchTracked(name))
+    .filter(
+      (name) =>
+        context.engine.isBranchTracked(name) &&
+        !refresh.deferred?.includes(name)
+    )
     .sort()
     .map((branchName) => {
       const node = refresh.preserved?.includes(branchName)

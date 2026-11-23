@@ -1,6 +1,10 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
-import { getPendingSyncLogNotice } from './log';
+import { getPendingSyncLogNotice, getSyncReconciliationLines } from './log';
+import {
+  isPendingSyncReconciliation,
+  readSyncReconciliation,
+} from '../lib/engine/sync_reconciliation';
 
 function displayBranchesInternal(
   opts: {
@@ -8,6 +12,7 @@ function displayBranchesInternal(
     highlightCurrentBranch?: boolean;
     omitCurrentBranch?: boolean;
     indent?: number;
+    hidden?: ReadonlySet<string>;
   },
   context: TContext
 ): { display: string; branchName: string }[] {
@@ -23,7 +28,11 @@ function displayBranchesInternal(
   return (
     context.engine
       .getChildren(opts.branchName)
-      ?.filter((b) => b !== currentBranchName || !opts.omitCurrentBranch)
+      ?.filter(
+        (b) =>
+          !opts.hidden?.has(b) &&
+          (b !== currentBranchName || !opts.omitCurrentBranch)
+      )
       .map((b) =>
         displayBranchesInternal(
           {
@@ -41,12 +50,23 @@ function displayBranchesInternal(
 export function logShortClassic(context: TContext): void {
   const notice = getPendingSyncLogNotice(context);
   if (notice) context.splog.info(notice);
+  const { entries } = readSyncReconciliation();
+  const hidden = new Set(
+    context.engine.allBranchNames.filter((name) =>
+      isPendingSyncReconciliation(name, entries)
+    )
+  );
   context.splog.page(
     displayBranchesInternal(
-      { branchName: context.engine.trunk, highlightCurrentBranch: true },
+      {
+        branchName: context.engine.trunk,
+        highlightCurrentBranch: true,
+        hidden,
+      },
       context
     )
       .map((b) => b.display)
+      .concat(getSyncReconciliationLines(entries))
       .join('\n')
   );
 }

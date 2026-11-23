@@ -1,6 +1,12 @@
 import { getGithubPr } from '../../lib/api/github_pr';
 import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
 import { getSha } from '../../lib/git/get_sha';
+import {
+  isPendingSyncReconciliation,
+  readSyncReconciliation,
+  ReconciliationState,
+  SyncReconciliation,
+} from '../../lib/engine/sync_reconciliation';
 import { TContext } from '../../lib/context';
 import { ExitFailedError, KilledError } from '../../lib/errors';
 import {
@@ -33,6 +39,7 @@ export type SyncRefreshPlan = {
   readonly trunk?: RemoteTrunkUpdate;
   readonly nodes: ReturnType<typeof snapshotRemoteUpdateGraph>;
   readonly preserved?: readonly string[];
+  readonly deferred?: readonly string[];
   readonly prs: Awaited<ReturnType<typeof selectSyncFeatures>>['prs'];
 };
 
@@ -40,7 +47,11 @@ export type SyncRefreshPlan = {
 export async function prepareSyncRefresh(
   opts: { pull: boolean; force: boolean },
   context: TContext
-): Promise<SyncRefreshPlan> {
+): Promise<{
+  readonly refresh: SyncRefreshPlan;
+  readonly saved: ReconciliationState;
+  readonly entries: readonly SyncReconciliation[];
+}> {
   const original = captureGetCheckout();
   const originalHead = getSha('HEAD');
   const trunkHead = getSha(`refs/heads/${context.engine.trunk}`);
@@ -63,6 +74,28 @@ export async function prepareSyncRefresh(
         `${node.branchName} is ahead of remote; keeping its local commits.`
       );
     }
+    const existing = readSyncReconciliation();
+    const entries = [
+      ...existing.entries,
+      ...findDeferredMergeSurvivors(
+        nodes,
+        { prs, existing: existing.entries },
+        context
+      ),
+    ];
+    const deferred = new Set(
+      context.engine.allBranchNames.filter((name) =>
+        isPendingSyncReconciliation(name, entries)
+      )
+    );
+    // Incoming changes can introduce a dependency absent from the local stack.
+    for (const node of nodes) {
+      if (deferred.has(node.parentBranchName)) deferred.add(node.branchName);
+    }
+    releaseRemoteUpdateGraph(
+      nodes.filter((node) => deferred.has(node.branchName))
+    );
+    nodes = nodes.filter((node) => !deferred.has(node.branchName));
     const preserved: string[] = [];
     for (const node of nodes) {
       const contained =
@@ -104,19 +137,76 @@ export async function prepareSyncRefresh(
     );
     if (trunk?.reset) await confirmSyncTrunkReset(trunk, opts.force, context);
     return {
-      original,
-      originalHead,
-      trunkHead,
-      trunk,
-      nodes,
-      prs,
-      ...(preserved.length ? { preserved } : {}),
+      refresh: {
+        original,
+        originalHead,
+        trunkHead,
+        trunk,
+        nodes,
+        prs: prs.filter((pr) => !deferred.has(pr.headRefName)),
+        ...(deferred.size ? { deferred: [...deferred] } : {}),
+        ...(preserved.length ? { preserved } : {}),
+      },
+      saved: existing,
+      entries,
     };
   } catch (error) {
     releaseRemoteUpdateGraph(nodes);
     if (trunk) releaseRemoteTrunk(trunk);
     throw error;
   }
+}
+
+function findDeferredMergeSurvivors(
+  nodes: readonly RemoteUpdateNode[],
+  {
+    prs,
+    existing,
+  }: {
+    readonly prs: SyncRefreshPlan['prs'];
+    readonly existing: readonly SyncReconciliation[];
+  },
+  context: TContext
+): SyncReconciliation[] {
+  const entries: SyncReconciliation[] = [];
+  for (const node of nodes) {
+    if (
+      node.parentBranchName !== context.engine.trunk ||
+      !node.previousParentBranchName ||
+      node.previousParentBranchName === node.parentBranchName ||
+      !node.previousBase ||
+      !node.previousHead ||
+      !node.previousMetadata ||
+      hasCanonicalAncestry(node.previousHead, node.head) ||
+      existing.some((entry) => entry.branch === node.branchName)
+    )
+      continue;
+    const formerParent = node.previousParentBranchName;
+    const parent = prs.find(
+      (pr) => pr.headRefName === formerParent && pr.state === 'MERGED'
+    );
+    if (parent?.baseRefName !== node.parentBranchName) continue;
+    const formerParentHead = getSha(`refs/heads/${formerParent}`);
+    if (
+      !formerParentHead ||
+      !hasCanonicalAncestry(node.previousBase, node.previousHead)
+    )
+      continue;
+    entries.push({
+      branch: node.branchName,
+      head: node.previousHead,
+      base: node.previousBase,
+      metadata: node.previousMetadata,
+      formerParent,
+      formerParentHead,
+      mergedHead: parent.headRefOid,
+      formerParentPr: parent.number,
+      pullRequest: node.pullRequestNumber,
+      pullRequestBase: node.parentBranchName,
+      publishedHead: node.head,
+    });
+  }
+  return entries;
 }
 
 function isLocalAheadMergeSurvivor(

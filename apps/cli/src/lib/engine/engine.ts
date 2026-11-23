@@ -37,6 +37,7 @@ import { TScopeSpec } from './scope_spec';
 import { publishFoldStackRefs } from '../git/fold_stack';
 import { FileSplitPublication, publishFileSplitRefs } from '../git/file_split';
 import { assertBranchEditable } from './frozen_branch';
+import { assertBranchNotPendingReconciliation } from './sync_reconciliation';
 import { sameMetadataExceptFrozen } from './metadata_comparison';
 import { assertBranchesAvailableInWorktrees } from '../git/worktrees';
 
@@ -404,6 +405,8 @@ export function composeEngine({
   };
 
   const validateNewParent = (branchName: string, parentBranchName: string) => {
+    assertBranchNotPendingReconciliation(branchName);
+    assertBranchNotPendingReconciliation(parentBranchName);
     if (branchName === parentBranchName) {
       throw new PreconditionsFailedError(
         `Cannot set parent of ${chalk.yellow(branchName)} to itself!`
@@ -705,6 +708,7 @@ export function composeEngine({
       return 'TRACKED';
     },
     untrackBranch: (branchName: string) => {
+      assertBranchNotPendingReconciliation(branchName);
       const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
       deleteMetadataRef(branchName);
       cache.branches[branchName] = {

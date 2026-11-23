@@ -21,6 +21,10 @@ import { createPrBodyFooter } from '../create_pr_body_footer';
 import { execFileSync } from 'child_process';
 import { syncPrInfo } from '../sync_pr_info';
 import { getShaOrThrow } from '../../lib/git/get_sha';
+import {
+  isPendingSyncReconciliation,
+  readSyncReconciliation,
+} from '../../lib/engine/sync_reconciliation';
 
 // eslint-disable-next-line max-lines-per-function
 export async function submitAction(
@@ -113,7 +117,7 @@ export async function submitAction(
     context.splog.newline();
   }
 
-  const allBranchNames = filterFrozenBranches(
+  const allBranchNames = filterEditableBranches(
     context.engine
       .getRelativeStack(
         args.branch ?? context.engine.currentBranchPrecondition,
@@ -124,7 +128,7 @@ export async function submitAction(
   );
 
   const branchNames = args.select
-    ? filterFrozenBranches(
+    ? filterEditableBranches(
         await selectBranches(context, allBranchNames),
         context
       )
@@ -354,6 +358,7 @@ async function getPrFooterUpdates(
   context: TContext
 ): Promise<{ branch: string; number: number; url?: string; body: string }[]> {
   if (!context.repoConfig.getIsGithubIntegrationEnabled()) return [];
+  const { entries } = readSyncReconciliation();
   // Submitting changes the dependency tree of the submitted branches and ancestors.
   const branchesToUpdate = new Set<string>(branchNames);
   for (const branch of branchNames) {
@@ -374,6 +379,7 @@ async function getPrFooterUpdates(
   ].filter(
     (branch) =>
       !branchesToUpdate.has(branch) &&
+      !isPendingSyncReconciliation(branch, entries) &&
       !context.engine.isBranchFrozen(branch) &&
       context.engine.getPrInfo(branch)?.number !== undefined
   );
@@ -381,6 +387,7 @@ async function getPrFooterUpdates(
 
   const footerBranches = [...branchesToUpdate].filter(
     (branch) =>
+      !isPendingSyncReconciliation(branch, entries) &&
       !context.engine.isBranchFrozen(branch) &&
       Boolean(context.engine.getPrInfo(branch)?.number)
   );
@@ -440,11 +447,18 @@ async function getPrFooterUpdates(
   return updates;
 }
 
-function filterFrozenBranches(
+function filterEditableBranches(
   branches: readonly string[],
   context: TContext
 ): string[] {
+  const { entries } = readSyncReconciliation();
   return branches.filter((branch) => {
+    if (isPendingSyncReconciliation(branch, entries)) {
+      context.splog.info(
+        `Skipping ${branch}: pending reconciliation. See an log.`
+      );
+      return false;
+    }
     if (!context.engine.isBranchFrozen(branch)) return true;
     context.splog.info(`Skipping frozen branch ${branch}.`);
     return false;
@@ -457,7 +471,7 @@ async function selectBranches(
 ): Promise<string[]> {
   const result = [];
   for (const branchName of branchNames) {
-    if (!filterFrozenBranches([branchName], context).length) continue;
+    if (!filterEditableBranches([branchName], context).length) continue;
     const selected = (
       await context.prompts({
         name: 'value',

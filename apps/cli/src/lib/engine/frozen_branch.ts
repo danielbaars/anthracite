@@ -1,9 +1,11 @@
 import { PreconditionsFailedError } from '../errors';
 import { readMetadataRef } from './metadata_ref';
 import { TContinueConfig } from '../spiffy/continuation_spf';
+import { assertBranchNotPendingReconciliation } from './sync_reconciliation';
 
 /** Read from Git so external editors/hooks cannot leave a stale writable cache. */
 export function assertBranchEditable(branchName: string): void {
+  assertBranchNotPendingReconciliation(branchName);
   if (readMetadataRef(branchName).frozen === true)
     throw new PreconditionsFailedError(
       `Cannot modify frozen branch ${branchName}. Run an unfreeze ${branchName} first.`

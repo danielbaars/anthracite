@@ -278,6 +278,12 @@ function finishOwnedSync(operation: SyncOperation, context: TContext): void {
   if (context.continueConfig.data.sync !== operation)
     refuseSync('Sync recovery owner changed.');
   context.continueConfig.delete();
+  if (operation.refresh.deferred?.length)
+    context.splog.info(
+      `Sync partially completed. Updated: ${
+        operation.updated.join(', ') || 'none'
+      }. Deferred: ${operation.refresh.deferred.join(', ')}.`
+    );
 }
 
 export async function continueSyncOperation(

@@ -1,3 +1,4 @@
+import { assertBranchNotPendingReconciliation } from '../lib/engine/sync_reconciliation';
 import chalk from 'chalk';
 import { getGithubPr, GithubPr } from '../lib/api/github_pr';
 import { runGitCommand } from '../lib/git/runner';
@@ -105,6 +106,7 @@ export function assertDeleteAllowed(
   if (context.engine.isTrunk(args.branchName)) {
     throw new ExitFailedError('Cannot delete trunk!');
   }
+  assertBranchNotPendingReconciliation(args.branchName);
   if (!args.force && !isSafeToDelete(args.branchName, context).result) {
     if (
       ['CLOSED', 'MERGED'].includes(
