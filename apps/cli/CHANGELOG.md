@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.10.0](https://github.com/danielbaars/anthracite/compare/v0.9.5...v0.10.0) (2026-11-23)
+
+
+### Features
+
+* **sync:** explain merged-parent reconciliation evidence ([5331fb0](https://github.com/danielbaars/anthracite/commit/5331fb0115c8a288a8a976633cdbd3b172a2e0e4)), closes [#222](https://github.com/danielbaars/anthracite/issues/222)
+* **sync:** reconcile with explicitly selected published work ([8ce2c9c](https://github.com/danielbaars/anthracite/commit/8ce2c9c9c06a02b229e96d1115f8f2428dd3a8ce)), closes [#224](https://github.com/danielbaars/anthracite/issues/224)
+* **sync:** replay retained local work onto verified trunk ([7cde7d1](https://github.com/danielbaars/anthracite/commit/7cde7d113e0f421d428338958fb0a4a59e8db525))
+* **sync:** retain unresolved branches after a parent merge ([b649844](https://github.com/danielbaars/anthracite/commit/b649844771a04d5dd4d3f15ff76cbd973317ae0d))
+
+
+### Bug Fixes
+
+* **cli:** clarify sync reconciliation output ([#229](https://github.com/danielbaars/anthracite/issues/229)) ([4f70357](https://github.com/danielbaars/anthracite/commit/4f703576c9e3fd8cfd7ed6989abbffb87295133b))
+* **sync:** bind reconciliation choice to owned recovery ([943c0a0](https://github.com/danielbaars/anthracite/commit/943c0a087d043061e9f2ac8be707e3c50499c7a6))
+* **sync:** report the actual reconciliation choice ([f7b6520](https://github.com/danielbaars/anthracite/commit/f7b652065a94ef817dd1485dd50f7de7ab3f5514))
+* **sync:** resume retained reconciliation safely ([a405708](https://github.com/danielbaars/anthracite/commit/a405708110ec174cf494e8ba6d224a30369d545e))
+* **sync:** retain strict empty-range handling for routine restacks ([b256fd2](https://github.com/danielbaars/anthracite/commit/b256fd276e4c26a8474f3cc89b7b2e29499c2406)), closes [#222](https://github.com/danielbaars/anthracite/issues/222)
+* **sync:** scope deferred reconciliation to affected branches ([b579602](https://github.com/danielbaars/anthracite/commit/b579602dd28ee8afcb2e0c75538a9a1be7408a3a))
+
 ## [0.9.5](https://github.com/danielbaars/anthracite/compare/v0.9.4...v0.9.5) (2026-11-19)
 
 
