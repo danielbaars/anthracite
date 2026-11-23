@@ -124,7 +124,8 @@ export function compareBranchWork(
   const read = boundedGitReader();
   try {
     if (!hasCanonicalGraph(read)) return { kind: 'unknown' };
-    const left = ownCommits(local.base, local.head, read);
+    const left =
+      local.base === local.head ? [] : ownCommits(local.base, local.head, read);
     // No-pull may leave local trunk behind the GitHub base. Use the
     // verified PR snapshot, or report unknown if its objects are absent.
     const base = read([
@@ -136,7 +137,8 @@ export function compareBranchWork(
       .toString('ascii')
       .trim();
     if (!validOid.test(base)) return { kind: 'unknown' };
-    const right = ownCommits(base, published.head, read);
+    const right =
+      base === published.head ? [] : ownCommits(base, published.head, read);
     if (!left || !right) return { kind: 'unknown' };
     let matchingPatches = 0;
     let equivalent = left.length === right.length;
@@ -212,7 +214,7 @@ function ownCommits(
     .toString('ascii')
     .trim();
   const ids = output ? output.split('\n') : [];
-  if (ids.length > MAX_COMMITS) return undefined;
+  if (!ids.length || ids.length > MAX_COMMITS) return undefined;
   let parent = base;
   const commits: OwnCommit[] = [];
   for (const oid of ids) {
