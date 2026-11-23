@@ -297,6 +297,8 @@ async function executeSyncReconciliation(
     if (plan.replacement) {
       context.engine.applySyncReplacement(plan);
       assertSyncExpected(operation, plan.branch);
+      if (!operation.updated.includes(plan.branch))
+        operation.updated.push(plan.branch);
       saveSyncOperation(operation, context, plan.branch);
       assertSyncReconciliationLocalInputs(plan, operation);
       assertSyncReconciliationFiles(plan);
@@ -359,7 +361,11 @@ function completeSyncReconciliation(
     );
   completeSyncBranch(operation, plan.branch, context);
   context.splog.info(
-    `Reconciled ${plan.branch} on ${operation.trunkName}, keeping local commits. No changes published.`
+    `Reconciled ${plan.branch} on ${operation.trunkName}, ${
+      plan.replacement
+        ? 'using the verified GitHub version'
+        : 'keeping local commits'
+    }. No changes published.`
   );
 }
 

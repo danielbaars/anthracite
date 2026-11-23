@@ -125,7 +125,9 @@ describe('sync CLI preserving merged-parent replay', function () {
       ]);
 
       expect(result.status, result.output).to.equal(0);
-      expect(result.output).to.include('Reconciled child on main');
+      expect(result.output).to.include(
+        'Reconciled child on main, using the verified GitHub version'
+      );
       expect(result.output).to.include('my unpublished change');
       expect(
         fixture.git(fixture.consumer, 'show', 'child:published.txt')
