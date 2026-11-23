@@ -50,6 +50,7 @@ import {
   recordSyncRecoveryWrite,
   saveSyncOperation,
   validateSyncRecovery,
+  validateSyncReconciliationRetry,
   refuseSync,
 } from './sync_recovery';
 
@@ -272,7 +273,12 @@ async function executeSyncReconciliation(
   context: TContext
 ): Promise<void> {
   for (const plan of operation.refresh.reconciliation ?? []) {
-    if (operation.completedMaintenance.includes(plan.branch)) continue;
+    if (
+      operation.completedMaintenance.includes(plan.branch) ||
+      operation.skippedReconciliation?.includes(plan.branch)
+    )
+      continue;
+    const retrying = operation.reconciling === plan.branch;
     assertSyncExpected(operation);
     try {
       // Hooks, configuration and the source worktree may have changed since selection.
@@ -285,7 +291,10 @@ async function executeSyncReconciliation(
       assertSyncExpected(operation);
       assertSyncReconciliationLocalInputs(plan, operation);
       assertSyncReconciliationFiles(plan);
-    } catch {
+    } catch (error) {
+      if (retrying) throw error;
+      (operation.skippedReconciliation ??= []).push(plan.branch);
+      saveSyncOperation(operation, context);
       context.splog.info(
         `Reconciliation for ${plan.branch} could not be reverified. Keeping local work and deferring cleanup.`
       );
@@ -294,7 +303,13 @@ async function executeSyncReconciliation(
     operation.reconciling = plan.branch;
     saveSyncOperation(operation, context);
     const range = reconciliationReplayRange(plan);
-    if (plan.replacement) {
+    const alreadyReplaced =
+      retrying &&
+      operation.expected.some(
+        ({ branchName, head }) =>
+          branchName === plan.branch && head === plan.publishedHead
+      );
+    if (plan.replacement && !alreadyReplaced) {
       context.engine.applySyncReplacement(plan);
       assertSyncExpected(operation, plan.branch);
       if (!operation.updated.includes(plan.branch))
@@ -422,7 +437,14 @@ export async function continueSyncOperation(
   opts: { addAll: boolean },
   context: TContext
 ): Promise<void> {
-  const operation = validateSyncRecovery(context.continueConfig.data);
+  const data = context.continueConfig.data;
+  if (data.sync?.reconciling && !data.sync.active) {
+    const operation = validateSyncReconciliationRetry(data);
+    recordSyncRecoveryWrite(context);
+    await verifyPendingSyncCleanup(operation, context);
+    return executeSyncOperation(operation, context);
+  }
+  const operation = validateSyncRecovery(data);
   recordSyncRecoveryWrite(context);
   const active = operation.active;
   if (!active) throw new Error('Validated sync has no active rebase.');
@@ -557,10 +579,16 @@ function verifyPendingSyncCleanup(
 }
 function reportSyncFailure(operation: SyncOperation, error: unknown): never {
   let live = false;
+  let retryable = false;
   try {
     live = validateSyncRecovery(requireSavedSync(), false).kind === 'sync';
   } catch {
-    /* Preserve unverified recovery for manual inspection. */
+    try {
+      retryable =
+        validateSyncReconciliationRetry(requireSavedSync()).kind === 'sync';
+    } catch {
+      /* Preserve unverified recovery for manual inspection. */
+    }
   }
   refuseSync(
     `Sync stopped during ${operation.phase}. Updated: ${
@@ -590,6 +618,8 @@ function reportSyncFailure(operation: SyncOperation, error: unknown): never {
     )}). Original project: ${operation.root}. ${
       live
         ? 'Resolve the conflict and run an continue.'
+        : retryable
+        ? 'Run an continue to reverify and retry the saved reconciliation.'
         : 'No verified owned continuation; inspect reached work and saved sync intent manually. A supported owned sync can be ended with an sync --abort, preserving reached work and residual Git/files.'
     } Some source refs may already have been removed; inspect remaining refs.\n${
       error instanceof Error ? error.message : String(error)

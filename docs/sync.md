@@ -30,6 +30,16 @@ A closed or merged PR is a cleanup input rather than a feature-refresh source. D
 
 When GitHub retargets an open child to trunk after its parent PR merges, sync preserves a strictly local-ahead child whose remote commits are already contained locally. It keeps the original local replay boundary for cleanup and maintenance instead of asking to replace the child with the older remote head. Cleanup still follows the selected delete options; no-restack still defers replay. This narrow case requires the old local parent to match the freshly verified merged PR head. Divergence, a closed/unmerged parent and other parent changes retain existing explicit reconciliation. See the [repair verification](verification/sync-merged-parent-local-commits-2026-11-02.md).
 
+## Reconciling a branch after its former parent merges
+
+If a parent PR merges in another checkout, GitHub may now show its open child PR against trunk while the local child is still based on the old local parent. Sync displays the branch names and PR numbers, compares the two branches' own commits against their respective bases, and labels times according to their source. A different hash or newer push alone does not prove a content change or authorize a replacement.
+
+A verified trunk fast-forward and other independent changes can finish while a branch awaits reconciliation. The completion report names the updated and deferred branches. Full and short logs list the unresolved survivor and retained former tip separately from the active stack. That tip preserves the boundary of the survivor's own commits. Automatic submission and dependent maintenance exclude the affected branches while reconciliation is pending.
+
+When sync asks for a decision, keeping the local commits replays them onto the verified new base. Taking the published version requires separate consent for the named branch and the displayed local work it will replace. Deferral keeps the branch and its dependent work available for a later sync. A known replay conflict is reported with its paths. If a live replay is interrupted, follow the owned sync continuation instructions in the original worktree. When sync verifies a saved reconciliation that stopped before its live replay, `an continue` can recheck and retry the exact choice. A newer published tip requires a fresh sync and, where needed, fresh consent.
+
+A reconciled branch returns to the active stack after its head and parent agree. Cleanup still requires its usual authorization and must wait until the old tip is no longer needed. A later submit is a separate operation. Finish or resolve pending reconciliation with a compatible Anthracite build before downgrading.
+
 ## Options and authority
 
 |Option|Meaning|

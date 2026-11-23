@@ -4,6 +4,7 @@ import { TContext } from '../../lib/context';
 import { getGithubPr } from '../../lib/api/github_pr';
 import { assertBranchNotFrozen } from '../../lib/engine/frozen_branch';
 import {
+  assertSyncReconciliationPins,
   readSyncReconciliation,
   SyncReconciliation,
 } from '../../lib/engine/sync_reconciliation';
@@ -355,6 +356,7 @@ export function assertSyncReconciliationLocalInputs(
     throw new ExitFailedError(
       `Captured reconciliation inputs for ${plan.branch} changed. Keeping local work.`
     );
+  assertSyncReconciliationPins(entry);
   assertBranchNotFrozen(plan.branch);
   assertBranchesAvailableInWorktrees([plan.branch]);
 }

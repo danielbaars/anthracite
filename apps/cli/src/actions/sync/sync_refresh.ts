@@ -84,7 +84,9 @@ export async function prepareSyncRefresh(
     const existing = readSyncReconciliation();
     const entries = expandReconciliationScope(
       [
-        ...existing.entries,
+        ...existing.entries.map((entry) =>
+          refreshRetainedPublishedHead(entry, { nodes, prs })
+        ),
         ...findDeferredMergeSurvivors(
           nodes,
           { prs, existing: existing.entries },
@@ -200,6 +202,40 @@ function expandReconciliationScope(
       parentBranchName: context.engine.getParentPrecondition(branchName),
     }));
   return extendSyncReconciliation(entries, { local, incoming: nodes });
+}
+
+/** Fresh planning may compare a newer version of the same PR, with no saved consent. */
+function refreshRetainedPublishedHead(
+  entry: SyncReconciliation,
+  snapshot: {
+    readonly nodes: readonly RemoteUpdateNode[];
+    readonly prs: SyncRefreshPlan['prs'];
+  }
+): SyncReconciliation {
+  const node = snapshot.nodes.find(
+    ({ branchName }) => branchName === entry.branch
+  );
+  if (
+    !node ||
+    node.head === entry.publishedHead ||
+    node.pullRequestNumber !== entry.pullRequest ||
+    node.parentBranchName !== entry.pullRequestBase ||
+    node.previousHead !== entry.head ||
+    node.previousBase !== entry.base ||
+    node.previousMetadata !== entry.metadata ||
+    node.previousParentBranchName !== entry.formerParent
+  )
+    return entry;
+  const former = snapshot.prs.find(
+    ({ number }) => number === entry.formerParentPr
+  );
+  return former?.state === 'MERGED' &&
+    former.headRefName === entry.formerParent &&
+    former.headRefOid === entry.mergedHead &&
+    former.baseRefName === entry.pullRequestBase &&
+    getSha(`refs/heads/${entry.formerParent}`) === entry.formerParentHead
+    ? { ...entry, publishedHead: node.head }
+    : entry;
 }
 
 function findDeferredMergeSurvivors(

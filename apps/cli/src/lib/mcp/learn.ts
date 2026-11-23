@@ -96,6 +96,13 @@ head or exact detached OID. Only actual approved deletion of that branch permits
 the reported trunk fallback. File collisions, tracked dirt and affected worktrees
 remain protected; late failures retain reached work and concurrent actor state.
 
+When a former parent has merged, sync can complete independent updates while
+holding a branch in pending reconciliation. Inspect full/short log for the
+survivor and its retained former tip. Compare the named own work before a terminal
+decision. Noninteractive sync preserves local work, and ordinary stack commands
+cannot automatically publish or rewrite the deferred branches. The partial
+completion report names outstanding work.
+
 A real owned sync conflict returns cli_error. Resolve deliberately in the printed
 original project and use an continue/cont in a fresh call. The saved sync intent
 retains pinned sources, graph, consent, remaining phases and checkout policy;
@@ -104,8 +111,10 @@ requires fresh reads of the exact saved identities/states and may need GitHub re
 access; disabled integration, changed PRs or failed lookup refuse advancement.
 No new candidates or source heads are discovered on resume. Raw Git abort cancels
 only the active rebase, not earlier updates, cleanup or completed rewrites. Missing,
-foreign, changed, aborted or no-active intent and uncertain completed publication
-require manual inspection, not automatic retry or rollback. To end a supported
+foreign, changed or aborted intent and uncertain completed publication require
+manual inspection. When sync reports that a verified saved reconciliation
+stopped before its live replay, an continue rechecks the same captured selection
+and resumes from the reached work. It never reuses consent for a newer source. To end a supported
 owned sync, run an sync --abort in the original project. This is local and offline:
 it archives the original intent and source observations, quits only its matching
 active rebase, and releases only the sync gate. Repeating after completion is a

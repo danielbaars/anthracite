@@ -50,6 +50,27 @@ export function readSyncReconciliation(): ReconciliationState {
   }
 }
 
+function reconciliationTips(
+  entries: readonly SyncReconciliation[]
+): Set<string> {
+  return new Set(
+    entries.flatMap(({ head, base, formerParentHead, publishedHead }) => [
+      head,
+      base,
+      formerParentHead,
+      publishedHead,
+    ])
+  );
+}
+
+export function assertSyncReconciliationPins(entry: SyncReconciliation): void {
+  for (const tip of reconciliationTips([entry]))
+    if (getSha(`${namespace}/commits/${tip}`) !== tip)
+      throw new ExitFailedError(
+        `A pinned sync reconciliation source for ${entry.branch} is missing or changed.`
+      );
+}
+
 /** Publish the decision and its recoverable commit range in one ref transaction. */
 export function retainSyncReconciliation(
   before: ReconciliationState,
@@ -61,15 +82,20 @@ export function retainSyncReconciliation(
   );
   const retained = before.entries.map((existing) => {
     const updated = entries.find((entry) => entry.branch === existing.branch);
+    if (!updated) return existing;
+    const dependents = new Set([
+      ...(existing.dependents ?? []),
+      ...(updated.dependents ?? []),
+    ]);
     if (
-      !updated?.dependents?.some((name) => !existing.dependents?.includes(name))
+      updated.publishedHead === existing.publishedHead &&
+      dependents.size === (existing.dependents?.length ?? 0)
     )
       return existing;
     return {
       ...existing,
-      dependents: [
-        ...new Set([...(existing.dependents ?? []), ...updated.dependents]),
-      ],
+      publishedHead: updated.publishedHead,
+      ...(dependents.size ? { dependents: [...dependents] } : {}),
     };
   });
   if (
@@ -78,7 +104,11 @@ export function retainSyncReconciliation(
   )
     return;
   const expected = new Map<string, string>();
-  for (const entry of additions) {
+  const changedSources = retained.filter(
+    (entry, index) =>
+      entry.publishedHead !== before.entries[index]?.publishedHead
+  );
+  for (const entry of [...additions, ...changedSources]) {
     for (const [ref, revision] of captureDeferralRefs(entry)) {
       if (expected.has(ref) && expected.get(ref) !== revision)
         throw new ExitFailedError(
@@ -100,15 +130,12 @@ export function retainSyncReconciliation(
     onError: 'throw',
     resource: 'storeSyncReconciliation',
   });
-  const tips = [
-    ...new Set(
-      additions.flatMap(({ head, base, formerParentHead }) => [
-        head,
-        base,
-        formerParentHead,
-      ])
-    ),
-  ];
+  const changed = [...additions, ...changedSources];
+  const tips = [...reconciliationTips(changed)];
+  const needed = reconciliationTips([...retained, ...additions]);
+  const retired = [...reconciliationTips(before.entries)].filter(
+    (tip) => !needed.has(tip)
+  );
   const updates = [
     before.revision
       ? `update ${stateRef} ${metadata} ${before.revision}`
@@ -119,6 +146,7 @@ export function retainSyncReconciliation(
       const existing = getSha(ref);
       return existing ? `verify ${ref} ${tip}` : `create ${ref} ${tip}`;
     }),
+    ...retired.map((tip) => `delete ${namespace}/commits/${tip} ${tip}`),
   ];
   runGitCommand({
     args: ['-c', 'core.hooksPath=/dev/null', 'update-ref', '--stdin'],
@@ -236,14 +264,8 @@ export function finishSyncReconciliation(
         resource: 'storeSyncReconciliation',
       })
     : '';
-  const neededPins = new Set(
-    remaining.flatMap(({ head, base, formerParentHead }) => [
-      head,
-      base,
-      formerParentHead,
-    ])
-  );
-  const retired = [...new Set([entry.head, entry.base, entry.formerParentHead])]
+  const neededPins = reconciliationTips(remaining);
+  const retired = [...reconciliationTips([entry])]
     .filter((tip) => !neededPins.has(tip))
     .map((tip) => `delete ${namespace}/commits/${tip} ${tip}`);
   runGitCommand({

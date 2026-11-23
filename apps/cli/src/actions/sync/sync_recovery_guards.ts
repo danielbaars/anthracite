@@ -32,7 +32,15 @@ export function assertSyncSources(operation: SyncOperation): void {
         `Pinned sync source ${source.sourceRef} is missing or changed.`
       );
   const plans = operation.refresh.reconciliation ?? [];
+  const skipped = operation.skippedReconciliation ?? [];
   if (
+    new Set(skipped).size !== skipped.length ||
+    skipped.some(
+      (name) =>
+        name === operation.reconciling ||
+        operation.completedMaintenance.includes(name) ||
+        !plans.some(({ branch }) => branch === name)
+    ) ||
     new Set(plans.map(({ branch }) => branch)).size !== plans.length ||
     plans.some(
       (plan) =>
