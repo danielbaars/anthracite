@@ -307,7 +307,7 @@ describe('sync CLI and installed MCP delivery', function () {
     for (let attempt = 0; attempt < 2; attempt++) {
       const result = await run(['sync', '--no-delete']);
       expect(result.status, result.stderr).to.equal('success');
-      expect(result.stdout).to.include('Sync partially completed');
+      expect(result.stderr).to.include('Sync partially completed');
       expect(result.stdout).to.include(
         'Patches matching at the same position: 9'
       );
