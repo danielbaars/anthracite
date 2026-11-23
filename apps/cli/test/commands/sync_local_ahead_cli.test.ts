@@ -196,7 +196,7 @@ describe('sync CLI unpublished local commits', function () {
     const result = fixture.run(['sync', '--no-delete']);
     expect(result.status, result.output).to.equal(1);
     expect(result.output).to.include('Hit conflict restacking child');
-    expect(result.output).to.include('keeping local history');
+    expect(result.output).to.include('unpublished local history');
     expect(
       fixture.git(fixture.consumer, 'diff', '--name-only', '--diff-filter=U')
     ).to.equal('main.txt');
@@ -229,7 +229,7 @@ describe('sync CLI unpublished local commits', function () {
     const result = fixture.run(['get', 'child', '--no-restack']);
     expect(result.status, result.output).to.equal(1);
     expect(result.output).to.include('shares a name with a local branch');
-    expect(result.output).not.to.include('keeping local history');
+    expect(result.output).not.to.include('unpublished local history');
     fixture.assertTip('child', head);
     expect(fixture.observe()).to.deep.equal(before);
   });

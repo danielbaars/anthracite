@@ -54,9 +54,11 @@ describe('sync CLI paired local restacks', function () {
 
     const result = fixture.ok('sync', '--no-delete');
 
-    expect(result.output).to.include('parent: local restack');
-    expect(result.output).to.include('child: local restack');
-    expect(result.output).to.include('Publication is pending');
+    expect(result.output).to.include('parent has unpublished local history');
+    expect(result.output).to.include('child has unpublished local history');
+    expect(
+      result.output.match(/child has unpublished local history/g)
+    ).to.have.length(1);
     expect(result.output).to.include("an submit --branch 'child' --dry-run");
     expect(result.output).not.to.include('How would you like to handle');
     expect(fixture.observe()).to.deep.equal(before);
@@ -91,8 +93,8 @@ describe('sync CLI paired local restacks', function () {
       fixture.assertTip(name, head);
     }
     fixture.assertTip('independent', incoming);
-    expect(result.output).to.include('tip: local restack');
-    expect(result.output).to.include('sibling: local restack');
+    expect(result.output).to.include('tip has unpublished local history');
+    expect(result.output).to.include('sibling has unpublished local history');
     expect(result.output).to.include('local-only is local-only');
     expect(
       fixture.git(fixture.consumer, 'show', 'independent:fresh.txt')
@@ -147,7 +149,9 @@ describe('sync CLI paired local restacks', function () {
 
       expect(result.status, result.output).to.equal(1);
       expect(result.output).to.include('histories differ');
-      expect(result.output).not.to.include('child: local restack');
+      expect(result.output).not.to.include(
+        'child has unpublished local history'
+      );
       expect(fixture.observe()).to.deep.equal(before);
       expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
       expect(
@@ -175,7 +179,7 @@ describe('sync CLI paired local restacks', function () {
     const paused = fixture.run(['sync', '--no-delete']);
 
     expect(paused.status, paused.output).to.equal(1);
-    expect(paused.output).to.include('child: local restack');
+    expect(paused.output).to.include('child has unpublished local history');
     expect(paused.output).to.include('Hit conflict restacking child');
     const record = z
       .object({
@@ -400,7 +404,7 @@ describe('sync CLI paired local restacks', function () {
     expect(response.isError).to.equal(false);
     expect(result.status, result.stderr).to.equal('success');
     expect(result.exitCode).to.equal(0);
-    expect(result.stdout).to.include('child: local restack');
+    expect(result.stdout).to.include('child has unpublished local history');
     expect(fixture.observe()).to.deep.equal(before);
     fixture.git(
       fixture.consumer,

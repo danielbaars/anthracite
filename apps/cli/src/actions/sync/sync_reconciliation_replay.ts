@@ -22,6 +22,7 @@ import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import { compareBranchWork, hasCanonicalAncestry } from './local_restack';
 import type { SyncOperation } from './sync_operation';
 import type { SyncRefreshPlan } from './sync_refresh';
+import { reportSyncReconciliationEvidence } from './sync_reconciliation_evidence';
 
 const oid = z.string().regex(/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/);
 export const syncReconciliationReplaySchema = z
@@ -53,10 +54,10 @@ export async function planSyncReconciliationReplays(
     readonly prs: SyncRefreshPlan['prs'];
     readonly onto: string;
     readonly restack: boolean;
+    readonly debug: boolean;
   },
   context: TContext
 ): Promise<SyncReconciliationReplay[]> {
-  if (!options.restack) return [];
   const planned: SyncReconciliationReplay[] = [];
   for (const entry of options.entries) {
     const node = options.nodes.find(
@@ -66,6 +67,13 @@ export async function planSyncReconciliationReplays(
     const former = options.prs.find(
       ({ number }) => number === entry.formerParentPr
     );
+    const evidence = { entry, node, parent: former, published: pr };
+    if (options.debug)
+      await reportSyncReconciliationEvidence(evidence, context, 'debug');
+    if (!options.restack) {
+      reportPending(entry, 'Replay is deferred for this sync.', context);
+      continue;
+    }
     if (
       !node ||
       !pr?.baseRefOid ||
@@ -84,8 +92,14 @@ export async function planSyncReconciliationReplays(
       former.state !== 'MERGED' ||
       former.baseRefName !== context.engine.trunk ||
       former.headRefOid !== entry.mergedHead
-    )
+    ) {
+      reportPending(
+        entry,
+        'Current branch and PR evidence could not be verified.',
+        context
+      );
       continue;
+    }
     if (
       options.entries.some(
         (other) =>
@@ -93,12 +107,16 @@ export async function planSyncReconciliationReplays(
           (other.formerParent === entry.branch ||
             other.dependents?.includes(entry.branch))
       )
-    )
-      continue;
-    if (context.engine.isBranchFrozen(entry.branch)) {
-      context.splog.info(
-        `Keeping frozen branch ${entry.branch} pending reconciliation.`
+    ) {
+      reportPending(
+        entry,
+        'Another branch needs this history for reconciliation.',
+        context
       );
+      continue;
+    }
+    if (context.engine.isBranchFrozen(entry.branch)) {
+      reportPending(entry, 'The branch is frozen.', context);
       continue;
     }
     const plan: SyncReconciliationReplay = {
@@ -115,7 +133,17 @@ export async function planSyncReconciliationReplays(
       formerParentPr: entry.formerParentPr,
       mergedHead: entry.mergedHead,
     };
-    const selected = await chooseReconciliationReplay(plan, entry, context);
+    const selected = await chooseReconciliationReplay(
+      plan,
+      {
+        entry,
+        showEvidence: () =>
+          options.debug
+            ? Promise.resolve()
+            : reportSyncReconciliationEvidence(evidence, context, 'info'),
+      },
+      context
+    );
     if (selected) planned.push(selected);
   }
   return planned;
@@ -123,10 +151,17 @@ export async function planSyncReconciliationReplays(
 
 async function chooseReconciliationReplay(
   plan: SyncReconciliationReplay,
-  entry: SyncReconciliation,
+  {
+    entry,
+    showEvidence,
+  }: {
+    readonly entry: SyncReconciliation;
+    readonly showEvidence: () => Promise<void>;
+  },
   context: TContext
 ): Promise<SyncReconciliationReplay | undefined> {
-  const localIsClean = await assessSource(plan, 'Local', context);
+  const local = await inspectLocalReplay(reconciliationReplayRange(plan));
+  const localIsClean = local.status === 'clean';
   if (
     localIsClean &&
     compareBranchWork(entry, {
@@ -141,21 +176,35 @@ async function chooseReconciliationReplay(
   }
 
   const published = planPublishedReplay(plan);
-  const publishedIsClean = published
-    ? await assessSource(published, 'GitHub', context)
-    : false;
-  if (!published)
-    context.splog.info(
-      `GitHub replay of ${plan.branch} onto ${context.engine.trunk}: replay feasibility could not be verified.`
+  const github: LandingReplayAssessment = published
+    ? await inspectLocalReplay(reconciliationReplayRange(published))
+    : {
+        status: 'unavailable',
+        reason: 'The GitHub branch commit range could not be verified.',
+      };
+  const publishedIsClean = github.status === 'clean';
+  const assessments = describeReplayChoices(local, github, context);
+  if (!context.canPrompt || (!localIsClean && !publishedIsClean)) {
+    reportPending(
+      entry,
+      [
+        ...assessments,
+        ...(localIsClean || publishedIsClean
+          ? ['Run an sync in a terminal to choose an available resolution.']
+          : []),
+      ].join('\n  '),
+      context
     );
-  if (!context.canPrompt || (!localIsClean && !publishedIsClean))
     return undefined;
+  }
 
+  await showEvidence();
+  for (const assessment of assessments) context.splog.info(assessment);
   if (localIsClean)
     context.splog.info(
       `Keeping local commits on ${plan.branch} will replay them onto ${context.engine.trunk} without publishing.`
     );
-  context.splog.info('Deferring keeps both local tips for recovery.');
+  context.splog.info('Deferring keeps both local branches for recovery.');
   const { choice } = await context.prompts({
     type: 'select',
     name: 'choice',
@@ -185,8 +234,11 @@ async function chooseReconciliationReplay(
     initial: !localIsClean && publishedIsClean ? 1 : 0,
   });
   if (choice === 'local') return plan;
-  if (choice === 'published' && published)
-    return confirmPublishedReplay(published, context);
+  if (choice === 'published' && published) {
+    const confirmed = await confirmPublishedReplay(published, context);
+    if (confirmed) return confirmed;
+  }
+  reportPending(entry, 'No resolution selected.', context);
   return undefined;
 }
 
@@ -221,20 +273,62 @@ function planPublishedReplay(
   return { ...plan, replacement: { from: base } };
 }
 
-async function assessSource(
-  plan: SyncReconciliationReplay,
-  label: 'Local' | 'GitHub',
+function reportPending(
+  { branch, formerParent, pullRequest, formerParentPr }: SyncReconciliation,
+  reason: string,
   context: TContext
-): Promise<boolean> {
-  const assessment = await inspectLocalReplay(reconciliationReplayRange(plan));
-  if (assessment.status === 'clean') return true;
-  const reason = describeUnverifiedReplay(assessment);
+): void {
   context.splog.info(
-    `${label} replay of ${plan.branch} onto ${context.engine.trunk}: ${reason} Keeping local work pending reconciliation unless another resolution is chosen.`
+    `${branch} (PR #${pullRequest}): needs attention.\n  ${reason}\n  Its former parent ${formerParent} (PR #${formerParentPr}) merged. Keeping both local branches for recovery.`
   );
-  if (assessment.status === 'unavailable')
+}
+
+function describeReplayChoices(
+  local: LandingReplayAssessment,
+  github: LandingReplayAssessment,
+  context: TContext
+): string[] {
+  const describe = (assessment: LandingReplayAssessment): string => {
+    if (assessment.status === 'clean') return '';
+    if (assessment.status === 'conflict')
+      return `would conflict in ${assessment.paths
+        .map(safeDiagnostic)
+        .join(', ')}. Later commits were not assessed.`;
     context.splog.debug(safeDiagnostic(assessment.reason));
-  return false;
+    const rerere = assessment.reason.match(
+      /^Replay inspection cannot reproduce local replay with effective rerere\.enabled=true \((system|global|local|worktree|command), /
+    );
+    if (rerere)
+      return `could not be checked because rerere is enabled in ${rerere[1]} Git config.`;
+    if (
+      assessment.reason.startsWith(
+        'Replay inspection cannot reproduce local replay with implicit rerere.enabled=true from '
+      )
+    )
+      return 'could not be checked because an existing Git rerere cache enables rerere.';
+    if (
+      assessment.reason ===
+      'The GitHub branch commit range could not be verified.'
+    )
+      return 'could not be checked because the GitHub commit range could not be verified.';
+    return 'could not be checked. See --debug for the reason.';
+  };
+  const localResult = describe(local);
+  const githubResult = describe(github);
+  const differentUnavailableReasons =
+    local.status === 'unavailable' &&
+    github.status === 'unavailable' &&
+    local.reason !== github.reason;
+  if (
+    localResult &&
+    localResult === githubResult &&
+    !differentUnavailableReasons
+  )
+    return [`Local and GitHub replays ${localResult}`];
+  return [
+    ...(localResult ? [`Local replay ${localResult}`] : []),
+    ...(githubResult ? [`GitHub replay ${githubResult}`] : []),
+  ];
 }
 
 function readReconciliationGit(args: readonly string[]): string | undefined {

@@ -49,10 +49,12 @@ describe('sync CLI equivalent local restacks', function () {
     const remote = fixture.git(fixture.remote, 'show-ref');
     const before = fixture.observe();
 
-    const result = fixture.ok('sync', '--no-delete');
+    const result = fixture.ok('sync', '--no-delete', '--debug');
 
     fixture.assertTip('parent', head);
-    expect(result.output).to.include('local restack').and.to.include('match');
+    expect(result.stderr)
+      .to.include('local restack')
+      .and.to.include('branch commits match remote');
     expect(result.output).to.include('unpublished');
     expect(result.output).not.to.include('How would you like to handle');
     expect(fixture.observe()).to.deep.equal(before);
@@ -221,7 +223,7 @@ describe('sync CLI equivalent local restacks', function () {
     const before = fixture.observe();
     const result = fixture.run(['sync', '--no-delete'], true);
     expect(result.status, result.output).to.equal(0);
-    expect(result.output).to.include('local restack');
+    expect(result.output).to.include('unpublished local history');
     expect(result.output).not.to.include('How would you like to handle');
     expect(fixture.observe()).to.deep.equal(before);
     fixture.status('parent');
@@ -295,7 +297,7 @@ describe('sync CLI equivalent local restacks', function () {
     createRestack();
     const before = fixture.observe();
     const result = fixture.ok('sync', '--no-delete');
-    expect(result.output).to.include('local restack');
+    expect(result.output).to.include('unpublished local history');
     expect(fixture.git(fixture.consumer, 'log', '-1', '--format=%B')).to.equal(
       'Deliberate empty explanation'
     );
@@ -318,7 +320,7 @@ describe('sync CLI equivalent local restacks', function () {
     const before = fixture.observe();
     const remote = fixture.git(fixture.remote, 'show-ref');
     const result = fixture.ok('sync', '--no-delete');
-    expect(result.output).to.include('local restack');
+    expect(result.output).to.include('unpublished local history');
     expect(fixture.observe()).to.deep.equal(before);
     expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
   });
@@ -494,7 +496,7 @@ describe('sync CLI equivalent local restacks', function () {
       '--no-restack',
     ]);
     expect(result.status, result.output).to.equal(1);
-    expect(result.output).not.to.include('keeping local history');
+    expect(result.output).not.to.include('unpublished local history');
     expect(fixture.observe()).to.deep.equal(before);
     expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remoteRefs);
   });

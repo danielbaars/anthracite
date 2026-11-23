@@ -284,7 +284,7 @@ export async function getBranchesFromRemote(
           const label = chalk.cyan(branchName);
           const quotedBranch = `'${branchName.replace(/'/g, "'\\''")}'`;
           context.splog.info(
-            `${label} has unpublished local history; keeping local history. Preview publication with an submit --branch ${quotedBranch} --dry-run.`
+            `${label} has unpublished local history. Preview publication: an submit --branch ${quotedBranch} --dry-run.`
           );
         } else if (
           context.engine.branchExists(branchName) &&

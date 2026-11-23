@@ -35,34 +35,12 @@ type Evidence = {
 };
 
 export async function reportSyncReconciliationEvidence(
-  {
-    entries,
-    nodes,
-    prs,
-  }: {
-    readonly entries: readonly SyncReconciliation[];
-    readonly nodes: readonly RemoteUpdateNode[];
-    readonly prs: readonly ReconciliationPr[];
-  },
-  context: TContext
+  evidence: Evidence,
+  context: TContext,
+  level: 'info' | 'debug'
 ): Promise<void> {
-  const reports = await Promise.all(
-    entries.map((entry) =>
-      describeSyncReconciliation(
-        {
-          entry,
-          node: nodes.find(({ branchName }) => branchName === entry.branch),
-          parent: prs.find(({ number }) => number === entry.formerParentPr),
-          published: prs.find(({ number }) => number === entry.pullRequest),
-        },
-        context
-      )
-    )
-  );
-  for (const lines of reports) {
-    for (const line of lines)
-      context.splog.info(line.replace(/[\p{Cc}\p{Cf}]/gu, '�'));
-  }
+  for (const line of await describeSyncReconciliation(evidence, context))
+    context.splog[level](line.replace(/[\p{Cc}\p{Cf}]/gu, '�'));
 }
 
 async function describeSyncReconciliation(

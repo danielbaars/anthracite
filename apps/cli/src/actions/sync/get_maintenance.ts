@@ -151,7 +151,9 @@ export function applyGetMaintenance(
 ): string[] {
   if (plan.length === 0) return [];
   const names = plan.map((entry) => entry.branchName);
-  context.splog.info(`Local maintenance: ${names.join(', ')}.`);
+  context.splog[operation === 'sync' ? 'debug' : 'info'](
+    `Local maintenance: ${names.join(', ')}.`
+  );
   if (!shouldRestack) {
     context.splog.info(`Pending restack: ${names.join(', ')} (--no-restack).`);
     return [];

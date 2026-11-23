@@ -80,9 +80,8 @@ describe('sync CLI repository-wide local maintenance', function () {
       fixture.git(fixture.remote, 'branch', '--list', 'independent', 'sibling')
     ).to.equal('');
     expect(result.output)
-      .to.include('Local maintenance:')
-      .and.to.include('independent')
-      .and.to.include('sibling');
+      .to.include('Restacked independent')
+      .and.to.include('Restacked sibling');
     const heads = fixture.git(
       fixture.consumer,
       'for-each-ref',
@@ -323,7 +322,9 @@ if (!fs.existsSync(${JSON.stringify(
     expect(
       fixture.git(fixture.consumer, 'show', 'local-work:local.txt')
     ).to.equal('local descendant work');
-    expect(result.output).to.include('Local maintenance: child, local-work.');
+    expect(result.output)
+      .to.include('Restacked child')
+      .and.to.include('Restacked local-work');
     expect(fixture.git(fixture.remote, 'rev-parse', 'child')).to.equal(
       fixture.oldChild
     );
