@@ -64,7 +64,11 @@ export async function planSyncCleanup(
   refresh: SyncRefreshPlan,
   context: TContext
 ): Promise<SyncCleanupPlan> {
-  const branches = projectCleanupBranches(refresh, context);
+  const projected = projectCleanupBranches(refresh, context);
+  const deferred = new Set(refresh.deferred);
+  const branches = projected.filter(
+    (branch) => !deferred.has(branch.branchName)
+  );
   const untouched = Object.entries(getMetadataRefList())
     .filter(([name]) => !branches.some((branch) => branch.branchName === name))
     .map(([branchName, metadata]) => ({
@@ -115,37 +119,11 @@ export async function planSyncCleanup(
         ).value === true);
     (confirmed ? accepted : declined).push(branch.branchName);
   }
-  const excluded: string[] = [];
   const projection = { trunkName: context.engine.trunk, trunkHead: trunk };
-  // Removing one candidate can expose a frozen survivor to another candidate.
-  while (excluded.length < accepted.length) {
-    const blocked = accepted.filter(
-      (name) =>
-        !excluded.includes(name) &&
-        cleanupClosure(
-          branches,
-          accepted.filter((candidate) => !excluded.includes(candidate)),
-          { ...projection, root: name }
-        ).mandatory.some(
-          (survivor) =>
-            branches.find((branch) => branch.branchName === survivor)?.frozen
-        )
-    );
-    if (!blocked.length) break;
-    for (const name of blocked) {
-      const frozen = cleanupClosure(
-        branches,
-        accepted.filter((candidate) => !excluded.includes(candidate)),
-        { ...projection, root: name }
-      ).mandatory.filter(context.engine.isBranchFrozen);
-      excluded.push(name);
-      context.splog.info(
-        `Skipping cleanup of ${name}: frozen mandatory survivors ${frozen.join(
-          ', '
-        )}. Unfreeze them before cleanup.`
-      );
-    }
-  }
+  const excluded = excludeBlockedCleanup(
+    { branches: projected, deferred, accepted, projection },
+    context
+  );
   const allowed = accepted.filter((name) => !excluded.includes(name));
   const closure = cleanupClosure(branches, allowed, projection);
   const plan = {
@@ -167,16 +145,66 @@ export async function planSyncCleanup(
   return plan;
 }
 
+function excludeBlockedCleanup(
+  {
+    branches,
+    deferred,
+    accepted,
+    projection,
+  }: {
+    branches: readonly CleanupBranch[];
+    deferred: ReadonlySet<string>;
+    accepted: readonly string[];
+    projection: { trunkName: string; trunkHead: string };
+  },
+  context: TContext
+): string[] {
+  const excluded = new Set<string>();
+  const frozen = new Set(
+    branches
+      .filter((branch) => branch.frozen)
+      .map((branch) => branch.branchName)
+  );
+  // Removing one candidate can expose a protected survivor to another candidate.
+  while (excluded.size < accepted.length) {
+    const deleting = accepted.filter((name) => !excluded.has(name));
+    const priorSize = excluded.size;
+    for (const name of deleting) {
+      const { mandatory } = cleanupClosure(branches, deleting, {
+        ...projection,
+        root: name,
+      });
+      const pending = mandatory.filter((survivor) => deferred.has(survivor));
+      const frozenSurvivors = mandatory.filter((survivor) =>
+        frozen.has(survivor)
+      );
+      if (pending.length) {
+        excluded.add(name);
+        context.splog.info(
+          `Deferring cleanup of ${name}: would change ${pending.join(
+            ', '
+          )} while reconciliation is pending.`
+        );
+      } else if (frozenSurvivors.length) {
+        excluded.add(name);
+        context.splog.info(
+          `Skipping cleanup of ${name}: frozen mandatory survivors ${frozenSurvivors.join(
+            ', '
+          )}. Unfreeze them before cleanup.`
+        );
+      }
+    }
+    if (excluded.size === priorSize) break;
+  }
+  return [...excluded];
+}
+
 function projectCleanupBranches(
   refresh: SyncRefreshPlan,
   context: TContext
 ): CleanupBranch[] {
   return context.engine.allBranchNames
-    .filter(
-      (name) =>
-        context.engine.isBranchTracked(name) &&
-        !refresh.deferred?.includes(name)
-    )
+    .filter((name) => context.engine.isBranchTracked(name))
     .sort()
     .map((branchName) => {
       const node = refresh.preserved?.includes(branchName)

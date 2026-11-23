@@ -98,7 +98,7 @@ export function logAction(
           ]
         : []
     )
-    .concat(getSyncReconciliationLines(entries))
+    .concat(getSyncReconciliationLines(entries, context.engine.allBranchNames))
     .join('\n');
 
   const notice = getPendingSyncLogNotice(context);
@@ -106,20 +106,32 @@ export function logAction(
 }
 
 export function getSyncReconciliationLines(
-  entries: readonly SyncReconciliation[]
+  entries: readonly SyncReconciliation[],
+  branchNames: readonly string[]
 ): string[] {
   if (!entries.length) return [];
   return [
     '',
     'Pending reconciliation',
-    ...entries.flatMap((entry) => [
-      `  ${entry.branch} (PR #${entry.pullRequest}): replay onto ${entry.pullRequestBase} pending.`,
-      `    Former parent: ${
-        entry.formerParent
-      } at ${entry.formerParentHead.slice(0, 8)} (PR #${
-        entry.formerParentPr
-      } merged); retained for recovery.`,
-    ]),
+    ...entries.flatMap((entry) => {
+      const dependents = branchNames.filter(
+        (name) =>
+          name !== entry.branch &&
+          name !== entry.formerParent &&
+          isPendingSyncReconciliation(name, [entry])
+      );
+      return [
+        `  ${entry.branch} (PR #${entry.pullRequest}): replay onto ${entry.pullRequestBase} pending.`,
+        `    Former parent: ${
+          entry.formerParent
+        } at ${entry.formerParentHead.slice(0, 8)} (PR #${
+          entry.formerParentPr
+        } merged); retained for recovery.`,
+        ...(dependents.length
+          ? [`    Deferred dependents: ${dependents.sort().join(', ')}.`]
+          : []),
+      ];
+    }),
   ];
 }
 
