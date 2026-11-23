@@ -11,6 +11,7 @@ import {
   assertSyncReconciliationLocalInputs,
   assertSyncReconciliationSource,
   ownedSyncReconciliation,
+  reconciliationReplayRange,
   SyncReconciliationReplay,
 } from './sync_reconciliation_replay';
 import { continueConfigFactory } from '../../lib/spiffy/continuation_spf';
@@ -274,11 +275,13 @@ async function executeSyncReconciliation(
     if (operation.completedMaintenance.includes(plan.branch)) continue;
     assertSyncExpected(operation);
     try {
-      await assertSyncReconciliationSource(plan, context);
       // Hooks, configuration and the source worktree may have changed since selection.
-      const assessment = await inspectLocalReplay(plan);
+      const assessment = await inspectLocalReplay(
+        reconciliationReplayRange(plan)
+      );
       if (assessment.status !== 'clean')
         throw new Error('The replay is no longer verified conflict-free.');
+      await assertSyncReconciliationSource(plan, context);
       assertSyncExpected(operation);
       assertSyncReconciliationLocalInputs(plan, operation);
       assertSyncReconciliationFiles(plan);
@@ -290,11 +293,24 @@ async function executeSyncReconciliation(
     }
     operation.reconciling = plan.branch;
     saveSyncOperation(operation, context);
-    const result = context.engine.reconcileSyncBranch(plan, false);
+    const range = reconciliationReplayRange(plan);
+    if (plan.replacement) {
+      context.engine.applySyncReplacement(plan);
+      assertSyncExpected(operation, plan.branch);
+      saveSyncOperation(operation, context, plan.branch);
+      assertSyncReconciliationLocalInputs(plan, operation);
+      assertSyncReconciliationFiles(plan);
+    }
+    const result = context.engine.reconcileSyncBranch(
+      { ...range, metadata: plan.metadata },
+      false
+    );
     if (result.result === 'REBASE_CONFLICT') {
       persistContinuation({ rebasedBranchBase: plan.onto }, context);
       throw new Error(
-        `Replaying local commits on ${plan.branch} hit a conflict.`
+        `Replaying ${plan.replacement ? 'GitHub' : 'local'} commits on ${
+          plan.branch
+        } hit a conflict.`
       );
     }
     completeSyncReconciliation(
@@ -416,14 +432,20 @@ export async function continueSyncOperation(
       if (
         active.onto !== reconciliation.onto ||
         active.base !== reconciliation.onto ||
-        active.originalHead !== reconciliation.head
+        active.originalHead !== reconciliationReplayRange(reconciliation).head
       )
         refuseSync('Saved reconciliation does not match the owned rebase.');
       await assertSyncReconciliationSource(reconciliation, context);
       assertSyncRecoveryWrite(context);
       validateSyncRecovery(context.continueConfig.data);
       if (opts.addAll) context.engine.addAll();
-      const result = context.engine.reconcileSyncBranch(reconciliation, true);
+      const result = context.engine.reconcileSyncBranch(
+        {
+          ...reconciliationReplayRange(reconciliation),
+          metadata: reconciliation.metadata,
+        },
+        true
+      );
       if (result.result === 'REBASE_CONFLICT') {
         validateSyncRecovery(context.continueConfig.data);
         persistContinuation({ rebasedBranchBase: active.base }, context);

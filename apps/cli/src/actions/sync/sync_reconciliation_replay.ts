@@ -1,3 +1,4 @@
+import { execFileSync } from 'child_process';
 import { z } from 'zod';
 import { TContext } from '../../lib/context';
 import { getGithubPr } from '../../lib/api/github_pr';
@@ -32,6 +33,7 @@ export const syncReconciliationReplaySchema = z
     formerParentHead: oid,
     formerParentPr: z.number().int().positive(),
     mergedHead: oid,
+    replacement: z.object({ from: oid }).strict().optional(),
   })
   .strict();
 
@@ -108,54 +110,196 @@ export async function planSyncReconciliationReplays(
       formerParentPr: entry.formerParentPr,
       mergedHead: entry.mergedHead,
     };
-    const assessment = await inspectLocalReplay(plan);
-    if (assessment.status !== 'clean') {
-      const reason =
-        assessment.status === 'conflict'
-          ? `conflicts in ${assessment.paths
-              .map(safeDiagnostic)
-              .join(', ')}. Later commits were not assessed.`
-          : 'replay feasibility could not be verified.';
-      context.splog.info(
-        `Local replay of ${entry.branch} onto ${context.engine.trunk}: ${reason} Keeping local work pending reconciliation.`
-      );
-      if (assessment.status === 'unavailable')
-        context.splog.debug(safeDiagnostic(assessment.reason));
-      continue;
-    }
-    const comparison = compareBranchWork(entry, {
-      baseTip: pr.baseRefOid,
-      head: node.head,
-    });
-    if (comparison.kind === 'equivalent') {
-      context.splog.info(
-        `Verified equivalent work on ${entry.branch}; keeping local commits and replaying them onto ${context.engine.trunk}.`
-      );
-      planned.push(plan);
-      continue;
-    }
-    if (!context.canPrompt) continue;
-    context.splog.info(
-      `Keeping local commits on ${entry.branch} will replay them onto ${context.engine.trunk} without publishing. Deferring keeps both local tips for recovery.`
-    );
-    const { choice } = await context.prompts({
-      type: 'select',
-      name: 'choice',
-      message: `Reconcile ${entry.branch} (PR #${entry.pullRequest})?`,
-      choices: [
-        {
-          title: 'Keep my local commits and replay them onto trunk',
-          value: 'local',
-        },
-        {
-          title: 'Keep these branches as they are and continue syncing',
-          value: 'defer',
-        },
-      ],
-    });
-    if (choice === 'local') planned.push(plan);
+    const selected = await chooseReconciliationReplay(plan, entry, context);
+    if (selected) planned.push(selected);
   }
   return planned;
+}
+
+async function chooseReconciliationReplay(
+  plan: SyncReconciliationReplay,
+  entry: SyncReconciliation,
+  context: TContext
+): Promise<SyncReconciliationReplay | undefined> {
+  const localIsClean = await assessSource(plan, 'Local', context);
+  if (
+    localIsClean &&
+    compareBranchWork(entry, {
+      baseTip: plan.publishedBaseTip,
+      head: plan.publishedHead,
+    }).kind === 'equivalent'
+  ) {
+    context.splog.info(
+      `Verified equivalent work on ${plan.branch}; keeping local commits and replaying them onto ${context.engine.trunk}.`
+    );
+    return plan;
+  }
+
+  const published = planPublishedReplay(plan);
+  const publishedIsClean = published
+    ? await assessSource(published, 'GitHub', context)
+    : false;
+  if (!published)
+    context.splog.info(
+      `GitHub replay of ${plan.branch} onto ${context.engine.trunk}: replay feasibility could not be verified.`
+    );
+  if (!context.canPrompt || (!localIsClean && !publishedIsClean))
+    return undefined;
+
+  if (localIsClean)
+    context.splog.info(
+      `Keeping local commits on ${plan.branch} will replay them onto ${context.engine.trunk} without publishing.`
+    );
+  context.splog.info('Deferring keeps both local tips for recovery.');
+  const { choice } = await context.prompts({
+    type: 'select',
+    name: 'choice',
+    message: `Reconcile ${plan.branch} (PR #${plan.pullRequest})?`,
+    choices: [
+      ...(localIsClean
+        ? [
+            {
+              title: 'Keep my local commits and replay them onto trunk',
+              value: 'local',
+            },
+          ]
+        : []),
+      ...(publishedIsClean
+        ? [
+            {
+              title: 'Review taking the verified GitHub version',
+              value: 'published',
+            },
+          ]
+        : []),
+      {
+        title: 'Keep these branches as they are and continue syncing',
+        value: 'defer',
+      },
+    ],
+    initial: !localIsClean && publishedIsClean ? 1 : 0,
+  });
+  if (choice === 'local') return plan;
+  if (choice === 'published' && published)
+    return confirmPublishedReplay(published, context);
+  return undefined;
+}
+
+export function reconciliationReplayRange(plan: SyncReconciliationReplay): {
+  readonly branch: string;
+  readonly head: string;
+  readonly from: string;
+  readonly onto: string;
+} {
+  const { branch, onto } = plan;
+  return plan.replacement
+    ? { branch, head: plan.publishedHead, from: plan.replacement.from, onto }
+    : { branch, head: plan.head, from: plan.from, onto };
+}
+
+function planPublishedReplay(
+  plan: SyncReconciliationReplay
+): SyncReconciliationReplay | undefined {
+  const base = readReconciliationGit([
+    'merge-base',
+    '--all',
+    plan.onto,
+    plan.publishedHead,
+  ]);
+  if (
+    !base ||
+    !oid.safeParse(base).success ||
+    !hasCanonicalAncestry(base, plan.publishedHead) ||
+    !hasCanonicalAncestry(base, plan.onto)
+  )
+    return undefined;
+  return { ...plan, replacement: { from: base } };
+}
+
+async function assessSource(
+  plan: SyncReconciliationReplay,
+  label: 'Local' | 'GitHub',
+  context: TContext
+): Promise<boolean> {
+  const assessment = await inspectLocalReplay(reconciliationReplayRange(plan));
+  if (assessment.status === 'clean') return true;
+  const reason =
+    assessment.status === 'conflict'
+      ? `conflicts in ${assessment.paths
+          .map(safeDiagnostic)
+          .join(', ')}. Later commits were not assessed.`
+      : 'replay feasibility could not be verified.';
+  context.splog.info(
+    `${label} replay of ${plan.branch} onto ${context.engine.trunk}: ${reason} Keeping local work pending reconciliation unless another resolution is chosen.`
+  );
+  if (assessment.status === 'unavailable')
+    context.splog.debug(safeDiagnostic(assessment.reason));
+  return false;
+}
+
+function readReconciliationGit(args: readonly string[]): string | undefined {
+  try {
+    return execFileSync('git', ['--no-replace-objects', ...args], {
+      encoding: 'utf8',
+      env: { ...process.env, GIT_NO_LAZY_FETCH: '1', GIT_OPTIONAL_LOCKS: '0' },
+      stdio: ['ignore', 'pipe', 'pipe'],
+      timeout: 1000,
+      maxBuffer: 64 * 1024,
+    }).trim();
+  } catch {
+    return undefined;
+  }
+}
+
+async function confirmPublishedReplay(
+  plan: SyncReconciliationReplay,
+  context: TContext
+): Promise<SyncReconciliationReplay | undefined> {
+  const localCommits = readReconciliationGit([
+    'log',
+    '--no-show-signature',
+    '--no-notes',
+    '--max-count=129',
+    '--format=%h %s',
+    `${plan.publishedHead}..${plan.head}`,
+    `^${plan.from}`,
+    '--',
+  ])
+    ?.split('\n')
+    .filter(Boolean);
+  if (!localCommits || localCommits.length > 128) {
+    context.splog.info(
+      `Could not verify which local commits would leave ${plan.branch}. Keeping local work.`
+    );
+    return undefined;
+  }
+  context.splog.info(
+    `Taking GitHub tip ${plan.publishedHead.slice(0, 8)} (PR #${
+      plan.pullRequest
+    }) replaces ${plan.branch} at local tip ${plan.head.slice(0, 8)}.`
+  );
+  if (localCommits.length) {
+    context.splog.info(
+      'Local commit IDs that will leave this branch (some changes may be present under other IDs):'
+    );
+    for (const commit of localCommits)
+      context.splog.info(`  ${safeDiagnostic(commit)}`);
+  } else
+    context.splog.info(
+      'The published history already contains all local branch commit IDs.'
+    );
+  context.splog.info(
+    plan.replacement?.from === plan.onto
+      ? 'The GitHub version is already based on the verified new trunk.'
+      : `Sync will replay the GitHub commits onto ${context.engine.trunk} before restoring the active stack.`
+  );
+  const { confirmed } = await context.prompts({
+    type: 'confirm',
+    name: 'confirmed',
+    message: `Replace local ${plan.branch} with the verified GitHub version?`,
+    initial: false,
+  });
+  return confirmed === true ? plan : undefined;
 }
 
 function safeDiagnostic(text: string): string {
@@ -181,6 +325,16 @@ export function assertSyncReconciliationLocalInputs(
   const entry = readSyncReconciliation().entries.find(
     ({ branch }) => branch === plan.branch
   );
+  const selectedHead = reconciliationReplayRange(plan).head;
+  const expectedHead = operation.expected.find(
+    ({ branchName }) => branchName === plan.branch
+  )?.head;
+  const allowedHead =
+    plan.replacement &&
+    operation.reconciling === plan.branch &&
+    expectedHead === selectedHead
+      ? selectedHead
+      : plan.head;
   if (
     !entry ||
     entry.head !== plan.head ||
@@ -195,7 +349,7 @@ export function assertSyncReconciliationLocalInputs(
     entry.mergedHead !== plan.mergedHead ||
     getSha(`refs/heads/${operation.trunkName}`) !== plan.onto ||
     getSha(`refs/heads/${plan.formerParent}`) !== plan.formerParentHead ||
-    (checkHead && getSha(`refs/heads/${plan.branch}`) !== plan.head) ||
+    (checkHead && getSha(`refs/heads/${plan.branch}`) !== allowedHead) ||
     getSha(`refs/branch-metadata/${plan.branch}`) !== plan.metadata
   )
     throw new ExitFailedError(
@@ -258,8 +412,9 @@ export function assertSyncReconciliationFiles(
   plan: SyncReconciliationReplay
 ): void {
   uncommittedTrackedChangesPrecondition();
+  const range = reconciliationReplayRange(plan);
   assertRestackFilesAvailable({
-    branches: [{ name: plan.branch, from: plan.from }],
+    branches: [{ name: plan.branch, from: range.from, head: range.head }],
     checkoutRevisions: [plan.onto],
     operation: 'get',
   });

@@ -100,6 +100,183 @@ describe('sync CLI preserving merged-parent replay', function () {
     expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
   });
 
+  for (const trunkAlreadyCurrent of [false, true]) {
+    it(`takes the published branch only after separate confirmation (trunk current: ${trunkAlreadyCurrent})`, () => {
+      fixture.commit(fixture.consumer, 'local.txt', 'my unpublished change');
+      const trunk = publishMergedParent();
+      fixture.commit(
+        fixture.producer,
+        'published.txt',
+        'published feature work'
+      );
+      fixture.git(fixture.producer, 'push', 'origin', 'child');
+      const remote = fixture.git(fixture.remote, 'show-ref');
+      if (trunkAlreadyCurrent) {
+        fixture.git(fixture.consumer, 'fetch', 'origin', 'main');
+        fixture.git(fixture.consumer, 'branch', '-f', 'main', trunk);
+      }
+
+      const result = fixture.run(['sync', '--no-delete'], true, [
+        { prompt: 'Reconcile child (PR #2)?', input: '\u001b[B\r' },
+        {
+          prompt: 'Replace local child with the verified GitHub version?',
+          input: 'y\r',
+        },
+      ]);
+
+      expect(result.status, result.output).to.equal(0);
+      expect(result.output).to.include('Reconciled child on main');
+      expect(result.output).to.include('my unpublished change');
+      expect(
+        fixture.git(fixture.consumer, 'show', 'child:published.txt')
+      ).to.equal('published feature work');
+      expect(
+        fixture.git(fixture.consumer, 'ls-tree', 'child', 'local.txt')
+      ).to.equal('');
+      expect(
+        fixture.git(fixture.consumer, 'merge-base', 'main', 'child')
+      ).to.equal(trunk);
+      expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
+    });
+  }
+
+  for (const response of ['decline', 'no-terminal', 'changed-source']) {
+    it(`preserves local work when published replacement is ${response}`, () => {
+      const head = fixture.commit(
+        fixture.consumer,
+        'local.txt',
+        'unpublished correction'
+      );
+      const trunk = publishMergedParent();
+      fixture.commit(
+        fixture.producer,
+        'published.txt',
+        'published feature work'
+      );
+      fixture.git(fixture.producer, 'push', 'origin', 'child');
+      const remote = fixture.git(fixture.remote, 'rev-parse', 'child');
+      const result =
+        response === 'no-terminal'
+          ? fixture.run(['sync', '--force', '--no-delete'])
+          : fixture.run(['sync', '--no-delete'], true, [
+              { prompt: 'Reconcile child (PR #2)?', input: '\u001b[B\r' },
+              {
+                prompt: 'Replace local child with the verified GitHub version?',
+                input: response === 'decline' ? 'n\r' : 'y\r',
+                ...(response === 'changed-source'
+                  ? {
+                      beforeInput: [
+                        'git',
+                        '--git-dir',
+                        fixture.remote,
+                        'update-ref',
+                        'refs/heads/child',
+                        trunk,
+                        remote,
+                      ],
+                    }
+                  : {}),
+              },
+            ]);
+      expect(result.status, result.output).to.equal(0);
+      expect(result.output).to.include('Sync partially completed');
+      if (response === 'changed-source')
+        expect(result.output).to.include('could not be reverified');
+      fixture.assertTip('main', trunk);
+      fixture.assertTip('child', head);
+      fixture.assertTip('parent', fixture.oldParent);
+      expect(fixture.git(fixture.remote, 'rev-parse', 'child')).to.equal(
+        response === 'changed-source' ? trunk : remote
+      );
+    });
+  }
+
+  it('offers a clean published replay after a local conflict without making replacement the default', () => {
+    fixture.commit(fixture.consumer, 'local.txt', 'my local change');
+    publishMergedParent();
+    fixture.commit(fixture.producer, 'published.txt', 'published work');
+    fixture.git(fixture.producer, 'push', 'origin', 'child');
+    fixture.git(fixture.producer, 'switch', 'main');
+    const trunk = fixture.commit(
+      fixture.producer,
+      'local.txt',
+      'different trunk text'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'main');
+    const remote = fixture.git(fixture.remote, 'show-ref');
+
+    const result = fixture.run(['sync', '--no-delete'], true, [
+      { prompt: 'Reconcile child (PR #2)?', input: '\u001b[A\r' },
+      {
+        prompt: 'Replace local child with the verified GitHub version?',
+        input: 'y\r',
+      },
+    ]);
+    expect(result.status, result.output).to.equal(0);
+    expect(result.output).to.include(
+      'Local replay of child onto main: conflicts in local.txt'
+    );
+    expect(result.output).to.include(
+      'Sync will replay the GitHub commits onto main'
+    );
+    expect(result.output).to.include('Reconciled child on main');
+    expect(fixture.git(fixture.consumer, 'show', 'child:local.txt')).to.equal(
+      'different trunk text'
+    );
+    expect(
+      fixture.git(fixture.consumer, 'show', 'child:published.txt')
+    ).to.equal('published work');
+    expect(
+      fixture.git(fixture.consumer, 'merge-base', 'main', 'child')
+    ).to.equal(trunk);
+    expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
+  });
+
+  it('keeps an ignored file that the published replay would touch between commits', () => {
+    const local = fixture.commit(
+      fixture.consumer,
+      'local.txt',
+      'unpublished local work'
+    );
+    const trunk = publishMergedParent();
+    fixture.commit(
+      fixture.producer,
+      'scratch.tmp',
+      'temporary published content'
+    );
+    fixture.git(fixture.producer, 'rm', 'scratch.tmp');
+    fixture.git(
+      fixture.producer,
+      'commit',
+      '-m',
+      'Remove temporary published content'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'child');
+    const ignore = `${fixture.consumer}/.git/info/exclude`;
+    fs.appendFileSync(ignore, '\nscratch.tmp\n');
+    fs.writeFileSync(
+      `${fixture.consumer}/scratch.tmp`,
+      'ignored work stays here'
+    );
+    const remote = fixture.git(fixture.remote, 'show-ref');
+
+    const result = fixture.run(['sync', '--no-delete'], true, [
+      { prompt: 'Reconcile child (PR #2)?', input: '\u001b[B\r' },
+      {
+        prompt: 'Replace local child with the verified GitHub version?',
+        input: 'y\r',
+      },
+    ]);
+    expect(result.status, result.output).to.equal(0);
+    expect(result.output).to.include('could not be reverified');
+    fixture.assertTip('main', trunk);
+    fixture.assertTip('child', local);
+    expect(fs.readFileSync(`${fixture.consumer}/scratch.tmp`, 'utf8')).to.equal(
+      'ignored work stays here'
+    );
+    expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
+  });
+
   it('names a proven conflict before deferring, while trunk advances', () => {
     publishMergedParent();
     fixture.git(fixture.producer, 'switch', 'main');
@@ -115,7 +292,13 @@ describe('sync CLI preserving merged-parent replay', function () {
 
     const result = fixture.ok('sync', '--delete-all');
 
-    expect(result.output).to.include('conflicts in child.txt');
+    expect(result.output).to.include(
+      'Local replay of child onto main: conflicts in child.txt'
+    );
+    expect(result.output).to.include(
+      'GitHub replay of child onto main: conflicts in child.txt'
+    );
+    expect(result.output).not.to.include('Replace local child');
     expect(result.output).to.include('Later commits were not assessed');
     expect(result.output).to.include('Sync partially completed');
     fixture.assertTip('main', trunk);
