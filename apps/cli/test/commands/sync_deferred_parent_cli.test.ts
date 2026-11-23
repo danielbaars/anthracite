@@ -47,7 +47,9 @@ describe('sync CLI deferred merged-parent transition', function () {
 
     expect(result.output).to.include('Fast-forwarded trunk main');
     expect(result.output).to.include('Sync partially completed');
-    expect(result.output).to.include('Keeping parent for recovery');
+    expect(result.output).to.include(
+      'Its former parent parent (PR #1) merged. Keeping both local branches for recovery.'
+    );
     fixture.assertTip('main', remoteMain);
     fixture.assertTip('parent', fixture.oldParent);
     fixture.assertTip('child', local);

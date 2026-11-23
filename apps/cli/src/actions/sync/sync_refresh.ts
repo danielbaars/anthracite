@@ -26,7 +26,6 @@ import {
   hasEquivalentLocalRestack,
 } from './local_restack';
 import { captureGetCheckout } from './get_checkout';
-import { reportSyncReconciliationEvidence } from './sync_reconciliation_evidence';
 import {
   lookupPullRequest,
   pullRequestSchema,
@@ -53,7 +52,7 @@ export type SyncRefreshPlan = {
 
 /** Snapshot sources and collect all reconciliation authority before application. */
 export async function prepareSyncRefresh(
-  opts: { pull: boolean; force: boolean; restack: boolean },
+  opts: { pull: boolean; force: boolean; restack: boolean; debug?: boolean },
   context: TContext
 ): Promise<{
   readonly refresh: SyncRefreshPlan;
@@ -97,7 +96,6 @@ export async function prepareSyncRefresh(
       nodes,
       context
     );
-    await reportSyncReconciliationEvidence({ entries, nodes, prs }, context);
     const reconciliation = await planSyncReconciliationReplays(
       {
         entries,
@@ -105,6 +103,7 @@ export async function prepareSyncRefresh(
         prs,
         onto: trunk?.head ?? trunkHead,
         restack: opts.restack && !trunk?.reset,
+        debug: opts.debug === true,
       },
       context
     );
@@ -180,7 +179,7 @@ function preserveLocalRestacks(
     if (!contained && !equivalent) continue;
     assertRemoteUpdateNodeUnchanged(node);
     if (equivalent)
-      context.splog.info(
+      context.splog.debug(
         `🔁 ${node.branchName}: local restack on newer ${node.parentBranchName}; branch commits match remote. Publication is pending.`
       );
     preserved.push(node.branchName);
@@ -385,7 +384,7 @@ async function selectSyncFeatures(context: TContext) {
     }
     prs.push(pr);
     if (pr.state !== 'OPEN') {
-      context.splog.info(
+      context.splog.debug(
         `${branch} has a ${pr.state?.toLowerCase()} pull request; feature refresh skipped, pending separately authorized cleanup.`
       );
       continue;

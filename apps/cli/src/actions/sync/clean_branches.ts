@@ -81,7 +81,7 @@ export async function planSyncCleanup(
   const accepted: string[] = [];
   const declined: string[] = [];
   if (opts.delete)
-    context.splog.info(
+    context.splog.debug(
       '🧹 Checking if any branches have been merged/closed and can be deleted...'
     );
   let inspected = 0;

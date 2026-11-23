@@ -18,6 +18,7 @@ export async function syncAction(
     deleteAll: boolean;
     showDeleteProgress: boolean;
     restack: boolean;
+    debug?: boolean;
   },
   context: TContext
 ): Promise<void> {
@@ -36,13 +37,6 @@ export async function syncAction(
     if (refresh.trunk && entries.length)
       assertRemoteTrunkUnchanged(refresh.trunk);
     retainSyncReconciliation(saved, entries);
-    for (const { branch, formerParent } of entries) {
-      if (refresh.reconciliation?.some((plan) => plan.branch === branch))
-        continue;
-      context.splog.info(
-        `Deferred ${branch}. Keeping ${formerParent} for recovery. Dependent updates and cleanup are deferred.`
-      );
-    }
     applying = true;
     await executeSyncOperation(operation, context);
   } finally {

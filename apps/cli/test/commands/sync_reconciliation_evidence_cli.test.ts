@@ -39,6 +39,41 @@ describe('sync CLI merged-parent reconciliation evidence', function () {
     return published;
   }
 
+  it('explains a shared replay blocker once and keeps detailed evidence behind debug', () => {
+    publishTransition();
+    fixture.git(fixture.consumer, 'config', 'rerere.enabled', 'true');
+    fs.writeJsonSync(fixture.identities, {
+      prOverrides: {
+        parent: { state: 'MERGED', mergedAt: '2026-10-23T10:00:00Z' },
+      },
+    });
+    const remote = fixture.git(fixture.remote, 'show-ref');
+
+    const { output } = fixture.ok('sync', '--delete-all');
+    expect(output).to.include('child (PR #2): needs attention.');
+    expect(output.match(/rerere is enabled/g)).to.have.length(1);
+    expect(output).to.include('Local and GitHub replays could not be checked');
+    expect(output).to.include(
+      'Its former parent parent (PR #1) merged. Keeping both local branches for recovery.'
+    );
+    expect(output).to.include('Fast-forwarded trunk main');
+    expect(output).to.include('Sync partially completed');
+    expect(output).not.to.match(
+      /Local tip:|Merged:|Local update:|Patches matching/
+    );
+
+    const quiet = fixture.ok('sync', '--delete-all', '--quiet');
+    expect(quiet.stdout).to.equal('');
+    expect(quiet.stderr).to.include('Sync partially completed');
+
+    const debug = fixture.ok('sync', '--delete-all', '--debug');
+    expect(debug.stderr).to.include('effective rerere.enabled=true (local,');
+    expect(debug.stderr).to.include('Local tip:').and.to.include('Merged:');
+    fixture.assertTip('child', fixture.oldChild);
+    fixture.assertTip('parent', fixture.oldParent);
+    expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
+  });
+
   it('identifies equivalent feature work across changed bases and labels the source of times', () => {
     const trunk = fixture.git(fixture.consumer, 'rev-parse', 'main');
     const published = publishTransition();
@@ -88,7 +123,12 @@ describe('sync CLI merged-parent reconciliation evidence', function () {
       ],
     });
 
-    const { output } = fixture.ok('sync', '--no-pull', '--delete-all');
+    const { output } = fixture.ok(
+      'sync',
+      '--no-pull',
+      '--delete-all',
+      '--debug'
+    );
 
     expect(output).to.include('child (PR #2) now targets main on GitHub');
     expect(output).to.include('Local parent: parent (PR #1)');
@@ -139,7 +179,7 @@ describe('sync CLI merged-parent reconciliation evidence', function () {
       ],
     });
 
-    const { output } = fixture.ok('sync', '--delete-all');
+    const { output } = fixture.ok('sync', '--delete-all', '--debug');
 
     expect(output).to.include(
       'Branch patches differ. Local commits: 1. GitHub commits: 1.'
@@ -174,7 +214,7 @@ describe('sync CLI merged-parent reconciliation evidence', function () {
       activityError: true,
     });
 
-    const { output } = fixture.ok('sync', '--delete-all');
+    const { output } = fixture.ok('sync', '--delete-all', '--debug');
 
     expect(output).to.include('Fast-forwarded trunk main');
     expect(output).to.include(
@@ -202,7 +242,12 @@ describe('sync CLI merged-parent reconciliation evidence', function () {
       prOverrides: { parent: { state: 'MERGED' } },
     });
 
-    const { output } = fixture.ok('sync', '--no-pull', '--delete-all');
+    const { output } = fixture.ok(
+      'sync',
+      '--no-pull',
+      '--delete-all',
+      '--debug'
+    );
 
     expect(output).to.include(
       'Comparison unavailable: could not verify both branch commit ranges.'

@@ -298,7 +298,7 @@ describe('frozen sync through the public CLI', function () {
       '--no-interactive',
     ]);
     expect(result.status, result.stdout + result.stderr).to.equal(0);
-    expect(result.stdout).to.include('Local maintenance: child.');
+    expect(result.stdout).to.include('Restacked child on anchor.');
     expect(fixture.git('rev-parse', 'anchor')).to.equal(anchor);
     expect(fixture.git('rev-parse', 'refs/branch-metadata/anchor')).to.equal(
       metadata

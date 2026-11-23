@@ -308,11 +308,10 @@ describe('sync CLI and installed MCP delivery', function () {
       const result = await run(['sync', '--no-delete']);
       expect(result.status, result.stderr).to.equal('success');
       expect(result.stderr).to.include('Sync partially completed');
-      expect(result.stdout).to.include(
-        'Patches matching at the same position: 9'
-      );
-      expect(result.stdout).to.include(
-        'Local replay of child onto main: conflicts in'
+      expect(result.stdout).to.include('child (PR #2): needs attention.');
+      expect(result.stdout).not.to.include('Patches matching');
+      expect(result.stdout).to.match(
+        /Local (?:and GitHub replays|replay) would conflict in/
       );
       expect(result.stdout).to.include('main.txt');
       fixture.assertTip('main', trunk);

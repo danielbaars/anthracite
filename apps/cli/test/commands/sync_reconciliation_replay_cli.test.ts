@@ -223,9 +223,9 @@ describe('sync CLI preserving merged-parent replay', function () {
     const newer = fixture.commit(fixture.producer, 'published.txt', 'new work');
     fixture.git(fixture.producer, 'push', 'origin', 'child');
     const remote = fixture.git(fixture.remote, 'show-ref');
-    const repeat = fixture.ok('sync', '--force', '--no-delete');
+    const repeat = fixture.ok('sync', '--force', '--no-delete', '--debug');
     expect(repeat.output).to.include('Sync partially completed');
-    expect(repeat.output).to.include(newer.slice(0, 8));
+    expect(repeat.stderr).to.include(`GitHub tip: ${newer.slice(0, 8)}`);
     fixture.assertTip('child', local);
 
     const accepted = fixture.run(['sync', '--no-delete'], true, [
@@ -448,7 +448,11 @@ describe('sync CLI preserving merged-parent replay', function () {
     ]);
     expect(result.status, result.output).to.equal(0);
     expect(result.output).to.include(
-      'Local replay of child onto main: conflicts in local.txt'
+      'Local replay would conflict in local.txt'
+    );
+    expect(result.output.indexOf('Local tip:')).to.be.within(
+      0,
+      result.output.indexOf('Reconcile child (PR #2)?') - 1
     );
     expect(result.output).to.include(
       'Sync will replay the GitHub commits onto main'
@@ -556,11 +560,9 @@ describe('sync CLI preserving merged-parent replay', function () {
     const result = fixture.ok('sync', '--delete-all');
 
     expect(result.output).to.include(
-      'Local replay of child onto main: conflicts in child.txt'
+      'Local and GitHub replays would conflict in child.txt'
     );
-    expect(result.output).to.include(
-      'GitHub replay of child onto main: conflicts in child.txt'
-    );
+    expect(result.output.match(/conflict in child\.txt/g)).to.have.length(1);
     expect(result.output).not.to.include('Replace local child');
     expect(result.output).to.include('Later commits were not assessed');
     expect(result.output).to.include('Sync partially completed');

@@ -104,6 +104,7 @@ export const handler = async (argv: argsT): Promise<void> => {
         deleteAll: argv['delete-all'],
         showDeleteProgress: argv['show-delete-progress'],
         restack: argv.restack,
+        debug: argv.debug === true,
       },
       context
     );
