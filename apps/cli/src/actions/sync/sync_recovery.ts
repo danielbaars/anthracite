@@ -4,7 +4,7 @@ import {
 } from './sync_reconciliation_replay';
 import fs from 'fs';
 import path from 'path';
-import { createHash } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
 import { TContext } from '../../lib/context';
 import { ExitFailedError } from '../../lib/errors';
 import { getRebaseDirectory } from '../../lib/git/rebase_in_progress';
@@ -13,6 +13,7 @@ import { ownsRebase } from '../../lib/git/rebase_ownership';
 import { gitEnvironmentOverrides } from '../../lib/git/environment_overrides';
 import { getSyncRemoteUrl, getSyncRepository } from './sync_identity';
 import { getSha } from '../../lib/git/get_sha';
+import { runGitCommand } from '../../lib/git/runner';
 import {
   continueConfigFactory,
   TContinueConfig,
@@ -244,6 +245,75 @@ export function validateSyncRecovery(
   return operation;
 }
 
+function retryReceiptRef(id: string): string {
+  if (!/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(id))
+    refuseSync('Invalid saved reconciliation retry receipt.');
+  return `refs/gt-metadata/sync-reconciliation/retry/${id}`;
+}
+
+function hashRetryReceipt(bytes: string, write = false): string {
+  return runGitCommand({
+    args: ['hash-object', ...(write ? ['-w'] : []), '--stdin'],
+    options: { input: createHash('sha256').update(bytes).digest('hex') },
+    onError: 'throw',
+    resource: 'hashSyncRetryReceipt',
+  });
+}
+
+function assertRetryReceipt(id: string | undefined, bytes: string): string {
+  const expected = hashRetryReceipt(bytes);
+  if (!id || getSha(retryReceiptRef(id)) !== expected)
+    refuseSync(
+      'Saved reconciliation retry authorization changed or is unavailable.'
+    );
+  return expected;
+}
+
+/** Bind the exact idle choice and reached refs before starting or retrying Git. */
+export function saveSyncReconciliationRetry(
+  operation: SyncOperation,
+  context: TContext,
+  branch?: string
+): () => void {
+  assertSyncRecoveryWrite(context);
+  const priorBytes = records.get(context.continueConfig);
+  const previous =
+    operation.retryReceipt && priorBytes
+      ? assertRetryReceipt(operation.retryReceipt, priorBytes)
+      : undefined;
+  const id = (operation.retryReceipt ??= randomUUID());
+  const ref = retryReceiptRef(id);
+  saveSyncOperation(operation, context, branch);
+  const bytes = records.get(context.continueConfig);
+  if (!bytes)
+    refuseSync('Could not record reconciliation retry authorization.');
+  const current = hashRetryReceipt(bytes, true);
+  runGitCommand({
+    args: ['-c', 'core.hooksPath=/dev/null', 'update-ref', '--stdin'],
+    options: {
+      input: previous
+        ? `update ${ref} ${current} ${previous}\n`
+        : `create ${ref} ${current}\n`,
+    },
+    onError: 'throw',
+    resource: 'bindSyncRetryReceipt',
+  });
+  return () => {
+    runGitCommand({
+      args: [
+        '-c',
+        'core.hooksPath=/dev/null',
+        'update-ref',
+        '-d',
+        ref,
+        current,
+      ],
+      onError: 'throw',
+      resource: 'releaseSyncRetryReceipt',
+    });
+  };
+}
+
 /** Retry only a saved reconciliation before a live rebase was established. */
 export function validateSyncReconciliationRetry(
   data: TContinueConfig['data']
@@ -265,6 +335,7 @@ export function validateSyncReconciliationRetry(
     getRebaseDirectory()
   )
     refuseSync('No verified reconciliation can be retried before replay.');
+  assertRetryReceipt(operation.retryReceipt, owned.bytes);
   const otherGitState = [
     'MERGE_HEAD',
     'CHERRY_PICK_HEAD',

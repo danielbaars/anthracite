@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import fs from 'fs-extra';
 import { FrozenGetFixture } from '../lib/fixtures/frozen_get_cli';
 
+// eslint-disable-next-line max-lines-per-function
 describe('sync CLI deferred merged-parent transition', function () {
   this.timeout(120000);
   let fixture: FrozenGetFixture;
@@ -82,6 +83,34 @@ describe('sync CLI deferred merged-parent transition', function () {
     fixture.ok('sync', '--delete-all');
     fixture.assertTip('parent', fixture.oldParent);
     fixture.assertTip('child', local);
+  });
+
+  it('refuses invalid saved branch names before applying reconciliation or cleanup', () => {
+    const local = fixture.commit(fixture.consumer, 'local.txt', 'local work');
+    const trunk = publishMergedParent();
+    fixture.ok('sync', '--no-delete');
+    const stateRef = 'refs/gt-metadata/sync-reconciliation/state';
+    const revision = fixture.git(fixture.consumer, 'rev-parse', stateRef);
+    const record = JSON.parse(
+      fixture.git(fixture.consumer, 'cat-file', 'blob', revision)
+    );
+    record.entries[0].formerParent = 'bad..parent';
+    const file = `${fixture.root}/malformed-reconciliation.json`;
+    fs.writeJsonSync(file, record);
+    const edited = fixture.git(fixture.consumer, 'hash-object', '-w', file);
+    fixture.git(fixture.consumer, 'update-ref', stateRef, edited, revision);
+
+    const result = fixture.run(['sync', '--delete-all']);
+    expect(result.status, result.output).to.equal(1);
+    expect(result.output).to.include(
+      'Saved sync reconciliation could not be read'
+    );
+    fixture.assertTip('main', trunk);
+    fixture.assertTip('parent', fixture.oldParent);
+    fixture.assertTip('child', local);
+    expect(fixture.git(fixture.consumer, 'rev-parse', stateRef)).to.equal(
+      edited
+    );
   });
 
   it('honors no-pull and leaves trunk and both local tips unchanged', () => {

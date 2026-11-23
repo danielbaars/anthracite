@@ -1,10 +1,6 @@
 import chalk from 'chalk';
 import { TContext } from '../lib/context';
-import { getPendingSyncLogNotice, getSyncReconciliationLines } from './log';
-import {
-  isPendingSyncReconciliation,
-  readSyncReconciliation,
-} from '../lib/engine/sync_reconciliation';
+import { getPendingSyncLogNotice, getSyncReconciliationDisplay } from './log';
 
 function displayBranchesInternal(
   opts: {
@@ -50,12 +46,7 @@ function displayBranchesInternal(
 export function logShortClassic(context: TContext): void {
   const notice = getPendingSyncLogNotice(context);
   if (notice) context.splog.info(notice);
-  const { entries } = readSyncReconciliation();
-  const hidden = new Set(
-    context.engine.allBranchNames.filter((name) =>
-      isPendingSyncReconciliation(name, entries)
-    )
-  );
+  const { hidden, lines } = getSyncReconciliationDisplay(context);
   context.splog.page(
     displayBranchesInternal(
       {
@@ -66,9 +57,7 @@ export function logShortClassic(context: TContext): void {
       context
     )
       .map((b) => b.display)
-      .concat(
-        getSyncReconciliationLines(entries, context.engine.allBranchNames)
-      )
+      .concat(lines)
       .join('\n')
   );
 }

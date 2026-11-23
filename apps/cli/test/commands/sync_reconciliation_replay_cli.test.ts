@@ -81,6 +81,22 @@ describe('sync CLI preserving merged-parent replay', function () {
     expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
   });
 
+  it('reconciles after intentionally unfreezing a previously deferred survivor', () => {
+    fixture.ok('freeze', 'child');
+    const trunk = publishMergedParent();
+    expect(fixture.ok('sync', '--no-delete').output).to.include('Deferred:');
+    fixture.assertTip('child', fixture.oldChild);
+    fixture.ok('unfreeze', 'child');
+    const resumed = fixture.ok('sync', '--no-delete');
+    expect(resumed.output).to.include('Reconciled child on main');
+    expect(
+      fixture.git(fixture.consumer, 'merge-base', 'main', 'child')
+    ).to.equal(trunk);
+    expect(fixture.ok('log', 'short').output).not.to.include(
+      'Pending reconciliation'
+    );
+  });
+
   it('keeps differing local work after explicit preserving choice', () => {
     fixture.commit(fixture.consumer, 'local.txt', 'my unpublished change');
     const trunk = publishMergedParent();
@@ -184,7 +200,9 @@ describe('sync CLI preserving merged-parent replay', function () {
       expect(result.status, result.output).to.equal(0);
       expect(result.output).to.include('Sync partially completed');
       if (response === 'changed-source')
-        expect(result.output).to.include('could not be reverified');
+        expect(result.output).to.include(
+          'GitHub reconciliation evidence changed for child'
+        );
       fixture.assertTip('main', trunk);
       fixture.assertTip('child', head);
       fixture.assertTip('parent', fixture.oldParent);
@@ -279,6 +297,58 @@ describe('sync CLI preserving merged-parent replay', function () {
     expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
     expect(fixture.ok('log', 'short').output).not.to.include(
       'Pending reconciliation'
+    );
+  });
+
+  it('refuses an edited idle reconciliation choice and resumes the original local replay', () => {
+    const local = fixture.commit(
+      fixture.consumer,
+      'local.txt',
+      'my local work'
+    );
+    const trunk = publishMergedParent();
+    const published = fixture.commit(
+      fixture.producer,
+      'published.txt',
+      'remote work'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'child');
+    const hook = path.join(fixture.consumer, '.git/hooks/pre-rebase');
+    fs.writeFileSync(hook, '#!/bin/sh\nexit 1\n', { mode: 0o755 });
+    const stopped = fixture.run(['sync', '--no-delete'], true, [
+      { prompt: 'Reconcile child (PR #2)?', input: '\r' },
+    ]);
+    expect(stopped.status, stopped.output).to.equal(1);
+    fixture.assertTip('child', local);
+    fixture.assertTip('main', trunk);
+    fs.removeSync(hook);
+
+    const recovery = path.join(fixture.consumer, '.git', '.gtcontinue');
+    const original = fs.readFileSync(recovery, 'utf8');
+    const index = fixture.git(fixture.consumer, 'ls-files', '--stage');
+    const remote = fixture.git(fixture.remote, 'show-ref');
+    const edited = JSON.parse(original);
+    edited.sync.refresh.reconciliation[0].replacement = { from: trunk };
+    fs.writeJsonSync(recovery, edited);
+    const retry = fixture.run(['continue', '--all']);
+    expect(retry.status, retry.output).to.equal(1);
+    expect(retry.output).to.include(
+      'Saved reconciliation retry authorization changed'
+    );
+    fixture.assertTip('child', local);
+    fixture.assertTip('main', trunk);
+    expect(fixture.git(fixture.consumer, 'ls-files', '--stage')).to.equal(
+      index
+    );
+    expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
+
+    fs.writeFileSync(recovery, original);
+    expect(fixture.ok('continue').output).to.include('keeping local commits');
+    expect(fixture.git(fixture.consumer, 'show', 'child:local.txt')).to.equal(
+      'my local work'
+    );
+    expect(fixture.git(fixture.consumer, 'rev-parse', 'child')).not.to.equal(
+      published
     );
   });
 
@@ -432,13 +502,42 @@ describe('sync CLI preserving merged-parent replay', function () {
       },
     ]);
     expect(result.status, result.output).to.equal(0);
-    expect(result.output).to.include('could not be reverified');
+    expect(result.output).to.include(
+      'Cannot sync: restacking would overwrite ignored file scratch.tmp'
+    );
     fixture.assertTip('main', trunk);
     fixture.assertTip('child', local);
     expect(fs.readFileSync(`${fixture.consumer}/scratch.tmp`, 'utf8')).to.equal(
       'ignored work stays here'
     );
     expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
+  });
+
+  it('names a conflict found while revalidating a previously clean replay', () => {
+    const local = fixture.commit(fixture.consumer, 'main.txt', 'local edit');
+    publishMergedParent();
+    fixture.git(fixture.producer, 'switch', 'main');
+    const trunk = fixture.commit(fixture.producer, 'main.txt', 'trunk edit');
+    fixture.git(fixture.producer, 'push', 'origin', 'main');
+    const attributes = path.join(fixture.consumer, '.git/info/attributes');
+    fs.writeFileSync(attributes, 'main.txt merge=union\n');
+    const result = fixture.run(['sync', '--no-delete'], true, [
+      {
+        prompt: 'Reconcile child (PR #2)?',
+        beforeInput: ['rm', attributes],
+        input: '\r',
+      },
+    ]);
+    expect(result.status, result.output).to.equal(0);
+    expect(result.output).to.include(
+      'could not be reverified. conflicts in main.txt'
+    );
+    expect(result.output).to.include('Sync partially completed');
+    fixture.assertTip('main', trunk);
+    fixture.assertTip('child', local);
+    expect(
+      fixture.git(fixture.consumer, 'diff', '--name-only', '--diff-filter=U')
+    ).to.equal('');
   });
 
   it('names a proven conflict before deferring, while trunk advances', () => {

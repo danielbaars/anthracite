@@ -5,6 +5,7 @@ import {
 import { getGithubPr } from '../../lib/api/github_pr';
 import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
 import { getSha } from '../../lib/git/get_sha';
+import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 import {
   extendSyncReconciliation,
   isPendingSyncReconciliation,
@@ -85,7 +86,7 @@ export async function prepareSyncRefresh(
     const entries = expandReconciliationScope(
       [
         ...existing.entries.map((entry) =>
-          refreshRetainedPublishedHead(entry, { nodes, prs })
+          refreshRetainedEvidence(entry, { nodes, prs })
         ),
         ...findDeferredMergeSurvivors(
           nodes,
@@ -122,6 +123,7 @@ export async function prepareSyncRefresh(
         nodes: nodes.filter((node) => !preserved.includes(node.branchName)),
         force: false,
         scope: 'sync',
+        projectedReconciliation: entries,
         trunk,
         target: 'branchName' in original ? original.branchName : undefined,
         finalBranch: 'branchName' in original ? original.branchName : undefined,
@@ -204,8 +206,8 @@ function expandReconciliationScope(
   return extendSyncReconciliation(entries, { local, incoming: nodes });
 }
 
-/** Fresh planning may compare a newer version of the same PR, with no saved consent. */
-function refreshRetainedPublishedHead(
+/** Fresh planning may adopt a verified source or freeze-only change, without old consent. */
+function refreshRetainedEvidence(
   entry: SyncReconciliation,
   snapshot: {
     readonly nodes: readonly RemoteUpdateNode[];
@@ -217,12 +219,11 @@ function refreshRetainedPublishedHead(
   );
   if (
     !node ||
-    node.head === entry.publishedHead ||
     node.pullRequestNumber !== entry.pullRequest ||
     node.parentBranchName !== entry.pullRequestBase ||
     node.previousHead !== entry.head ||
     node.previousBase !== entry.base ||
-    node.previousMetadata !== entry.metadata ||
+    !sameMetadataExceptFrozen(node.previousMetadata, entry.metadata) ||
     node.previousParentBranchName !== entry.formerParent
   )
     return entry;
@@ -234,7 +235,7 @@ function refreshRetainedPublishedHead(
     former.headRefOid === entry.mergedHead &&
     former.baseRefName === entry.pullRequestBase &&
     getSha(`refs/heads/${entry.formerParent}`) === entry.formerParentHead
-    ? { ...entry, publishedHead: node.head }
+    ? { ...entry, publishedHead: node.head, metadata: node.previousMetadata }
     : entry;
 }
 

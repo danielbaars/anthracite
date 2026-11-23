@@ -7,20 +7,46 @@ import { readMetadataRef } from './metadata_ref';
 const namespace = 'refs/gt-metadata/sync-reconciliation';
 const stateRef = `${namespace}/state`;
 const oid = z.string().regex(/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/);
+/** Literal components of refs/heads, without Git's shorthand expansion. */
+export const reconciliationBranchName = z
+  .string()
+  .min(1)
+  .refine(
+    (name) =>
+      name !== '@' &&
+      !name.startsWith('-') &&
+      !name.endsWith('.') &&
+      !name.includes('..') &&
+      !name.includes('@{') &&
+      !/[ ~^:?*[\\]/u.test(name) &&
+      ![...name].some(
+        (character) =>
+          character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127
+      ) &&
+      name
+        .split('/')
+        .every(
+          (component) =>
+            component &&
+            !component.startsWith('.') &&
+            !component.endsWith('.lock')
+        )
+  );
+
 const recordSchema = z
   .object({
-    branch: z.string().min(1),
+    branch: reconciliationBranchName,
     head: oid,
     base: oid,
     metadata: oid,
-    formerParent: z.string().min(1),
+    formerParent: reconciliationBranchName,
     formerParentHead: oid,
     mergedHead: oid,
     formerParentPr: z.number().int().positive(),
     pullRequest: z.number().int().positive(),
-    pullRequestBase: z.string().min(1),
+    pullRequestBase: reconciliationBranchName,
     publishedHead: oid,
-    dependents: z.array(z.string().min(1)).optional(),
+    dependents: z.array(reconciliationBranchName).optional(),
   })
   .strict();
 const stateSchema = z
@@ -50,22 +76,27 @@ export function readSyncReconciliation(): ReconciliationState {
   }
 }
 
-function reconciliationTips(
+function reconciliationPins(
   entries: readonly SyncReconciliation[]
-): Set<string> {
-  return new Set(
-    entries.flatMap(({ head, base, formerParentHead, publishedHead }) => [
-      head,
-      base,
-      formerParentHead,
-      publishedHead,
-    ])
-  );
+): Map<string, string> {
+  const pins = new Map<string, string>();
+  for (const {
+    head,
+    base,
+    formerParentHead,
+    publishedHead,
+    metadata,
+  } of entries) {
+    for (const tip of [head, base, formerParentHead, publishedHead])
+      pins.set(`${namespace}/commits/${tip}`, tip);
+    pins.set(`${namespace}/metadata/${metadata}`, metadata);
+  }
+  return pins;
 }
 
 export function assertSyncReconciliationPins(entry: SyncReconciliation): void {
-  for (const tip of reconciliationTips([entry]))
-    if (getSha(`${namespace}/commits/${tip}`) !== tip)
+  for (const [ref, revision] of reconciliationPins([entry]))
+    if (getSha(ref) !== revision)
       throw new ExitFailedError(
         `A pinned sync reconciliation source for ${entry.branch} is missing or changed.`
       );
@@ -83,19 +114,19 @@ export function retainSyncReconciliation(
   const retained = before.entries.map((existing) => {
     const updated = entries.find((entry) => entry.branch === existing.branch);
     if (!updated) return existing;
-    const dependents = new Set([
-      ...(existing.dependents ?? []),
-      ...(updated.dependents ?? []),
-    ]);
+    const dependents = updated.dependents ?? [];
     if (
       updated.publishedHead === existing.publishedHead &&
-      dependents.size === (existing.dependents?.length ?? 0)
+      updated.metadata === existing.metadata &&
+      dependents.length === (existing.dependents?.length ?? 0) &&
+      dependents.every((name) => existing.dependents?.includes(name))
     )
       return existing;
     return {
       ...existing,
       publishedHead: updated.publishedHead,
-      ...(dependents.size ? { dependents: [...dependents] } : {}),
+      metadata: updated.metadata,
+      dependents: dependents.length ? dependents : undefined,
     };
   });
   if (
@@ -105,8 +136,7 @@ export function retainSyncReconciliation(
     return;
   const expected = new Map<string, string>();
   const changedSources = retained.filter(
-    (entry, index) =>
-      entry.publishedHead !== before.entries[index]?.publishedHead
+    (entry, index) => entry !== before.entries[index]
   );
   for (const entry of [...additions, ...changedSources]) {
     for (const [ref, revision] of captureDeferralRefs(entry)) {
@@ -130,28 +160,27 @@ export function retainSyncReconciliation(
     onError: 'throw',
     resource: 'storeSyncReconciliation',
   });
-  const changed = [...additions, ...changedSources];
-  const tips = [...reconciliationTips(changed)];
-  const needed = reconciliationTips([...retained, ...additions]);
-  const retired = [...reconciliationTips(before.entries)].filter(
-    (tip) => !needed.has(tip)
+  const changed = reconciliationPins([...additions, ...changedSources]);
+  const needed = reconciliationPins([...retained, ...additions]);
+  const retired = [...reconciliationPins(before.entries)].filter(
+    ([ref]) => !needed.has(ref)
   );
   const updates = [
     before.revision
-      ? `update ${stateRef} ${metadata} ${before.revision}`
-      : `create ${stateRef} ${metadata}`,
-    ...[...expected].map(([ref, revision]) => `verify ${ref} ${revision}`),
-    ...tips.map((tip) => {
-      const ref = `${namespace}/commits/${tip}`;
-      const existing = getSha(ref);
-      return existing ? `verify ${ref} ${tip}` : `create ${ref} ${tip}`;
-    }),
-    ...retired.map((tip) => `delete ${namespace}/commits/${tip} ${tip}`),
+      ? `update ${stateRef}\0${metadata}\0${before.revision}\0`
+      : `create ${stateRef}\0${metadata}\0`,
+    ...[...expected].map(([ref, revision]) => `verify ${ref}\0${revision}\0`),
+    ...[...changed].map(([ref, revision]) =>
+      getSha(ref)
+        ? `verify ${ref}\0${revision}\0`
+        : `create ${ref}\0${revision}\0`
+    ),
+    ...retired.map(([ref, revision]) => `delete ${ref}\0${revision}\0`),
   ];
   runGitCommand({
-    args: ['-c', 'core.hooksPath=/dev/null', 'update-ref', '--stdin'],
+    args: ['-c', 'core.hooksPath=/dev/null', 'update-ref', '--stdin', '-z'],
     options: {
-      input: ['start', ...updates, 'prepare', 'commit', ''].join('\n'),
+      input: ['start\0', ...updates, 'prepare\0', 'commit\0'].join(''),
     },
     onError: 'throw',
     resource: 'retainSyncReconciliation',
@@ -204,6 +233,23 @@ function addLocalDescendants(
   }
 }
 
+/** Display uses the captured local graph, while mutation checks read live refs. */
+export function projectSyncReconciliationDisplay(
+  entries: readonly SyncReconciliation[],
+  edges: readonly StackEdge[]
+): readonly { entry: SyncReconciliation; branches: ReadonlySet<string> }[] {
+  const children = indexChildren(edges);
+  return entries.map((entry) => {
+    const branches = new Set<string>();
+    addLocalDescendants(branches, children, [
+      entry.branch,
+      entry.formerParent,
+      ...(entry.dependents ?? []),
+    ]);
+    return { entry, branches };
+  });
+}
+
 /** Retain branches connected only by a proposed PR base; local edges stay live. */
 export function extendSyncReconciliation(
   entries: readonly SyncReconciliation[],
@@ -211,8 +257,13 @@ export function extendSyncReconciliation(
 ): readonly SyncReconciliation[] {
   const local = indexChildren(edges.local);
   const incoming = indexChildren(edges.incoming);
+  const freshIncoming = new Set(
+    edges.incoming.map(({ branchName }) => branchName)
+  );
   return entries.map((entry) => {
-    const dependents = new Set(entry.dependents);
+    const dependents = new Set(
+      entry.dependents?.filter((name) => !freshIncoming.has(name))
+    );
     const names = new Set<string>();
     addLocalDescendants(names, local, [
       entry.branch,
@@ -226,9 +277,13 @@ export function extendSyncReconciliation(
         addLocalDescendants(names, local, [child]);
       }
     }
-    return dependents.size > (entry.dependents?.length ?? 0)
-      ? { ...entry, dependents: [...dependents].sort() }
-      : entry;
+    return dependents.size === (entry.dependents?.length ?? 0) &&
+      [...dependents].every((name) => entry.dependents?.includes(name))
+      ? entry
+      : {
+          ...entry,
+          dependents: dependents.size ? [...dependents].sort() : undefined,
+        };
   });
 }
 
@@ -242,6 +297,7 @@ export function finishSyncReconciliation(
     readonly onto: string;
   }
 ): void {
+  reconciliationBranchName.parse(result.trunk);
   const before = readSyncReconciliation();
   const entry = before.entries.find(({ branch }) => branch === expected.branch);
   if (
@@ -264,26 +320,25 @@ export function finishSyncReconciliation(
         resource: 'storeSyncReconciliation',
       })
     : '';
-  const neededPins = reconciliationTips(remaining);
-  const retired = [...reconciliationTips([entry])]
-    .filter((tip) => !neededPins.has(tip))
-    .map((tip) => `delete ${namespace}/commits/${tip} ${tip}`);
+  const neededPins = reconciliationPins(remaining);
+  const retired = [...reconciliationPins([entry])]
+    .filter(([ref]) => !neededPins.has(ref))
+    .map(([ref, revision]) => `delete ${ref}\0${revision}\0`);
   runGitCommand({
-    args: ['-c', 'core.hooksPath=/dev/null', 'update-ref', '--stdin'],
+    args: ['-c', 'core.hooksPath=/dev/null', 'update-ref', '--stdin', '-z'],
     options: {
       input: [
-        'start',
+        'start\0',
         metadata
-          ? `update ${stateRef} ${metadata} ${before.revision}`
-          : `delete ${stateRef} ${before.revision}`,
-        `verify refs/heads/${entry.branch} ${result.head}`,
-        `verify refs/heads/${result.trunk} ${result.onto}`,
-        `verify refs/branch-metadata/${entry.branch} ${result.metadata}`,
+          ? `update ${stateRef}\0${metadata}\0${before.revision}\0`
+          : `delete ${stateRef}\0${before.revision}\0`,
+        `verify refs/heads/${entry.branch}\0${result.head}\0`,
+        `verify refs/heads/${result.trunk}\0${result.onto}\0`,
+        `verify refs/branch-metadata/${entry.branch}\0${result.metadata}\0`,
         ...retired,
-        'prepare',
-        'commit',
-        '',
-      ].join('\n'),
+        'prepare\0',
+        'commit\0',
+      ].join(''),
     },
     onError: 'throw',
     resource: 'finishSyncReconciliation',
@@ -315,8 +370,11 @@ export function isPendingSyncReconciliation(
   return false;
 }
 
-export function assertBranchNotPendingReconciliation(branch: string): void {
-  if (isPendingSyncReconciliation(branch, readSyncReconciliation().entries))
+export function assertBranchNotPendingReconciliation(
+  branch: string,
+  entries = readSyncReconciliation().entries
+): void {
+  if (isPendingSyncReconciliation(branch, entries))
     throw new ExitFailedError(
       `Cannot modify ${branch} while it has pending reconciliation. Inspect the affected branches with an log.`
     );
