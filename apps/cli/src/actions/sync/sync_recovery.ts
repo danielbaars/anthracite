@@ -345,7 +345,12 @@ export function assertSyncHookParticipants(
   {
     owner,
     beforeMutation,
-  }: { readonly owner?: string; readonly beforeMutation: boolean }
+    preparedRefs,
+  }: {
+    readonly owner?: string;
+    readonly beforeMutation: boolean;
+    readonly preparedRefs?: string;
+  }
 ): boolean {
   const file = getRecoveryFile();
   if (!fs.existsSync(file)) return false;
@@ -366,6 +371,25 @@ export function assertSyncHookParticipants(
       !data.rebaseOwnership?.endsWith(`:${getRecoveryDigest(data)}`))
   )
     refuseSync('Owned sync intent changed during a Git hook.');
+  if (reconciliation?.replacement && preparedRefs) {
+    const expected = operation.expected.find(
+      ({ branchName }) => branchName === branch
+    );
+    if (expected?.head === reconciliation.head) {
+      for (const line of preparedRefs.split('\n')) {
+        const [old, next, ref] = line.split(' ');
+        if (
+          (ref?.startsWith('refs/heads/') && ref !== `refs/heads/${branch}`) ||
+          ((ref === `refs/heads/${branch}` || ref === 'HEAD') &&
+            (old !== reconciliation.head ||
+              next !== reconciliation.publishedHead))
+        )
+          refuseSync(
+            `Cannot replace ${branch}: the prepared update does not match the confirmed tips.`
+          );
+      }
+    }
+  }
   assertSyncSources(operation);
   assertSyncParticipants(operation, branch, branch);
   if (reconciliation && beforeMutation)

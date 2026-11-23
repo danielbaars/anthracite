@@ -93,6 +93,8 @@ export const handler = (
     const reconciling = assertSyncHookParticipants(args.branch, {
       owner: args['sync-owner'],
       beforeMutation: args.phase === 'before-mutation',
+      preparedRefs:
+        args.phase === 'prepared' ? input.toString('utf8') : undefined,
     });
     for (const branch of [args.branch, ...(args.participant ?? [])])
       if (!reconciling || branch !== args.branch) assertBranchEditable(branch);

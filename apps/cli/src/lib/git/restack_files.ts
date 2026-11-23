@@ -15,7 +15,7 @@ export function assertRestackFilesAvailable({
   operation,
   cwd: sourceRoot,
 }: {
-  branches: readonly { name: string; from: string }[];
+  branches: readonly { name: string; from: string; head?: string }[];
   checkoutRevisions?: readonly string[];
   all?: boolean;
   skipTrackedPaths?: boolean;
@@ -41,10 +41,10 @@ export function assertRestackFilesAvailable({
     });
   const plannedPaths = [
     ...new Set([
-      ...branches.flatMap(({ name, from }) =>
+      ...branches.flatMap(({ name, from, head = `refs/heads/${name}` }) =>
         [
           runGitCommand({
-            args: ['ls-tree', '-r', '--name-only', '-z', `refs/heads/${name}`],
+            args: ['ls-tree', '-r', '--name-only', '-z', head],
             options: { cwd, noTrim: true, env },
             onError: 'throw',
             resource: 'restackPaths',
@@ -57,7 +57,7 @@ export function assertRestackFilesAvailable({
               '--name-only',
               '-z',
               '--no-renames',
-              `${from}..refs/heads/${name}`,
+              `${from}..${head}`,
               '--',
             ],
             options: { cwd, noTrim: true, env },

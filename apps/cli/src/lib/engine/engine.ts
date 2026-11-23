@@ -1,3 +1,4 @@
+import { runGitCommand } from '../git/runner';
 import { uncommittedTrackedChangesPrecondition } from '../preconditions';
 import { assertRestackFilesAvailable } from '../git/restack_files';
 import { deleteLandedLeafRefs } from '../git/land_cleanup';
@@ -169,6 +170,12 @@ export type TEngine = {
       }
     | { result: 'REBASE_DONE' | 'REBASE_UNNEEDED' };
 
+  applySyncReplacement: (plan: {
+    readonly branch: string;
+    readonly head: string;
+    readonly publishedHead: string;
+    readonly metadata: string;
+  }) => void;
   reconcileSyncBranch: (
     plan: {
       readonly branch: string;
@@ -1377,6 +1384,39 @@ export function composeEngine({
         verifyPublication: preserveOtherRefs,
       });
       return { result: 'REBASE_DONE' };
+    },
+    applySyncReplacement: ({ branch, head, publishedHead, metadata }) => {
+      assertBranchNotFrozen(branch);
+      assertBranchesAvailableInWorktrees([branch]);
+      assertFetchedMetadata(branch, metadata, git);
+      if (git.getShaOrThrow(`refs/heads/${branch}`) !== head)
+        throw new PreconditionsFailedError(
+          `${branch} changed before replacing it with the GitHub version.`
+        );
+      const current = git.getCurrentBranchName();
+      withFrozenCommitGuard(
+        branch,
+        (prefix) =>
+          runGitCommand({
+            args: [
+              ...prefix,
+              ...(current === branch
+                ? ['reset', '--keep', publishedHead]
+                : ['update-ref', `refs/heads/${branch}`, publishedHead, head]),
+            ],
+            onError: 'throw',
+            resource: 'applySyncReplacement',
+          }),
+        { participants: [branch], allRefs: true }
+      );
+      if (
+        git.getCurrentBranchName() !== current ||
+        git.getShaOrThrow(`refs/heads/${branch}`) !== publishedHead
+      )
+        throw new PreconditionsFailedError(
+          `${branch} or the checkout changed during replacement. Inspect reached work.`
+        );
+      assertFetchedMetadata(branch, metadata, git);
     },
     reconcileSyncBranch: (plan, resume) => {
       const { branch, onto, from, metadata } = plan;
