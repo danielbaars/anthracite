@@ -13,6 +13,7 @@ export function rebase(args: {
   restackCommitterDateIsAuthorDate?: boolean;
   participants?: readonly string[];
   preserveOtherRefs?: boolean;
+  preserveCommits?: boolean;
 }): TRebaseResult {
   let result: TRebaseResult = 'REBASE_DONE';
   withFrozenCommitGuard(
@@ -23,7 +24,7 @@ export function rebase(args: {
           ...(args.restackCommitterDateIsAuthorDate
             ? [`--committer-date-is-author-date`]
             : []),
-          ...(getAbsorbGuard()
+          ...(args.preserveCommits || getAbsorbGuard()
             ? ['--reapply-cherry-picks', '--empty=keep']
             : []),
           `--onto`,

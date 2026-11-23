@@ -36,7 +36,7 @@ import { validateOrFixParentBranchRevision } from './parse_branches_and_meta';
 import { TScopeSpec } from './scope_spec';
 import { publishFoldStackRefs } from '../git/fold_stack';
 import { FileSplitPublication, publishFileSplitRefs } from '../git/file_split';
-import { assertBranchEditable } from './frozen_branch';
+import { assertBranchEditable, assertBranchNotFrozen } from './frozen_branch';
 import { assertBranchNotPendingReconciliation } from './sync_reconciliation';
 import { sameMetadataExceptFrozen } from './metadata_comparison';
 import { assertBranchesAvailableInWorktrees } from '../git/worktrees';
@@ -168,6 +168,18 @@ export type TEngine = {
         rebasedBranchBase: string;
       }
     | { result: 'REBASE_DONE' | 'REBASE_UNNEEDED' };
+
+  reconcileSyncBranch: (
+    plan: {
+      readonly branch: string;
+      readonly onto: string;
+      readonly from: string;
+      readonly metadata: string;
+    },
+    resume: boolean
+  ) =>
+    | { result: 'REBASE_CONFLICT' }
+    | { result: 'REBASE_DONE'; head: string; metadata: string };
 
   rebaseInteractive: (branchName: string) =>
     | {
@@ -599,7 +611,11 @@ export function composeEngine({
   const handleSuccessfulRebase = (
     branchName: string,
     parentBranchRevision: string,
-    options?: { participants?: readonly string[]; verifyPublication?: boolean }
+    options?: {
+      participants?: readonly string[];
+      verifyPublication?: boolean;
+      reconciledParent?: string;
+    }
   ) => {
     const cachedMeta = assertBranchIsValidAndNotTrunkAndGetMeta(branchName);
 
@@ -613,11 +629,15 @@ export function composeEngine({
         );
     };
     try {
-      assertBranchEditable(branchName);
+      if (options?.reconciledParent) assertBranchNotFrozen(branchName);
+      else assertBranchEditable(branchName);
       publishedMetadata = updateMeta(
         branchName,
         {
           ...cachedMeta,
+          ...(options?.reconciledParent
+            ? { parentBranchName: options.reconciledParent }
+            : {}),
           branchRevision,
           parentBranchRevision,
         },
@@ -644,6 +664,7 @@ export function composeEngine({
     } catch (error) {
       throw new RebaseMetadataError(branchName, error);
     }
+    return { head: branchRevision, metadata: publishedMetadata };
   };
 
   return {
@@ -1356,6 +1377,34 @@ export function composeEngine({
         verifyPublication: preserveOtherRefs,
       });
       return { result: 'REBASE_DONE' };
+    },
+    reconcileSyncBranch: (plan, resume) => {
+      const { branch, onto, from, metadata } = plan;
+      assertBranchNotFrozen(branch);
+      assertFetchedMetadata(branch, metadata, git);
+      const result = resume
+        ? git.rebaseContinue(branch, [branch], true)
+        : git.rebase({
+            branchName: branch,
+            onto,
+            from,
+            restackCommitterDateIsAuthorDate,
+            participants: [branch],
+            preserveOtherRefs: true,
+            preserveCommits: true,
+          });
+      if (result === 'REBASE_CONFLICT') return { result };
+      if (git.getCurrentBranchName() !== branch)
+        throw new PreconditionsFailedError(
+          `Physical checkout changed after reconciling ${branch}. Inspect reached work.`
+        );
+      assertFetchedMetadata(branch, metadata, git);
+      const publication = handleSuccessfulRebase(branch, onto, {
+        participants: [branch],
+        verifyPublication: true,
+        reconciledParent: assertTrunk(),
+      });
+      return { result, ...publication };
     },
     rebaseInteractive: (branchName: string) => {
       assertBranchEditable(branchName);

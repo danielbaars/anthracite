@@ -90,9 +90,12 @@ export const handler = (
     return;
   try {
     assertSyncHookOwnership(args['sync-owner']);
+    const reconciling = assertSyncHookParticipants(args.branch, {
+      owner: args['sync-owner'],
+      beforeMutation: args.phase === 'before-mutation',
+    });
     for (const branch of [args.branch, ...(args.participant ?? [])])
-      assertBranchEditable(branch);
-    assertSyncHookParticipants(args.branch);
+      if (!reconciling || branch !== args.branch) assertBranchEditable(branch);
     assertGetHookParticipants(args.branch);
   } catch (error: unknown) {
     process.stderr.write(

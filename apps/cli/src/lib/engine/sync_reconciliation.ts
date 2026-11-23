@@ -204,6 +204,70 @@ export function extendSyncReconciliation(
   });
 }
 
+/** Retire the recovery record only with the verified replacement refs. */
+export function finishSyncReconciliation(
+  expected: Pick<SyncReconciliation, 'branch' | 'head' | 'base' | 'metadata'>,
+  result: {
+    readonly head: string;
+    readonly metadata: string;
+    readonly trunk: string;
+    readonly onto: string;
+  }
+): void {
+  const before = readSyncReconciliation();
+  const entry = before.entries.find(({ branch }) => branch === expected.branch);
+  if (
+    !entry ||
+    entry.head !== expected.head ||
+    entry.base !== expected.base ||
+    entry.metadata !== expected.metadata
+  )
+    throw new ExitFailedError(
+      'Saved sync reconciliation changed before completion.'
+    );
+  const remaining = before.entries.filter(
+    ({ branch }) => branch !== entry.branch
+  );
+  const metadata = remaining.length
+    ? runGitCommand({
+        args: ['hash-object', '-w', '--stdin'],
+        options: { input: JSON.stringify({ version: 1, entries: remaining }) },
+        onError: 'throw',
+        resource: 'storeSyncReconciliation',
+      })
+    : '';
+  const neededPins = new Set(
+    remaining.flatMap(({ head, base, formerParentHead }) => [
+      head,
+      base,
+      formerParentHead,
+    ])
+  );
+  const retired = [...new Set([entry.head, entry.base, entry.formerParentHead])]
+    .filter((tip) => !neededPins.has(tip))
+    .map((tip) => `delete ${namespace}/commits/${tip} ${tip}`);
+  runGitCommand({
+    args: ['-c', 'core.hooksPath=/dev/null', 'update-ref', '--stdin'],
+    options: {
+      input: [
+        'start',
+        metadata
+          ? `update ${stateRef} ${metadata} ${before.revision}`
+          : `delete ${stateRef} ${before.revision}`,
+        `verify refs/heads/${entry.branch} ${result.head}`,
+        `verify refs/heads/${result.trunk} ${result.onto}`,
+        `verify refs/branch-metadata/${entry.branch} ${result.metadata}`,
+        ...retired,
+        'prepare',
+        'commit',
+        '',
+      ].join('\n'),
+    },
+    onError: 'throw',
+    resource: 'finishSyncReconciliation',
+  });
+}
+
 /** Follow tracked parent edges so a dependent child cannot publish past a deferral. */
 export function isPendingSyncReconciliation(
   branch: string,

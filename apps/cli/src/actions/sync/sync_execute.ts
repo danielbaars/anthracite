@@ -1,3 +1,18 @@
+import { inspectLocalReplay } from '../../lib/git/landing_replay';
+import {
+  finishSyncReconciliation,
+  isPendingSyncReconciliation,
+  readSyncReconciliation,
+} from '../../lib/engine/sync_reconciliation';
+import { readMetadataRef } from '../../lib/engine/metadata_ref';
+import { hasCanonicalAncestry } from './local_restack';
+import {
+  assertSyncReconciliationFiles,
+  assertSyncReconciliationLocalInputs,
+  assertSyncReconciliationSource,
+  ownedSyncReconciliation,
+  SyncReconciliationReplay,
+} from './sync_reconciliation_replay';
 import { continueConfigFactory } from '../../lib/spiffy/continuation_spf';
 import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 import { TContext } from '../../lib/context';
@@ -143,6 +158,7 @@ export async function executeSyncOperation(
       },
       context
     );
+    await executeSyncReconciliation(operation, context);
     finishOwnedSync(operation, context);
   } catch (error) {
     reportSyncFailure(operation, error);
@@ -250,6 +266,87 @@ function executeSyncCleanup(operation: SyncOperation, context: TContext): void {
   }));
 }
 
+async function executeSyncReconciliation(
+  operation: SyncOperation,
+  context: TContext
+): Promise<void> {
+  for (const plan of operation.refresh.reconciliation ?? []) {
+    if (operation.completedMaintenance.includes(plan.branch)) continue;
+    assertSyncExpected(operation);
+    try {
+      await assertSyncReconciliationSource(plan, context);
+      // Hooks, configuration and the source worktree may have changed since selection.
+      const assessment = await inspectLocalReplay(plan);
+      if (assessment.status !== 'clean')
+        throw new Error('The replay is no longer verified conflict-free.');
+      assertSyncExpected(operation);
+      assertSyncReconciliationLocalInputs(plan, operation);
+      assertSyncReconciliationFiles(plan);
+    } catch {
+      context.splog.info(
+        `Reconciliation for ${plan.branch} could not be reverified. Keeping local work and deferring cleanup.`
+      );
+      continue;
+    }
+    operation.reconciling = plan.branch;
+    saveSyncOperation(operation, context);
+    const result = context.engine.reconcileSyncBranch(plan, false);
+    if (result.result === 'REBASE_CONFLICT') {
+      persistContinuation({ rebasedBranchBase: plan.onto }, context);
+      throw new Error(
+        `Replaying local commits on ${plan.branch} hit a conflict.`
+      );
+    }
+    completeSyncReconciliation(
+      { plan, publication: result },
+      operation,
+      context
+    );
+  }
+}
+
+function completeSyncReconciliation(
+  {
+    plan,
+    publication: { head, metadata },
+  }: {
+    readonly plan: SyncReconciliationReplay;
+    readonly publication: { readonly head: string; readonly metadata: string };
+  },
+  operation: SyncOperation,
+  context: TContext
+): void {
+  const parent = readMetadataRef(plan.branch);
+  if (
+    parent.parentBranchName !== operation.trunkName ||
+    parent.parentBranchRevision !== plan.onto ||
+    getSha(`refs/heads/${operation.trunkName}`) !== plan.onto ||
+    !hasCanonicalAncestry(plan.onto, head)
+  )
+    refuseSync(
+      `The reached head or tracking for ${plan.branch} could not be verified.`
+    );
+  assertSyncRecoveryWrite(context);
+  finishSyncReconciliation(
+    {
+      branch: plan.branch,
+      head: plan.head,
+      base: plan.from,
+      metadata: plan.metadata,
+    },
+    { head, metadata, trunk: operation.trunkName, onto: plan.onto }
+  );
+  operation.reconciling = undefined;
+  if (operation.completion)
+    operation.completion.untouched = operation.completion.untouched.filter(
+      (name) => name !== plan.branch
+    );
+  completeSyncBranch(operation, plan.branch, context);
+  context.splog.info(
+    `Reconciled ${plan.branch} on ${operation.trunkName}, keeping local commits. No changes published.`
+  );
+}
+
 function finishOwnedSync(operation: SyncOperation, context: TContext): void {
   operation.phase = 'checkout';
   saveSyncOperation(operation, context);
@@ -278,11 +375,24 @@ function finishOwnedSync(operation: SyncOperation, context: TContext): void {
   if (context.continueConfig.data.sync !== operation)
     refuseSync('Sync recovery owner changed.');
   context.continueConfig.delete();
-  if (operation.refresh.deferred?.length)
+  const remaining = readSyncReconciliation().entries;
+  const resolved =
+    operation.refresh.reconciliation?.filter(({ branch }) =>
+      operation.completedMaintenance.includes(branch)
+    ) ?? [];
+  const deferred =
+    operation.refresh.deferred?.filter(
+      (name) =>
+        isPendingSyncReconciliation(name, remaining) ||
+        !resolved.some(
+          ({ branch, formerParent }) => name === branch || name === formerParent
+        )
+    ) ?? [];
+  if (deferred.length)
     context.splog.info(
       `Sync partially completed. Updated: ${
         operation.updated.join(', ') || 'none'
-      }. Deferred: ${operation.refresh.deferred.join(', ')}.`
+      }. Deferred: ${deferred.join(', ')}.`
     );
 }
 
@@ -298,44 +408,81 @@ export async function continueSyncOperation(
     verifyPendingSyncCleanup(operation, context);
     assertSyncRecoveryWrite(context);
     validateSyncRecovery(context.continueConfig.data);
-    if (opts.addAll) context.engine.addAll();
-    const participants = [
-      ...new Set([
-        ...getPendingSyncMandatory(operation),
-        ...(operation.cleanup.restack
-          ? operation.maintenance
-              .filter(
-                (entry) =>
-                  !entry.frozen &&
-                  !operation.completedMaintenance.includes(entry.branchName)
-              )
-              .map((entry) => entry.branchName)
-          : []),
-      ]),
-    ];
-    const result = context.engine.continueRebase(
-      active.base,
-      participants,
-      true
+    const reconciliation = ownedSyncReconciliation(
+      operation,
+      active.branchName
     );
-    if (result.result === 'REBASE_CONFLICT') {
+    if (reconciliation) {
+      if (
+        active.onto !== reconciliation.onto ||
+        active.base !== reconciliation.onto ||
+        active.originalHead !== reconciliation.head
+      )
+        refuseSync('Saved reconciliation does not match the owned rebase.');
+      await assertSyncReconciliationSource(reconciliation, context);
+      assertSyncRecoveryWrite(context);
       validateSyncRecovery(context.continueConfig.data);
-      persistContinuation(
-        {
-          rebasedBranchBase: active.base,
-          branchesToSync: context.continueConfig.data.branchesToSync,
-          branchesToRestack: context.continueConfig.data.branchesToRestack,
-        },
+      if (opts.addAll) context.engine.addAll();
+      const result = context.engine.reconcileSyncBranch(reconciliation, true);
+      if (result.result === 'REBASE_CONFLICT') {
+        validateSyncRecovery(context.continueConfig.data);
+        persistContinuation({ rebasedBranchBase: active.base }, context);
+        throw new Error('Rebase conflict is not yet resolved.');
+      }
+      completeSyncReconciliation(
+        { plan: reconciliation, publication: result },
+        operation,
         context
       );
-      throw new Error('Rebase conflict is not yet resolved.');
-    }
-    completeSyncBranch(operation, result.branchName, context);
+    } else
+      await continueOrdinarySyncRebase({ ...opts, active }, operation, context);
     verifyPendingSyncCleanup(operation, context);
   } catch (error) {
     reportSyncFailure(operation, error);
   }
   await executeSyncOperation(operation, context);
+}
+
+async function continueOrdinarySyncRebase(
+  {
+    addAll,
+    active,
+  }: {
+    readonly addAll: boolean;
+    readonly active: NonNullable<SyncOperation['active']>;
+  },
+  operation: SyncOperation,
+  context: TContext
+): Promise<void> {
+  if (addAll) context.engine.addAll();
+  const participants = [
+    ...new Set([
+      ...getPendingSyncMandatory(operation),
+      ...(operation.cleanup.restack
+        ? operation.maintenance
+            .filter(
+              (entry) =>
+                !entry.frozen &&
+                !operation.completedMaintenance.includes(entry.branchName)
+            )
+            .map((entry) => entry.branchName)
+        : []),
+    ]),
+  ];
+  const result = context.engine.continueRebase(active.base, participants, true);
+  if (result.result === 'REBASE_CONFLICT') {
+    validateSyncRecovery(context.continueConfig.data);
+    persistContinuation(
+      {
+        rebasedBranchBase: active.base,
+        branchesToSync: context.continueConfig.data.branchesToSync,
+        branchesToRestack: context.continueConfig.data.branchesToRestack,
+      },
+      context
+    );
+    throw new Error('Rebase conflict is not yet resolved.');
+  }
+  completeSyncBranch(operation, result.branchName, context);
 }
 function verifyPendingSyncCleanup(
   operation: SyncOperation,

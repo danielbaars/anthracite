@@ -150,9 +150,11 @@ async function effectiveReplayConfiguration(
 
 async function assertSupportedReplayControls(
   git: ReplayRepository,
-  settings: readonly ReplayConfiguration[]
+  settings: readonly ReplayConfiguration[],
+  preserveOtherRefs: boolean
 ): Promise<void> {
   for (const key of ['rebase.updaterefs', 'rerere.enabled']) {
+    if (key === 'rebase.updaterefs' && preserveOtherRefs) continue;
     const setting = settings.find((item) => item.key === key);
     if (!setting) {
       if (key !== 'rerere.enabled') continue;
@@ -178,10 +180,13 @@ async function assertSupportedReplayControls(
   }
 }
 
-async function copyReplayConfiguration(git: ReplayRepository): Promise<void> {
+async function copyReplayConfiguration(
+  git: ReplayRepository,
+  preserveOtherRefs: boolean
+): Promise<void> {
   await assertNoBranchConditionalLandingConfiguration(git, git.source);
   const settings = await effectiveReplayConfiguration(git);
-  await assertSupportedReplayControls(git, settings);
+  await assertSupportedReplayControls(git, settings, preserveOtherRefs);
   for (const { key, value, scope, origin } of settings) {
     if (replayConfigKeys.has(key) && value !== null)
       await git.run(['config', key, value]);
@@ -250,13 +255,7 @@ async function copyReplayConfiguration(git: ReplayRepository): Promise<void> {
   }
 }
 
-async function prepareReplayObjects(
-  plan: LandPlan,
-  remote: string,
-  git: ReplayRepository
-): Promise<void> {
-  if (!plan.remoteTrunk)
-    throw new Error('Remote trunk is unavailable for replay inspection.');
+async function initReplayRepository(git: ReplayRepository): Promise<void> {
   const objects = await git.read(
     ['rev-parse', '--path-format=absolute', '--git-path', 'objects'],
     git.source
@@ -283,6 +282,16 @@ async function prepareReplayObjects(
     path.join(git.directory, '.git', 'config'),
     path.join(git.directory, '.git', 'inspection-server-config')
   );
+}
+
+async function prepareReplayObjects(
+  plan: LandPlan,
+  remote: string,
+  git: ReplayRepository
+): Promise<void> {
+  if (!plan.remoteTrunk)
+    throw new Error('Remote trunk is unavailable for replay inspection.');
+  await initReplayRepository(git);
   if (
     (
       await git.run(['cat-file', '-e', `${plan.remoteTrunk}^{commit}`], {
@@ -341,6 +350,13 @@ async function prepareReplayObjects(
       .filter(Boolean))
       commits.add(commit);
   }
+  await assertReplayAttributes(commits, git);
+}
+
+async function assertReplayAttributes(
+  commits: Iterable<string>,
+  git: ReplayRepository
+): Promise<void> {
   for (const commit of commits) {
     const files = (
       await git.run(['ls-tree', '-r', '--name-only', '-z', commit])
@@ -354,18 +370,22 @@ async function prepareReplayObjects(
   }
 }
 
+type ReplayRange = {
+  readonly branch: string;
+  readonly onto: string;
+  readonly from: string;
+  readonly head: string;
+};
+
 async function replayCommits(
   git: ReplayRepository,
-  input: {
-    readonly branch: string;
-    readonly onto: string;
-    readonly from: string;
-    readonly head: string;
+  input: ReplayRange & {
     readonly force: boolean;
+    readonly preserveCommits?: boolean;
   }
 ): Promise<string | LandingReplayAssessment> {
   if (!input.force && !git.localConfigurationReady) {
-    await copyReplayConfiguration(git);
+    await copyReplayConfiguration(git, input.preserveCommits ?? false);
     git.localConfigurationReady = true;
   }
   const config = path.join(git.directory, '.git', 'config');
@@ -389,6 +409,9 @@ async function replayCommits(
       [
         'rebase',
         ...(input.force ? ['--force-rebase'] : []),
+        ...(input.preserveCommits
+          ? ['--reapply-cherry-picks', '--empty=keep']
+          : []),
         '--onto',
         input.onto,
         input.from,
@@ -541,31 +564,103 @@ async function simulateLandingGraph(
   return { status: 'clean' };
 }
 
+/** Inspect exact sync inputs without fetching, checking out or writing in the project. */
+export async function inspectLocalReplay(
+  input: ReplayRange
+): Promise<LandingReplayAssessment> {
+  return runReplayInspection('an-sync-replay-', async (git) => {
+    await assertCanonicalReplayHistory(git);
+    await initReplayRepository(git);
+    await git.run(['merge-base', '--is-ancestor', input.from, input.head]);
+    const commits = (
+      await git.read([
+        'rev-list',
+        '--reverse',
+        '--max-count=129',
+        `${input.from}..${input.head}`,
+      ])
+    )
+      .split('\n')
+      .filter(Boolean);
+    if (commits.length > 128)
+      throw new Error('Replay inspection exceeded the commit limit.');
+    let parent = input.from;
+    for (const commit of commits) {
+      if ((await git.read(['show', '-s', '--format=%P', commit])) !== parent)
+        throw new Error(
+          'Replay inspection requires a linear sequence of commits.'
+        );
+      parent = commit;
+    }
+    await assertReplayAttributes([input.onto, input.from, ...commits], git);
+    const result = await replayCommits(git, {
+      ...input,
+      force: false,
+      preserveCommits: true,
+    });
+    return typeof result === 'string' ? { status: 'clean' } : result;
+  });
+}
+
+async function assertCanonicalReplayHistory(
+  git: ReplayRepository
+): Promise<void> {
+  if (
+    ['GIT_GRAFT_FILE', 'GIT_SHALLOW_FILE', 'GIT_REPLACE_REF_BASE'].some(
+      (key) => git.originalEnvironment[key] !== undefined
+    ) ||
+    (await git.read(
+      ['for-each-ref', '--format=%(refname)', 'refs/replace'],
+      git.source
+    ))
+  )
+    throw new Error(
+      'Replay inspection cannot safely reproduce overridden history sources.'
+    );
+  for (const name of ['info/grafts', 'shallow']) {
+    const file = await git.read(
+      ['rev-parse', '--path-format=absolute', '--git-path', name],
+      git.source
+    );
+    const stat = fs.statSync(file, { throwIfNoEntry: false });
+    if (stat && (!stat.isFile() || stat.size))
+      throw new Error(
+        'Replay inspection cannot safely reproduce shallow or grafted history.'
+      );
+  }
+}
+
 /** Simulate only in owned disposable storage; generated OIDs never authorize effects. */
 export async function inspectLandingReplay(
   plan: LandPlan,
   remote: string
 ): Promise<LandingReplayAssessment> {
+  return runReplayInspection('an-land-replay-', async (git) => {
+    await assertSupportedInputs(plan, git);
+    await prepareReplayObjects(plan, remote, git);
+    return simulateLandingGraph(plan, git);
+  });
+}
+
+async function runReplayInspection(
+  prefix: string,
+  inspect: (git: ReplayRepository) => Promise<LandingReplayAssessment>
+): Promise<LandingReplayAssessment> {
   try {
-    return await withLandingInspection(
-      'an-land-replay-',
-      async (inspection) => {
-        const directory = path.join(inspection.temporary, 'replay');
-        const git: ReplayRepository = {
-          ...inspection,
-          localConfigurationReady: false,
-          source: process.cwd(),
-          directory,
-          run: (args, options = {}) =>
-            inspection.run(args, { ...options, cwd: options.cwd ?? directory }),
-          read: async (args, cwd = directory) =>
-            (await inspection.run(args, { cwd })).stdout.trim(),
-        };
-        await assertSupportedInputs(plan, git);
-        await prepareReplayObjects(plan, remote, git);
-        return await simulateLandingGraph(plan, git);
-      }
-    );
+    return await withLandingInspection(prefix, async (inspection) => {
+      const directory = path.join(inspection.temporary, 'replay');
+      const git: ReplayRepository = {
+        ...inspection,
+        localConfigurationReady: false,
+        source: process.cwd(),
+        directory,
+        run: (args, options = {}) =>
+          inspection.run(args, { ...options, cwd: options.cwd ?? directory }),
+        read: async (args, cwd = directory) =>
+          (await inspection.run(args, { cwd })).stdout.trim(),
+      };
+      return await inspect(git);
+    });
   } catch (error: unknown) {
     return {
       status: 'unavailable',

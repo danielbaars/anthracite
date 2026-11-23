@@ -1,3 +1,7 @@
+import {
+  planSyncReconciliationReplays,
+  SyncReconciliationReplay,
+} from './sync_reconciliation_replay';
 import { getGithubPr } from '../../lib/api/github_pr';
 import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
 import { getSha } from '../../lib/git/get_sha';
@@ -42,12 +46,13 @@ export type SyncRefreshPlan = {
   readonly nodes: ReturnType<typeof snapshotRemoteUpdateGraph>;
   readonly preserved?: readonly string[];
   readonly deferred?: readonly string[];
+  readonly reconciliation?: readonly SyncReconciliationReplay[];
   readonly prs: Awaited<ReturnType<typeof selectSyncFeatures>>['prs'];
 };
 
 /** Snapshot sources and collect all reconciliation authority before application. */
 export async function prepareSyncRefresh(
-  opts: { pull: boolean; force: boolean },
+  opts: { pull: boolean; force: boolean; restack: boolean },
   context: TContext
 ): Promise<{
   readonly refresh: SyncRefreshPlan;
@@ -90,6 +95,16 @@ export async function prepareSyncRefresh(
       context
     );
     await reportSyncReconciliationEvidence({ entries, nodes, prs }, context);
+    const reconciliation = await planSyncReconciliationReplays(
+      {
+        entries,
+        nodes,
+        prs,
+        onto: trunk?.head ?? trunkHead,
+        restack: opts.restack && !trunk?.reset,
+      },
+      context
+    );
     const deferred = new Set(
       context.engine.allBranchNames.filter((name) =>
         isPendingSyncReconciliation(name, entries)
@@ -99,34 +114,7 @@ export async function prepareSyncRefresh(
       nodes.filter((node) => deferred.has(node.branchName))
     );
     nodes = nodes.filter((node) => !deferred.has(node.branchName));
-    const preserved: string[] = [];
-    for (const node of nodes) {
-      const contained =
-        node.previousParentBranchName === node.parentBranchName &&
-        node.previousHead !== node.head &&
-        hasCanonicalAncestry(node.head, node.previousHead);
-      const parent = nodes.find(
-        (candidate) =>
-          candidate.branchName === node.parentBranchName &&
-          preserved.includes(candidate.branchName)
-      );
-      const equivalent =
-        !contained &&
-        (node.parentBranchName === context.engine.trunk ||
-          parent !== undefined) &&
-        hasEquivalentLocalRestack(node, parent, (detail) =>
-          context.splog.debug(
-            `Local restack proof for ${node.branchName} (remote head ${node.head}; local head ${node.previousHead}): ${detail}.`
-          )
-        );
-      if (!contained && !equivalent) continue;
-      assertRemoteUpdateNodeUnchanged(node);
-      if (equivalent)
-        context.splog.info(
-          `🔁 ${node.branchName}: local restack on newer ${node.parentBranchName}; branch commits match remote. Publication is pending.`
-        );
-      preserved.push(node.branchName);
-    }
+    const preserved = preserveLocalRestacks(nodes, context);
     await prepareRemoteUpdates(
       {
         nodes: nodes.filter((node) => !preserved.includes(node.branchName)),
@@ -148,6 +136,7 @@ export async function prepareSyncRefresh(
         nodes,
         prs: prs.filter((pr) => !deferred.has(pr.headRefName)),
         ...(deferred.size ? { deferred: [...deferred] } : {}),
+        ...(reconciliation.length ? { reconciliation } : {}),
         ...(preserved.length ? { preserved } : {}),
       },
       saved: existing,
@@ -158,6 +147,41 @@ export async function prepareSyncRefresh(
     if (trunk) releaseRemoteTrunk(trunk);
     throw error;
   }
+}
+
+function preserveLocalRestacks(
+  nodes: readonly RemoteUpdateNode[],
+  context: TContext
+): string[] {
+  const preserved: string[] = [];
+  for (const node of nodes) {
+    const contained =
+      node.previousParentBranchName === node.parentBranchName &&
+      node.previousHead !== node.head &&
+      hasCanonicalAncestry(node.head, node.previousHead);
+    const parent = nodes.find(
+      (candidate) =>
+        candidate.branchName === node.parentBranchName &&
+        preserved.includes(candidate.branchName)
+    );
+    const equivalent =
+      !contained &&
+      (node.parentBranchName === context.engine.trunk ||
+        parent !== undefined) &&
+      hasEquivalentLocalRestack(node, parent, (detail) =>
+        context.splog.debug(
+          `Local restack proof for ${node.branchName} (remote head ${node.head}; local head ${node.previousHead}): ${detail}.`
+        )
+      );
+    if (!contained && !equivalent) continue;
+    assertRemoteUpdateNodeUnchanged(node);
+    if (equivalent)
+      context.splog.info(
+        `🔁 ${node.branchName}: local restack on newer ${node.parentBranchName}; branch commits match remote. Publication is pending.`
+      );
+    preserved.push(node.branchName);
+  }
+  return preserved;
 }
 
 function expandReconciliationScope(
