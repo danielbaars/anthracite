@@ -153,6 +153,7 @@ function main(): void {
       headRepository: { name, nameWithOwner: repo },
       headRepositoryOwner: { login: owner },
       isCrossRepository: false,
+      mergedAt: null,
       mergeable: null,
       mergeStateStatus: null,
       statusCheckRollup: null,

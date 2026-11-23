@@ -36,14 +36,10 @@ export async function syncAction(
     if (refresh.trunk && entries.length)
       assertRemoteTrunkUnchanged(refresh.trunk);
     retainSyncReconciliation(saved, entries);
-    for (const entry of entries) {
-      const reason = saved.entries.includes(entry)
-        ? `pending reconciliation recorded after the merge of ${entry.formerParent}`
-        : `PR #${entry.pullRequest} now targets ${entry.pullRequestBase} after ${entry.formerParent} (PR #${entry.formerParentPr}) merged`;
+    for (const { branch, formerParent } of entries)
       context.splog.info(
-        `Deferred ${entry.branch}: ${reason}. Keeping ${entry.formerParent} for recovery. Dependent updates and cleanup are deferred.`
+        `Deferred ${branch}. Keeping ${formerParent} for recovery. Dependent updates and cleanup are deferred.`
       );
-    }
     applying = true;
     await executeSyncOperation(operation, context);
   } finally {
