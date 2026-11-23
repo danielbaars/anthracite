@@ -115,9 +115,11 @@ export function preflightSyncRecovery(command: string): boolean {
     refuseSync('Finish the pending sync before starting another operation.');
   if (gitEnvironmentOverrides.some((key) => process.env[key] !== undefined))
     refuseSync('Continue sync without Git repository/index overrides.');
-  validateSyncRecovery(
-    continueConfigFactory.load(undefined, { preserveInvalid: true }).data
-  );
+  const data = continueConfigFactory.load(undefined, {
+    preserveInvalid: true,
+  }).data;
+  if (data.sync?.active || !data.sync?.reconciling) validateSyncRecovery(data);
+  else validateSyncReconciliationRetry(data);
   return true;
 }
 
@@ -239,6 +241,40 @@ export function validateSyncRecovery(
   assertSyncSources(operation);
   if (protections) assertSyncParticipants(operation, active.branchName);
   else assertSyncExpected(operation);
+  return operation;
+}
+
+/** Retry only a saved reconciliation before a live rebase was established. */
+export function validateSyncReconciliationRetry(
+  data: TContinueConfig['data']
+): SyncOperation {
+  const owned = readOwnedSyncRecovery();
+  const operation = data.sync;
+  const plan = operation?.reconciling
+    ? ownedSyncReconciliation(operation, operation.reconciling)
+    : undefined;
+  if (
+    !owned ||
+    JSON.stringify(owned.data) !== JSON.stringify(data) ||
+    !operation ||
+    !plan ||
+    operation.active ||
+    data.rebaseOwnership ||
+    !operation.trunkCompleted ||
+    !operation.cleanupCompleted ||
+    getRebaseDirectory()
+  )
+    refuseSync('No verified reconciliation can be retried before replay.');
+  const otherGitState = [
+    'MERGE_HEAD',
+    'CHERRY_PICK_HEAD',
+    'REVERT_HEAD',
+    'sequencer',
+    'BISECT_START',
+  ].find((name) => fs.existsSync(path.join(operation.gitDirectory, name)));
+  if (otherGitState) refuseSync(`Foreign active Git state ${otherGitState}.`);
+  assertSyncSources(operation);
+  assertSyncParticipants(operation, plan.branch);
   return operation;
 }
 

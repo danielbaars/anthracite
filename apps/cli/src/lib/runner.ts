@@ -186,7 +186,9 @@ async function graphiteInternal(
     if (continueData) assertAbsorbContinuationAvailable(continueData);
     if (continueData && git.rebaseInProgress()) {
       const activeBranch = git.getRebaseHead();
-      if (activeBranch) assertBranchEditable(activeBranch);
+      // Owned sync validates the active branch against its exact saved replay.
+      if (activeBranch && !continueData.sync)
+        assertBranchEditable(activeBranch);
       assertContinuationBranchesEditable(continueData, activeBranch);
       assertDeleteRecoveryEditable(continueData.delete);
       assertFileSplitAvailable(continueData);

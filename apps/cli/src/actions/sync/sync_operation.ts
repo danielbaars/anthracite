@@ -96,6 +96,7 @@ export const syncOperationSchema = z
     ]),
     trunkCompleted: z.boolean(),
     reconciling: z.string().min(1).optional(),
+    skippedReconciliation: z.array(z.string().min(1)).optional(),
     completedRemote: z.array(z.string()),
     completedPrs: z.array(z.string()),
     completedMaintenance: z.array(z.string()),

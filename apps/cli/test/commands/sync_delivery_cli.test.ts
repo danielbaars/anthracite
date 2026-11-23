@@ -244,6 +244,96 @@ describe('sync CLI and installed MCP delivery', function () {
     expect(connection.stderr).to.equal('');
   });
 
+  it('installed MCP reports the preserved merged-parent transition across repeated sync', async () => {
+    fixture.commandTimeoutMs = 45_000;
+    fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
+    fixture.ok('unfreeze', 'child');
+    fixture.ok('checkout', 'child');
+    for (let index = 1; index <= 8; index++) {
+      for (const directory of [fixture.consumer, fixture.producer])
+        fixture.commit(
+          directory,
+          `shared-${index}.txt`,
+          `Shared work ${index}`
+        );
+    }
+    fixture.git(fixture.producer, 'switch', 'parent');
+    fixture.commit(fixture.producer, 'parent.txt', 'published parent revision');
+    fixture.git(fixture.producer, 'switch', 'main');
+    fixture.git(fixture.producer, 'cherry-pick', 'parent~1', 'parent');
+    fixture.git(
+      fixture.producer,
+      'rebase',
+      '--onto',
+      'main',
+      fixture.oldParent,
+      'child'
+    );
+    fixture.commit(fixture.producer, 'main.txt', 'published feature edit');
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'main.txt'),
+      'local feature edit'
+    );
+    fs.writeFileSync(
+      path.join(fixture.consumer, 'parent.txt'),
+      'local follow-up'
+    );
+    fixture.git(fixture.consumer, 'add', 'main.txt', 'parent.txt');
+    fixture.git(fixture.consumer, 'commit', '-m', 'Local feature edit');
+    const survivor = fixture.git(fixture.consumer, 'rev-parse', 'child');
+    fixture.git(fixture.producer, 'switch', 'main');
+    const trunk = fixture.commit(
+      fixture.producer,
+      'main.txt',
+      'independent trunk work'
+    );
+    fixture.git(fixture.producer, 'push', '--force', 'origin', 'main', 'child');
+    fs.writeJsonSync(fixture.prs, { parent: 'main', child: 'main' });
+    fs.writeJsonSync(fixture.identities, {
+      prOverrides: { parent: { state: 'MERGED' } },
+    });
+    const remote = fixture.git(fixture.remote, 'show-ref');
+    const index = fixture.git(fixture.consumer, 'ls-files', '--stage');
+    connection = new McpCliClient(fixture.consumer, fixture.env);
+    await connection.connect();
+    const learned = await connection.client.callTool({
+      name: 'learn_an',
+      arguments: {},
+    });
+    expect(JSON.stringify(learned.content)).to.include(
+      'pending reconciliation'
+    );
+
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const result = await run(['sync', '--no-delete']);
+      expect(result.status, result.stderr).to.equal('success');
+      expect(result.stdout).to.include('Sync partially completed');
+      expect(result.stdout).to.include(
+        'Patches matching at the same position: 9'
+      );
+      expect(result.stdout).to.include(
+        'Local replay of child onto main: conflicts in'
+      );
+      expect(result.stdout).to.include('main.txt');
+      fixture.assertTip('main', trunk);
+      fixture.assertTip('child', survivor);
+      fixture.assertTip('parent', fixture.oldParent);
+      expect(
+        fixture.git(fixture.consumer, 'branch', '--show-current')
+      ).to.equal('child');
+      expect(fixture.git(fixture.consumer, 'ls-files', '--stage')).to.equal(
+        index
+      );
+      expect(fixture.git(fixture.remote, 'show-ref')).to.equal(remote);
+    }
+    const inspected = await run(['log', 'short']);
+    expect(inspected.status, inspected.stderr).to.equal('success');
+    expect(inspected.stdout).to.include('Pending reconciliation');
+    expect(inspected.stdout).to.include('child');
+    expect(inspected.stdout).to.include('parent');
+    expect(connection.errors).to.deep.equal([]);
+  });
+
   async function run(args: readonly string[]) {
     const response = await connection.client.callTool({
       name: 'run_an_cmd',
