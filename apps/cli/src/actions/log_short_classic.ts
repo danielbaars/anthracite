@@ -66,7 +66,9 @@ export function logShortClassic(context: TContext): void {
       context
     )
       .map((b) => b.display)
-      .concat(getSyncReconciliationLines(entries))
+      .concat(
+        getSyncReconciliationLines(entries, context.engine.allBranchNames)
+      )
       .join('\n')
   );
 }

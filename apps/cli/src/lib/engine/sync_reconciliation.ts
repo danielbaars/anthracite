@@ -20,6 +20,7 @@ const recordSchema = z
     pullRequest: z.number().int().positive(),
     pullRequestBase: z.string().min(1),
     publishedHead: oid,
+    dependents: z.array(z.string().min(1)).optional(),
   })
   .strict();
 const stateSchema = z
@@ -58,7 +59,24 @@ export function retainSyncReconciliation(
     (entry) =>
       !before.entries.some((existing) => existing.branch === entry.branch)
   );
-  if (!additions.length) return;
+  const retained = before.entries.map((existing) => {
+    const updated = entries.find((entry) => entry.branch === existing.branch);
+    if (
+      !updated?.dependents?.some((name) => !existing.dependents?.includes(name))
+    )
+      return existing;
+    return {
+      ...existing,
+      dependents: [
+        ...new Set([...(existing.dependents ?? []), ...updated.dependents]),
+      ],
+    };
+  });
+  if (
+    !additions.length &&
+    retained.every((entry, index) => entry === before.entries[index])
+  )
+    return;
   const expected = new Map<string, string>();
   for (const entry of additions) {
     for (const [ref, revision] of captureDeferralRefs(entry)) {
@@ -75,7 +93,7 @@ export function retainSyncReconciliation(
       input: JSON.stringify(
         stateSchema.parse({
           version: 1,
-          entries: [...before.entries, ...additions],
+          entries: [...retained, ...additions],
         })
       ),
     },
@@ -131,6 +149,61 @@ function captureDeferralRefs(entry: SyncReconciliation): [string, string][] {
   ];
 }
 
+type StackEdge = { branchName: string; parentBranchName: string };
+
+function indexChildren(
+  edges: readonly StackEdge[]
+): ReadonlyMap<string, Set<string>> {
+  const children = new Map<string, Set<string>>();
+  for (const { branchName, parentBranchName } of edges) {
+    const siblings = children.get(parentBranchName) ?? new Set<string>();
+    siblings.add(branchName);
+    children.set(parentBranchName, siblings);
+  }
+  return children;
+}
+
+function addLocalDescendants(
+  names: Set<string>,
+  children: ReadonlyMap<string, Set<string>>,
+  startingAt: readonly string[]
+): void {
+  const pending = new Set(startingAt);
+  for (const branch of pending) {
+    names.add(branch);
+    for (const child of children.get(branch) ?? [])
+      if (!names.has(child)) pending.add(child);
+  }
+}
+
+/** Retain branches connected only by a proposed PR base; local edges stay live. */
+export function extendSyncReconciliation(
+  entries: readonly SyncReconciliation[],
+  edges: { local: readonly StackEdge[]; incoming: readonly StackEdge[] }
+): readonly SyncReconciliation[] {
+  const local = indexChildren(edges.local);
+  const incoming = indexChildren(edges.incoming);
+  return entries.map((entry) => {
+    const dependents = new Set(entry.dependents);
+    const names = new Set<string>();
+    addLocalDescendants(names, local, [
+      entry.branch,
+      entry.formerParent,
+      ...dependents,
+    ]);
+    for (const name of names) {
+      for (const child of incoming.get(name) ?? []) {
+        if (names.has(child)) continue;
+        dependents.add(child);
+        addLocalDescendants(names, local, [child]);
+      }
+    }
+    return dependents.size > (entry.dependents?.length ?? 0)
+      ? { ...entry, dependents: [...dependents].sort() }
+      : entry;
+  });
+}
+
 /** Follow tracked parent edges so a dependent child cannot publish past a deferral. */
 export function isPendingSyncReconciliation(
   branch: string,
@@ -140,9 +213,13 @@ export function isPendingSyncReconciliation(
   const seen = new Set<string>();
   let name: string | undefined = branch;
   while (name && !seen.has(name)) {
+    const branchName = name;
     if (
       entries.some(
-        (entry) => entry.branch === name || entry.formerParent === name
+        (entry) =>
+          entry.branch === name ||
+          entry.formerParent === name ||
+          entry.dependents?.includes(branchName)
       )
     )
       return true;

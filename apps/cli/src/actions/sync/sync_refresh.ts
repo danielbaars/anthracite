@@ -2,6 +2,7 @@ import { getGithubPr } from '../../lib/api/github_pr';
 import { TBranchPRInfo } from '../../lib/engine/metadata_ref';
 import { getSha } from '../../lib/git/get_sha';
 import {
+  extendSyncReconciliation,
   isPendingSyncReconciliation,
   readSyncReconciliation,
   ReconciliationState,
@@ -76,24 +77,24 @@ export async function prepareSyncRefresh(
       );
     }
     const existing = readSyncReconciliation();
-    const entries = [
-      ...existing.entries,
-      ...findDeferredMergeSurvivors(
-        nodes,
-        { prs, existing: existing.entries },
-        context
-      ),
-    ];
+    const entries = expandReconciliationScope(
+      [
+        ...existing.entries,
+        ...findDeferredMergeSurvivors(
+          nodes,
+          { prs, existing: existing.entries },
+          context
+        ),
+      ],
+      nodes,
+      context
+    );
     await reportSyncReconciliationEvidence({ entries, nodes, prs }, context);
     const deferred = new Set(
       context.engine.allBranchNames.filter((name) =>
         isPendingSyncReconciliation(name, entries)
       )
     );
-    // Incoming changes can introduce a dependency absent from the local stack.
-    for (const node of nodes) {
-      if (deferred.has(node.parentBranchName)) deferred.add(node.branchName);
-    }
     releaseRemoteUpdateGraph(
       nodes.filter((node) => deferred.has(node.branchName))
     );
@@ -157,6 +158,24 @@ export async function prepareSyncRefresh(
     if (trunk) releaseRemoteTrunk(trunk);
     throw error;
   }
+}
+
+function expandReconciliationScope(
+  entries: readonly SyncReconciliation[],
+  nodes: readonly RemoteUpdateNode[],
+  context: TContext
+): readonly SyncReconciliation[] {
+  if (!entries.length) return entries;
+  const local = context.engine.allBranchNames
+    .filter(
+      (name) =>
+        !context.engine.isTrunk(name) && context.engine.isBranchTracked(name)
+    )
+    .map((branchName) => ({
+      branchName,
+      parentBranchName: context.engine.getParentPrecondition(branchName),
+    }));
+  return extendSyncReconciliation(entries, { local, incoming: nodes });
 }
 
 function findDeferredMergeSurvivors(
