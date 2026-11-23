@@ -10,6 +10,8 @@ import {
   assertSyncReconciliationFiles,
   assertSyncReconciliationLocalInputs,
   assertSyncReconciliationSource,
+  describeUnverifiedReplay,
+  safeDiagnostic,
   ownedSyncReconciliation,
   reconciliationReplayRange,
   SyncReconciliationReplay,
@@ -17,6 +19,7 @@ import {
 import { continueConfigFactory } from '../../lib/spiffy/continuation_spf';
 import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 import { TContext } from '../../lib/context';
+import { ExitFailedError, PreconditionsFailedError } from '../../lib/errors';
 import { getSyncRemoteUrl, getSyncRepository } from './sync_identity';
 import { getSha } from '../../lib/git/get_sha';
 import { getCurrentBranchName } from '../../lib/git/branch_ops';
@@ -49,6 +52,7 @@ import {
   assertSyncRecoveryWrite,
   recordSyncRecoveryWrite,
   saveSyncOperation,
+  saveSyncReconciliationRetry,
   validateSyncRecovery,
   validateSyncReconciliationRetry,
   refuseSync,
@@ -286,7 +290,7 @@ async function executeSyncReconciliation(
         reconciliationReplayRange(plan)
       );
       if (assessment.status !== 'clean')
-        throw new Error('The replay is no longer verified conflict-free.');
+        throw new ExitFailedError(describeUnverifiedReplay(assessment));
       await assertSyncReconciliationSource(plan, context);
       assertSyncExpected(operation);
       assertSyncReconciliationLocalInputs(plan, operation);
@@ -296,12 +300,17 @@ async function executeSyncReconciliation(
       (operation.skippedReconciliation ??= []).push(plan.branch);
       saveSyncOperation(operation, context);
       context.splog.info(
-        `Reconciliation for ${plan.branch} could not be reverified. Keeping local work and deferring cleanup.`
+        `Reconciliation for ${plan.branch} could not be reverified. ${
+          error instanceof ExitFailedError ||
+          error instanceof PreconditionsFailedError
+            ? `${safeDiagnostic(error.message)} `
+            : ''
+        }Keeping local work and deferring cleanup.`
       );
       continue;
     }
     operation.reconciling = plan.branch;
-    saveSyncOperation(operation, context);
+    let releaseRetryReceipt = saveSyncReconciliationRetry(operation, context);
     const range = reconciliationReplayRange(plan);
     const alreadyReplaced =
       retrying &&
@@ -314,7 +323,11 @@ async function executeSyncReconciliation(
       assertSyncExpected(operation, plan.branch);
       if (!operation.updated.includes(plan.branch))
         operation.updated.push(plan.branch);
-      saveSyncOperation(operation, context, plan.branch);
+      releaseRetryReceipt = saveSyncReconciliationRetry(
+        operation,
+        context,
+        plan.branch
+      );
       assertSyncReconciliationLocalInputs(plan, operation);
       assertSyncReconciliationFiles(plan);
     }
@@ -324,12 +337,14 @@ async function executeSyncReconciliation(
     );
     if (result.result === 'REBASE_CONFLICT') {
       persistContinuation({ rebasedBranchBase: plan.onto }, context);
+      releaseRetryReceipt();
       throw new Error(
         `Replaying ${plan.replacement ? 'GitHub' : 'local'} commits on ${
           plan.branch
         } hit a conflict.`
       );
     }
+    releaseRetryReceipt();
     completeSyncReconciliation(
       { plan, publication: result },
       operation,
@@ -370,6 +385,7 @@ function completeSyncReconciliation(
     { head, metadata, trunk: operation.trunkName, onto: plan.onto }
   );
   operation.reconciling = undefined;
+  operation.retryReceipt = undefined;
   if (operation.completion)
     operation.completion.untouched = operation.completion.untouched.filter(
       (name) => name !== plan.branch
@@ -426,7 +442,7 @@ function finishOwnedSync(operation: SyncOperation, context: TContext): void {
         )
     ) ?? [];
   if (deferred.length)
-    context.splog.info(
+    context.splog.warn(
       `Sync partially completed. Updated: ${
         operation.updated.join(', ') || 'none'
       }. Deferred: ${deferred.join(', ')}.`

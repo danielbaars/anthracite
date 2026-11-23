@@ -1,4 +1,7 @@
-import { assertBranchNotPendingReconciliation } from '../../lib/engine/sync_reconciliation';
+import {
+  assertBranchNotPendingReconciliation,
+  type SyncReconciliation,
+} from '../../lib/engine/sync_reconciliation';
 import chalk from 'chalk';
 import { createGetOperation, executeGetOperation } from './get_execute';
 import {
@@ -422,6 +425,7 @@ export async function prepareRemoteUpdates(
     nodes: readonly RemoteUpdateNode[];
     force: boolean;
     scope?: 'get' | 'sync';
+    projectedReconciliation?: readonly SyncReconciliation[];
     target?: string;
     trunk?: RemoteTrunkUpdate;
     finalBranch: string | undefined;
@@ -440,8 +444,14 @@ export async function prepareRemoteUpdates(
         node.parentBranchName
   );
   for (const node of changing) {
-    assertBranchNotPendingReconciliation(node.branchName);
-    assertBranchNotPendingReconciliation(node.parentBranchName);
+    assertBranchNotPendingReconciliation(
+      node.branchName,
+      args.projectedReconciliation
+    );
+    assertBranchNotPendingReconciliation(
+      node.parentBranchName,
+      args.projectedReconciliation
+    );
   }
   const advancingTrunk =
     args.trunk && args.trunk.head !== args.trunk.previousHead;
@@ -458,7 +468,7 @@ export async function prepareRemoteUpdates(
       ...args.nodes.map((node) => node.head),
       ...(advancingTrunk && args.trunk ? [args.trunk.head] : []),
     ],
-    operation: 'get',
+    operation: args.scope ?? 'get',
   });
   for (const node of changing) {
     const exists = context.engine.branchExists(node.branchName);

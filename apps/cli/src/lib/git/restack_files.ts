@@ -27,7 +27,8 @@ export function assertRestackFilesAvailable({
     | 'reorder'
     | 'split'
     | 'absorb'
-    | 'get';
+    | 'get'
+    | 'sync';
 }): void {
   if (branches.length === 0 && checkoutRevisions.length === 0) return;
   const env = { ...process.env };

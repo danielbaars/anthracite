@@ -7,9 +7,8 @@ import { getOtherWorktreeBranches } from '../lib/git/worktrees';
 import { clearPromptResultLine, suggest } from '../lib/utils/prompts_helpers';
 import { getBranchInfo } from './show_branch';
 import {
-  isPendingSyncReconciliation,
+  projectSyncReconciliationDisplay,
   readSyncReconciliation,
-  SyncReconciliation,
 } from '../lib/engine/sync_reconciliation';
 
 function getUntrackedBranchNames(context: TContext) {
@@ -58,12 +57,7 @@ export function logAction(
   },
   context: TContext
 ): void {
-  const { entries } = readSyncReconciliation();
-  const hidden = new Set(
-    context.engine.allBranchNames.filter((name) =>
-      isPendingSyncReconciliation(name, entries)
-    )
-  );
+  const { hidden, lines } = getSyncReconciliationDisplay(context);
   const logOutput = (
     hidden.has(opts.branchName)
       ? []
@@ -98,27 +92,36 @@ export function logAction(
           ]
         : []
     )
-    .concat(getSyncReconciliationLines(entries, context.engine.allBranchNames))
+    .concat(lines)
     .join('\n');
 
   const notice = getPendingSyncLogNotice(context);
   context.splog.page(notice ? `${notice}\n${logOutput}` : logOutput);
 }
 
-export function getSyncReconciliationLines(
-  entries: readonly SyncReconciliation[],
-  branchNames: readonly string[]
-): string[] {
-  if (!entries.length) return [];
-  return [
+export function getSyncReconciliationDisplay(context: TContext): {
+  readonly hidden: ReadonlySet<string>;
+  readonly lines: readonly string[];
+} {
+  const { entries } = readSyncReconciliation();
+  if (!entries.length) return { hidden: new Set(), lines: [] };
+  const branchNames = context.engine.allBranchNames;
+  const live = new Set(branchNames);
+  const scopes = projectSyncReconciliationDisplay(
+    entries,
+    branchNames.flatMap((branchName) => {
+      const parentBranchName = context.engine.getParent(branchName);
+      return parentBranchName ? [{ branchName, parentBranchName }] : [];
+    })
+  );
+  const hidden = new Set(scopes.flatMap(({ branches }) => [...branches]));
+  const lines = [
     '',
     'Pending reconciliation',
-    ...entries.flatMap((entry) => {
-      const dependents = branchNames.filter(
+    ...scopes.flatMap(({ entry, branches }) => {
+      const dependents = [...branches].filter(
         (name) =>
-          name !== entry.branch &&
-          name !== entry.formerParent &&
-          isPendingSyncReconciliation(name, [entry])
+          name !== entry.branch && name !== entry.formerParent && live.has(name)
       );
       return [
         `  ${entry.branch} (PR #${entry.pullRequest}): replay onto ${entry.pullRequestBase} pending.`,
@@ -133,6 +136,7 @@ export function getSyncReconciliationLines(
       ];
     }),
   ];
+  return { hidden, lines };
 }
 
 export function logForConflictStatus(

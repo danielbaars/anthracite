@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import fs from 'fs-extra';
 import { FrozenGetFixture } from '../lib/fixtures/frozen_get_cli';
 
+// eslint-disable-next-line max-lines-per-function
 describe('sync CLI deferred reconciliation dependencies', function () {
   this.timeout(180000);
   let fixture: FrozenGetFixture;
@@ -108,6 +109,37 @@ describe('sync CLI deferred reconciliation dependencies', function () {
       fixture.run(['submit', '--branch', 'local-descendant', '--dry-run'])
         .output
     ).to.include('Skipping local-descendant: pending reconciliation');
+
+    const silent = fixture.ok('sync', '--no-delete', '--quiet');
+    expect(silent.output).to.include('Sync partially completed');
+
+    // GitHub retargets only the projected dependency. Its locally tracked
+    // parent was already main, so it and its own child can resume normally.
+    fixture.git(fixture.consumer, 'push', '--force', 'origin', 'incoming');
+    fixture.git(fixture.producer, 'fetch', 'origin', 'incoming');
+    fixture.git(fixture.producer, 'switch', 'incoming');
+    fixture.git(fixture.producer, 'reset', '--hard', 'FETCH_HEAD');
+    const remoteAdvance = fixture.commit(
+      fixture.producer,
+      'published.txt',
+      'independent now'
+    );
+    fixture.git(fixture.producer, 'push', 'origin', 'incoming');
+    fs.writeJsonSync(fixture.prs, {
+      parent: 'main',
+      child: 'main',
+      incoming: 'main',
+      independent: 'main',
+    });
+    const retargeted = fixture.ok('sync', '--no-delete', '--no-restack');
+    fixture.assertTip('incoming', remoteAdvance);
+    fixture.assertTip('local-descendant', descendant);
+    expect(retargeted.output).not.to.match(/Deferred: [^\n]*incoming/);
+    const active = fixture
+      .ok('log', 'short')
+      .output.split('Pending reconciliation');
+    expect(active[0]).to.include('local-descendant');
+    expect(active[1]).not.to.include('local-descendant');
   });
   it('defers cleanup that would reparent a retained former parent and removes independent eligible work', () => {
     fixture.commit(fixture.consumer, 'local.txt', 'local correction');

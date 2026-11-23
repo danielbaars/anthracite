@@ -6,12 +6,16 @@ import { assertBranchNotFrozen } from '../../lib/engine/frozen_branch';
 import {
   assertSyncReconciliationPins,
   readSyncReconciliation,
+  reconciliationBranchName,
   SyncReconciliation,
 } from '../../lib/engine/sync_reconciliation';
 import { ExitFailedError } from '../../lib/errors';
 import { getSha } from '../../lib/git/get_sha';
 import { runGitCommand } from '../../lib/git/runner';
-import { inspectLocalReplay } from '../../lib/git/landing_replay';
+import {
+  inspectLocalReplay,
+  LandingReplayAssessment,
+} from '../../lib/git/landing_replay';
 import { assertRestackFilesAvailable } from '../../lib/git/restack_files';
 import { assertBranchesAvailableInWorktrees } from '../../lib/git/worktrees';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
@@ -22,7 +26,7 @@ import type { SyncRefreshPlan } from './sync_refresh';
 const oid = z.string().regex(/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/);
 export const syncReconciliationReplaySchema = z
   .object({
-    branch: z.string().min(1),
+    branch: reconciliationBranchName,
     head: oid,
     from: oid,
     onto: oid,
@@ -30,7 +34,7 @@ export const syncReconciliationReplaySchema = z
     pullRequest: z.number().int().positive(),
     publishedHead: oid,
     publishedBaseTip: oid,
-    formerParent: z.string().min(1),
+    formerParent: reconciliationBranchName,
     formerParentHead: oid,
     formerParentPr: z.number().int().positive(),
     mergedHead: oid,
@@ -224,12 +228,7 @@ async function assessSource(
 ): Promise<boolean> {
   const assessment = await inspectLocalReplay(reconciliationReplayRange(plan));
   if (assessment.status === 'clean') return true;
-  const reason =
-    assessment.status === 'conflict'
-      ? `conflicts in ${assessment.paths
-          .map(safeDiagnostic)
-          .join(', ')}. Later commits were not assessed.`
-      : 'replay feasibility could not be verified.';
+  const reason = describeUnverifiedReplay(assessment);
   context.splog.info(
     `${label} replay of ${plan.branch} onto ${context.engine.trunk}: ${reason} Keeping local work pending reconciliation unless another resolution is chosen.`
   );
@@ -303,7 +302,17 @@ async function confirmPublishedReplay(
   return confirmed === true ? plan : undefined;
 }
 
-function safeDiagnostic(text: string): string {
+export function describeUnverifiedReplay(
+  assessment: Exclude<LandingReplayAssessment, { status: 'clean' }>
+): string {
+  return assessment.status === 'conflict'
+    ? `conflicts in ${assessment.paths
+        .map(safeDiagnostic)
+        .join(', ')}. Later commits were not assessed.`
+    : 'replay feasibility could not be verified.';
+}
+
+export function safeDiagnostic(text: string): string {
   return text.replace(/[\p{Cc}\p{Cf}]/gu, '�');
 }
 
@@ -418,6 +427,6 @@ export function assertSyncReconciliationFiles(
   assertRestackFilesAvailable({
     branches: [{ name: plan.branch, from: range.from, head: range.head }],
     checkoutRevisions: [plan.onto],
-    operation: 'get',
+    operation: 'sync',
   });
 }
