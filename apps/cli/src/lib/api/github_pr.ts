@@ -27,6 +27,7 @@ const prSchema = z.object({
   state: z.enum(['OPEN', 'CLOSED', 'MERGED']),
   isDraft: z.boolean(),
   headRefName: z.string().min(1),
+  mergedAt: z.iso.datetime().nullable().catch(null).optional(),
   headRefOid: oid,
   baseRefName: z.string().min(1),
   baseRefOid: oid,

@@ -20,6 +20,7 @@ import {
   hasEquivalentLocalRestack,
 } from './local_restack';
 import { captureGetCheckout } from './get_checkout';
+import { reportSyncReconciliationEvidence } from './sync_reconciliation_evidence';
 import {
   lookupPullRequest,
   pullRequestSchema,
@@ -83,6 +84,7 @@ export async function prepareSyncRefresh(
         context
       ),
     ];
+    await reportSyncReconciliationEvidence({ entries, nodes, prs }, context);
     const deferred = new Set(
       context.engine.allBranchNames.filter((name) =>
         isPendingSyncReconciliation(name, entries)

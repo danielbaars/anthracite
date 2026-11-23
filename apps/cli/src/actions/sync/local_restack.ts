@@ -98,6 +98,72 @@ export function hasEquivalentLocalRestack(
   }
 }
 
+type OwnRange = { readonly base: string; readonly head: string };
+
+export type BranchWorkComparison =
+  | {
+      readonly kind: 'equivalent' | 'different';
+      readonly localCount: number;
+      readonly publishedCount: number;
+      readonly matchingPatches: number;
+    }
+  | { readonly kind: 'unknown' };
+
+/** Compare only exact ordered feature ranges. This grants no update authority. */
+export function compareBranchWork(
+  local: OwnRange,
+  published: { readonly baseTip: string; readonly head: string }
+): BranchWorkComparison {
+  const validOid = new RegExp(`^${OID}$`);
+  if (
+    ![local.base, local.head, published.baseTip, published.head].every((oid) =>
+      validOid.test(oid)
+    )
+  )
+    return { kind: 'unknown' };
+  const read = boundedGitReader();
+  try {
+    if (!hasCanonicalGraph(read)) return { kind: 'unknown' };
+    const left = ownCommits(local.base, local.head, read);
+    // No-pull may leave local trunk behind the GitHub base. Use the
+    // verified PR snapshot, or report unknown if its objects are absent.
+    const base = read([
+      'merge-base',
+      '--all',
+      published.baseTip,
+      published.head,
+    ])
+      .toString('ascii')
+      .trim();
+    if (!validOid.test(base)) return { kind: 'unknown' };
+    const right = ownCommits(base, published.head, read);
+    if (!left || !right) return { kind: 'unknown' };
+    let matchingPatches = 0;
+    let equivalent = left.length === right.length;
+    for (const [index, commit] of left.entries()) {
+      const other = right[index];
+      if (!other) break;
+      const patchMatches = commitPatch(commit, read).equals(
+        commitPatch(other, read)
+      );
+      if (patchMatches) matchingPatches++;
+      equivalent =
+        equivalent &&
+        patchMatches &&
+        commit.author === other.author &&
+        commit.message.equals(other.message);
+    }
+    return {
+      kind: equivalent ? 'equivalent' : 'different',
+      localCount: left.length,
+      publishedCount: right.length,
+      matchingPatches,
+    };
+  } catch {
+    return { kind: 'unknown' };
+  }
+}
+
 function boundedGitReader(): ReadGit {
   const deadline = Date.now() + MAX_DURATION_MS;
   let bytes = 0;
@@ -146,7 +212,7 @@ function ownCommits(
     .toString('ascii')
     .trim();
   const ids = output ? output.split('\n') : [];
-  if (!ids.length || ids.length > MAX_COMMITS) return undefined;
+  if (ids.length > MAX_COMMITS) return undefined;
   let parent = base;
   const commits: OwnCommit[] = [];
   for (const oid of ids) {

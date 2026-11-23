@@ -24,8 +24,13 @@ import { sameMetadataExceptFrozen } from '../../lib/engine/metadata_comparison';
 export const pullRequestSchema = z.object({
   headRefName: z.string().min(1),
   baseRefName: z.string().min(1),
+  baseRefOid: z
+    .string()
+    .regex(/^[a-f0-9]{40,64}$/)
+    .optional(),
   number: z.number().int().positive(),
   url: z.string().url(),
+  mergedAt: z.iso.datetime().nullable().catch(null).optional(),
   headRefOid: z.string().regex(/^[a-f0-9]{40,64}$/),
   state: z.enum(['OPEN', 'CLOSED', 'MERGED']).optional(),
   headRepository: z

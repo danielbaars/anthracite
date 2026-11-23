@@ -74,6 +74,10 @@ const identity = require('fs').existsSync(${JSON.stringify(
       )}) ? JSON.parse(require('fs').readFileSync(${JSON.stringify(
         this.identities
       )}, 'utf8')) : {};
+if (args[0] === 'api' && args[1] === 'repos/get-fixture/repo/activity') {
+  if (identity.activityError) respond('', 1, 'HTTP 403');
+  respond(JSON.stringify(identity.activity || []) + '\\n');
+}
 if (args[0] === 'api' && args[1] === 'user') {
   if (identity.accountError) respond('', 7);
   respond((identity.accountRaw === undefined ? JSON.stringify(identity.account || {}) : identity.accountRaw) + '\\n');
@@ -110,7 +114,7 @@ const headRefOid = require('child_process').execFileSync('git', ['rev-parse', 'r
 const baseRefOid = require('child_process').execFileSync('git', ['rev-parse', 'refs/heads/' + parent], { cwd: ${JSON.stringify(
         this.producer
       )}, encoding: 'utf8' }).trim();
-const response = { mergeable: null, mergeStateStatus: null, statusCheckRollup: null, author: { login: 'get-fixture' }, isCrossRepository: false, baseRefOid, headRepository: { name: 'repo', nameWithOwner: 'get-fixture/repo' }, headRepositoryOwner: { login: 'get-fixture' }, headRefName: head, baseRefName: parent, headRefOid, number: head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
+const response = { mergedAt: null, mergeable: null, mergeStateStatus: null, statusCheckRollup: null, author: { login: 'get-fixture' }, isCrossRepository: false, baseRefOid, headRepository: { name: 'repo', nameWithOwner: 'get-fixture/repo' }, headRepositoryOwner: { login: 'get-fixture' }, headRefName: head, baseRefName: parent, headRefOid, number: head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1, state: 'OPEN', url: 'https://github.com/get-fixture/repo/pull/' + (head === 'parent' ? 1 : head === 'child' ? 2 : Object.keys(parents).indexOf(head) + 1), title: details[head] || head + ' original PR', body: 'Existing PR body', isDraft: false, reviewDecision: 'REVIEW_REQUIRED' };
 if (fields === 'author') {
   if (identity.authorError) respond('', 8);
   respond((identity.authorRaw === undefined ? JSON.stringify({author: (identity.authors || {})[head]}) : identity.authorRaw) + '\\n');
