@@ -2,12 +2,14 @@ import { expect } from 'chai';
 import fs from 'fs-extra';
 import { FrozenGetFixture } from '../lib/fixtures/frozen_get_cli';
 
+// eslint-disable-next-line max-lines-per-function
 describe('sync CLI local commits after a parent PR merges', function () {
   this.timeout(120000);
   let fixture: FrozenGetFixture;
 
   beforeEach(() => {
     fixture = new FrozenGetFixture();
+    fixture.commandTimeoutMs = 45000;
     fixture.ok('sync', '--no-pull', '--no-delete', '--no-restack');
     fixture.ok('unfreeze', 'child');
     fixture.ok('checkout', 'child');
@@ -166,7 +168,7 @@ describe('sync CLI local commits after a parent PR merges', function () {
   });
 
   for (const blocker of ['remote divergence', 'closed parent'] as const) {
-    it(`keeps explicit reconciliation for ${blocker}`, () => {
+    it(`preserves local work when reconciliation is needed for ${blocker}`, () => {
       const head = fixture.commit(
         fixture.consumer,
         'local.txt',
@@ -184,11 +186,20 @@ describe('sync CLI local commits after a parent PR merges', function () {
 
       const result = fixture.run(['sync', '--delete-all']);
 
-      expect(result.status).to.equal(1);
-      expect(result.output).to.include('Cannot overwrite local branch child');
+      if (blocker === 'remote divergence') {
+        expect(result.status).to.equal(0);
+        expect(result.output).to.include('Sync partially completed');
+        fixture.assertTip(
+          'main',
+          fixture.git(fixture.producer, 'rev-parse', 'main')
+        );
+      } else {
+        expect(result.status).to.equal(1);
+        expect(result.output).to.include('Cannot overwrite local branch child');
+        fixture.assertTip('main', trunk);
+      }
       fixture.assertTip('child', head);
       fixture.assertTip('parent', fixture.oldParent);
-      fixture.assertTip('main', trunk);
       expect(fixture.git(fixture.consumer, 'show', 'child:local.txt')).to.equal(
         'local correction'
       );

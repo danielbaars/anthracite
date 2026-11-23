@@ -2,6 +2,10 @@ import yargs from 'yargs';
 import { restackBranches } from '../actions/restack';
 import { SCOPE } from '../lib/engine/scope_spec';
 import { graphite } from '../lib/runner';
+import {
+  isPendingSyncReconciliation,
+  readSyncReconciliation,
+} from '../lib/engine/sync_reconciliation';
 
 const args = {
   branch: {
@@ -44,11 +48,20 @@ export const handler = async (argv: argsT): Promise<void> =>
       : argv.downstack
       ? SCOPE.DOWNSTACK
       : SCOPE.STACK;
+    const { entries } = readSyncReconciliation();
+    const branches = context.engine.getRelativeStack(
+      argv.branch ?? context.engine.currentBranchPrecondition,
+      scope
+    );
     return restackBranches(
-      context.engine.getRelativeStack(
-        argv.branch ?? context.engine.currentBranchPrecondition,
-        scope
-      ),
-      context
+      branches.filter((branch) => {
+        if (!isPendingSyncReconciliation(branch, entries)) return true;
+        context.splog.info(
+          `Skipping ${branch}: pending reconciliation. See an log.`
+        );
+        return false;
+      }),
+      context,
+      { preserveOtherRefs: entries.length > 0 }
     );
   });

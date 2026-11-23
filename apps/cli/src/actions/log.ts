@@ -6,6 +6,11 @@ import { TContext } from '../lib/context';
 import { getOtherWorktreeBranches } from '../lib/git/worktrees';
 import { clearPromptResultLine, suggest } from '../lib/utils/prompts_helpers';
 import { getBranchInfo } from './show_branch';
+import {
+  isPendingSyncReconciliation,
+  readSyncReconciliation,
+  SyncReconciliation,
+} from '../lib/engine/sync_reconciliation';
 
 function getUntrackedBranchNames(context: TContext) {
   return context.engine.allBranchNames.filter(
@@ -53,37 +58,69 @@ export function logAction(
   },
   context: TContext
 ): void {
-  const logOutput = getStackLines(
-    {
-      short: opts.style === 'SHORT',
-      reverse: opts.reverse,
-      branchName: opts.branchName,
-      indentLevel: 0,
-      steps: opts.steps,
-      sortForDisplay: true,
-      showParentEdges: true,
-      worktreeLabels: new Map(
-        [...getOtherWorktreeBranches()].map(([branch, directory]) => [
-          branch,
-          path.basename(directory),
-        ])
-      ),
-    },
-    context
+  const { entries } = readSyncReconciliation();
+  const hidden = new Set(
+    context.engine.allBranchNames.filter((name) =>
+      isPendingSyncReconciliation(name, entries)
+    )
+  );
+  const logOutput = (
+    hidden.has(opts.branchName)
+      ? []
+      : getStackLines(
+          {
+            short: opts.style === 'SHORT',
+            reverse: opts.reverse,
+            branchName: opts.branchName,
+            indentLevel: 0,
+            steps: opts.steps,
+            sortForDisplay: true,
+            showParentEdges: true,
+            hidden,
+            worktreeLabels: new Map(
+              [...getOtherWorktreeBranches()].map(([branch, directory]) => [
+                branch,
+                path.basename(directory),
+              ])
+            ),
+          },
+          context
+        )
   )
     .concat(
       opts.showUntracked
         ? [
             '',
             chalk.yellowBright(`Untracked branches:`),
-            ...getUntrackedBranchNames(context),
+            ...getUntrackedBranchNames(context).filter(
+              (name) => !hidden.has(name)
+            ),
           ]
         : []
     )
+    .concat(getSyncReconciliationLines(entries))
     .join('\n');
 
   const notice = getPendingSyncLogNotice(context);
   context.splog.page(notice ? `${notice}\n${logOutput}` : logOutput);
+}
+
+export function getSyncReconciliationLines(
+  entries: readonly SyncReconciliation[]
+): string[] {
+  if (!entries.length) return [];
+  return [
+    '',
+    'Pending reconciliation',
+    ...entries.flatMap((entry) => [
+      `  ${entry.branch} (PR #${entry.pullRequest}): replay onto ${entry.pullRequestBase} pending.`,
+      `    Former parent: ${
+        entry.formerParent
+      } at ${entry.formerParentHead.slice(0, 8)} (PR #${
+        entry.formerParentPr
+      } merged); retained for recovery.`,
+    ]),
+  ];
 }
 
 export function logForConflictStatus(
@@ -188,6 +225,7 @@ type TPrintStackArgs = {
   sortForDisplay?: boolean;
   showParentEdges?: boolean;
   worktreeLabels?: ReadonlyMap<string, string>;
+  hidden?: ReadonlySet<string>;
 };
 
 function getLogShortColor(toColor: string, index: number): string {
@@ -265,6 +303,7 @@ function getDownstackExclusiveLines(
       recursiveParents: true,
     }),
   ]
+    .filter((name) => !args.hidden?.has(name))
     .slice(-(args.steps ?? 0))
     .map((branchName) =>
       // skip the branching line for downstack because we show 1 child per branch
@@ -298,8 +337,9 @@ function getUpstackExclusiveLines(
     .getChildren(args.branchName)
     .filter(
       (child) =>
-        !args.omitCurrentBranch ||
-        child !== context.engine.currentBranchPrecondition
+        !args.hidden?.has(child) &&
+        (!args.omitCurrentBranch ||
+          child !== context.engine.currentBranchPrecondition)
     );
   const numChildren = children.length;
   // Ordinary log presentation has a stable order independent of tip dates.
@@ -326,7 +366,9 @@ function getBranchLines(
   },
   context: TContext
 ): string[] {
-  const children = context.engine.getChildren(args.branchName);
+  const children = context.engine
+    .getChildren(args.branchName)
+    .filter((name) => !args.hidden?.has(name));
   const numChildren =
     children.length -
     (args.omitCurrentBranch &&

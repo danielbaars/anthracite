@@ -1,3 +1,4 @@
+import { assertBranchNotPendingReconciliation } from '../../lib/engine/sync_reconciliation';
 import chalk from 'chalk';
 import { createGetOperation, executeGetOperation } from './get_execute';
 import {
@@ -438,6 +439,10 @@ export async function prepareRemoteUpdates(
       context.engine.getParentPrecondition(node.branchName) !==
         node.parentBranchName
   );
+  for (const node of changing) {
+    assertBranchNotPendingReconciliation(node.branchName);
+    assertBranchNotPendingReconciliation(node.parentBranchName);
+  }
   const advancingTrunk =
     args.trunk && args.trunk.head !== args.trunk.previousHead;
   if (changing.length > 0 || advancingTrunk)

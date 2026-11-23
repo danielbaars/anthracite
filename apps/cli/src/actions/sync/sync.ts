@@ -1,5 +1,7 @@
 import { createSyncOperation, executeSyncOperation } from './sync_execute';
 import { TContext } from '../../lib/context';
+import { retainSyncReconciliation } from '../../lib/engine/sync_reconciliation';
+import { assertRemoteTrunkUnchanged } from './remote_update_trunk';
 import { uncommittedTrackedChangesPrecondition } from '../../lib/preconditions';
 import {
   planSyncMaintenance,
@@ -20,7 +22,7 @@ export async function syncAction(
   context: TContext
 ): Promise<void> {
   uncommittedTrackedChangesPrecondition();
-  const refresh = await prepareSyncRefresh(opts, context);
+  const { refresh, saved, entries } = await prepareSyncRefresh(opts, context);
   let applying = false;
   try {
     const cleanup = await planSyncCleanup(opts, refresh, context);
@@ -31,6 +33,17 @@ export async function syncAction(
       { refresh, cleanup, maintenance },
       context
     );
+    if (refresh.trunk && entries.length)
+      assertRemoteTrunkUnchanged(refresh.trunk);
+    retainSyncReconciliation(saved, entries);
+    for (const entry of entries) {
+      const reason = saved.entries.includes(entry)
+        ? `pending reconciliation recorded after the merge of ${entry.formerParent}`
+        : `PR #${entry.pullRequest} now targets ${entry.pullRequestBase} after ${entry.formerParent} (PR #${entry.formerParentPr}) merged`;
+      context.splog.info(
+        `Deferred ${entry.branch}: ${reason}. Keeping ${entry.formerParent} for recovery. Dependent updates and cleanup are deferred.`
+      );
+    }
     applying = true;
     await executeSyncOperation(operation, context);
   } finally {
