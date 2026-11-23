@@ -21,6 +21,7 @@ const fields = [
   'state',
   'isDraft',
   'headRefName',
+  'mergedAt',
   'headRefOid',
   'baseRefName',
   'baseRefOid',
